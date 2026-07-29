@@ -106,3 +106,17 @@ periods. The output is intentionally separate from the main comparison:
 support restrictions can stabilize matrix completion while changing the
 retained worker population, so both the full-population and retained-sample
 targets must be inspected.
+
+The paired interaction-sorting calibration uses common random numbers across
+sorting strengths:
+
+```powershell
+& .\.venv311\Scripts\python.exe scripts\run_monte_carlo.py `
+  --config configs\interaction_sorting_calibration.json `
+  --output results\interaction_sorting_calibration
+```
+
+The production ladder uses `interaction_sorting=0.4` and 10 periods for the
+rank-one interaction-sorting baseline. The `0.8` design remains in this
+calibration as an intentional weak-support stress test. The rank-two rung uses
+15 periods.

@@ -240,12 +240,15 @@ level only when a type-class assignment law is explicitly supplied.
 2. Additive schedule, sorting on common components.
 3. Rank-one free-factor schedule, independent assignment.
 4. Rank-one free-factor schedule, sorting on common components.
-5. Rank-one free-factor schedule, sorting on interaction gains.
+5. Rank-one free-factor schedule, moderate sorting on interaction gains
+   (`interaction_sorting=0.4`, `T=10`).
 6. BLM-style grouped schedule.
-7. Rank-two truth fitted at ranks zero, one, and two.
+7. Rank-two truth fitted at ranks zero, one, and two (`T=15`).
 
 Observation-process violations and graph stress tests are added only after
-the deterministic pilot passes.
+the deterministic pilot passes. Strong rank-one interaction sorting
+(`interaction_sorting=0.8`) is kept in the separate interaction-sorting
+calibration as a weak-support stress design rather than used as the baseline.
 
 ## 7. Monte Carlo reporting contract
 
@@ -253,6 +256,12 @@ Every replication derives separate population, panel, and estimator seeds
 from the master seed, scenario index, and replication index. An estimator
 exception is recorded as a failed attempt and does not stop other estimators
 or replications.
+
+Calibration scenarios may declare a common nonnegative `seed_group` in place
+of the scenario index. Scenarios in the same group then use common population,
+panel, and estimator random-number streams within each replication. This is a
+variance-reduction device for controlled design comparisons; it does not pool
+their estimates or targets.
 
 Scalar estimates use long-form rows containing the estimate, its declared
 target, error, squared error, and the estimator's retained observations,

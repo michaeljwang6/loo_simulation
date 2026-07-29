@@ -59,6 +59,7 @@ class ScenarioConfig:
     panel_kwargs: Mapping[str, Any]
     true_rank: int
     plugin_ranks: tuple[int, ...]
+    seed_group: int | None = None
     blm_worker_types: int | None = None
     blm_firm_types: int | None = None
 
@@ -82,6 +83,8 @@ class ScenarioConfig:
             raise ValueError("plugin_ranks cannot be empty.")
         if any(rank < 0 for rank in self.plugin_ranks):
             raise ValueError("plugin_ranks cannot contain negative values.")
+        if self.seed_group is not None and self.seed_group < 0:
+            raise ValueError("seed_group cannot be negative.")
         if "seed" in self.population_kwargs or "seed" in self.panel_kwargs:
             raise ValueError(
                 "Scenario kwargs cannot set seeds; the runner assigns them."
@@ -1061,11 +1064,11 @@ def _run_blm(
 
 def _replication_seeds(
     master_seed: int,
-    scenario_index: int,
+    scenario_seed_group: int,
     replication: int,
 ) -> tuple[int, int, int, int, int]:
     state = np.random.SeedSequence(
-        [master_seed, scenario_index, replication]
+        [master_seed, scenario_seed_group, replication]
     ).generate_state(5, dtype=np.uint32)
     return tuple(int(value) for value in state)  # type: ignore[return-value]
 
@@ -1109,6 +1112,11 @@ def run_monte_carlo(
     records: list[MonteCarloRecord] = []
     attempts: list[EstimatorAttempt] = []
     for scenario_index, scenario in enumerate(config.scenarios):
+        scenario_seed_group = (
+            scenario_index
+            if scenario.seed_group is None
+            else scenario.seed_group
+        )
         for replication in range(config.replications):
             (
                 population_seed,
@@ -1118,7 +1126,7 @@ def run_monte_carlo(
                 blm_seed,
             ) = _replication_seeds(
                 config.seed,
-                scenario_index,
+                scenario_seed_group,
                 replication,
             )
             if progress is not None:
@@ -1292,9 +1300,9 @@ def default_dgp_ladder(
                 **free_size,
                 "rank": 1,
                 "singular_values": (1.0,),
-                "interaction_sorting": 0.8,
+                "interaction_sorting": 0.4,
             },
-            panel_kwargs=free_panel,
+            panel_kwargs={**free_panel, "n_periods": 10},
             true_rank=1,
             plugin_ranks=(0, 1),
         ),
@@ -1331,7 +1339,7 @@ def default_dgp_ladder(
                 "common_sorting": 0.4,
                 "interaction_sorting": 0.4,
             },
-            panel_kwargs=free_panel,
+            panel_kwargs={**free_panel, "n_periods": 15},
             true_rank=2,
             plugin_ranks=(0, 1, 2),
         ),
@@ -1372,6 +1380,11 @@ def config_from_dict(value: Mapping[str, Any]) -> MonteCarloConfig:
                 true_rank=int(item["true_rank"]),
                 plugin_ranks=tuple(
                     int(rank) for rank in item["plugin_ranks"]
+                ),
+                seed_group=(
+                    None
+                    if item.get("seed_group") is None
+                    else int(item["seed_group"])
                 ),
                 blm_worker_types=(
                     None

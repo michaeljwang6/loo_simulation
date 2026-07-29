@@ -102,6 +102,60 @@ def test_configuration_json_round_trip(tmp_path) -> None:
     assert loaded == config
 
 
+def test_seed_groups_use_common_random_numbers() -> None:
+    scenarios = tuple(
+        ScenarioConfig(
+            name=name,
+            population_kind="free_factor",
+            population_kwargs={
+                "n_workers": 16,
+                "n_firms": 5,
+                "rank": 0,
+                "singular_values": (),
+                "common_sorting": sorting,
+            },
+            panel_kwargs={
+                "n_periods": 5,
+                "redraw_probability": 0.8,
+                "error_sd": 0.2,
+            },
+            true_rank=0,
+            plugin_ranks=(0,),
+            seed_group=77,
+        )
+        for name, sorting in (
+            ("independent", 0.0),
+            ("sorted", 0.5),
+        )
+    )
+    config = MonteCarloConfig(
+        scenarios=scenarios,
+        replications=1,
+        seed=1901,
+        estimators=EstimatorConfig(
+            run_bic=False,
+            run_fe_kss=False,
+            run_bs20=False,
+            run_blm=False,
+            low_rank_n_starts=1,
+            low_rank_max_iterations=100,
+        ),
+    )
+
+    result = run_monte_carlo(config)
+
+    assert len(result.attempts) == 2
+    seed_triplets = {
+        (
+            attempt.population_seed,
+            attempt.panel_seed,
+            attempt.estimator_seed,
+        )
+        for attempt in result.attempts
+    }
+    assert len(seed_triplets) == 1
+
+
 def test_result_persistence_writes_declared_tables(tmp_path) -> None:
     result = run_monte_carlo(_lightweight_config())
 

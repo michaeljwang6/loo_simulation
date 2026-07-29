@@ -36,6 +36,7 @@
           1.0
         ]
       },
+      "seed_group": 101,
       "true_rank": 1
     },
     {
@@ -58,6 +59,7 @@
           1.0
         ]
       },
+      "seed_group": 101,
       "true_rank": 1
     },
     {
@@ -80,6 +82,7 @@
           1.0
         ]
       },
+      "seed_group": 101,
       "true_rank": 1
     },
     {
@@ -102,6 +105,7 @@
           1.0
         ]
       },
+      "seed_group": 101,
       "true_rank": 1
     },
     {
@@ -126,6 +130,7 @@
           0.5
         ]
       },
+      "seed_group": 102,
       "true_rank": 2
     },
     {
@@ -150,6 +155,7 @@
           0.5
         ]
       },
+      "seed_group": 102,
       "true_rank": 2
     },
     {
@@ -174,6 +180,7 @@
           0.5
         ]
       },
+      "seed_group": 102,
       "true_rank": 2
     },
     {
@@ -198,6 +205,7 @@
           0.5
         ]
       },
+      "seed_group": 102,
       "true_rank": 2
     }
   ],
