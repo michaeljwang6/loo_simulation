@@ -23,3 +23,15 @@ The implementation is deliberately staged:
    differences.
 
 See `SIMULATION_CONTRACT.md` for the exact estimands and comparison rules.
+
+The first estimator smoke test is:
+
+```powershell
+& .\.venv311\Scripts\python.exe scripts\estimator_pilot.py
+```
+
+It reports exact population truths alongside PyTwoWay's AKM plug-in,
+homoskedastic correction, heteroskedastic KSS correction, and weighted BS20
+moments. Each estimator also reports the size of its own cleaned analysis
+sample. The project output remains a population truth/plug-in benchmark; the
+unfinished project LOO correction is not implemented or labeled as complete.

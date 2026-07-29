@@ -1,4 +1,5 @@
 import numpy as np
+import pytest
 
 from loo_sim.dgp import generate_population
 from loo_sim.truth import compute_population_truth
@@ -49,3 +50,44 @@ def test_rank_one_free_factor_is_nonadditive() -> None:
     assert truth.a_h > 0
     assert not np.isclose(truth.c_assign - truth.c_ab, 0.0)
     assert truth.rho_h > 0
+
+
+def test_requested_singular_values_equal_weighted_interaction_spectrum() -> None:
+    requested = np.array([1.5, 0.4])
+    dgp = generate_population(
+        n_workers=40,
+        n_firms=20,
+        rank=2,
+        singular_values=tuple(requested),
+        seed=40,
+    )
+
+    worker_gram = dgp.worker_factors.T @ (
+        dgp.worker_weights[:, None] * dgp.worker_factors
+    )
+    firm_gram = dgp.firm_factors.T @ (
+        dgp.firm_weights[:, None] * dgp.firm_factors
+    )
+    weighted_interaction = (
+        np.sqrt(dgp.worker_weights)[:, None]
+        * dgp.interaction
+        * np.sqrt(dgp.firm_weights)[None, :]
+    )
+    actual = np.linalg.svd(weighted_interaction, compute_uv=False)[:2]
+
+    assert np.allclose(worker_gram, np.eye(2))
+    assert np.allclose(firm_gram, np.eye(2))
+    assert np.allclose(actual, requested)
+
+
+def test_rank_and_singular_value_validation() -> None:
+    with pytest.raises(ValueError, match="rank cannot exceed"):
+        generate_population(n_workers=3, n_firms=4, rank=3)
+
+    with pytest.raises(ValueError, match="non-increasing"):
+        generate_population(
+            n_workers=10,
+            n_firms=8,
+            rank=2,
+            singular_values=(0.5, 1.0),
+        )

@@ -34,11 +34,26 @@ def _standardize(values: FloatArray, weights: FloatArray) -> FloatArray:
     return centered / scale if scale > 0 else centered
 
 
-def _weighted_center_columns(
+def _weighted_orthonormalize_columns(
     values: FloatArray,
     weights: FloatArray,
 ) -> FloatArray:
-    return values - np.sum(weights[:, None] * values, axis=0)
+    """Center and orthonormalize columns under a discrete population law."""
+
+    if values.shape[1] == 0:
+        return values.copy()
+
+    centered = values - np.sum(weights[:, None] * values, axis=0)
+    weighted = np.sqrt(weights)[:, None] * centered
+    orthonormal, triangular = np.linalg.qr(weighted, mode="reduced")
+
+    # Fix the otherwise arbitrary QR column signs so seeded simulations remain
+    # stable across linear-algebra implementations.
+    signs = np.sign(np.diag(triangular))
+    signs[signs == 0] = 1.0
+    orthonormal *= signs
+
+    return orthonormal / np.sqrt(weights)[:, None]
 
 
 def _correlated_pair(
@@ -109,6 +124,11 @@ def generate_population(
         raise ValueError("At least two workers and two firms are required.")
     if rank < 0:
         raise ValueError("rank cannot be negative.")
+    if rank > min(n_workers - 1, n_firms - 1):
+        raise ValueError(
+            "rank cannot exceed min(n_workers - 1, n_firms - 1) after "
+            "weighted centering."
+        )
 
     if singular_values is None:
         singular = np.ones(rank, dtype=float)
@@ -120,6 +140,8 @@ def generate_population(
             )
         if np.any(singular < 0):
             raise ValueError("singular_values cannot be negative.")
+        if np.any(np.diff(singular) > 0):
+            raise ValueError("singular_values must be in non-increasing order.")
 
     rng = np.random.default_rng(seed)
     p = np.full(n_workers, 1.0 / n_workers)
@@ -133,8 +155,8 @@ def generate_population(
     )
     alpha = _standardize(alpha, p)
     psi = _standardize(psi, q)
-    worker_factors = _weighted_center_columns(worker_factors, p)
-    firm_factors = _weighted_center_columns(firm_factors, q)
+    worker_factors = _weighted_orthonormalize_columns(worker_factors, p)
+    firm_factors = _weighted_orthonormalize_columns(firm_factors, q)
 
     if rank == 0:
         interaction = np.zeros((n_workers, n_firms), dtype=float)

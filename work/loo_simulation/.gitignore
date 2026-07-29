@@ -2,6 +2,7 @@
 .uv-cache/
 .venv/
 .venv311/
+.mplconfig/
 .pytest_cache/
 __pycache__/
 *.py[cod]
@@ -9,3 +10,4 @@ __pycache__/
 build/
 dist/
 results/
+logs/
