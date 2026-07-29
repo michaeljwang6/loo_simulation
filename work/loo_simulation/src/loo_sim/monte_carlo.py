@@ -669,12 +669,15 @@ def _record_one_low_rank(
         "success" if estimate.functionally_stable else "unstable"
     )
     message = (
-        "converged and stable across near-optimal starts"
-        if status == "success"
-        else (
-            "fit returned values but failed convergence or functional "
-            "stability checks"
-        )
+        f"converged={estimate.converged}; "
+        f"iterations={estimate.iterations}; "
+        f"functionally_stable={estimate.functionally_stable}; "
+        f"near_optimal_starts={estimate.near_optimal_starts}; "
+        f"q_f_spread={estimate.q_f_spread:.8g}; "
+        f"h_f_spread={estimate.h_f_spread:.8g}; "
+        f"c_assign_spread={estimate.c_assign_spread:.8g}; "
+        f"rectangles={estimate.sample.rectangles}; "
+        f"edge_mean_rmse={estimate.edge_mean_rmse:.8g}"
     )
     attempts.append(
         _attempt(

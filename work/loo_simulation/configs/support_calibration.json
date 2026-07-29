@@ -1,0 +1,205 @@
+{
+  "estimators": {
+    "blm_variants": [
+      "oracle",
+      "estimated"
+    ],
+    "low_rank_max_iterations": 300,
+    "low_rank_minimum_degree": null,
+    "low_rank_n_starts": 3,
+    "low_rank_tolerance": 1e-06,
+    "run_bic": false,
+    "run_blm": false,
+    "run_bs20": false,
+    "run_fe_kss": false,
+    "run_low_rank": true
+  },
+  "replications": 10,
+  "scenarios": [
+    {
+      "name": "rank1_interaction_t07",
+      "panel_kwargs": {
+        "error_sd": 0.5,
+        "n_periods": 7,
+        "redraw_probability": 0.75
+      },
+      "plugin_ranks": [
+        1
+      ],
+      "population_kind": "free_factor",
+      "population_kwargs": {
+        "interaction_sorting": 0.8,
+        "n_firms": 10,
+        "n_workers": 80,
+        "rank": 1,
+        "singular_values": [
+          1.0
+        ]
+      },
+      "true_rank": 1
+    },
+    {
+      "name": "rank1_interaction_t10",
+      "panel_kwargs": {
+        "error_sd": 0.5,
+        "n_periods": 10,
+        "redraw_probability": 0.75
+      },
+      "plugin_ranks": [
+        1
+      ],
+      "population_kind": "free_factor",
+      "population_kwargs": {
+        "interaction_sorting": 0.8,
+        "n_firms": 10,
+        "n_workers": 80,
+        "rank": 1,
+        "singular_values": [
+          1.0
+        ]
+      },
+      "true_rank": 1
+    },
+    {
+      "name": "rank1_interaction_t15",
+      "panel_kwargs": {
+        "error_sd": 0.5,
+        "n_periods": 15,
+        "redraw_probability": 0.75
+      },
+      "plugin_ranks": [
+        1
+      ],
+      "population_kind": "free_factor",
+      "population_kwargs": {
+        "interaction_sorting": 0.8,
+        "n_firms": 10,
+        "n_workers": 80,
+        "rank": 1,
+        "singular_values": [
+          1.0
+        ]
+      },
+      "true_rank": 1
+    },
+    {
+      "name": "rank1_interaction_t20",
+      "panel_kwargs": {
+        "error_sd": 0.5,
+        "n_periods": 20,
+        "redraw_probability": 0.75
+      },
+      "plugin_ranks": [
+        1
+      ],
+      "population_kind": "free_factor",
+      "population_kwargs": {
+        "interaction_sorting": 0.8,
+        "n_firms": 10,
+        "n_workers": 80,
+        "rank": 1,
+        "singular_values": [
+          1.0
+        ]
+      },
+      "true_rank": 1
+    },
+    {
+      "name": "rank2_misspecification_t07",
+      "panel_kwargs": {
+        "error_sd": 0.5,
+        "n_periods": 7,
+        "redraw_probability": 0.75
+      },
+      "plugin_ranks": [
+        2
+      ],
+      "population_kind": "free_factor",
+      "population_kwargs": {
+        "common_sorting": 0.4,
+        "interaction_sorting": 0.4,
+        "n_firms": 10,
+        "n_workers": 80,
+        "rank": 2,
+        "singular_values": [
+          1.0,
+          0.5
+        ]
+      },
+      "true_rank": 2
+    },
+    {
+      "name": "rank2_misspecification_t10",
+      "panel_kwargs": {
+        "error_sd": 0.5,
+        "n_periods": 10,
+        "redraw_probability": 0.75
+      },
+      "plugin_ranks": [
+        2
+      ],
+      "population_kind": "free_factor",
+      "population_kwargs": {
+        "common_sorting": 0.4,
+        "interaction_sorting": 0.4,
+        "n_firms": 10,
+        "n_workers": 80,
+        "rank": 2,
+        "singular_values": [
+          1.0,
+          0.5
+        ]
+      },
+      "true_rank": 2
+    },
+    {
+      "name": "rank2_misspecification_t15",
+      "panel_kwargs": {
+        "error_sd": 0.5,
+        "n_periods": 15,
+        "redraw_probability": 0.75
+      },
+      "plugin_ranks": [
+        2
+      ],
+      "population_kind": "free_factor",
+      "population_kwargs": {
+        "common_sorting": 0.4,
+        "interaction_sorting": 0.4,
+        "n_firms": 10,
+        "n_workers": 80,
+        "rank": 2,
+        "singular_values": [
+          1.0,
+          0.5
+        ]
+      },
+      "true_rank": 2
+    },
+    {
+      "name": "rank2_misspecification_t20",
+      "panel_kwargs": {
+        "error_sd": 0.5,
+        "n_periods": 20,
+        "redraw_probability": 0.75
+      },
+      "plugin_ranks": [
+        2
+      ],
+      "population_kind": "free_factor",
+      "population_kwargs": {
+        "common_sorting": 0.4,
+        "interaction_sorting": 0.4,
+        "n_firms": 10,
+        "n_workers": 80,
+        "rank": 2,
+        "singular_values": [
+          1.0,
+          0.5
+        ]
+      },
+      "true_rank": 2
+    }
+  ],
+  "seed": 20260730
+}

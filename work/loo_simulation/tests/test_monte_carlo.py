@@ -61,6 +61,12 @@ def test_runner_is_reproducible_and_keeps_target_types_separate() -> None:
         attempt.estimator == "project_plugin_r0"
         for attempt in first.attempts
     )
+    assert all(
+        "functionally_stable=" in attempt.message
+        and "near_optimal_starts=" in attempt.message
+        and "edge_mean_rmse=" in attempt.message
+        for attempt in first.attempts
+    )
     assert {record.target_type for record in first.records} == {
         "analysis_sample_project",
         "population_project",

@@ -91,3 +91,18 @@ BS20 rows distinguish its native type-moment target, and grouped BLM rows
 report both native cell means and grouped project functionals. Numerical
 values from unstable fits remain auditable and are counted as unstable rather
 than silently deleted.
+
+Before changing the baseline panel length or positive-rank support
+restriction, run the low-rank-only support calibration:
+
+```powershell
+& .\.venv311\Scripts\python.exe scripts\run_monte_carlo.py `
+  --config configs\support_calibration.json `
+  --output results\support_calibration
+```
+
+It compares rank-one and rank-two oracle-rank fits at 7, 10, 15, and 20
+periods. The output is intentionally separate from the main comparison:
+support restrictions can stabilize matrix completion while changing the
+retained worker population, so both the full-population and retained-sample
+targets must be inspected.

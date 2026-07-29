@@ -64,7 +64,11 @@ def main() -> None:
         if args.output is not None
         else Path("results") / args.config.stem
     )
-    progress = None if args.quiet else print
+    progress = (
+        None
+        if args.quiet
+        else lambda message: print(message, flush=True)
+    )
     result = run_monte_carlo(config, progress=progress)
     saved = save_monte_carlo_results(result, output)
     failures = sum(
