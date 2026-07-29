@@ -133,6 +133,51 @@ separating estimation error from the estimand/model gap.
 BS20 is excluded from schedule-completion comparisons unless an explicit
 bridge restriction is imposed.
 
+## 5.1 AKM/KSS population target under nonadditivity
+
+Without additional controls, the native AKM/KSS population effects are the
+assignment-weighted additive projection
+
+\[
+(\mu^{AKM},\alpha^{AKM},\psi^{AKM})
+=\arg\min_{\mu,\alpha,\psi}
+\sum_{ij}P^{obs}_{ij}
+\left(m_{ij}-\mu-\alpha_i-\psi_j\right)^2,
+\]
+
+with \(p\)-weighted worker effects and \(q\)-weighted firm effects normalized
+to zero. The native PyTwoWay comparison moments are
+
+\[
+V_\psi^{AKM}=\operatorname{Var}_{q}(\psi_J^{AKM}),
+\qquad
+C_{\psi\alpha}^{AKM}
+=\operatorname{Cov}_{P^{obs}}
+(\psi_J^{AKM},\alpha_I^{AKM}).
+\]
+
+Under additive separability,
+
+\[
+V_\psi^{AKM}=Q_F,\qquad
+C_{\psi\alpha}^{AKM}=C^w_{\mathrm{assign}}.
+\]
+
+Under independent assignment with nonadditivity, the AKM projection agrees
+with the canonical product-weighted main effects and
+
+\[
+V_\psi^{AKM}=Q_F-\frac12H_F.
+\]
+
+For general nonadditive sorting, the AKM projection can absorb conditional
+means of the interaction. Its native moments must therefore be reported
+separately from the project objects.
+
+The projection defines the comparison target under misspecification; it does
+not assert that the KSS correction retains its additive-model unbiasedness
+when the omitted interaction behaves like a persistent match component.
+
 ## 6. Initial DGP ladder
 
 1. Additive schedule, independent assignment.
