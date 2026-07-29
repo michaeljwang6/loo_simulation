@@ -95,6 +95,41 @@ def test_runner_is_reproducible_and_keeps_target_types_separate() -> None:
     assert summary.n_attempts == 2
     assert summary.n_estimates == 2
     assert summary.n_failure == 0
+    assert summary.bias_monte_carlo_se == pytest.approx(
+        summary.error_standard_deviation
+        / summary.n_estimates**0.5
+    )
+
+
+def test_conditional_summary_excludes_unstable_returned_values() -> None:
+    result = run_monte_carlo(_lightweight_config())
+    attempts = (
+        result.attempts[0],
+        replace(result.attempts[1], status="unstable"),
+    )
+    mixed = replace(result, attempts=attempts)
+
+    unconditional = next(
+        row
+        for row in mixed.summaries()
+        if row.metric == "q_f"
+        and row.target_type == "population_project"
+    )
+    stable = next(
+        row
+        for row in mixed.summaries(
+            included_statuses=("success",)
+        )
+        if row.metric == "q_f"
+        and row.target_type == "population_project"
+    )
+
+    assert unconditional.n_attempts == 2
+    assert unconditional.n_estimates == 2
+    assert stable.n_attempts == 2
+    assert stable.n_estimates == 1
+    assert stable.n_success == 1
+    assert stable.n_unstable == 1
 
 
 def test_configuration_json_round_trip(tmp_path) -> None:
@@ -172,6 +207,7 @@ def test_result_persistence_writes_declared_tables(tmp_path) -> None:
     expected = {
         "attempt_summary.csv",
         "attempts.csv",
+        "conditional_stable_summary.csv",
         "config.json",
         "metadata.json",
         "records.csv",
@@ -186,6 +222,9 @@ def test_result_persistence_writes_declared_tables(tmp_path) -> None:
     )
     assert metadata["record_count"] == len(result.records)
     assert metadata["attempt_count"] == len(result.attempts)
+    assert metadata["conditional_stable_summary_count"] == len(
+        result.summaries(included_statuses=("success",))
+    )
     assert metadata["replication_indices"] == [0, 1]
     assert metadata["config_fingerprint"] == config_fingerprint(
         result.config

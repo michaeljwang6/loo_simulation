@@ -80,8 +80,12 @@ written as:
   diagnostics for every estimator attempt;
 - `attempt_summary.csv`: estimator-level success, instability, and failure
   rates, including estimators that never return a value;
-- `summary.csv`: bias, sampling standard deviation, RMSE, and mean retained
-  sample size by scenario, estimator, metric, and target type;
+- `summary.csv`: bias, error standard deviation, Monte Carlo standard error
+  of the bias, RMSE, and mean retained sample size by scenario, estimator,
+  metric, and target type, including returned values classified as unstable;
+- `conditional_stable_summary.csv`: the separately labeled robustness table
+  computed only from successful, functionally stable returned values while
+  retaining the full attempt counts;
 - `config.json` and `metadata.json`: the resolved reproducibility contract.
 
 Low-rank plug-in rows distinguish the complete population target from the
@@ -146,6 +150,10 @@ The five-replication computational gate and its interpretation are recorded
 in `PREPRODUCTION_AUDIT.md`. In particular, rank selection and functional
 stability are separate diagnostics: a selected positive rank can still yield
 unstable plug-in functionals under weak support.
+
+The completed 100-replication findings, including native-estimand,
+population-project, unconditional, and conditional-on-stability comparisons,
+are documented in `PRODUCTION_RESULTS.md`.
 
 Shards can also be run individually with `run_monte_carlo.py --shard-index`
 and `--shard-count`. To merge independently launched shards:

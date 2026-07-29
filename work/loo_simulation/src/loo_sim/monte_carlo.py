@@ -254,6 +254,8 @@ class MonteCarloSummary:
     mean_target: float
     bias: float
     standard_deviation: float
+    error_standard_deviation: float
+    bias_monte_carlo_se: float
     rmse: float
     mean_observations: float
     mean_workers: float
@@ -320,8 +322,43 @@ class MonteCarloResult:
             )
         return tuple(output)
 
-    def summaries(self) -> tuple[MonteCarloSummary, ...]:
-        """Aggregate records without hiding failures or unstable fits."""
+    def summaries(
+        self,
+        *,
+        included_statuses: Iterable[AttemptStatus] | None = None,
+    ) -> tuple[MonteCarloSummary, ...]:
+        """Aggregate records, optionally restricting returned-value status.
+
+        The default is the unconditional procedure-performance summary and
+        includes values returned by unstable fits. Passing
+        ``included_statuses=("success",)`` produces the separately labeled
+        conditional-on-stability robustness summary. Attempt counts always
+        describe the full set of attempts so instability remains visible.
+        """
+
+        selected_statuses: frozenset[AttemptStatus] | None
+        if included_statuses is None:
+            selected_statuses = None
+        else:
+            selected_statuses = frozenset(included_statuses)
+            valid_statuses = {"success", "unstable", "failure"}
+            if (
+                not selected_statuses
+                or not selected_statuses.issubset(valid_statuses)
+            ):
+                raise ValueError(
+                    "included_statuses must contain one or more valid "
+                    "attempt statuses."
+                )
+
+        attempt_status = {
+            (
+                attempt.scenario,
+                attempt.replication,
+                attempt.estimator,
+            ): attempt.status
+            for attempt in self.attempts
+        }
 
         record_groups: dict[
             tuple[str, str, str, str], list[MonteCarloRecord]
@@ -333,7 +370,15 @@ class MonteCarloResult:
                 record.metric,
                 record.target_type,
             )
-            record_groups[key].append(record)
+            records_for_key = record_groups[key]
+            if selected_statuses is None or attempt_status[
+                (
+                    record.scenario,
+                    record.replication,
+                    record.estimator,
+                )
+            ] in selected_statuses:
+                records_for_key.append(record)
 
         attempt_groups: dict[
             tuple[str, str], list[EstimatorAttempt]
@@ -361,6 +406,9 @@ class MonteCarloResult:
             finite_estimate = estimate[finite]
             finite_target = target[finite]
             finite_error = error[finite]
+            error_standard_deviation = _sample_sd_or_nan(
+                finite_error
+            )
             summaries.append(
                 MonteCarloSummary(
                     scenario=scenario,
@@ -386,6 +434,13 @@ class MonteCarloResult:
                     bias=_mean_or_nan(finite_error),
                     standard_deviation=_sample_sd_or_nan(
                         finite_estimate
+                    ),
+                    error_standard_deviation=error_standard_deviation,
+                    bias_monte_carlo_se=(
+                        error_standard_deviation
+                        / np.sqrt(finite_error.size)
+                        if finite_error.size
+                        else float("nan")
                     ),
                     rmse=_rmse_or_nan(finite_error),
                     mean_observations=_mean_or_nan(
@@ -1756,6 +1811,9 @@ def save_monte_carlo_results(
     output = Path(output_directory)
     output.mkdir(parents=True, exist_ok=True)
     summaries = result.summaries()
+    stable_summaries = result.summaries(
+        included_statuses=("success",)
+    )
     attempt_summaries = result.attempt_summaries()
     _write_dataclass_csv(
         output / "records.csv",
@@ -1777,6 +1835,11 @@ def save_monte_carlo_results(
         summaries,
         MonteCarloSummary,
     )
+    _write_dataclass_csv(
+        output / "conditional_stable_summary.csv",
+        stable_summaries,
+        MonteCarloSummary,
+    )
     with (output / "config.json").open("w", encoding="utf-8") as stream:
         json.dump(
             config_to_dict(result.config),
@@ -1796,6 +1859,7 @@ def save_monte_carlo_results(
         "attempt_count": len(result.attempts),
         "attempt_summary_count": len(attempt_summaries),
         "summary_count": len(summaries),
+        "conditional_stable_summary_count": len(stable_summaries),
     }
     with (output / "metadata.json").open("w", encoding="utf-8") as stream:
         json.dump(metadata, stream, indent=2, sort_keys=True)
