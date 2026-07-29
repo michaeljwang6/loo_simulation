@@ -109,6 +109,36 @@ The initial comparison uses:
 
 No output may call the project plug-in estimate the "full LOO estimator."
 
+### Initial low-rank plug-in implementation
+
+For a fixed interaction rank \(r\), the initial project estimator solves
+
+\[
+\min_{\alpha,\psi,U,V}
+\sum_{(i,j)\in E}
+n_{ij}\left(
+\bar Y_{ij}-\alpha_i-\psi_j-u_i'v_j
+\right)^2.
+\]
+
+It uses alternating weighted least squares, a spectral initialization plus
+perturbed starts, and match counts \(n_{ij}\) as weights. Factor centering and
+SVD normalization fix a convenient gauge without changing the completed wage
+schedule. The current simulation sets \(X_{ij}'\delta=0\); more generally the
+input outcome to this implementation must first be residualized for observed
+covariates.
+
+Positive-rank fits default to the largest connected support core with at least
+\(r+2\) distinct matches per worker and firm. This is one observation more
+than the conditional-regression minimum and is a finite-sample stability
+restriction. Every output reports the retained support, rectangle count,
+convergence, near-optimal-start functional dispersion, and completed-schedule
+functionals.
+
+The optional BIC rank selector uses a common support sample across candidate
+ranks and is an exploratory simulation device, not part of the unfinished LOO
+theory. No quadratic bias correction is applied.
+
 ## 5. Two evaluation panels
 
 ### Native-estimand performance

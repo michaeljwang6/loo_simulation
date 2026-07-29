@@ -5,7 +5,15 @@ from __future__ import annotations
 from dataclasses import asdict
 import json
 
-from loo_sim import compute_procedure_targets, generate_population, sample_panel
+import numpy as np
+
+from loo_sim import (
+    compute_population_truth,
+    compute_procedure_targets,
+    generate_population,
+    sample_panel,
+    select_low_rank_bic,
+)
 from loo_sim.pytwoway_estimators import estimate_bs20, estimate_fe_kss
 
 
@@ -33,6 +41,24 @@ def run_scenario(name: str, *, rank: int, singular_values: tuple[float, ...]):
     )
     fe_kss = estimate_fe_kss(panel, exact=True)
     bs20 = estimate_bs20(panel)
+    rank_selection = select_low_rank_bic(
+        panel,
+        candidate_ranks=(0, 1),
+        n_starts=3,
+        seed=704,
+    )
+    oracle_rank_plugin = rank_selection.estimates[
+        rank_selection.candidate_ranks.index(rank)
+    ]
+    analysis_truth = compute_population_truth(
+        population.schedule[
+            np.ix_(
+                oracle_rank_plugin.worker_ids,
+                oracle_rank_plugin.firm_ids,
+            )
+        ],
+        oracle_rank_plugin.assignment,
+    )
 
     return {
         "scenario": name,
@@ -62,6 +88,55 @@ def run_scenario(name: str, *, rank: int, singular_values: tuple[float, ...]):
             "workers": panel.n_workers,
             "firms": panel.n_firms_observed,
             "mover_share": panel.mover_share,
+        },
+        "project_low_rank_plugin": {
+            "label": oracle_rank_plugin.label,
+            "oracle_rank": rank,
+            "bic_selected_rank": rank_selection.selected_rank,
+            "bic_by_rank": dict(
+                zip(
+                    rank_selection.candidate_ranks,
+                    rank_selection.bic_values,
+                )
+            ),
+            "sample": asdict(oracle_rank_plugin.sample),
+            "converged": oracle_rank_plugin.converged,
+            "functionally_stable": (
+                oracle_rank_plugin.functionally_stable
+            ),
+            "near_optimal_starts": (
+                oracle_rank_plugin.near_optimal_starts
+            ),
+            "start_objectives": oracle_rank_plugin.start_objectives,
+            "singular_values": (
+                oracle_rank_plugin.singular_values.tolist()
+            ),
+            "estimates": {
+                "q_f": oracle_rank_plugin.functionals.q_f,
+                "h_f": oracle_rank_plugin.functionals.h_f,
+                "rho_h": oracle_rank_plugin.functionals.rho_h,
+                "c_assign": oracle_rank_plugin.functionals.c_assign,
+            },
+            "analysis_sample_truth": {
+                "q_f": analysis_truth.q_f,
+                "h_f": analysis_truth.h_f,
+                "rho_h": analysis_truth.rho_h,
+                "c_assign": analysis_truth.c_assign,
+            },
+            "schedule_estimation_error": {
+                "q_f": (
+                    oracle_rank_plugin.functionals.q_f
+                    - analysis_truth.q_f
+                ),
+                "h_f": (
+                    oracle_rank_plugin.functionals.h_f
+                    - analysis_truth.h_f
+                ),
+                "c_assign": (
+                    oracle_rank_plugin.functionals.c_assign
+                    - analysis_truth.c_assign
+                ),
+            },
         },
         "fe_kss": asdict(fe_kss),
         "bs20": asdict(bs20),

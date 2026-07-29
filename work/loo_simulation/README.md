@@ -32,8 +32,10 @@ The first estimator smoke test is:
 
 It reports exact population truths alongside PyTwoWay's AKM plug-in,
 homoskedastic correction, heteroskedastic KSS correction, and weighted BS20
-moments. Each estimator also reports the size of its own cleaned analysis
-sample. Under nonadditivity it additionally reports the population
-assignment-weighted AKM projection and the resulting estimand gaps. The
-project output remains a population truth/plug-in benchmark; the unfinished
-project LOO correction is not implemented or labeled as complete.
+moments. It also runs the project's match-count-weighted alternating
+least-squares estimator at the oracle rank and with exploratory BIC rank
+selection. Each estimator reports the size of its own cleaned analysis sample.
+Under nonadditivity the pilot reports the population assignment-weighted AKM
+projection, estimator-specific targets, and the resulting estimand gaps. The
+project output remains a low-rank plug-in benchmark; the unfinished project
+LOO correction is not implemented or labeled as complete.
