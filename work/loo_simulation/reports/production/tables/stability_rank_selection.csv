@@ -1,0 +1,8 @@
+scenario,scenario_label,true_rank,selection_distribution,correct_rank_rate,bic_unstable_rate,bic_failure_rate
+additive_independent,"Additive, independent",0,0: 100,1.0,0.0,0.0
+additive_common_sorting,"Additive, common sorting",0,0: 100,1.0,0.0,0.0
+rank1_independent,"Rank 1, independent",1,1: 100,1.0,0.11,0.0
+rank1_common_sorting,"Rank 1, common sorting",1,1: 100,1.0,0.12,0.0
+rank1_interaction_sorting,"Rank 1, interaction sorting",1,1: 100,1.0,0.06,0.0
+rank2_misspecification,Rank 2,2,1: 4; 2: 96,0.96,0.09,0.0
+grouped_blm,Grouped BLM,1,0: 10; 1: 90,0.9,0.88,0.0

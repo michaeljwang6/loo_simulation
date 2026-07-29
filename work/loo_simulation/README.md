@@ -10,8 +10,8 @@ Y_{ij}=X_{ij}'\delta+\alpha_i+\psi_j+u_i'\Lambda v_j+\varepsilon_{ij}.
 \]
 
 The full LOO bias correction is still under development. Consequently, the
-first numerical experiments label the project estimator as a **low-rank
-plug-in estimator**, not as the final LOO estimator.
+first numerical experiments label the project estimator as the **low-rank
+plug-in without LOO correction**, not as the final LOO estimator.
 
 The implementation is deliberately staged:
 
@@ -154,6 +154,16 @@ unstable plug-in functionals under weak support.
 The completed 100-replication findings, including native-estimand,
 population-project, unconditional, and conditional-on-stability comparisons,
 are documented in `PRODUCTION_RESULTS.md`.
+
+Generate the paper-ready PDF/PNG figures and CSV/LaTeX tables with:
+
+```powershell
+& .\.venv311\Scripts\python.exe -m pip install -e ".[report]"
+$env:MPLCONFIGDIR = (Resolve-Path .).Path + "\.mplconfig"
+& .\.venv311\Scripts\python.exe scripts\report_results.py
+```
+
+The generated bundle is written to `reports\production`.
 
 Shards can also be run individually with `run_monte_carlo.py --shard-index`
 and `--shard-count`. To merge independently launched shards:

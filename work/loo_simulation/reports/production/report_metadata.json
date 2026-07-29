@@ -1,0 +1,30 @@
+{
+  "attempt_count": 5200,
+  "config_fingerprint": "e03e0c242706502fcd58f20c1cc52c4deeb234f48c981a4885e13157d6ac2a09",
+  "generated_files": [
+    "figures/additive-bias.pdf",
+    "figures/additive-bias.png",
+    "figures/akm-project-estimand-gap.pdf",
+    "figures/akm-project-estimand-gap.png",
+    "figures/bs20-native-correlation-bias.pdf",
+    "figures/bs20-native-correlation-bias.png",
+    "figures/grouped-blm-comparison.pdf",
+    "figures/grouped-blm-comparison.png",
+    "figures/nonadditive-unconditional-vs-stable-rmse.pdf",
+    "figures/nonadditive-unconditional-vs-stable-rmse.png",
+    "figures/stability-rank-selection.pdf",
+    "figures/stability-rank-selection.png",
+    "tables/additive_comparison.csv",
+    "tables/additive_comparison.tex",
+    "tables/bs20_native.csv",
+    "tables/bs20_native.tex",
+    "tables/grouped_blm_comparison.csv",
+    "tables/grouped_blm_comparison.tex",
+    "tables/nonadditive_comparison.csv",
+    "tables/nonadditive_comparison.tex",
+    "tables/stability_rank_selection.csv",
+    "tables/stability_rank_selection.tex"
+  ],
+  "record_count": 32400,
+  "replications": 100
+}
