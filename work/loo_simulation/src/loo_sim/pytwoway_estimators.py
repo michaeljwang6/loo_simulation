@@ -178,7 +178,9 @@ def prepare_fe_sample(panel: PanelData) -> Any:
             "connectedness": "leave_out_spell",
             "collapse_at_connectedness_measure": True,
             "drop_single_stayers": True,
-            "drop_returns": "returners",
+            # PyTwoWay's FE Monte Carlo keeps return spells. Dropping every
+            # returner can erase the mover network in longer simulated panels.
+            "drop_returns": False,
             "copy": True,
             "verbose": False,
         }

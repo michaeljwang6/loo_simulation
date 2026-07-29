@@ -142,6 +142,11 @@ replication indices before reusing completed work. Once all shards finish, the
 launcher strictly validates full coverage, non-overlap, and record uniqueness,
 then writes the combined tables to `merged`.
 
+The five-replication computational gate and its interpretation are recorded
+in `PREPRODUCTION_AUDIT.md`. In particular, rank selection and functional
+stability are separate diagnostics: a selected positive rank can still yield
+unstable plug-in functionals under weak support.
+
 Shards can also be run individually with `run_monte_carlo.py --shard-index`
 and `--shard-count`. To merge independently launched shards:
 

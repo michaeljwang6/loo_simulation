@@ -7,6 +7,7 @@ from loo_sim.pytwoway_estimators import (
     estimate_fe_kss,
     panel_to_bipartite,
     prepare_bs20_sample,
+    prepare_fe_sample,
 )
 
 
@@ -96,3 +97,37 @@ def test_fe_kss_wrapper_returns_exact_bias_corrections() -> None:
     assert np.isfinite(result.var_psi_he)
     assert np.isfinite(result.cov_psi_alpha_he)
     assert 0 <= result.min_leverage <= result.max_leverage < 1
+
+
+def test_fe_kss_leave_out_spell_sample_keeps_returners() -> None:
+    """Regress the rank-two, long-panel returner-network failure."""
+
+    population = generate_population(
+        n_workers=80,
+        n_firms=10,
+        rank=2,
+        singular_values=(1.0, 0.5),
+        common_sorting=0.4,
+        interaction_sorting=0.4,
+        seed=449124751,
+    )
+    panel = sample_panel(
+        population,
+        n_periods=15,
+        redraw_probability=0.75,
+        error_sd=0.5,
+        seed=3289324901,
+    )
+
+    cleaned = prepare_fe_sample(panel)
+    result = estimate_fe_kss(panel, seed=763823908, exact=True)
+
+    assert int(round(float(cleaned.loc[:, "w"].sum()))) == 80 * 15
+    assert cleaned.loc[:, "i"].nunique() == 80
+    assert cleaned.loc[:, "j"].nunique() == 10
+    assert result.sample.observations == 80 * 15
+    assert result.sample.workers == 80
+    assert result.sample.firms == 10
+    assert np.isfinite(result.var_psi_fe)
+    assert np.isfinite(result.var_psi_ho)
+    assert np.isfinite(result.var_psi_he)
