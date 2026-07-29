@@ -246,3 +246,23 @@ level only when a type-class assignment law is explicitly supplied.
 
 Observation-process violations and graph stress tests are added only after
 the deterministic pilot passes.
+
+## 7. Monte Carlo reporting contract
+
+Every replication derives separate population, panel, and estimator seeds
+from the master seed, scenario index, and replication index. An estimator
+exception is recorded as a failed attempt and does not stop other estimators
+or replications.
+
+Scalar estimates use long-form rows containing the estimate, its declared
+target, error, squared error, and the estimator's retained observations,
+workers, and firms. Summary tables report bias, sampling standard deviation,
+RMSE, and attempt counts. Completion status is reported separately as
+success, unstable, or failure so an all-failure estimator cannot disappear
+from the output.
+
+Returned values from an unstable low-rank or BLM fit are retained for audit
+and included in the unconditional procedure-performance summary. They are
+never relabeled as successful. Any conditional-on-stability analysis must be
+reported as a separate robustness table rather than replacing the
+unconditional result.

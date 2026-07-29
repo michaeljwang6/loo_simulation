@@ -50,3 +50,44 @@ It compares PyTwoWay BLM with oracle firm classes and wage-distribution
 clusters against the known stationary worker-type by firm-class mean table.
 Latent worker labels, and estimated firm labels where applicable, are aligned
 only for simulation evaluation.
+
+## Monte Carlo runner
+
+The configuration-driven runner executes the DGP ladder replication by
+replication and isolates estimator failures rather than aborting the study.
+Start with the one-replication representative pilot:
+
+```powershell
+& .\.venv311\Scripts\python.exe scripts\run_monte_carlo.py `
+  --config configs\quick_pilot.json `
+  --output results\quick_pilot
+```
+
+After inspecting those diagnostics, the complete seven-rung configuration is:
+
+```powershell
+& .\.venv311\Scripts\python.exe scripts\run_monte_carlo.py `
+  --config configs\full_ladder.json `
+  --output results\full_ladder
+```
+
+The full configuration declares 100 replications, but `--replications` and
+`--seed` can override those two fields without editing the JSON. Results are
+written as:
+
+- `records.csv`: one estimate--target--error row per scalar metric;
+- `attempts.csv`: convergence, failure, stability, and retained-sample
+  diagnostics for every estimator attempt;
+- `attempt_summary.csv`: estimator-level success, instability, and failure
+  rates, including estimators that never return a value;
+- `summary.csv`: bias, sampling standard deviation, RMSE, and mean retained
+  sample size by scenario, estimator, metric, and target type;
+- `config.json` and `metadata.json`: the resolved reproducibility contract.
+
+Low-rank plug-in rows distinguish the complete population target from the
+truth on the retained analysis sample. FE/KSS rows distinguish their native
+assignment-weighted additive-projection target from the project target.
+BS20 rows distinguish its native type-moment target, and grouped BLM rows
+report both native cell means and grouped project functionals. Numerical
+values from unstable fits remain auditable and are counted as unstable rather
+than silently deleted.
