@@ -165,6 +165,16 @@ $env:MPLCONFIGDIR = (Resolve-Path .).Path + "\.mplconfig"
 
 The generated bundle is written to `reports\production`.
 
+The integrated methods-and-results note is `SIMULATION_WRITEUP.md`. Render its
+verified PDF with:
+
+```powershell
+& .\.venv311\Scripts\python.exe -m pip install -e ".[writeup]"
+& .\.venv311\Scripts\python.exe scripts\build_simulation_writeup_pdf.py
+```
+
+The PDF is written to `output\pdf\loo_simulation_writeup.pdf`.
+
 Shards can also be run individually with `run_monte_carlo.py --shard-index`
 and `--shard-count`. To merge independently launched shards:
 
