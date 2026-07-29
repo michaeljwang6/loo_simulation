@@ -22,12 +22,17 @@ from .monte_carlo import (
     MonteCarloResult,
     MonteCarloSummary,
     ScenarioConfig,
+    config_fingerprint,
     config_from_dict,
     config_to_dict,
     default_dgp_ladder,
     load_monte_carlo_config,
+    load_monte_carlo_results,
+    merge_monte_carlo_results,
+    merge_saved_monte_carlo_results,
     run_monte_carlo,
     save_monte_carlo_results,
+    shard_replication_indices,
 )
 from .panel import PanelData, sample_panel
 from .targets import (
@@ -63,6 +68,7 @@ __all__ = [
     "compute_blm_grouped_target",
     "compute_population_truth",
     "compute_procedure_targets",
+    "config_fingerprint",
     "config_from_dict",
     "config_to_dict",
     "default_dgp_ladder",
@@ -70,8 +76,12 @@ __all__ = [
     "generate_grouped_population",
     "generate_population",
     "load_monte_carlo_config",
+    "load_monte_carlo_results",
+    "merge_monte_carlo_results",
+    "merge_saved_monte_carlo_results",
     "run_monte_carlo",
     "sample_panel",
     "save_monte_carlo_results",
     "select_low_rank_bic",
+    "shard_replication_indices",
 ]

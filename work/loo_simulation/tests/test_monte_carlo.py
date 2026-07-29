@@ -1,14 +1,22 @@
 import json
+from dataclasses import replace
+
+import pytest
 
 from loo_sim import (
     EstimatorConfig,
     MonteCarloConfig,
     ScenarioConfig,
+    config_fingerprint,
     config_from_dict,
     config_to_dict,
     load_monte_carlo_config,
+    load_monte_carlo_results,
+    merge_monte_carlo_results,
+    merge_saved_monte_carlo_results,
     run_monte_carlo,
     save_monte_carlo_results,
+    shard_replication_indices,
 )
 
 
@@ -178,3 +186,71 @@ def test_result_persistence_writes_declared_tables(tmp_path) -> None:
     )
     assert metadata["record_count"] == len(result.records)
     assert metadata["attempt_count"] == len(result.attempts)
+    assert metadata["replication_indices"] == [0, 1]
+    assert metadata["config_fingerprint"] == config_fingerprint(
+        result.config
+    )
+    assert load_monte_carlo_results(output) == result
+
+
+def test_disjoint_shards_merge_to_exact_unsharded_result(tmp_path) -> None:
+    config = replace(_lightweight_config(), replications=4)
+    full = run_monte_carlo(config)
+    first_indices = shard_replication_indices(
+        config.replications,
+        shard_index=0,
+        shard_count=2,
+    )
+    second_indices = shard_replication_indices(
+        config.replications,
+        shard_index=1,
+        shard_count=2,
+    )
+    first = run_monte_carlo(
+        config,
+        replication_indices=first_indices,
+    )
+    second = run_monte_carlo(
+        config,
+        replication_indices=second_indices,
+    )
+
+    merged = merge_monte_carlo_results((second, first))
+
+    assert first_indices == (0, 2)
+    assert second_indices == (1, 3)
+    assert merged == full
+
+    first_path = save_monte_carlo_results(first, tmp_path / "first")
+    second_path = save_monte_carlo_results(
+        second,
+        tmp_path / "second",
+    )
+    merged_path = merge_saved_monte_carlo_results(
+        (first_path, second_path),
+        tmp_path / "merged",
+    )
+    assert load_monte_carlo_results(merged_path) == full
+
+
+def test_merge_rejects_overlap_and_incomplete_coverage() -> None:
+    config = replace(_lightweight_config(), replications=3)
+    first = run_monte_carlo(
+        config,
+        replication_indices=(0, 1),
+    )
+    overlap = run_monte_carlo(
+        config,
+        replication_indices=(1, 2),
+    )
+
+    with pytest.raises(ValueError, match="overlapping"):
+        merge_monte_carlo_results((first, overlap))
+    with pytest.raises(ValueError, match="missing"):
+        merge_monte_carlo_results((first,))
+
+    partial = merge_monte_carlo_results(
+        (first,),
+        require_complete=False,
+    )
+    assert partial.replication_indices == (0, 1)

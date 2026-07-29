@@ -120,3 +120,35 @@ The production ladder uses `interaction_sorting=0.4` and 10 periods for the
 rank-one interaction-sorting baseline. The `0.8` design remains in this
 calibration as an intentional weak-support stress test. The rank-two rung uses
 15 periods.
+
+## Resumable production execution
+
+Run the 100-replication ladder as independently saved shards rather than one
+long serial process:
+
+```powershell
+& .\.venv311\Scripts\python.exe scripts\run_monte_carlo_shards.py `
+  --config configs\full_ladder.json `
+  --output-root results\full_ladder_production `
+  --shard-count 20 `
+  --workers 2 `
+  --resume
+```
+
+This assigns five global replication indices to each shard and runs at most
+two shards concurrently. Every completed shard is saved immediately. Rerunning
+the command with `--resume` validates configuration fingerprints and
+replication indices before reusing completed work. Once all shards finish, the
+launcher strictly validates full coverage, non-overlap, and record uniqueness,
+then writes the combined tables to `merged`.
+
+Shards can also be run individually with `run_monte_carlo.py --shard-index`
+and `--shard-count`. To merge independently launched shards:
+
+```powershell
+$shards = Get-ChildItem results\full_ladder_production `
+  -Directory -Filter "shard_*"
+& .\.venv311\Scripts\python.exe scripts\merge_monte_carlo.py `
+  --inputs $shards.FullName `
+  --output results\full_ladder_production\merged
+```

@@ -10,6 +10,7 @@ from loo_sim import (
     load_monte_carlo_config,
     run_monte_carlo,
     save_monte_carlo_results,
+    shard_replication_indices,
 )
 
 
@@ -44,11 +45,26 @@ def _arguments() -> argparse.Namespace:
         help="Optional override of the master seed in the JSON file.",
     )
     parser.add_argument(
+        "--shard-index",
+        type=int,
+        help="Zero-based shard index; requires --shard-count.",
+    )
+    parser.add_argument(
+        "--shard-count",
+        type=int,
+        help="Total number of round-robin replication shards.",
+    )
+    parser.add_argument(
         "--quiet",
         action="store_true",
         help="Suppress one-line replication progress updates.",
     )
-    return parser.parse_args()
+    args = parser.parse_args()
+    if (args.shard_index is None) != (args.shard_count is None):
+        parser.error(
+            "--shard-index and --shard-count must be supplied together."
+        )
+    return args
 
 
 def main() -> None:
@@ -59,17 +75,33 @@ def main() -> None:
     if args.seed is not None:
         config = replace(config, seed=args.seed)
 
-    output = (
-        args.output
-        if args.output is not None
-        else Path("results") / args.config.stem
-    )
+    replication_indices = None
+    if args.shard_index is not None:
+        replication_indices = shard_replication_indices(
+            config.replications,
+            shard_index=args.shard_index,
+            shard_count=args.shard_count,
+        )
+    if args.output is not None:
+        output = args.output
+    elif args.shard_index is None:
+        output = Path("results") / args.config.stem
+    else:
+        shard_name = (
+            f"shard_{args.shard_index:04d}_of_"
+            f"{args.shard_count:04d}"
+        )
+        output = Path("results") / args.config.stem / shard_name
     progress = (
         None
         if args.quiet
         else lambda message: print(message, flush=True)
     )
-    result = run_monte_carlo(config, progress=progress)
+    result = run_monte_carlo(
+        config,
+        replication_indices=replication_indices,
+        progress=progress,
+    )
     saved = save_monte_carlo_results(result, output)
     failures = sum(
         attempt.status == "failure" for attempt in result.attempts

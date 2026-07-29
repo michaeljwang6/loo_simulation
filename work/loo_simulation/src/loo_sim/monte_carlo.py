@@ -9,10 +9,11 @@ estimation error and estimand differences are visible in different rows.
 from __future__ import annotations
 
 from collections import defaultdict
-from collections.abc import Callable, Mapping
+from collections.abc import Callable, Iterable, Mapping
 import csv
 from dataclasses import asdict, dataclass, fields
 from datetime import datetime, timezone
+import hashlib
 import json
 from pathlib import Path
 from typing import Any, Literal
@@ -281,6 +282,7 @@ class MonteCarloResult:
     config: MonteCarloConfig
     records: tuple[MonteCarloRecord, ...]
     attempts: tuple[EstimatorAttempt, ...]
+    replication_indices: tuple[int, ...]
 
     def attempt_summaries(self) -> tuple[EstimatorAttemptSummary, ...]:
         """Aggregate attempt status even when every estimate failed."""
@@ -1102,13 +1104,79 @@ def _generate_replication(
     return population, panel, targets
 
 
+def _normalize_replication_indices(
+    config: MonteCarloConfig,
+    replication_indices: Iterable[int] | None,
+) -> tuple[int, ...]:
+    if replication_indices is None:
+        return tuple(range(config.replications))
+    indices = tuple(sorted(int(value) for value in replication_indices))
+    if len(indices) != len(set(indices)):
+        raise ValueError("replication_indices cannot contain duplicates.")
+    if any(
+        value < 0 or value >= config.replications
+        for value in indices
+    ):
+        raise ValueError(
+            "Every replication index must lie between zero and "
+            "config.replications - 1."
+        )
+    return indices
+
+
+def shard_replication_indices(
+    replications: int,
+    *,
+    shard_index: int,
+    shard_count: int,
+) -> tuple[int, ...]:
+    """Assign global replication indices to one deterministic shard."""
+
+    if replications < 1:
+        raise ValueError("replications must be positive.")
+    if shard_count < 1:
+        raise ValueError("shard_count must be positive.")
+    if shard_index < 0 or shard_index >= shard_count:
+        raise ValueError(
+            "shard_index must lie between zero and shard_count - 1."
+        )
+    return tuple(range(shard_index, replications, shard_count))
+
+
+def _record_sort_key(
+    record: MonteCarloRecord,
+) -> tuple[str, int, str, str, str]:
+    return (
+        record.scenario,
+        record.replication,
+        record.estimator,
+        record.metric,
+        record.target_type,
+    )
+
+
+def _attempt_sort_key(
+    attempt: EstimatorAttempt,
+) -> tuple[str, int, str]:
+    return (
+        attempt.scenario,
+        attempt.replication,
+        attempt.estimator,
+    )
+
+
 def run_monte_carlo(
     config: MonteCarloConfig,
     *,
+    replication_indices: Iterable[int] | None = None,
     progress: Callable[[str], None] | None = None,
 ) -> MonteCarloResult:
-    """Run every configured replication while isolating estimator failures."""
+    """Run selected global replications while isolating estimator failures."""
 
+    selected_replications = _normalize_replication_indices(
+        config,
+        replication_indices,
+    )
     records: list[MonteCarloRecord] = []
     attempts: list[EstimatorAttempt] = []
     for scenario_index, scenario in enumerate(config.scenarios):
@@ -1117,7 +1185,7 @@ def run_monte_carlo(
             if scenario.seed_group is None
             else scenario.seed_group
         )
-        for replication in range(config.replications):
+        for replication in selected_replications:
             (
                 population_seed,
                 panel_seed,
@@ -1224,8 +1292,9 @@ def run_monte_carlo(
 
     return MonteCarloResult(
         config=config,
-        records=tuple(records),
-        attempts=tuple(attempts),
+        records=tuple(sorted(records, key=_record_sort_key)),
+        attempts=tuple(sorted(attempts, key=_attempt_sort_key)),
+        replication_indices=selected_replications,
     )
 
 
@@ -1357,6 +1426,17 @@ def config_to_dict(config: MonteCarloConfig) -> dict[str, Any]:
     return asdict(config)
 
 
+def config_fingerprint(config: MonteCarloConfig) -> str:
+    """Return a stable SHA-256 fingerprint of the resolved configuration."""
+
+    encoded = json.dumps(
+        config_to_dict(config),
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
+
+
 def config_from_dict(value: Mapping[str, Any]) -> MonteCarloConfig:
     """Validate and construct a configuration loaded from JSON."""
 
@@ -1436,11 +1516,242 @@ def _write_dataclass_csv(
             writer.writerow(asdict(row))
 
 
+def _read_csv(path: Path) -> list[dict[str, str]]:
+    with path.open(newline="", encoding="utf-8") as stream:
+        return list(csv.DictReader(stream))
+
+
+def _record_from_csv(row: Mapping[str, str]) -> MonteCarloRecord:
+    return MonteCarloRecord(
+        scenario=row["scenario"],
+        replication=int(row["replication"]),
+        population_seed=int(row["population_seed"]),
+        panel_seed=int(row["panel_seed"]),
+        estimator_seed=int(row["estimator_seed"]),
+        estimator=row["estimator"],
+        metric=row["metric"],
+        target_type=row["target_type"],
+        estimate=float(row["estimate"]),
+        target=float(row["target"]),
+        error=float(row["error"]),
+        squared_error=float(row["squared_error"]),
+        n_observations=int(row["n_observations"]),
+        n_workers=int(row["n_workers"]),
+        n_firms=int(row["n_firms"]),
+    )
+
+
+def _attempt_from_csv(row: Mapping[str, str]) -> EstimatorAttempt:
+    status = row["status"]
+    if status not in ("success", "unstable", "failure"):
+        raise ValueError(f"Unknown estimator-attempt status: {status}.")
+    return EstimatorAttempt(
+        scenario=row["scenario"],
+        replication=int(row["replication"]),
+        population_seed=int(row["population_seed"]),
+        panel_seed=int(row["panel_seed"]),
+        estimator_seed=int(row["estimator_seed"]),
+        estimator=row["estimator"],
+        status=status,
+        message=row["message"],
+        n_observations=int(row["n_observations"]),
+        n_workers=int(row["n_workers"]),
+        n_firms=int(row["n_firms"]),
+    )
+
+
+def load_monte_carlo_results(
+    input_directory: str | Path,
+) -> MonteCarloResult:
+    """Load and validate one saved full run or shard."""
+
+    input_path = Path(input_directory)
+    config = load_monte_carlo_config(input_path / "config.json")
+    with (input_path / "metadata.json").open(
+        encoding="utf-8"
+    ) as stream:
+        metadata = json.load(stream)
+    if not isinstance(metadata, dict):
+        raise ValueError("Result metadata must be a JSON object.")
+
+    expected_fingerprint = metadata.get("config_fingerprint")
+    actual_fingerprint = config_fingerprint(config)
+    if (
+        expected_fingerprint is not None
+        and expected_fingerprint != actual_fingerprint
+    ):
+        raise ValueError(
+            f"Configuration fingerprint mismatch in {input_path}."
+        )
+
+    records = tuple(
+        _record_from_csv(row)
+        for row in _read_csv(input_path / "records.csv")
+    )
+    attempts = tuple(
+        _attempt_from_csv(row)
+        for row in _read_csv(input_path / "attempts.csv")
+    )
+    if int(metadata.get("record_count", -1)) != len(records):
+        raise ValueError(f"Record count mismatch in {input_path}.")
+    if int(metadata.get("attempt_count", -1)) != len(attempts):
+        raise ValueError(f"Attempt count mismatch in {input_path}.")
+
+    saved_indices = metadata.get("replication_indices")
+    if saved_indices is None:
+        replication_indices = tuple(
+            sorted(
+                {
+                    record.replication for record in records
+                }
+                | {
+                    attempt.replication for attempt in attempts
+                }
+            )
+        )
+    else:
+        replication_indices = _normalize_replication_indices(
+            config,
+            (int(value) for value in saved_indices),
+        )
+    allowed = set(replication_indices)
+    if any(record.replication not in allowed for record in records):
+        raise ValueError(
+            f"A record lies outside the declared shard in {input_path}."
+        )
+    if any(attempt.replication not in allowed for attempt in attempts):
+        raise ValueError(
+            f"An attempt lies outside the declared shard in {input_path}."
+        )
+    return MonteCarloResult(
+        config=config,
+        records=tuple(sorted(records, key=_record_sort_key)),
+        attempts=tuple(sorted(attempts, key=_attempt_sort_key)),
+        replication_indices=replication_indices,
+    )
+
+
+def merge_monte_carlo_results(
+    results: Iterable[MonteCarloResult],
+    *,
+    require_complete: bool = True,
+) -> MonteCarloResult:
+    """Merge disjoint shards after strict configuration validation."""
+
+    result_list = tuple(results)
+    if not result_list:
+        raise ValueError("At least one result is required for merging.")
+    config = result_list[0].config
+    fingerprint = config_fingerprint(config)
+    scenario_names = {
+        scenario.name for scenario in config.scenarios
+    }
+    replication_indices: set[int] = set()
+    records: list[MonteCarloRecord] = []
+    attempts: list[EstimatorAttempt] = []
+    for result in result_list:
+        if config_fingerprint(result.config) != fingerprint:
+            raise ValueError(
+                "Cannot merge results with different configurations."
+            )
+        normalized_indices = _normalize_replication_indices(
+            config,
+            result.replication_indices,
+        )
+        if normalized_indices != result.replication_indices:
+            raise ValueError(
+                "Shard replication indices must be sorted and unique."
+            )
+        shard_indices = set(result.replication_indices)
+        overlap = replication_indices & shard_indices
+        if overlap:
+            raise ValueError(
+                "Cannot merge overlapping replication indices: "
+                f"{sorted(overlap)}."
+            )
+        replication_indices.update(shard_indices)
+        if any(
+            record.replication not in shard_indices
+            or record.scenario not in scenario_names
+            for record in result.records
+        ):
+            raise ValueError(
+                "A scalar record is inconsistent with its shard or config."
+            )
+        if any(
+            attempt.replication not in shard_indices
+            or attempt.scenario not in scenario_names
+            for attempt in result.attempts
+        ):
+            raise ValueError(
+                "An estimator attempt is inconsistent with its shard "
+                "or config."
+            )
+        records.extend(result.records)
+        attempts.extend(result.attempts)
+
+    expected = set(range(config.replications))
+    if require_complete and replication_indices != expected:
+        missing = sorted(expected - replication_indices)
+        extra = sorted(replication_indices - expected)
+        raise ValueError(
+            "Merged shards do not cover the full configuration; "
+            f"missing={missing}, extra={extra}."
+        )
+
+    record_keys = [_record_sort_key(record) for record in records]
+    if len(record_keys) != len(set(record_keys)):
+        raise ValueError("Merged results contain duplicate scalar records.")
+    attempt_keys = [_attempt_sort_key(attempt) for attempt in attempts]
+    if len(attempt_keys) != len(set(attempt_keys)):
+        raise ValueError(
+            "Merged results contain duplicate estimator attempts."
+        )
+    return MonteCarloResult(
+        config=config,
+        records=tuple(sorted(records, key=_record_sort_key)),
+        attempts=tuple(sorted(attempts, key=_attempt_sort_key)),
+        replication_indices=tuple(sorted(replication_indices)),
+    )
+
+
+def merge_saved_monte_carlo_results(
+    input_directories: Iterable[str | Path],
+    output_directory: str | Path,
+    *,
+    require_complete: bool = True,
+) -> Path:
+    """Load, merge, validate, and persist a collection of result shards."""
+
+    merged = merge_monte_carlo_results(
+        (
+            load_monte_carlo_results(path)
+            for path in input_directories
+        ),
+        require_complete=require_complete,
+    )
+    return save_monte_carlo_results(merged, output_directory)
+
+
 def save_monte_carlo_results(
     result: MonteCarloResult,
     output_directory: str | Path,
 ) -> Path:
     """Persist long records, attempts, summaries, config, and metadata."""
+
+    normalized_indices = _normalize_replication_indices(
+        result.config,
+        result.replication_indices,
+    )
+    if normalized_indices != result.replication_indices:
+        raise ValueError(
+            "result.replication_indices must be sorted and unique."
+        )
+    allowed = set(normalized_indices)
+    if any(record.replication not in allowed for record in result.records):
+        raise ValueError("A result record lies outside its declared shard.")
+    if any(attempt.replication not in allowed for attempt in result.attempts):
+        raise ValueError("A result attempt lies outside its declared shard.")
 
     output = Path(output_directory)
     output.mkdir(parents=True, exist_ok=True)
@@ -1475,8 +1786,12 @@ def save_monte_carlo_results(
         )
         stream.write("\n")
     metadata = {
-        "schema_version": 1,
+        "schema_version": 2,
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+        "config_fingerprint": config_fingerprint(result.config),
+        "replication_indices": list(result.replication_indices),
+        "is_complete": result.replication_indices
+        == tuple(range(result.config.replications)),
         "record_count": len(result.records),
         "attempt_count": len(result.attempts),
         "attempt_summary_count": len(attempt_summaries),

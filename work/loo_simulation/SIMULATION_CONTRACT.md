@@ -263,6 +263,17 @@ panel, and estimator random-number streams within each replication. This is a
 variance-reduction device for controlled design comparisons; it does not pool
 their estimates or targets.
 
+Production replications retain their global zero-based indices when assigned
+to shards. Each saved shard declares those indices and a SHA-256 fingerprint
+of the complete resolved configuration. A complete merge must have identical
+fingerprints, disjoint replication indices, coverage of every configured
+replication, and no duplicate scalar records or estimator attempts.
+
+Parallel execution occurs across independently saved shards, with each
+estimator internally restricted to one core where supported. Completed shards
+are the checkpoint unit. Resume mode may reuse a shard only after loading and
+validating its tables, counts, fingerprint, and replication indices.
+
 Scalar estimates use long-form rows containing the estimate, its declared
 target, error, squared error, and the estimator's retained observations,
 workers, and firms. Summary tables report bias, sampling standard deviation,
