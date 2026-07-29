@@ -39,3 +39,14 @@ Under nonadditivity the pilot reports the population assignment-weighted AKM
 projection, estimator-specific targets, and the resulting estimand gaps. The
 project output remains a low-rank plug-in benchmark; the unfinished project
 LOO correction is not implemented or labeled as complete.
+
+The grouped-model BLM pilot is:
+
+```powershell
+& .\.venv311\Scripts\python.exe scripts\blm_pilot.py
+```
+
+It compares PyTwoWay BLM with oracle firm classes and wage-distribution
+clusters against the known stationary worker-type by firm-class mean table.
+Latent worker labels, and estimated firm labels where applicable, are aligned
+only for simulation evaluation.

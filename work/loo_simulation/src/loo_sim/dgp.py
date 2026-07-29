@@ -9,6 +9,7 @@ from numpy.typing import NDArray
 
 
 FloatArray = NDArray[np.float64]
+IntArray = NDArray[np.int64]
 
 
 @dataclass(frozen=True)
@@ -25,6 +26,15 @@ class PopulationDGP:
     firm_factors: FloatArray
     singular_values: FloatArray
     interaction: FloatArray
+
+
+@dataclass(frozen=True)
+class GroupedPopulationDGP(PopulationDGP):
+    """A population whose wage schedule is constant within type-class cells."""
+
+    worker_groups: IntArray
+    firm_groups: IntArray
+    cell_means: FloatArray
 
 
 def _standardize(values: FloatArray, weights: FloatArray) -> FloatArray:
@@ -190,4 +200,141 @@ def generate_population(
         firm_factors=firm_factors,
         singular_values=singular,
         interaction=interaction,
+    )
+
+
+def generate_grouped_population(
+    *,
+    n_workers: int = 600,
+    n_firms: int = 30,
+    n_worker_types: int = 2,
+    n_firm_types: int = 3,
+    rank: int = 1,
+    singular_values: tuple[float, ...] | None = None,
+    common_sorting: float = 0.4,
+    interaction_sorting: float = 0.2,
+    grand_mean: float = 0.0,
+    seed: int = 24680,
+) -> GroupedPopulationDGP:
+    """Generate a BLM-style grouped wage schedule and assignment law."""
+
+    if n_worker_types < 1 or n_worker_types > n_workers:
+        raise ValueError(
+            "n_worker_types must lie between one and n_workers."
+        )
+    if n_firm_types < 1 or n_firm_types > n_firms:
+        raise ValueError("n_firm_types must lie between one and n_firms.")
+    if rank < 0 or rank > min(n_worker_types - 1, n_firm_types - 1):
+        raise ValueError(
+            "rank must lie between zero and "
+            "min(n_worker_types - 1, n_firm_types - 1)."
+        )
+    if singular_values is None:
+        singular = np.ones(rank, dtype=float)
+    else:
+        singular = np.asarray(singular_values, dtype=float)
+        if singular.shape != (rank,):
+            raise ValueError(
+                f"singular_values must have length {rank}; got "
+                f"{singular.shape}."
+            )
+        if np.any(singular < 0):
+            raise ValueError("singular_values cannot be negative.")
+        if np.any(np.diff(singular) > 0):
+            raise ValueError(
+                "singular_values must be in non-increasing order."
+            )
+
+    rng = np.random.default_rng(seed)
+    worker_groups = (
+        np.arange(n_workers, dtype=np.int64) % n_worker_types
+    )
+    firm_groups = np.arange(n_firms, dtype=np.int64) % n_firm_types
+    rng.shuffle(worker_groups)
+    rng.shuffle(firm_groups)
+
+    worker_type_weights = np.bincount(
+        worker_groups, minlength=n_worker_types
+    ).astype(float)
+    worker_type_weights /= worker_type_weights.sum()
+    firm_type_weights = np.bincount(
+        firm_groups, minlength=n_firm_types
+    ).astype(float)
+    firm_type_weights /= firm_type_weights.sum()
+
+    worker_type_main = _standardize(
+        rng.normal(size=n_worker_types),
+        worker_type_weights,
+    )
+    firm_type_main = _standardize(
+        rng.normal(size=n_firm_types),
+        firm_type_weights,
+    )
+    raw_worker_factors = rng.normal(size=(n_worker_types, rank))
+    raw_firm_factors = rng.normal(size=(n_firm_types, rank))
+    worker_type_factors = _weighted_orthonormalize_columns(
+        raw_worker_factors,
+        worker_type_weights,
+    )
+    firm_type_factors = _weighted_orthonormalize_columns(
+        raw_firm_factors,
+        firm_type_weights,
+    )
+    if rank == 0:
+        type_interaction = np.zeros(
+            (n_worker_types, n_firm_types),
+            dtype=float,
+        )
+    else:
+        type_interaction = (
+            worker_type_factors * singular
+        ) @ firm_type_factors.T
+
+    cell_means = (
+        grand_mean
+        + worker_type_main[:, np.newaxis]
+        + firm_type_main[np.newaxis, :]
+        + type_interaction
+    )
+    worker_main = worker_type_main[worker_groups]
+    firm_main = firm_type_main[firm_groups]
+    worker_factors = worker_type_factors[worker_groups]
+    firm_factors = firm_type_factors[firm_groups]
+    interaction = type_interaction[
+        worker_groups[:, np.newaxis],
+        firm_groups[np.newaxis, :],
+    ]
+    schedule = cell_means[
+        worker_groups[:, np.newaxis],
+        firm_groups[np.newaxis, :],
+    ]
+
+    p = np.full(n_workers, 1.0 / n_workers)
+    q = np.full(n_firms, 1.0 / n_firms)
+    common_score = worker_main[:, np.newaxis] * firm_main[np.newaxis, :]
+    if np.std(interaction) > 0:
+        interaction_score = interaction / np.std(interaction)
+    else:
+        interaction_score = interaction
+    log_kernel = (
+        common_sorting * common_score
+        + interaction_sorting * interaction_score
+    )
+    kernel = np.exp(np.clip(log_kernel, -30.0, 30.0))
+    assignment = _balance_kernel(kernel, p, q)
+
+    return GroupedPopulationDGP(
+        schedule=schedule,
+        assignment=assignment,
+        worker_weights=p,
+        firm_weights=q,
+        worker_main=worker_main,
+        firm_main=firm_main,
+        worker_factors=worker_factors,
+        firm_factors=firm_factors,
+        singular_values=singular,
+        interaction=interaction,
+        worker_groups=worker_groups,
+        firm_groups=firm_groups,
+        cell_means=cell_means,
     )

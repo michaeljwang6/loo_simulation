@@ -11,6 +11,7 @@ from .truth import PopulationTruth, compute_population_truth
 
 
 FloatArray = NDArray[np.float64]
+IntArray = NDArray[np.int64]
 
 
 @dataclass(frozen=True)
@@ -58,6 +59,18 @@ class ProcedureTargets:
         """BS20 native covariance target minus project assignment covariance."""
 
         return self.project.bs_covariance - self.project.c_assign
+
+
+@dataclass(frozen=True)
+class BLMGroupedPopulationTarget:
+    """Native type-by-firm-class mean surface and grouped project objects."""
+
+    cell_means: FloatArray
+    group_assignment: FloatArray
+    worker_type_weights: FloatArray
+    firm_type_weights: FloatArray
+    within_cell_variance: float
+    project_functionals: PopulationTruth
 
 
 def _weighted_variance(values: FloatArray, weights: FloatArray) -> float:
@@ -194,3 +207,73 @@ def compute_procedure_targets(
     project = compute_population_truth(schedule, assignment, atol=atol)
     akm = compute_akm_population_target(schedule, assignment, atol=atol)
     return ProcedureTargets(project=project, akm=akm)
+
+
+def compute_blm_grouped_target(
+    schedule: ArrayLike,
+    assignment: ArrayLike,
+    worker_groups: ArrayLike,
+    firm_groups: ArrayLike,
+    *,
+    atol: float = 1e-10,
+) -> BLMGroupedPopulationTarget:
+    """Aggregate a population into BLM worker-type by firm-class cells."""
+
+    project = compute_population_truth(schedule, assignment, atol=atol)
+    worker_group = np.asarray(worker_groups, dtype=np.int64)
+    firm_group = np.asarray(firm_groups, dtype=np.int64)
+    if worker_group.shape != (project.schedule.shape[0],):
+        raise ValueError("worker_groups must have one entry per worker.")
+    if firm_group.shape != (project.schedule.shape[1],):
+        raise ValueError("firm_groups must have one entry per firm.")
+    if np.any(worker_group < 0) or np.any(firm_group < 0):
+        raise ValueError("group labels cannot be negative.")
+    worker_labels = np.unique(worker_group)
+    firm_labels = np.unique(firm_group)
+    if not np.array_equal(
+        worker_labels, np.arange(worker_labels.size)
+    ):
+        raise ValueError("worker group labels must be contiguous from zero.")
+    if not np.array_equal(firm_labels, np.arange(firm_labels.size)):
+        raise ValueError("firm group labels must be contiguous from zero.")
+
+    group_assignment = np.zeros(
+        (worker_labels.size, firm_labels.size),
+        dtype=float,
+    )
+    group_wage_total = np.zeros_like(group_assignment)
+    for worker in range(project.schedule.shape[0]):
+        for firm in range(project.schedule.shape[1]):
+            cell = (worker_group[worker], firm_group[firm])
+            probability = project.assignment[worker, firm]
+            group_assignment[cell] += probability
+            group_wage_total[cell] += (
+                probability * project.schedule[worker, firm]
+            )
+    if np.any(group_assignment <= 0):
+        raise ValueError("Every BLM type-class cell must have positive mass.")
+    cell_means = group_wage_total / group_assignment
+
+    fitted_group_mean = cell_means[
+        worker_group[:, np.newaxis],
+        firm_group[np.newaxis, :],
+    ]
+    within_cell_variance = float(
+        np.sum(
+            project.assignment
+            * (project.schedule - fitted_group_mean) ** 2
+        )
+    )
+    grouped_functionals = compute_population_truth(
+        cell_means,
+        group_assignment,
+        atol=atol,
+    )
+    return BLMGroupedPopulationTarget(
+        cell_means=cell_means,
+        group_assignment=group_assignment,
+        worker_type_weights=group_assignment.sum(axis=1),
+        firm_type_weights=group_assignment.sum(axis=0),
+        within_cell_variance=within_cell_variance,
+        project_functionals=grouped_functionals,
+    )

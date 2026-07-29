@@ -208,6 +208,32 @@ The projection defines the comparison target under misspecification; it does
 not assert that the KSS correction retains its additive-model unbiasedness
 when the omitted interaction behaves like a persistent match component.
 
+## 5.2 BLM native grouped target
+
+For a grouped DGP with latent worker type \(L\) and firm class \(K\), the
+stationary native BLM mean target is
+
+\[
+A_{\ell k}^{BLM}
+=\mathbb E[Y\mid L=\ell,K=k].
+\]
+
+The PyTwoWay wrapper follows the clean, spell-collapse, firm-cluster,
+event-study, and mover/stayer pipeline. Two variants are kept separate:
+
+- **Oracle firm groups:** the true simulated firm classes are supplied in
+  column \(g\).
+- **Estimated firm groups:** firms are clustered using empirical wage CDFs and
+  K-means before BLM estimation.
+
+BLM's two period-specific mean tables \(A_1,A_2\) are averaged only in the
+stationary simulation designs. Latent worker labels and estimated firm labels
+are aligned to the truth solely for Monte Carlo loss calculations.
+
+The grouped BLM cell table is not automatically converted into a completed
+worker-by-firm wage schedule. Project functionals are applied at the grouped
+level only when a type-class assignment law is explicitly supplied.
+
 ## 6. Initial DGP ladder
 
 1. Additive schedule, independent assignment.

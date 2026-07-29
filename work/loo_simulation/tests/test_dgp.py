@@ -1,7 +1,8 @@
 import numpy as np
 import pytest
 
-from loo_sim.dgp import generate_population
+from loo_sim.dgp import generate_grouped_population, generate_population
+from loo_sim.targets import compute_blm_grouped_target
 from loo_sim.truth import compute_population_truth
 
 
@@ -91,3 +92,44 @@ def test_rank_and_singular_value_validation() -> None:
             rank=2,
             singular_values=(0.5, 1.0),
         )
+
+
+def test_grouped_dgp_has_exact_type_class_schedule_and_targets() -> None:
+    dgp = generate_grouped_population(
+        n_workers=60,
+        n_firms=15,
+        n_worker_types=3,
+        n_firm_types=3,
+        rank=2,
+        singular_values=(1.0, 0.4),
+        seed=50,
+    )
+    grouped = compute_blm_grouped_target(
+        dgp.schedule,
+        dgp.assignment,
+        dgp.worker_groups,
+        dgp.firm_groups,
+    )
+    individual = compute_population_truth(dgp.schedule, dgp.assignment)
+
+    assert np.allclose(
+        dgp.schedule,
+        dgp.cell_means[
+            dgp.worker_groups[:, None],
+            dgp.firm_groups[None, :],
+        ],
+    )
+    assert np.allclose(grouped.cell_means, dgp.cell_means)
+    assert np.isclose(grouped.within_cell_variance, 0.0)
+    assert np.isclose(
+        grouped.project_functionals.q_f,
+        individual.q_f,
+    )
+    assert np.isclose(
+        grouped.project_functionals.h_f,
+        individual.h_f,
+    )
+    assert np.isclose(
+        grouped.project_functionals.c_assign,
+        individual.c_assign,
+    )

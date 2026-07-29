@@ -1,6 +1,11 @@
 """Simulation tools for the LOO worker--firm wage project."""
 
-from .dgp import PopulationDGP, generate_population
+from .dgp import (
+    GroupedPopulationDGP,
+    PopulationDGP,
+    generate_grouped_population,
+    generate_population,
+)
 from .low_rank import (
     BICRankSelectionResult,
     LowRankAnalysisSample,
@@ -11,8 +16,10 @@ from .low_rank import (
 from .panel import PanelData, sample_panel
 from .targets import (
     AKMPopulationTarget,
+    BLMGroupedPopulationTarget,
     ProcedureTargets,
     compute_akm_population_target,
+    compute_blm_grouped_target,
     compute_procedure_targets,
 )
 from .truth import PopulationTruth, compute_population_truth
@@ -20,6 +27,8 @@ from .truth import PopulationTruth, compute_population_truth
 __all__ = [
     "AKMPopulationTarget",
     "BICRankSelectionResult",
+    "BLMGroupedPopulationTarget",
+    "GroupedPopulationDGP",
     "LowRankAnalysisSample",
     "LowRankPluginResult",
     "PanelData",
@@ -27,9 +36,11 @@ __all__ = [
     "PopulationTruth",
     "ProcedureTargets",
     "compute_akm_population_target",
+    "compute_blm_grouped_target",
     "compute_population_truth",
     "compute_procedure_targets",
     "fit_low_rank_plugin",
+    "generate_grouped_population",
     "generate_population",
     "sample_panel",
     "select_low_rank_bic",
