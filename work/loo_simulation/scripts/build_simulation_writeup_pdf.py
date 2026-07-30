@@ -3,10 +3,18 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import html
 import re
+import tempfile
 from pathlib import Path
 
+import matplotlib
+
+matplotlib.use("Agg")
+
+from matplotlib.font_manager import FontProperties
+from matplotlib.mathtext import math_to_image
 from PIL import Image as PillowImage
 from reportlab.lib import colors
 from reportlab.lib.enums import TA_CENTER, TA_LEFT
@@ -40,6 +48,73 @@ DARK = colors.HexColor("#1F2937")
 MID = colors.HexColor("#4B5563")
 LIGHT = colors.HexColor("#E5E7EB")
 VERY_LIGHT = colors.HexColor("#F8FAFC")
+MATH_DPI = 300
+
+
+class MathRenderer:
+    """Render Markdown LaTeX fragments with Matplotlib's mathtext engine."""
+
+    def __init__(self, directory: Path) -> None:
+        self.directory = directory
+        self.directory.mkdir(parents=True, exist_ok=True)
+
+    def _render(self, expression: str, font_size: float) -> Path:
+        normalized = " ".join(expression.strip().split())
+        digest = hashlib.sha256(
+            f"{font_size:.2f}|{normalized}".encode("utf-8")
+        ).hexdigest()[:20]
+        path = self.directory / f"math-{digest}.png"
+        if not path.exists():
+            math_to_image(
+                f"${normalized}$",
+                path,
+                prop=FontProperties(
+                    family="DejaVu Serif",
+                    size=font_size,
+                ),
+                dpi=MATH_DPI,
+                format="png",
+                color="#1F2937",
+            )
+        return path
+
+    def inline(self, expression: str, font_size: float) -> str:
+        path = self._render(expression, font_size)
+        with PillowImage.open(path) as image:
+            width_px, height_px = image.size
+        natural_height = height_px * 72 / MATH_DPI
+        height = min(max(natural_height, font_size * 0.88), font_size * 1.45)
+        width = width_px / height_px * height
+        return (
+            f'<img src="{html.escape(path.as_posix(), quote=True)}" '
+            f'width="{width:.2f}" height="{height:.2f}" valign="-2"/>'
+        )
+
+    def display(
+        self,
+        expression: str,
+        available_width: float,
+        font_size: float = 11.2,
+    ) -> KeepTogether:
+        path = self._render(expression, font_size)
+        with PillowImage.open(path) as image:
+            width_px, height_px = image.size
+        width = width_px * 72 / MATH_DPI
+        height = height_px * 72 / MATH_DPI
+        max_width = available_width * 0.92
+        if width > max_width:
+            scale = max_width / width
+            width *= scale
+            height *= scale
+        rendered = Image(str(path), width=width, height=height)
+        rendered.hAlign = "CENTER"
+        return KeepTogether(
+            [
+                Spacer(1, 2),
+                rendered,
+                Spacer(1, 7),
+            ]
+        )
 
 
 def _font_candidates() -> tuple[tuple[Path, ...], ...]:
@@ -194,7 +269,11 @@ def _styles() -> dict[str, ParagraphStyle]:
     return styles
 
 
-def _inline_markup(text: str) -> str:
+def _inline_markup(
+    text: str,
+    math_renderer: MathRenderer,
+    font_size: float,
+) -> str:
     placeholders: dict[str, str] = {}
 
     def protect(value: str) -> str:
@@ -208,6 +287,13 @@ def _inline_markup(text: str) -> str:
             "<font name=\"WriteupMono\">"
             + html.escape(match.group(1))
             + "</font>"
+        ),
+        text,
+    )
+    text = re.sub(
+        r"(?<!\\)\$([^$\n]+?)(?<!\\)\$",
+        lambda match: protect(
+            math_renderer.inline(match.group(1), font_size)
         ),
         text,
     )
@@ -230,8 +316,15 @@ def _inline_markup(text: str) -> str:
     return text
 
 
-def _paragraph(text: str, style: ParagraphStyle) -> Paragraph:
-    return Paragraph(_inline_markup(text.strip()), style)
+def _paragraph(
+    text: str,
+    style: ParagraphStyle,
+    math_renderer: MathRenderer,
+) -> Paragraph:
+    return Paragraph(
+        _inline_markup(text.strip(), math_renderer, style.fontSize),
+        style,
+    )
 
 
 def _table_widths(column_count: int, available: float) -> list[float]:
@@ -250,13 +343,16 @@ def _make_table(
     rows: list[list[str]],
     styles: dict[str, ParagraphStyle],
     available_width: float,
+    math_renderer: MathRenderer,
 ) -> LongTable:
     data: list[list[Paragraph]] = []
     for row_index, row in enumerate(rows):
         style = (
             styles["table_header"] if row_index == 0 else styles["table"]
         )
-        data.append([_paragraph(cell, style) for cell in row])
+        data.append(
+            [_paragraph(cell, style, math_renderer) for cell in row]
+        )
     table = LongTable(
         data,
         colWidths=_table_widths(len(rows[0]), available_width),
@@ -271,8 +367,8 @@ def _make_table(
                 ("VALIGN", (0, 0), (-1, -1), "TOP"),
                 ("LEFTPADDING", (0, 0), (-1, -1), 4),
                 ("RIGHTPADDING", (0, 0), (-1, -1), 4),
-                ("TOPPADDING", (0, 0), (-1, -1), 3),
-                ("BOTTOMPADDING", (0, 0), (-1, -1), 3),
+                ("TOPPADDING", (0, 0), (-1, -1), 2),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 2),
                 ("GRID", (0, 0), (-1, 0), 0.35, BLUE),
                 ("LINEBELOW", (0, 1), (-1, -1), 0.25, LIGHT),
                 (
@@ -292,6 +388,7 @@ def _make_figure(
     caption: str,
     styles: dict[str, ParagraphStyle],
     available_width: float,
+    math_renderer: MathRenderer,
 ) -> KeepTogether:
     with PillowImage.open(path) as source:
         width_px, height_px = source.size
@@ -308,7 +405,14 @@ def _make_figure(
         [
             Spacer(1, 4),
             image,
-            Paragraph(_inline_markup(caption), styles["caption"]),
+            Paragraph(
+                _inline_markup(
+                    caption,
+                    math_renderer,
+                    styles["caption"].fontSize,
+                ),
+                styles["caption"],
+            ),
         ]
     )
 
@@ -366,6 +470,7 @@ def _parse_markdown(
     source: Path,
     styles: dict[str, ParagraphStyle],
     available_width: float,
+    math_renderer: MathRenderer,
 ) -> list[object]:
     lines = source.read_text(encoding="utf-8").splitlines()
     story: list[object] = []
@@ -377,9 +482,29 @@ def _parse_markdown(
         text = " ".join(line.strip() for line in paragraph_lines)
         paragraph_lines.clear()
         if text.startswith("*Source:") and text.endswith("*"):
-            story.append(_paragraph(text[1:-1], styles["source"]))
+            story.append(
+                KeepTogether(
+                    [
+                        _paragraph(
+                            text[1:-1],
+                            styles["source"],
+                            math_renderer,
+                        )
+                    ]
+                )
+            )
         else:
-            story.append(_paragraph(text, styles["body"]))
+            story.append(
+                KeepTogether(
+                    [
+                        _paragraph(
+                            text,
+                            styles["body"],
+                            math_renderer,
+                        )
+                    ]
+                )
+            )
 
     index = 0
     first_heading = True
@@ -388,6 +513,22 @@ def _parse_markdown(
         stripped = line.strip()
         if not stripped:
             flush_paragraph()
+            index += 1
+            continue
+
+        if stripped == "$$":
+            flush_paragraph()
+            equation_lines: list[str] = []
+            index += 1
+            while index < len(lines) and lines[index].strip() != "$$":
+                equation_lines.append(lines[index].strip())
+                index += 1
+            if index >= len(lines):
+                raise ValueError("Unclosed display-math block in Markdown.")
+            expression = " ".join(equation_lines)
+            story.append(
+                math_renderer.display(expression, available_width)
+            )
             index += 1
             continue
 
@@ -401,6 +542,7 @@ def _parse_markdown(
                     image_match.group(1),
                     styles,
                     available_width,
+                    math_renderer,
                 )
             )
             index += 1
@@ -412,7 +554,9 @@ def _parse_markdown(
             level = len(heading_match.group(1))
             heading = heading_match.group(2)
             if level == 1 and first_heading:
-                story.append(_paragraph(heading, styles["title"]))
+                story.append(
+                    _paragraph(heading, styles["title"], math_renderer)
+                )
                 story.append(
                     HRFlowable(
                         width="100%",
@@ -427,18 +571,29 @@ def _parse_markdown(
                     story.append(PageBreak())
                 elif heading == "References":
                     story.append(PageBreak())
-                story.append(_paragraph(heading, styles["h1"]))
+                story.append(
+                    _paragraph(heading, styles["h1"], math_renderer)
+                )
             else:
                 if re.match(r"4\.[2-6]\s", heading):
                     story.append(PageBreak())
-                story.append(_paragraph(heading, styles["h2"]))
+                story.append(
+                    _paragraph(heading, styles["h2"], math_renderer)
+                )
             index += 1
             continue
 
         if stripped.startswith("|"):
             flush_paragraph()
             rows, index = _parse_table(lines, index)
-            story.append(_make_table(rows, styles, available_width))
+            story.append(
+                _make_table(
+                    rows,
+                    styles,
+                    available_width,
+                    math_renderer,
+                )
+            )
             story.append(Spacer(1, 7))
             continue
 
@@ -449,7 +604,7 @@ def _parse_markdown(
                 ListFlowable(
                     [
                         ListItem(
-                            _paragraph(item, styles["list"]),
+                            _paragraph(item, styles["list"], math_renderer),
                             leftIndent=12,
                         )
                         for item in items
@@ -471,7 +626,7 @@ def _parse_markdown(
                 ListFlowable(
                     [
                         ListItem(
-                            _paragraph(item, styles["list"]),
+                            _paragraph(item, styles["list"], math_renderer),
                             leftIndent=14,
                         )
                         for item in items
@@ -524,6 +679,8 @@ def _footer(canvas: object, document: object) -> None:
 def build_pdf(source: Path, output: Path) -> None:
     styles = _styles()
     output.parent.mkdir(parents=True, exist_ok=True)
+    temporary_root = ROOT / "tmp" / "pdfs"
+    temporary_root.mkdir(parents=True, exist_ok=True)
     document = SimpleDocTemplate(
         str(output),
         pagesize=LETTER,
@@ -538,12 +695,18 @@ def build_pdf(source: Path, output: Path) -> None:
         author="",
         subject="Production Monte Carlo methods, results, and interpretation",
     )
-    story = _parse_markdown(
-        source,
-        styles,
-        LETTER[0] - document.leftMargin - document.rightMargin,
-    )
-    document.build(story, onFirstPage=_footer, onLaterPages=_footer)
+    with tempfile.TemporaryDirectory(
+        prefix="writeup-math-",
+        dir=temporary_root,
+    ) as temporary_directory:
+        math_renderer = MathRenderer(Path(temporary_directory))
+        story = _parse_markdown(
+            source,
+            styles,
+            LETTER[0] - document.leftMargin - document.rightMargin,
+            math_renderer,
+        )
+        document.build(story, onFirstPage=_footer, onLaterPages=_footer)
 
 
 def parse_args() -> argparse.Namespace:

@@ -23,6 +23,7 @@ report = [
     "matplotlib>=3.8,<4",
 ]
 writeup = [
+    "matplotlib>=3.8,<4",
     "Pillow>=10,<12",
     "reportlab>=4,<5",
 ]
