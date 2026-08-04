@@ -73,6 +73,17 @@ class BLMGroupedPopulationTarget:
     project_functionals: PopulationTruth
 
 
+@dataclass(frozen=True)
+class BLMEvaluationGroups:
+    """Oracle discretization used to evaluate BLM on any population DGP."""
+
+    worker_groups: IntArray
+    firm_groups: IntArray
+    worker_score: FloatArray
+    firm_score: FloatArray
+    method: str
+
+
 def _weighted_variance(values: FloatArray, weights: FloatArray) -> float:
     mean = float(np.sum(weights * values))
     return float(np.sum(weights * (values - mean) ** 2))
@@ -276,4 +287,63 @@ def compute_blm_grouped_target(
         firm_type_weights=group_assignment.sum(axis=0),
         within_cell_variance=within_cell_variance,
         project_functionals=grouped_functionals,
+    )
+
+
+def _ordered_equal_count_groups(
+    scores: FloatArray,
+    n_groups: int,
+    *,
+    name: str,
+) -> IntArray:
+    if n_groups < 1 or n_groups > scores.size:
+        raise ValueError(
+            f"{name} group count must lie between one and {scores.size}."
+        )
+    order = np.argsort(scores, kind="mergesort")
+    labels = np.empty(scores.size, dtype=np.int64)
+    for position, index in enumerate(order):
+        labels[index] = min(position * n_groups // scores.size, n_groups - 1)
+    if np.unique(labels).size != n_groups:
+        raise ArithmeticError(f"{name} grouping produced an empty group.")
+    return labels
+
+
+def compute_blm_evaluation_groups(
+    schedule: ArrayLike,
+    assignment: ArrayLike,
+    *,
+    n_worker_types: int,
+    n_firm_types: int,
+) -> BLMEvaluationGroups:
+    """Construct a common oracle BLM discretization for any wage schedule.
+
+    This is an evaluation device, not an assumption that a continuous DGP is
+    literally grouped. Product-marginal mean wages from the complete schedule
+    order workers and firms. Equal-count bins of those scores define the cell
+    target against which BLM is aligned. This rule is deterministic and
+    remains well-defined under an additive schedule, whose leading singular
+    values can be tied. A true grouped DGP can instead pass its simulated
+    labels directly to ``compute_blm_grouped_target``.
+    """
+
+    truth = compute_population_truth(schedule, assignment)
+    worker_score = truth.worker_main.copy()
+    firm_score = truth.firm_main.copy()
+    worker_groups = _ordered_equal_count_groups(
+        worker_score,
+        n_worker_types,
+        name="worker",
+    )
+    firm_groups = _ordered_equal_count_groups(
+        firm_score,
+        n_firm_types,
+        name="firm",
+    )
+    return BLMEvaluationGroups(
+        worker_groups=worker_groups,
+        firm_groups=firm_groups,
+        worker_score=worker_score,
+        firm_score=firm_score,
+        method="product_marginal_mean_equal_count_bins",
     )

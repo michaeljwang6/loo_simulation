@@ -23,6 +23,9 @@ import numpy as np
 from .dgp import (
     GroupedPopulationDGP,
     PopulationDGP,
+    generate_akm_population,
+    generate_crippa_population,
+    generate_gklp_population,
     generate_grouped_population,
     generate_population,
 )
@@ -40,13 +43,22 @@ from .pytwoway_estimators import (
 )
 from .targets import (
     ProcedureTargets,
+    compute_blm_evaluation_groups,
     compute_blm_grouped_target,
     compute_procedure_targets,
 )
 from .truth import PopulationTruth, compute_population_truth
 
 
-PopulationKind = Literal["free_factor", "grouped"]
+PopulationKind = Literal[
+    "akm",
+    "crippa",
+    "blm",
+    "low_rank",
+    "gklp",
+    "free_factor",
+    "grouped",
+]
 AttemptStatus = Literal["success", "unstable", "failure"]
 
 
@@ -67,9 +79,18 @@ class ScenarioConfig:
     def __post_init__(self) -> None:
         if not self.name:
             raise ValueError("Scenario names cannot be empty.")
-        if self.population_kind not in ("free_factor", "grouped"):
+        population_kinds = {
+            "akm",
+            "crippa",
+            "blm",
+            "low_rank",
+            "gklp",
+            "free_factor",
+            "grouped",
+        }
+        if self.population_kind not in population_kinds:
             raise ValueError(
-                "population_kind must be 'free_factor' or 'grouped'."
+                "population_kind must identify one of the declared DGPs."
             )
         if self.true_rank < 0:
             raise ValueError("true_rank cannot be negative.")
@@ -92,9 +113,10 @@ class ScenarioConfig:
             )
         blm_values = (self.blm_worker_types, self.blm_firm_types)
         if any(value is not None for value in blm_values):
-            if self.population_kind != "grouped":
+            if self.population_kind not in ("grouped", "blm"):
                 raise ValueError(
-                    "BLM type counts are only valid for grouped populations."
+                    "Legacy scenario-level BLM type counts are only valid "
+                    "for grouped populations."
                 )
             if any(value is None or value < 1 for value in blm_values):
                 raise ValueError(
@@ -139,6 +161,8 @@ class EstimatorConfig:
     blm_n_iterations: int = 250
     blm_threshold: float = 1e-6
     blm_cdf_resolution: int = 10
+    blm_worker_types: int | None = None
+    blm_firm_types: int | None = None
 
     def __post_init__(self) -> None:
         if self.low_rank_n_starts < 1:
@@ -176,6 +200,16 @@ class EstimatorConfig:
             raise ValueError("blm_threshold must be positive.")
         if self.blm_cdf_resolution < 2:
             raise ValueError("blm_cdf_resolution must be at least two.")
+        blm_type_counts = (self.blm_worker_types, self.blm_firm_types)
+        if any(value is not None for value in blm_type_counts):
+            if any(
+                value is None or value < 1
+                for value in blm_type_counts
+            ):
+                raise ValueError(
+                    "Both positive BLM worker and firm type counts are "
+                    "required when either is supplied."
+                )
 
 
 @dataclass(frozen=True)
@@ -980,25 +1014,54 @@ def _run_blm(
     *,
     scenario: ScenarioConfig,
     replication: int,
-    population: GroupedPopulationDGP,
+    population: PopulationDGP,
     panel: PanelData,
+    targets: ProcedureTargets,
     seed_triplet: tuple[int, int, int],
     config: EstimatorConfig,
     records: list[MonteCarloRecord],
     attempts: list[EstimatorAttempt],
 ) -> None:
-    if (
-        scenario.blm_worker_types is None
-        or scenario.blm_firm_types is None
-    ):
+    n_worker_types = (
+        config.blm_worker_types
+        if config.blm_worker_types is not None
+        else scenario.blm_worker_types
+    )
+    n_firm_types = (
+        config.blm_firm_types
+        if config.blm_firm_types is not None
+        else scenario.blm_firm_types
+    )
+    if n_worker_types is None or n_firm_types is None:
         return
+    true_grouped_target = (
+        isinstance(population, GroupedPopulationDGP)
+        and np.unique(population.worker_groups).size == n_worker_types
+        and np.unique(population.firm_groups).size == n_firm_types
+    )
+    if true_grouped_target:
+        worker_groups = population.worker_groups
+        firm_groups = population.firm_groups
+        grouping_method = "true_simulated_blm_types"
+    else:
+        evaluation_groups = compute_blm_evaluation_groups(
+            population.schedule,
+            population.assignment,
+            n_worker_types=n_worker_types,
+            n_firm_types=n_firm_types,
+        )
+        worker_groups = evaluation_groups.worker_groups
+        firm_groups = evaluation_groups.firm_groups
+        grouping_method = evaluation_groups.method
     target = compute_blm_grouped_target(
         population.schedule,
         population.assignment,
-        population.worker_groups,
-        population.firm_groups,
+        worker_groups,
+        firm_groups,
     )
     for variant_index, variant in enumerate(config.blm_variants):
+        if variant == "oracle" and not true_grouped_target:
+            continue
         estimator = f"blm_{variant}"
         variant_seed = int(
             np.random.SeedSequence(
@@ -1009,10 +1072,10 @@ def _run_blm(
         try:
             estimate = estimate_blm(
                 panel,
-                n_worker_types=scenario.blm_worker_types,
-                n_firm_types=scenario.blm_firm_types,
+                n_worker_types=n_worker_types,
+                n_firm_types=n_firm_types,
                 firm_groups=(
-                    population.firm_groups
+                    firm_groups
                     if variant == "oracle"
                     else None
                 ),
@@ -1063,10 +1126,12 @@ def _run_blm(
                 estimator=estimator,
                 status="success" if stable else "unstable",
                 message=(
-                    "BLM likelihood paths passed monotonicity checks"
+                    "BLM likelihood paths passed monotonicity checks; "
+                    f"evaluation_groups={grouping_method}"
                     if stable
                     else "BLM returned values but a likelihood path failed "
-                    "its monotonicity check"
+                    "its monotonicity check; "
+                    f"evaluation_groups={grouping_method}"
                 ),
                 sample=sample,
             )
@@ -1083,7 +1148,11 @@ def _run_blm(
                         seeds=seeds,
                         estimator=estimator,
                         metric=metric,
-                        target_type="native_blm_cell",
+                        target_type=(
+                            "native_blm_cell"
+                            if true_grouped_target
+                            else "blm_projection_cell"
+                        ),
                         estimate=alignment.aligned_estimate[
                             worker_type, firm_type
                         ],
@@ -1114,7 +1183,22 @@ def _run_blm(
             estimator=estimator,
             estimate=fitted_project,
             target=target.project_functionals,
-            target_type="grouped_population_project",
+            target_type=(
+                "grouped_population_project"
+                if true_grouped_target
+                else "blm_projection_project"
+            ),
+            sample=sample,
+        )
+        _append_project_records(
+            records,
+            scenario=scenario,
+            replication=replication,
+            seeds=seeds,
+            estimator=estimator,
+            estimate=fitted_project,
+            target=targets.project,
+            target_type="population_project",
             sample=sample,
         )
 
@@ -1137,16 +1221,33 @@ def _generate_replication(
     panel_seed: int,
 ) -> tuple[PopulationDGP, PanelData, ProcedureTargets]:
     population_kwargs = dict(scenario.population_kwargs)
-    if scenario.population_kind == "grouped":
+    if scenario.population_kind in ("grouped", "blm"):
         population = generate_grouped_population(
             **population_kwargs,
             seed=population_seed,
         )
-    else:
+    elif scenario.population_kind in ("free_factor", "low_rank"):
         population = generate_population(
             **population_kwargs,
             seed=population_seed,
         )
+    elif scenario.population_kind == "akm":
+        population = generate_akm_population(
+            **population_kwargs,
+            seed=population_seed,
+        )
+    elif scenario.population_kind == "crippa":
+        population = generate_crippa_population(
+            **population_kwargs,
+            seed=population_seed,
+        )
+    elif scenario.population_kind == "gklp":
+        population = generate_gklp_population(
+            **population_kwargs,
+            seed=population_seed,
+        )
+    else:  # pragma: no cover - ScenarioConfig validates this branch away.
+        raise ValueError(f"Unknown population kind: {scenario.population_kind}.")
     targets = compute_procedure_targets(
         population.schedule,
         population.assignment,
@@ -1326,15 +1427,13 @@ def run_monte_carlo(
                     records=records,
                     attempts=attempts,
                 )
-            if (
-                config.estimators.run_blm
-                and isinstance(population, GroupedPopulationDGP)
-            ):
+            if config.estimators.run_blm:
                 _run_blm(
                     scenario=scenario,
                     replication=replication,
                     population=population,
                     panel=panel,
+                    targets=targets,
                     seed_triplet=(
                         population_seed,
                         panel_seed,
@@ -1478,7 +1577,12 @@ def default_dgp_ladder(
 def config_to_dict(config: MonteCarloConfig) -> dict[str, Any]:
     """Convert a configuration to a JSON-compatible dictionary."""
 
-    return asdict(config)
+    value = asdict(config)
+    estimator_value = value["estimators"]
+    for name in ("blm_worker_types", "blm_firm_types"):
+        if estimator_value[name] is None:
+            estimator_value.pop(name)
+    return value
 
 
 def config_fingerprint(config: MonteCarloConfig) -> str:
@@ -1539,6 +1643,9 @@ def config_from_dict(value: Mapping[str, Any]) -> MonteCarloConfig:
         estimator_value["blm_variants"] = tuple(
             estimator_value["blm_variants"]
         )
+    for name in ("blm_worker_types", "blm_firm_types"):
+        if estimator_value.get(name) is not None:
+            estimator_value[name] = int(estimator_value[name])
     estimators = EstimatorConfig(**estimator_value)
     return MonteCarloConfig(
         scenarios=scenarios,

@@ -24,6 +24,25 @@ The implementation is deliberately staged:
 
 See `SIMULATION_CONTRACT.md` for the exact estimands and comparison rules.
 
+## Full DGP-by-estimator matrix
+
+The new experiment implements the complete whiteboard cross-product: additive
+AKM, Crippa/Tukey, discrete-type BLM, continuous low-rank-factor, and GKLP DGPs
+are each estimated by KSS, BLM, Borovičková--Shimer 2020, and the current
+project low-rank plug-in. The DGP specification and estimator settings are
+separate in the configuration, so no estimator is restricted to its preferred
+DGP.
+
+See `DGP_ESTIMATOR_MATRIX.md` for the exact distributions, formulas, target
+comparisons, and commands for running locally or on a SLURM cluster without
+using Codex credits. Start with:
+
+```powershell
+& .\.venv311\Scripts\python.exe scripts\run_monte_carlo.py `
+  --config configs\dgp_estimator_matrix_pilot.json `
+  --output results\dgp_estimator_matrix_pilot
+```
+
 The first estimator smoke test is:
 
 ```powershell

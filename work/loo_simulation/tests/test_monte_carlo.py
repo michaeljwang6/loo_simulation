@@ -145,6 +145,31 @@ def test_configuration_json_round_trip(tmp_path) -> None:
     assert loaded == config
 
 
+def test_full_dgp_estimator_matrix_config_is_declared() -> None:
+    config = load_monte_carlo_config(
+        "configs/dgp_estimator_matrix_pilot.json"
+    )
+
+    assert [scenario.population_kind for scenario in config.scenarios] == [
+        "akm",
+        "crippa",
+        "blm",
+        "low_rank",
+        "gklp",
+    ]
+    assert config.estimators.run_fe_kss
+    assert config.estimators.run_blm
+    assert config.estimators.run_bs20
+    assert config.estimators.run_low_rank
+    assert config.estimators.blm_worker_types == 2
+    assert config.estimators.blm_firm_types == 3
+    assert all(
+        scenario.blm_worker_types is None
+        and scenario.blm_firm_types is None
+        for scenario in config.scenarios
+    )
+
+
 def test_seed_groups_use_common_random_numbers() -> None:
     scenarios = tuple(
         ScenarioConfig(

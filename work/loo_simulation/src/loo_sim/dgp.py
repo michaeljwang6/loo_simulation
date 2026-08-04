@@ -108,6 +108,33 @@ def _balance_kernel(
     raise RuntimeError("assignment balancing did not converge.")
 
 
+def _assignment_from_components(
+    worker_main: FloatArray,
+    firm_main: FloatArray,
+    interaction: FloatArray,
+    worker_weights: FloatArray,
+    firm_weights: FloatArray,
+    *,
+    common_sorting: float,
+    interaction_sorting: float,
+) -> FloatArray:
+    """Create a sorted assignment law while preserving fixed marginals."""
+
+    common_score = worker_main[:, None] * firm_main[None, :]
+    interaction_sd = float(np.std(interaction))
+    interaction_score = (
+        interaction / interaction_sd
+        if interaction_sd > 0
+        else interaction
+    )
+    log_kernel = (
+        common_sorting * common_score
+        + interaction_sorting * interaction_score
+    )
+    kernel = np.exp(np.clip(log_kernel, -30.0, 30.0))
+    return _balance_kernel(kernel, worker_weights, firm_weights)
+
+
 def generate_population(
     *,
     n_workers: int = 100,
@@ -121,7 +148,14 @@ def generate_population(
     grand_mean: float = 0.0,
     seed: int = 12345,
 ) -> PopulationDGP:
-    """Generate a complete free-factor wage schedule and assignment law.
+    """Generate the project's continuous low-rank-factor DGP.
+
+    Before finite-population normalization, worker and firm main effects and
+    factor innovations are Gaussian. The requested factor correlations are
+    imposed on those Gaussian draws. Main effects are then standardized and
+    factor columns are centered and orthonormalized under uniform population
+    weights, so ``singular_values`` are the exact weighted interaction
+    singular values in every replication.
 
     Assignment starts from uniform worker and firm marginals. Exponential
     tilting introduces common-component and interaction-gain sorting, after
@@ -180,14 +214,15 @@ def generate_population(
         + interaction
     )
 
-    common_score = alpha[:, None] * psi[None, :]
-    if np.std(interaction) > 0:
-        interaction_score = interaction / np.std(interaction)
-    else:
-        interaction_score = interaction
-    log_kernel = common_sorting * common_score + interaction_sorting * interaction_score
-    kernel = np.exp(np.clip(log_kernel, -30.0, 30.0))
-    assignment = _balance_kernel(kernel, p, q)
+    assignment = _assignment_from_components(
+        alpha,
+        psi,
+        interaction,
+        p,
+        q,
+        common_sorting=common_sorting,
+        interaction_sorting=interaction_sorting,
+    )
 
     return PopulationDGP(
         schedule=schedule,
@@ -199,6 +234,188 @@ def generate_population(
         worker_factors=worker_factors,
         firm_factors=firm_factors,
         singular_values=singular,
+        interaction=interaction,
+    )
+
+
+def generate_akm_population(
+    *,
+    n_workers: int = 100,
+    n_firms: int = 40,
+    common_sorting: float = 0.0,
+    grand_mean: float = 0.0,
+    seed: int = 12345,
+) -> PopulationDGP:
+    """Generate the additive AKM benchmark as a distinct DGP."""
+
+    return generate_population(
+        n_workers=n_workers,
+        n_firms=n_firms,
+        rank=0,
+        singular_values=(),
+        common_sorting=common_sorting,
+        interaction_sorting=0.0,
+        grand_mean=grand_mean,
+        seed=seed,
+    )
+
+
+def generate_crippa_population(
+    *,
+    n_workers: int = 100,
+    n_firms: int = 40,
+    beta_0: float = 0.75,
+    common_sorting: float = 0.0,
+    interaction_sorting: float = 0.0,
+    grand_mean: float = 0.0,
+    seed: int = 13579,
+) -> PopulationDGP:
+    r"""Generate Crippa's nonadditive Tukey mean surface.
+
+    The population wage schedule is
+
+    .. math::
+
+        m_{ij}=\mu+\alpha_i+\psi_j+\beta_0\alpha_i\psi_j.
+
+    Raw worker and firm types are independent standard normal draws. They are
+    standardized to weighted mean zero and variance one in the realized
+    finite population. A nonzero ``beta_0`` therefore gives an exact rank-one
+    interaction with weighted singular value ``abs(beta_0)``.
+    """
+
+    if n_workers < 2 or n_firms < 2:
+        raise ValueError("At least two workers and two firms are required.")
+    if not np.isfinite(beta_0) or beta_0 == 0:
+        raise ValueError("beta_0 must be finite and nonzero.")
+
+    rng = np.random.default_rng(seed)
+    p = np.full(n_workers, 1.0 / n_workers)
+    q = np.full(n_firms, 1.0 / n_firms)
+    alpha = _standardize(rng.normal(size=n_workers), p)
+    psi = _standardize(rng.normal(size=n_firms), q)
+    interaction = beta_0 * alpha[:, None] * psi[None, :]
+    schedule = (
+        grand_mean
+        + alpha[:, None]
+        + psi[None, :]
+        + interaction
+    )
+    assignment = _assignment_from_components(
+        alpha,
+        psi,
+        interaction,
+        p,
+        q,
+        common_sorting=common_sorting,
+        interaction_sorting=interaction_sorting,
+    )
+    firm_factor = np.sign(beta_0) * psi[:, None]
+    return PopulationDGP(
+        schedule=schedule,
+        assignment=assignment,
+        worker_weights=p,
+        firm_weights=q,
+        worker_main=alpha,
+        firm_main=psi,
+        worker_factors=alpha[:, None],
+        firm_factors=firm_factor,
+        singular_values=np.asarray([abs(beta_0)], dtype=float),
+        interaction=interaction,
+    )
+
+
+def generate_gklp_population(
+    *,
+    n_workers: int = 100,
+    n_firms: int = 40,
+    ability_correlation: float = 0.35,
+    firm_type_correlation: float = 0.25,
+    productivity_shock_sd: float = 0.5,
+    common_sorting: float = 0.0,
+    interaction_sorting: float = 0.0,
+    grand_mean: float = 0.0,
+    seed: int = 97531,
+) -> PopulationDGP:
+    r"""Generate a static perfect-information GKLP log-wage slice.
+
+    After residualizing observed covariates, the simulated schedule is the
+    finite-population version of
+
+    .. math::
+
+        m_{ij}=Z_i+c_j+b_j\eta_i
+        +\tfrac12 b_j^2\sigma_\varepsilon^2.
+
+    ``(Z_i, eta_i)`` and ``(c_j, b_j)`` start as correlated Gaussian pairs.
+    Main effects are standardized and factor coordinates are centered and
+    normalized. The convex risk term remains part of the firm main effect;
+    the comparative-advantage interaction ``eta_i b_j`` has exact weighted
+    rank one.
+    """
+
+    if n_workers < 2 or n_firms < 2:
+        raise ValueError("At least two workers and two firms are required.")
+    if productivity_shock_sd < 0:
+        raise ValueError("productivity_shock_sd cannot be negative.")
+
+    rng = np.random.default_rng(seed)
+    p = np.full(n_workers, 1.0 / n_workers)
+    q = np.full(n_firms, 1.0 / n_firms)
+    general_ability, sector_ability = _correlated_pair(
+        n_workers,
+        1,
+        ability_correlation,
+        rng,
+    )
+    firm_constant, firm_loading = _correlated_pair(
+        n_firms,
+        1,
+        firm_type_correlation,
+        rng,
+    )
+    general_ability = _standardize(general_ability, p)
+    sector_ability = _weighted_orthonormalize_columns(
+        sector_ability,
+        p,
+    )
+    firm_constant = _standardize(firm_constant, q)
+    firm_loading = _weighted_orthonormalize_columns(
+        firm_loading,
+        q,
+    )
+    b = firm_loading[:, 0]
+    raw_firm_main = (
+        firm_constant
+        + 0.5 * b**2 * productivity_shock_sd**2
+    )
+    firm_main = raw_firm_main - np.sum(q * raw_firm_main)
+    interaction = sector_ability @ firm_loading.T
+    schedule = (
+        grand_mean
+        + general_ability[:, None]
+        + firm_main[None, :]
+        + interaction
+    )
+    assignment = _assignment_from_components(
+        general_ability,
+        firm_main,
+        interaction,
+        p,
+        q,
+        common_sorting=common_sorting,
+        interaction_sorting=interaction_sorting,
+    )
+    return PopulationDGP(
+        schedule=schedule,
+        assignment=assignment,
+        worker_weights=p,
+        firm_weights=q,
+        worker_main=general_ability,
+        firm_main=firm_main,
+        worker_factors=sector_ability,
+        firm_factors=firm_loading,
+        singular_values=np.ones(1, dtype=float),
         interaction=interaction,
     )
 
@@ -311,17 +528,15 @@ def generate_grouped_population(
 
     p = np.full(n_workers, 1.0 / n_workers)
     q = np.full(n_firms, 1.0 / n_firms)
-    common_score = worker_main[:, np.newaxis] * firm_main[np.newaxis, :]
-    if np.std(interaction) > 0:
-        interaction_score = interaction / np.std(interaction)
-    else:
-        interaction_score = interaction
-    log_kernel = (
-        common_sorting * common_score
-        + interaction_sorting * interaction_score
+    assignment = _assignment_from_components(
+        worker_main,
+        firm_main,
+        interaction,
+        p,
+        q,
+        common_sorting=common_sorting,
+        interaction_sorting=interaction_sorting,
     )
-    kernel = np.exp(np.clip(log_kernel, -30.0, 30.0))
-    assignment = _balance_kernel(kernel, p, q)
 
     return GroupedPopulationDGP(
         schedule=schedule,

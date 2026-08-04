@@ -17,7 +17,7 @@ from loo_sim import (
 def _arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description=(
-            "Run LOO-project, FE/KSS, BS20, and grouped-BLM numerical "
+            "Run LOO-project, FE/KSS, BS20, and BLM numerical "
             "comparisons."
         )
     )

@@ -3,6 +3,9 @@
 from .dgp import (
     GroupedPopulationDGP,
     PopulationDGP,
+    generate_akm_population,
+    generate_crippa_population,
+    generate_gklp_population,
     generate_grouped_population,
     generate_population,
 )
@@ -37,9 +40,11 @@ from .monte_carlo import (
 from .panel import PanelData, sample_panel
 from .targets import (
     AKMPopulationTarget,
+    BLMEvaluationGroups,
     BLMGroupedPopulationTarget,
     ProcedureTargets,
     compute_akm_population_target,
+    compute_blm_evaluation_groups,
     compute_blm_grouped_target,
     compute_procedure_targets,
 )
@@ -48,6 +53,7 @@ from .truth import PopulationTruth, compute_population_truth
 __all__ = [
     "AKMPopulationTarget",
     "BICRankSelectionResult",
+    "BLMEvaluationGroups",
     "BLMGroupedPopulationTarget",
     "EstimatorAttempt",
     "EstimatorAttemptSummary",
@@ -65,6 +71,7 @@ __all__ = [
     "ProcedureTargets",
     "ScenarioConfig",
     "compute_akm_population_target",
+    "compute_blm_evaluation_groups",
     "compute_blm_grouped_target",
     "compute_population_truth",
     "compute_procedure_targets",
@@ -73,6 +80,9 @@ __all__ = [
     "config_to_dict",
     "default_dgp_ladder",
     "fit_low_rank_plugin",
+    "generate_akm_population",
+    "generate_crippa_population",
+    "generate_gklp_population",
     "generate_grouped_population",
     "generate_population",
     "load_monte_carlo_config",
