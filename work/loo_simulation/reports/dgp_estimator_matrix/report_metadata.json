@@ -1,0 +1,26 @@
+{
+  "attempt_count": 4300,
+  "config_fingerprint": "3e8ab3b57d35190989c47117f139b414b9f656db8a933d6c5d1df6d2aa5fbcc4",
+  "generated_files": [
+    "DGP_ESTIMATOR_RESULTS.md",
+    "reports/dgp_estimator_matrix/figures/common-target-rmse.pdf",
+    "reports/dgp_estimator_matrix/figures/common-target-rmse.png",
+    "reports/dgp_estimator_matrix/figures/native-project-target-gaps.pdf",
+    "reports/dgp_estimator_matrix/figures/native-project-target-gaps.png",
+    "reports/dgp_estimator_matrix/figures/project-returned-vs-stable-rmse.pdf",
+    "reports/dgp_estimator_matrix/figures/project-returned-vs-stable-rmse.png",
+    "reports/dgp_estimator_matrix/figures/rank-selection.pdf",
+    "reports/dgp_estimator_matrix/figures/rank-selection.png",
+    "reports/dgp_estimator_matrix/figures/status-matrix.pdf",
+    "reports/dgp_estimator_matrix/figures/status-matrix.png",
+    "reports/dgp_estimator_matrix/tables/blm_failure_reasons.csv",
+    "reports/dgp_estimator_matrix/tables/common_target_performance.csv",
+    "reports/dgp_estimator_matrix/tables/native_project_target_contrasts.csv",
+    "reports/dgp_estimator_matrix/tables/rank_selection.csv",
+    "reports/dgp_estimator_matrix/tables/rank_selection.tex",
+    "reports/dgp_estimator_matrix/tables/status_rates.csv",
+    "reports/dgp_estimator_matrix/tables/status_rates.tex"
+  ],
+  "record_count": 29085,
+  "replications": 100
+}

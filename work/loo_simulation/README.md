@@ -43,6 +43,16 @@ using Codex credits. Start with:
   --output results\dgp_estimator_matrix_pilot
 ```
 
+After the production shards merge, generate the dedicated tables, figures,
+Markdown report, and PDF with:
+
+```powershell
+& .\.venv311\Scripts\python.exe scripts\report_dgp_estimator_matrix.py
+& .\.venv311\Scripts\python.exe scripts\build_simulation_writeup_pdf.py `
+  --input DGP_ESTIMATOR_RESULTS.md `
+  --output output\pdf\dgp_estimator_matrix_report.pdf
+```
+
 The first estimator smoke test is:
 
 ```powershell

@@ -1,0 +1,10 @@
+scenario,scenario_label,reason,count
+akm_dgp,AKM,invalid likelihood start,1
+akm_dgp,AKM,missing stayer-class support,30
+akm_dgp,AKM,no stayer event,2
+blm_grouped_dgp,BLM types,missing stayer-class support,19
+crippa_tukey_dgp,Crippa/Tukey,missing stayer-class support,20
+crippa_tukey_dgp,Crippa/Tukey,no stayer event,1
+gklp_perfect_information_dgp,GKLP,missing stayer-class support,18
+low_rank_factor_dgp,Low-rank factors,invalid likelihood start,2
+low_rank_factor_dgp,Low-rank factors,missing stayer-class support,28

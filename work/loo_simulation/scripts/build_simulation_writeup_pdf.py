@@ -24,13 +24,13 @@ from reportlab.lib.units import inch
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import (
+    CondPageBreak,
     HRFlowable,
     Image,
     KeepTogether,
     ListFlowable,
     ListItem,
     LongTable,
-    PageBreak,
     Paragraph,
     SimpleDocTemplate,
     Spacer,
@@ -567,16 +567,11 @@ def _parse_markdown(
                 )
                 first_heading = False
             elif level == 2:
-                if heading == "4. Results":
-                    story.append(PageBreak())
-                elif heading == "References":
-                    story.append(PageBreak())
                 story.append(
                     _paragraph(heading, styles["h1"], math_renderer)
                 )
             else:
-                if re.match(r"4\.[2-6]\s", heading):
-                    story.append(PageBreak())
+                story.append(CondPageBreak(0.7 * inch))
                 story.append(
                     _paragraph(heading, styles["h2"], math_renderer)
                 )
@@ -681,6 +676,14 @@ def build_pdf(source: Path, output: Path) -> None:
     output.parent.mkdir(parents=True, exist_ok=True)
     temporary_root = ROOT / "tmp" / "pdfs"
     temporary_root.mkdir(parents=True, exist_ok=True)
+    source_title = next(
+        (
+            line.removeprefix("# ").strip()
+            for line in source.read_text(encoding="utf-8").splitlines()
+            if line.startswith("# ")
+        ),
+        "LOO numerical experiments",
+    )
     document = SimpleDocTemplate(
         str(output),
         pagesize=LETTER,
@@ -688,12 +691,9 @@ def build_pdf(source: Path, output: Path) -> None:
         leftMargin=0.65 * inch,
         topMargin=0.58 * inch,
         bottomMargin=0.58 * inch,
-        title=(
-            "Comparing Schedule-Based Low-Rank Functionals with "
-            "KSS, BLM, and Borovickova-Shimer"
-        ),
+        title=source_title,
         author="",
-        subject="Production Monte Carlo methods, results, and interpretation",
+        subject="Monte Carlo methods, results, and interpretation",
     )
     with tempfile.TemporaryDirectory(
         prefix="writeup-math-",

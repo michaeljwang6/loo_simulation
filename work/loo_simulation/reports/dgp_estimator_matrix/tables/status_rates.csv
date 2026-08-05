@@ -1,0 +1,21 @@
+scenario,scenario_label,estimator,procedure_label,n_attempts,n_success,n_unstable,n_failure,success_rate,unstable_rate,failure_rate
+akm_dgp,AKM,kss_he,KSS-HE,100,100,0,0,1.0,0.0,0.0
+akm_dgp,AKM,blm_estimated,BLM,100,43,24,33,0.43,0.24,0.33
+akm_dgp,AKM,bs20,BS20,100,100,0,0,1.0,0.0,0.0
+akm_dgp,AKM,project_plugin_bic,Project plug-in,100,100,0,0,1.0,0.0,0.0
+crippa_tukey_dgp,Crippa/Tukey,kss_he,KSS-HE,100,100,0,0,1.0,0.0,0.0
+crippa_tukey_dgp,Crippa/Tukey,blm_estimated,BLM,100,57,22,21,0.57,0.22,0.21
+crippa_tukey_dgp,Crippa/Tukey,bs20,BS20,100,100,0,0,1.0,0.0,0.0
+crippa_tukey_dgp,Crippa/Tukey,project_plugin_bic,Project plug-in,100,100,0,0,1.0,0.0,0.0
+blm_grouped_dgp,BLM types,kss_he,KSS-HE,100,100,0,0,1.0,0.0,0.0
+blm_grouped_dgp,BLM types,blm_estimated,BLM,100,46,35,19,0.46,0.35,0.19
+blm_grouped_dgp,BLM types,bs20,BS20,100,100,0,0,1.0,0.0,0.0
+blm_grouped_dgp,BLM types,project_plugin_bic,Project plug-in,100,6,94,0,0.06,0.94,0.0
+low_rank_factor_dgp,Low-rank factors,kss_he,KSS-HE,100,100,0,0,1.0,0.0,0.0
+low_rank_factor_dgp,Low-rank factors,blm_estimated,BLM,100,46,24,30,0.46,0.24,0.3
+low_rank_factor_dgp,Low-rank factors,bs20,BS20,100,100,0,0,1.0,0.0,0.0
+low_rank_factor_dgp,Low-rank factors,project_plugin_bic,Project plug-in,100,78,22,0,0.78,0.22,0.0
+gklp_perfect_information_dgp,GKLP,kss_he,KSS-HE,100,100,0,0,1.0,0.0,0.0
+gklp_perfect_information_dgp,GKLP,blm_estimated,BLM,100,50,32,18,0.5,0.32,0.18
+gklp_perfect_information_dgp,GKLP,bs20,BS20,100,100,0,0,1.0,0.0,0.0
+gklp_perfect_information_dgp,GKLP,project_plugin_bic,Project plug-in,100,94,6,0,0.94,0.06,0.0
