@@ -1,0 +1,406 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,booktabs,array}
+\usepackage[hidelinks]{hyperref}
+
+\title{Miscellaneous Checks: Event Studies, Paired Movers, and Kline's Edge Model}
+\author{}
+\date{\today}
+
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+
+\begin{document}
+\maketitle
+
+\section*{Source Convention}
+
+Page citations to Sorkin--Warwar refer to the PDF pages in
+\texttt{sorkin warwar 2026 sw\_logadditivity.pdf}. Page citations to Kline refer
+to the PDF pages in \texttt{kline\_2024\_review\_akm\_firm\_wage\_effects\_w33084.pdf}.
+When I reuse the prior project write-up, I cite the prior result PDF
+\texttt{7\_15\_Meeting (1).pdf} and \texttt{shimer\_smith\_writeup.tex}.
+Displays or claims not directly sourced are labeled as derived examples,
+derived algebra, or derived mappings.
+
+\section{Notation}
+
+\begin{center}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.24\linewidth}
+                >{\raggedright\arraybackslash}p{0.68\linewidth}}
+\toprule
+Symbol & Meaning \\
+\midrule
+$Y_{it},Y_{it}(j)$ & Observed wage and potential wage for worker $i$ at time $t$ if assigned to firm $j$. Source for Kline potential-outcome notation: Kline, pp. 29--31. \\
+$D_{it}$ & Firm employing worker $i$ at time $t$ in Kline's causal notation. Source: Kline, p. 30. \\
+$\alpha_i,\psi_j,X_{it}'\beta,\varepsilon_{it},\mu_{ij}$ & Worker effect, firm effect, covariate component, AKM error, and illustrative time-invariant worker-firm match effect. Source for AKM components: Kline, p. 15. The match-effect extension is derived for the separability discussion. \\
+$\tau_t,\varepsilon_{it}(j)$ & Illustrative common time component and transitory potential-wage shock used in the derived parallel-trends example. \\
+$A,B,a,b$ & Origin and destination firms and two paired movers in the derived paired-mover algebra. Source for paired-mover design: SW abstract, p. 1. \\
+$G_A,G_B,\beta_{\mathrm{paired}}$ & Origin wage gap, destination wage gap, and paired-mover forecast coefficient. Derived notation for the paired-mover separability calculation. \\
+$h_i,p_j,m_{ij}$ & Worker, firm, and match effects in SW's partial-equilibrium search model. Source: SW, p. 27. \\
+$EE,EUE,\lambda_1$ & Employer-to-employer moves, employer-unemployment-employer moves, and SW's on-the-job offer-arrival parameter. Source: SW, pp. 27, 31--33. \\
+$X,Y,g,\beta_{\mathrm{pooled}}$ & Generic regressor, outcome, group, and pooled OLS coefficient in the derived pooling identity. \\
+$R,E,B,\Delta,u,\hat\Delta,\tilde\Delta$ & Kline adjusted wage changes, worker-by-edge matrix, firm-by-edge incidence matrix, unrestricted directed edge effects, edge-model error, estimated edge effects, and AKM-predicted edge effects. Source: Kline, pp. 18--19, 24--27. \\
+$c,C,\dot\psi,\dot\eta$ & Kline cycle vector, matrix collecting fundamental cycles, projected firm-effect coefficients, and cycle-effect coefficients. Source: Kline, pp. 18--20. \\
+$W,H,M,h_{\ell\ell},n_\ell,\ell$ & Kline mover-weight matrix, projection matrix, residual-maker matrix, edge leverage, number of movers on edge $\ell$, and edge index. Source: Kline, pp. 24--27. \\
+$Y_{ij},X_{ij}'\delta,u_i,v_j,\Lambda$ & Project low-rank wage-interface notation used in the nesting comparison. Source: prior result PDF, pp. 18--21; \texttt{shimer\_smith\_writeup.tex}, Sec. 6. \\
+$m_{ij},\mu_{jk}$ & Derived static mean wage surface and edge-specific mean worker factor, $\mu_{jk}=\E[u_i\mid i:j\to k]$, used to map low-rank surfaces into Kline edge effects. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Sorkin--Warwar: Why the Event Study Can Have Low Power}
+
+The intuition in the to-do list is right, but it needs one sharpening. The standard
+event-study diagnostic is mainly a diagnostic for pre-trends and realized mover
+wage changes lining up with firm-effect changes. It is not a direct test of additive
+separability. A time-invariant match effect can sit in the level of wages and pass
+a parallel-trends diagnostic cleanly.
+
+\subsection{Parallel Trends Is Not Separability}
+
+Derived illustrative model: consider the potential wage level at firm $j$:
+\[
+Y_{it}(j)=\alpha_i+\psi_j+\mu_{ij}+\tau_t+\varepsilon_{it}(j),
+\]
+where $\mu_{ij}$ is a time-invariant worker-firm match effect. After removing
+common time effects, the origin-firm potential trend for a worker moving from
+$j$ to $k$ is
+\[
+Y_{i2}(j)-Y_{i1}(j)
+=
+\varepsilon_{i2}(j)-\varepsilon_{i1}(j).
+\]
+If the move is not selected on this transitory shock, then
+\[
+\E[Y_{i2}(j)-Y_{i1}(j)\mid D_{i1}=j,D_{i2}=k]=0.
+\]
+This is exactly Kline's parallel-trends restriction: among workers switching
+between a pair of firms, average potential wages at the origin firm would not
+have changed between periods. Source: Kline, Assumption 2, p. 30.
+
+Derived comparison: additive separability requires something stronger:
+\[
+\mu_{ij}=0
+\quad\text{or at least}\quad
+\E[\mu_{ik}-\mu_{ij}\mid i:j\to k]=0
+\text{ in the relevant contrasts.}
+\]
+The realized wage change for a mover is
+\[
+Y_{i2}(k)-Y_{i1}(j)
+=
+\psi_k-\psi_j+\mu_{ik}-\mu_{ij}
++\varepsilon_{i2}(k)-\varepsilon_{i1}(j).
+\]
+So a time-invariant match effect does not create a pre-trend by itself. It creates
+heterogeneous treatment effects and possible intransitive edge effects. That is a
+different restriction from parallel trends.
+
+This is precisely Kline's point in Section 3.3: edge wage changes can have a
+causal interpretation under exclusion, parallel trends, and stationarity even when
+additivity fails. Source: Kline, pp. 29--31. He explicitly notes that one does not
+need additive separability for firm switches to identify average treatment effects
+on movers. Source: Kline, Proposition 1, p. 31.
+
+\subsection{Why Paired Movers Hit Separability Directly}
+
+Derived paired-mover algebra: take two workers $a$ and $b$ who both move from firm $A$ to firm $B$. Their
+origin wage gap is
+\[
+G_A
+=
+Y_{aA}-Y_{bA}
+=
+(\alpha_a-\alpha_b)+(\mu_{aA}-\mu_{bA}),
+\]
+and their destination wage gap is
+\[
+G_B
+=
+Y_{aB}-Y_{bB}
+=
+(\alpha_a-\alpha_b)+(\mu_{aB}-\mu_{bB}).
+\]
+The firm effect cancels because both workers traverse the same $A\to B$ pair.
+Under additive separability, $\mu_{ij}=0$, so
+\[
+G_B=G_A.
+\]
+With match effects, $G_A$ and $G_B$ need not be equal. Derived special case: if match effects are
+independent across firms and independent of worker effects, then
+\[
+\beta_{\text{paired}}
+=
+\frac{\Cov(G_B,G_A)}{\Var(G_A)}
+=
+\frac{\Var(\alpha_a-\alpha_b)}
+{\Var(\alpha_a-\alpha_b)+\Var(\mu_{aA}-\mu_{bA})}
+<1.
+\]
+This is the clean mathematical reason paired movers test separability more
+directly than the event study. The paired-mover comparison removes the common
+firm move and asks whether worker wage gaps are portable across the same
+origin-destination transition.
+
+SW's headline empirical design is exactly this: for two workers both moving from
+firm $A$ to firm $B$, the pay gap at the origin should predict the gap at the
+destination with coefficient one under additive worker and firm effects. Source:
+SW abstract, p. 1. They estimate coefficients below one in Brazil and Italy, which
+they interpret as evidence of match effects. Source: SW abstract, p. 1.
+
+\subsection{The Low-Power Mechanism in SW}
+
+SW's model gives workers payoff
+\[
+h_i+p_j+m_{ij},
+\]
+where $h_i$ is a worker effect, $p_j$ a firm effect, and $m_{ij}$ a match effect.
+Workers observe both firm and match components when deciding whether to accept
+offers, so the model violates both additive separability and exogenous mobility.
+Source: SW, p. 27.
+
+Even so, the pooled event study can pass. In their simulated model, the full-sample
+event-study coefficient is $0.99$ even though $41\%$ of moves are employer-to-employer
+moves. Split by move type, the coefficient is $0.57$ for EE moves and $0.99$ for
+EUE moves. Source: SW, pp. 31--33. So the event study detects the failure in the
+EE subsample, but the pooled sample hides it.
+
+Derived pooling identity: if the sample is split into groups $g$, the pooled
+OLS slope of $\Delta Y$ on $\Delta\psi$ is not just a sample-size-weighted average
+of within-group slopes. It also includes between-group covariance:
+\[
+\beta_{\text{pooled}}
+=
+\frac{\sum_g \Pr(g)\Cov(X,Y\mid g)
++\Cov(\E[X\mid g],\E[Y\mid g])}
+{\sum_g \Pr(g)\Var(X\mid g)+\Var(\E[X\mid g])},
+\qquad X=\Delta\psi,\;Y=\Delta Y.
+\]
+The between-group slope can push the pooled coefficient back toward one even when
+within-group slopes show failure. SW explicitly describe this mechanism: pooled
+coefficients combine relative sample sizes, within-group variances, and between-group
+differences in sample means. Source: SW, pp. 32--33. In their simulations, increasing
+the EE share lowers both subsample coefficients, but the pooled coefficient remains
+above $0.90$ and can exceed either subsample coefficient because the between-sample
+slope is above one. Source: SW, pp. 32--34.
+
+\subsection{Bottom Line on the Friday Intuition}
+
+Derived bottom line from Kline and SW: the Friday intuition is correct:
+\[
+\text{event study} \approx \text{parallel-trends / realized mover diagnostic},
+\]
+while
+\[
+\text{paired movers} \approx \text{direct portability / separability diagnostic}.
+\]
+A time-invariant match effect can pass the event study because it does not create
+origin-firm pre-trends. It fails paired movers because the worker wage gap need not
+be preserved from $A$ to $B$. SW's additional contribution is showing that even when
+endogenous mobility creates event-study failures in a subsample, pooling can make the
+full event-study coefficient look reassuring. Source: SW, pp. 31--35; prior result
+PDF, Sec. 4 and Sec. 7.7.
+
+\section{Kline Section 3: What the Content Is}
+
+Kline Section 3 rewrites AKM as a restriction on directed mover edge effects. Start
+from
+\[
+Y_{it}=\alpha_i+\psi_{j(i,t)}+X_{it}'\beta+\varepsilon_{it}.
+\]
+Source: Kline, p. 15. For two-period movers, define adjusted wage changes
+\[
+R=Y_2-Y_1-(X_2-X_1)'\beta.
+\]
+Let $E$ be the worker-by-edge matrix of directed origin-destination indicators,
+and let $B$ be the firm-by-edge incidence matrix. Kline shows that AKM implies
+\[
+R=EB'\psi+\varepsilon.
+\]
+Source: Kline, pp. 18--19.
+
+The unrestricted edge-effect model is
+\[
+R=E\Delta+u,
+\]
+where $\Delta_{jk}$ is the average adjusted wage change for movers from firm $j$
+to firm $k$. Source: Kline, p. 19. AKM imposes
+\[
+\Delta=B'\psi.
+\]
+This reduces potentially $|E|$ directed edge effects to $J-1$ independent firm
+effects. Source: Kline, p. 19.
+
+\subsection{The Cycle Content}
+
+For any cycle vector $c$ in the mobility graph, $Bc=0$. Therefore AKM implies
+\[
+c'\Delta=c'B'\psi=0.
+\]
+Source: Kline, pp. 18--19. Conversely, within a connected set, these cycle
+restrictions exhaust the restrictions that AKM imposes on edge effects. Kline
+writes
+\[
+\Delta=B'\dot\psi+C\dot\eta,
+\]
+where $C\dot\eta$ is the cycle component, and AKM is the restriction
+$\dot\eta=0$. Source: Kline, p. 20.
+
+This is the actual content of Section 3: firm effects are not primitive magic
+objects. They are a low-dimensional potential function for directed mover wage
+changes. They are valid as global firm wage levels only when edge effects are
+path-independent around cycles.
+
+\subsection{The Noise-Adjusted Goodness-of-Fit Content}
+
+Kline also asks how well AKM approximates unrestricted edge effects in Veneto.
+The key object is the residual between estimated unrestricted edge effects and
+AKM-predicted edge effects:
+\[
+\hat\Delta-\tilde\Delta=M\hat\Delta,
+\qquad M=I-H.
+\]
+For the mover-weighted residual sum of squares, Kline decomposes
+\[
+\E_u[\hat\Delta'M'WM\hat\Delta]
+=
+\Delta'M'WM\Delta
++\operatorname{trace}\!\left(M'WMV_u[\hat\Delta]\right).
+\]
+Source: Kline, p. 27. The first term is model error; the second is sampling noise.
+Under exact AKM, the first term vanishes but the second remains.
+
+Empirically, among non-bridge edges with at least two movers, the residual sum of
+squares is $360.51$, while expected noise under AKM is $207.58$. The difference
+$152.92$ is the estimated squared approximation error. Relative to the
+noise-adjusted edge-effect sum of squares $978.67$, AKM captures about $84\%$ of
+true edge-effect variation; the implied correlation is $0.92$. Source: Kline,
+pp. 27--28. Across edge samples, Kline reports noise-adjusted $R^2$ values roughly
+between $72\%$ and $88\%$, and about $81\%$ when bridges are included. Source:
+Kline, pp. 28--29.
+
+\subsection{The Causal Content}
+
+Kline's causal section says that edge effects can be causal under three conditions:
+exclusion, parallel trends, and stationarity. Source: Kline, pp. 29--31. Proposition
+1 states that, under those assumptions,
+\[
+\E[Y_{i2}-Y_{i1}\mid D_{i1}=j,D_{i2}=k]=\Delta_{jk},
+\]
+the average treatment effect on movers along edge $j\to k$. Source: Kline, p. 31.
+Crucially, this does not require additive separability. Kline explicitly emphasizes
+that edge effects can be causal even when firm effects are heterogeneous, but those
+edge effects may be intransitive and therefore may not aggregate to a single global
+firm ranking. Source: Kline, pp. 30--31.
+
+\section{Is Kline's General Edge Model Nested in Our Low-Rank Factor Model?}
+
+Short answer:
+\[
+\text{AKM is nested; unrestricted Kline edge effects are not.}
+\]
+
+\subsection{AKM Is Nested}
+
+The additive AKM wage surface is the rank-zero case of the project interface
+\[
+Y_{ij}=X_{ij}'\delta+\alpha_i+\psi_j+u_i^\top\Lambda v_j+\varepsilon_{ij},
+\qquad
+\Lambda=0.
+\]
+This was already in the project note and prior result PDF. Source: prior result
+PDF, pp. 18--21; \texttt{shimer\_smith\_writeup.tex}, Sec. 6.
+
+\subsection{A Low-Rank Wage Surface Implies a Restricted Edge Model}
+
+Derived mapping from the project interface to Kline edges: suppose the true static wage surface is
+\[
+m_{ij}=\alpha_i+\psi_j+u_i^\top\Lambda v_j.
+\]
+For a worker moving from firm $j$ to firm $k$, the wage change is
+\[
+m_{ik}-m_{ij}
+=
+\psi_k-\psi_j+u_i^\top\Lambda(v_k-v_j).
+\]
+The mean edge effect is therefore
+\[
+\Delta_{jk}
+=
+\psi_k-\psi_j+\mu_{jk}^\top\Lambda(v_k-v_j),
+\qquad
+\mu_{jk}\equiv \E[u_i\mid i:j\to k].
+\tag{LR-edge}
+\]
+This is the bridge from our low-rank wage surface to Kline's edge language. Around
+a directed firm cycle $C$, the additive firm effects telescope:
+\[
+\sum_{(j,k)\in C}\Delta_{jk}
+=
+\sum_{(j,k)\in C}\mu_{jk}^\top\Lambda(v_k-v_j).
+\]
+So nonzero cycle components can arise from two ingredients together: nonzero
+interaction $\Lambda$ and edge-specific mover composition $\mu_{jk}$.
+
+\subsection{But Kline's Unrestricted Edge Model Is More General}
+
+Kline's unrestricted model
+\[
+R=E\Delta+u
+\]
+places a free parameter on each observed directed firm-to-firm edge. It is not a
+static worker-firm wage surface. It is a reduced-form model of average wage changes
+for selected movers along origin-destination edges.
+
+Therefore it is not nested in $(\star)$ unless extra restrictions happen to hold.
+For a Kline edge vector $\Delta$ to come from a low-rank wage surface, there must
+exist firm effects $\psi_j$, firm factors $v_j$, interaction matrix $\Lambda$, and
+edge-specific mover composition moments $\mu_{jk}$ such that (LR-edge) holds for
+every observed edge. An arbitrary $\Delta$ need not satisfy this.
+
+Equivalently:
+\[
+\text{low-rank wage model}
+\quad\Rightarrow\quad
+\text{structured edge effects},
+\]
+but
+\[
+\text{unrestricted edge effects}
+\quad\not\Rightarrow\quad
+\text{low-rank wage model}.
+\]
+
+Kline's $\Delta_{jk}$ is therefore best treated as a diagnostic/statistical interface.
+It can absorb the implications of additivity, low-rank interactions, match effects,
+selection, or other mechanisms for mover wage changes. But by itself it does not
+identify which mechanism generated those edge effects. This matches the prior
+result PDF's conclusion that Kline's edge effects are diagnostic/statistical-interface
+objects, not structural models. Source: prior result PDF, Secs. 7.4--7.7 and 8.3.
+
+\section{Clean Takeaways}
+
+\begin{enumerate}
+\item The event study is mainly a parallel-trends / realized-mover diagnostic. It can
+pass with time-invariant match effects because those match effects sit in wage levels
+and treatment-effect heterogeneity, not necessarily in pre-trends.
+
+\item Paired movers test separability more directly. For two workers making the same
+$A\to B$ move, firm effects cancel, so the test asks whether wage gaps are portable
+from origin to destination.
+
+\item SW's additional low-power mechanism is pooling. Within-subsample event-study
+coefficients can reveal problems, while between-sample mean differences push the
+pooled coefficient back toward one.
+
+\item Kline Section 3 says AKM is a path-independence restriction on unrestricted
+directed edge effects. Cycle sums are the empirical content.
+
+\item Kline's unrestricted edge model is not nested in the low-rank worker-firm wage
+surface. AKM is nested as $\Lambda=0$, and a low-rank surface implies structured
+edge effects, but arbitrary edge effects are a more general reduced form.
+\end{enumerate}
+
+\end{document}

@@ -1,0 +1,2379 @@
+===== PDF PAGE 1 =====
+Econometrica, Vol. 87, No. 3 (May, 2019), 699–739
+A DISTRIBUTIONAL FRAMEWORK FOR MATCHED
+EMPLOYER EMPLOYEE DATA
+STÉPHANE BONHOMME
+Department of Economics, University of Chicago
+THIBAUT LAMADON
+Department of Economics, University of Chicago
+ELENA MANRESA
+Department of Economics, New Y ork University
+We propose a framework to identify and estimate earnings distributions and worker
+composition on matched panel data, allowing for two-sided worker-ﬁrm unobserved
+heterogeneity and complementarities in earnings. We introduce two models: a static
+model that allows for nonlinear interactions between workers and ﬁrms, and a dy-
+namic model that allows, in addition, for Markovian earnings dynamics and endoge-
+nous mobility. We show that this framework nests a number of structural models of
+wages and worker mobility. We establish identiﬁcation in short panels, and develop
+tractable two-step estimators where ﬁrms are classiﬁed in a ﬁrst step. Applying our
+method to Swedish administrative data, we ﬁnd that log-earnings are approximately
+additive in worker and ﬁrm heterogeneity. Our estimates imply the presence of strong
+sorting patterns between workers and ﬁrms, and a small contribution of ﬁrms—net
+of worker composition—to earnings dispersion. In addition, we document that wages
+have a direct effect on mobility, and that, beyond their dependence on the current ﬁrm,
+earnings after a job move also depend on the previous employer.
+K
+EYWORDS: T wo-sided heterogeneity, bipartite networks, matched employer em-
+ployee data, sorting, job mobility.
+1. INTRODUCTION
+IDENTIFYING THE CONTRIBUTIONS of worker and ﬁrm heterogeneity to earnings disper-
+sion is an important step toward answering a number of economic questions, such as the
+nature of sorting patterns between heterogeneous workers and ﬁrms or the sources of
+earnings inequality.
+T wo inﬂuential literatures have approached these questions from different angles. The
+method of Abowd, Kramarz, and Margolis (1999) (AKM hereafter) relies on two-way
+ﬁxed-effects regressions to account for unobservable worker and ﬁrm effects, and allows
+one to quantify their respective contributions to earnings dispersion, as well as correla-
+tions between worker and ﬁrm effects. The AKM method is widely used in labor and other
+ﬁelds in economics.
+1 A second literature tackles similar issues from a structural perspec-
+Stéphane Bonhomme: sbonhomme@uchicago.edu
+Thibaut Lamadon: lamadon@uchicago.edu
+Elena Manresa: em1849@nyu.edu
+We thank the four anonymous referees, our discussants Pat Kline, Chris Hansen, and Mikkel Sølvsten,
+and Joe Altonji, Bryan Graham, Jeremy Lise, Rafael Lopes de Melo, Costas Meghir, Magne Mogstad, Derek
+Neal, Luigi Pistaferri, Jean-Marc Robin, Adam Rosen, Raffaele Saggio, Uta Schoenberg, Robert Shimer, Chris
+T aber, and audiences at various places for useful comments. We thank the IFAU for access to, and Lisa Laun for
+help with, the Swedish administrative data. The authors acknowledge support from NSF Grant SES-1658920.
+1Applications of the method to earnings data include Gruetter and Lalive (2009), Mendes, van den Berg,
+and Lindeboom (2010), Woodcock (2008), Card, Heining, and Kline (2013), Goldschmidt and Schmieder
+© 2019 The Econometric Society https://doi.org/10.3982/ECTA15722
+
+
+===== PDF PAGE 2 =====
+700 S. BONHOMME, T . LAMADON, AND E. MANRESA
+tive, by developing and estimating fully speciﬁed theoretical models of sorting in the labor
+market.2
+Reconciling these reduced-form and structural literatures has proven difﬁcult. While
+the AKM method provides a tractable way to deal with two-sided unobserved heterogene-
+ity, the AKM model relies on substantive, possibly restrictive assumptions. The absence
+of interactions between worker and ﬁrm attributes restricts complementarity patterns in
+earnings. This is at odds with the theoretical literature which, since Becker (1973), has
+emphasized the link between complementarity and sorting ( Shimer and Smith (2000),
+Eeckhout and Kircher (2011)). In addition, the AKM model is static, in the sense that
+worker mobility does not depend on earnings realizations conditional on worker and ﬁrm
+heterogeneity, and that earnings after a job move do not depend on the previous ﬁrm.
+Such a static model is not able to account for a number of mechanisms that have been
+emphasized in the dynamic structural literature.
+On the other hand, attempts at structurally estimating dynamic models of sorting have
+faced computational and empirical challenges. The dimensions involved are daunting:
+how to estimate a model of worker mobility and earnings with hundreds of thousands
+of workers and dozens of thousands of ﬁrms in the presence of both ﬁrm and worker
+unobserved heterogeneity? And how much of the results are driven by functional form
+assumptions?
+In this paper, we introduce an empirical framework with two-sided unobserved hetero-
+geneity that nests a range of theoretical mechanisms emphasized in the literature. While
+allowing for rich patterns of complementarities, sorting, and dynamics, the framework
+preserves parsimony using a dimension reduction technique to model ﬁrm heterogeneity.
+We propose two models, static and dynamic, which allow for interaction effects between
+worker and ﬁrm heterogeneity. In the dynamic model, we let job mobility depend on earn-
+ings realizations in addition to worker and ﬁrm attributes, and we allow earnings after a
+job move to depend on attributes of the previous ﬁrm beyond those of the current one by
+specifying dynamic persistence as ﬁrst-order Markov.
+We provide conditions for identiﬁcation in short panels under discrete worker hetero-
+geneity. The primary source of identiﬁcation is given by job movers. For the static model
+we rely on two periods, while we use four periods to identify the dynamic model. The
+ability of our method to deal with short panels is important, since even when matched
+employer employee data sets with a long panel dimension are available, assuming time-
+invariant heterogeneity of either workers or ﬁrms over long periods may be unattractive.
+Our analysis shows that mobility and heterogeneity patterns play a key role in identifying
+complementarities.
+We deﬁne the relevant level of ﬁrm unobserved heterogeneity as the class of a ﬁrm.
+We model worker types as draws from a discrete distribution, and allow for unrestricted
+interactions between worker types and ﬁrm classes. In principle, a class could be a ﬁrm it-
+self. However, in typical matched employer employee data sets, the number of job movers
+(2015), Song, Price, Guvenen, and Bloom (2015), and Sorkin (2018), among others. The AKM estimator has
+been used in a variety of other ﬁelds, for example to link banks to ﬁrms, teachers to schools or students, and
+to document differences across areas in patients’ health care utilization (e.g., Kramarz, Machin, and Ouazad
+(2015), Jackson (2013), Finkelstein, Gentzkow, and Williams (2016)).
+2Many structural models proposed in the literature build on Becker (1973). Examples are Lopes de Melo
+(2018), Lise, Meghir, and Robin (2016), Bagger and Lentz (2014), Hagedorn, Law, and Manovskii (2017), and
+Lamadon, Lise, Meghir, and Robin (2013).
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 3 =====
+A FRAMEWORK FOR EMPLOYER EMPLOYEE DATA 701
+per ﬁrm tends to be small, which creates an incidental parameter bias in estimation. 3 In
+such environments, reducing the number of classes can alleviate small-sample biases. We
+use a k-means clustering estimator to classify ﬁrms based on how similar their earnings
+distributions are. The classiﬁcation may also be based on mobility patterns or longitudinal
+earnings information, and it can be modiﬁed to incorporate ﬁrm characteristics such as
+value added. We establish the consistency of the classiﬁcation under discrete ﬁrm hetero-
+geneity.
+4
+We use a two-step approach for estimation. In the classiﬁcation step, we group ﬁrms
+into classes usingk-means clustering, and in theestimation step, we estimate the model by
+maximum likelihood, conditional on the estimated ﬁrm classes. Estimating ﬁrm classes in
+a ﬁrst step is helpful for tractability. We verify in simulations that our estimator performs
+well in data sets similar to the one of our application. We also conﬁrm the ability of our
+estimator to recover wage functions in data sets generated according to the theoretical
+model of Shimer and Smith (2000), extended to allow for on-the-job search, under both
+positive and negative assortative matching.
+We take our approach to Swedish matched employer employee panel data, focusing on
+males for the 2002–2004 period. The estimates of our static model imply that an addi-
+tive speciﬁcation provides a good ﬁrst-order approximation to log-earnings, although our
+results also highlight the presence of some complementarities between ﬁrms and lower-
+type workers. Between-ﬁrm differences explain 38% of the overall log-earnings variance.
+However, our estimates imply that, net of the effect of worker composition, ﬁrm het-
+erogeneity accounts for less than 5% of the overall variance (i.e., less than 13% of the
+between-ﬁrm variance). The largest share of the variance is explained by worker hetero-
+geneity. In addition, we ﬁnd a strong association between worker and ﬁrm heterogeneity,
+with a correlation ranging between 30% and 50% depending on the speciﬁcation.
+These results suggest that similar workers are not paid very differently across employ-
+ers, although different workers tend to work in very different ﬁrms. The presence of strong
+sorting, together with the absence of strong complementarities in wages, is difﬁcult to rec-
+oncile with models where sorting is driven by complementaries in production, as inBecker
+(1973). Alternative explanations for sorting have been proposed, such as the presence of
+amenities, peer effects, or more complex heterogeneity, although our ﬁndings might also
+be partly driven by speciﬁcities of the Swedish labor market.
+The estimates of our dynamic model in the 2001–2005 period, besides being in line with
+the cross-sectional variance decomposition implied by our static model, shed light on sev-
+eral mechanisms that have been emphasized in the structural literature. In particular, we
+ﬁnd that low earnings realizations, conditional on worker and ﬁrm heterogeneity, tend
+to make workers more likely to move. This violation of exogenous mobility may indicate
+the presence of match heterogeneity. We also ﬁnd evidence of an effect of the previous
+employer on current earnings, conditional on the current ﬁrm’s class. This state depen-
+3See Abowd, Kramarz, Lengermann, and Pérez-Duarte (2004), Andrews, Gill, Schank, and Upward (2008,
+2012), and recently Kline, Saggio, and Sølvsten (2018) for methods to address incidental parameter bias in
+ﬁxed-effects regressions.
+4Similarly as in most of the literature on discrete estimation, this result is derived under the assumption that
+the population of ﬁrms consists of a ﬁnite, known number of classes. In Bonhomme, Lamadon, and Manresa
+(2017), we considered a setting where the discrete modeling is viewed as an approximation to an underlying,
+possibly continuous, distribution of ﬁrm unobserved heterogeneity, and we provided consistency results and
+rates of convergence.
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 4 =====
+702 S. BONHOMME, T . LAMADON, AND E. MANRESA
+dence effect could be rationalized by existing theories, such as the offer and counteroffer
+mechanism of Postel-Vinay and Robin(2002).
+Literature and Outline
+The methods we propose contribute to a large literature on the identiﬁcation and estima-
+tion of models with latent heterogeneity. Discrete ﬁxed-effects approaches have recently
+been proposed in single-agent panel data analysis ( Hahn and Moon (2010), Lin and Ng
+(2012), Bonhomme and Manresa (2015)). The k-means clustering algorithm we use to
+classify ﬁrms is widely used in a number of ﬁelds, and efﬁcient computational routines are
+available (Steinley (2006)). Here, we use such an approach in models with two-sided het-
+erogeneity. Our approach to identiﬁcation and estimation of mixture models has a num-
+ber of precedents in the literature, such asHall and Zhou (2003), Hu (2008), Henry, Kita-
+mura, and Salanié (2014), Levine, Hunter, and Chauveau (2011), Bonhomme, Jochmans,
+and Robin(2014), and Hu and Schennach(2008)a n dHu and Shum(2012) for continuous
+mixtures. Our conditional mixture approach is also related to mixed membership models
+(Blei, Ng, and Jordan (2003), Airoldi, Blei, Fienberg, and Xing (2008)).
+Compared to this previous work, we rely on a hybrid “one-sided correlated random-
+effects” approach, where we model the ﬁrm classes as discrete ﬁxed effects, and the
+worker types as (discrete or continuous) random effects correlated with the ﬁrm classes.
+This approach is motivated by the structure of typical matched employer employee data
+sets. With sufﬁciently many workers per ﬁrm, ﬁrm class membership will be accurately
+estimated. In contrast, the number of observations for a given worker is typically small.
+This approach can alleviate the incidental parameter bias of ﬁxed-effects estimators, par-
+ticularly in short panels. It also offers a tractable way of allowing for complementarities
+and dynamics. Bonhomme (2017) reviewed existing econometric methods for bipartite
+network data.
+Also related, Abowd, McKinney, and Schmutte (2018) proposed a Bayesian approach
+where both ﬁrm and worker heterogeneity are discrete. Their setup allows for latent
+match effects to drive job mobility, in a way that is related to—but different from—our
+dynamic model. Hagedorn, Law, and Manovskii (2017) proposed to recover worker types
+by ranking workers by their earnings within ﬁrms, and aggregating those partial rankings
+across ﬁrms. Their method relies on long panels, and exploits the implications of a struc-
+tural model to identify ﬁrm heterogeneity. In contrast, while our framework nests a num-
+ber of theoretical models of wages and mobility, it is not tied to a speciﬁc structural model.
+The outline of the paper is as follows. In Section 2, we present the framework. In Sec-
+tions 3 and 4, we study identiﬁcation and estimation. In Sections 5 and 6,
+we show empir-
+ical results based on the static and dynamic models. Last, we conclude in Section 7.T h e
+Supplemental Material (Bonhomme, Lamadon, and Manresa (2019)) contains details on
+computation and several extensions, and an exercise on simulated data generated using a
+theoretical sorting model.
+2.
+FRAMEWORK OF ANAL YSIS
+We consider an economy composed of N workers and J ﬁrms. We denote as jit the
+identiﬁer of the ﬁrm where workeri is employed at timet. Job mobility between a ﬁrm at
+t and another ﬁrm at t + 1 is denoted as mit = 1.
+Heterogeneity across ﬁrms is characterized by their class.W ed e n o t ea skit =k(jit) in
+{1/commaori/periodori/periodori/periodori/commaoriK} the class of ﬁrm jit .T h eK classes form a partition of the set of ﬁrms. There
+m a yb ea sm a n yc l a s s e sa sﬁ r m s ,i nw h i c hc a s eK = J and kit = jit . Alternatively, ﬁrm
+classes could be deﬁned in terms of observables such as industry or size. In Section 4,w e
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 5 =====
+A FRAMEWORK FOR EMPLOYER EMPLOYEE DATA 703
+describe a method to consistently estimate the latent classes kit from the data, under the
+assumption that ﬁrm heterogeneity has a ﬁnite, known number of points of support in the
+population.
+Workers are also heterogeneous, and we denote the type of worker i as αi. These types
+can be discrete or continuous, depending on the speciﬁcation. In addition to their unob-
+served types, workers may also differ in terms of their observable characteristics X
+it .
+Last, worker i receives log-earnings Yit at time t. The observed data for worker i are
+thus a sequence of earnings(Yi1/commaori/periodori/periodori/periodori/commaoriYiT), ﬁrm and mobility indicators(ji1/commaorimi1/commaori/periodori/periodori/periodori/commaoriji/commaoriT−1/commaori
+mi/commaoriT−1/commaorijiT), and covariates(Xi1/commaori/periodori/periodori/periodori/commaoriXiT). We consider a balanced panel setup for simplic-
+ity, and we focus on workers receiving positive earnings in each period.
+In this framework, we will be interested in recovering the distributions of log-earnings
+for workers of type αin ﬁrms of class k, and the proportions of type-αworkers in class-
+k ﬁrms. Earnings distributions will be informative about complementarities, while type
+proportions will be informative about sorting patterns. In addition, within our framework
+we will be able to document transition probabilities and other dynamic aspects.
+We consider two different models: a static model where current earnings do not affect
+job mobility or future earnings conditional on worker type and ﬁrm class, and a dynamic
+model that allows for these possibilities. We now describe these two models in turn. Next,
+we discuss how our assumptions map to theoretical sorting models proposed in the liter-
+ature. Throughout, we denote Z
+t
+i =(Zi1/commaori/periodori/periodori/periodori/commaoriZit) the history of a random variable Zit up
+to period t.
+2.1. Static Model
+There are two main assumptions in the static model. First, job mobility may depend
+on the type of the worker and the classes of the ﬁrms, but not directly on earnings. As a
+result, the ﬁrm and mobility indicators, and ﬁrm classes, are all strictly exogenous in the
+panel data sense. In addition, covariates are also strictly exogenous. Second, log-earnings
+after a job move are not allowed to depend on previous ﬁrm classes or previous earnings,
+conditional on the worker type and the new ﬁrm’s class.
+Before stating the assumptions formally, let us describe the model’s timing. In period 1,
+the type of a workeri,α
+i, is drawn from a distribution that depends on the classki1 of the
+ﬁrm where she is employed and her characteristics Xi1. The worker draws log-earnings
+Yi1 from a distribution that depends on αi, ki1,a n dXi1.
+At the end of every period t ≥ 1, the worker moves to another ﬁrm (i.e., mit = 1o r0 )
+with a probability that may depend on her type αi, her characteristics Xt
+i , the fact that
+she moved in previous periods mt−1
+i , and current and past ﬁrm classes kt
+i . This probabil-
+ity, like all other probability distributions in the model, may depend on t unrestrictedly.
+Moreover, the probability that the class of the ﬁrm she moves to is ki/commaorit+1 = k′ may also
+depend on αi, Xt
+i , mt−1
+i ,a n dkt
+i (while also varying with k′). Last, covariates Xi/commaorit+1 are
+drawn from a distribution depending on αi, Xt
+i , mt
+i ,a n dkt+1
+i .
+If the worker changes ﬁrm (i.e., when mit = 1), log-earnings Yi/commaorit+1 in period t + 1a r e
+drawn from a distribution that depends on αi, Xi/commaorit+1,a n d ki/commaorit+1. If instead the worker
+remains in the same ﬁrm between t and t + 1( i . e . ,mit = 0), Yi/commaorit+1 are drawn from an
+unrestricted distribution that may depend on Yt
+i , αi, Xt+1
+i ,a n dkt+1
+i .
+Formally, the two main assumptions are thus as follows.
+ASSUMPTION 1—Static Model:
+(i) ( Mobility Determinants) mit , ki/commaorit+1, and Xi/commaorit+1 are independent of Yt
+i conditional on
+αi, kt
+i , mt−1
+i , and Xt
+i .
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 6 =====
+704 S. BONHOMME, T . LAMADON, AND E. MANRESA
+(ii) ( Serial Independence) Yi/commaorit+1 is independent of Yt
+i , kt
+i , mt−1
+i , and Xt
+i conditional on αi,
+ki/commaorit+1, Xi/commaorit+1, and mit = 1.
+A simple example of the static model is the following log-earnings regression:
+Yit =at(kit) +bt(kit)αi +X′
+itct +εit/commaori (1)
+where E(εit|αi/commaorikT
+i
+/commaorimT
+i
+/commaoriXT
+i ) = 0. This model simpliﬁes to the AKM model in the absence
+of interaction effects, that is, when bt(k) = 1, and ﬁrms jit and classes kit coincide.5
+2.2. Dynamic Model
+There are two main differences between the dynamic model and the static model. First,
+at the end of period t, the worker moves to another ﬁrm with a probability that depends
+on her current log-earnings Yit , in addition to her type αi, Xit ,a n dkit , and likewise the
+probability to move to a ﬁrm of classki/commaorit+1 =k′ also depends onYit . Second, log-earnings
+Yi/commaorit+1 in periodt +1 are drawn from a distribution depending on the previous log-earnings
+Yit and the previous ﬁrm class kit , in addition to αi, Xi/commaorit+1,a n dki/commaorit+1. Job movers and job
+stayers draw their log-earnings from different distributions conditional on these variables.
+As we discuss in the next subsection, allowing for these features is important in order to
+nest a number of structural models of wage and employment dynamics that have been
+proposed in the literature. Formally, we make the following assumptions.
+A
+SSUMPTION 2—Dynamic Model:
+(i) (Mobility Determinants )mit ,ki/commaorit+1, andXi/commaorit+1 are independent ofYt−1
+i ,kt−1
+i ,mt−1
+i , and
+Xt−1
+i conditional on Yit , αi, kit , and Xit .
+(ii) ( Serial Dependence) Yi/commaorit+1 is independent of Yt−1
+i , kt−1
+i , mt−1
+i , and Xt
+i conditional on
+Yit , αi, ki/commaorit+1, kit , Xi/commaorit+1, and mit .
+Assumption 2 consists of two ﬁrst-order Markov conditions. In part (i), log-earningsYit
+are allowed to affect the probability to change job directly between t and t + 1, but the
+previous earnings Yi/commaorit−1 do not have a direct effect. 6 Similarly, in part (ii), log-earnings
+Yi/commaorit+1 may depend on the ﬁrst lag of log-earnings Yit , and on the current and lagged ﬁrm
+classes ki/commaorit+1 and kit , but not on the further past such asYi/commaorit−1 and ki/commaorit−1. Note that, unlike
+in the static model, Assumption 2(ii) restricts the evolution of log-earnings within as well
+as between jobs.
+As a simple dynamic extension of (1), one may consider the following speciﬁcation for
+the earnings of job movers between t − 1a n dt (i.e., mi/commaorit−1 = 1):
+Yit =ρtYi/commaorit−1 +a1t(kit) +a2t(ki/commaorit−1) +bt(kit)αi +X′
+itct +vit/commaori (2)
+where E(vit|αi/commaorikt
+i/commaorimt−1
+i /commaoriYt−1
+i /commaoriXt
+i) = 0. Here, log-earnings after a job move may depend
+on earnings and ﬁrm class in the previous job.
+5While both parts in Assumption1 are needed to identify the full model, restrictions on dependence are not
+needed to identify parameters such as at(k), bt(k),a n dct in (1).
+6Assumption 2(i) allowsXi/commaorit+1 to be drawn from a distribution that depends onYit as well asαi,Xit ,mit ,a n d
+ki/commaorit+1. Our identiﬁcation arguments can be extended to this case, and estimation could allow for sequentially
+exogenous individual characteristics, such as job tenure.
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 7 =====
+A FRAMEWORK FOR EMPLOYER EMPLOYEE DATA 705
+2.3. Links With Theoretical Models
+In this subsection, we study whether our assumptions are compatible with various theo-
+retical models of the labor market. We consider models that abstract from hours of work,
+so we refer to earnings and wages indistinctively.
+Models Where the Relevant State Space Is (α/commaorikt)
+We ﬁrst consider models where wages are a function, possibly nonlinear or non-
+monotonic, of the worker typeα, the ﬁrm classkt , and a time-varying effect, sayεt ,w h e r e
+εt does not affect mobility decisions. This structure is compatible, for instance, with wage
+posting models (as inBurdett and Mortensen (1998), Delacroix and Shi (2006), or Shimer
+(2005)), where the wage paid to a worker does not have any history dependence andεt is
+classical measurement error or an i.i.d. match effect realized after mobility. This means
+that, while allowing for rich mobility and earnings patterns, such models are compatible
+with Assumption 1 of our static model.
+Similarly, Assumption 1 is compatible with models where the wage is set as the outcome
+of a bargaining process between the ﬁrm and the worker under certain conditions on the
+worker’s outside option. For example, this is the case in Shimer and Smith (2000), where
+the outside option is unemployment since workers always go through unemployment be-
+fore ﬁnding a new job; see also Hagedorn, Law, and Manovskii (2017). In such sorting
+models, specifying the wage function in a way that allows for interactions between worker
+types and ﬁrm classes is key, since earnings may be non-monotonic in ﬁrm productivity
+and different workers rank identical ﬁrms differently. Our static model can accommodate
+both features.
+Models With Markovian Match Effects and State Dependence
+In dynamic models, workers often move based on the realization of the match effect ε
+t ,
+which is allowed to be serially correlated. Alternatively, εt may be thought of as a scalar
+human capital process. This is compatible with the assumptions of our dynamic model
+provided εt is ﬁrst-order Markov; see Assumption 2. For example, in a wage posting
+model with match-speciﬁc heterogeneity, workers may observe potential wages before
+deciding whether or not to move. While incompatible with Assumption1, this is perfectly
+consistent with the dynamic model’s assumptions provided mobility, the new ﬁrm’s class,
+and the new wage are jointly ﬁrst-order Markov.
+T o see this formally, consider an agent in periodt with wage Y
+t and ﬁrm class kt .S h e
+draws an offer, (Y∗
+t+1/commaorik∗
+t+1), jointly with a potential wage ˜Yt+1 she would get should she
+decide not to move, all of which may depend on the current wage Yt ,ﬁ r mc l a s skt ,a n d
+type α. The decision to move is based on all this information. The realized ﬁrm class is
+then either kt+1 =kt with associated wage ˜Yt+1,o r kt+1 =k∗
+t+1
+with wage Y∗
+t+1, depending
+on the outcome of the mobility decision. Assumption2 is satisﬁed in this model, since the
+effective conditioning set is (α/commaoriYt/commaorikt).
+Our dynamic model encompasses other mechanisms, such as endogenous search in-
+tensity along the lines of Bagger and Lentz (2014), where the previous wage may affect
+offers through an endogenous search decision. It also encompasses sequential contract-
+ing as in Postel-Vinay and Robin (2002), where the Bertrand competition is captured by
+the fact that the outside offer Y∗
+t+1 and the ﬁrm’s wage counteroffer ˜Yt+1 may depend on
+each other, and (α/commaoriYt/commaorikt) are sufﬁcient statistics for the history. Related examples are
+contract posting models (as in Burdett and Coles (2003), Shi (2008)), where the optimal
+contract is a tenure contract.
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 8 =====
+706 S. BONHOMME, T . LAMADON, AND E. MANRESA
+In the setting of Assumption 2, the wage conditional on moving depends on the past
+wage and the past ﬁrm. Our dynamic model allows for these selection effects. However,
+recovering underlying primitives such as distributions of wage offers Y∗
+t+1 would require
+making additional assumptions. In the absence of those, our framework allows one to
+identify the distributions of realized wages for job movers and stayers, as a function of
+worker and ﬁrm heterogeneity.
+Time Effects
+Our static and dynamic models allow distributions to depend unrestrictedly on calendar
+time. Lise and Robin (2013) developed a model of sorting in a labor market with se-
+quential contracting and aggregate shocks. Present values and earnings are functions of
+worker and ﬁrm heterogeneity, an aggregate state, and the current bargaining position.
+Assumption 2 of our dynamic model is satisﬁed in this setting.
+Outside Our Framework
+However, non-Markovian earnings structures will violate the assumptions of our dynamic
+model. This will happen if the structural model allows for permanent-transitory earnings
+dynamics conditional on worker types, as in Hall and Mishkin (1982), for example. This
+will also happen in models that combine a sequential contracting mechanism (à laPostel-
+Vinay and Robin (2002)) with a match-speciﬁc effect. In this case, agents need to keep
+track of both the match effect and the bargaining position, so the one-to-one mapping
+between earnings and the value to the worker no longer holds, making mobility decisions
+potentially dependent on the whole history of wages. Such environments are not nested
+in our framework, which only allows for uni-dimensional time-varying effects ε
+t .
+3. IDENTIFICATION
+In this section, we provide conditions for identiﬁcation of earnings distributions for all
+worker types and ﬁrm classes, and worker type distributions for all ﬁrm classes, given
+two periods in the static model and four periods in the dynamic model. The analysis is
+conditional on a partition of ﬁrms into classes. In the next section, we will show how to
+consistently estimate class membership k(j), for each ﬁrm j.
+3.1. Intuition in an Interactive Regression Model
+We ﬁrst provide an intuition for identiﬁcation of complementarities in a stationary spec-
+iﬁcation of the interactive regression model of equation (1)w i t hT = 2 periods, where we
+abstract from covariates. Consider job movers between two ﬁrms of classes k and k
+′ ̸=k,
+respectively, between periods 1 and 2. Here, we study identiﬁcation in a population where
+there is a continuum of workers moving from k to k
+′.7 Log-earnings in each period are
+given by
+Yi1 =a(k) +b(k)αi +εi1/commaoriYi2 =a
+(
+k′)
++b
+(
+k′)
+αi +εi2/commaori (3)
+7This intuitively means that this analysis will be relevant for data sets with a sufﬁcient number of workers
+moving between ﬁrm classes. Our grouping of ﬁrms into classes is motivated by the incidental parameter bias
+d u et ol o wm o b i l i t y .W ew i l lr e t u r nt ot h i si s s u ei nt h ee s t i m a t i o ns e c t i o n .
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 9 =====
+A FRAMEWORK FOR EMPLOYER EMPLOYEE DATA 707
+where E(εit|αi/commaoriki1 = k/commaoriki2 = k′/commaorimi1 = 1) = 0. In this sample of job movers, the ratio
+b(k′)/b(k) is not identiﬁed without further assumptions.8
+Consider now job movers from a ﬁrm in class k′ to a ﬁrm in class k. Their log-earnings
+are given by
+Yi1 =a
+(
+k′)
++b
+(
+k′)
+αi +εi1/commaoriYi2 =a(k) +b(k)αi +εi2/periodori
+By comparing differences in log-earnings in each class between these two subpopulations
+of job movers, we obtain
+b
+(
+k′)
+b(k) = Ekk′(Yi2) − Ek′k(Yi1)
+Ekk′(Yi1) − Ek′k(Yi2)/commaori (4)
+provided that the following condition holds:
+Ekk′(αi) ̸= Ek′k(αi)/commaori (5)
+where we have denoted Ekk′(Zi) = E(Zi|ki1 = k/commaoriki2 = k′/commaorimi1 = 1). This shows that, if
+(5) holds, then b(k′)/b(k) is identiﬁed from mean restrictions on job movers between k
+and k′. Conversely, if (5) does not hold, then b(k′)/b(k) is not identiﬁed based on those
+restrictions. Note that (5) requires the types of workers moving from k to k′ and from k′
+to k to differ. If b(k′) +b(k) ̸= 0, (5) is equivalent to
+Ekk′(Yi1 +Yi2) ̸= Ek′k(Yi1 +Yi2)/commaori (6)
+so it can be empirically tested (under the maintained hypothesis of exogenous mobility).
+An implication is that, when ( 5) does not hold, additivity of log-earnings in worker
+and ﬁrm attributes—that is, the b(k)’s being equal in all ﬁrms—is not testable based on
+mean restrictions. This analysis clariﬁes what can be learned from graphical illustrations
+of mean log-earnings before and after a job move event, which are often used to support
+additive speciﬁcations (e.g., Card, Heining, and Kline (2013)). Strictly speaking, docu-
+menting symmetric wage gains and losses is not sufﬁcient to demonstrate that wage func-
+tions are additive. As an example, in the theoretical model of Shimer and Smith (2000),
+wage gains and losses are symmetric around a job move, yet the wage function can feature
+any degree of complementarity between worker types and ﬁrm classes (see Figure S2 in
+the Supplemental Material).
+A main goal of this paper is to establish that, by fully exploiting earnings information
+before and after a job move, complementarities can be identiﬁed and consistently esti-
+mated under a rank condition akin to ( 5). Such a condition will be satisﬁed quite gener-
+ally. For example, it is satisﬁed in an extension of the model of Shimer and Smith (2000)
+with on-the-job search. Below, we use this theoretical model as a laboratory to evaluate
+the performance of our estimator on simulated data.
+3.2. Identiﬁcation With Discrete Worker T ypes
+In this subsection, we consider the general static and dynamic models under Assump-
+tions 1 and 2, respectively. We make no functional form assumptions on earnings distri-
+butions, except that we consider models where worker typesα
+i have ﬁnite support. While
+8Model (3) is formally equivalent to a measurement error model where αi is the error-free regressor and
+Yi2 is the error-ridden regressor. It is well-known that identiﬁcation fails in general. For example, b(k′)/b(k)
+is not identiﬁed when εi1, εi2,a n dαi are independent Gaussian random variables (Reiersøl (1950)).
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 10 =====
+708 S. BONHOMME, T . LAMADON, AND E. MANRESA
+assuming discrete worker types is not crucial for identiﬁcation, discreteness is helpful for
+tractability, and we will use a ﬁnite mixture speciﬁcation in our empirical implementation.
+We ﬁrst consider the static model onT = 2 periods, which sufﬁce for identiﬁcation. Let
+Fkα(y1) denote the cumulative distribution function (cdf) of log-earnings in period 1, in
+ﬁrm classk, for worker typeα.L e tFm
+k′α(y2) denote the cdf of log-earnings in period 2, for
+class k′ and type α, for job movers between periods 1 and 2 (i.e., when mi1 = 1). Let also
+pkk′(α)denote the probability distribution of αi for job movers between a ﬁrm of class k
+and another ﬁrm of classk′. Finally, letqk(α)denote the distribution ofαi for workers in
+aﬁ r mo fc l a s sk. All these distributions may be conditional on exogenous covariates Xi1
+and Xi2, although we omit the conditioning for conciseness.
+Let L be the number of points of support of worker types, and let us denote the types
+asαi ∈{ 1/commaori/periodori/periodori/periodori/commaoriL}. We assume thatL is known. In the application, we will check sensitivity
+by varying L. The static model imposes the following restrictions on the bivariate log-
+earnings distribution for job movers:
+Pr
+[
+Yi1≤y1/commaoriYi2≤y2|ki1=k/commaoriki2=k′/commaorimi1=1
+]
+=
+L∑
+α=1
+Fkα(y1)Fm
+k′α(y2)pkk′(α)/periodori(7)
+T o see why (7) holds, note that Yi1 is independent of (ki2/commaorimi1) conditional on (αi/commaoriki1).
+This is due to the fact that, by Assumption1(i), mobility is unaffected by log-earningsYi1,
+conditional on type and classes. Moreover, Yi2 is independent of (Yi1/commaoriki1) conditional
+on (αi/commaoriki2/commaorimi1 = 1). This is due to the lack of dependence on the past after a job move
+in Assumption 1(ii). In addition, we have the following decomposition of the cdf of log-
+earnings in period 1:
+Pr[Yi1 ≤ y1|ki1 =k]=
+L∑
+α=1
+Fkα(y1)qk(α)/periodori (8)
+We now provide conditions under which all parameters appearing in ( 7)a n d( 8)a r e
+identiﬁed. We start with a deﬁnition.
+DEFINITION 1: A connecting cycle of length R is a pair of sequences of ﬁrm classes
+(k1/commaori/periodori/periodori/periodori/commaorikR) in period 1, and (˜k1/commaori/periodori/periodori/periodori/commaori˜kR) in period 2, with kR+1 =k1, such that pkr/commaori˜kr(α)̸=
+0 and pkr+1/commaori˜kr(α)̸= 0 for all r in {1/commaori/periodori/periodori/periodori/commaoriR} and αin {1/commaori/periodori/periodori/periodori/commaoriL}.
+ASSUMPTION 3—Mixture Model, Static:
+(i) For any two ﬁrm classes k ̸= k′ in {1/commaori/periodori/periodori/periodori/commaoriK}, there exists a connecting cycle
+(k1/commaori/periodori/periodori/periodori/commaorikR), (˜k1/commaori/periodori/periodori/periodori/commaori˜kR), such that k1 = k and kr = k′ for some r, and such that the
+scalars a(1)/commaori/periodori/periodori/periodori/commaoria(L)are all distinct, where
+a(α)= pk1/commaori˜k1(α)pk2/commaori˜k2(α)··· pkR/commaori˜kR(α)
+pk2/commaori˜k1(α)pk3/commaori˜k2(α)··· pk1/commaori˜kR(α)/periodori
+In addition, for all k, k′, possibly equal , there exists a connecting cycle (k′
+1/commaori/periodori/periodori/periodori/commaorik′
+R
+),
+(˜k′
+1
+/commaori/periodori/periodori/periodori/commaori˜k′
+R
+), such that k′
+1
+=k and ˜k′
+r
+=k′ for some r.
+(ii) T h e r ee x i s tﬁ n i t es e t so fM values for y1 and y2 such that, for all r in {1/commaori/periodori/periodori/periodori/commaoriR}, the
+matrices A(kr/commaori˜kr) and A(kr+1/commaori˜kr) have rank L, where A(k/commaorik′) has (y1/commaoriy2) element:
+Pr
+[
+Yi1 ≤ y1/commaoriYi2 ≤ y2|ki1 =k/commaoriki2 =k′/commaorimi1 = 1
+]
+/periodori
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 11 =====
+A FRAMEWORK FOR EMPLOYER EMPLOYEE DATA 709
+k1
+k2
+˜k1
+˜k2
+FIGURE 1.—A connecting cycle of length R = 2.
+Assumption 3 requires that any two ﬁrm classes k and k′ belong to a connecting cycle.
+An example is given in Figure 1, where the presence of a connecting cycle requires that
+there is a positive proportion of every worker type among job movers fromk1 to ˜k1,k1 to
+˜k2, k2 to ˜k1,a n dk2 to ˜k2, respectively. Existence of cycles implies graph connectedness,
+in the sense of AKM ( Abowd, Creecy, and Kramarz (2002)). However, connectedness
+here is at the ﬁrm class level. A speciﬁc feature of our nonlinear setting is the need for
+every ﬁrm class to contain job movers of all types of workers. This may be demanding
+empirically, and the condition may fail in some models of sorting. The requirement on
+cycles can be relaxed, at the cost of losing point-identiﬁcation of some of the quantities
+of interest. Alternatively, one may impose more structure, as in the interactive regression
+model (1), for example.
+Assumption 3(i) requires some asymmetry in worker type composition between differ-
+ent ﬁrm classes. This condition requires non-random mobility, since it fails when pkk′(α)
+does not depend on (k/commaorik′). Also, part (i) fails when pkk′(α)is symmetric in (k/commaorik′).T h i s
+situation arises in the model of Shimer and Smith (2000) in the absence of on-the-job
+search, for example. In the mixture model we focus on here, the presence of asymmetric
+job movements between ﬁrm classes is crucial for identiﬁcation. This is similar to the case
+of the interactive regression model we analyzed above; see equation (6).
+Finally, Assumption 3(ii) is a rank condition. It will be satisﬁed if, in addition to part
+(i), for all r the distributions Fkr/commaori1/commaori/periodori/periodori/periodori/commaoriFkr/commaoriLare linearly independent, and similarly for
+F˜kr/commaori1/commaori/periodori/periodori/periodori/commaoriF˜kr/commaoriL/commaoriFm
+kr/commaori1/commaori/periodori/periodori/periodori/commaoriFm
+kr/commaoriL,a n dFm
+˜kr/commaori1/commaori/periodori/periodori/periodori/commaoriFm
+˜kr/commaoriL.
+The next result shows that, with only two periods and given the structure of the static
+model, both the type- and class-speciﬁc earnings distributions and the proportions of
+worker types can be uniquely recovered. The intuition for the result is similar to that
+in the interactive regression model. Due to the discrete heterogeneity setting, identiﬁca-
+tion is up to an arbitrary choice of labeling of the latent worker types. Proofs are given in
+Appendix A.
+T
+HEOREM 1: Let T = 2, and let Assumptions 1 and 3 hold. Suppose that ﬁrm classes are
+observed. Then, up to labeling of the types α, Fkα and Fm
+k′α are identiﬁed for all (α/commaorik/commaorik′).
+Moreover, for all pairs (k/commaorik′) for which there are job moves from k tok′,pkk′(α)is identiﬁed
+for all α, for the same labeling . Last, the type proportions qk(α)in the ﬁrst period are all
+identiﬁed, again for the same labeling .
+We now turn to the dynamic model, where we focus on T = 4 periods. Let G
+f
+y2/commaorikα(y1)
+(for “forward”) denote the cdf of log-earnings in period 1, in a ﬁrm class k, for a worker
+of type αwho does not change ﬁrm between periods 1 and 2 and earns y2 in period 2.
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 12 =====
+710 S. BONHOMME, T . LAMADON, AND E. MANRESA
+Let Gb
+y3/commaorik′α(y4) (for “backward”) be the cdf of Yi4,i nﬁ r mc l a s sk′, for a worker of type
+αwho does not change ﬁrm between periods 3 and 4 and earns y3 in period 3. Last, let
+py2y3/commaorikk′(α)denote the type distribution of workers who stay in the same ﬁrm of class k
+between periods 1 and 2, move to another ﬁrm of class k′ in period 3, remain in that ﬁrm
+in period 4, and earn y2 and y3 in periods 2 and 3. We again abstract from covariates.
+In the dynamic model, the bivariate cdf of log-earnings Yi1 and Yi4 for workers who
+change ﬁrm between periods 2 and 3 is
+Pr
+[
+Yi1 ≤ y1/commaoriYi4 ≤ y4|Yi2 =y2/commaoriYi3 =y3/commaoriki1 =ki2 =k/commaoriki3 =ki4 =k′/commaori
+mi1 = 0/commaorimi2 = 1/commaorimi3 = 0
+]
+=
+L∑
+α=1
+G
+f
+y2/commaorikα(y1)Gb
+y3/commaorik′α(y4)py2y3/commaorikk′(α)/periodori (9)
+Equation (9) is a consequence of Assumption 2, which is a ﬁrst-order Markov assump-
+tion on the process (Yit/commaorikit/commaorimi/commaorit−1),w h e r e ,i na d d i t i o n ,mit can only depend on Yit and
+kit but not on mi/commaorit−1. In particular, by Assumption 2(ii), Yi4 is independent of past mo-
+bility, ﬁrm classes, and earnings, conditional on (αi/commaoriYi3/commaoriki4/commaoriki3/commaorimi3). Similarly, Yi1 can
+be shown to be independent of future classes, earnings, and mobility conditional on
+(αi/commaoriYi2/commaoriki1/commaoriki2/commaorimi1).
+In addition, in the dynamic case, we denote asFkαthe cdf of log-earningsYi2 for workers
+in ﬁrm classk who remain in the same ﬁrm in periods 1 and 2 (i.e.,mi1 = 0), and we denote
+as qk(α)the distribution of αi for these workers. The joint cdf of log-earnings in periods
+1a n d2i s
+Pr[Yi1 ≤ y1/commaoriYi2 ≤ y2|ki1 =ki2 =k/commaorimi1 = 0]=
+L∑
+α=1
+G
+f
+y2/commaorikα(y1)Fkα(y2)qk(α)/periodori(10)
+The mathematical structure of (9)–(10) is analogous to that of (7)–(8). This is useful to
+analyze the static and dynamic models using similar methods. Intuitively, the conditioning
+on log-earningsYi2 andYi3 immediately before and after the job move ensures conditional
+independence of log-earnings Yi1 and Yi4, even though, in this model, earnings have a
+direct effect on job mobility and respond dynamically to lagged earnings and previous
+ﬁrm classes.
+We start by listing the assumptions, which are stronger than in the static case.
+DEFINITION 2: An augmented connecting cycle of length R is a pair of sequences of ﬁrm
+classes and log-earnings values (k1/commaoriy1/commaori/periodori/periodori/periodori/commaorikR/commaoriyR) and (˜k1/commaori˜y1/commaori/periodori/periodori/periodori/commaori˜kR/commaori˜yR), with kR+1 =k1
+and yR+1 = y1, such that pyr/commaori˜yr/commaorikr/commaori˜kr(α)̸= 0 and pyr+1/commaori˜yr/commaorikr+1/commaori˜kr(α)̸= 0 for all r in {1/commaori/periodori/periodori/periodori/commaoriR}
+and αin {1/commaori/periodori/periodori/periodori/commaoriL}.
+ASSUMPTION 4—Mixture Model, Dynamic:
+(i) For any two ﬁrm classes k, k′ in {1/commaori/periodori/periodori/periodori/commaoriK} and any two log-earnings values y, y′,
+with (k/commaoriy)̸= (k′/commaoriy′), there exists an augmented connecting cycle (k1/commaoriy1/commaori/periodori/periodori/periodori/commaorikR/commaoriyR) and
+(˜k1/commaori˜y1/commaori/periodori/periodori/periodori/commaori˜kR/commaori˜yR), such that (k1/commaoriy1) =(k/commaoriy), and (kr/commaoriyr) =(k′/commaoriy′) for some r, and such
+that the scalars a(1)/commaori/periodori/periodori/periodori/commaoria(L)are all distinct, where
+a(α)= py1/commaori˜y1/commaorik1/commaori˜k1(α)py2/commaori˜y2/commaorik2/commaori˜k2(α)/periodori/periodori/periodoripyR/commaori˜yR/commaorikR/commaori˜kR(α)
+py2/commaori˜y1/commaorik2/commaori˜k1(α)py3/commaori˜y2/commaorik3/commaori˜k2(α)/periodori/periodori/periodoripy1/commaori˜yR/commaorik1/commaori˜kR(α)/periodori
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 13 =====
+A FRAMEWORK FOR EMPLOYER EMPLOYEE DATA 711
+In addition, for all k, k′ and y, y′, possibly equal, there exists an augmented connecting cycle
+(k′
+1/commaoriy′
+1/commaori/periodori/periodori/periodori/commaorik′
+R
+/commaoriy′
+R), (˜k′
+1
+/commaori˜y′
+1/commaori/periodori/periodori/periodori/commaori˜k′
+R
+/commaori˜y′
+R), such that k′
+1
+=k, y′
+1 =y, and ˜k′
+r
+=k′, ˜y′
+r =y′ for
+some r.
+(ii) There exist ﬁnite sets of M values for y1 and y4 such that, for all r in {1/commaori/periodori/periodori/periodori/commaoriR}, the
+matrices A(yr/commaori˜yr/commaorikr/commaori˜kr) and A(yr+1/commaori˜yr/commaorikr+1/commaori˜kr) have rank L, where A(y/commaoriy′/commaorik/commaorik′) has
+(y1/commaoriy4) element:
+Pr
+[
+Yi1 ≤ y1/commaoriYi4 ≤ y4|Yi2 =y/commaoriYi3 =y′/commaoriki2 =k/commaoriki3 =k′/commaorimi2 = 1
+]
+/periodori
+We then have the following nonparametric identiﬁcation result for the dynamic model
+under discrete worker heterogeneity.
+THEOREM 2: Let T = 4, and let Assumptions 2 and 4 hold. Suppose that ﬁrm classes are
+observed. Then, up to labeling of the types α:
+(i) G
+f
+y2/commaorikαand Gb
+y3/commaorik′α are identiﬁed for all (α/commaorik/commaorik′). Moreover, for all (k/commaoriy2/commaorik′/commaoriy3) for
+which there are job moves from (k/commaoriy2) to (k′/commaoriy3), py2y3/commaorikk′(α)is identiﬁed for all α.
+(ii) Fkα and qk(α), and log-earnings cdfs in periods 3 and 4, are also identiﬁed . Last,
+type-speciﬁc transition probabilities between ﬁrm classes are identiﬁed .
+4. TWO-STEP GROUPED FIXED-EFFECTS ESTIMATION
+In the previous section, we have provided conditions under which earnings distributions
+are identiﬁed in the presence of sorting and complementarities. These results hold at
+the ﬁrm class level kit , where, in principle, kit could coincide with the ﬁrm jit . However,
+in matched employer employee panel data sets of typical sizes, estimating models with
+complementarities, dynamics, and two-sided heterogeneity may be ill-behaved due to the
+incidental parameter biases caused by the large number of ﬁrm-speciﬁc parameters that
+are solely identiﬁed from job movements. For this reason, we use a dimension reduction
+method to partition ﬁrms into classes. We now describe a computationally tractable two-
+step grouped ﬁxed-effects estimator, where we classify ﬁrms in a ﬁrst step and estimate
+earnings and mobility parameters in a second step.
+4.1. Recovering Firm Classes Using k-Means Clustering
+In both the static and dynamic models described in Section 2, the distributions of log-
+earnings Y
+it and characteristics Xit , and the probabilities of mobility mit , are all allowed
+to depend on ﬁrm classes k, but not on the identity of the ﬁrm within class k. In other
+words, unobservable ﬁrm heterogeneity operates at the level of ﬁrm classes in the model,
+not at the level of individual ﬁrms. For example, in ( 8), the ﬁrst period’s distribution of
+log-earnings in ﬁrmj does not depend onj beyond its dependence on ﬁrm classk =k(j):
+Pr[Y
+i1 ≤ y1|ji1 =j]=
+L∑
+α=1
+Fkα(y1)qk(α)/commaori (11)
+where the left-hand side thus only depends on k =k(j). This observation motivates clas-
+sifying ﬁrms into classes using their earnings distributions, as we now explain.
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 14 =====
+712 S. BONHOMME, T . LAMADON, AND E. MANRESA
+We propose partitioning the J ﬁrms in the sample into classes by solving the following
+weighted k-means problem:
+min
+k(1)/commaori/periodori/periodori/periodori/commaorik(J)/commaoriH1/commaori/periodori/periodori/periodori/commaoriHK
+J∑
+j=1
+nj
+∫ (ˆFj(y) − Hk(j)(y)
+)2
+dμ(y)/commaori (12)
+where ˆFj denotes the empirical cdf of log-earnings in ﬁrm j, nj is the number of workers
+in ﬁrm j, μis a discrete or continuous measure ( μis supported on a ﬁnite grid in our
+application), k(1)/commaori/periodori/periodori/periodori/commaorik(J)denotes a partition of ﬁrms into K classes, and H1/commaori/periodori/periodori/periodori/commaoriHK
+are cdfs. Here, we take the number K of ﬁrm classes as known. In the empirical analysis,
+we will check robustness around the baseline valueK = 10. We minimize (12) with respect
+to all possible partitions and to class-speciﬁc cdfs. While global minima ink-means may be
+challenging to compute, k-means algorithms are widely used in many ﬁelds and efﬁcient
+heuristic computational methods have been developed (e.g., Steinley (2006)).
+Through the classiﬁcation in ( 12), we estimate ﬁrm classes as “discrete ﬁxed effects,”
+allowing them to be correlated to ﬁrm-speciﬁc covariates. In our application on short
+panels, we will assume that the ﬁrms’ classiﬁcation is time-invariant, and we will correlate
+the estimated classes ex post to ﬁrm observables.
+T o provide a formal justiﬁcation for the classiﬁcation, we consider a setting where the
+model (either static or dynamic) is well-speciﬁed, and there exists a partition of ﬁrms
+into K classes in the population. We consider an asymptotic sequence where both the
+number of ﬁrms and the number of workers per ﬁrm tend to inﬁnity. Using a result from
+Bonhomme and Manresa (2015), we show that estimated ﬁrm classes, ˆk(j), converge to
+the population ones up to an arbitrary labeling as the sample size grows. As a result, the
+asymptotic distribution of parameter estimates in the second step is not affected by the
+estimation of ﬁrm classes. In Appendix B, we provide details on this analysis.
+T wo remarks are in order. First, the labeling of the classes is arbitrary. This labeling
+does not affect variance decomposition exercises. However, a structural interpretation of
+the ﬁrm classes in terms of productivity would require additional assumptions. Eeckhout
+and Kircher (2011)s h o w e dt h a ti ns o m ec a s e s ,i tc a nb ei m p o s s i b l et or e c o v e rs u c ha
+productivity ordering from wage data only.
+Second, the classiﬁcation fails to be identiﬁed when two ﬁrm classes have identical
+earnings distributions in the cross-section. This can happen if one ﬁrm offers a higher
+earnings schedule but has lower-type workers, and another one offers a lower earnings
+schedule but has higher-type workers, in such a way that the two ﬁrms have exactly the
+same earnings distributions. In some environments without ﬁrm capacity constraints, such
+as Postel-Vinay and Robin (2002), the upper bound of earnings in the ﬁrm is increasing
+in ﬁrm productivity, so ﬁrm-speciﬁc distributions are all different and ﬁrms may be con-
+sistently classiﬁed based on their earnings distributions. It is difﬁcult to obtain similar
+guarantees in models with capacity constraints. Nevertheless, note that identiﬁcation can
+survive even when some ﬁrms have identical mean earnings, provided the distributions of
+earnings differ.
+In the empirical analysis, we attempt to bring additional information beyond cross-
+sectional earnings to learn about ﬁrm heterogeneity, in several ways. Going beyond wage
+information has been advocated in the structural literature (e.g., Eeckhout and Kircher
+(2011), Bagger and Lentz (2014), Hagedorn, Law, and Manovskii (2017), Bartolucci, De-
+vicienti, and Monzon (2015)). As robustness checks, we use reclassiﬁcation and random-
+effects methods, which rely on longitudinal information on both earnings and mobility.
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 15 =====
+A FRAMEWORK FOR EMPLOYER EMPLOYEE DATA 713
+We also experiment, albeit without a structural model, with bringing other information
+on the ﬁrm in order to inform the classiﬁcation, such as ﬁrm value added and measures
+of worker ﬂows.
+4.2. Recovering the Model’s Parameters in a Second Step
+From the ﬁrst step, we obtain estimates of ﬁrm classesˆk(j) for all ﬁrmsj in the sample.
+Given those, we then impute a class ˆkit = ˆk(jit) to each worker-period observation, and
+we estimate the model conditional on the ˆkit ’s. T o describe this second step, we consider
+a speciﬁcation where workers belong toL latent types, and the model is parametric given
+worker and ﬁrm heterogeneity. We focus on a two-period version of the static model, and
+a four-period version of the dynamic model, both of which we estimate on Swedish data.
+In the static case, we let fkα(y;θf) (ﬁrst-period earnings), fm
+kα(y;θfm) (second-period
+earnings for job movers), qk(α;θq) (worker-type proportions), and pkk′(α;θp) (worker-
+type proportions for job movers) be indexed by parameter vectors θf , θfm , θq, θp.I n
+our baseline speciﬁcation, we will let both earnings densities be log-normal with (k/commaoriα)-
+speciﬁc means and variances. That is, means and variances of log-earnings are allowed to
+differ between all combinations of worker types and ﬁrm classes. In addition, in the time
+dimension, we will allow for full interactions between ﬁrm classes and time indicators, as
+well as unrestricted non-stationary variances. Last, we will treat all q
+k(α)and pkk′(α)as
+unrestricted parameters.
+Following the spirit of the identiﬁcation strategy, we ﬁrst estimate log-earnings densities
+using job movers only, and we then estimate worker-type proportions in the ﬁrst period
+using both job movers and job stayers. 9 Under the assumption that worker types and
+earnings realizations are independent across workers conditional on mobility indicators
+and ﬁrm classes, the log-likelihood of job movers conditional on mobility patterns and
+estimated ﬁrm classes takes the following form (Nm denoting the number of job movers):
+Nm∑
+i=1
+K∑
+k=1
+K∑
+k′=1
+1{ˆki1 =k}1
+{ˆki2 =k′}
+ln
+( L∑
+α=1
+pkk′(α;θp)fkα(Yi1;θf)fm
+k′α(Yi2;θfm)
+)
+/periodori(13)
+In turn, the log-likelihood of all workers in period 1 is
+N∑
+i=1
+K∑
+k=1
+1{ˆki1 =k} ln
+( L∑
+α=1
+qk(α;θq)fkα(Yi1; ˆθf)
+)
+/periodori (14)
+Hence, conditional on the estimated ﬁrm classes, (13)a n d(14) are standard single-agent
+correlated random-effects log-likelihood functions. We estimate ˆθf , ˆθfm , ˆθp by maximiz-
+ing ( 13), and then ˆθq by maximizing (14). We use the EM algorithm for computation
+(Dempster, Laird, and Rubin (1977)).
+Dynamic Model
+We use a similar approach for the dynamic ﬁnite mixture model using four periods; see
+equations (9)a n d(10). In this case, we specify the conditional mean of Yi4 given Yi3 and
+9Proceeding in this way has the advantage of recovering earnings parameters from job movements directly,
+albeit with some efﬁciency loss. In practice, we estimate the type proportions of job stayers in the last step, and
+combine them with the pkk′(α)to recover the unconditional proportions qk(α).
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 16 =====
+714 S. BONHOMME, T . LAMADON, AND E. MANRESA
+worker and ﬁrm heterogeneity asμ4k′α+ρ4|3Yi3,w h e r eμ4k′αis a(k′/commaoriα)-speciﬁc intercept.
+Likewise, the conditional mean of Yi1 given Yi2 and worker and ﬁrm heterogeneity is
+μ1kα+ρ1|2Yi2. The parametersρ4|3 and ρ1|2 capture the persistence of log-earnings within
+job. For parsimony, we have imposed that those parameters are homogeneous across
+worker types and ﬁrm classes, although this could be relaxed with a larger sample.
+In addition, we specify the mean of (Yi2/commaoriYi3) for job movers between classes k and k′
+as (μ2kα+ξ2(k′)/commaoriμ3k′α+ξ3(k)). The term ξ2(k′) reﬂects that, conditional on moving be-
+tweenk andk′, mean log-earnings before the move can differ with the ﬁrm of destination,
+due to the presence of endogenous mobility. The termξ3(k) reﬂects that the previous ﬁrm
+is allowed to have a direct effect on log-earnings after a move, through the presence of
+state dependence. Neither of those effects is allowed for in the static version of the model.
+We specify the mean of (Y
+i2/commaoriYi3) for job stayers in a ﬁrm of class k as (μs
+2kα/commaoriμs
+3kα
+).L a s t ,
+for both stayers and movers, we let the covariance matrices vary with ﬁrm classes.10
+Given estimates ˆρ4|3 and ˆρ1|2 of the persistence parameters, the other parameters can
+be estimated using a similar approach as in the static case, based on the following log-
+likelihood functions:
+Nm∑
+i=1
+K∑
+k=1
+K∑
+k′=1
+1{ˆki2 =k}1
+{ˆki3 =k′}
+×···
+× ln
+( L∑
+α=1
+pkk′(α;θp)f
+f
+Yi2/commaorikα(Yi1; ˆρ1|2/commaoriθff )fm
+kk′α(Yi2/commaoriYi3;θfm)fb
+Yi3/commaorik′α(Yi4; ˆρ4|3/commaoriθfb)
+)
+/commaori(15)
+and
+N∑
+i=1
+K∑
+k=1
+1{ˆki2=k}
+× ln
+( L∑
+α=1
+qk(α;θq)f
+f
+Yi2kα(Yi1; ˆρ1|2/commaoriˆθff )fs
+kα(Yi2/commaoriYi3;θfs)fb
+Yi3/commaorik′α(Yi4; ˆρ4|3/commaoriˆθfb)
+)
+/periodori(16)
+We estimate ˆθp, ˆθff , ˆθfm , ˆθfb based on (15), and then ˆθq, ˆθfs based on (16), using the EM
+algorithm in both cases.
+While it is in principle possible to estimateρ4|3 andρ1|2 by maximizing a joint likelihood
+function across movers and stayers with respect to all parameters, doing so would be
+computationally cumbersome. A convenient alternative, which we adopt in the empirical
+analysis, is to estimate these parameters in an initial step based on covariance restrictions.
+Under the assumption that the effect of worker types on mean log-earnings is constant
+over time within ﬁrm, simple restrictions on the ρ’s can be obtained by exploiting the
+particular form of the conditional means of Y
+i4 given Yi3 and Yi1 given Yi2, respectively.
+We provide details on the covariance-based estimation ofρ4|3 andρ1|2 in the Supplemental
+Material.
+The estimation approach outlined in this section can be modiﬁed in several ways that
+we implement empirically. A ﬁrst extension is a model-based reclassiﬁcation. Given es-
+timates of the θparameters, one may reclassify every ﬁrm j to the class k = ˜k(j) that
+10We impose that the best linear predictors in the regressions ofYi3 onYi2, for both stayers (denoted asρs
+3|2)
+and movers (ρm
+3|2
+), do not depend on worker types or ﬁrm classes, and that the residual variances in the case of
+movers only depend on k′. This could be relaxed with a large enough sample.
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 17 =====
+A FRAMEWORK FOR EMPLOYER EMPLOYEE DATA 715
+corresponds to the maximal value of the k-speciﬁc likelihoods of ﬁrm j’s observations.
+This approach can be iterated further. In addition, while we have described estimation in
+the context of ﬁnite mixture models, the two-step approach can also be used in regression
+models, such as the AKM model and its interactive counterparts ( 1)a n d( 2) that allow
+for complementarities or dynamics. In such models, the two-step grouped ﬁxed-effects
+method delivers computationally convenient estimation algorithms based on mean and
+covariance restrictions. We will use estimates of interactive regression models to show the
+robustness of our results.
+Experiments on Simulated Data
+T o evaluate the ability of our estimator to recover the contributions of worker and ﬁrm
+heterogeneity to earnings dispersion, we consider two simulation experiments. We ﬁrst
+analyze an extension of the model of Shimer and Smith (2000) with on-the-job search,
+using parameter values that imply either positive or negative assortative matching. We
+ﬁnd that our ﬁnite mixture estimator of the static model recovers wage functions and
+variance contributions well (see Figure S3 and T able S1 in the Supplemental Material).
+We also set up a second simulation experiment, where we use our empirical estimates on
+Swedish data as “true” parameter values. We ﬁnd that the Monte Carlo distributions are
+approximately centered around true values and have low dispersion, for both the static
+model and the dynamic model (see T ables S5 and S6). In the simulation based on the
+static model, we also compute means of AKM ﬁxed-effects estimates across Monte Carlo
+distributions (ﬁfth row in T able S5). We ﬁnd that AKM estimates of variance components
+are severely biased. Although such biases may not be surprising, given the short length of
+the panel and the low mobility rate, note that our estimator does recover the magnitudes
+of variance components in this setting.
+5.
+EMPIRICAL RESULTS I: STATIC MODEL
+We now present results for the static model in the Swedish data. We use administra-
+tive data covering the entire working age population in Sweden between 1997 and 2008.
+We follow Friedrich, Laun, Meghir, and Pistaferri ( 2014) for sample selection and con-
+struction of monthly log-earnings. We estimate the static model on males working in the
+private sector in 2002 and 2004. We keep workers who are both fully employed in the
+same ﬁrm in 2002 and fully employed in the same ﬁrm in 2004, and ﬁrms with at least
+one fully-employed worker during the period. In Appendix C, we provide details on the
+Swedish labor market, and on sample construction. We deﬁne job movements in a con-
+servative way, which we describe in detail in Appendix C. This construction results in low
+mobility rates, with a ratio of job movers to job stayers of 3.3% in the sample.
+Firm Classes
+As described in Section 4, we estimate ﬁrm classes using a weighted k-means algorithm
+with 10,000 randomly generated starting values. We use ﬁrms’ cdfs of 2002 log-earnings on
+a grid of 20 percentiles of the overall log-earnings distribution. We weight measurements
+by ﬁrm size, and only include job stayers in the classiﬁcation.
+In T able I, we provide summary statistics about the estimated ﬁrm classes for our
+baseline choice of number of classes K = 10. We order ﬁrm classes according to mean
+log-earnings in each class. Classes capture substantial heterogeneity between ﬁrms. The
+between-ﬁrm-class log-earnings variance is 0 /periodori0421, that is, 89% of the overall between-
+ﬁrm variance. This suggests that assuming homogeneity within each of the 10 classes
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 18 =====
+716 S. BONHOMME, T . LAMADON, AND E. MANRESA
+TABLE I
+DATADESCRIPTION, BY ESTIMATED FIRM CLASSESa
+Class: 1 2 3456 7 89 1 0 A ll
+Number of Workers 16,868 50,906 74,073 76,616 80,562 66,120 105,485 61,272 47,164 20,709 599,775
+Number of Firms 5808 6832 4983 5835 3507 4149 3672 3467 2886 2687 43,826
+Mean Firm Reported Size 12.43 20.92 42.68 28.47 65.06 32.30 60.08 51.24 54.16 50.86 37.59
+Number of Firms ≥ 10
+(Actual Size)
+160 1034 1519 1357 1192 930 999 855 632 415 9093
+Number of Firms ≥ 50
+(Actual Size)
+7 87 260 225 270 162 245 183 147 52 1638
+% High School Drop Out 28.5% 27.8% 25.9% 26.8% 22.2% 23.8% 18.9% 12.9% 6.1% 3.2% 20.6%
+% High School Graduates 61.3% 63.4% 62.3% 63.3% 59.1% 62.7% 58.4% 49.3% 34.9% 25.6% 56.7%
+% Some College 10.2% 8.8% 11.8% 9.9% 18.7% 13.5% 22.8% 37.8% 59.0% 71.2% 22.7%
+%W o r k e r sY o u n g e r
+Than 30
+24.3% 19.5% 19.8% 17.5% 18.6% 15.4% 13.8% 14.3% 15.0% 14.3% 16.8%
+% Workers Between 31
+and 50
+54.1% 54.6% 55.0% 56.2% 56.0% 57.6% 58.5% 58.9% 60.0% 64.2% 57.2%
+%W o r k e r sO l d e r
+Than 51
+21.7% 25.9% 25.1% 26.3% 25.5% 27.0% 27.6% 26.8% 25.0% 21.5% 26.0%
+%W o r k e r si n
+Manufacturing
+24.3% 39.3% 46.8% 53.0% 51.5% 52.0% 53.0% 40.3% 31.5% 7.6% 45.4%
+% Workers in Services 39.3% 32.1% 23.3% 19.7% 14.4% 15.0% 16.0% 29.7% 52.1% 72.6% 25.3%
+% Workers in Retail and
+Tr a d e
+26.4% 19.0% 24.9% 10.6% 29.3% 7.9% 8.4% 17.7% 14.8% 18.7% 16.7%
+%W o r k e r si n
+Construction
+9.9% 9.6% 5.1% 16.8% 4.9% 25.1% 22.5% 12.3% 1.5% 1.1% 12.6%
+Mean log-Earnings 9.69 9.92 10.01 10.06 10.15 10.16 10.24 10.36 10.50 10.77 10.18
+V ariance of log-Earnings 0.101 0.054 0.085 0.051 0.102 0.051 0.077 0.096 0.109 0.173 0.124
+Skewness of log-Earnings -1.392 -0.709 0.345 0.019 0.576 0.433 0.474 0.703 0.385 1.001 0.582
+Kurtosis of log-Earnings 7.780 14.093 9.017 15.565 7.788 14.763 10.033 8.141 6.651 6.984 7.400
+Between-Firm V ariance
+of log-Earnings
+0.0462 0.0044 0.0036 0.0018 0.0032 0.0016 0.0016 0.0045 0.0057 0.0435 0.0475
+Mean log-V alue-Added
+per Worker
+12.40 12.58 12.69 12.69 12.84 12.75 12.87 12.94 13.03 13.18 12.74
+aThe table corresponds to males fully employed in the same ﬁrm in 2002 and 2004, for ﬁrms that are continuously present in the sample. The “actual size” isthe number of workers per ﬁrm in our
+sample. All numbers in the table correspond to 2002.
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 19 =====
+A FRAMEWORK FOR EMPLOYER EMPLOYEE DATA 717
+might not result in major losses of information, at least in terms of variance of log-
+earnings. Classes differ also in terms of second-, third-, and fourth-order log-earnings
+moments. In addition, there are substantial differences between classes in terms of worker
+characteristics. While lower classes (according to their mean log-earnings) show high
+percentages of high school dropouts and low percentages of workers with some college,
+higher classes show the opposite pattern. Lower classes also tend to have higher percent-
+ages of workers less than 30 years old, and lower percentages of workers between 30 and
+50, while higher classes have more workers between 30 and 50. This relationship broadly
+reﬂects the life cycle pattern of earnings in these data.
+Firm size reported by the ﬁrm tends to increase with ﬁrm class, although the relation-
+ship is not monotonic. Classes 1 and 2 contain smaller ﬁrms than the other classes. There
+is also evidence of both between-and-within-sector variation between classes, which is
+not monotonic in mean earnings. For example, the proportion of workers in services is
+U-shaped in ﬁrm class, while it is inverse U-shaped in manufacturing. Last, log value
+added per worker tends to increase with ﬁrm class, although classes explain only 18% of
+the between-ﬁrm variance in log value added per worker.
+There is substantial worker mobility between ﬁrm classes in our sample, especially be-
+tween adjacent classes (see T able S4 in the Supplemental Material). This is important
+since our identiﬁcation strategy is based on exploiting mobility. In addition, means of log-
+earnings for workers moving between different ﬁrm classes—for example, moving “up”
+or “down”—tend to be associated with different earnings levels (see Figure S6). We em-
+phasized the importance of such asymmetric patterns in our identiﬁcation analysis; see
+equation (6).
+Wages, Worker Heterogeneity, and Firm Heterogeneity
+Our baseline estimates are based on a Gaussian ﬁnite mixture model with L = 6t y p e so f
+workers and K = 10 ﬁrm classes. We check below how sensitive our main results are to
+varying these two numbers. As we explained in Section 4, we estimate earnings distribu-
+tions and type proportions of job movers using the sample of job movers between 2002
+and 2004. We then estimate type proportions of job stayers in 2002. Maximum likelihood
+estimation of ﬁnite mixture models is often subject to local maxima, and our setting is
+no exception. In addition, some local maxima have poor connectedness, in the sense that
+some worker types only move within a subset of ﬁrm classes, which results in unstable pa-
+rameter estimates. We use the EM algorithm to explore the likelihood function, and use
+a measure of network connectedness recently studied in Jochmans and Weidner (2017)
+to select our preferred estimates; see the Supplemental Material for details.
+In the left panel of Figure 2, we plot estimates of the means of log-earnings, for each
+ﬁrm class and each worker type. On the x-axis, ﬁrm classes are ordered by mean log-
+earnings. The brackets show 95% conﬁdence intervals based on the parametric boot-
+strap.
+11 The results show clear evidence of worker heterogeneity. They also show some
+variation in log-earnings between ﬁrm classes, although to a lesser extent. Moreover,
+lower-type workers (where “lower” types refer to low mean log-earnings) appear to gain
+the most from working in a higher-wage ﬁrm. This suggests the presence of some comple-
+mentarity between ﬁrms and lower-type workers, which we will further explore below.
+11The bootstrap draws are conditional on worker and ﬁrm links in the data, and ﬁrm classes are re-estimated
+in each replication. This bootstrap procedure provides a measure of parameter uncertainty that accounts for
+uncertainty in ﬁrm classes.
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 20 =====
+718 S. BONHOMME, T . LAMADON, AND E. MANRESA
+FIGURE 2.—Main parameter estimates of the static model. Notes: Estimates of the static model, on
+2002–2004. In the left graph, we plot estimates of means of log-earnings, by worker type and ﬁrm class. We
+order theK = 10 ﬁrm classes (on thex-axis) by mean log-earnings. On they-axis, we report estimates of mean
+log-earnings for the L = 6 worker types. In the right graph, we show estimates of the proportions of worker
+types in each ﬁrm class. In the left graph, the brackets indicate pointwise parametric bootstrap 2.5%–97.5%
+quantile bands (computed using 200 replications).
+In the right panel of Figure 2, we report the estimated proportions of worker types in
+each ﬁrm class. The results show how the composition of worker types differs markedly
+across ﬁrm classes. For example, the lowest-class ﬁrms (in terms of mean log-earnings)
+employ mostly the bottom two worker types, while the highest-class ﬁrms employ mostly
+the top three worker types. Overall, the two graphs in Figure 2 suggest that variation
+in log-earnings between ﬁrm classes is mainly due to ﬁrms employing different workers,
+rather than differences in earnings for a given worker type.
+V ariance Decomposition and Reallocation
+We next report the results of several exercises that illustrate how earnings and heterogene-
+ity relate to each other. We start with a decomposition of the variance of log-earnings. In
+the literature since Abowd, Kramarz, and Margolis (1999), it is common to decompose
+the variance of log-earnings—net of observed covariates—into four components: the vari-
+ance of worker effects α(i.e., coefﬁcients of worker type indicators), the variance of ﬁrm
+effects ψ(i.e., coefﬁcients of ﬁrm class indicators), twice the covariance between the two,
+and the variance of residualsε. In our nonlinear model, we perform a similar decomposi-
+tion by working with a linear projection of log-earnings on worker type indicators and ﬁrm
+class indicators, in a regression without interactions. The results of the decomposition re-
+ported in the top panel of T able II show two main features. First, worker heterogeneity
+explains substantially more variation in earnings than ﬁrm heterogeneity. Differences in
+ﬁrm classes only account for 2/periodori6% of the variance, compared to 60% for the part due
+to differences in worker types. The second main ﬁnding is that the part explained by the
+covariance is substantial. The correlation between worker and ﬁrm effects is 49%, which
+suggests the presence of strong sorting between workers and ﬁrms. This is in line with the
+evidence documented in the right panel of Figure 2.
+As a ﬁrst way to quantify the economic magnitude of complementarities, we next assess
+the explanatory power of worker types and ﬁrm classes when those enter the regression
+interactively as opposed to additively. TheR
+2 coefﬁcient in the linear regression is 74/periodori8%,
+while in the regression that includes all interactions between worker type indicators and
+ﬁrm class indicators, theR
+2 is 75/periodori8%. Hence, while the left panel of Figure 2 suggests the
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 21 =====
+A FRAMEWORK FOR EMPLOYER EMPLOYEE DATA 719
+TABLE II
+VARIANCE DECOMPOSITION AND REALLOCATION EXERCISE IN THE STATICMODELa
+V ariance Decomposition (×100)
+Va r(α)
+Va r(y)
+Va r(ψ)
+Va r(y)
+2C o v(α/commaoriψ)
+Va r(y)
+Va r(ε)
+Va r(y) Corr(α/commaoriψ)
+60.03 2/periodori56 12/periodori17 25/periodori24 49/periodori13
+(0.85) (0/periodori16)( 0/periodori39)( 0/periodori59)( 0/periodori86)
+Reallocation Exercise (×100)
+Mean Median 10%-Quantile 90%-Quantile V ariance
+0.50 0/periodori58 2/periodori60 −1/periodori24 −1/periodori12
+(0.10) (0/periodori11)( 0/periodori19)( 0/periodori31)( 0/periodori11)
+aEstimates of the static model, on 2002–2004. In the top panel, αdenotes the worker effect, and ψdenotes the ﬁrm effect, in
+the linear regression Y = α+ψ+ε. In the bottom panel, we report differences in means, quantiles, and variances of log-earnings
+between two samples: a counterfactual sample where workers are randomly reallocated to ﬁrms, and the original sample. The results
+are obtained using 1,000,000 simulations, and we report parametric bootstrap standard errors in parentheses (computed using 200
+replications).
+presence of some complementarity between ﬁrms and lower-type workers, those comple-
+mentarities explain only a small part of the variance of log-earnings.
+We next consider the impact on log-earnings of a reallocation exercise where workers
+are randomly allocated to ﬁrms. With this exercise, our aim is to assess the contribution of
+sorting to the distribution of earnings. We assume that earnings functions, for all worker
+types and ﬁrm classes, are not affected by the reallocation, thus abstracting from equilib-
+rium effects. We show the results of the reallocation in the bottom panel of T able II.I n
+the ﬁrst column, we report the estimate of the difference in mean log-earnings between
+two samples: a counterfactual sample where workers are randomly allocated among ﬁrms,
+and our original sample. In an additively separable economy between workers and ﬁrms,
+such as under the AKM model, there should be no effect of the reallocation on mean log-
+earnings (e.g., Graham, Imbens, and Ridder (2014)). However, using our estimates that
+account for the presence of complementarities, we ﬁnd a positive mean impact (0.5%),
+which suggests that the effect of complementarities on average log-earnings is statistically
+signiﬁcant but quantitatively small. The positive sign is in line with the fact that the mean
+worker type tends to increase with ﬁrm class k, while complementarities are somewhat
+stronger in low-wage ﬁrm classes.
+12
+Moreover, in our distributional framework, we are able to estimate the entire counter-
+factual earnings distribution corresponding to a given reallocation of workers to ﬁrms. In
+columns 2 to 4 of the bottom panel of T able II, we show the differences in medians and
+10% and 90% percentiles of log-earnings between the counterfactual random allocation
+and our sample. We also report differences in variances in the last column. We see that,
+while the median effect is in line with the mean effect, the bottom of the distribution
+would tend to beneﬁt in the random allocation, whereas the top would be hurt. Those
+differences reﬂect both the fact that log-earnings are less dispersed in the random alloca-
+12T o provide an intuition, consider the regression model ( 1). In this speciﬁcation, the difference between
+mean outcomes in a population where workers are randomly allocated to ﬁrms and in our data is, abstracting
+from time indices for clarity, Erandom(Yi) − E(Yi) =− Cov(b(ki)/commaoriE(αi|ki)).
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 22 =====
+720 S. BONHOMME, T . LAMADON, AND E. MANRESA
+tion, as shown by the reduction in variance, as well as the presence of complementarities
+at the bottom of the distribution.
+Interpretation
+The coexistence of strong sorting and weak complementarities may be surprising in the
+perspective of the search matching models inspired by Becker (1973). In such models, as-
+sortative matching patterns arise from complementarities in production, which are often
+reﬂected in non-monotonic wages. For example, this happens in the model ofShimer and
+Smith (2000) with on-the-job search that we have simulated. More generally, the results in
+this section are difﬁcult to reconcile with models based on revealed preferences for wages
+only. This may indicate that workers or ﬁrms care about other job attributes ( Hwang,
+Mortensen, and Reed (1998)), or that workers of a similar type enjoy working together
+as in the peer effects literature. Workers and ﬁrms might also be more complex than
+assumed in most models of sorting ( Lindenlaub (2017), Lise and Postel-Vinay (2015)).
+More speciﬁcally to the Swedish context, as we discuss in Appendix C, institutions such
+as unions may contribute to explain why different ﬁrms do not pay similar workers very
+differently.
+Robustness Analysis
+In order to explore the robustness of our results, we perform several exercises that we
+summarize in T ableIII. In panels B and C of the table, we show the results of the vari-
+ance decomposition for different values of the numbers of ﬁrm classes and worker types,
+respectively. The results are quite stable across K values. In addition, while taking L = 3
+seems to understate the contribution of worker heterogeneity and overstate that of ﬁrm
+heterogeneity, the results are stable between L = 5a n dL = 9.
+In panel D, we report results corresponding to several additional speciﬁcations. In the
+ﬁrst row, we show the results for a model where log-earnings are distributed as three-
+component mixtures of Gaussians, conditional on worker types and ﬁrm classes. The re-
+sults are very similar to the baseline. In the second row, we report the results of a variance
+decomposition applied to residuals of log-earnings on a third-order polynomial in age,
+three education categories, three sectors (manufacturing, retail, and services), and time
+indicators, with a set of interactions. TheR
+2 in the regression is 21%. We estimate the pa-
+rameters on the regression residuals using our two-step approach, including thek-means
+step. We ﬁnd that the contribution of worker unobserved heterogeneity is 50% of the
+variance, compared to 60% in the baseline. Moreover, the relative contribution of ﬁrm
+heterogeneity is somewhat larger than in the baseline. In rows three and four, we report
+decompositions estimated on smaller ﬁrms (less than 50 workers per ﬁrm in 2002) and
+large ﬁrms (more than 50). In smaller ﬁrms, the contribution of worker heterogeneity is
+reduced compared to that of ﬁrm heterogeneity and the covariance term, while in larger
+ﬁrms, worker heterogeneity accounts for a greater share of the log-earnings variance. In
+the ﬁfth row, we show that the variance decomposition implied by a fully nonstationary
+model gives very close results to our baseline estimates.
+In panel E of T ableIII, we show results based on the interactive regression model (1).
+13
+This model is a valuable complement to our baseline model for several reasons. First,
+in the regression model, we do not assume that worker types are discrete. Second, es-
+timation only relies on mean and covariance restrictions, not on other features of the
+13We do not account for covariates (i.e.,ct = 0), and we keep bt(k) constant over time.
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 23 =====
+A FRAMEWORK FOR EMPLOYER EMPLOYEE DATA 721
+TABLE III
+VARIANCE DECOMPOSITION (×100), STATICMODEL,R OBUSTNESS CHECKSa
+Va r(α)
+Va r(y)
+Va r(ψ)
+Va r(y)
+2C o v(α/commaoriψ)
+Va r(y)
+Va r(ε)
+Va r(y) Corr(α/commaoriψ)
+A. Baseline Model
+60/periodori02 /periodori61 2/periodori22 5/periodori24 9/periodori1
+B. V arying the Number of Firm Classes
+K = 36 5/periodori91 /periodori48 /periodori72 4/periodori14 5/periodori3
+K = 20 57/periodori62 /periodori91 2/periodori22 7/periodori34 7/periodori4
+C. V arying the Number of Worker T ypes
+L = 31 3/periodori51 3/periodori41 2/periodori26 0/periodori84 5/periodori4
+L = 55 5/periodori53 /periodori21 2/periodori82 8/periodori54 7/periodori9
+L = 95 3/periodori33 /periodori51 3/periodori13 0/periodori14 8/periodori2
+D. Other Mixture Speciﬁcations
+Mixture-of-Mixtures 62/periodori62 /periodori41 1/periodori32 3/periodori84 6/periodori4
+Log-Earnings Residuals 49/periodori63 /periodori51 0/periodori63 6/periodori34 0/periodori0
+Firms
+With ≤50 Workers 52/periodori64 /periodori01 7/periodori02 6/periodori45 9/periodori1
+Firms With> 50 Workers 60 /periodori12 /periodori67 /periodori92 9/periodori43 1/periodori6
+Fully Nonstationary 60/periodori52 /periodori81 2/periodori52 4/periodori34 8/periodori3
+E. Regression Models
+Interactive 56/periodori52 /periodori11 0/periodori83 0/periodori65 0/periodori2
+Linear 60/periodori61 /periodori71 0/periodori02 7/periodori64 8/periodori5
+F . Other Classiﬁcations
+Classify Using Means 57/periodori14 /periodori21 3/periodori72 5/periodori04 3/periodori8
+Split by Percent of Movers 67 /periodori21 /periodori58 /periodori52 2/periodori94 2/periodori5
+Split by V alue Added 55/periodori43 /periodori41 2/periodori52 8/periodori74 6/periodori0
+G. Reclassiﬁcation (Starting at Baseline)
+1 Iteration 55/periodori94 /periodori11 3/periodori32 6/periodori74 3/periodori9
+10 Iterations 56/periodori34 /periodori11 2/periodori52 7/periodori24 1/periodori2
+aEstimates of the static model, on 2002–2004. αdenotes the worker effect, and ψdenotes the ﬁrm effect, in the linear regression
+Y =α+ψ+ε. The results are obtained using 1,000,000 simulations. The various speciﬁcations are described in the text.
+distribution of the data. For example, the parameters at(k) and b(k) are estimated from
+mean restrictions alone, which do not rely on assumptions on serial dependence. In ad-
+dition, the regression estimator is straightforward to compute. On the other hand, unlike
+our baseline speciﬁcation, the model’s functional forms restrict the shape of interaction
+effects between worker and ﬁrm heterogeneity. In the second row, we report the results
+for a regression model where we additionally impose that b(k) = 1f o ra l lk. The results
+in panel E show similar variance decompositions as in our baseline model.
+In panel F , we consider several speciﬁcations in which we vary the way we classify ﬁrms.
+In the ﬁrst row, we use deciles of mean log-earnings for the classiﬁcation. In the next two
+rows, we split each class in two equally-sized subclasses according to the percentage of
+job movers in the ﬁrm (second row), and value added (third row). These speciﬁcations
+capture other information, beyond differences in log-earnings distributions, contained in
+mobility patterns and value added. The results show some differences with our baseline
+estimates. For example, when splitting the classes according to value added, the ﬁrm ef-
+fects variance becomes 3/periodori4%, compared to 2/periodori6% in the baseline. The three speciﬁcations
+in panel F also give slightly smaller correlations between worker and ﬁrm effects. How-
+ever, the differences compared to our baseline estimates are small.
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 24 =====
+722 S. BONHOMME, T . LAMADON, AND E. MANRESA
+Last, in panel G of T able III, we show the results of a model-based reclassiﬁcation.
+Unlike our baseline classiﬁcation of ﬁrms, this method incorporates information from
+both periods, including earnings associated with job mobility. We report the result of one
+and ten iterations, starting from the baseline parameter values. The iterated estimates
+tend to imply a somewhat larger ﬁrm effect and smaller correlation coefﬁcient than our
+baseline two-step results, although the differences are quantitatively small. We have also
+performed a similar reclassiﬁcation starting from different initial classiﬁcations: deciles of
+the ﬁrm effects estimates of Abowd, Kramarz, and Margolis (1999), deciles of log value
+added per worker, deciles of the poaching rank measure ofBagger and Lentz (2014), and
+deciles of the ﬁrm-speciﬁc shares of job movers. We have found that, while the initial
+values of the variance components differ substantially, the values after ten iterations are
+quite close to each other (see T able S7 in the Supplemental Material).
+The magnitudes we ﬁnd differ from the ﬁxed-effects estimates ofAbowd, Kramarz, and
+Margolis (1999). In particular, the AKM estimate of the variance of ﬁrm effects is 32% on
+our sample, and the estimated correlation coefﬁcient is negative. In short panels with low
+mobility rates, it is well-documented that the AKM estimator may be biased ( Andrews
+et al. (2008)). Our experiments on simulated data, which we described in Section 4,s u g -
+gest that biases may be substantial in our case. In additional robustness checks, we have
+found that the large AKM estimate of the ﬁrm effects variance is mostly driven by ﬁrms
+with very small number of job movers, and that the variance drops substantially when us-
+ing existing bias-correction methods (see T able S2 in the Supplemental Material). These
+various exercises support our ﬁnding that, once netted out of incidental parameter bias,
+the variance of ﬁrm effects is small in the Swedish data.
+We have performed two additional robustness checks. T o further address the robustness
+of our classiﬁcation of ﬁrms, we have estimated a two-sided random-effects speciﬁcation
+where both worker types and ﬁrm classes are treated as stochastic. Compared to our two-
+step approach, this speciﬁcation is more challenging to estimate. T o check sensitivity to
+departures from discrete ﬁrm heterogeneity, we have computed estimates allowing for
+within-class ﬁrm heterogeneity. In both cases, we have found magnitudes in line with our
+baseline estimates. We provide details on these robustness checks in the Supplemental
+Material.
+In all our speciﬁcations, we consistently ﬁnd magnitudes that are in line with our base-
+line estimates. In particular, ﬁrm effects net of worker composition explain less than 5%
+of the log-earnings variance, and the correlation between worker and ﬁrm effects ranges
+between 30% and 50%. Compared to estimates based on AKM—not corrected for bias—
+in other countries, our ﬁndings on Swedish data suggest a smaller contribution of ﬁrms
+to wage dispersion and a stronger association between worker and ﬁrm heterogeneity.
+We are aware of only a handful of structural estimates in the literature. Notably, Bagger
+and Lentz (2014) found a variance of ﬁrm effects of 11% and a correlation coefﬁcient of
+32% on Danish data, and Hagedorn, Law, and Manovskii (2017) estimated a correlation
+between worker and ﬁrm types of 75% on a German sample.
+6.
+EMPIRICAL RESULTS II: DYNAMIC MODEL
+In this section, we present empirical results for our dynamic model. We start by de-
+scribing parameter estimates, and we then assess their implications in terms of dynamic
+patterns.
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 25 =====
+A FRAMEWORK FOR EMPLOYER EMPLOYEE DATA 723
+TABLE IV
+PARAMETER ESTIMATES OF THE DYNAMIC MODELa
+Earnings Effects ξ2(k′) of Future Firm Classes
+k′ = 2 k′ = 3 k′ = 4 k′ = 5 k′ = 6 k′ = 7 k′ = 8 k′ = 9 k′ = 10
+−0.005 0 /periodori004 0/periodori005 0/periodori022 0/periodori002 0/periodori015 0/periodori009 0/periodori016 0/periodori023
+(0.008) (0/periodori009)(0/periodori011)(0/periodori012)(0/periodori011)(0/periodori010)(0/periodori011)(0/periodori012)(0/periodori012)
+Earnings Effects ξ3(k) of Past Firm Classes
+k = 2 k = 3 k = 4 k = 5 k = 6 k = 7 k = 8 k = 9 k = 10
+0.051 0 /periodori038 0/periodori045 0/periodori061 0/periodori040 0/periodori072 0/periodori058 0/periodori087 0/periodori090
+(0.016) (0/periodori015)(0/periodori015)(0/periodori016)(0/periodori017)(0/periodori015)(0/periodori018)(0/periodori016)(0/periodori017)
+Persistence Parametersρ
+ρ1|2 ρm
+3|2 ρs
+3|2
+ρ4|3
+0.227 0.246 0.681 0.651
+(0.009) (0.044) (0.022) (0.004)
+aEstimates of the dynamic model, on 2001–2005.ρm
+3|2 is the autoregressive coefﬁcient of log-earnings for job movers between 2002
+and 2004, and ρs
+3|2
+is the coefﬁcient for job stayers. ξ2(k′) and ξ3(k) denote the mean effects on log-earnings before and after a
+job move between ﬁrm classes k and k′, respectively. k′ = 1 and k = 1 are the omitted categories. We report parametric bootstrap
+standard errors in parentheses (computed using 200 replications).
+6.1. Parameter Estimates
+We estimate the dynamic model on 2001–2005, focusing on males fully-employed in the
+same ﬁrm in 2001–2002 and 2004–2005. In order to estimate ﬁrm classes, we use the same
+weighted k-means algorithm as in the static model. We then estimate the model in three
+steps, as explained in Section 4. We estimate the earnings persistence parametersρ4|3 and
+ρ1|2, the wage functions and type probabilities of job movers, and those of job stayers, in
+turn.
+In T ableIV, we show estimates of several parameters of the dynamic model. The pa-
+rameter ξ2(k′) is the effect of ﬁrm class k′ on the mean log-earnings in period 2 of a
+worker moving from k in period 2 to k′ in period 3. It would be zero for all k′ under
+the strict exogeneity assumption on mobility, which is imposed in our static model and
+many models in the literature. This effect is quantitatively small, with at most a 2% effect
+relative to the omitted class k
+′ = 1. Note that strict exogeneity of mobility also imposes
+that earnings realizations are independent of the subsequent decision to move. We ﬁnd
+stronger support against this implication of exogenous mobility; see T ableVII.
+The parameter ξ
+3(k), in turn, captures the effect of ﬁrm class k on the mean log-
+earnings in period 3 of a worker moving between k and k′. Our static model, and many
+models in the literature, would also rule out the presence of a direct effect of the previous
+employer on current earnings. This effect appears empirically quite large in the dynamic
+model. It is approximately monotonic in ﬁrm class, and amounts to a 9% wage premium
+in the highest classes. This suggests that past ﬁrms have an impact on future earnings.
+In the bottom panel of T able IV, we report the estimates of earnings persistence pa-
+rameters. Persistence estimates are higher for job stayers than for job movers. Note that
+the autoregressive coefﬁcient of 0/periodori246 upon job move is signiﬁcantly different from zero,
+which suggests that the conditional independence assumption of the static model does
+not hold in our data. As an important robustness check, we have estimated the persis-
+tence parameters based on covariance restrictions in ﬁrst differences, in addition to the
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 26 =====
+724 S. BONHOMME, T . LAMADON, AND E. MANRESA
+TABLE V
+VARIANCE DECOMPOSITION AND REALLOCATION EXERCISE IN THE DYNAMIC MODEL
+V ariance Decomposition (×100)
+Va r(α)
+Va r(y)
+Va r(ψ)
+Va r(y)
+2C o v(α/commaoriψ)
+Va r(y)
+Va r(ε)
+Va r(y) Corr(α/commaoriψ)
+60/periodori27 4/periodori24 13/periodori40 22/periodori09 41/periodori90
+(1/periodori30)( 0/periodori65)( 0/periodori37)( 0/periodori69)( 2/periodori35)
+Reallocation Exercise (×100)
+Mean Median 10%-Quantile 90%-Quantile V ariance
+0/periodori26 0/periodori80 2/periodori57 −3/periodori24 −1/periodori05
+(0/periodori28)( 0/periodori19)( 0/periodori70)( 0/periodori57)( 1/periodori03)
+aEstimates of the dynamic model, on 2001–2005. See the notes to T ableII.
+speciﬁcation in levels shown in T ableIV. The literature has documented differences be-
+tween level estimates and ﬁrst difference estimates of the dynamics of earnings in sev-
+eral data sets (Daly, Hryshko, and Manovskii (2016)). We ﬁnd ρ1|2 = 0/periodori506, ρ4|3 = 0/periodori451,
+ρm
+3|2 = 0/periodori194, and ρs
+3|2
+= 0/periodori605. Despite the differences in persistence estimates, variance
+decomposition results are similar in this case.
+The estimates of the dynamic model deliver similar cross-sectional patterns for log-
+earnings and sorting as in the static case. In particular, the model implies approximate
+additivity of log-earnings in worker types and ﬁrm classes, relatively small differences
+across ﬁrms for all worker types except the lowest one, and strong evidence of association
+between worker types and ﬁrm classes (see Figure S7 in the Supplemental Material). In
+Ta b l eV, we report the cross-sectional variance decomposition and reallocation exercise
+based on the dynamic model. The variance decomposition is quite similar to the one we
+obtained using the static model, with some differences: the contribution of ﬁrm effects in-
+creases from 2.6% to 4.2%, and the correlation between worker and ﬁrm effects decreases
+from 49% to 42%. As in the static model, adding interactions between worker types and
+ﬁrm classes has small effects on theR
+2 of the regression (i.e., 78/periodori5% versus 77/periodori9%). In the
+bottom panel of T ableV, we show that the distributional effects of randomly reallocating
+workers across ﬁrms are also in line with the static results. The reallocation has a positive
+effect on mean (now insigniﬁcant) and median (signiﬁcant) log-earnings, with asymmetric
+effects on the two tails of the distribution.
+In T ableVI, we show that our estimates are stable across a range of speciﬁcations, when
+estimating the persistence parameters in differences instead of levels (panel B), varying
+the numbers of ﬁrm classes and worker types (panels C and D), and estimating regression
+models (panel E). Using the dynamic model to reclassify ﬁrms, we obtain a larger variance
+contribution of ﬁrm effects and a lower correlation coefﬁcient (panel F). This suggests
+that reclassifying ﬁrms does make a difference in the dynamic case, although the overall
+magnitudes are still quite comparable to the baseline two-step estimates of the dynamic
+model. Last, our framework delivers estimates of workers’ mobility patterns among ﬁrms,
+which we report in the Supplemental Material (see Figure S8).
+6.2. Dynamic Effects
+While the dynamic and static models have similar cross-sectional implications, the
+richer setting we consider in this section allows us to study dynamic aspects of worker
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 27 =====
+A FRAMEWORK FOR EMPLOYER EMPLOYEE DATA 725
+TABLE VI
+VARIANCE DECOMPOSITION (×100), DYNAMIC MODEL,R OBUSTNESS CHECKSa
+Va r(α)
+Va r(y)
+Va r(ψ)
+Va r(y)
+2C o v(α/commaoriψ)
+Va r(y)
+Va r(ε)
+Va r(y) Corr(α/commaoriψ)
+A. Baseline model
+60.3 4.2 13.4 22.1 41.9
+B. Persistence parameters estimated in ﬁrst differences
+58.7 4.5 13.0 23.9 40.1
+C. V arying the number of ﬁrm classes
+K = 3 63.5 3.2 10.9 22.4 38.4
+K = 15 58.7 4.9 13.8 22.6 40.8
+D. V arying the number of worker types
+L = 3 18.7 16.6 10.7 54.0 30.2
+L = 5 57.8 5.5 13.6 23.2 38.0
+L = 9 60.0 4.8 13.4 21.9 39.5
+E. Regression models
+Interactive 60.8 4.9 14.9 19.4 43.1
+Linear 72.9 2.9 11.2 13.0 38.9
+F . Reclassiﬁcation (starting at baseline)
+1 iteration 58.0 5.8 12.9 23.3 35.0
+10 iterations 57.9 7.1 11.5 23.3 28.4
+aEstimates of the dynamic model, on 2001–2005. See the notes to T ableIII.
+mobility and earnings, which are interesting from both empirical and theoretical perspec-
+tives. We discuss endogenous mobility and dynamic dependence in turn.
+Endogenous Mobility
+We ﬁrst study how the current wage affects a worker’s decision to move, and which ﬁrm
+she moves to. In models where there is no match heterogeneity and mobility is efﬁcient,
+the wage before the move should not have an effect on the propensity to move, since a
+worker would always move toward higher-surplus ﬁrms irrespective of her current wage.
+In contrast, in wage posting models with match-speciﬁc heterogeneity, a worker is more
+(respectively, less) likely to accept job offers when her current match is of low (resp. high)
+quality. In addition, endogenous mobility is ruled out in AKM ﬁxed-effects regressions.
+In T ableVII, we report the estimated probability of a job move conditional on the ﬁrm
+class at origin, overall and by ﬁrm class at destination. In the top panel, we show those
+numbers in the full sample, while in the middle and bottom panels, we select workers
+for whom the earnings rank before the move, given ﬁrm class and worker type, is below
+10 or above 90 percent, respectively. In the ﬁrst column, we see that while the overall
+mobility rate lies between 2% and 3%, it is substantially higher for workers who had a low
+earnings realization in 2002. This suggests that workers are more likely to move when paid
+less. Such evidence of endogenous mobility is in line with estimates inAbowd, McKinney,
+and Schmutte (2018), and it is consistent with the predictions of wage posting models
+with match-speciﬁc heterogeneity. In contrast, our estimates in the bottom panel suggest
+that high earnings realizations do not strongly affect mobility. Last, results by ﬁrm class at
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 28 =====
+726 S. BONHOMME, T . LAMADON, AND E. MANRESA
+TABLE VII
+TRANSITION PROBABILITIES (×100), BY CONDITIONAL DECILE OF PREVIOUS EARNINGSa
+All movers k′ = 1–3 k′ = 4–7 k′ = 8–10
+All
+k = 1–3 2.20 0.84 1.06 0.30
+(0.03) (0.02) (0.03) (0.02)
+k = 4–7 1.86 0.39 1.03 0.44
+(0.03) (0.02) (0.02) (0.01)
+k = 8–10 2.90 0.47 1.00 1.43
+(0.06) (0.06) (0.03) (0.02)
+First Conditional Decile of Earnings
+k = 1–3 3.41 1.53 1.52 0.37
+(0.21) (0.09) (0.12) (0.05)
+k = 4–7 3.20 0.77 1.74 0.69
+(0.17) (0.09) (0.09) (0.05)
+k = 8–10 4.92 0.93 1.74 2.25
+(0.31) (0.15) (0.14) (0.13)
+T enth Conditional Decile of Earnings
+k = 1–3 2.76 0.95 1.42 0.40
+(0.20) (0.08) (0.13) (0.06)
+k = 4–7 1.82 0.35 1.05 0.42
+(0.10) (0.04) (0.06) (0.03)
+k = 8–10 2.03 0.29 0.71 1.03
+(0.14) (0.06) (0.06) (0.08)
+aWe report the probability of changing job, overall and by destination ﬁrm classk′, for each origin ﬁrm classk. In the top panel, we
+show results for all workers. In the middle and bottom panels, we show results for workers in the ﬁrst and tenth deciles of log-earnings
+Yi2, respectively, conditional on worker type αi and current ﬁrm class ki2 =k. The estimates are obtained using the dynamic model,
+with 10,000,000 simulations. We report parametric bootstrap standard errors in parentheses (computed using 200 replications).
+destination do not seem to vary much with earnings realizations, which is in line with the
+small estimates of ξ2(k′) that we found.
+State Dependence and Network Effects
+We next use our dynamic estimates to study how a worker’s wage is affected by the ﬁrms
+she works for over time. Speciﬁcally, we focus on how much of the wage dispersion among
+similar workers is explained by the workers’ previous employers. There are two different
+reasons why the previous employer may matter. First, working in a high-wage ﬁrm, say,
+may make a worker more likely to move to another high-wage ﬁrm. We refer to this effect,
+which is driven by mobility patterns across the network of ﬁrms, as the network effect.
+Second, the past ﬁrm may have a direct effect on the worker’s wage after a job move. We
+call this the state dependence effect.
+Network and state dependence effects are present in many models of earnings and
+mobility. Consider, as an example, sequential bargaining models where ﬁrms are char-
+acterized by their productivities (e.g., Postel-Vinay and Robin (2002), Lise, Meghir, and
+Robin (2016), Bagger and Lentz (2014)). Due to the on-the-job search process, the dis-
+tribution of productivities of future employers depends on the productivity of the current
+employer (network effect). Moreover, due to the offer and counteroffer mechanism, a
+worker coming from a more productive ﬁrm is able to extract a higher share of the sur-
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 29 =====
+A FRAMEWORK FOR EMPLOYER EMPLOYEE DATA 727
+TABLE VIII
+DECOMPOSITION OF THE SHARE OF VARIANCE OF LOG -EARNINGS OF JOB MOVERS EXPLAINED BY THE
+FIRM CLASS OF THEIR PREVIOUS EMPLOYER (×100)a
+T otal Network Effect State Dependence
+Y ear After the Move (2004) 2.57 0.84 1.74
+(0.75) (0.14) (0.67)
+T wo Y ears After the Move (2005) 2.04 0.98 1.05
+(0.49) (0.16) (0.39)
+aEstimates of the dynamic model, on 2001–2005. In the ﬁrst column, we show the share of the within-worker-type variance of
+log-earnings of job movers explained by the ﬁrm class of their previous employer. In the second and third columns, we decompose this
+share of variance into two components, “network effect” and “state dependence,” which we deﬁne in the text. The estimates are based
+on 1,000,000 simulations. We report parametric bootstrap standard errors in parentheses (computed using 200 replications).
+plus from the poaching ﬁrm, compared to a worker coming from a less productive ﬁrm
+(state dependence). In AKM and our static model, network effects are allowed for, but
+there is no state dependence.
+Formally, we decompose the log-earnings variance explained by the previous ﬁrm class
+as follows, holding worker types constant and omitting them from the notation for con-
+ciseness:
+Va r
+(
+E(Y
+i3|ki2)
+)
+  
+total
+= Va r
+(
+E
+[
+E(Yi3|ki3/commaoriki2)|ki2
+])
+= Va r
+(
+E
+[
+E(Yi3|ki3)|ki2
+])
+  
+network effect
++ Va r
+(
+E(Yi3|ki2)
+)
+− Va r
+(
+E
+[
+E(Yi3|ki3)|ki2
+])
+  
+state dependence effect
+/periodori
+Note that the ﬁrst term in the decomposition (i.e., the network effect) ignores the direct
+effect that the previous ﬁrm classk
+i2 could have on the wageYi3 after the move, given the
+current class ki3. Hence, this network effect measures the dependence of wages on the
+past ﬁrm class ki2 that is solely due to the dependence of ki3 on ki2.
+In T ableVIII, we report the results of this decomposition. We focus on the part of the
+variance of log-earnings following a job move that is net of worker heterogeneity. This
+within-type variance amounts to 40% of the overall variance after the move. In the ﬁrst
+column, we show that 2.6% of the log-earnings variance immediately after the move is
+explained by the previous employer.
+14 T wo years after the move (i.e., in 2005), previous
+employers still explain 2% of the log-earnings variance.
+In the second and third columns of T ableVIII, we show how much of the effect of the
+previous employer is due to network effect and state dependence, respectively. We ﬁnd
+that, immediately after the move, one third of the total effect is due to the network effect
+(0.8%), while two thirds reﬂect state dependence (1.7%). T wo years after the move (i.e.,
+in 2005), the total effect of the previous employer is split approximately equally between
+network effect and state dependence. Hence, according to our results, state dependence is
+14Interestingly, variation in previous employers also explains .94% of the variance within the same current
+employer. This represents approximately 10% of the contribution of the ﬁrm class of the current employer.
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 30 =====
+728 S. BONHOMME, T . LAMADON, AND E. MANRESA
+of a similar order of magnitude (in fact, larger in the short run) compared to the network
+effect.
+These ﬁndings suggest that, while it is important to study how workers move between
+ﬁrms, it is equally important to understand how wages are set dynamically around such
+moves. These issues have been studied theoretically in structural settings through the use
+of speciﬁc contracting environments. The results in this section should be of interest for
+the empirical modeling of mobility and earnings since, in addition to relying on exoge-
+nous mobility, standard static regression models rule out state dependence while leaving
+network effects fully unrestricted.
+7.
+CONCLUSION
+In this paper, we propose a framework that allows for two-sided unobserved hetero-
+geneity in matched employer employee data sets. We introduce empirical models that
+allow for worker-ﬁrm interactions and dynamics, hence for mechanisms that have been
+emphasized in theoretical work. We provide conditions for identiﬁcation in short panels,
+and develop several estimators.
+Our application to Swedish administrative data shows that an additive model provides
+a good ﬁrst-order approximation to log-earnings, while at the same time showing a strong
+association between worker and ﬁrm heterogeneity and a small relative contribution of
+ﬁrms to earnings dispersion. These ﬁndings, which are robust to a wide variety of speciﬁ-
+cation checks, differ from many estimates of variance components in the literature. A re-
+cent paper by Borovickova and Shimer (2017) proposed a different measure of sorting
+and also found a strong worker-ﬁrm association on Austrian data. Another recent paper
+by Lentz, Piyapromdee, and Robin(2017) used an estimator related to ours to study wages
+and mobility using Danish administrative data while accounting for unemployment.
+Using our dynamic model, we ﬁnd that endogenous mobility, by which earnings shocks
+affect mobility decisions, and state dependence and network effects, by which past ﬁrms
+have an impact on earnings after a job move, are features of our data. These ﬁndings
+support mechanisms that have been emphasized in the structural literature. At the same
+time, our estimates call for theoretical models that, unlike standard sorting models where
+complementaries between agents drive the nature of the allocation, can rationalize the
+presence of a relatively small ﬁrm effect and a strong association between worker and
+ﬁrm heterogeneity.
+Our two-step estimation approach preserves parsimony by reducing the dimension of
+ﬁrm heterogeneity to a smaller number of classes, and modeling the conditional distribu-
+tions of worker types. We show this strategy is helpful in alleviating small-sample biases
+arising from low mobility rates. In companion work (Bonhomme, Lamadon, and Manresa
+(2017)), we further studied the theoretical properties of approaches based on an initial
+clustering step, viewing discrete estimation as an approximation to individual or ﬁrm het-
+erogeneity.
+T wo-step estimation could be useful in structural settings, too, where joint estimation of
+the distribution of two-sided heterogeneity and the structural parameters may be compu-
+tationally prohibitive. An attractive feature is that the classiﬁcation does not rely on the
+entire model’s structure, solely on the fact that unobserved ﬁrm heterogeneity operates
+at the class level. Our identiﬁcation results could also prove useful for structural models
+of workers and ﬁrms. In particular, it would be interesting to study how, under certain
+structural assumptions, our estimates could be used to reveal sorting patterns in terms
+of ﬁrm and worker productivity. Another interesting extension of our results would be to
+allow for time-varying processes of worker types that could respond to ﬁrm-level shocks.
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 31 =====
+A FRAMEWORK FOR EMPLOYER EMPLOYEE DATA 729
+Last, in this paper we have proposed a portable methodology for empirical work. Our
+methods may reveal interesting patterns of sorting and complementarities in other studies
+of workers and ﬁrms, including in relatively small samples such as a particular occupation
+or a short period of time (e.g., around a recession), where dimension reduction is likely to
+be particularly helpful. More generally, we hope that our methods will be useful in other
+settings involving matched panel data, for example in economics of education, urban eco-
+nomics, or ﬁnance.
+APPENDIX A: P
+ROOFS
+A.1. Proof of Theorem 1
+Let k ∈{ 1/commaori/periodori/periodori/periodori/commaoriK},a n dl e t(k1/commaori/periodori/periodori/periodori/commaorikR), (˜k1/commaori/periodori/periodori/periodori/commaori˜kR) as in Assumption 3,w i t hk1 =k.
+From (7), we have, considering workers who move from kr to ˜kr′ for some r ∈{ 1/commaori/periodori/periodori/periodori/commaoriR}
+and r′ ∈{r − 1/commaorir},
+Pr[Yi1 ≤ y1/commaoriYi2 ≤ y2|ki1 =kr/commaoriki2 = ˜kr′/commaorimi1 = 1]
+=
+L∑
+α=1
+pkr/commaori˜kr′ (α)Fkr/commaoriα(y1)Fm
+˜kr′/commaoriα(y2)/periodori (A1)
+Consider sets ofM values fory1 andy2 that satisfy Assumption 3(ii). Note that one can
+augment those sets with a ﬁnite number of other values, including +∞ , while preserving
+the rank condition in Assumption 3(ii). Writing (A1) in matrix notation, we obtain
+A(kr/commaori˜kr′) =F(kr)D(kr/commaori˜kr′)Fm(˜kr′)⊺/commaori (A2)
+where A(kr/commaori˜kr′) is M ×M with generic element:
+Pr[Yi1 ≤ y1/commaoriYi2 ≤ y2|ki1 =kr/commaoriki2 = ˜kr′/commaorimi1 = 1]/commaori
+F(kr) isM ×L with elementFkr/commaoriα(y1),Fm(˜kr′) isM ×L with elementFm
+˜kr′/commaoriα(y2),D(kr/commaori˜kr′)
+is L ×L diagonal with element pkr/commaori˜kr′ (α),a n dA⊺ denotes the transpose of matrix A.
+Note that A(kr/commaori˜kr′) has rank L by Assumption 3(ii). Consider a singular value decom-
+position of A(k1/commaori˜k1):
+A(k1/commaori˜k1) =F(k1)D(k1/commaori˜k1)Fm(˜k1)⊺ =USV ⊺/commaori
+where S is L ×L diagonal and non-singular, and U and V have orthonormal columns.
+We deﬁne the following matrices:
+B(kr/commaori˜kr′) =S− 1
+2 U⊺A(kr/commaori˜kr′)VS − 1
+2 /commaori
+Q(kr) =S− 1
+2 U⊺F(kr)/periodori
+B(kr/commaori˜kr′) and Q(kr) are non-singular by Assumption 3(ii). Moreover, we have, for all
+r ∈{ 1/commaori/periodori/periodori/periodori/commaoriR},
+B(kr/commaori˜kr)B(kr+1/commaori˜kr)−1 =S− 1
+2 U⊺A(kr/commaori˜kr)VS − 1
+2
+(
+S− 1
+2 U⊺A(kr+1/commaori˜kr)VS − 1
+2
+)−1
+=S− 1
+2 U⊺F(kr)D(kr/commaori˜kr)
+(
+S− 1
+2 U⊺F(kr+1)D(kr+1/commaori˜kr)
+)−1
+=Q(kr)D(kr/commaori˜kr)D(kr+1/commaori˜kr)−1Q(kr+1)−1/periodori
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 32 =====
+730 S. BONHOMME, T . LAMADON, AND E. MANRESA
+Let Er =B(kr/commaori˜kr)B(kr+1/commaori˜kr)−1. We thus have
+E1E2 ··· ER =Q(k1)D(k1/commaori˜k1)D(k2/commaori˜k1)−1 ··· D(kR/commaori˜kR)D(k1/commaori˜kR)−1Q(k1)−1/periodori
+The eigenvalues of this matrix are all distinct by Assumption 3(i), so Q(k1) = Q(k) is
+identiﬁed up to right-multiplication by a diagonal matrix and permutation of its columns.
+Now, note that F(k) =UU ⊺F(k),s o
+F(k) =US
+1
+2 Q(k)
+is identiﬁed up to right-multiplication by a diagonal matrix and permutation of its
+columns. Hence Fkα(y1)λα is identiﬁed up to a choice of labeling, where λα̸= 0 is a scale
+factor. As pointed out above, without loss of generality we can assume that the set of
+y1 values contains y1 =+ ∞ . This implies that λα is identiﬁed, so Fkα(y1) is identiﬁed up
+to labeling. As a result, Fk/commaoriσ(α)(y1) is identiﬁed for some permutation σ:{ 1/commaori/periodori/periodori/periodori/commaoriL}→
+{1/commaori/periodori/periodori/periodori/commaoriL}. T o identifyFk/commaoriσ(α)at a point y different from the grid of M values considered
+so far, simply augment the set of values withy as an additional value, and apply the above
+arguments.
+Let nowk′ ̸=k,a n dl e t(k1/commaori/periodori/periodori/periodori/commaorikR),(˜k1/commaori/periodori/periodori/periodori/commaori˜kR) be a connecting cycle such thatk1 =k
+and k′ =kr for some r, by Assumption 3(i). We have
+A(k/commaori˜k1) =F(k)D(k/commaori˜k1)Fm(˜k1)⊺/periodori
+As Fk/commaoriσ(α)is identiﬁed and F(k) has rank L,
+pk/commaori˜k1
+(
+σ(α)
+)
+Fm
+˜k1/commaoriσ(α)(y2)
+is identiﬁed, so by taking y2 =+ ∞ ,b o t hpk/commaori˜k1(σ(α))and Fm
+˜k1/commaoriσ(α)are identiﬁed. Next we
+have
+A(k2/commaori˜k1) =F(k2)D(k2/commaori˜k1)Fm(˜k1)⊺/commaori
+so, using similar arguments, pk2/commaori˜k1(σ(α))and Fk2/commaoriσ(α)are identiﬁed. By induction,
+pkr/commaori˜kr′ (σ(α)), Fkr/commaoriσ(α),a n dFm
+˜kr′/commaoriσ(α)are identiﬁed for all r and r′ ∈{r − 1/commaorir}.A s k′ = kr ,
+it follows that Fk′/commaoriσ(α)is identiﬁed. Moreover, for each k′ (possibly equal to k), using a
+connecting cycle as in the second part of Assumption 3(i), we obtain by a similar argu-
+ment that Fm
+k′/commaoriσ(α)is identiﬁed.
+Then, let (k/commaorik′) ∈{ 1/commaori/periodori/periodori/periodori/commaoriK}2.F r o m
+A
+(
+k/commaorik′)
+=F(k)D
+(
+k/commaorik′)
+Fm(
+k′)⊺
+/commaori
+and, from the fact that Fk/commaoriσ(α)and Fm
+k′/commaoriσ(α)are both identiﬁed, and that F(k) and Fm(k′)
+have rank L by Assumption 3(ii), it follows that pkk′(σ(α))is identiﬁed.
+T o show the last part of Theorem1, note that by the ﬁrst part of the proof there exists
+a permutation σ:{ 1/commaori/periodori/periodori/periodori/commaoriL}→{ 1/commaori/periodori/periodori/periodori/commaoriL} such that Fk/commaoriσ(α)is identiﬁed for all k, α.N o w
+we have, writing (8) for the L worker types and M values of y1 given by Assumption 3(ii)
+in matrix form,
+H(k) =F(k)P(k)/commaori
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 33 =====
+A FRAMEWORK FOR EMPLOYER EMPLOYEE DATA 731
+where H(k) has generic element Pr[Yi1 ≤ y1|ki1 =k], the L × 1 vector P(k) has generic
+element qk(σ(α)), and the columns of F(k) have been ordered with respect to σ.B y
+Assumption 3(ii), F(k) has rank L, from which it follows that
+P(k) =
+[
+F(k)⊺F(k)
+]−1
+F(k)⊺H(k)
+is identiﬁed. So qk(σ(α))is identiﬁed.
+A.2. Proof of Theorem 2
+Part (i) is a direct application of Theorem 1, under Assumption 4.
+For part (ii), we have, from (10),
+Pr[Yi1 ≤ y1|Yi2 =y2/commaoriki1 =ki2 =k/commaorimi1 = 0]=
+L∑
+α=1
+G
+f
+y2/commaorikα(y1)πy2/commaorik(α)/commaori
+where
+πy2/commaorik(α)= qk(α)fkα(y2)
+L∑
+˜α=1
+qk(˜α)fk˜α(y2)
+are the posterior probabilities of worker types given Yi2 =y2, ki2 =k,a n dmi1 = 0, with
+fkα denoting the density of log-earnings given αi = α, ki2 = k,a n dmi1 = 0, and qk(α)
+denoting the proportion of workers of type αwith ki2 =k and mi1 = 0.
+Given the rank condition on theM ×L matrix with generic elementG
+f
+y
+2/commaorikα(y1),w h i c hi s
+identiﬁed up to labeling of α, πy2/commaorik(α)are thus identiﬁed up to the same labeling. Hence,
+qk(α)= Pr[αi =α|ki2 =k/commaorimi1 = 0]= E
+[
+πYi2/commaorik(α)|ki2 =k/commaorimi1 = 0
+]
+is also identiﬁed up to labeling. By Bayes’s rule, the second period’s log-earnings cdf:
+Fkα(y2) = Pr[Yi2 ≤ y2|αi =α/commaoriki2 =k/commaorimi1 = 0]
+= E
+[πYi2/commaorik(α)
+qk(α) 1{Yi2 ≤ y2}
+⏐⏐⏐ki2 =k/commaorimi1 = 0
+]
+is thus also identiﬁed up to labeling. Similarly, the log-earnings cdfs in all other periods
+can be uniquely recovered up to labeling, the period-3 and period-4 ones by making use of
+the bivariate distribution of (Yi3/commaoriYi4). T ransition probabilities associated with job change
+are identiﬁed as
+Pr
+[
+ki3 =k′|αi =α/commaoriYi2 =y2/commaoriki2 =k/commaorimi2 = 1
+]
+=
+∫
+py2y3/commaorikk′(α)qkk′(y2/commaoriy3)dy 3
+K∑
+˜k=1
+∫
+py2y3/commaorik˜k(α)qk˜k(y2/commaoriy3)dy 3
+/commaori
+where qkk′(y2/commaoriy3) is deﬁned by
+∫ y
+−∞
+qkk′(y2/commaoriy3)dy 3 = Pr
+[
+Yi3 ≤ y/commaoriki3 =k′|Yi2 =y2/commaoriki2 =k/commaorimi2 = 1
+]
+/periodori
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 34 =====
+732 S. BONHOMME, T . LAMADON, AND E. MANRESA
+APPENDIX B: A SYMPTOTIC PROPERTIES
+We consider a setting where the model is well-speciﬁed and there exists a partition
+of ﬁrms into K classes in the population. We focus on an asymptotic sequence where
+the number of ﬁrms J may grow with the number of workers N and the numbers of
+workers per ﬁrm nj . We make the following assumptions, where μis a discrete measure
+on {y1/commaori/periodori/periodori/periodori/commaoriyD}, k0(j) denote ﬁrm classes in the population, H0
+k denote the population
+class-speciﬁc cdfs, and ∥H∥2 = ∑D
+d=1 H(yd)2.
+ASSUMPTION B1—Clustering:
+(i) Yi1 are independent across workers and ﬁrms.
+(ii) For allk ∈{ 1/commaori/periodori/periodori/periodori/commaoriK},l i mJ→∞
+1
+J
+∑J
+j=1
+1{k0(j) =k}> 0.
+(iii) For allk ̸=k′ in {1/commaori/periodori/periodori/periodori/commaoriK}, ∥H0
+k − H0
+k′ ∥> 0.
+(iv) Let n = minj=1/commaori/periodori/periodori/periodori/commaoriJnj . There exists δ>0 such that J/nδ→ 0 as n tends to inﬁnity.
+Assumption B1(i) could be relaxed to allow for some form of weak dependence across
+and within ﬁrms, in the spirit of the analysis of Bonhomme and Manresa (2015)w h o
+analyzed panel data on individuals over time as opposed to workers within ﬁrms. Parts
+B1(ii) and (iii) require that the clusters be large and well-separated in the population.
+Assumption B1(iv) allows for asymptotic sequences where the number of workers per
+ﬁrm grows polynomially more slowly than the number of ﬁrms.
+Verifying the assumptions of Theorems 1 and 2 in Bonhomme and Manresa (2015),
+we now show that the estimated ﬁrm classes, ˆk(j), converge uniformly to the population
+classes up to an arbitrary labeling. As a result, we obtain that the asymptotic distribution
+of the log-earnings cdf ˆH
+k coincides with that of the empirical cdf of log-earnings in the
+population class k (i.e., the true one).
+PROPOSITION B1: Let Assumption B1 hold. Then, up to labeling of the classes k:
+(i) Pr(ˆk(j) ̸=k0(j) for some j ≤ J) =o(1).
+(ii) For ally, √Nk( ˆHk(y) −H0
+k(y))
+d
+→ N(0/commaoriH0
+k(y)(1 −H0
+k(y))), whereNk is the number
+o fw o r k e r si nﬁ r m so fc l a s sk; that is, Nk = ∑N
+i=1 1{k0(ji1) =k}.
+PROOF: Note that ( 12) is equivalent to the following weighted k-means problem:
+min
+k(1)/commaori/periodori/periodori/periodori/commaorik(J)/commaoriH1/commaori/periodori/periodori/periodori/commaoriHK
+N∑
+i=1
+∫ (
+1{Yi1 ≤ y1}− Hk(ji1)(y1)
+)2
+dμ(y1)/periodori
+We now verify Assumptions 1 and 2 in Bonhomme and Manresa (2015). Note that their
+setup allows for unbalanced structures (i.e., different nj across j) provided the assump-
+tions are formulated in terms of the minimum ﬁrm size in the sample: n = minj nj .T h e i r
+Assumptions 1a and 1c are satisﬁed since 1{Yi1 ≤ y1} is bounded. Assumptions 1d, 1e,
+and 1f hold because of Assumption B1(i). Assumptions 2a and 2b hold by Assumptions
+B1(ii) and (iii). Finally, Assumptions 2c and 2d are also satisﬁed by Assumption B1(i)
+and boundedness of 1{Yi1 ≤ y1}. Theorems 1 and 2 in Bonhomme and Manresa (2015)
+and Assumption B1(iv) then imply the result. Q.E.D.
+We next turn to second-step estimation of parameters. In the static model, the likeli-
+hood function of log-earnings Yi conditional on mobility mi, ﬁrm indicators ji1, ji2,a n d
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 35 =====
+A FRAMEWORK FOR EMPLOYER EMPLOYEE DATA 733
+population ﬁrm classes k0(j) takes the form
+f
+(
+Y1/commaori/periodori/periodori/periodori/commaoriYN|m1/commaori/periodori/periodori/periodori/commaorimN/commaorij11/commaorij12/commaori/periodori/periodori/periodori/commaorijN1/commaorijN2/commaorik0(1)/commaori/periodori/periodori/periodori/commaorik0(J);θ
+)
+=
+N∏
+i=1
+f
+(
+Yi|mi/commaorik0(ji1)/commaorik0(ji2);θ
+)
+/commaori
+whereθis a ﬁnite-dimensional vector of parameters with population valueθ0. Conditional
+independence follows from the assumption that worker types and idiosyncratic shocks to
+log-earnings are independent across workers, conditionally on ﬁrm classes and mobility
+indicators. The likelihood function takes a similar form in the dynamic model.
+Let us deﬁne the following infeasible parameter estimate:
+˜θ= argmax
+θ
+N∑
+i=1
+lnf
+(
+Yi|mi/commaorik0(ji1)/commaorik0(ji2);θ
+)
+/periodori
+ASSUMPTION B2—Infeasible Estimator: There is a positive-deﬁnite matrix Ω such that,
+as N tends to inﬁnity,
+√
+N
+(˜θ− θ0) d
+→ N(0/commaoriΩ)/periodori
+Since ˜θis a standard ﬁnite-dimensional maximum likelihood estimator, and observa-
+tions are independent across individuals, Assumption B2 is not restrictive. Under correct
+speciﬁcation, Ωis the inverse of the Hessian matrix.
+Let now
+ˆθ= argmax
+θ
+N∑
+i=1
+lnf
+(
+Yi|mi/commaoriˆk(ji1)/commaoriˆk(ji2);θ
+)
+denote the second-step parameter estimate given the estimated ﬁrm classes. The follow-
+ing result shows thatˆθand ˜θhave the same asymptotic distribution. In practice this means
+that, under those assumptions, one can treat the estimated ﬁrm classes as known when
+computing standard errors of estimators based on them.
+P
+ROPOSITION B2: Let Assumptions B1 and B2 hold. Then, as N tends to inﬁnity,
+√
+N
+(ˆθ− θ0) d
+→ N(0/commaoriΩ)/periodori
+PROOF: This is immediate since
+Pr
+(√
+N
+(ˆθ− θ0)
+̸=
+√
+N
+(˜θ− θ0))
+≤ Pr
+(ˆk(j) ̸=k0(j) for somej ≤ J
+)
+/commaori
+which is o(1) by Proposition B1.S e e Hahn and Moon (2010) for a similar argument.
+Q.E.D.
+Under Proposition B2, asymptotically valid conﬁdence intervals forθ0 (or smooth func-
+tions of θ0 such as variance components) can be obtained using analytical methods or
+the parametric bootstrap, without the need to account for the uncertainty arising from
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 36 =====
+734 S. BONHOMME, T . LAMADON, AND E. MANRESA
+the classiﬁcation. However, in our experience, estimating ﬁrm classes tends to add ﬁnite-
+sample noise to the parameter estimates. As an attempt to account for this ﬁnite-sample
+variability, we reclassify ﬁrms into classes in each bootstrap replication.
+Last, here we have provided a result for a maximum likelihood estimator. Our estima-
+tor is slightly different since it is based on a sequential approach: estimating ﬁrst some
+parameters using job movers only, and then estimating other parameters using job stay-
+ers. Asymptotic equivalence still goes through in this case, although the analytical form
+of the matrix Ωis different.
+APPENDIX C: D
+ATA
+We use a match of four different databases fromFriedrich et al.(2014), covering the en-
+tire working age population in Sweden between 1997 and 2008. The Swedish data registry
+(ANST), which is part of the register-based labor market statistics at Statistics Sweden
+(RAMS), provides information about individuals, their employment, and their employers.
+This database is collected yearly from the ﬁrm’s income statements. The other databases
+provide additional information on worker and ﬁrm characteristics, as well as unemploy-
+ment status of workers: LOUISE/LINDA contains information on workers, SBS provides
+accounting data and balance sheet information for all non-ﬁnancial corporations in Swe-
+den, and the Unemployment Register contains spells of unemployment registered at the
+Public Employment Service.
+The RAMS data set allows constructing individual employment spells within a year,
+since it provides the ﬁrst and last remunerated month for each employee in a plant as
+well as ﬁrm and plant identiﬁer. We deﬁne ﬁrms through ﬁrm identiﬁers. We deﬁne the
+main employment of each individual in a year as the one providing the highest earnings
+in that year. The main employer determines the employer of a worker in a given year.
+RAMS provides pre-tax yearly earnings for each spell. We use the ratio between total
+earnings at the main employer and the number of months employed as our measure of
+monthly earnings. We compute real earnings in 2007 prices.
+Sample Selection
+Following Friedrich et al.(2014), we perform a ﬁrst sample selection by dropping all ﬁnan-
+cial corporations and some sectors such as ﬁshery and agriculture, education, health, and
+social work. In addition, we discard all workers from the public sector or self-employed.
+We focus on workers employed in years 2002 and 2004. These two years correspond to
+periods 1 and 2 in the static model. We restrict the sample to males. We choose not to in-
+clude female workers in the analysis in order to avoid dealing with gender differences in
+labor supply, since we do not have information on hours worked. We keep ﬁrms that have
+at least one worker who is fully employed in both 2002 and 2004 (“continuing ﬁrms”),
+where fully employed workers are those employed in all twelve months in a year in one
+ﬁrm. From this 2002–2004 sample, we deﬁne the subsample of movers as workers whose
+ﬁrm identiﬁer changes between 2002 and 2004. If a worker returns in 2004 to the ﬁrm she
+worked for in 2002, we do not consider this worker to be a mover (4/periodori3% of the sample).
+Restricting workers to be fully employed in 2002 and 2004, and ﬁrms to be present in
+both periods, is not innocuous, and we will see that this results in a substantial reduction
+of the number of workers whose ﬁrm identiﬁer changes in the course of 2003. The reason
+for this conservative sample selection is that we want to capture, as closely as possible,
+individual job moves between existing ﬁrms. In particular, a ﬁrm may appear in only one
+period because of a merger or acquisition, entry or exit, or due to a redeﬁnition of the ﬁrm
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 37 =====
+A FRAMEWORK FOR EMPLOYER EMPLOYEE DATA 735
+identiﬁer over time. Although we have conducted robustness checks, in our preferred
+speciﬁcation we do not include these job moves since we do not think that they map
+naturally to our model. For the dynamic model, we consider a subsample that covers the
+years 2001 to 2005. In addition to the criteria used to construct the 2002–2004 sample, we
+require that workers be fully employed in the same ﬁrm in 2001 and 2002, and in 2004
+and 2005.
+Descriptive Statistics
+We now report descriptive statistics in the 2002–2004 and 2001–2005 samples, as well as
+in the subsamples of job movers. The numbers can be found in T ableC1. The 2002–2004
+sample contains about 600,000 workers and 44,000 ﬁrms. Hence, the average number
+of workers per ﬁrm is 13.7. The mean ﬁrm size as reported by the ﬁrm is higher, 37.6,
+due to our sample selection that focuses on fully employed male workers. In the 2001–
+2005 sample, the mean number of workers and mean reported size are 12.3 and 37.1,
+respectively. The distribution of ﬁrm size is skewed, and medians are smaller. At the same
+time, reported ﬁrm sizes in the subsamples of movers are substantially higher.
+Identiﬁcation relies on workers moving between ﬁrms over time. In the 2002–2004 sam-
+ple, the mobility rate, which we deﬁne as the fraction of workers fully employed in 2002
+and 2004 whose ﬁrm identiﬁers are different in these two years, is 19,557/599,775= 3/periodori3%.
+In the 2001–2005 sample, the rate is 2 /periodori4%. These numbers are lower than the ones cal-
+culated by Skans, Edin, and Holmlund (2009), who documented between-plant mobility
+TABLE C1
+DATADESCRIPTIONa
+Y ears: 2002–2004 2002–2004 2001–2005 2001–2005
+All Movers All Movers
+Number of Workers 599,775 19,557 442,757 9645
+Number of Firms 43,826 7557 36,928 4248
+Number of Firms ≥ 10 23,389 6231 20,557 3644
+Number of Firms ≥ 50 4338 2563 3951 1757
+Mean Firm Reported Size 37.59 132.33 39.67 184.77
+Median Firm Reported Size 10 28 11 36
+% High School Drop Out 20.6% 14% 21.5% 14.7%
+% High School Graduates 56.7% 57.3% 57% 59%
+% Some College 22.7% 28.7% 21.4% 26.3%
+% Workers Y ounger Than 30 16.8% 28% 13.9% 23.8%
+% Workers Between 31 and 50 57.2% 59% 59.4% 62.1%
+% Workers Older Than 51 26% 13% 26.7% 14.2%
+% Workers in Manufacturing 45.4% 35.1% 48.5% 40.4%
+% Workers in Services 25.3% 33.7% 22.4% 27.8%
+% Workers in Retail and T rade 16.7% 20.3% 16.3% 20.8%
+% Workers in Construction 12.6% 10.9% 12.8% 11%
+Mean Log-Earnings 10.18 10.17 10.19 10.17
+V ariance of Log-Earnings 0.124 0.166 0.113 0.148
+Between-Firm V ariance of Log-Earnings 0.0475 0.1026 0.0441 0.0947
+aDescriptive statistics for a sample from the Swedish registry data that includes males, fully employed in the same ﬁrm in 2002
+and 2004 (columns 1 and 2), and fully employed in the same ﬁrm in 2001–2002 and 2004–2005 (columns 3 and 4), for ﬁrms that are
+continuously present in the sample. The numbers in the table correspond to 2002.
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 38 =====
+736 S. BONHOMME, T . LAMADON, AND E. MANRESA
+rates ranging between 4% and 6% between 1986 and 2000.15 T o understand how our sam-
+ple selection inﬂuences the mobility rate, we have computed similar descriptive statistics
+in the entire 2002–2004 sample, without imposing that workers are fully employed in 2002
+and 2004 or that ﬁrms exist in the two periods. Removing the requirements of full-year
+employment in both 2002 and 2004 and continuously existing ﬁrms results in a consid-
+erably less restrictive deﬁnition of mobility, as the mobility rate is 11.2% in this case.
+Although we prefer to focus on a more restrictive deﬁnition for estimation, as robust-
+ness checks we have also estimated the models on this larger sample, ﬁnding comparable
+results.
+The between-ﬁrm log-earnings variance represents 38/periodori3% of total log-earnings variance
+in 2002. This number is higher than the 31% percentage explained between plants in 2000,
+as reported bySkans, Edin, and Holmlund(2009). However, despite growing steadily over
+the past decades, the between-ﬁrm (or plant) component is still lower compared with
+other economies such as Germany, Brazil, or the United States. In Germany and Brazil,
+between-ﬁrm components are closer to 50%; seeBaumgarten, Felbermayry, and Lehwald
+(2014)o r Akerman, Helpman, Itskhoki, Muendler, and Redding (2013), for example.
+In the United States, Barth, Bryson, Davis, and Freeman (2014) reported a between-
+establishment log-earnings component of 46% to 49% in 1996–2007.
+While differences across countries need to be interpreted cautiously due to differences
+in earnings deﬁnition and data collection, lower levels of between-ﬁrm earnings disper-
+sion in Sweden are often attributed to historically highly unionized labor market and the
+presence of collective wage bargaining agreements. In particular, after World War II, the
+introduction of the so-called solidarity wage policy, which had as guiding principle “equal
+pay for equal work,” signiﬁcantly limited the capacity of ﬁrms to differentially pay their
+employees. However, several reforms over the last two decades have contributed to an in-
+crease in between-ﬁrm wage variation due to a more informal coordination in wage setting
+(see Skans, Edin, and Holmlund (2009), and Akerman, Helpman, Itskhoki, Muendler,
+and Redding (2013)). It is important to keep these features of the Swedish labor market
+in mind when interpreting our results.
+Finally, comparing the ﬁrst two columns—or the last two columns—of T ableC1,w es e e
+that job movers are, on average, younger and more educated than workers who remain
+in the same ﬁrm. They also tend to work more in service sectors as opposed to manu-
+facturing. At the same time, characteristics of job movers and stayers show substantial
+overlap.
+REFERENCES
+ABOWD,J .M . ,R .H .CREECY, AND F. KRAMARZ (2002): “Computing Person and Firm Effects Using Linked
+Longitudinal Employer-Employee Data,” Unpublished Manuscript. [709]
+ABOWD,J .M . ,F .KRAMARZ,P .LENGERMANN, AND S. PÉREZ-DUARTE(2004): “ Are Good Workers Employed
+by Good Firms? A T est of a Simple Assortative Matching Model for France and the United States,” Unpub-
+lished Manuscript. [701]
+ABOWD,J .M . ,F .K RAMARZ, AND D. N. M ARGOLIS (1999): “High Wage Workers and High Wage Firms,”
+Econometrica, 67, 251–333. [699,718,722]
+ABOWD,J .M . ,K .L .MCKINNEY, AND I. M. SCHMUTTE (2018): “Modeling Endogenous Mobility in Earnings
+Determination,” Journal of Business & Economic Statistics, 1–14. [ 702,725]
+15See their Figure 7.14. Skans, Edin, and Holmlund (2009) reported the fraction of workers employed in
+plants with more than 25 employees in yearst − 1a n dt who changed plant betweent − 1a n dt.A sac o m p a r i -
+son, in Germany, Fitzenberger and Garloff (2007) reported yearly between-employers transition rates of 7/periodori5%
+in the period 1976 to 1996 for male workers.
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 39 =====
+A FRAMEWORK FOR EMPLOYER EMPLOYEE DATA 737
+AIROLDI,E .M . ,D .M .BLEI,S .E .F IENBERG, AND E. P . XING (2008): “Mixed Membership Stochastic Block-
+models,” J .M a c h .L e a r n .R e s ., 9, 1981–2014. [702]
+AKERMAN,A . ,E .H ELPMAN,O .I TSKHOKI,M . - A .MUENDLER, AND S. REDDING (2013): “Sources of Wage
+Inequality,” American Economic Review, Papers and Proceedings, 103, 214–219. [736]
+ANDREWS,M .J . ,L .G ILL,T .S CHANK, AND R. UPWARD (2008): “High Wage Workers and Low Wage Firms:
+Negative Assortative Matching or Limited Mobility Bias?”J .R .S t a t .S o c .S e r .AS t a t .S o c ., 171, 673–697.[701,
+722]
+(2012): “High Wage Workers Match With High Wage Firms: Clear Evidence of the Effects of Limited
+Mobility Bias,” Econ. Lett., 117, 824–827. [701]
+BAGGER,J . , AND R. LENTZ (2014): “ An Empirical Model of Wage Dispersion With Sorting,” University of
+Wisconsin, Report. [700,705,712,722,726]
+BARTH,E . ,A .BRY S O N,J .C .D AVIS, AND R. FREEMAN (2014): “It’s Where Y ou Work: Increases in Earnings
+Dispersion Across Establishments and Individuals in the U.S.,” Unpublished Manuscript. [736]
+BARTOLUCCI,C . ,F .D EVICIENTI, AND I. M ONZON (2015): “Identifying Sorting in Practice,” Unpublished
+Manuscript. [712]
+BAUMGARTEN,D . ,G .F ELBERMAYR Y, AND S. LEHWALD (2014): “Drivers of Wage Inequality in Germany:
+T rade, T echnology, or Institutions?” Unpublished Manuscript. [736]
+BECKER, G. S. (1973): “ A Theory of Marriage: Part I,” Journal of Political Economy, 81, 813–846. [700,701,
+720]
+BLEI,D .M . ,A .Y .N G, AND M. I. J ORDAN (2003): “Latent Dirichlet Allocation,” J. Mach. Learn. Res. ,3 ,
+993–1022. [702]
+BONHOMME, S. (2017): “Econometric Analysis of Bipartite Networks,” inThe Econometric Analysis of Network
+Data, ed. by B. Graham and A. De Paula. [702]
+BONHOMME,S . ,AND E. MANRESA (2015): “Grouped Patterns of Heterogeneity in Panel Data,”Econometrica,
+83, 1147–1184. [702,712,732]
+BONHOMME,S . ,K .JOCHMANS, AND J. M. ROBIN (2014): “Nonparametric Estimation of Finite Mixtures From
+Repeated Measurements,” Journal of the Royal Statistical Society, Series B (forthcoming). [702]
+BONHOMME,S . ,T .LAMADON, AND E. MANRESA (2017): “Discretizing Unobserved Heterogeneity,” Unpub-
+lished Manuscript. [701,728]
+(2019): “Supplement to ‘ A Distributional Framework for Matched Employer Employee Data’,”
+Econometrica Supplemental Material, 87, https://doi.org/10.3982/ECTA15722.[ 702]
+BOROVICKOVA,K . ,AND R. SHIMER (2017): “High Wage Workers Work for High Wage Firms,” Unpublished
+Manuscript. [728]
+BURDETT,K . ,AND M. G. COLES (2003): “Wage/T enure Contracts and Equilibrium Search,”Econometrica, 71,
+1377–1404. [705]
+BURDETT,K . ,AND D. T . MORTENSEN (1998): “Wage Differentials, Employer Size, and Unemployment,” Int.
+Econ. Rev., 257–273. [705]
+CARD,D . ,J .HEINING, AND P. KLINE (2013): “Workplace Heterogeneity and the Rise of West German Wage
+Inequality,” Q. J. Econ., 128, 967–1015. [699,707]
+DAL Y,M . ,D .H RY S H KO, AND I. MANOVSKII (2016): “Improving the Measurement of Earnings Dynamics,”
+Unpublished Manuscript. [724]
+DELACROIX,A . ,AND S. SHI (2006): “Directed Search on the Job and the Wage Ladder,” Int. Econ. Rev., 47,
+651–699. [705]
+DEMPSTER,A .P . ,N .M .LAIRD, AND D. B. RUBIN (1977): “Maximum Likelihood From Incomplete Data via
+the EM Algorithm,” J. R. Stat. Soc. Series B Stat. Methodol. , 39, 1–38. [713]
+EECKHOUT,J . ,AND P. KIRCHER (2011): “Identifying Sorting in Theory,” Rev. Econ. Stud., 78, 872–906. [700,
+712]
+FINKELSTEIN,A . ,M .G ENTZKOW, AND H. W ILLIAMS (2016): “Sources of Geographic V ariation in Health
+Care: Evidence From Patient Migration,” Quarterly Journal of Economics , 131, 1681–1726. [700]
+FITZENBERGER,B . , AND A. GARLOFF (2007): “Descriptive Evidence on Labor Market T ransitions and the
+Wage Structure in Germany,” Int. Econ. Rev., 227, 115–152. [736]
+FRIEDRICH,B . ,L .L AUN,C .M EGHIR, AND L. P ISTAFERRI (2014): “Earnings Dynamics and Firm-Level
+Shocks,” Unpublished Manuscript. [715,734]
+GOLDSCHMIDT,D . ,AND J. SCHMIEDER (2015): “The Rise of Domestic Outsourcing and the Evolution of the
+German Wage Structure,” Quarterly Journal of Economics . T o appear. [699,700]
+GRAHAM,B .S . ,G .W .I MBENS, AND G. RIDDER (2014): “Complementarity and Aggregate Implications of
+Assortative Matching: A Nonparametric Analysis,” Quantitative Economics, 5, 29–66. [719]
+GRUETTER,M . ,AND R. LALIVE (2009): “The Importance of Firms in Wage Determination,” Labour Econ.,
+16, 149–160. [699]
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 40 =====
+738 S. BONHOMME, T . LAMADON, AND E. MANRESA
+HAGEDORN,M . ,T .H .L AW, AND I. MANOVSKII (2017): “Identifying Equilibrium Models of Labor Market
+Sorting,” Econometrica, 85, 29–65. [700,702,705,712,722]
+HAHN,J . ,AND H. R. MOON (2010): “Panel Data Models With Finite Number of Multiple Equilibria,” Econo-
+metric Theory, 26, 863–881. [702,733]
+HALL,P . ,AND X.-H. ZHOU (2003): “Nonparametric Estimation of Component Distributions in a Multivariate
+Mixture,” Ann. Stat., 31, 201–224. [702]
+HALL,R .E . , AND F. S . MISHKIN (1982): “The Sensitivity of Consumption to T ransitory Income: Estimates
+From Panel Data on Households,” Econometrica, 50, 461–481. [706]
+HENR Y,M . ,Y .KITAMURA, AND B. SALANIÉ (2014): “Partial Identiﬁcation of Finite Mixtures in Econometric
+Models,” Quant. Econom., 5, 123–144. [702]
+HU, Y. (2008): “Identiﬁcation and Estimation of Nonlinear Models With Misclassiﬁcation Error Using Instru-
+mental V ariables: A General Solution,”Journal of Econometrics, 144, 27–61. [702]
+HU,Y . ,AND S. M. SCHENNACH (2008): “Instrumental V ariable T reatment of Nonclassical Measurement Error
+Models,” Econometrica, 76, 195–216. [702]
+HU,Y . , AND M. SHUM (2012): “Nonparametric Identiﬁcation of Dynamic Models With Unobserved State
+V ariables,”J. Econom., 171, 32–44. [702]
+HWANG,H . -S., D. T . MORTENSEN, AND W. R . REED (1998): “Hedonic Wages and Labor Market Search,”
+Journal of Labor Economics , 16, 815–847. [720]
+JACKSON, C. K. (2013): “Match Quality, Worker Productivity, and Worker Mobility: Direct Evidence From
+Te a c h e r s , ”Rev. Econ. Stat., 95, 1096–1116. [700]
+JOCHMANS,K . , AND M. W EIDNER (2017): “Fixed-Effect Regressions on Network Data,” Unpublished
+Manuscript. [717]
+KLINE,P . ,R .SAGGIO, AND M. SØLVSTEN (2018): “Leave-out Estimation of V ariance Components,” ArXiv
+e-prints. [701]
+KRAMARZ,F . ,S .J .MACHIN, AND A. OUAZAD (2015): “Using Compulsory Mobility to Identify School Quality
+and Peer Effects,” Oxford Bulletin of Economics and Statistics, 77, 566–587. [700]
+LAMADON,T . ,J .L ISE,C .M EGHIR, AND J. M. R OBIN (2013): “Matching, Sorting, Firm Productivity and
+Wages,” Unpublished Manuscript. [700]
+LENTZ,R . ,S .P IYAPROMDEE, AND J.-M. ROBIN (2017): “On Worker and Firm Heterogeneity in Wages and
+Employment Mobility: Evidence From Danish Register Data,” Unpublished Manuscript. [728]
+LEVINE,M . ,D .R .H UNTER, AND D. CHAUVEAU (2011): “Maximum Smoothed Likelihood for Multivariate
+Mixtures,” Biometrika, 98, 403–416. [702]
+LIN,C . - C . ,AND S. NG (2012): “Estimation of Panel Data Models With Parameter Heterogeneity When Group
+Membership Is Unknown,” Journal of Econometric Methods,1 .[ 702]
+LINDENLAUB, I. (2017): “Sorting Multidimensional T ypes: Theory and Application,”T h eR e v i e wo fE c o n o m i c
+Studies, 84, 718–789. [720]
+LISE,J . ,AND F. POSTEL-VINAY (2015): “Multidimensional Skills, Sorting, and Human Capital Accumulation,”
+Manuscript, University of Minnesota. [720]
+LISE,J . ,AND J.-M. ROBIN (2013): “The Macro-Dynamics of Sorting Between Workers and Firms,” American
+Economic Review. T o appear. [706]
+LISE,J . ,C .MEGHIR, AND J.-M. ROBIN (2016): “Matching, Sorting and Wages,”Review of Economic Dynamics,
+19, 63–87. [700,726]
+LOPES DE MELO, R. (2018): “Firm Wage Differentials and Labor Market Sorting: Reconciling Theory and
+Evidence,” Journal of Political Economy, 126, 313–346. [700]
+MENDES,R . ,G .J . VAN DEN BERG, AND M. LINDEBOOM (2010): “ An Empirical Assessment of Assortative
+Matching in the Labor Market,” Labour Econ., 17, 919–929. [699]
+POSTEL-VINAY,F . ,AND J.-M.R OBIN (2002): “Equilibrium Wage Dispersion With Worker and Employer Het-
+erogeneity,” Econometrica, 70, 2295–2350. [702,705,706,712,726]
+REIERSØL, O. (1950): “Identiﬁability of a Linear Relation Between V ariables Which Are Subject to Error,”
+Econometrica, 18, 375–389. [707]
+SHI, S. (2008): “Directed Search for Equilibrium Wage-T enure Contracts,”Econometrica, 77, 561–584. [705]
+SHIMER, R. (2005): “The Assignment of Workers to Jobs in an Economy With Coordination Frictions,”Journal
+of Political Economy, 113, 996–1025. [705]
+SHIMER,R . ,AND L. SMITH (2000): “ Assortative Matching and Search,”Econometrica, 68, 343–369. [700,701,
+705,707,709,715,720]
+SKANS,O .N . ,P . - A .EDIN, AND B. HOLMLUND (2009): “Wage Dispersion Between and Within Plants: Sweden
+1985–2000,” in The Structure of Wages: An International Comparison , ed. by E. P . Lazear and K. L. Shaw.
+University of Chicago Press, 217–260. [735,736]
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+===== PDF PAGE 41 =====
+A FRAMEWORK FOR EMPLOYER EMPLOYEE DATA 739
+SONG,J . ,D .J .PRICE,F .GUVENEN, AND N. BLOOM (2015): “Firming up Inequality,” Unpublished Manuscript.
+[700]
+SORKIN, I. (2018): “Ranking Firms Using Revealed Preference,” The Quarterly Journal of Economics , 133,
+1331–1393. [700]
+STEINLEY, D. (2006): “K-Means Clustering: A Half-Century Synthesis,” Br. J. Math. Stat. Psychol., 59, 1–34.
+[702,712]
+WOODCOCK, S. D. (2008): “Wage Differentials in the Presence of Unobserved Worker, Firm, and Match Het-
+erogeneity,” Labour Econ., 15, 771–793. [699]
+Co-editor Aviv Nevo handled this manuscript.
+Manuscript received 25 September, 2017; ﬁnal version accepted 21 December, 2018; available online 18 February,
+2019.
+ 14680262, 2019, 3, Downloaded from https://onlinelibrary.wiley.com/doi/10.3982/ECTA15722 by Harvard University, Wiley Online Library on [02/05/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License

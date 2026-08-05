@@ -1,0 +1,1921 @@
+﻿\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,booktabs,array,longtable}
+\usepackage[hidelinks]{hyperref}
+
+\title{Search, Selection, Low-Rank Wage Interfaces, and Edge Diagnostics}
+\author{}
+\date{\today}
+
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\1}{\mathbf{1}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+
+\begin{document}
+\maketitle
+
+% ============================================================
+% Merged from ss_to_bs_memo.tex
+% ============================================================
+
+
+\section{From Shimer--Smith to Borovi\v{c}kov\'a--Shimer}
+
+\paragraph{Source convention.}
+
+Page citations to Shimer--Smith refer to the printed Econometrica pages in
+\emph{Assortative Matching and Search}. Page citations to Borovi\v{c}kov\'a--Shimer
+refer to the paper page numbers printed in the October 23, 2025 draft,
+\emph{Assortative Matching and Wages: The Role of Selection}. When I reuse a
+result from the prior project notes, I cite the prior result PDF
+\texttt{7\_15\_Meeting (1).pdf} and the source \TeX{} files
+\texttt{shimer\_smith\_writeup.tex} or
+\texttt{model\_acceptance\_stochasticity\_writeup.tex}. Displays or claims not
+directly sourced are labeled as derived comparisons or derived identities.
+
+\subsection{Notation}
+
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.24\linewidth}
+                >{\raggedright\arraybackslash}p{0.68\linewidth}}
+\toprule
+Symbol & Meaning \\
+\midrule
+\endfirsthead
+\toprule
+Symbol & Meaning \\
+\midrule
+\endhead
+$x,y$ & Types. In Shimer--Smith, both sides are symmetric agent types; in BS, $x$ is a worker type and $y$ is a firm/job type. Source: Shimer--Smith, p. 346; BS, pp. 4--5. \\
+$u(y),u_x$ & Unmatched density or measure. Shimer--Smith use $u(y)$ for unmatched type-$y$ agents; BS use $u_x$ for unemployed type-$x$ workers. Source: Shimer--Smith, p. 347; BS, p. 5. \\
+$v_y$ & Measure of vacant type-$y$ firms/jobs in BS. Source: BS, p. 5. \\
+$\rho$ & Meeting/contact-rate parameter. Source: Shimer--Smith, p. 347; BS, p. 5. \\
+$r,\delta$ & Discount rate and exogenous match-separation rate. Source: Shimer--Smith, pp. 347--348; BS, pp. 4--5. \\
+$f(x,y),f_{x,y}$ & Type-pair production surface. Shimer--Smith output is deterministic $f(x,y)$; BS output is $zf_{x,y}$. Source: Shimer--Smith, pp. 346--347; BS, p. 5. \\
+$z,G,g,z_0,\theta$ & BS match-specific productivity shock, its distribution and density, and the Pareto scale and shape parameters used in Proposition 2. For the Pareto mean formulas with $(\theta-1)$ in the denominator, the relevant assumption is $\theta>1$; a Pareto distribution itself only requires a positive shape parameter. Source: BS, pp. 5, 11. \\
+$W(x),W(x\mid y)$ & Shimer--Smith values of being unmatched and matched with type $y$. Source: Shimer--Smith, p. 348. \\
+$S(x\mid y)$ & Shimer--Smith personal capital surplus, $W(x\mid y)-W(x)$. Source: Shimer--Smith, p. 348. \\
+$\mathcal M(x)$ & Shimer--Smith mutually agreeable matching set for type $x$. Source: Shimer--Smith, p. 347. \\
+$w(x)$ & Shimer--Smith reservation wage / flow value of being unmatched, $w(x)=rW(x)$. Source: Shimer--Smith, p. 349. \\
+$\pi(x\mid y)$ & Shimer--Smith flow payoff to type $x$ while matched with type $y$. Source: Shimer--Smith, pp. 347--348. \\
+$\alpha_x,\psi_y,c_{xy}$ & Derived additive worker-side term, additive other-side term, and interaction term used to rewrite the Shimer--Smith payoff as $\pi(x\mid y)=\alpha_x+\psi_y+c_{xy}$. Source for derivation: prior result PDF, Sec. 6.3; \texttt{shimer\_smith\_writeup.tex}, Sec. 6.3. \\
+$V_x^u,V_y^v$ & BS values of unemployment for worker type $x$ and vacancy for firm type $y$. Source: BS, pp. 5--6. \\
+$V^e_{x,y}(z,w),V^f_{y,x}(z,w)$ & BS employed-worker and matched-firm values for match quality $z$ and wage $w$. Source: BS, pp. 5--6. \\
+$\bar w_x,\bar\pi_y$ & BS worker reservation wage and firm reservation profit, $\bar w_x=rV_x^u$ and $\bar\pi_y=rV_y^v$. Source: BS, p. 6. \\
+$V^s_{x,y}(z)$ & BS total match surplus. Source: BS equation (5), p. 6. \\
+$\bar z_{x,y}$ & BS reservation productivity threshold, $(\bar w_x+\bar\pi_y)/f_{x,y}$. Source: BS equation (6), p. 6. \\
+$\gamma$ & BS worker bargaining weight in Nash bargaining. Source: BS, p. 5. \\
+$W_{x,y}(z)$ & BS equilibrium wage in an accepted match. Source: BS equation (9), p. 7. \\
+$ITT_x(y),ATT_x(y)$ & BS intent-to-treat and average treatment on the treated from creating a meeting with a type-$y$ firm for a type-$x$ worker. Source: BS equations (17)--(19), pp. 9--10. \\
+$\omega_{i,j},\alpha_x^*,\psi_y^*,\epsilon_{i,j}$ & BS observed accepted-match wage and Proposition 2 worker component, firm component, and residual. Source: BS Proposition 2, pp. 11--12. \\
+\bottomrule
+\end{longtable}
+
+\subsection{The Clean Mapping}
+
+The old notes had the right informal comparison: Shimer--Smith is random search
+with deterministic type-pair surplus, while Borovi\v{c}kov\'a--Shimer is random
+search with stochastic match-specific surplus. Source: prior result PDF, Secs.
+1 and 8.4; \texttt{model\_acceptance\_stochasticity\_writeup.tex}, Secs. 3--4.
+The mapping is:
+
+\[
+\begin{array}{>{\raggedright\arraybackslash}p{0.27\linewidth}
+                >{\raggedright\arraybackslash}p{0.31\linewidth}
+                >{\raggedright\arraybackslash}p{0.31\linewidth}}
+\toprule
+Object & Shimer--Smith & Borovi\v{c}kov\'a--Shimer \\
+\midrule
+Side structure & Symmetric agents of types $x,y$ & Workers $x$ and firms/jobs $y$ \\
+Meetings & Unmatched type $x$ meets unmatched type $y$ at rate
+$\rho u(y)\,dy$ & Unemployed type $x$ worker contacts vacant type $y$ firm at
+rate $\rho v_y$ \\
+Match output & Deterministic $f(x,y)$ & Stochastic $z f_{x,y}$, with $z\sim G$ drawn at the meeting \\
+Worker outside flow value & $w(x)=rW(x)$ & $\bar w_x=rV_x^u$ \\
+Other side outside flow value & $w(y)=rW(y)$ & $\bar\pi_y=rV_y^v$ \\
+Accepted-match payoff/wage & $\pi(x\mid y)$, the worker's flow payoff & $W_{x,y}(z)$, the equilibrium wage \\
+Surplus split & Symmetric Nash, $S(x\mid y)=S(y\mid x)$ & Generalized Nash, worker share $\gamma$ \\
+Acceptance & $f(x,y)\geq w(x)+w(y)$ & $z f_{x,y}\geq \bar w_x+\bar\pi_y$ \\
+\bottomrule
+\end{array}
+\]
+
+The following correspondence is a derived notational map across the two models:
+\[
+f(x,y)
+\quad\longleftrightarrow\quad
+z f_{x,y},
+\qquad
+w(x)
+\quad\longleftrightarrow\quad
+\bar w_x,
+\qquad
+w(y)
+\quad\longleftrightarrow\quad
+\bar\pi_y.
+\]
+The way to explain the table is in three steps.
+
+\begin{enumerate}
+\item \textbf{Both papers have random meetings.} In Shimer--Smith, the randomness is
+that an unmatched agent does not choose exactly whom to meet; meetings arrive through
+the search process. In BS, unemployed workers and vacancies also meet randomly. Source:
+Shimer--Smith, p. 347; BS, p. 5.
+
+\item \textbf{The production object differs.} In Shimer--Smith, once the two types
+$(x,y)$ are known, the match output is the fixed number $f(x,y)$. In BS, once the
+worker type $x$ and firm type $y$ are known, the meeting still draws $z$, so output is
+the random value $zf_{x,y}$. Source: Shimer--Smith, pp. 346--347; BS, p. 5.
+
+\item \textbf{The acceptance object therefore differs.} In Shimer--Smith, a type pair is
+either acceptable or not acceptable in equilibrium. In BS, the same type pair can sometimes
+match and sometimes fail to match, depending on the realized $z$. This is the selection
+channel.
+\end{enumerate}
+
+Derived comparison: here is the explicit collapse to the Shimer--Smith payoff
+formula. Start from the BS accepted-match wage equation:
+\[
+W_{x,y}(z)
+=
+\bar w_x+\gamma\left(zf_{x,y}-\bar w_x-\bar\pi_y\right),
+\qquad z\geq \bar z_{x,y}.
+\]
+Source: BS equation (9), p. 7. If bargaining is symmetric, $\gamma=1/2$, then
+\[
+W_{x,y}(z)
+=
+\bar w_x+\frac12 zf_{x,y}
+-\frac12\bar w_x-\frac12\bar\pi_y
+=
+\frac12 zf_{x,y}
++\frac12\bar w_x
+-\frac12\bar\pi_y.
+\]
+Now impose the degenerate-productivity case $z=z^\ast$, so every meeting of the
+same type pair has the same realized output. Define the deterministic type-pair
+production term
+\[
+\tilde f(x,y)\equiv z^\ast f_{x,y}.
+\]
+Then the BS wage becomes
+\[
+W_{x,y}
+=
+\frac12 \tilde f(x,y)
++\frac12\bar w_x
+-\frac12\bar\pi_y.
+\tag{BS-degenerate}
+\]
+Compare this with the Shimer--Smith payoff formula derived in the old notes:
+\[
+\pi(x\mid y)
+=
+\frac12 f(x,y)
++\frac12 w(x)
+-\frac12 w(y).
+\tag{SS-payoff}
+\]
+Source: prior result PDF, Sec. 6.3;
+\texttt{shimer\_smith\_writeup.tex}, Sec. 6.3. The correspondence is therefore
+\[
+\pi(x\mid y)\leftrightarrow W_{x,y},
+\qquad
+f(x,y)\leftrightarrow \tilde f(x,y)=z^\ast f_{x,y},
+\qquad
+w(x)\leftrightarrow \bar w_x,
+\qquad
+w(y)\leftrightarrow \bar\pi_y.
+\]
+So, under symmetric bargaining and degenerate $z$, BS has the same algebraic
+payoff shape as Shimer--Smith, except that BS labels the two sides as worker and
+firm rather than as two symmetric agents.
+
+The reason this shortcut fails with nondegenerate $z$ is also explicit. Holding
+the type pair $(x,y)$ fixed, BS no longer has one number $\tilde f(x,y)$. It has
+a random realized production value
+\[
+zf_{x,y}.
+\]
+Thus the same type pair generates the random wage
+\[
+W_{x,y}(z)
+=
+\frac12 zf_{x,y}
++\frac12\bar w_x
+-\frac12\bar\pi_y
+\quad\text{when }\gamma=1/2,
+\]
+but only if the draw clears the threshold
+\[
+z\geq \bar z_{x,y}
+=
+\frac{\bar w_x+\bar\pi_y}{f_{x,y}}.
+\]
+Source: BS equation (6), p. 6. Therefore the type pair $(x,y)$ maps to a
+distribution of possible realized payoffs, not to one deterministic payoff. The
+econometrician sees wages only for the selected meetings whose $z$ clears the
+acceptance threshold.
+
+\subsection{Where the Models Actually Diverge}
+
+The divergence is not the Bellman logic. In both papers, value equations have
+current flow payoffs plus expected capital gains/losses from Poisson events. In
+Shimer--Smith, an unmatched type $x$ receives a capital gain when a mutually
+agreeable type $y$ is met, and a matched agent loses the personal surplus when
+the match is destroyed. Source: Shimer--Smith, pp. 347--349; prior result PDF,
+Secs. 1.3--1.6; \texttt{shimer\_smith\_writeup.tex}, Sec. 1.
+
+This means the first line of explanation should be: ``do not contrast SS and BS as
+deterministic versus stochastic search.'' That contrast is too crude. Search is stochastic
+in both models. The useful contrast is deterministic type-pair surplus versus stochastic
+type-pair surplus.
+
+The divergence is also not simply that one model is random and the other is
+deterministic. Both have random meetings and random separations. The exact
+divergence is the timing and role of match quality. In Shimer--Smith, once the
+types $(x,y)$ are fixed, match output is fixed at $f(x,y)$. Therefore the
+equilibrium acceptance rule is deterministic at the type-pair level:
+\[
+y\in \mathcal M(x)
+\quad\Longleftrightarrow\quad
+f(x,y)-w(x)-w(y)\geq 0 .
+\]
+Source: Shimer--Smith, equation (5), p. 349.
+
+In Borovi\v{c}kov\'a--Shimer, a type $x$ worker and type $y$ firm draw $z$ after
+they meet. Holding $(x,y)$ fixed, some meetings are accepted and others are
+rejected. The type-pair acceptance probability is
+\[
+\Pr(\text{accept}\mid x,y)=1-G(\bar z_{x,y}),
+\qquad
+\bar z_{x,y}=\frac{\bar w_x+\bar\pi_y}{f_{x,y}}.
+\]
+Source: BS equations (6) and (13), pp. 6--8. That is the selection wedge. It
+creates a difference between the value of creating a meeting and the value of an
+observed accepted match.
+
+The nuance is important. Suppose a worker of type $x$ meets a firm of type $y$ ten
+times in ten independent copies of the BS economy. The first-stage type pair is the
+same every time, but the $z$ draw changes. Some meetings produce a high enough $z$
+and become observed jobs; other meetings are rejected and leave no wage observation.
+In Shimer--Smith, by contrast, the same type pair has the same surplus every time,
+so the equilibrium type-pair acceptance decision does not vary across repeated meetings.
+
+\subsection{Bellman to Threshold to ITT}
+
+Start with the Shimer--Smith Bellman logic. For an unmatched type $x$ agent,
+meetings with mutually acceptable type $y$ agents arrive at rate $\rho u(y)\,dy$.
+The value gain from such a meeting is the personal surplus
+\[
+S(x\mid y)=W(x\mid y)-W(x).
+\]
+Thus the unmatched Bellman equation is
+\[
+rW(x)
+=
+\rho\int_{\mathcal M(x)}S(x\mid y)u(y)\,dy.
+\tag{SS-unmatched}
+\]
+Source: Shimer--Smith, pp. 347--349; prior result PDF, Sec. 1.3;
+\texttt{shimer\_smith\_writeup.tex}, Sec. 1.2. The key point is that the
+Bellman equation values search by integrating the surplus gains from meetings
+that become matches.
+
+Now use the matched Bellman equation. While matched with type $y$, type $x$
+receives flow payoff $\pi(x\mid y)$ and loses the match at rate $\delta$. Hence
+\[
+rW(x\mid y)
+=
+\pi(x\mid y)-\delta S(x\mid y).
+\tag{SS-matched}
+\]
+Source: Shimer--Smith, pp. 347--349; prior result PDF, Sec. 1.4;
+\texttt{shimer\_smith\_writeup.tex}, Sec. 1.3. Since
+$S(x\mid y)=W(x\mid y)-W(x)$ and $w(x)=rW(x)$, this can be rearranged as
+\[
+\pi(x\mid y)
+=
+w(x)+(r+\delta)S(x\mid y).
+\]
+Why does this look like only one side of the market? Because Shimer--Smith is a
+symmetric matching model. There are not workers and firms. There are agents of
+different types, and either side of the match can be called the $x$ side or the
+$y$ side. The other side's Bellman equation is therefore not a different economic
+object; it is the same equation with $x$ and $y$ swapped:
+\[
+rW(y\mid x)
+=
+\pi(y\mid x)-\delta S(y\mid x).
+\tag{SS-matched-y}
+\]
+Under symmetric Nash bargaining in Shimer--Smith,
+\[
+S(x\mid y)=S(y\mid x),
+\]
+so the two personal surplus equations are two copies of the same logic. This is
+why the notes can write the Bellman equation for type $x$ and then obtain the
+type-$y$ version by symmetry.
+
+Using the two side-specific Bellman equations and feasibility,
+\[
+\pi(x\mid y)+\pi(y\mid x)=f(x,y),
+\]
+gives the Shimer--Smith personal surplus formula
+\[
+S(x\mid y)
+=
+\frac{f(x,y)-w(x)-w(y)}{2(r+\delta)}.
+\tag{SS-surplus}
+\]
+Source for the derivation: prior result PDF, Secs. 1.5--1.6;
+\texttt{shimer\_smith\_writeup.tex}, Sec. 1.4. The match is mutually acceptable
+exactly when this surplus is nonnegative:
+\[
+y\in\mathcal M(x)
+\quad\Longleftrightarrow\quad
+f(x,y)\geq w(x)+w(y).
+\tag{SS-threshold}
+\]
+Source: Shimer--Smith, equation (5), p. 349.
+
+This is the cross-paper bridge. In Shimer--Smith, a meeting with type $y$ has a
+deterministic worker-side value
+\[
+\max\left\{
+\frac{f(x,y)-w(x)-w(y)}{2(r+\delta)},0
+\right\}.
+\]
+There is no extra match-quality draw after the meeting, so conditional on the
+type pair $(x,y)$, the meeting either always creates this surplus or always
+creates zero surplus. In BS, the same Bellman logic is kept, but the meeting
+draws $z$ before the acceptance decision. Therefore the value of creating a
+meeting must average over the possible $z$ realizations. That average is exactly
+the ITT object.
+
+The mathematical connection between the Shimer--Smith matched Bellmans and the
+BS Bellmans is a relabeling plus a change in the output object. In Shimer--Smith,
+the two side-specific matched equations can be written as
+\[
+rW(x\mid y)
+=
+\pi(x\mid y)+\delta\left(W(x)-W(x\mid y)\right),
+\tag{SS-x}
+\]
+\[
+rW(y\mid x)
+=
+\pi(y\mid x)+\delta\left(W(y)-W(y\mid x)\right).
+\tag{SS-y}
+\]
+The two flow payoffs exhaust deterministic output:
+\[
+\pi(x\mid y)+\pi(y\mid x)=f(x,y).
+\]
+BS keeps this Bellman form but labels the two sides as worker and firm. The
+worker's matched value is $V^e_{x,y}(z,w)$, the worker's outside value is
+$V_x^u$, and the worker's flow payoff is the wage $w$. The firm's matched value
+is $V^f_{y,x}(z,w)$, the firm's outside value is $V_y^v$, and the firm's flow
+payoff is output net of the wage, $zf_{x,y}-w$. Thus the side-by-side map is
+\[
+\begin{array}{ccl}
+W(x\mid y) &\longleftrightarrow& V^e_{x,y}(z,w),\\
+W(x) &\longleftrightarrow& V_x^u,\\
+\pi(x\mid y) &\longleftrightarrow& w,\\
+W(y\mid x) &\longleftrightarrow& V^f_{y,x}(z,w),\\
+W(y) &\longleftrightarrow& V_y^v,\\
+\pi(y\mid x) &\longleftrightarrow& zf_{x,y}-w,\\
+f(x,y) &\longleftrightarrow& zf_{x,y}.
+\end{array}
+\]
+
+BS write the worker and firm Bellman equations for a realized match quality
+$z$ and arbitrary wage $w$ as
+\[
+rV^e_{x,y}(z,w)=w+\delta\left(V_x^u-V^e_{x,y}(z,w)\right),
+\]
+\[
+rV^f_{y,x}(z,w)=z f_{x,y}-w+\delta\left(V_y^v-V^f_{y,x}(z,w)\right).
+\]
+Source: BS equations (2)--(4), pp. 6--7. Define
+\[
+\bar w_x=rV_x^u,\qquad \bar\pi_y=rV_y^v.
+\]
+This is the BS analogue of the two Shimer--Smith matched Bellman equations:
+current flow payoff plus the capital loss from separation. BS writes two
+equations because workers and firms are economically distinct sides with
+different flow payoffs. Shimer--Smith needs only one displayed side because the
+model is symmetric; the other side is obtained by swapping $x$ and $y$.
+
+Adding the worker and firm values and subtracting outside values gives BS total
+match surplus
+\[
+V^s_{x,y}(z)
+=
+\frac{\max\{z f_{x,y}-\bar w_x-\bar\pi_y,0\}}{r+\delta}.
+\]
+Source: BS equation (5), p. 6.
+
+Thus the selection threshold is exactly
+\[
+z\geq \bar z_{x,y},
+\qquad
+\bar z_{x,y}
+=
+\frac{\bar w_x+\bar\pi_y}{f_{x,y}}.
+\]
+Source: BS equation (6), p. 6. This is the BS analogue of Shimer--Smith's
+$f(x,y)\geq w(x)+w(y)$, except that the left-hand side is realized only after
+the meeting.
+
+Now the ITT follows from the same object that appears inside the Bellman
+equation. In Shimer--Smith, the value of a type-$y$ meeting for type $x$ is the
+deterministic personal surplus $S(x\mid y)$ when the pair is acceptable. In BS,
+the value of a type-$y$ meeting for a type-$x$ worker before seeing $z$ is the
+expected worker share of the realized total surplus:
+\[
+\text{meeting value before }z
+=
+\gamma \E_z\!\left[V^s_{x,y}(z)\right].
+\]
+Because $V^s_{x,y}(z)=0$ below the threshold, this expectation integrates only
+over accepted draws.
+
+Under Nash bargaining with worker share $\gamma$, the worker's gain from an
+accepted meeting is $\gamma V^s_{x,y}(z)$. BS define the value of creating a
+meeting before seeing $z$ as the intent-to-treat:
+\[
+ITT_x(y)
+=
+\gamma\int_0^\infty V^s_{x,y}(z)g(z)\,dz
+=
+\gamma\int_{\bar z_{x,y}}^\infty V^s_{x,y}(z)g(z)\,dz.
+\]
+Source: BS equations (17)--(18), p. 9. The average treatment on the treated,
+conditional on the meeting actually becoming a match, is
+\[
+ATT_x(y)
+=
+\gamma
+\frac{\int_{\bar z_{x,y}}^\infty V^s_{x,y}(z)g(z)\,dz}
+{1-G(\bar z_{x,y})}.
+\]
+Source: BS equation (19), pp. 9--10. Dividing the ITT integral by the ATT
+conditional mean gives the derived identity
+\[
+ITT_x(y)=\left[1-G(\bar z_{x,y})\right]ATT_x(y).
+\]
+Therefore the comparison is pinned down by the acceptance probability
+\[
+p_{x,y}\equiv 1-G(\bar z_{x,y}).
+\]
+If $0<p_{x,y}<1$ and accepted matches have positive surplus, then
+\[
+0<ITT_x(y)<ATT_x(y).
+\]
+The intuition is simple: $ATT_x(y)$ conditions on the meeting becoming a match,
+while $ITT_x(y)$ values the meeting before knowing whether it will clear the
+selection threshold. If $p_{x,y}=1$, then every meeting is accepted and
+$ITT_x(y)=ATT_x(y)$. If $p_{x,y}=0$, the ATT is not economically meaningful
+because there are no treated/accepted matches.
+Under the Pareto case used in BS Section 3, this becomes
+\[
+ITT_x(y)
+=
+\left(\frac{\bar z_{x,y}}{z_0}\right)^{-\theta}ATT_x(y).
+\]
+Source: BS equation (27), pp. 13--14. BS emphasize the empirical content of this
+identity: wage data on accepted matches reveal objects tied to the ATT, not the
+ITT, unless one also knows the probability that a meeting clears the acceptance
+threshold. Source: BS equation (20), p. 10, and Sec. 3.2, pp. 13--14.
+
+\subsection{Is $\pi(x\mid y)$ a Wage?}
+
+For Shimer--Smith, yes in the limited sense that $\pi(x\mid y)$ is the flow payoff
+received by type $x$ while matched with type $y$. It is the worker-side flow
+payment in the Bellman equation, and feasibility imposes
+\[
+\pi(x\mid y)+\pi(y\mid x)=f(x,y).
+\]
+Source: Shimer--Smith, pp. 347--348. The old note derived the useful expression
+\[
+\pi(x\mid y)
+=
+\frac12 f(x,y)+\frac12 w(x)-\frac12 w(y).
+\tag{SS-payoff}
+\]
+Source: prior result PDF, Sec. 6.3; \texttt{shimer\_smith\_writeup.tex},
+Sec. 6.3. This is not printed in Shimer--Smith; it follows from their equations
+(3)--(4), pp. 348--349.
+
+The word ``wage'' needs care. Shimer--Smith are writing a symmetric
+transferable-output matching model, not a worker-firm employment model. Thus
+$\pi(x\mid y)$ is wage-like because it is the flow payment to the $x$ side while
+matched, but the same notation could be used for either side of the match. The
+formula says: the $x$ side gets half of the match output, plus half of its own
+outside value, minus half of the partner's outside value. Intuitively, a higher
+outside value for $x$ raises the payment needed to make $x$ willing to match,
+while a higher outside value for $y$ gives $y$ a stronger claim on the same output
+pie.
+
+For BS, the actual wage object is not $\pi(x\mid y)$. BS use $\bar\pi_y$ for the
+firm's reservation profit, while the accepted-match wage is $W_{x,y}(z)$. The
+structural wage equation is
+\[
+W_{x,y}(z)
+=
+\bar w_x+\gamma\left(zf_{x,y}-\bar w_x-\bar\pi_y\right),
+\qquad z\geq \bar z_{x,y}.
+\]
+Source: BS equation (9), p. 7. Derived comparison to SS: this is exactly parallel to the SS-payoff formula,
+outside value plus worker bargaining share times realized net surplus. Setting
+$\gamma=1/2$ and replacing $z f_{x,y}$ by deterministic $f(x,y)$ gives
+\[
+W_{x,y}
+=
+\frac12 f_{x,y}+\frac12\bar w_x-\frac12\bar\pi_y,
+\]
+which is the same additive-plus-half-production structure as SS-payoff.
+
+Thus the clean answer is: $\pi(x\mid y)$ is the wage-like object in
+Shimer--Smith, but in BS the wage is $W_{x,y}(z)$, not $\bar\pi_y$. The symbol
+$\bar\pi_y$ is the firm's reservation profit, an outside-option object on the
+firm side. Confusing $W_{x,y}(z)$ and $\bar\pi_y$ would mix up the worker's actual
+pay in an accepted match with the firm's value of remaining vacant.
+
+\subsection{Check Against BS Proposition 2}
+
+Proposition 2 is the payoff from adding the stochastic $z$ and then conditioning
+on accepted matches. Under a Pareto distribution for $z$, BS prove that the wage
+observed in an accepted match can be written
+\[
+\omega_{i,j}
+=
+\alpha^*_{x_i}+\psi^*_{y_j}+\epsilon_{i,j},
+\]
+where
+\[
+\alpha^*_x
+=
+\left(1+\frac{\gamma}{\theta-1}\right)\bar w_x,
+\qquad
+\psi^*_y
+=
+\frac{\gamma}{\theta-1}\bar\pi_y,
+\]
+and the residual is mean zero conditional on the worker and firm types. Source:
+BS Proposition 2, pp. 11--12.
+
+BS then connect the firm wage component to treatment effects. In the Pareto
+case,
+\[
+ATT_x(y)
+=
+\frac{\gamma(\bar w_x+\bar\pi_y)}{(\theta-1)(r+\delta)}
+=
+\frac{\frac{\gamma}{\gamma+\theta-1}\alpha^*_x+\psi^*_y}{r+\delta}.
+\]
+Therefore, for a fixed worker type,
+\[
+ATT_x(y_1)-ATT_x(y_2)
+=
+\frac{\psi^*_{y_1}-\psi^*_{y_2}}{r+\delta}.
+\]
+Source: BS equations (24)--(26), p. 13. This is the precise sense in which
+firm wage premia line up with the ATT: they recover differences in accepted
+match values, not differences in the ex ante value of creating meetings.
+
+Derived comparison: this does line up with the SS additive-plus-$\frac12 f$ result, but with an
+important twist. In SS, the payoff surface is additive plus one-half of the
+deterministic production surface. In BS with Pareto $z$, conditioning on
+acceptance makes the normalized overshoot $z/\bar z_{x,y}$ have the same
+distribution for every type pair. Since
+\[
+\bar z_{x,y}f_{x,y}=\bar w_x+\bar\pi_y,
+\]
+the accepted wage can be rewritten in terms of $(\bar w_x,\bar\pi_y)$ and the
+accepted overshoot, rather than in terms of $f_{x,y}$ directly. That is why
+Proposition 2 says the accepted wage is additively separable even though the
+matching probabilities still depend on $f_{x,y}$ through $\bar z_{x,y}$.
+
+Here is the Pareto step written out. Start from the BS wage equation:
+\[
+W_{x,y}(z)
+=
+\bar w_x+\gamma(zf_{x,y}-\bar w_x-\bar\pi_y).
+\]
+Use the threshold identity $\bar z_{x,y}f_{x,y}=\bar w_x+\bar\pi_y$ to rewrite
+the production term as
+\[
+zf_{x,y}
+=
+\frac{z}{\bar z_{x,y}}(\bar w_x+\bar\pi_y).
+\]
+Now define the accepted-match overshoot
+\[
+Q=\frac{z}{\bar z_{x,y}}
+\qquad\text{conditional on }z\geq \bar z_{x,y}.
+\]
+Under the Pareto distribution, the conditional distribution of $Q$ is the same for
+every type pair:
+\[
+\Pr(Q\geq q\mid z\geq \bar z_{x,y})
+=
+\frac{\Pr(z\geq q\bar z_{x,y})}{\Pr(z\geq \bar z_{x,y})}
+=
+q^{-\theta}.
+\]
+This Pareto scale-invariance calculation was already written in the prior
+stochasticity note. Source: \texttt{model\_acceptance\_stochasticity\_writeup.tex},
+Sec. 4; prior result PDF, Sec. 8.4. Because the distribution of $Q$ is common
+across type pairs, $f_{x,y}$ disappears from the conditional mean accepted wage
+after the threshold substitution. It does not disappear from the model: it still
+governs the probability of acceptance, $1-G(\bar z_{x,y})$, and therefore the
+match graph and ITT.
+
+So the exact slogan should be:
+\[
+\text{SS: deterministic type-pair surplus gives payoff } 
+\frac12 f+\text{additive outside values.}
+\]
+\[
+\text{BS: stochastic type-pair surplus plus Pareto selection gives accepted wages }
+\text{additive in reservation values.}
+\]
+The wage surface can look additively separable in BS while the match graph is
+strongly shaped by nonadditive production through selection thresholds. This is
+the real bridge from Bellman to selection to ITT.
+
+
+% ============================================================
+% Merged from bilal_modeling_memo.tex
+% ============================================================
+
+
+\section{Bilal Slides and the Low-Rank Modeling Section}
+
+\paragraph{Source convention.}
+
+Page citations to Bilal refer to the PDF pages in
+\texttt{bilal\_2024\_slides\_search-and-matching\_Lecture2.pdf}. Page citations
+to Bonhomme--Lamadon--Manresa refer to the printed Econometrica pages in BLM
+(2019). Page citations to the project note refer to PDF pages in
+\texttt{loo\_full\_note\_v1.pdf}. When I reuse results from the prior project
+notes, I cite the prior result PDF \texttt{7\_15\_Meeting (1).pdf} and the
+source \TeX{} file \texttt{shimer\_smith\_writeup.tex}. Displays or claims not
+directly sourced are labeled as derived synthesis, derived ANOVA steps, or
+derived nesting interpretations.
+
+\subsection{Notation}
+
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.24\linewidth}
+                >{\raggedright\arraybackslash}p{0.68\linewidth}}
+\toprule
+Symbol & Meaning \\
+\midrule
+\endfirsthead
+\toprule
+Symbol & Meaning \\
+\midrule
+\endhead
+$u_t,v_t$ & Bilal unemployment and vacancy stocks at time $t$. Source: Bilal, pp. 9--10. \\
+$M_t,M(u,v)$ & Bilal aggregate matching function and number of matches. Source: Bilal, p. 9. \\
+$m,\alpha$ & Bilal Cobb--Douglas matching-function scale and unemployment elasticity in $M(u,v)=mu^\alpha v^{1-\alpha}$. Source: Bilal, p. 9. \\
+$\theta_t$ & Bilal labor-market tightness, $v_t/u_t$. It is positive but not necessarily greater than one, since vacancies can be smaller or larger than unemployment. Source: Bilal, p. 10. \\
+$f_t,q_t$ & Bilal job-finding and vacancy-filling probabilities. Source: Bilal, p. 10. \\
+$s$ & Bilal exogenous job-termination probability. Source: Bilal, p. 10. \\
+$U_t,E_t,V_t,J_t$ & Bilal values of unemployment, employment, a vacant job/firm, and a filled job/firm. Source: Bilal, p. 14. \\
+$b,c,z_t,w_t,\beta$ & Bilal unemployment flow payoff, vacancy cost, productivity, wage, and discount factor. Source: Bilal, pp. 9, 14. \\
+$S_t,\gamma,r$ & Bilal joint surplus, worker bargaining power, and steady-state interest-rate notation $r=\beta^{-1}-1$. Source: Bilal, pp. 15, 19, 23. \\
+$Y_{ij},X_{ij}'\delta,\varepsilon_{ij}$ & Project wage/log-wage observation, observed covariate component, and residual in the low-rank interface. Source: project note, p. 8. \\
+$i,j,I,J$ & Worker and firm indices and counts in the project interface. Source: project note, p. 8. \\
+$\alpha_i,\psi_j,u_i,v_j,\Lambda,\operatorname{rank}(\Lambda)=r$ & Project additive worker and firm components, worker and firm interaction factors, interaction matrix, and interaction rank. Source: project note, p. 8. The symbol $r$ is therefore context-dependent: an interest rate in Bilal's steady-state slide and an interaction rank in the project interface. \\
+$\delta,\varepsilon_{ij}$ & Project covariate coefficient vector in $X_{ij}'\delta$ and residual in $(\star)$. Source: project note, p. 8. \\
+$k,\ell,K,L$ & Worker type and firm class indices and counts in the saturated type-cell construction. Source: project note, p. 8. \\
+$\mu_{k\ell},\mu_{\cdot\cdot},\mu_{k\cdot},\mu_{\cdot\ell}$ & Saturated type-cell mean and its grand, row, and column means. Derived from the ANOVA decomposition in project note Proposition 1, p. 8. \\
+$\bar\alpha_k,\bar\psi_\ell,M_{k\ell}$ & Additive type components and double-centered interaction matrix in the ANOVA decomposition. Derived from project note Proposition 1, p. 8. This $M$ is unrelated to Bilal's matching function $M(u,v)$. \\
+$e_k,e_\ell,\1_K,\1_L$ & Standard basis vectors and all-ones vectors used in the type-indicator nesting and rank proof. Derived notation for project note Proposition 1, p. 8. \\
+$k_{it},\ell(j),\alpha_i,a_t(k),b_t(k),X_{it}'c_t,\varepsilon_{it}$ & BLM firm class, project firm-class map, worker type, class intercept, class slope, covariate component, and residual in the simple static regression example. Source for BLM objects: BLM, pp. 702--704; project notation $\ell(j)$ is derived for the type-cell embedding. \\
+\bottomrule
+\end{longtable}
+
+\subsection{Bilal Lecture 2: What Matters for This Project}
+
+Bilal's Lecture 2 is a compact DMP search-and-matching benchmark. It is not a
+two-sided worker-type/firm-type model like Shimer--Smith or
+Borovi\v{c}kov\'a--Shimer, but it gives the reusable search logic: matching
+technology, value functions, joint surplus, Nash bargaining, free entry, and
+the unemployment stock-flow law.
+
+Derived synthesis for teaching the section: read the slides as a five-step
+chain.
+\begin{enumerate}
+\item A matching function turns unemployment and vacancies into meetings.
+\item Tightness summarizes how favorable the market is to workers versus firms.
+\item Worker and firm Bellman equations value unemployment, employment,
+vacancies, and filled jobs.
+\item Adding worker and firm values gives joint surplus, which removes the wage
+because the wage is a transfer inside the match.
+\item Bargaining splits the surplus, and free entry pins down tightness.
+\end{enumerate}
+That chain is why the slides matter for this project. They are not a source for
+the low-rank wage equation itself; they are the cleanest source for the search
+logic that sits behind the SS-to-BS comparison.
+
+\subsubsection{Matching Technology and Tightness}
+
+The lecture defines vacancies $v_t$ and unemployment $u_t$, with matches formed
+by a matching function
+\[
+M_t=M(u_t,v_t).
+\]
+The slide specializes to Cobb--Douglas,
+\[
+M(u,v)=m u^\alpha v^{1-\alpha},
+\]
+while noting that the qualitative results extend to any constant-returns
+matching function. Source: Bilal, p. 9.
+
+Labor-market tightness is
+\[
+\theta_t=\frac{v_t}{u_t}.
+\]
+The job-finding probability for an unemployed worker is
+\[
+f_t=\frac{M_t}{u_t}=f(\theta_t)=m\theta_t^{1-\alpha},
+\]
+and the vacancy-filling probability is
+\[
+q_t=\frac{M_t}{v_t}=q(\theta_t)=m\theta_t^{-\alpha}
+=\frac{f(\theta_t)}{\theta_t}.
+\]
+Source: Bilal, p. 10. The key conceptual point for our work is that random
+matching can be summarized either at the individual meeting-rate level, as in
+SS and BS, or at the aggregate matching-function/tightness level, as in DMP.
+When $\theta_t$ rises, vacancies are abundant relative to unemployed workers.
+Then workers find jobs more easily because $f_t$ rises, while firms fill
+vacancies less easily because $q_t$ falls. This is the first place where the
+two-sided nature of search appears even though the model has only one aggregate
+worker type and one aggregate job type.
+
+\subsubsection{Value Functions}
+
+The lecture's four Bellman equations are
+\[
+U_t=b+\beta \E_t\left[f_t E_{t+1}+(1-f_t)U_{t+1}\right],
+\]
+\[
+E_t=w_t+\beta \E_t\left[sU_{t+1}+(1-s)E_{t+1}\right],
+\]
+\[
+V_t=-c+\beta \E_t\left[q_tJ_{t+1}+(1-q_t)V_{t+1}\right],
+\]
+\[
+J_t=z_t-w_t+\beta \E_t\left[sV_{t+1}+(1-s)J_{t+1}\right].
+\]
+Source: Bilal, p. 14. This is the slide-deck analogue of the Bellman logic used
+in the SS and BS memo: current payoff plus expected continuation values, with
+transitions generated by search and separation.
+
+The equations should be read literally. An unemployed worker receives $b$ today,
+then next period is employed with probability $f_t$ and unemployed otherwise. An
+employed worker receives $w_t$ today, then loses the job with probability $s$.
+A vacancy pays cost $c$ today and is filled with probability $q_t$. A filled job
+receives output net of wages, $z_t-w_t$, and separates with probability $s$.
+These four equations are the accounting system from which the surplus equation
+is obtained.
+
+\subsubsection{Surplus and the Wage}
+
+The worker surplus is $E_t-U_t$, the firm surplus is $J_t-V_t$, and free entry
+sets $V_t=0$. The joint match surplus is
+\[
+S_t=E_t+J_t-U_t,
+\]
+and the lecture derives
+\[
+S_t
+=
+z_t-b-\beta f_t\E_t[E_{t+1}-U_{t+1}]
++\beta(1-s)\E_t[S_{t+1}].
+\]
+Source: Bilal, p. 15; the negative sign on the foregone-search term is also
+confirmed by the later joint-surplus equation on Bilal, p. 21,
+$S_t=z_t-b+\beta(1-s-\gamma f_t)\E_t[S_{t+1}]$. The useful point is the same
+one that makes SS and BS clean: with transferable utility and linear payoffs,
+joint surplus is independent of the wage. The wage only splits the surplus.
+
+The term $z_t-b$ is the current output gain from employment rather than
+unemployment. The term $\beta(1-s)\E_t[S_{t+1}]$ is the continuation value of
+the match if it survives. The negative foregone-search term appears because a
+matched worker cannot simultaneously remain unemployed and keep drawing new job
+offers. This nuance is easy to miss: the search opportunity that an unemployed
+worker gives up is part of the opportunity cost of being matched.
+
+Bilal then imposes generalized Nash bargaining:
+\[
+w_t=\arg\max_w (E_t(w)-U_t)^\gamma J_t(w)^{1-\gamma},
+\]
+so
+\[
+E_t(w_t)-U_t=\gamma S_t,
+\qquad
+J_t(w_t)=(1-\gamma)S_t.
+\]
+Source: Bilal, p. 19. The equilibrium wage can be written as
+\[
+w_t=(1-\gamma)b+\gamma(z_t+\theta_t c),
+\]
+after using free entry. Source: Bilal, p. 20. For our project, this is a
+warning and a guide: search frictions determine outside options and surplus,
+but the wage equation depends on the bargaining/transfer rule. That is why the
+SS-to-BS mapping had to track outside values and surplus shares carefully.
+
+\subsubsection{Equilibrium Conditions}
+
+Given surplus sharing, the joint-surplus Bellman becomes
+\[
+S_t=z_t-b+\beta(1-s-\gamma f_t)\E_t[S_{t+1}],
+\]
+free entry determines tightness,
+\[
+c=\beta q_t(1-\gamma)\E_t[S_{t+1}],
+\]
+and unemployment follows
+\[
+u_{t+1}-u_t=s(1-u_t)-f_tu_t.
+\]
+Source: Bilal, p. 21. In steady state, these reduce to the job-creation condition
+\[
+\frac{r+s+\gamma f(\theta)}{(1-\gamma)q(\theta)}
+=
+\frac{z-b}{c},
+\qquad r=\beta^{-1}-1,
+\]
+and the Beveridge-curve stock-flow identity
+\[
+u=\frac{s}{s+f(\theta)}.
+\]
+Source: Bilal, p. 23.
+
+The equilibrium logic is now closed. Given tightness, the matching function gives
+$f(\theta)$ and $q(\theta)$. Given these probabilities, surplus is determined.
+Given surplus sharing and free entry, vacancies enter until the expected value
+of posting a vacancy equals the cost. The unemployment equation then says how the
+stock of unemployed workers evolves from separations into unemployment and job
+findings out of unemployment.
+
+\subsubsection{Connection to SS and BS}
+
+Derived synthesis: Bilal's slides should be used as the generic search-model scaffold, not as a
+direct nesting target. SS and BS add type-pair heterogeneity to this search
+logic. SS makes match output deterministic conditional on types, $f(x,y)$. BS
+adds a match-specific draw $z$ and therefore a type-pair selection threshold.
+The shared structure is:
+\[
+\text{Bellman equations}
+\quad\Rightarrow\quad
+\text{joint surplus independent of wage}
+\quad\Rightarrow\quad
+\text{Nash split}
+\quad\Rightarrow\quad
+\text{acceptance/job-creation condition}.
+\]
+
+\subsection{Modeling Section: The Low-Rank Interface}
+
+The project note's modeling object is
+\[
+Y_{ij}
+=
+X_{ij}'\delta+\alpha_i+\psi_j+u_i^\top\Lambda v_j+\varepsilon_{ij},
+\qquad
+\operatorname{rank}(\Lambda)=r\ll \min\{I,J\}.
+\tag{$\star$}
+\]
+Source: project note, p. 8; prior result PDF, pp. 18--21;
+\texttt{shimer\_smith\_writeup.tex}, Sec. 6. The point of the modeling section is
+not to claim that every structural model is literally inside $(\star)$. The point
+is to identify which static wage-equation cores land in this interface after
+normalization.
+
+\subsubsection{The Double-Demeaned $K\times L$ Construction}
+
+Let worker types be $k\in\{1,\ldots,K\}$ and firm classes be
+$\ell\in\{1,\ldots,L\}$. Let
+\[
+\mu=(\mu_{k\ell})\in\mathbb R^{K\times L}
+\]
+be the saturated static type-pair mean wage surface:
+\[
+\mu_{k\ell}
+=
+\E[Y\mid \text{worker type }k,\text{ firm class }\ell].
+\]
+This is the object shown in the Saturday screenshot
+\texttt{C:\textbackslash Users\textbackslash A8327\textbackslash Downloads\textbackslash image (3).png}
+and in the project note's Proposition 1. Source: project note, p. 8.
+
+Derived ANOVA step: define the grand mean, row means, and column means by
+\[
+\mu_{\cdot\cdot}
+=
+\frac{1}{KL}\sum_{k=1}^K\sum_{\ell=1}^L\mu_{k\ell},
+\qquad
+\mu_{k\cdot}
+=
+\frac{1}{L}\sum_{\ell=1}^L\mu_{k\ell},
+\qquad
+\mu_{\cdot\ell}
+=
+\frac{1}{K}\sum_{k=1}^K\mu_{k\ell}.
+\]
+Set
+\[
+\bar\alpha_k=\mu_{k\cdot}-\mu_{\cdot\cdot},
+\qquad
+\bar\psi_\ell=\mu_{\cdot\ell},
+\]
+and define the double-centered interaction matrix
+\[
+M_{k\ell}
+=
+\mu_{k\ell}-\mu_{k\cdot}-\mu_{\cdot\ell}+\mu_{\cdot\cdot}.
+\]
+Then
+\[
+\mu_{k\ell}
+=
+\bar\alpha_k+\bar\psi_\ell+M_{k\ell}.
+\]
+This is a derived ANOVA decomposition. The steps are:
+\begin{enumerate}
+\item Start with the fully saturated table $\mu_{k\ell}$, which allows every
+worker-type/firm-class cell to have its own mean.
+\item Pull out the worker-type level $\bar\alpha_k$ by comparing row $k$ to the
+grand mean.
+\item Pull out the firm-class level $\bar\psi_\ell$ by using the column mean.
+\item Put whatever remains in $M_{k\ell}$.
+\end{enumerate}
+Because $M_{k\ell}$ is defined as the leftover after removing row and column
+levels, it is the pure interaction part of the table. It tells us whether a
+particular worker type and firm class have a mean wage above or below what their
+separate additive levels would predict. The interaction matrix is double-centered:
+\[
+\sum_{\ell=1}^L M_{k\ell}=0\quad\text{for every }k,
+\qquad
+\sum_{k=1}^K M_{k\ell}=0\quad\text{for every }\ell.
+\]
+The row sums are zero because the average leftover within a row has already been
+absorbed into $\bar\alpha_k$. The column sums are zero because the average
+leftover within a column has already been absorbed into $\bar\psi_\ell$. It is
+unique once the mean convention above is fixed.
+
+Derived embedding in $(\star)$: assign worker $i$ to type $k(i)$ and firm $j$ to class $\ell(j)$. Let
+$e_k\in\mathbb R^K$ and $e_\ell\in\mathbb R^L$ be standard basis vectors. Set
+\[
+\alpha_i=\bar\alpha_{k(i)},
+\qquad
+\psi_j=\bar\psi_{\ell(j)},
+\qquad
+u_i=e_{k(i)},
+\qquad
+v_j=e_{\ell(j)},
+\qquad
+\Lambda=M.
+\]
+Then
+\[
+u_i^\top\Lambda v_j
+=
+e_{k(i)}^\top M e_{\ell(j)}
+=
+M_{k(i)\ell(j)},
+\]
+and therefore
+\[
+\alpha_i+\psi_j+u_i^\top\Lambda v_j
+=
+\mu_{k(i)\ell(j)}.
+\]
+So the saturated $K\times L$ type-pair mean surface is exactly a special case of
+$(\star)$. The indicator vectors do no estimation magic here: they simply select
+one row and one column of the type-cell matrix. The entire substantive claim is
+that the project interface has enough room to reproduce any static type-cell
+mean once the additive pieces and the centered interaction matrix are allowed.
+
+\subsubsection{Rank Bound}
+
+Derived rank bound: because $M$ is double-centered, its columns lie in the $K-1$ dimensional
+subspace orthogonal to $\1_K$, and its rows lie in the $L-1$ dimensional
+subspace orthogonal to $\1_L$. Hence
+\[
+\operatorname{rank}(M)
+\leq
+\min\{K-1,L-1\}
+=
+\min\{K,L\}-1.
+\]
+This is the rank bound in the screenshot and in the project note. Source:
+project note, p. 8. The important interpretation is that the additive row and
+column components remove one dimension from each side. The interaction matrix
+does not live in all of $\mathbb R^{K\times L}$; it lives between centered type
+spaces.
+
+The bound is easiest to explain geometrically. A completely unrestricted
+$K\times L$ matrix can vary in $K$ independent row directions and $L$ independent
+column directions. Double-centering removes the all-ones direction on the worker
+side and the all-ones direction on the firm side. Therefore the interaction can
+use at most $K-1$ independent worker directions and at most $L-1$ independent firm
+directions, so its rank cannot exceed the smaller of those two numbers.
+
+\subsection{In What Sense We Nest BLM}
+
+\subsubsection{Notation for the BLM Nesting Question}
+
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.24\linewidth}
+                >{\raggedright\arraybackslash}p{0.68\linewidth}}
+\toprule
+Symbol & Meaning \\
+\midrule
+\endfirsthead
+\toprule
+Symbol & Meaning \\
+\midrule
+\endhead
+$\mathcal F_\star$ & The class of static conditional mean wage surfaces generated by the project interface $(\star)$. Derived notation for the nesting argument. \\
+$\mathcal P_{\mathrm{BLM}}$ & The class of joint panel-data distributions generated by the full BLM framework. Derived notation for the nesting argument. \\
+$\Pi_{\mathrm{mean}}$ & Projection that maps a joint panel distribution to its static conditional mean wage surface. Derived notation for the nesting argument. \\
+$m_{ij}$ & Static conditional mean wage for worker $i$ at firm $j$, after observed covariates are held fixed or partialled out. Derived notation for $(\star)$. \\
+$t,T$ & Calendar period and panel length in BLM. Source: BLM, p. 703. \\
+$Y_i^T,j_i^T,k_i^T,m_i^{T-1},X_i^T$ & Worker-level panel histories of earnings, firms, firm classes, mobility indicators, and covariates. Source: BLM, p. 703. \\
+$Y_{it},X_{it}$ & Worker $i$'s log earnings and observed covariates in period $t$. Source: BLM, p. 703. \\
+$j_{it},k_{it}$ & Firm employing worker $i$ and that firm's latent class in period $t$. Source: BLM, pp. 702--704. \\
+$m_{it}$ & BLM mobility indicator between periods. Source: BLM, pp. 703--704. This is unrelated to the derived mean surface $m_{ij}$. \\
+$\alpha_i$ & BLM worker type, discrete or continuous depending on the specification. Source: BLM, p. 703. \\
+$a_t(k),b_t(k),c_t,\varepsilon_{it}$ & BLM simple static regression intercept, worker-type slope, covariate coefficient, and residual. Source: BLM, p. 704. \\
+$F_{t,k,\alpha,x}$ & Generic notation for the conditional distribution of log earnings at time $t$ for worker type $\alpha$, firm class $k$, and covariates $x$. BLM's target is earnings distributions, not only means. Source: BLM, pp. 703--704; notation is derived. \\
+$P(k_{i,t+1},m_{it}\mid\cdot),\Pr,\Pr'$ & BLM mobility/transition law and two generic probability laws used in the counterexample. In the dynamic model mobility may depend on current earnings $Y_{it}$. Source: BLM, p. 704; prime notation is derived. \\
+$F(Y_{i,t+1}\mid\cdot)$ & BLM post-move or next-period earnings distribution. In the dynamic model it may depend on previous earnings and previous firm class. Source: BLM, p. 704. \\
+\bottomrule
+\end{longtable}
+
+BLM's static model uses firm classes and worker heterogeneity. Firms are grouped
+into classes $k(j)$, and workers have latent types $\alpha_i$, which may be
+discrete or continuous. BLM are interested in earnings distributions for workers
+of a given type in a given firm class, as well as type proportions and sorting.
+Source: BLM, pp. 702--704. A simple static BLM regression example is
+\[
+Y_{it}=a_t(k_{it})+b_t(k_{it})\alpha_i+X_{it}'c_t+\varepsilon_{it}.
+\]
+Source: BLM, p. 704.
+
+Derived nesting interpretation: the honest nesting claim has three layers.
+
+\paragraph{1. Exact for static type-cell mean surfaces.}
+If BLM worker heterogeneity is discretized into $K$ worker types and firm
+heterogeneity into $L$ firm classes, then the static conditional mean surface
+\[
+\mu_{k\ell}
+=
+\E[Y\mid k(i)=k,\ell(j)=\ell]
+\]
+is exactly nested by $(\star)$ through the double-demeaned construction above.
+This is the clean reading of the screenshot's BLM row.
+The word ``static'' is doing real work. We are only talking about the mean wage
+attached to a worker type and firm class at a point in the model, after the
+types/classes have been defined.
+
+\paragraph{2. Exact for BLM's simple interactive mean example.}
+The displayed BLM regression
+\[
+a_t(k)+b_t(k)\alpha_i
+\]
+is a firm-class intercept plus a firm-class slope on worker type. For a fixed
+date $t$, it is nested by
+\[
+\psi_j=a_t(\ell(j)),
+\qquad
+u_i=\alpha_i,
+\qquad
+v_j=b_t(\ell(j)),
+\qquad
+\Lambda=1,
+\]
+with observed covariates absorbed into $X_{ij}'\delta$. This is rank one if
+$\alpha_i$ is scalar. If the empirical object is instead a fully saturated
+discrete type-class mean matrix, the exact representation is the $M$ construction
+above, with rank at most $\min\{K,L\}-1$.
+
+This is also where the two meanings of ``low rank'' need to be kept separate.
+The simple BLM mean example is algebraically rank one because the interaction is
+the product of a worker scalar $\alpha_i$ and a firm-class slope $b_t(k)$. But it
+does not necessarily reduce the effective number of worker parameters: every
+worker can still carry their own $\alpha_i$. The project note's nesting claim is
+about algebraic rank of the interaction surface, not automatically about a small
+number of worker parameters.
+
+\paragraph{3. Not exact for the full BLM framework.}
+Here is the rigorous version of the non-nesting claim. The project interface is
+a model for a static conditional mean surface. After suppressing covariates for
+notation, it says
+\[
+m_{ij}
+\equiv
+\E[Y_{ij}\mid i,j]
+=
+\alpha_i+\psi_j+u_i^\top\Lambda v_j.
+\tag{LR-mean}
+\]
+Thus $\mathcal F_\star$ is a set of maps
+\[
+(i,j)\mapsto m_{ij}.
+\]
+It does not specify a joint distribution for the worker panel
+\[
+\left(Y_i^T,j_i^T,k_i^T,m_i^{T-1},X_i^T\right),
+\]
+nor does it specify a law for firm-class assignment, worker-type proportions,
+mobility, or the full conditional distribution of earnings around the mean.
+
+BLM's full framework is a model for those additional objects. The observed data
+are sequences of earnings, firm and mobility indicators, and covariates. Source:
+BLM, p. 703. BLM's target includes earnings distributions for workers of type
+$\alpha$ in firms of class $k$ and the proportions of worker types in firm
+classes. Source: BLM, p. 703. Their static example includes the mean regression
+\[
+Y_{it}=a_t(k_{it})+b_t(k_{it})\alpha_i+X_{it}'c_t+\varepsilon_{it},
+\]
+but the framework around it is distributional and panel-based. Source: BLM,
+p. 704. Their dynamic model additionally allows current earnings to affect
+mobility and allows earnings in period $t+1$ to depend on previous earnings and
+previous firm class. Source: BLM, p. 704.
+
+Therefore, if ``model A nests model B'' means that every observable distribution
+generated by B can be generated by A under some parameter choice, then
+$(\star)$ does not nest the full BLM framework. The reason is not just verbal; it
+is a domain mismatch:
+\[
+\mathcal F_\star
+\subseteq
+\left\{\text{static conditional mean surfaces }(i,j)\mapsto m_{ij}\right\},
+\]
+whereas full BLM lives in a space like
+\[
+\mathcal P_{\mathrm{BLM}}
+\subseteq
+\left\{
+\text{joint laws of }(Y_i^T,j_i^T,k_i^T,m_i^{T-1},X_i^T,\alpha_i)
+\right\}.
+\]
+There is no parameter vector $(\delta,\alpha_i,\psi_j,u_i,\Lambda,v_j)$ in
+$(\star)$ that determines the BLM objects
+\[
+F_{t,k,\alpha,x},\qquad
+\Pr(\alpha_i\mid k_{it}=k),\qquad
+\Pr(k_{i,t+1},m_{it}\mid Y_{it},\alpha_i,k_{it},X_{it}),
+\]
+or
+\[
+F(Y_{i,t+1}\mid Y_{it},\alpha_i,k_{it},k_{i,t+1},X_{it},X_{i,t+1},m_{it}).
+\]
+Those objects are part of BLM's empirical framework; they are not coordinates of
+the low-rank wage surface.
+
+A concrete counterexample makes the point. Take two BLM data-generating processes
+with the same static mean
+\[
+\E[Y_{it}\mid \alpha_i,k_{it},X_{it}]
+=
+a_t(k_{it})+b_t(k_{it})\alpha_i+X_{it}'c_t,
+\]
+but different conditional earnings distributions, for example one with small
+conditional variance and one with large conditional variance. Both have the same
+mean surface and therefore the same representation in $(\star)$, but they imply
+different earnings distributions. Since BLM's target includes the earnings
+distribution, $(\star)$ cannot be a nesting of the full BLM model.
+
+Likewise, take two BLM dynamic models with the same contemporaneous mean surface
+but different mobility laws:
+\[
+\Pr(m_{it}=1\mid Y_{it},\alpha_i,k_{it},X_{it})
+\neq
+\Pr'(m_{it}=1\mid Y_{it},\alpha_i,k_{it},X_{it}).
+\]
+They again map to the same static low-rank mean surface, but they imply different
+joint panel distributions and different sorting/mobility patterns. Since
+$(\star)$ has no transition law for $m_{it}$ or $k_{i,t+1}$, it cannot reproduce
+or restrict those differences. Adding an arbitrary mobility model on top of
+$(\star)$ would be a new augmented model, not the original low-rank interface.
+
+So the exact mathematical statement is about a projection, not a full nesting.
+Let $\Pi_{\mathrm{mean}}$ map a BLM joint panel distribution to the static
+conditional mean surface it implies. For the static mean layers discussed above,
+\[
+\Pi_{\mathrm{mean}}\left(\mathcal P_{\mathrm{BLM}}\right)
+\subseteq \mathcal F_\star
+\quad\text{under the embeddings above,}
+\]
+when attention is restricted to the discretized type-cell means or the simple
+interactive mean example. But this does not imply
+\[
+\mathcal P_{\mathrm{BLM}}\subseteq \mathcal F_\star.
+\]
+Indeed, the latter expression is not even a well-typed nesting claim: elements
+of $\mathcal F_\star$ are mean functions, while elements of
+$\mathcal P_{\mathrm{BLM}}$ are joint distributions. The projection
+$\Pi_{\mathrm{mean}}$ is many-to-one. It deliberately discards distributions,
+type proportions, class-estimation/mixture structure, and dynamic transition
+laws. BLM themselves emphasize that the dynamic model allows earnings to affect
+mobility and allows post-move earnings to depend on previous earnings and
+previous firm class. Source: BLM, p. 704. They also note that still richer
+non-Markovian structures can fall outside their own framework. Source: BLM,
+p. 706. This reinforces the point: BLM is a framework for panel distributions
+and dynamics, not merely a single static wage-surface equation.
+
+So the phrase ``we nest BLM'' is correct only if it is expanded as:
+\[
+\text{we nest BLM's static wage-equation/type-cell mean layer.}
+\]
+It should not be written as:
+\[
+\text{we nest the full BLM empirical framework.}
+\]
+This matches the prior result PDF's warning that the factor interface nests
+static wage-equation cores, while BLM's grouping, mixture estimation, and dynamic
+extensions remain separate implementation and interpretation layers. Source:
+prior result PDF, pp. 18--21; \texttt{shimer\_smith\_writeup.tex}, Sec. 6.5.
+
+Put differently, the surface nests more than the factors. If two different
+normalizations or latent-type representations generate the same static mean
+surface, $(\star)$ nests the observational surface. It does not by itself identify
+which worker factor, firm factor, or class assignment was the structural one.
+
+\subsection{Clean Wording for the Modeling Section}
+
+The safest paragraph is:
+
+\begin{quote}
+The low-rank interface nests the static wage-equation cores of several models.
+For BLM, the exact statement is about the static type-cell mean surface. If
+worker types are $k=1,\ldots,K$ and firm classes are $\ell=1,\ldots,L$, any
+saturated mean matrix $\mu_{k\ell}$ decomposes uniquely into additive row and
+column terms plus a double-centered interaction matrix $M$. Taking worker and
+firm factors to be type indicators and $\Lambda=M$ reproduces the mean surface
+exactly, with $\operatorname{rank}(M)\leq\min\{K,L\}-1$. This nests BLM's static
+mean layer, but not BLM's full distributional estimator, class-estimation step,
+or dynamic panel model. Mathematically, the low-rank interface is a family of
+static conditional mean surfaces, while full BLM is a family of joint panel
+distributions with earnings distributions, worker-type proportions, firm-class
+assignment, and mobility laws. The former can represent the mean layer of the
+latter, but it does not determine or nest the latter as a full empirical
+framework.
+\end{quote}
+
+
+% ============================================================
+% Merged from misc_eventstudy_kline_memo.tex
+% ============================================================
+
+
+\section{Sorkin--Warwar Event Studies and Kline Edge Effects}
+
+\paragraph{Source convention.}
+
+Page citations to Sorkin--Warwar refer to the PDF pages in
+\texttt{sorkin warwar 2026 sw\_logadditivity.pdf}. Page citations to Kline refer
+to the PDF pages in \texttt{kline\_2024\_review\_akm\_firm\_wage\_effects\_w33084.pdf}.
+When I reuse the prior project write-up, I cite the prior result PDF
+\texttt{7\_15\_Meeting (1).pdf} and \texttt{shimer\_smith\_writeup.tex}.
+Displays or claims not directly sourced are labeled as derived examples,
+derived algebra, or derived mappings.
+
+\subsection{Notation}
+
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.24\linewidth}
+                >{\raggedright\arraybackslash}p{0.68\linewidth}}
+\toprule
+Symbol & Meaning \\
+\midrule
+\endfirsthead
+\toprule
+Symbol & Meaning \\
+\midrule
+\endhead
+$Y_{it},Y_{it}(j)$ & Observed wage and potential wage for worker $i$ at time $t$ if assigned to firm $j$. Source for Kline potential-outcome notation: Kline, pp. 29--31. \\
+$D_{it}$ & Firm employing worker $i$ at time $t$ in Kline's causal notation. Source: Kline, p. 30. \\
+$\alpha_i,\psi_j,X_{it}'\beta,\varepsilon_{it},\mu_{ij}$ & Worker effect, firm effect, covariate component, AKM error, and illustrative time-invariant worker-firm match effect. Source for AKM components: Kline, p. 15. The match-effect extension is derived for the separability discussion. \\
+$\tau_t,\varepsilon_{it}(j)$ & Illustrative common time component and transitory potential-wage shock used in the derived parallel-trends example. \\
+$A,B,a,b$ & Origin and destination firms and two paired movers in the derived paired-mover algebra. Source for paired-mover design: SW abstract, p. 1. \\
+$G_A,G_B,\beta_{\mathrm{paired}}$ & Origin wage gap, destination wage gap, and paired-mover forecast coefficient. Derived notation for the paired-mover separability calculation. \\
+$h_i,p_j,m_{ij}$ & Worker, firm, and match effects in SW's partial-equilibrium search model. Source: SW, p. 27. \\
+$EE,EUE,\lambda_1$ & Employer-to-employer moves, employer-unemployment-employer moves, and SW's on-the-job offer-arrival parameter. Source: SW, pp. 27, 31--33. \\
+$X,Y,g,\beta_{\mathrm{pooled}}$ & Generic regressor, outcome, group, and pooled OLS coefficient in the derived pooling identity. \\
+$R,E,B,\Delta,u,\hat\Delta,\tilde\Delta$ & Kline adjusted wage changes, worker-by-edge matrix, firm-by-edge incidence matrix, unrestricted directed edge effects, edge-model error, estimated edge effects, and AKM-predicted edge effects. Source: Kline, pp. 18--19, 24--27. \\
+$c,C,\dot\psi,\dot\eta$ & Kline cycle vector, matrix collecting fundamental cycles, projected firm-effect coefficients, and cycle-effect coefficients. Source: Kline, pp. 18--20. \\
+$W,H,M,h_{\ell\ell},n_\ell,\ell$ & Kline mover-weight matrix, projection matrix, residual-maker matrix, edge leverage, number of movers on edge $\ell$, and edge index. Source: Kline, pp. 24--27. \\
+$Y_{ij},X_{ij}'\delta,u_i,v_j,\Lambda$ & Project low-rank wage-interface notation used in the nesting comparison. Source: prior result PDF, pp. 18--21; \texttt{shimer\_smith\_writeup.tex}, Sec. 6. \\
+$m_{ij},\mu_{jk}$ & Derived static mean wage surface and edge-specific mean worker factor, $\mu_{jk}=\E[u_i\mid i:j\to k]$, used to map low-rank surfaces into Kline edge effects. \\
+\bottomrule
+\end{longtable}
+
+\subsection{Sorkin--Warwar: Why the Event Study Can Have Low Power}
+
+This section is self-contained. Its purpose is to explain one narrow question:
+why can a standard AKM event-study test look reassuring even when worker-firm
+match effects are important?
+
+\subsubsection{Local Notation}
+
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.24\linewidth}
+                >{\raggedright\arraybackslash}p{0.68\linewidth}}
+\toprule
+Symbol & Meaning \\
+\midrule
+\endfirsthead
+\toprule
+Symbol & Meaning \\
+\midrule
+\endhead
+$i$ & Worker index. \\
+$A,B,j,k$ & Firms. $A$ and $B$ are used for a common origin-destination pair in the paired-mover calculation. \\
+$Y_{it}$ & Observed log earnings of worker $i$ at time $t$. Source: SW, p. 31, for changes in log earnings in the event-study exercise. \\
+$Y_i(j)$ & Static potential log earnings of worker $i$ at firm $j$ in the derived separability calculation. \\
+$\alpha_i,\psi_j$ & Worker and firm components in the additive AKM wage model. Source for AKM additive structure: Kline, p. 15; used here as the benchmark tested by SW. \\
+$\mu_{ij}$ & Worker-firm match effect in the derived wage decomposition. This is the object ruled out by additive separability. \\
+$h_i,p_j,m_{ij}$ & Worker, firm, and match payoff components in SW's model. Source: SW, p. 27. \\
+$\Delta Y_i$ & Realized earnings change for a mover, destination earnings minus origin earnings. Source: SW, pp. 31--33. \\
+$\Delta\psi_i$ & Change in firm effects for a mover, destination firm effect minus origin firm effect. Source: SW, pp. 31--33. \\
+$\beta_{\mathrm{ES}}$ & Event-study regression coefficient of $\Delta Y_i$ on $\Delta\psi_i$. Source: SW, pp. 31--33. \\
+$G_A,G_B$ & Pay gap between two paired movers at the origin firm $A$ and destination firm $B$. Source for paired-mover design: SW abstract, p. 1. \\
+$\beta_{\mathrm{paired}}$ & Forecast coefficient from destination pay gaps on origin pay gaps in the paired-mover design. Source: SW abstract, p. 1. \\
+$EE,EUE$ & Employer-to-employer moves and employer-unemployment-employer moves. Source: SW, pp. 31--33. \\
+$g,X,Y$ & Generic group, regressor, and outcome used in the derived pooled-slope identity. \\
+\bottomrule
+\end{longtable}
+
+\subsubsection{What the Event Study Tests}
+
+SW describe the event-study test as asking whether changes in firm effects, or
+mean co-worker earnings, predict within-worker changes in earnings. Source: SW,
+p. 31. In the notation here, the test is the slope in
+\[
+\Delta Y_i
+=
+\beta_{\mathrm{ES}}\Delta\psi_i+\text{error}_i.
+\]
+SW construct it by randomly splitting workers, estimating two sets of firm
+effects, and instrumenting the change in firm effects estimated in one sample
+with the change estimated in the other sample. Source: SW, p. 32. The split-sample
+instrument is meant to address measurement error in the generated firm effects.
+
+Under the additive AKM benchmark, the wage of worker $i$ at firm $j$ is
+\[
+Y_i(j)=\alpha_i+\psi_j.
+\tag{AKM}
+\]
+If worker $i$ moves from firm $j$ to firm $k$, the worker component cancels:
+\[
+\Delta Y_i
+=
+Y_i(k)-Y_i(j)
+=
+\psi_k-\psi_j
+=
+\Delta\psi_i.
+\]
+So in the additive benchmark, the event-study coefficient should be
+\[
+\beta_{\mathrm{ES}}=1.
+\]
+This is the reason the event-study is a useful diagnostic: if workers moving to
+higher firm-effect firms do not receive correspondingly higher earnings, additive
+firm effects or exogenous mobility look suspicious.
+
+\subsubsection{Why This Is Not the Same as Testing Separability}
+
+Additive separability rules out worker-firm match effects. To see the distinction,
+allow the static wage at firm $j$ to be
+\[
+Y_i(j)=\alpha_i+\psi_j+\mu_{ij},
+\tag{Match}
+\]
+where $\mu_{ij}$ is a worker-firm match effect. For a mover from $j$ to $k$,
+\[
+\Delta Y_i
+=
+\psi_k-\psi_j+\mu_{ik}-\mu_{ij}
+=
+\Delta\psi_i+\Delta\mu_i.
+\]
+The population event-study slope is therefore
+\[
+\beta_{\mathrm{ES}}
+=
+\frac{\Cov(\Delta Y_i,\Delta\psi_i)}{\Var(\Delta\psi_i)}
+=
+1+
+\frac{\Cov(\Delta\mu_i,\Delta\psi_i)}{\Var(\Delta\psi_i)}.
+\tag{ES-slope}
+\]
+This formula is the key. The event-study coefficient can equal one even when
+match effects are large, as long as the change in match quality is uncorrelated
+with the change in firm effects in the sample used by the regression:
+\[
+\Cov(\Delta\mu_i,\Delta\psi_i)=0
+\quad\Rightarrow\quad
+\beta_{\mathrm{ES}}=1,
+\]
+even if
+\[
+\Var(\Delta\mu_i)>0.
+\]
+Thus the event study is not a direct test of $\mu_{ij}=0$. It tests whether the
+match-effect change is systematically aligned with the firm-effect change.
+
+The same point can be stated using pre-trends. If $\mu_{ij}$ is time-invariant,
+then it sits in the level of the worker-firm wage and need not generate a
+pre-trend. A worker can have a special match value at firm $j$ that is constant
+over time. That match value violates additive separability, but by itself it does
+not imply that the worker's wage would have been trending differently before the
+move. This is why passing a pre-trend or event-study diagnostic is weaker than
+showing that wages are additively separable.
+
+\subsubsection{Why Paired Movers Test Separability More Directly}
+
+SW's paired-mover design asks a different question. Consider two workers, $a$ and
+$b$, who both move from firm $A$ to firm $B$. Their wage gap at the origin is
+\[
+G_A
+=
+Y_a(A)-Y_b(A)
+=
+(\alpha_a-\alpha_b)+(\mu_{aA}-\mu_{bA}),
+\]
+and their wage gap at the destination is
+\[
+G_B
+=
+Y_a(B)-Y_b(B)
+=
+(\alpha_a-\alpha_b)+(\mu_{aB}-\mu_{bB}).
+\]
+The firm component cancels because both workers are observed at the same origin
+firm and the same destination firm. Under additive separability, $\mu_{ij}=0$ for
+all $(i,j)$, so
+\[
+G_B=G_A.
+\]
+That is the paired-mover implication: the pay gap between the two workers should
+be portable from the origin firm to the destination firm.
+
+With match effects, the gap need not be portable. In the simple derived case
+where match effects are independent across firms and independent of worker
+effects,
+\[
+\beta_{\mathrm{paired}}
+=
+\frac{\Cov(G_B,G_A)}{\Var(G_A)}
+=
+\frac{\Var(\alpha_a-\alpha_b)}
+{\Var(\alpha_a-\alpha_b)+\Var(\mu_{aA}-\mu_{bA})}
+<1.
+\]
+SW's abstract states the design in exactly these terms: for two workers both
+moving from firm $A$ to firm $B$, additive worker and firm effects imply that the
+origin pay gap should predict the destination pay gap with coefficient one.
+Source: SW abstract, p. 1. They estimate coefficients of $0.73$ in Brazil and
+$0.78$ in Italy, which they interpret as evidence of match effects. Source: SW
+abstract, p. 1.
+
+\subsubsection{The SW Low-Power Mechanism}
+
+SW then ask whether a model with match effects and endogenous mobility can still
+pass the standard event-study test. Their model gives workers payoff
+\[
+h_i+p_j+m_{ij},
+\]
+where $h_i$ is a worker effect, $p_j$ is a firm effect, and $m_{ij}$ is a match
+effect. Workers observe both firm and match components when deciding whether to
+accept offers. Source: SW, p. 27.
+
+In simulated data, the event-study test does detect the problem in one important
+subsample. For employer-to-employer moves, where workers have more scope to
+select on match quality, SW report an event-study coefficient of $0.57$. For
+employer-unemployment-employer moves, they report $0.99$. Source: SW, pp.
+31--33. The surprising result is the pooled coefficient: even though $41\%$ of
+moves are employer-to-employer moves, the full-sample coefficient is $0.99$.
+Source: SW, pp. 31--33. So the pooled event study passes even though a large
+subsample fails.
+
+The reason is that a pooled regression slope is not just an average of subgroup
+slopes. If the sample is split into groups $g$, the pooled slope of outcome $Y$
+on regressor $X$ is
+\[
+\beta_{\mathrm{pooled}}
+=
+\frac{\sum_g \Pr(g)\Cov(X,Y\mid g)
++\Cov(\E[X\mid g],\E[Y\mid g])}
+{\sum_g \Pr(g)\Var(X\mid g)+\Var(\E[X\mid g])}.
+\tag{pooled}
+\]
+The first term in the numerator is the within-group contribution. The second is
+the between-group contribution. SW emphasize this exact logic: pooled
+coefficients combine relative sample sizes, within-group variances, and
+between-group differences in sample means. Source: SW, pp. 32--33. If the
+between-group slope is above one, it can pull the pooled event-study coefficient
+back toward one even when the within-group coefficients reveal failures.
+
+SW show this in their simulations. As the share of employer-to-employer moves
+rises, both the EE and EUE event-study coefficients fall, but the pooled
+coefficient remains above $0.90$ and can exceed either subgroup coefficient
+because the between-sample slope is above one. Source: SW, pp. 32--34. In the
+Brazilian data, they report an event-study coefficient of $1.09$; in Veneto, they
+report $1.18$. Source: SW, p. 34. They also show that splitting the Brazilian
+data by whether firm effects increase or decrease gives less reassuring subgroup
+coefficients than the pooled regression. Source: SW, p. 34.
+
+\subsubsection{Self-Contained Bottom Line}
+
+The event-study test has low power against match effects for two distinct
+reasons.
+
+\begin{enumerate}
+\item Algebraically, the event-study slope is
+\[
+\beta_{\mathrm{ES}}
+=
+1+\frac{\Cov(\Delta\mu_i,\Delta\psi_i)}{\Var(\Delta\psi_i)}.
+\]
+It can equal one even when match effects matter, provided changes in match
+quality are not correlated with changes in firm effects in the tested sample.
+
+\item Empirically, even when some subgroups fail the event-study test, pooling can
+hide the failure because the pooled slope includes between-group mean
+differences. This is the specific low-power mechanism SW document on pp. 31--35.
+\end{enumerate}
+
+Paired movers are sharper for additive separability because they compare two
+workers on the same $A\to B$ transition. The firm movement is common to both
+workers, so the test asks whether worker wage gaps are portable across firms. That
+portability implication is exactly what worker-firm match effects break.
+
+\subsection{Kline Section 3: What the Content Is}
+
+Kline Section 3 rewrites AKM as a restriction on directed mover edge effects. Start
+from
+\[
+Y_{it}=\alpha_i+\psi_{j(i,t)}+X_{it}'\beta+\varepsilon_{it}.
+\]
+Source: Kline, p. 15. For two-period movers, define adjusted wage changes
+\[
+R=Y_2-Y_1-(X_2-X_1)'\beta.
+\]
+Let $E$ be the worker-by-edge matrix of directed origin-destination indicators,
+and let $B$ be the firm-by-edge incidence matrix. Kline shows that AKM implies
+\[
+R=EB'\psi+\varepsilon.
+\]
+Source: Kline, pp. 18--19.
+
+The unrestricted edge-effect model is
+\[
+R=E\Delta+u,
+\]
+where $\Delta_{jk}$ is the average adjusted wage change for movers from firm $j$
+to firm $k$. Source: Kline, p. 19. AKM imposes
+\[
+\Delta=B'\psi.
+\]
+This reduces potentially $|E|$ directed edge effects to $J-1$ independent firm
+effects. Source: Kline, p. 19.
+
+The easiest way to say the content is: Kline starts with wage changes on directed
+firm-to-firm edges and asks when those edge changes can be summarized by firm
+levels. If the wage gain from $j$ to $k$ is always $\psi_k-\psi_j$, then moving
+around any closed loop must add up to zero. If a loop has a nonzero sum, then the
+edge effects cannot all be differences of one global firm-effect vector.
+
+\subsubsection{The Cycle Content}
+
+For any cycle vector $c$ in the mobility graph, $Bc=0$. Therefore AKM implies
+\[
+c'\Delta=c'B'\psi=0.
+\]
+Source: Kline, pp. 18--19. Conversely, within a connected set, these cycle
+restrictions exhaust the restrictions that AKM imposes on edge effects. Kline
+writes
+\[
+\Delta=B'\dot\psi+C\dot\eta,
+\]
+where $C\dot\eta$ is the cycle component, and AKM is the restriction
+$\dot\eta=0$. Source: Kline, p. 20.
+
+This is the actual content of Section 3: firm effects are not primitive magic
+objects. They are a low-dimensional potential function for directed mover wage
+changes. They are valid as global firm wage levels only when edge effects are
+path-independent around cycles.
+
+\subsubsection{The Noise-Adjusted Goodness-of-Fit Content}
+
+Kline also asks how well AKM approximates unrestricted edge effects in Veneto.
+The key object is the residual between estimated unrestricted edge effects and
+AKM-predicted edge effects:
+\[
+\hat\Delta-\tilde\Delta=M\hat\Delta,
+\qquad M=I-H.
+\]
+For the mover-weighted residual sum of squares, Kline decomposes
+\[
+\E_u[\hat\Delta'M'WM\hat\Delta]
+=
+\Delta'M'WM\Delta
++\operatorname{trace}\!\left(M'WMV_u[\hat\Delta]\right).
+\]
+Source: Kline, p. 27. The first term is model error; the second is sampling noise.
+Under exact AKM, the first term vanishes but the second remains.
+
+Empirically, among non-bridge edges with at least two movers, the residual sum of
+squares is $360.51$, while expected noise under AKM is $207.58$. The difference
+$152.92$ is the estimated squared approximation error. Relative to the
+noise-adjusted edge-effect sum of squares $978.67$, AKM captures about $84\%$ of
+true edge-effect variation; the implied correlation is $0.92$. Source: Kline,
+pp. 27--28. Across edge samples, Kline reports noise-adjusted $R^2$ values roughly
+between $72\%$ and $88\%$, and about $81\%$ when bridges are included. Source:
+Kline, pp. 28--29.
+
+\subsubsection{The Causal Content}
+
+Kline's causal section says that edge effects can be causal under three conditions:
+exclusion, parallel trends, and stationarity. Source: Kline, pp. 29--31. Proposition
+1 states that, under those assumptions,
+\[
+\E[Y_{i2}-Y_{i1}\mid D_{i1}=j,D_{i2}=k]=\Delta_{jk},
+\]
+the average treatment effect on movers along edge $j\to k$. Source: Kline, p. 31.
+Crucially, this does not require additive separability. Kline explicitly emphasizes
+that edge effects can be causal even when firm effects are heterogeneous, but those
+edge effects may be intransitive and therefore may not aggregate to a single global
+firm ranking. Source: Kline, pp. 30--31.
+
+\subsection{Is Kline's General Edge Model Nested in Our Low-Rank Factor Model?}
+
+Short answer:
+\[
+\text{AKM is nested; unrestricted Kline edge effects are not.}
+\]
+
+\subsubsection{Local Notation}
+
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.24\linewidth}
+                >{\raggedright\arraybackslash}p{0.68\linewidth}}
+\toprule
+Symbol & Meaning \\
+\midrule
+\endfirsthead
+\toprule
+Symbol & Meaning \\
+\midrule
+\endhead
+$i$ & Worker index. \\
+$j,k$ & Origin and destination firms. \\
+$m_{ij}$ & Static conditional mean wage of worker $i$ at firm $j$, after covariates are suppressed. Derived notation for the low-rank surface. \\
+$\alpha_i,\psi_j$ & Worker and firm additive components in the wage surface. Source for AKM components: Kline, p. 15. \\
+$u_i,v_j,\Lambda$ & Worker factor, firm factor, and low-rank interaction matrix in the project interface. Source: prior result PDF, pp. 18--21; \texttt{shimer\_smith\_writeup.tex}, Sec. 6. \\
+$d_u,d_v$ & Dimensions of the worker and firm factor vectors in the local dimension-count argument. Derived notation. \\
+$R,E,B,\Delta,u$ & Kline adjusted wage changes, worker-by-edge matrix, firm-by-edge incidence matrix, unrestricted directed edge effects, and residual. Source: Kline, pp. 18--19. \\
+$\Delta_{jk}$ & Kline unrestricted average adjusted wage change for movers from firm $j$ to firm $k$. Source: Kline, p. 19. \\
+$\mu_{jk}$ & Mean worker factor among movers on edge $j\to k$, $\mu_{jk}=\E[u_i\mid i:j\to k]$. Derived notation for mapping low-rank wage surfaces into Kline edge effects. \\
+$q_{jk}$ & Nonadditive part of the edge effect after removing the firm-effect difference, $q_{jk}=\Delta_{jk}-(\psi_k-\psi_j)$. Derived notation. \\
+$C$ & Directed cycle in the firm mobility graph. Source for cycle logic: Kline, pp. 18--20. \\
+\bottomrule
+\end{longtable}
+
+\subsubsection{Step 1: The Two Models Live on Different Objects}
+
+The project low-rank model is a model of wage levels. Suppressing covariates, its
+static mean surface is
+\[
+m_{ij}
+=
+\alpha_i+\psi_j+u_i^\top\Lambda v_j.
+\tag{LR-level}
+\]
+This object answers the question: what is worker $i$'s mean wage if employed at
+firm $j$?
+
+Kline's unrestricted edge model is a model of mover wage changes. For two-period
+movers, Kline defines adjusted wage changes $R$ and writes the unrestricted edge
+model as
+\[
+R=E\Delta+u.
+\tag{Kline-edge}
+\]
+Source: Kline, p. 19. Here $\Delta_{jk}$ is a free average adjusted wage change
+for movers from origin firm $j$ to destination firm $k$. This object answers a
+different question: among the selected workers who move from $j$ to $k$, what is
+their average wage change?
+
+So the logical direction is:
+\[
+\text{wage-level model}
+\quad\Longrightarrow\quad
+\text{implied mover edge effects}.
+\]
+The reverse direction is not automatic. Knowing the average wage change on each
+observed edge does not, by itself, recover a worker-by-firm wage-level surface.
+
+\subsubsection{Step 2: AKM Is the Easy Nested Case}
+
+AKM is nested because it is the rank-zero case of the project interface. Set
+\[
+\Lambda=0.
+\]
+Then (LR-level) becomes
+\[
+m_{ij}=\alpha_i+\psi_j.
+\tag{AKM-level}
+\]
+For a worker moving from firm $j$ to firm $k$,
+\[
+m_{ik}-m_{ij}
+=
+(\alpha_i+\psi_k)-(\alpha_i+\psi_j)
+=
+\psi_k-\psi_j.
+\]
+Therefore AKM implies
+\[
+\Delta_{jk}=\psi_k-\psi_j.
+\tag{AKM-edge}
+\]
+This is exactly Kline's AKM restriction $\Delta=B'\psi$: edge effects must be
+differences of a single vector of firm effects. Source: Kline, pp. 18--19.
+Equivalently, the sum of AKM edge effects around any directed cycle is zero,
+because the firm effects telescope:
+\[
+(\psi_B-\psi_A)+(\psi_C-\psi_B)+(\psi_A-\psi_C)=0.
+\]
+Source for the cycle interpretation: Kline, pp. 18--20.
+
+\subsubsection{Step 3: A Low-Rank Wage Surface Implies Structured Edge Effects}
+
+Now allow the low-rank interaction. From (LR-level), a worker moving from $j$ to
+$k$ has wage change
+\[
+m_{ik}-m_{ij}
+=
+\psi_k-\psi_j+u_i^\top\Lambda(v_k-v_j).
+\]
+Averaging over the selected movers on edge $j\to k$ gives
+\[
+\Delta_{jk}
+=
+\psi_k-\psi_j+\mu_{jk}^\top\Lambda(v_k-v_j),
+\qquad
+\mu_{jk}\equiv \E[u_i\mid i:j\to k].
+\tag{LR-edge}
+\]
+This is the clean bridge from the low-rank wage surface to Kline's edge language.
+The first term, $\psi_k-\psi_j$, is the AKM part. The second term is the
+interaction-composition part. It depends on three objects at once:
+\[
+\text{mover composition } \mu_{jk},
+\qquad
+\text{firm-factor difference } v_k-v_j,
+\qquad
+\text{interaction matrix } \Lambda.
+\]
+
+Around a directed firm cycle $C$, the additive firm effects still telescope:
+\[
+\sum_{(j,k)\in C}(\psi_k-\psi_j)=0.
+\]
+Thus any cycle sum under the low-rank model must come from the interaction term:
+\[
+\sum_{(j,k)\in C}\Delta_{jk}
+=
+\sum_{(j,k)\in C}\mu_{jk}^\top\Lambda(v_k-v_j).
+\tag{LR-cycle}
+\]
+This equation is useful because it shows both sides of the answer. Low-rank wage
+surfaces can generate nonzero Kline cycle components, so they are more flexible
+than AKM. But the cycle components are not arbitrary: they must be generated by
+the same worker factors, firm factors, and low-rank matrix that generate every
+other edge.
+
+\subsubsection{Step 4: Kline's Unrestricted Edge Model Is Not Nested}
+
+Kline's unrestricted model places a free parameter on each observed directed
+edge:
+\[
+\Delta=(\Delta_{jk})_{j\to k}.
+\]
+By contrast, the low-rank model requires every edge to satisfy the representation
+\[
+\Delta_{jk}
+=
+\psi_k-\psi_j+\mu_{jk}^\top\Lambda(v_k-v_j).
+\]
+Equivalently, after removing the additive firm-effect difference,
+\[
+q_{jk}
+\equiv
+\Delta_{jk}-(\psi_k-\psi_j)
+\]
+must satisfy
+\[
+q_{jk}=\mu_{jk}^\top\Lambda(v_k-v_j)
+\quad\text{for every observed edge }j\to k.
+\tag{restriction}
+\]
+This is a genuine restriction. The same $\Lambda$ and the same firm factors
+$v_j$ must rationalize all edges at once. An unrestricted Kline edge model does
+not impose this shared-factor structure.
+
+A simple special case makes the non-nesting immediate. If $\Lambda=0$, then
+$q_{jk}=0$ for every edge, so every directed cycle must sum to zero. But Kline's
+unrestricted $\Delta$ allows a three-firm cycle such as
+\[
+\Delta_{AB}=1,\qquad \Delta_{BC}=1,\qquad \Delta_{CA}=1,
+\]
+whose cycle sum is $3$. This edge table is allowed by the unrestricted Kline
+model but impossible under AKM. Source for unrestricted edge effects and cycle
+restrictions: Kline, pp. 18--20.
+
+With $\Lambda\neq 0$, the low-rank model allows nonzero cycle sums, but only of
+the form (LR-cycle). For fixed low factor dimensions and fixed mover-composition
+moments $\mu_{jk}$, the set of edge residuals
+\[
+(q_{jk})_{j\to k}
+\]
+that can be written as $\mu_{jk}^\top\Lambda(v_k-v_j)$ is a structured
+low-dimensional subset of all edge tables. Kline's unrestricted edge model is the
+whole edge table. Therefore the unrestricted edge model is more general.
+
+The dimension count makes this precise. Suppose there are $J$ firms and $|E|$
+observed directed edges. Holding the edge compositions $\mu_{jk}$ fixed, the
+low-rank edge representation is governed by the shared parameters
+\[
+(\psi_1,\ldots,\psi_J),\qquad
+(v_1,\ldots,v_J),\qquad
+\Lambda,
+\]
+with at most
+\[
+J+Jd_v+d_ud_v
+\]
+raw degrees of freedom before normalizations. Kline's unrestricted edge vector
+$\Delta$ has one free number per directed edge, so it has $|E|$ degrees of
+freedom. When the mobility graph has many edges relative to the factor
+dimensions, a generic vector in $\mathbb R^{|E|}$ cannot lie in the image of the
+low-rank representation. Making the factors large enough to fit every edge would
+turn the exercise into a saturated edge model, not the fixed low-rank wage
+surface $(\star)$.
+
+\subsubsection{Linear Conclusion}
+
+The nesting answer is asymmetric:
+\[
+\text{low-rank wage surface}
+\quad\Longrightarrow\quad
+\text{structured Kline edge effects},
+\]
+but
+\[
+\text{unrestricted Kline edge effects}
+\quad\not\Longrightarrow\quad
+\text{low-rank wage surface}.
+\]
+Kline's $\Delta_{jk}$ is best understood as a diagnostic or statistical
+interface. It records average wage changes on mover edges. Those edge changes
+may be produced by AKM firm effects, low-rank interactions, match effects,
+selection, or other mechanisms. But the unrestricted edge model does not identify
+which mechanism generated them, and it does not require the shared-factor
+restrictions imposed by the low-rank wage surface.
+
+\section{Clean Takeaways}
+
+\begin{enumerate}
+\item The event study is mainly a parallel-trends / realized-mover diagnostic. It can
+pass with time-invariant match effects because those match effects sit in wage levels
+and treatment-effect heterogeneity, not necessarily in pre-trends.
+
+\item Paired movers test separability more directly. For two workers making the same
+$A\to B$ move, firm effects cancel, so the test asks whether wage gaps are portable
+from origin to destination.
+
+\item SW's additional low-power mechanism is pooling. Within-subsample event-study
+coefficients can reveal problems, while between-sample mean differences push the
+pooled coefficient back toward one.
+
+\item Kline Section 3 says AKM is a path-independence restriction on unrestricted
+directed edge effects. Cycle sums are the empirical content.
+
+\item Kline's unrestricted edge model is not nested in the low-rank worker-firm wage
+surface. AKM is nested as $\Lambda=0$, and a low-rank surface implies structured
+edge effects, but arbitrary edge effects are a more general reduced form.
+\end{enumerate}
+
+
+\end{document}

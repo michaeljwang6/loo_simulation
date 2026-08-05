@@ -1,0 +1,571 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/3y3yxw",
+    "id": "3y3yxw",
+    "slide": 14,
+    "layoutId": "f4a45b2d-a165-41aa-a743-0923c43a574a",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "82378df2-dc0e-4aa0-b5f4-c07656602ab7",
+    "masterLayoutName": "Master",
+    "backgroundColor": "#FFFFFF",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "bg1": "#FFFFFF",
+      "bg2": "#000000",
+      "tx1": "#1F1F1F",
+      "tx2": "#FFFFFF",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "typefaces": [
+      "+mn-lt"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "f4a45b2d-a165-41aa-a743-0923c43a574a",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "82378df2-dc0e-4aa0-b5f4-c07656602ab7",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "82378df2-dc0e-4aa0-b5f4-c07656602ab7",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/lcvelwry",
+      "id": "1",
+      "bbox": [
+        72,
+        40,
+        900,
+        20
+      ],
+      "geometry": "rect",
+      "text": "FUNCTIONAL IDENTIFICATION",
+      "textPreview": "FUNCTIONAL IDENTIFICATION",
+      "resolvedFontSize": 12,
+      "resolvedTextStyle": {
+        "fontSize": 12,
+        "typeface": "+mn-lt",
+        "color": "#666666",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "FUNCTIONAL IDENTIFICATION"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "FUNCTIONAL IDENTIFICATION",
+          "resolvedTextStyle": {
+            "fontSize": 12,
+            "color": "#666666",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "FUNCTIONAL IDENTIFICATION",
+              "fontSize": 12,
+              "color": "#666666",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/y94vqh87",
+      "id": "2",
+      "bbox": [
+        72,
+        74,
+        1130,
+        74
+      ],
+      "geometry": "rect",
+      "text": "Functional identification is weaker than full matrix completion",
+      "textPreview": "Functional identification is weaker than full matrix completion",
+      "resolvedFontSize": 35,
+      "resolvedTextStyle": {
+        "fontSize": 35,
+        "typeface": "+mn-lt",
+        "color": "#000000",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Functional identification is weaker than full matrix completion"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Functional identification is weaker than full matrix completion",
+          "resolvedTextStyle": {
+            "fontSize": 35,
+            "color": "#000000",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Functional identification is weaker than full matrix completion",
+              "fontSize": 35,
+              "color": "#000000",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/jadwjm9s",
+      "id": "3",
+      "bbox": [
+        86,
+        172,
+        1105,
+        440
+      ],
+      "geometry": "rect",
+      "text": "Let T_A(m)=m_T' A m_T be the target.\n\nFull completion asks:\n  Is every cell m_ij on T identified?\n\nFunctional identification asks:\n  Can any observationally equivalent schedule inside the model change T_A?\n\nOperational test:\n  local tangent directions not pinned down by support must lie in the null directions of the target operator A.\n\nSubstance:\n  The econometric object is not the factor normalization or every missing cell. It is the invariant scalar functional.",
+      "textPreview": "Let T_A(m)=m_T' A m_T be the target. |  | Full completion asks: |   Is every cell m_ij on T identified? |  | Functional identification as...",
+      "resolvedFontSize": 21,
+      "resolvedTextStyle": {
+        "fontSize": 21,
+        "typeface": "+mn-lt",
+        "color": "#000000",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 13,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Let T_A(m)=m_T' A m_T be the target."
+          },
+          {
+            "index": 2,
+            "text": ""
+          },
+          {
+            "index": 3,
+            "text": "Full completion asks:"
+          },
+          {
+            "index": 4,
+            "text": "  Is every cell m_ij on T identified?"
+          },
+          {
+            "index": 5,
+            "text": ""
+          },
+          {
+            "index": 6,
+            "text": "Functional identification asks:"
+          },
+          {
+            "index": 7,
+            "text": "  Can any observationally equivalent schedule inside the model change T_A?"
+          },
+          {
+            "index": 8,
+            "text": ""
+          },
+          {
+            "index": 9,
+            "text": "Operational test:"
+          },
+          {
+            "index": 10,
+            "text": "  local tangent directions not pinned down by support must lie in the null directions of the target operator A."
+          },
+          {
+            "index": 11,
+            "text": ""
+          },
+          {
+            "index": 12,
+            "text": "Substance:"
+          },
+          {
+            "index": 13,
+            "text": "  The econometric object is not the factor normalization or every missing cell. It is the invariant scalar functional."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Let T_A(m)=m_T' A m_T be the target.",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Let T_A(m)=m_T' A m_T be the target.",
+              "fontSize": 21,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "Full completion asks:",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Full completion asks:",
+              "fontSize": 21,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 4,
+          "text": "  Is every cell m_ij on T identified?",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "  Is every cell m_ij on T identified?",
+              "fontSize": 21,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 6,
+          "text": "Functional identification asks:",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Functional identification asks:",
+              "fontSize": 21,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 7,
+          "text": "  Can any observationally equivalent schedule inside the model change T_A?",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "  Can any observationally equivalent schedule inside the model change T_A?",
+              "fontSize": 21,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 9,
+          "text": "Operational test:",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Operational test:",
+              "fontSize": 21,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 10,
+          "text": "  local tangent directions not pinned down by support must lie in the null directions of the target operator A.",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "  local tangent directions not pinned down by support must lie in the null directions of the target operator A.",
+              "fontSize": 21,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 12,
+          "text": "Substance:",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Substance:",
+              "fontSize": 21,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 13,
+          "text": "  The econometric object is not the factor normalization or every missing cell. It is the invariant scalar functional.",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "  The econometric object is not the factor normalization or every missing cell. It is the invariant scalar functional.",
+              "fontSize": 21,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/8fmxwrq9",
+      "id": "4",
+      "bbox": [
+        72,
+        655,
+        940,
+        22
+      ],
+      "geometry": "rect",
+      "text": "Source: LOO note, p. 26; TeX Part II, low-rank identification",
+      "textPreview": "Source: LOO note, p. 26; TeX Part II, low-rank identification",
+      "resolvedFontSize": 11,
+      "resolvedTextStyle": {
+        "fontSize": 11,
+        "typeface": "+mn-lt",
+        "color": "#666666",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Source: LOO note, p. 26; TeX Part II, low-rank identification"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Source: LOO note, p. 26; TeX Part II, low-rank identification",
+          "resolvedTextStyle": {
+            "fontSize": 11,
+            "color": "#666666",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Source: LOO note, p. 26; TeX Part II, low-rank identification",
+              "fontSize": 11,
+              "color": "#666666",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/tgfepwru",
+      "id": "5",
+      "bbox": [
+        1150,
+        655,
+        60,
+        22
+      ],
+      "geometry": "rect",
+      "text": "14",
+      "textPreview": "14",
+      "resolvedFontSize": 11,
+      "resolvedTextStyle": {
+        "fontSize": 11,
+        "typeface": "+mn-lt",
+        "color": "#666666",
+        "alignment": "right",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "14"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "14",
+          "resolvedTextStyle": {
+            "fontSize": 11,
+            "color": "#666666",
+            "alignment": "right"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "14",
+              "fontSize": 11,
+              "color": "#666666",
+              "alignment": "right"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    }
+  ],
+  "composeRuns": []
+}

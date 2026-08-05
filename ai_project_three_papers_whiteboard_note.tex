@@ -1,0 +1,1050 @@
+  \documentclass[11pt]{article}
+  \usepackage[margin=1in]{geometry}
+  \usepackage{amsmath,amssymb,booktabs,array,longtable,enumitem}
+  \usepackage[hidelinks]{hyperref}
+  
+  \newcommand{\E}{\mathbb{E}}
+  \newcommand{\Var}{\operatorname{Var}}
+  \newcommand{\Cov}{\operatorname{Cov}}
+  \newcommand{\R}{\mathbb{R}}
+  \newcommand{\ind}{\mathbf{1}}
+  \newcommand{\thetav}{\boldsymbol{\theta}}
+  
+  \title{An AI Productivity Atlas, Prediction-Powered Inference,\\
+  and Multi-Task Prediction-Powered Inference}
+  \author{}
+  \date{\today}
+  
+  \begin{document}
+  \maketitle
+  
+  \section*{Purpose and source convention}
+  
+  This is a new, self-contained note. It does not replace or modify the earlier
+  AI-project discussion in \texttt{todo\_chat\_merged\_notes.tex}.
+  
+  The three source documents are:
+  \begin{enumerate}[leftmargin=2em]
+      \item \emph{The Distributional Effects of AI's Productivity Gains: A Data
+      Fusion Approach}, the five-page project proposal (``Proposal'');
+      \item Angelopoulos, Bates, Fannjiang, Jordan, and Zrnic,
+      \emph{Prediction-Powered Inference}, arXiv:2301.09633v4 (``PPI'');
+      \item Emmenegger, Stahler, and Podimata,
+      \emph{Prediction-Powered Inference Across Many Tasks for AI Evaluation
+      \& Social Science Research}, arXiv:2605.29249v1 (``MT-PPI'').
+  \end{enumerate}
+  Page citations refer to PDF pages. A statement marked ``derived'' is proved in
+  this note from the displayed definitions. A statement marked ``proposal
+  claim'' is asserted in the proposal but is not proved there.
+  
+  \section{The project proposal}
+  
+  \subsection*{Notation}
+  
+  \begin{longtable}{>{\raggedright\arraybackslash}p{0.22\linewidth}
+                    >{\raggedright\arraybackslash}p{0.70\linewidth}}
+  \toprule
+  Symbol & Meaning \\
+  \midrule
+  \endfirsthead
+  \toprule
+  Symbol & Meaning \\
+  \midrule
+  \endhead
+  \(j\in\{1,\ldots,J\}\) & Occupation--task cell and the number of cells. \\
+  \(\theta_j\) & True productivity gain in cell \(j\). \\
+  \(\thetav\) & Full map \((\theta_1,\ldots,\theta_J)'\). \\
+  \(p_j\) & Economic weight for cell \(j\), with
+  \(p_j\geq 0\) and \(\sum_j p_j=1\). \\
+  \(\bar\theta\) & Weighted mean gain, \(\sum_jp_j\theta_j\). \\
+  \(p_j^0,p_j^A\) & Weights for the pre-AI basket and the basket of tasks
+  actually brought to AI. \\
+  \(\bar\theta^0,\bar\theta^A\) & Mean gains under the two baskets,
+  \(\sum_jp_j^0\theta_j\) and \(\sum_jp_j^A\theta_j\). \\
+  \(k\) & Number of cells selected in a top-\(k\) ranking or targeting set. \\
+  \(S_j\) & Broad but biased and noisy model score for cell \(j\), after fixing
+  one basket. \\
+  \(\mu,\tau^2\) & Mean and variance of the Gaussian distribution of
+  true cell gains. \\
+  \(a,b\) & Intercept and slope of the score-to-truth measurement channel;
+  \(0<b<1\) represents compression. \\
+  \(\eta_j,\sigma_S^2\) & Score error and its variance. \\
+  \(R_j\) & Indicator that cell \(j\) is selected for validation. \\
+  \(m\) & Number of validated cells, \(m=\sum_jR_j\). \\
+  \(\widehat v_j\) & Experimental estimate of \(\theta_j\) in a validated
+  cell. \\
+  \(\varepsilon_j,s_j^2\) & Experimental estimation error and its known design
+  variance. \\
+  \(m_j,\omega^2\) & Posterior mean and variance of \(\theta_j\) given only
+  the broad score. \\
+  \(P_j,m_j^{\mathrm{val}}\) & Posterior precision and mean when cell \(j\)
+  is also validated. \\
+  \(\lambda\) & Score reliability ratio,
+  \(b^2\tau^2/(b^2\tau^2+\sigma_S^2)\). \\
+  \(\psi\) & Score-channel parameter vector
+  \((\mu,\tau^2,a,b,\sigma_S^2)\). \\
+  \(\Lambda_j\) & Sensitivity constant in the proposal's asserted
+  near-oracle excess-risk expansion. \\
+  \(\sigma_\theta^2,\beta,\nu_j,\widehat\theta_j^v\) & Source-PDF aliases for
+  \(\tau^2,b,\eta_j,\widehat v_j\); they are listed only to make the notation
+  conversion explicit. \\
+  \bottomrule
+  \end{longtable}
+  
+  \noindent\textit{Notation conversion.}
+  The proposal PDF writes the latent variance, channel slope, score error, and
+  validation estimate as \(\sigma_\theta^2,\beta,\nu_j,\widehat\theta_j^v\).
+  The earlier AI-project note writes the same objects as
+  \(\tau^2,b,\eta_j,\widehat v_j\), with validation error
+  \(\varepsilon_j\). This note preserves the earlier note's notation.
+  
+  \subsection*{Board 1: the objects of interest}
+  
+  Fix one task basket. The primitive object is the vector
+  \[
+      \thetav
+      =(\theta_1,\ldots,\theta_J)'.
+  \]
+  The mean is
+  \[
+      \bar\theta=\sum_{j=1}^Jp_j\theta_j.
+  \]
+  The corresponding weighted cross-cell dispersion is
+  \[
+      \sum_{j=1}^Jp_j(\theta_j-\bar\theta)^2.
+  \]
+  The two basket means use the same notation as the earlier note:
+  \[
+      \bar\theta^0=\sum_{j=1}^Jp_j^0\theta_j,
+      \qquad
+      \bar\theta^A=\sum_{j=1}^Jp_j^A\theta_j.
+  \]
+  Rankings and top-\(k\) sets are other functions of the same vector.
+  These are the proposal's estimands. An atlas estimator is a rule for estimating
+  \(\thetav\). The estimand and the estimator are not the same
+  object. (Proposal, p.~1.)
+  
+  Recovering the full map is sufficient for computing every summary. It is not
+  necessary for every summary. In particular, a randomized sample of validated
+  cells can identify a weighted mean directly, without identifying every
+  \(\theta_j\). Section 4 derives that estimator. Thus, the proposal's statement
+  that credible recovery of every summary requires the full map is too strong.
+  The full map is essential for cell-level claims and rankings; it is not
+  essential for the mean.
+  
+  \subsection*{Board 2: why scores alone do not identify the map}
+  
+  The proposal assumes
+  \[
+      \theta_j\sim N(\mu,\tau^2),
+      \qquad
+      S_j=a+b\theta_j+\eta_j,
+      \qquad
+      \eta_j\sim N(0,\sigma_S^2),
+  \]
+  with \(\eta_j\) independent of \(\theta_j\). (Proposal, p.~4.)
+  
+  The score distribution reveals only
+  \[
+      \E[S_j]=a+b\mu
+  \]
+  and
+  \[
+      \Var(S_j)=b^2\tau^2+\sigma_S^2.
+  \]
+  There are five unknown channel parameters
+  \[
+      (\mu,\tau^2,a,b,\sigma_S^2)
+  \]
+  which the earlier note collects as
+  \(\psi=(\mu,\tau^2,a,b,\sigma_S^2)\),
+  but only two marginal score moments. Therefore the score distribution alone
+  does not identify the level \(\mu\), the scale \(\tau^2\), or the
+  channel parameters separately. This is the proposal's nonidentification
+  argument. (Proposal, p.~4; algebra derived.)
+  
+  The presence of \(\eta_j\) also means that the ranking of the observed scores
+  need not equal the ranking of the true gains. The scores identify their own
+  ranking. They do not identify the realized ranking of
+  \((\theta_1,\ldots,\theta_J)\) unless additional assumptions remove or
+  discipline score noise. This qualification is not explicit in the proposal.
+  
+  \subsection*{Board 3: what randomized validation identifies}
+  
+  For a validated cell, the proposal observes
+  \[
+      \widehat v_j=\theta_j+\varepsilon_j,
+      \qquad
+      \E[\varepsilon_j\mid\theta_j,S_j]=0,
+      \qquad
+      \Var(\varepsilon_j\mid\theta_j,S_j)=s_j^2.
+  \]
+  Assume the validation cells are a random sample of the target cell population,
+  the design variances \(s_j^2\) are known, and \(\varepsilon_j\), \(\eta_j\), and
+  \(\theta_j\) obey the independence conditions in the Gaussian channel. These
+  conditions make the validation moments equal to the population moments.
+  (Proposal, pp.~2 and 4.)
+  
+  The five channel parameters are then recovered in five linear steps:
+  \begin{align*}
+      \mu
+      &=\E[\widehat v_j],\\
+      \tau^2
+      &=\Var(\widehat v_j)-\E[s_j^2],\\
+      b
+      &=\frac{\Cov(S_j,\widehat v_j)}
+              {\tau^2},\\
+      a
+      &=\E[S_j]-b\mu,\\
+      \sigma_S^2
+      &=\Var(S_j)-b^2\tau^2.
+  \end{align*}
+  The third line requires \(\tau^2>0\). Every displayed equality is
+  derived from the two measurement equations. This proves the identification
+  claim under the stated sampling and independence conditions. The proposal
+  states the conclusion but does not show these steps. (Proposal, p.~4.)
+  
+  \subsection*{Board 4: the empirical-Bayes map}
+  
+  For an unvalidated cell, Gaussian conditioning gives
+  \[
+      m_j
+      =\E[\theta_j\mid S_j]
+      =\mu+
+        \frac{b\tau^2}
+             {b^2\tau^2+\sigma_S^2}
+        (S_j-a-b\mu).
+  \]
+  The posterior variance and the score reliability ratio are
+  \[
+      \omega^2
+      =
+      \frac{\tau^2\sigma_S^2}{b^2\tau^2+\sigma_S^2},
+      \qquad
+      \lambda
+      =
+      \frac{b^2\tau^2}{b^2\tau^2+\sigma_S^2}.
+  \]
+  The coefficient multiplying the centered score is the calibrated shrinkage
+  coefficient. It corrects both compression and score noise. This formula is
+  derived from the proposal's Gaussian channel.
+  
+  For a validated cell, both measurements enter. Gaussian precision addition
+  gives
+  \begin{align*}
+      P_j
+      &=
+        \frac{1}{\tau^2}
+        +\frac{b^2}{\sigma_S^2}
+        +\frac{1}{s_j^2}
+      ,\\
+      m_j^{\mathrm{val}}
+      &=
+      P_j^{-1}\left(
+        \frac{\mu}{\tau^2}
+        +\frac{b(S_j-a)}{\sigma_S^2}
+        +\frac{\widehat v_j}{s_j^2}
+      \right).
+  \end{align*}
+  For an unvalidated cell, remove the last precision and numerator terms.
+  These formulas make the proposal's phrase ``posterior means combine the two''
+  explicit. (Proposal, pp.~2--4; formulas derived.)
+  
+  \subsection*{Board 5: what is established and what remains a research claim}
+  
+  \begin{enumerate}[leftmargin=2em]
+      \item Score-only nonidentification follows directly from the displayed
+      moments.
+      \item Channel identification follows from randomized validation plus the
+      measurement-error conditions displayed above.
+      \item Cell-level recovery outside the validation sample is model-based:
+      it uses the common Gaussian channel and exchangeable distribution of
+      \(\theta_j\).
+      \item The statement that feasible map risk exceeds oracle risk by
+      \(\Lambda_j/m+o(m^{-1})\), with an aggregate error of order
+      \(m^{-1/2}\), is a proposal claim. The five-page proposal supplies no
+      proof or regularity conditions. (Proposal, p.~4.)
+      \item The numerical ``knee'' near \(m=40\) is a simulation result, not an
+      identification theorem. (Proposal, pp.~2--3.)
+      \item The claim that true value gain lies between the pre-AI and actual-use
+      basket gains needs an ordering or behavioral assumption connecting the two
+      baskets. The proposal states the bound but does not supply that assumption
+      or its proof. (Proposal, pp.~1 and 3.)
+  \end{enumerate}
+  
+  \section{Angelopoulos et al.: prediction-powered inference}
+  
+  \subsection*{Notation}
+  
+  \begin{longtable}{>{\raggedright\arraybackslash}p{0.22\linewidth}
+                    >{\raggedright\arraybackslash}p{0.70\linewidth}}
+  \toprule
+  Symbol & Meaning \\
+  \midrule
+  \endfirsthead
+  \toprule
+  Symbol & Meaning \\
+  \midrule
+  \endhead
+  \(i\) & Observation index. \\
+  \(n,N\) & Numbers of labeled and unlabeled observations in the
+  superpopulation setup. \\
+  \((X_i,Y_i)\) & Labeled feature--outcome pair. \\
+  \((\widetilde X_i,\widetilde Y_i)\) & Unlabeled feature--outcome pair;
+  \(\widetilde Y_i\) is not observed. \\
+  \(f\) & Prediction rule; \(f(X)\) predicts \(Y\). \\
+  \(\theta^\star\) & Estimand. For mean estimation,
+  \(\theta^\star=\E[Y_i]\). \\
+  \(\theta\) & Generic candidate value used in the loss, subgradient, and
+  confidence-set construction. \\
+  \(\widehat\theta_{\mathrm{class}}\) & Labeled-only sample mean. \\
+  \(\widetilde\theta_f\) & Imputed estimate computed from predictions. \\
+  \(\Delta,\widehat\Delta\) & Population rectifier and its labeled-sample
+  estimate in the mean problem. \\
+  \(\widehat\theta_{\mathrm{PP}}\) & Prediction-powered point estimator of the
+  mean. \\
+  \(\sigma_Y^2,\sigma_{f-Y}^2,\sigma_f^2\) & Population variances of \(Y\),
+  \(f(X)-Y\), and \(f(X)\); hats denote their sample estimates. \\
+  \(\alpha,\delta\) & Total error probability and the part assigned to the
+  rectifier confidence set. \\
+  \(z_{1-\alpha/2}\) & Standard-normal quantile used in a two-sided interval. \\
+  \(\ell_\theta\) & Convex loss indexed by \(\theta\). \\
+  \(p\) & Dimension of the parameter \(\theta\in\R^p\). \\
+  \(g_\theta\) & Subgradient of \(\ell_\theta\) with respect to \(\theta\). \\
+  \(\Delta_\theta\) & General rectifier
+  \(\E[g_\theta(X,Y)-g_\theta(X,f(X))]\). \\
+  \(g_\theta^f\) & Imputed population subgradient
+  \(\E[g_\theta(X,f(X))]\). \\
+  \(R_\delta(\theta)\) & Confidence set for \(\Delta_\theta\). \\
+  \(T_{\alpha-\delta}(\theta)\) & Confidence set for \(g_\theta^f\). \\
+  \(C_{\mathrm{PP}}\) & Prediction-powered confidence set for
+  \(\theta^\star\). \\
+  \(L\) & Uniformly sampled labeled subset of a fixed population. \\
+  \(\theta_N\) & Fixed-population mean, \(N^{-1}\sum_iY_i\). \\
+  \(\widehat\theta_{\mathrm{PP},N}\) & Finite-population PPI estimator. \\
+  \(e_i,S_e^2\) & Finite-population residual \(Y_i-f(X_i)\) and its finite-
+  population sample variance. \\
+  \bottomrule
+  \end{longtable}
+  
+  \subsection*{Board 1: estimand, estimator, and inferential object}
+  
+  For mean estimation, the estimand is
+  \[
+      \theta^\star=\E[Y_i].
+  \]
+  The estimator is a random function of observed data:
+  \[
+      \widehat\theta_{\mathrm{PP}}
+      =
+      \frac{1}{N}\sum_{i=1}^N f(\widetilde X_i)
+      -
+      \frac{1}{n}\sum_{i=1}^n\{f(X_i)-Y_i\}.
+  \]
+  The inferential object is a confidence interval centered on that estimator.
+  The paper is interested in the scientific estimand \(\theta^\star\); PPI is the
+  method used to estimate it and quantify uncertainty. (PPI, pp.~2--3.)
+  
+  \subsection*{Board 2: why the correction works}
+  
+  Rewrite the estimator as
+  \[
+      \widehat\theta_{\mathrm{PP}}
+      =
+      \underbrace{\frac{1}{N}\sum_{i=1}^N f(\widetilde X_i)}
+                  _{\text{many cheap predictions}}
+      +
+      \underbrace{\frac{1}{n}\sum_{i=1}^n\{Y_i-f(X_i)\}}
+                  _{\text{mean prediction error on labels}}.
+  \]
+  Under the paper's initial setup, the labeled and unlabeled samples are
+  independent draws from the same population and \(f\) is independent of those
+  samples. Therefore
+  \begin{align*}
+      \E[\widehat\theta_{\mathrm{PP}}]
+      &=
+      \E[f(X_i)]+\E[Y_i-f(X_i)]\\
+      &=
+      \E[Y_i]\\
+      &=\theta^\star.
+  \end{align*}
+  No line requires \(f\) to be unbiased. Systematic prediction bias appears in
+  both prediction terms and cancels. (PPI, pp.~2--3; algebra derived.)
+  
+  Because the two samples are independent,
+  \[
+      \Var(\widehat\theta_{\mathrm{PP}})
+      =
+      \frac{\sigma_f^2}{N}
+      +
+      \frac{\sigma_{f-Y}^2}{n}.
+  \]
+  The corresponding large-sample interval is
+  \[
+      \widehat\theta_{\mathrm{PP}}
+      \ \pm\
+      z_{1-\alpha/2}
+      \sqrt{\frac{\widehat\sigma_f^2}{N}
+            +\frac{\widehat\sigma_{f-Y}^2}{n}}.
+  \]
+  The labeled-only estimator has variance \(\sigma_Y^2/n\). When \(N\) is much
+  larger than \(n\), PPI is more precise when the prediction residual has lower
+  variance than the outcome:
+  \[
+      \sigma_{f-Y}^2<\sigma_Y^2.
+  \]
+  Accurate predictions improve precision; correction, not predictive accuracy,
+  provides validity. (PPI, pp.~3--4 and 36.)
+  
+  \subsection*{Board 3: the general rectifier}
+  
+  The paper considers estimands defined by
+  \[
+      \theta^\star
+      =\arg\min_{\theta\in\R^p}\E[\ell_\theta(X_i,Y_i)].
+  \]
+  For a nondegenerate convex problem, the minimizer satisfies
+  \[
+      \E[g_{\theta^\star}(X_i,Y_i)]=0.
+  \]
+  Add and subtract the imputed subgradient:
+  \begin{align*}
+      \E[g_\theta(X_i,Y_i)]
+      &=
+      \E[g_\theta(X_i,f(X_i))]\\
+      &\quad+
+      \E[g_\theta(X_i,Y_i)-g_\theta(X_i,f(X_i))]\\
+      &=g_\theta^f+\Delta_\theta.
+  \end{align*}
+  The first term is estimated precisely with many predictions. The second term is
+  estimated with the labels. If
+  \[
+      \Pr\{\Delta_\theta\in R_\delta(\theta)\}\geq1-\delta
+  \]
+  and
+  \[
+      \Pr\{g_\theta^f\in T_{\alpha-\delta}(\theta)\}
+      \geq1-(\alpha-\delta),
+  \]
+  then the paper defines
+  \[
+      C_{\mathrm{PP}}
+      =
+      \{\theta:0\in R_\delta(\theta)+T_{\alpha-\delta}(\theta)\}.
+  \]
+  By the union bound, \(\theta^\star\) belongs to this set with probability at
+  least \(1-\alpha\). This is the paper's main convex-estimation theorem.
+  (PPI, pp.~4--5.)
+  
+  \subsection*{Board 4: the fixed-population version}
+  
+  Suppose the \(N\) units are fixed, \(f(X_i)\) is observed for every unit, and
+  \(L\) is a simple random sample without replacement of \(n\) units
+  whose \(Y_i\)'s are observed. The finite-population estimand is
+  \[
+      \theta_N=\frac{1}{N}\sum_{i=1}^NY_i.
+  \]
+  The natural finite-population PPI estimator is
+  \[
+      \widehat\theta_{\mathrm{PP},N}
+      =
+      \frac{1}{N}\sum_{i=1}^Nf(X_i)
+      +
+      \frac{1}{n}\sum_{i\in L}\{Y_i-f(X_i)\}.
+  \]
+  Let \(e_i=Y_i-f(X_i)\). Then
+  \begin{align*}
+      \widehat\theta_{\mathrm{PP},N}-\theta_N
+      &=
+      \frac{1}{n}\sum_{i\in L}e_i
+      -
+      \frac{1}{N}\sum_{i=1}^Ne_i.
+  \end{align*}
+  Simple random sampling makes the sample residual mean unbiased for the
+  population residual mean. Hence the estimator is exactly design-unbiased.
+  Its design variance is
+  \[
+      \Var(\widehat\theta_{\mathrm{PP},N})
+      =
+      \frac{1}{n}\left(1-\frac{n}{N}\right)S_e^2.
+  \]
+  This is the fixed-population difference estimator. The paper states the
+  finite-population rectifier construction; the displayed point estimator and
+  variance follow by applying its sampling-without-replacement formula to the
+  residuals. (PPI, pp.~23--24 and 34; last two displays derived.)
+  
+  \subsection*{Board 5: what PPI does and does not do}
+  
+  \begin{enumerate}[leftmargin=2em]
+      \item PPI gives valid inference for a specified low-dimensional estimand,
+      such as a mean, quantile, or regression coefficient. It does not require a
+      correct prediction model. (PPI, pp.~1 and 5--8.)
+      \item Validity requires the labeled observations to represent the target
+      population under the sampling assumptions. Prediction correction cannot
+      repair a nonrepresentative label design without additional adjustment.
+      (PPI, pp.~3, 15--16, and 23.)
+      \item A single aggregate can be identified without estimating every
+      latent unit outcome.
+      \item PPI does not, by itself, recover every unobserved cell effect
+      \(\theta_j\). It corrects a functional whose average prediction error is
+      learnable from the labels.
+      \item In the fixed-population case, the only sampling uncertainty comes
+      from estimating the population-average residual. The population mean of
+      the predictions is already observed. (PPI, p.~23; derived above.)
+  \end{enumerate}
+  
+  \section{Emmenegger, Stahler, and Podimata: multi-task PPI}
+  
+  \subsection*{Notation}
+  
+  \begin{longtable}{>{\raggedright\arraybackslash}p{0.22\linewidth}
+                    >{\raggedright\arraybackslash}p{0.70\linewidth}}
+  \toprule
+  Symbol & Meaning \\
+  \midrule
+  \endfirsthead
+  \toprule
+  Symbol & Meaning \\
+  \midrule
+  \endhead
+  \(\mathcal T,t,T\) & Set of tasks, a task index, and number of tasks. \\
+  \(i,N\) & Unit index and fixed number of units per task. \\
+  \(X_i^{(t)},Y_i^{(t)}\) & Covariates and ground-truth outcome for unit \(i\)
+  in task \(t\). \\
+  \(\widehat Y_i^{(t)}\) & Proxy outcome observed for every unit in task \(t\). \\
+  \(\theta^{(t)}\) & Task-\(t\) finite-population mean. \\
+  \(L^{(t)},n_t,O_i^{(t)}\) & Simple-random labeled subset, its size, and the
+  indicator \(\ind\{i\in L^{(t)}\}\). \\
+  \(s\) & Recalibration map applied to the proxy; \(s_i\) abbreviates
+  \(s(X_i,\widehat Y_i)\) in a single task. \\
+  \(\overline Y_L,\overline Y_N\) & Labeled-sample and population means of
+  \(Y\) in a single task. \\
+  \(\overline s_L,\overline s_N\) & Labeled-sample and population means of the
+  recalibrated proxy. \\
+  \(\gamma_t,\gamma^\star(s),\widehat\gamma_t\) & Task-specific power-tuning
+  coefficient, its oracle value, and its labeled-sample plug-in estimate. \\
+  \(\widehat\theta^{(t)}\) & Power-tuned PPI mean estimator for task \(t\). \\
+  \(Z_i,\overline Z_L,\overline Z_N\) & Residual \(Y_i-\gamma_t s_i\) and its
+  labeled and population means. \\
+  \(\Var_N,\Cov_N,\rho_N\) & Finite-population variance, covariance, and
+  correlation, using denominator \(N\). \\
+  \(\Var_L,\Cov_L\) & Variance and covariance computed on a task's labeled
+  sample. \\
+  \(S_Y^2,S_s^2,S_{Ys}\) & Finite-population sample variances of \(Y\) and
+  \(s\), and their covariance, using denominator \(N-1\). \\
+  \(V(s,\gamma_t),V^\star(s)\) & Design variance and oracle-minimized design
+  variance. \\
+  \(\mathcal H\) & Class of candidate recalibration maps. \\
+  \(s^{(-t)}\) & Global recalibrator learned from labeled data in all
+  tasks except \(t\). \\
+  \(s_{\mathrm{local}}^{(t)}\) & Recalibrator learned from task-\(t\)
+  labels without predicting an observation from its own outcome. \\
+  \(\kappa_t,u_i^{(t)}\) & Weight on the local recalibrator and resulting
+  adaptive proxy used by AREPPI. The earlier note reserves \(\gamma_t\) for
+  power tuning, so \(\kappa_t\) replaces the source paper's adaptive-mixture
+  symbol. \\
+  \(\lambda,\gamma\) & Source-paper aliases for the power-tuning coefficient
+  and AREPPI mixing weight; this note translates them to \(\gamma_t\) and
+  \(\kappa_t\). \\
+  \(\phi,\operatorname{id}\) & Generic transformation of \(\widehat Y\) and the
+  identity transformation. \\
+  \(\mathcal Z,I_z\) & Support of \(\widehat Y\) and the units whose proxy equals
+  \(z\). \\
+  \(m(z)\) & Finite-population conditional mean of \(Y\) at
+  \(\widehat Y=z\). \\
+  \(R_{Y\sim\widehat Y}^2\) & Fraction of finite-population outcome variance
+  explained by the unrestricted conditional mean \(m(\widehat Y)\). \\
+  \(a,b\) & Intercept and slope of an affine recalibration. \\
+  \bottomrule
+  \end{longtable}
+  
+  \noindent\textit{Notation conversion.}
+  The earlier AI-project note denotes the power-tuning coefficient by
+  \(\gamma_t\), whereas MT-PPI denotes it by \(\lambda\). This note keeps
+  \(\gamma_t\) for consistency with the earlier note. It uses \(\kappa_t\) for
+  AREPPI's local/global mixing weight, which MT-PPI denotes by \(\gamma\).
+  
+  \subsection*{Board 1: the many-task data structure}
+  
+  For each task \(t\in\mathcal T\), the paper fixes \(N\) units and targets
+  \[
+      \theta^{(t)}
+      =
+      \frac{1}{N}\sum_{i=1}^NY_i^{(t)}.
+  \]
+  The proxy \(\widehat Y_i^{(t)}\) is observed for every unit. Ground truth is
+  observed only when \(i\in L^{(t)}\), where \(L^{(t)}\) is a simple random sample
+  without replacement. (MT-PPI, pp.~3--4.)
+  
+  The target is one mean per task. The paper does not estimate one latent outcome
+  per unit. Its vector of scientific estimands is
+  \[
+      \bigl(\theta^{(1)},\ldots,\theta^{(T)}\bigr).
+  \]
+  
+  \subsection*{Board 2: power-tuned finite-population PPI}
+  
+  Suppress the task superscript. For a fixed recalibration map \(s\) and fixed
+  coefficient \(\gamma_t\), define
+  \[
+      \widehat\theta^{(t)}
+      =
+      \overline Y_L+\gamma_t(\overline s_N-\overline s_L).
+  \]
+  This contains three familiar cases:
+  \[
+      \gamma_t=0
+      \quad\Rightarrow\quad
+      \widehat\theta^{(t)}=\overline Y_L,
+  \]
+  \[
+      \gamma_t=1,\ s=\operatorname{id}
+      \quad\Rightarrow\quad
+      \text{ordinary PPI},
+  \]
+  and
+  \[
+      s=\operatorname{id},\ \gamma_t\ \text{estimated for precision}
+      \quad\Rightarrow\quad
+      \text{PPI++}.
+  \]
+  (MT-PPI, pp.~5--6.)
+  
+  Set \(Z_i=Y_i-\gamma_t s_i\). Subtract the target:
+  \begin{align*}
+      \widehat\theta^{(t)}-\theta^{(t)}
+      &=
+      (\overline Y_L-\gamma_t\overline s_L)
+      -
+      (\overline Y_N-\gamma_t\overline s_N)\\
+      &=\overline Z_L-\overline Z_N.
+  \end{align*}
+  For fixed \(s\) and \(\gamma_t\), simple random sampling gives
+  \[
+      \E[\overline Z_L]=\overline Z_N,
+  \]
+  so \(\widehat\theta^{(t)}\) is exactly design-unbiased. Its variance is
+  \[
+      V(s,\gamma_t)
+      =
+      \frac{1}{n_t}
+      \left(1-\frac{n_t}{N}\right)
+      \left[
+        S_Y^2-2\gamma_tS_{Ys}
+        +\gamma_t^2S_s^2
+      \right].
+  \]
+  Differentiate the bracket with respect to \(\gamma_t\):
+  \[
+      -2S_{Ys}+2\gamma_tS_s^2=0.
+  \]
+  Therefore
+  \[
+      \gamma^\star(s)
+      =
+      \frac{S_{Ys}}{S_s^2}
+      =
+      \frac{\Cov_N(Y,s)}{\Var_N(s)}.
+  \]
+  Substitution gives
+  \[
+      V^\star(s)
+      =
+      \frac{1}{n_t}\left(1-\frac{n_t}{N}\right)
+      S_Y^2\{1-\rho_N^2(Y,s)\}.
+  \]
+  The best recalibrator is therefore the one most correlated with \(Y\), after
+  allowing the scalar power coefficient to absorb linear scale. (MT-PPI,
+  pp.~5--6 and 16.)
+  
+  \subsection*{Board 3: GREPPI}
+  
+  For target task \(t\), GREPPI proceeds in this order:
+  \begin{enumerate}[leftmargin=2em]
+      \item Pool labeled pairs from tasks other than \(t\).
+      \item Fit \(s^{(-t)}\in\mathcal H\) on that pool.
+      \item Apply \(s^{(-t)}\) to every proxy in task \(t\).
+      \item Use task-\(t\) labels to estimate the task-\(t\) residual mean.
+      \item Optionally estimate
+      \[
+          \widehat\gamma_t
+          =
+          \frac{\Cov_L(Y,s^{(-t)}(\widehat Y))}
+               {\Var_L(s^{(-t)}(\widehat Y))}
+      \]
+      and form
+      \[
+          \widehat\theta^{(t)}
+          =
+          \overline Y_L^{(t)}
+          +
+          \widehat\gamma_t
+          \left[
+            \overline{s^{(-t)}}{}_N^{(t)}
+            -
+            \overline{s^{(-t)}}{}_L^{(t)}
+          \right].
+      \]
+  \end{enumerate}
+  The other tasks learn a better proxy. They do not supply the target task's
+  bias correction. The target task's own labels still supply that correction.
+  This is why cross-task learning can improve precision without requiring the
+  tasks to have identical residual means. (MT-PPI, pp.~3 and 6.)
+  
+  If \(\gamma_t=1\), the leave-one-task-out recalibrator is fixed with respect to
+  the target label draw, so the design-unbiasedness proof on Board 2 applies
+  conditional on that recalibrator. If \(\widehat\gamma_t\) is estimated from
+  the same target labels used for correction, exact finite-sample unbiasedness
+  no longer follows. The authors describe the resulting inference as
+  asymptotic and show small-sample undercoverage in their experiment. They
+  therefore set the source paper's power coefficient to one in the human-data
+  study. (MT-PPI, pp.~6 and 9--10.)
+  
+  \subsection*{Board 4: AREPPI}
+  
+  GREPPI can lose precision when other tasks have a different proxy--truth
+  relationship. AREPPI combines a global and a local recalibrator:
+  \[
+      u_i^{(t)}
+      =
+      \kappa_t\,s_{\mathrm{local}}^{(t)}
+          (\widehat Y_i^{(t)})
+      +(1-\kappa_t)\,s^{(-t)}
+          (\widehat Y_i^{(t)}).
+  \]
+  The local prediction for each labeled observation is out-of-fold: that
+  observation's \(Y_i^{(t)}\) is not used to train the function that predicts it.
+  The paper chooses \(\kappa_t\) to maximize squared correlation with target-task
+  outcomes, then replaces \(s_i\) by \(u_i^{(t)}\) in the estimator on Board 2.
+  (MT-PPI, p.~7.)
+  
+  Thus:
+  \[
+      \kappa_t=0
+      \quad\Rightarrow\quad
+      \text{use only the global cross-task relationship},
+  \]
+  while
+  \[
+      \kappa_t=1
+      \quad\Rightarrow\quad
+      \text{use only the local task relationship}.
+  \]
+  The adaptive mixture is a protection against task heterogeneity. It is not a
+  license to omit target-task labels.
+  
+  \subsection*{Board 5: why a nonlinear relationship is necessary}
+  
+  First take an affine recalibration
+  \[
+      s(\widehat Y)=a\widehat Y+b,
+      \qquad a\neq0.
+  \]
+  Then
+  \[
+      \Cov_N(Y,a\widehat Y+b)=a\Cov_N(Y,\widehat Y)
+  \]
+  and
+  \[
+      \Var_N(a\widehat Y+b)=a^2\Var_N(\widehat Y).
+  \]
+  Therefore
+  \[
+      \rho_N^2(Y,a\widehat Y+b)
+      =
+      \rho_N^2(Y,\widehat Y).
+  \]
+  Since \(V^\star(s)\) depends on \(s\) only through squared correlation,
+  \[
+      V^\star(a\widehat Y+b)=V^\star(\widehat Y).
+  \]
+  Power tuning already absorbs every shift and rescaling. Cross-task affine
+  recalibration cannot improve oracle variance beyond power-tuned PPI.
+  (MT-PPI, p.~8.)
+  
+  The stronger result follows in four steps. Define
+  \[
+      \mathcal Z=\{\widehat Y_i:i=1,\ldots,N\},
+      \qquad
+      I_z=\{i:\widehat Y_i=z\},
+  \]
+  and
+  \[
+      m(z)=\frac{1}{|I_z|}\sum_{i\in I_z}Y_i.
+  \]
+  For any transformation \(\phi\), observations with the same proxy value have
+  the same \(\phi(\widehat Y_i)\). Hence
+  \[
+      \Cov_N\{Y-m(\widehat Y),\phi(\widehat Y)\}=0.
+  \]
+  It follows that
+  \[
+      \Cov_N\{Y,\phi(\widehat Y)\}
+      =
+      \Cov_N\{m(\widehat Y),\phi(\widehat Y)\}.
+  \]
+  Cauchy--Schwarz then gives
+  \[
+      \rho_N^2\{Y,\phi(\widehat Y)\}
+      \leq
+      \frac{\Var_N\{m(\widehat Y)\}}{\Var_N(Y)}
+      =
+      R_{Y\sim\widehat Y}^2.
+  \]
+  Choosing \(\phi=m\) attains the upper bound. The identity map attains it if
+  and only if \(m\) is affine on the observed proxy support, apart from
+  degenerate zero-variance cases. Therefore a strict improvement over
+  power-tuned PPI is possible if and only if the proxy--truth conditional mean
+  is nonlinear on that support. (MT-PPI, pp.~8 and 18--19.)
+  
+  \subsection*{Board 6: what MT-PPI adds and what it does not add}
+  
+  \begin{enumerate}[leftmargin=2em]
+      \item It adds cross-task learning of a better, generally nonlinear proxy.
+      \item It preserves task-specific correction: every reported task still
+      uses labels from that task.
+      \item It explains exactly when cross-task recalibration can improve on
+      power-tuned PPI: only recoverable nonlinear structure matters.
+      \item Its formal setup targets finite-population task means. The paper
+      says extensions to general convex estimators are possible, but does not
+      deliver the full extension. (MT-PPI, p.~3.)
+      \item Estimating the power coefficient on very small target samples can
+      cause optimistic variance estimates and undercoverage. Fixed
+      \(\gamma_t=1\) or separate-sample tuning avoids the exact same-data
+      argument. (MT-PPI, pp.~6 and 9--10.)
+      \item It does not estimate a task with no target labels, because
+      cross-task recalibration is not a substitute for within-task correction.
+  \end{enumerate}
+  
+  \section{One design for the AI productivity project}
+  
+  \subsection*{Notation}
+  
+  \begin{longtable}{>{\raggedright\arraybackslash}p{0.22\linewidth}
+                    >{\raggedright\arraybackslash}p{0.70\linewidth}}
+  \toprule
+  Symbol & Meaning \\
+  \midrule
+  \endfirsthead
+  \toprule
+  Symbol & Meaning \\
+  \midrule
+  \endhead
+  \(j,J\) & Occupation--task cell and number of cells. \\
+  \(i,N_j\) & Worker--task instance and number of target instances in cell \(j\). \\
+  \(Y_{ij}\) & Gold-standard, quality-adjusted productivity gain for instance
+  \(i\) in cell \(j\), after fixing one task basket. \\
+  \(\widehat Y_{ij}\) & Cheap proxy gain observed for every target instance. \\
+  \(\theta_j\) & Cell mean \(N_j^{-1}\sum_iY_{ij}\). \\
+  \(L_j,n_j\) & Random labeled subset in cell \(j\) and its size. \\
+  \(s^{(-j)}\) & Nonlinear recalibrator learned from other cells. \\
+  \(\widehat\theta_j\) & Rectified estimate of the cell mean. \\
+  \(p_j,\bar\theta\) & Aggregation weight and aggregate gain. \\
+  \(p_j^0,p_j^A,\bar\theta^0,\bar\theta^A\) & The two basket-specific weights
+  and their aggregate gains. \\
+  \(S_j,g(S_j),\widehat v_j,R_j,\pi_j\) & Cell-level score, calibrated score
+  prediction, unbiased experimental
+  cell estimate, validation indicator, and validation inclusion probability in
+  the alternative cell-sampling design. \\
+  \(m\) & Number of validated cells in a simple random cell sample. \\
+  \(k\) & Number of cells in a reported top-\(k\) set. \\
+  \(\widehat{\bar\theta}_{\mathrm{PPI}}\) & Design-unbiased cell-level
+  difference estimator of the aggregate. \\
+  \(\widehat{\bar\theta}\) & Aggregate formed from the rectified cell estimates
+  under the many-instances-per-cell design. \\
+  \bottomrule
+  \end{longtable}
+  
+  \subsection*{Board 1: first determine the data shape}
+  
+  There are two different designs.
+  
+  \paragraph{Design A: one score per cell.}
+  The data contain \(S_j\) for every cell and an experimental
+  \(\widehat v_j\) only for selected cells. This is the proposal's stated
+  Gaussian-channel design. It supports:
+  \begin{itemize}[leftmargin=2em]
+      \item design-based estimation of aggregates from random validation;
+      \item model-based estimation of unvalidated cell effects through empirical
+      Bayes.
+  \end{itemize}
+  It does not fit MT-PPI's data structure, because there are not \(N_j\) proxy
+  observations and some labels inside every task.
+  
+  \paragraph{Design B: many instances inside every cell.}
+  After fixing one basket, the data contain \(\widehat Y_{ij}\) for all \(i\) in
+  each cell and \(Y_{ij}\) for a random subset \(L_j\) in each cell. Then each
+  cell is an
+  MT-PPI task, and
+  \[
+      \theta_j=\frac{1}{N_j}\sum_{i=1}^{N_j}Y_{ij}
+  \]
+  is exactly a task mean. This design supports design-based estimation of every
+  cell mean, provided every reported cell has target-cell labels.
+  
+  \subsection*{Board 2: the aggregate under Design A}
+  
+  Let validation include cell \(j\) with known probability \(\pi_j>0\), and let
+  \(\widehat v_j\) be unbiased for \(\theta_j\). Treat \(g(S_j)\) as fixed with
+  respect to cell \(j\)'s validation indicator and experimental noise. This is
+  exact when \(g\) is specified before validation or trained on an independent
+  calibration split. If the same validation observations train \(g\) and estimate
+  the residual correction, sample splitting or design-compatible cross-fitting
+  is required. Define
+  \[
+      \widehat{\bar\theta}_{\mathrm{PPI}}
+      =
+      \sum_{j=1}^Jp_jg(S_j)
+      +
+      \sum_{j:R_j=1}
+      \frac{p_j}{\pi_j}
+      \{\widehat v_j-g(S_j)\}.
+  \]
+  Take expectation over validation selection and experimental estimation:
+  \begin{align*}
+      \E[\widehat{\bar\theta}_{\mathrm{PPI}}]
+      &=
+      \sum_{j=1}^Jp_jg(S_j)
+      +
+      \sum_{j=1}^J
+      \E[R_j]\frac{p_j}{\pi_j}
+      \{\E[\widehat v_j]-g(S_j)\}\\
+      &=
+      \sum_{j=1}^Jp_jg(S_j)
+      +
+      \sum_{j=1}^J
+      \pi_j\frac{p_j}{\pi_j}\{\theta_j-g(S_j)\}\\
+      &=
+      \sum_{j=1}^Jp_j\theta_j\\
+      &=\bar\theta.
+  \end{align*}
+  This is a Horvitz--Thompson difference estimator, derived by applying the
+  finite-population PPI logic to cells. It identifies the aggregate even though
+  the individual unvalidated \(\theta_j\)'s remain unidentified without the
+  proposal's channel model.
+  
+  For equal weights and a simple random sample of \(m\) out of \(J\) cells,
+  \(\pi_j=m/J\), so the estimator becomes
+  \[
+      \widehat{\bar\theta}_{\mathrm{PPI}}
+      =
+      \frac{1}{J}\sum_{j=1}^Jg(S_j)
+      +
+      \frac{1}{m}\sum_{j:R_j=1}
+      \{\widehat v_j-g(S_j)\}.
+  \]
+  This is the finite-population PPI mean estimator with cells as units.
+  
+  \subsection*{Board 3: the map under Design B}
+  
+  Fix one task basket. For each cell \(j\):
+  \begin{enumerate}[leftmargin=2em]
+      \item Use labeled pairs from other cells to learn
+      \(s^{(-j)}\).
+      \item Apply that map to every \(\widehat Y_{ij}\) in cell \(j\).
+      \item Correct with the random target-cell labels:
+      \[
+          \widehat\theta_j
+          =
+          \frac{1}{N_j}\sum_{i=1}^{N_j}
+          s^{(-j)}(\widehat Y_{ij})
+          +
+          \frac{1}{n_j}\sum_{i\in L_j}
+          \left[
+            Y_{ij}-s^{(-j)}(\widehat Y_{ij})
+          \right].
+      \]
+      \item Conditional on the cross-cell recalibrator, simple random sampling
+      within cell \(j\) makes the second term unbiased for the full-cell average
+      residual. Therefore
+      \[
+          \E[\widehat\theta_j]=\theta_j.
+      \]
+      \item Aggregate after estimating the cells:
+      \[
+          \widehat{\bar\theta}
+          =
+          \sum_{j=1}^Jp_j\widehat\theta_j.
+      \]
+  \end{enumerate}
+  This is GREPPI with occupation--task cells as tasks and worker--task instances
+  as units. A nonlinear recalibrator can improve precision when the shared
+  proxy--truth conditional mean is nonlinear. The within-cell correction, not
+  cross-cell similarity, supplies design validity.
+  
+  \subsection*{Board 4: which method answers which project question}
+  
+  \begin{center}
+  \begin{tabular}{>{\raggedright\arraybackslash}p{0.25\linewidth}
+                  >{\raggedright\arraybackslash}p{0.30\linewidth}
+                  >{\raggedright\arraybackslash}p{0.35\linewidth}}
+  \toprule
+  Question & Suitable method & Reason \\
+  \midrule
+  Weighted mean gain &
+  Finite-population PPI difference estimator &
+  Average validation residual corrects the average proxy error; the full map is
+  not required. \\
+  \addlinespace
+  One mean for every cell, with labels inside every cell &
+  MT-PPI/GREPPI, preferably with fixed or separately tuned power coefficient in
+  very small samples &
+  Other cells learn the nonlinear proxy transformation; each target cell
+  supplies its own correction. \\
+  \addlinespace
+  One mean for every cell, but many cells have no labels &
+  Proposal's empirical-Bayes channel, or another explicit cross-cell model &
+  PPI and MT-PPI do not identify a label-free target cell. The map requires
+  model-based extrapolation. \\
+  \addlinespace
+  Rankings and top-\(k\) cells &
+  Posterior distribution for the full vector, followed by ranking uncertainty &
+  A valid aggregate correction does not identify individual ranks. \\
+  \addlinespace
+  Cross-cell dispersion &
+  An explicit second-moment procedure or full-vector model &
+  The three documents do not establish that the mean estimator alone yields a
+  valid dispersion estimator. \\
+  \bottomrule
+  \end{tabular}
+  \end{center}
+  
+  \subsection*{Board 5: the clean project conclusion}
+  
+  \begin{enumerate}[leftmargin=2em]
+      \item The proposal and the two PPI papers solve different statistical
+      problems.
+      \item The proposal targets a high-dimensional latent map and therefore
+      needs a cross-cell model for unvalidated cells.
+      \item PPI targets valid inference for a chosen functional and can estimate
+      the aggregate without estimating the map.
+      \item MT-PPI targets one mean in each of many tasks. It helps the project
+      only if each occupation--task cell contains many proxy observations and
+      at least some randomly sampled ground-truth observations.
+      \item Cross-task recalibration should be nonlinear if power-tuned PPI is
+      the benchmark; affine calibration adds no oracle precision.
+      \item Randomization has two distinct roles:
+      random cells support design-based aggregate inference, while random units
+      within every cell support design-based cell means.
+      \item Empirical Bayes and PPI are complements, not substitutes. PPI gives
+      design-based correction for supported aggregates or cell means. Empirical
+      Bayes supplies model-based shrinkage, extrapolation to unvalidated cells,
+      and the joint distribution needed for ranks and top-\(k\) statements.
+  \end{enumerate}
+  
+  \section*{References}
+  
+  \begin{enumerate}[leftmargin=2em]
+      \item Angelopoulos, A. N., Bates, S., Fannjiang, C., Jordan, M. I., and
+      Zrnic, T. (2023). \emph{Prediction-Powered Inference}.
+      \href{https://arxiv.org/pdf/2301.09633}{arXiv:2301.09633v4}.
+      \item Emmenegger, N., Stahler, E., and Podimata, C. (2026).
+      \emph{Prediction-Powered Inference Across Many Tasks for AI Evaluation
+      \& Social Science Research}.
+      \href{https://arxiv.org/pdf/2605.29249}{arXiv:2605.29249v1}.
+      \item \emph{The Distributional Effects of AI's Productivity Gains:
+      A Data Fusion Approach}. Project proposal,
+      \texttt{openai\_exchange\_proposal\_v4\_for\_ext.pdf}.
+  \end{enumerate}
+  
+  \end{document}

@@ -1,0 +1,567 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/oq4mpu",
+    "id": "oq4mpu",
+    "slide": 4,
+    "layoutId": "f4a45b2d-a165-41aa-a743-0923c43a574a",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "82378df2-dc0e-4aa0-b5f4-c07656602ab7",
+    "masterLayoutName": "Master",
+    "backgroundColor": "#FFFFFF",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "bg1": "#FFFFFF",
+      "bg2": "#000000",
+      "tx1": "#1F1F1F",
+      "tx2": "#FFFFFF",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "typefaces": [
+      "+mn-lt"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "f4a45b2d-a165-41aa-a743-0923c43a574a",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "82378df2-dc0e-4aa0-b5f4-c07656602ab7",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "82378df2-dc0e-4aa0-b5f4-c07656602ab7",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/alwbm5w3",
+      "id": "1",
+      "bbox": [
+        72,
+        40,
+        900,
+        20
+      ],
+      "geometry": "rect",
+      "text": "ESTIMANDS",
+      "textPreview": "ESTIMANDS",
+      "resolvedFontSize": 12,
+      "resolvedTextStyle": {
+        "fontSize": 12,
+        "typeface": "+mn-lt",
+        "color": "#666666",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "ESTIMANDS"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "ESTIMANDS",
+          "resolvedTextStyle": {
+            "fontSize": 12,
+            "color": "#666666",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "ESTIMANDS",
+              "fontSize": 12,
+              "color": "#666666",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/x8nuhkve",
+      "id": "2",
+      "bbox": [
+        72,
+        74,
+        1130,
+        74
+      ],
+      "geometry": "rect",
+      "text": "The central estimands generalize the two AKM firm-side questions",
+      "textPreview": "The central estimands generalize the two AKM firm-side questions",
+      "resolvedFontSize": 35,
+      "resolvedTextStyle": {
+        "fontSize": 35,
+        "typeface": "+mn-lt",
+        "color": "#000000",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "The central estimands generalize the two AKM firm-side questions"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "The central estimands generalize the two AKM firm-side questions",
+          "resolvedTextStyle": {
+            "fontSize": 35,
+            "color": "#000000",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "The central estimands generalize the two AKM firm-side questions",
+              "fontSize": 35,
+              "color": "#000000",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/c7etofet",
+      "id": "3",
+      "bbox": [
+        86,
+        172,
+        1105,
+        440
+      ],
+      "geometry": "rect",
+      "text": "Firm wage relevance:\n  Q_F = E_I[ Var_J(m_IJ) ]\n  H_F = E_{J,K}[ Var_I(m_IK - m_IJ) ]\n\nAssignment contribution:\n  C_assign^w = 1/2 { Var_obs(m_IJ) - Var_prod(m_IJ) }\n\nMean assignment into comparative advantage:\n  A_h = E_obs[h_IJ]\n\nAdditive AKM special case:\n  (Q_F, H_F, C_assign^w, A_h) = (Var(psi_J), 0, Cov(alpha_I, psi_J), 0).",
+      "textPreview": "Firm wage relevance: |   Q_F = E_I[ Var_J(m_IJ) ] |   H_F = E_{J,K}[ Var_I(m_IK - m_IJ) ] |  | Assignment contribution: |   C_assign^w = ...",
+      "resolvedFontSize": 21,
+      "resolvedTextStyle": {
+        "fontSize": 21,
+        "typeface": "+mn-lt",
+        "color": "#000000",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 12,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Firm wage relevance:"
+          },
+          {
+            "index": 2,
+            "text": "  Q_F = E_I[ Var_J(m_IJ) ]"
+          },
+          {
+            "index": 3,
+            "text": "  H_F = E_{J,K}[ Var_I(m_IK - m_IJ) ]"
+          },
+          {
+            "index": 4,
+            "text": ""
+          },
+          {
+            "index": 5,
+            "text": "Assignment contribution:"
+          },
+          {
+            "index": 6,
+            "text": "  C_assign^w = 1/2 { Var_obs(m_IJ) - Var_prod(m_IJ) }"
+          },
+          {
+            "index": 7,
+            "text": ""
+          },
+          {
+            "index": 8,
+            "text": "Mean assignment into comparative advantage:"
+          },
+          {
+            "index": 9,
+            "text": "  A_h = E_obs[h_IJ]"
+          },
+          {
+            "index": 10,
+            "text": ""
+          },
+          {
+            "index": 11,
+            "text": "Additive AKM special case:"
+          },
+          {
+            "index": 12,
+            "text": "  (Q_F, H_F, C_assign^w, A_h) = (Var(psi_J), 0, Cov(alpha_I, psi_J), 0)."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Firm wage relevance:",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Firm wage relevance:",
+              "fontSize": 21,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "  Q_F = E_I[ Var_J(m_IJ) ]",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "  Q_F = E_I[ Var_J(m_IJ) ]",
+              "fontSize": 21,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "  H_F = E_{J,K}[ Var_I(m_IK - m_IJ) ]",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "  H_F = E_{J,K}[ Var_I(m_IK - m_IJ) ]",
+              "fontSize": 21,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 5,
+          "text": "Assignment contribution:",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Assignment contribution:",
+              "fontSize": 21,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 6,
+          "text": "  C_assign^w = 1/2 { Var_obs(m_IJ) - Var_prod(m_IJ) }",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "  C_assign^w = 1/2 { Var_obs(m_IJ) - Var_prod(m_IJ) }",
+              "fontSize": 21,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 8,
+          "text": "Mean assignment into comparative advantage:",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Mean assignment into comparative advantage:",
+              "fontSize": 21,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 9,
+          "text": "  A_h = E_obs[h_IJ]",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "  A_h = E_obs[h_IJ]",
+              "fontSize": 21,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 11,
+          "text": "Additive AKM special case:",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Additive AKM special case:",
+              "fontSize": 21,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 12,
+          "text": "  (Q_F, H_F, C_assign^w, A_h) = (Var(psi_J), 0, Cov(alpha_I, psi_J), 0).",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "  (Q_F, H_F, C_assign^w, A_h) = (Var(psi_J), 0, Cov(alpha_I, psi_J), 0).",
+              "fontSize": 21,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/za5cjudk",
+      "id": "4",
+      "bbox": [
+        72,
+        655,
+        940,
+        22
+      ],
+      "geometry": "rect",
+      "text": "Source: LOO note, pp. 6-7, 12-17",
+      "textPreview": "Source: LOO note, pp. 6-7, 12-17",
+      "resolvedFontSize": 11,
+      "resolvedTextStyle": {
+        "fontSize": 11,
+        "typeface": "+mn-lt",
+        "color": "#666666",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Source: LOO note, pp. 6-7, 12-17"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Source: LOO note, pp. 6-7, 12-17",
+          "resolvedTextStyle": {
+            "fontSize": 11,
+            "color": "#666666",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Source: LOO note, pp. 6-7, 12-17",
+              "fontSize": 11,
+              "color": "#666666",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/y9wbqpwz",
+      "id": "5",
+      "bbox": [
+        1150,
+        655,
+        60,
+        22
+      ],
+      "geometry": "rect",
+      "text": "4",
+      "textPreview": "4",
+      "resolvedFontSize": 11,
+      "resolvedTextStyle": {
+        "fontSize": 11,
+        "typeface": "+mn-lt",
+        "color": "#666666",
+        "alignment": "right",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "4"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "4",
+          "resolvedTextStyle": {
+            "fontSize": 11,
+            "color": "#666666",
+            "alignment": "right"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "4",
+              "fontSize": 11,
+              "color": "#666666",
+              "alignment": "right"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    }
+  ],
+  "composeRuns": []
+}

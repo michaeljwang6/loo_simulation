@@ -1,0 +1,3937 @@
+
+
+===== PDF PAGE 1 =====
+
+∗
+Assortative Matching and Wages: The Role of Selection
+Katar´ına Boroviˇckov´a Robert Shimer
+FRB Richmond University of Chicago
+October 23, 2025
+Abstract
+Wedeveloparandomsearchmodelwithtwo-sidedheterogeneityandmatch-specific
+productivity shocks to explain why high-productivity workers tend to work at high-
+productivity firms despite low-productivity workers gaining about as much from such
+matches. Our model has two key predictions: i) a worker’s wage is additively separable
+in a component that depends on the worker’s productivity, a component that depends
+on the firm’s productivity, and a conditionally mean zero error term; and (ii) there
+is assortative matching between high wage workers and high wage firms. Selective
+job acceptance drives these patterns. All workers are equally likely to meet all firms,
+but workers have higher surplus from meeting firms of similar productivity. The high
+surplus meetings result in matches more frequently, generating assortative matching.
+Only the subset of meetings that result in matches are observed in administrative wage
+data, shaping wages. When all separations are exogenous, conventional two-way fixed
+effects estimators give unbiased estimates of the effect of a random job meeting to
+an unemployed worker conditional on the worker taking the job, but cannot measure
+the unconditional effect of the job offer. With endogenous separations, conventional
+estimators of the conditional value of the meeting are biased as well, and this bias is
+difficult to detect using standard empirical approaches. We show that our results are
+robust to allowing for on-the-job search in the model.
+∗
+We are grateful for comments from Fernando Alvarez, Gadi Barlevy, St´ephane Bonhomme, Jaroslav
+Boroviˇcka, Pawe(cid:32)l Gola, Kyle Herkenhoff, Juanna Schrøter Joensen, Philipp Kircher, Patrick Kline, Thibaut
+Lamadon, Guido Menzio, Magne Mogstad, Simon Mongey, Christian Moser, Andreas Mueller, Derek Neal,
+Ezra Oberfield, Benjamin Schoefer, Isaac Sorkin, four anonymous referees, and Larry Katz, as well as
+numerousworkshopparticipants. Anyremainingerrorsareourown. Theviewsexpressedhereinarethoseof
+theauthorsandnotnecessarilythoseoftheFederalReserveBankofRichmondortheFederalReserveSystem.
+
+===== PDF PAGE 2 =====
+
+1 Introduction
+Why do high-wage workers tend to work at high-wage firms, even though low-wage workers
+seem to enjoy similar wage gains from such jobs? Following the path-breaking study by
+Abowd, Kramarz and Margolis (1999) using administrative wage data, these empirical regu-
+larities have been extensively documented, yet the economic forces generating them remain
+unknown. Bonhomme, Lamadon and Manresa (2019, p. 701) write that “the presence of
+strong sorting, together with the absence of strong complementarities in wages, is difficult
+to reconcile with models where sorting is driven by complementarities in production, as in
+Becker (1973).” This paper proposes a natural reconciliation.
+Weprovethatarandomsearchmodelwithproductivecomplementaritiesbetweenhetero-
+geneous workers and firms, match-specific productivity shocks, and Nash-bargained wages
+offers a unified explanation for these patterns. Under simple conditions, the wage that a
+worker is paid can be expressed as the sum of a component that depends on the worker’s
+type, a component that depends on the firm’s type, and an error term that is orthogonal to
+both. This means that all workers receive on average an equal increase in the wage when
+workingatahigherfirmtype. Nevertheless, whentheproductiontechnologyissuitablycom-
+plementary, we prove that there is assortative matching between high-productivity workers
+and high-productivity firms.1
+Our theoretical results arise from a novel mechanism: selective hiring. While all workers
+areequallylikelytomeetallfirms, thelikelihoodthatamatchformsdependsontheworker’s
+and firm’s productivity. High-productivity firms rarely hire low-productivity job seekers, but
+when match-specific productivity is high enough, these workers are hired at a wage above
+the average wage earned by other low-productivity workers. Similarly, low-productivity
+firms seldom hire high-productivity workers unless match-specific productivity is unusually
+high. This selective hiring creates a systematic difference between the matches we observe
+in administrative data and all meetings between workers and firms, driving both sorting
+patterns and the behavior of wages.
+Our model not only offers a rationalization for the two-way fixed effects specification
+in Abowd, Kramarz and Margolis (1999), but it also offers an economically meaningful
+interpretationoftheoutputoftheseregressions. AsCard, Cardoso, HeiningandKline(2018,
+p. S16) note: “in the firm-switching literature, a key question is whether conventionally
+estimated firm-specific pay premiums predict the wage changes associated with exogenously
+1A corollary of these results is that high-productivity workers are high-wage workers while high-
+productivity firms are high-wage firms, which is important for interpretation. In our model productivity
+drives behavior, but administrative data sets often record wages rather than productivity. We maintain this
+distinction in our terminology throughout the paper.
+1
+
+===== PDF PAGE 3 =====
+
+induced job accessions and separations.” To answer this, we consider a concrete policy
+experiment: unemployed workers are introduced to different jobs, which they may accept or
+refuse. We show that the conventional estimators of the two-way fixed effects model yield
+biased estimates of the intent to treat (ITT), because administrative wage data contains no
+information about workers who choose not to take jobs. Nevertheless, they yield unbiased
+estimates of the average treatment on the treated (ATT), i.e. of the effect of the meeting on
+those workers who are hired.
+We then extend our model to introduce endogenous separations, by making the match-
+specificshockevolveovertimeforemployedworkers,withagrowthratethatisindependently
+and identically distributed over time and across workers. We show that the model remains
+analytically tractable. In particular, the wage that a worker is paid at a point in time is
+still the sum of a component that depends on the worker’s type, a component that depends
+on the firm’s type, and a serially correlated error term that is orthogonal to the first two
+components. But with endogenous separations, we show that conventional estimators of
+the two-way fixed effects model yield biased estimates of the ATT because the estimators
+necessarily rely on the wages of movers, i.e. workers who leave one job and start another; and
+the wages of movers are a non-representative sample of all wages due to endogenous match
+dissolutions. We obtain an analytical expression for the bias and show why this endogenous
+mobility may be difficult to detect using conventional tests, such as the one Card, Heining
+and Kline (2013) propose and implement. If we could observe both workers’ and firms’ true
+types, there would be no bias in the two-way fixed effects regression.
+Finally, we enrich our model to incorporate on-the-job search, with wages evolving in a
+manner based on Cahuc, Postel-Vinay and Robin (2006). We can no longer solve the model
+analytically, but instead use this more realistic framework to show the robustness of our
+results to several features: on-the-job search, using log wages rather than wages in the two-
+way fixed effects regression, and measuring the average wage in the main job in a given year,
+rather than the last wage before and first wage after a job-to-job transition. We replicate our
+previous analytical results numerically. First, our model generates log wages that are nearly
+additively separable in component that depends on the worker’s type, a component that
+depends on the firm’s type, and a persistent orthogonal error term. Second, conventional
+fixed effects estimators give biased estimates of both the ITT and ATT. Third, these biases
+may be difficult to detect using conventional tests (Card, Heining and Kline, 2013). Finally,
+we explore other implications of this model, such as the implications for the frequency of
+wage cuts from job-to-job moves, which is nearly 50 percent in our model.
+The match-specific component of wages is central to our analysis and represents a sig-
+nificant departure from previous research. While earlier studies acknowledged significant
+2
+
+===== PDF PAGE 4 =====
+
+residual wage variation, they typically treated these residuals as measurement error or time-
+varyingworkerheterogeneitythatdoesnotaffectjobchoice. Inourframeworktheseresiduals
+are evidence of the match-specific shocks that drive selective hiring and separations.
+Our paper contributes to several strands of literature. First, we build on empirical work
+using matched employer-employee data to study wage determination and sorting (Abowd,
+Kramarz and Margolis, 1999; Andrews, Gill, Schank and Upward, 2008; Card, Heining and
+Kline, 2013; Card, Cardoso and Kline, 2016; Alvarez, Benguria, Engbom and Moser, 2018;
+Song, Price, Guvenen, Bloom and Von Wachter, 2019; Bonhomme, Lamadon and Manresa,
+2019; Kline, Saggio and Sølvsten, 2020; Bonhomme, Holzheu, Lamadon, Manresa, Mogstad
+and Setzler, 2023). We provide a simple and novel theoretical mechanism that can explain
+the empirical regularities documented in these papers.
+Second, Card, Cardoso, HeiningandKline(2018), Lamadon, MogstadandSetzler(2022),
+and Lamadon, Lise, Meghir and Robin (2024) develop theoretical models with idiosyncratic
+and systematic differences in amenity valuations that are consistent with the same set of
+empirical findings. These papers use a static discrete choice framework while we use a
+dynamic search model. We thus address a key previously unresolved question raised by
+Card, Cardoso, Heining and Kline (2018, p. 18): “to what extent do insights from simple
+static wage-setting models of workplace differentiation carry over to dynamic labor market
+settings with search or mobility frictions?” A more fundamental difference is that the models
+in these earlier papers satisfy the exogenous mobility assumption, so selection does not affect
+measured wages. Future research should investigate the data needed to separately identify
+the mechanisms proposed by these distinct approaches.
+Third, we build on a large literature that studies how selection affects measured wages,
+dating back to early econometric analyses of the Roy (1951) model (Borjas, 1987; Heckman
+and Honore, 1990). Noe (2020) offers a recent theoretical analysis of this question in an
+environment where a worker is choosing between a finite number of alternative jobs at a
+point in time. The previous research does not study how selection shapes regressions of
+wages on worker and firm fixed effects, nor does it look at the connection between selection
+and assortative matching.
+Fourth, we contribute to the theoretical literature on conditions for assortative match-
+ing between heterogeneous workers and firms in labor markets with random search (Shimer
+and Smith, 2000; Hagedorn, Law and Manovskii, 2017; Lopes de Melo, 2018; Bagger and
+Lentz, 2019). Our model extends this literature by incorporating match-specific shocks, as in
+Gouss´e, Jacquemet and Robin (2017)’s model of the marriage market, and highlighting the
+role of selection in job acceptance decisions. The introduction of time-varying match-specific
+shocks into a framework with two-sided heterogeneity is novel. Our characterization of con-
+3
+
+===== PDF PAGE 5 =====
+
+ditions for assortative matching recalls similar conditions in competitive search models (Shi,
+2001, 2005; Shimer, 2005; Eeckhout and Kircher, 2010) and models with non-transferable
+utility (Smith, 2006; Bonneton and Sandmann, 2023). The details of the mechanisms are
+quite different, and in particular selection does not play a role in those papers. Those earlier
+papers also do not try to fit the empirical findings on how wages depend on worker and firm
+productivity. Our model bridges this gap by providing a framework that not only explains
+sorting patterns but also shows how the same selection force that generates sorting drives
+the wage patterns in administrative data sets.
+The rest of the paper is structured as follows. Section 2 develops the simplest version of
+our model. In Section 3, we derive conditions for the wage to be an additively separable and
+increasing function of worker productivity, firm productivity, and a conditionally mean zero
+error term. We also show that conventional estimates of wage premia are informative about
+the ATT but not the ITT in this environment. Section 4 derives conditions for assortative
+matchingofhigh-productivityworkerstohigh-productivityjobs. Section5extendsthemodel
+to allow for endogenous separations by making the match-specific shock vary over time. We
+prove that the results on assortative matching and additively separable wages carry over to
+this environment. We also prove that conventional estimators of wage premium yield biased
+estimates of the ATT when separations are endogenous, and that conventional tests of the
+exogenous mobility assumption may lack power. Finally, in Section 6 we extend our model
+to incorporate on-the-job search and show that our main analytical results are reflected in
+numerical results in a quantitative version of the model. Section 7 concludes by discussing
+how our results affect the economic interpretation of patterns in administrative wage data,
+in particular for our understanding of why wage inequality grew in recent decades.
+2 Model
+We formulate a search model with two-sided heterogeneity (Shimer and Smith, 2000) and
+match-specificheterogeneity(Gouss´e, JacquemetandRobin,2017). Themodelisformulated
+incontinuoustimeandwefocusonsteadystatesandsodroptimeargumentsinwhatfollows.
+2.1 Assumptions
+There is measure M of risk-neutral workers and measure N of risk-neutral firms. Everyone
+discounts the future at rate r > 0. There are X worker types indexed by x = 1,...,X. The
+population measure of type-x workers is m > 0, with
+(cid:80)X
+m = M. There are Y firm
+x x=1 x
+types indexed by y = 1,...,Y, with population measure n > 0 and
+(cid:80)Y
+n = N. Workers
+y y=1 y
+4
+
+===== PDF PAGE 6 =====
+
+can be either unemployed or matched to one firm; likewise, firms can be either vacant or
+matched to one worker. Thus, in this model, a firm and a job are identical.
+Search is random and for now only unemployed workers and vacant jobs can search. Let
+u bethepopulationmeasureofunemployedtype-xworkers, sothat ux istheunemployment
+x mx
+rate for type x. Similarly, let v be the population measure of type-y vacancies, with vy the
+y ny
+vacancyrateofy. Allunemployedworkerscontactvacanttype-y firmsaccordingtoaPoisson
+process with arrival rate ρv for y = 1,...,Y, where ρ > 0. Likewise, all vacant firms contact
+y
+unemployed type-x workers at rate ρu for x = 1,...,X.2
+x
+When a worker and firm meet, they learn the value of a match-specific productivity
+shock z drawn from a distribution function with density g(z) and cumulative distribution
+function G(z). The shock is independent across all worker and firm pairs. By definition, the
+distribution function G : R R is non-decreasing. We assume the mean productivity
++ +
+→
+(cid:82)
+draw, z
+∗ ≡ 0
+∞zg(z)dz, is finite, which is necessary for existence of an equilibrium.
+Afteranunemployedtype-xworkermeetsavacanttype-y firmanddrawsamatch-specific
+productivity shock z, they decide whether to match. If they match, they stop searching and
+produce flow output zf . A matched worker and firm split the surplus according to Nash
+x,y
+bargaining, with worker’s bargaining power equal to γ (0,1). We assume f > 0 for all
+x,y
+∈
+x and y. Matches end at rate δ > 0, leaving the worker unemployed and the job vacant.
+2.2 Value Functions
+In the remainder of this section, we develop the formal model. We emphasize in advance
+that our analytical results in Sections 3 and 4 rely on only three expressions: the selection
+equation (6), the structural wage equation (9), and the steady state equation (13).
+We start by formulating the value functions of workers and firms. For a type-x unem-
+ployed worker, let the expected present value of income be Vu:
+x
+Y (cid:90)
+rVu = ρ (cid:88) v ∞ max (cid:8) Ve (z,W (z)) Vu,0 (cid:9) g(z)dz. (1)
+x y x,y x,y − x
+y=1 0
+At rate ρv , the worker meets a vacant type y firm. They then draw match-specific produc-
+y
+tivity z from a distribution with density g(z). After that, they decide whether to match. If
+they do, the worker’s value jumps to Ve (z,W (z)), the expected present value of income
+x,y x,y
+2This is a quadratic matching technology (Diamond and Maskin, 1979), so the total number of matches
+is a homogeneous of degree two in unemployment u X and vacancies v Y . It is straightforward to
+{ x }x=1 { y }y=1
+prove Propositions 3–9 with a linear matching technology (homogeneous of degree one), at the cost only of
+additionalnotationalcomplexity. Similarly, our numericalresultscarryover exactlytoanenvironmentwith
+a linear matching technology.
+5
+
+===== PDF PAGE 7 =====
+
+for a type x worker matched to a type y firm in a match with productivity z and earning
+the equilibrium wage W (z). Nash bargaining implies that both parties agree on whether
+x,y
+to match, so the worker matches whenever the value of being in the match, Ve (z,W (z)),
+x,y x,y
+exceeds the value of being unmatched, Vu.
+x
+Once the worker is in the match, we have the corresponding Bellman equation
+rVe (z,w) = w+δ(Vu Ve (z,w)). (2)
+x,y x − x,y
+This equation describes a type x worker at a type y firm with match-specific shock z earning
+an arbitrary wage w. The worker earns the wage until the match ends exogenously. This
+implies that the worker will accept the match (Ve (z,w) Vu) if and only if w rVu w¯ ,
+x,y ≥ x ≥ x ≡ x
+the worker’s reservation wage.
+The Bellman equations for firms are symmetric:
+X (cid:90)
+rVv = ρ (cid:88) ∞ u max (cid:8) Vf (z,W (z)) Vv,0 (cid:9) g(z)dz (3)
+y x y,x x,y − y
+x=1 0
+rVf (z,w) = zf w+δ(Vv Vf (z,w)). (4)
+y,x x,y − y − y,x
+Notably, a type y firm earns flow profit zf w when employing a type x worker in a match
+x,y
+−
+with productivity z and paying a wage w. The firm will accept the match (Vf (z,w) Vv)
+y,x ≥ y
+if and only if zf w rVv π¯ , the firm’s reservation profit.
+x,y − ≥ y ≡ y
+We define the match surplus as
+max zf w¯ π¯ ,0
+Vs (z) Ve (z,w)+Vf (z,w) Vu Vv = { x,y − x − y }, (5)
+x,y ≡ x,y y,x − x − y r+δ
+where the second equation follows from equations (2) and (4) and the definitions of the
+reservation wage w¯ and reservation profit π¯ . The match surplus is strictly positive, mean-
+x y
+ing there exists a wage w which is acceptable both to the worker (Ve (z,w) Vu) and
+x,y ≥ x
+firm (Vf (z,w) Vv), if and only if the match-specific productivity shock z exceeds the
+y,x ≥ y
+reservation level z¯ , where
+x,y
+w¯ +π¯
+x y
+z¯ . (6)
+x,y
+≡ f
+x,y
+This selection equation is central to our analysis. As we discuss in Sections 3 and 4, it shapes
+which wages we observe in the data and how often we observe different types of matches. For
+now, an implication of the reservation productivity level is that we can rewrite the match
+6
+
+===== PDF PAGE 8 =====
+
+surplus in equation (5) as
+(cid:26) (cid:27)
+z w¯ +π¯
+Vs (z) = max 1,0 x y . (7)
+x,y z¯ − r+δ
+x,y
+Finally, when the match surplus is positive, we use Nash bargaining to pin down the equi-
+librium wage W (z):
+x,y
+W (z) = argmax(Ve (z,w) Vu)γ(Vf (z,w) Vv)1 γ. (8)
+x,y w x,y − x y,x − y −
+Using equations (2) and (4), as well as the definitions of the reservation wage and reservation
+profit, it is straightforward to show that this implies the structural wage equation
+W (z) = w¯ +γ(zf w¯ π¯ ) (9)
+x,y x x,y x y
+− −
+for z z¯ . Putting this together with the fact that a worker and firm match whenever
+x,y
+≥
+z z¯ , we get that type x workers match with type y firms at rate ρu v (1 G(z¯ )), with
+x,y x y x,y
+≥ −
+matches formed whenever W (z) w¯ , a type-x worker’s reservation wage. Symmetrically,
+x,y x
+≥
+a type-y firm agrees to match with a type-x worker whenever zf W (z) π¯ , a type-y
+x,y x,y y
+− ≥
+firm’s reservation profit.
+Wecannowcombinetheseequationstogetasimplerexpressionforaworker’sreservation
+wageandafirm’sreservationprofit. Eliminatethewagefromequation(2)usingequation(9)
+and the definition of reservation productivity in equation (6) to get:
+γf (z z¯ )
+Ve (z,W (z)) Vu = x,y − x,y . (10)
+x,y x,y − x r+δ
+Substitute that into equation (1) to get:
+Y (cid:90)
+γρ (cid:88) ∞
+w¯ = v f (z z¯ )g(z)dz. (11)
+x y x,y x,y
+r+δ −
+y=1 z¯x,y
+Analogous steps lead to the equation for a firm’s reservation profit:
+X (cid:90)
+(1 γ)ρ (cid:88) ∞
+π¯ = − u f (z z¯ )g(z)dz. (12)
+y x x,y x,y
+r+δ −
+x=1 z¯x,y
+Using these equations, we prove a useful preliminary result, that the reservation wage and
+reservation profit are increasing if the production function is increasing:
+Lemma 1 Assumef isstrictlyincreasinginxandy. Inanysolutiontoequations (6),(11),
+x,y
+7
+
+===== PDF PAGE 9 =====
+
+and (12), the reservation wage w¯ and reservation profit π¯ are strictly increasing.
+x y
+The proof is in Appendix A.1.
+2.3 State Variables and Equilibrium
+To close the model, we need to find the steady state values of u and v . To do this, we
+x y
+first define the steady state measure of (x,y) matches, ϕ ¯ . This satisfies the steady state
+x,y
+equation
+¯
+δϕ = ρu v (1 G(z¯ )). (13)
+x,y x y x,y
+−
+The left hand side is the rate that these matches end, while the right hand side is the rate
+that unemployed type-x workers (measure u ) meet vacant type-y jobs (ρv ) in a match with
+x y
+an acceptable z (share 1 G(z¯ ) of such meetings). We can also find the distribution of z
+x,y
+−
+in (x,y) matches. This is simply the distribution of idiosyncratic shocks truncated below at
+the acceptance threshold:
+G(z) G(z¯ )
+x,y
+Φ (z) − . (14)
+x,y
+≡ 1 G(z¯ )
+x,y
+−
+We introduce this expression here for comparison with the model of endogenous separations
+that we use later in the paper.
+By adding the measures of matches, we can then recover the unemployment and vacancy
+measures:
+Y
+(cid:88)
+¯
+u = m ϕ (15)
+x x x,y
+−
+y=1
+X
+(cid:88)
+¯
+v = n ϕ . (16)
+y y x,y
+−
+x=1
+¯
+An equilibrium is given by (w¯,π¯,z¯,ϕ,u,v) satisfying equations (6), (11), (12), (13), (15),
+and (16). We can prove
+Proposition 1 An equilibrium exists. In any equilibrium, the reservation wage w¯ and
+x
+reservation profit π¯ are strictly positive for all x and y.
+y
+The proof is in Appendix A.1.
+We note that a model like this may have multiple equilibria (Burdett and Coles, 1997).
+All of our claims apply to any steady state equilibrium.
+8
+
+===== PDF PAGE 10 =====
+
+2.4 Treatment Effects
+In a random search environment, the jobs that a worker takes depend in part the vagaries
+of the matching process. It is therefore natural to wonder how, by changing which firms
+a worker meets, one can improve the worker’s well-being. Indeed, some economists have
+experimented with information treatments that encourage workers to apply for different
+types of jobs (Belot, Kircher and Muller, 2019). Others have imagined place-based policies
+that incentivize firms to relocate in order to facilitate certain types of meetings (Bilal, 2023;
+Hong, 2024). Here we use our model to understand which meetings are most valuable to a
+given type of worker.
+To be concrete, we think of the following experiment: we create a meeting between an
+unemployed type-x worker and a vacant type-y job, and ask how this meeting affects the
+expected present value of the worker’s income. When the meeting results in a match, Nash
+bargaining implies that the expected present value of the worker’s income increases by a
+fraction γ of the match surplus:
+Ve (z,W (z)) Vu = γVs (z).
+x,y x,y − x x,y
+Thisdependsontheworker’stypex, thefirm’stypey, andtherealizationoftheidiosyncratic
+shock, z. If Vs (z) > 0, the match is created, while Vs (z) = 0 when the match is rejected.
+x,y x,y
+Thus the increase in the expected present value of the worker’s income, the causal effect of
+this experiment, is equal to the worker’s share of the match surplus.
+Now imagine we know x and y but do not know z, and so calculate the increase in the
+expected present value of the worker’s income conditional only on x and y. According to
+our model, this is
+(cid:90)
+ITT (y) γ ∞ Vs (z)g(z)dz, (17)
+x ≡ x,y
+0
+where ITT stands for the intent-to-treat. Since Vs (z) = 0 for z < z¯ , this is equivalent to
+x,y x,y
+(cid:90)
+ITT (y) = γ ∞ Vs (z)g(z)dz. (18)
+x x,y
+z¯x,y
+If we knew the parameters of our model, we could calculate this using the structure of the
+equilibrium. In Section 3.2, we analyze whether we can recover this from administrative
+wage data.
+A related concept is the increase in the expected present value of the worker’s income
+conditional on x, y, and on the fact that the worker and firm match when they meet, i.e.
+9
+
+===== PDF PAGE 11 =====
+
+z > z¯ :
+x,y
+(cid:82)
+∞ Vs (z)g(z)dz
+ATT (y) γ
+z¯x,y x,y
+. (19)
+x
+≡ 1 G(z¯ )
+x,y
+−
+We call this the average treatment on the treated (ATT) because it represents the causal
+effect of the meeting on earnings conditional on the meeting actually resulting in the worker
+and firm agreeing to match. It differs from the ITT because the workers who are treated
+(take the job) are selected based on the gain from taking the job.
+In our view, the ITT is the parameter of interest. For example, the goal of the Belot,
+Kircher and Muller (2019) information treatment and of the Bilal (2023) and Hong (2024)
+place-based policies is to raise workers’ value without knowing whether new meetings will
+result in matches. While the ATT is not the parameter of interest, we introduce it here
+because we show in Section 3.2 that the firm component of wages is closely related to the
+ATT, but not to the ITT.
+In order to recover the ITT from the ATT, we could use the steady state condition (13)
+to rewrite equations (18) and (19) as
+¯
+δϕ
+x,y
+ITT (y) = ATT (y). (20)
+x x
+ρu v
+x y
+¯
+If we knew x and y for all workers and firms, as well as the ATT, we could calculate ϕ ,
+x,y
+u and v for all x and y, and thus recover the ITT using the structure of our model.
+x y
+We note that this approach is reliant on the untestable assumption that all workers are
+as likely to meet all firms, i.e. search is completely random. Imagine a slight generalization
+of our model which allows that the rate an unemployed type x worker meets a vacant type
+y job is ρ u v . As is well-known (Flinn and Heckman, 1982), we cannot use adminis-
+x,y x y
+trative wage data to identify whether type x workers match infrequently with type y firms
+because they don’t often meet them (low ρ ) or because those meetings are unlikely to
+x,y
+have an idiosyncratic shock that exceeds the productivity threshold z¯ (low 1 G(z¯ )).
+x,y x,y
+−
+Equation (20) is thus only useful for recovering the ITT conditional on the random search
+assumption.
+3 Wages
+This section characterizes the wage that worker i of type x earns from firm j of type y when
+i j
+she works there, ω . We prove that when z has a Pareto distribution, ω is an additively
+i,j i,j
+separable function of a component that depends on the worker’s type, a component that
+depends on the firm type, and a heteroskedastic error that has a mean zero for all workers
+10
+
+===== PDF PAGE 12 =====
+
+and firms.3 The error term reflects the distribution of the match-specific shock, which we
+treat as unobserved by the economist throughout this section. We then show that the
+firm component in the wage is closely related to the ATT from the experiment outlined in
+Section 2.4.
+We next consider the output of a standard two-way fixed effects regression (Abowd,
+Kramarz and Margolis, 1999), proving that those regressions provide unbiased estimates of
+the worker and firm components up to an unidentified additive constant. As a result, the
+differencebetweentheestimatesoftwofirms’componentsgiveusanunbiasedestimateofthe
+difference between the ATTs. However, the two-way fixed effects estimates do not directly
+tell us the ITT, or the difference between two ITTs. Finally, we discuss what changes if we
+regress log wages, rather than the level of wages, on worker and firm fixed effects.
+3.1 Additive Separability of Wages
+This section proves one of our main results: when the idiosyncratic shock z has a Pareto
+distribution, the wage of worker i at firm j, ω , can be expressed as the sum of three terms:
+i,j
+a component α that depends on the worker’s type x , a component ψ that depends on
+x∗
+i
+i y∗
+j
+the firm’s type y , and a conditional mean-zero heteroskedastic error term ϵ .
+j i,j
+We assume throughout that the shock distribution is Pareto, so G(z) = 1 (z/z ) θ,
+0 −
+−
+where the shape parameter θ exceeds 1 to ensure a finite mean. We look at cases where there
+is an interior solution for the threshold z¯ for all pairs (x,y), 0 < z < z min z¯ , as
+x,y 0 x,y x,y
+¯ ≡
+will be the case if ρ is sufficiently large.4 This ensures that for all types (x,y), a match is
+rejected if z is sufficiently small and accepted if z is sufficiently large.
+Proposition 2 Assume z has a Pareto distribution with scale parameter z , 0 < z <
+0 0
+min z¯ , and shape parameter θ > 1. Let ω denote the wage in a match between worker
+x,y x,y i,j
+i of type x and firm j of type y , i.e. conditional on z z¯ . Then
+i j
+≥
+xi,yj
+ω = α +ψ +ϵ , (21)
+i,j x∗
+i
+y∗
+j
+i,j
+3In Appendix E, we examine the case where z has an exponential distribution. Appendix E.3 considers
+the extent to which our results are robust with other distributions.
+4Parameterize the contact rate as ρ = ρ¯z−θ, so the rate that an unemployed worker contacts a vacant
+0
+type-y firm and has productivity at least z is ρ¯z−θv for z >z , independent of z . For given ρ¯, a change in
+y 0 0
+z does not affect the equilibrium allocation as long as z z. Thus focusing on small values of z does not
+0 0 0
+≤¯
+changethearrivalrateof“good”matches. Wecouldsidestepanydiscussionofz byassumingthatmeetings
+0
+with match quality at least equal to z occur at rate ρ¯z−θ times the relevant vacancy or unemployment rate
+for any z, as in Oberfield (2018) and Buera and Oberfield (2020).
+11
+
+===== PDF PAGE 13 =====
+
+where
+(cid:18) (cid:19)
+γ γ
+α 1+ w¯ , ψ π¯ , ϵ γ(w¯ +π¯ )ν , (22)
+x∗
+≡ θ 1
+x y∗
+≡ θ 1
+y i,j
+≡
+xi yj i,j
+− −
+and ν is an independently and identically distributed random variable with mean zero and
+i,j
+cumulative distribution
+(cid:18) (cid:19) θ
+θ − 1
+Φ (ν) 1 ν + for all ν . (23)
+ν
+≡ − θ 1 ≥ −θ 1
+− −
+The proof is in Appendix A.2.
+There are several pieces to unpack from Proposition 2. First, the distribution of wages in
+a match between worker i and firm j depends only on four numbers: the worker’s reservation
+wage w¯ , the firm’s reservation profit π¯ , the worker’s bargaining power γ, and the Pareto
+x y
+shape parameter θ. The production technology f does not explicitly enter this expression.
+x,y
+This tells us that the wage distribution is not useful for learning about the production
+technology f, while simultaneously yielding strong and testable predictions for how wages
+behave across different types of matches.
+Second, workers who have a higher reservation wage earn more on average at any type
+of employer, and similarly firms that have a higher reservation profit pay more on average
+to any type of worker. When the production function is strictly increasing, this implies that
+more productive firms pay higher wages on average to all worker types, in line with a variety
+of empirical evidence, e.g. Alvarez, Benguria, Engbom and Moser (2018). But to understand
+the power of Proposition 2, it is useful to consider a non-monotonic production function
+f. That is, suppose that there are worker types x and x and firm types y and y such
+1 2 1 2
+that f > f and f < f . One might conjecture that with Nash bargaining, this
+x1,y1 x1,y2 x2,y1 x2,y2
+non-monotonicity would imply a similar ordering of average wages. Proposition 2 establishes
+that this cannot happen: π¯ > π¯ implies the expected wage of a type x worker is higher
+y2 y1
+at a type y firm than at a type y firm for all x.
+2 1
+Proposition 2 also implies that all workers have the same ranking of average wages across
+firm types y, determined by the reservation profit π¯ . This result stands in contrast to the
+y
+findings in Shimer and Smith (2000), a similar model except that the distribution of the
+idiosyncratic shock, G, is degenerate. In that case, an unproductive worker’s wage may be
+maximized at low-type firm, while a more productive worker’s wage is maximized at a high-
+type firm. See Eeckhout and Kircher (2011) and Lopes de Melo (2018) for an elaboration of
+this observation. The common ranking of average wages that our model predicts is in line
+with a growing body of empirical evidence (Bonhomme, Lamadon and Manresa, 2019).
+Finally, Proposition 2 provides an exact additive separability result, which rationalizes
+12
+
+===== PDF PAGE 14 =====
+
+regressing wages on worker and firm fixed effects, as well as a heteroskedastic error term.
+This is in line with a large body of empirical research, starting with Abowd, Kramarz and
+Margolis (1999), though typically the dependent variable in these regressions is the log wage,
+not the level of the wage. We discuss the relationship between regressions in levels and logs
+in Section 3.4 below.
+3.2 The Firm Component and Treatment Effects
+In this section, we show the close link between the firm component of wages, ψ defined in
+y∗
+equation (22), and the ATT, defined in equation (19). To begin, we rewrite the ATT using
+the Pareto functional form for the match-specific shock distribution, as well as the definition
+of the surplus function in equation (7):
+γ(w¯ +π¯ )
+x y
+ATT (y) = . (24)
+x
+(θ 1)(r+δ)
+−
+Then replace the reservation values w¯ and π¯ with the worker and firm components α and
+x y x∗
+ψ using their definitions in equation (22):
+y∗
+γ α +ψ
+γ+θ 1 x∗ y∗
+ATT x (y) = − . (25)
+r+δ
+Thus the average treatment effect depends on the worker component of wages α , the firm
+x∗
+component ψ , the discount rate r, the separation rate δ, worker’s bargaining power γ, and
+y∗
+the Pareto shape parameter θ.
+Next,lookatthedifferenceinATTsbetweentwojobsforasingleworker,∆ATT (y ,y )
+x 1 2
+≡
+ATT (y ) ATT (y ):
+x 1 x 2
+−
+ψ ψ
+∆ATT (y ,y ) =
+y∗
+1 −
+y∗
+2. (26)
+x 1 2
+r+δ
+Thedifferential average treatment on the treated isequaltothepresentvalueofthedifference
+between the firm wage components, discounting both because of impatience r and because
+of match impermanence δ. Importantly, this is the same for all workers.
+What about the intent to treat? From equations (18) and (19),
+(cid:18) (cid:19) θ
+z¯ x,y −
+ITT (y) = (1 G(z¯ ))ATT (y) = ATT (y), (27)
+x x.y x x
+− z
+0
+where the second equation uses the Pareto functional form. The difference between the
+ITT and ATT reflects selection-on-gains: when we observe a worker matched to a job, the
+realization of the idiosyncratic shock must have been large enough to ensure the meeting led
+13
+
+===== PDF PAGE 15 =====
+
+to a match. The difficulty in measuring the ITT is that the likelihood that a meeting results
+in a match varies across (x,y) pairs. Moreover, the worker and firm wage components do not
+capture this likelihood. To be clear, one could structurally estimate the model and recover
+the ITT; our point is merely that the worker and firm components of wages alone reveal the
+ATT, not the ITT. To obtain the ITT, we would also need to know how frequently a meeting
+results in a match.
+There are two special cases where selection-on-gains is not a big problem, so the ATT
+is informative about the ITT. First, when match-specific productivity is degenerate, z = z
+∗
+for all matches, as in Shimer and Smith (2000), then any (x,y) pair either always matches
+or never matches. For pairs that always match, the ITT and ATT are the same, while for
+pairs that never match, we cannot hope to measure either the ITT or ATT. Unfortunately,
+a degenerate match-specific productivity shock is not empirically plausible. Such a model
+cannot explain why there is a wage residual, predicts wages are generally hump-shaped in
+firm type (Eeckhout and Kircher, 2011; Lopes de Melo, 2018), and predicts that certain
+types of matches will never be formed.
+Second, if all firms had the same acceptance threshold for a given worker, z¯ = z¯ for all
+x,y x
+y, selection would truncate the distribution of match-specific shocks identically. This would
+imply that the differential intent-to-treat, ∆ITT (y ,y ) ITT (y ) ITT (y ), is equal to
+x 1 2 x 1 x 2
+≡ −
+the differential ATT times the probability a meeting turns into a match:
+(cid:18) (cid:19) θ
+z¯ x −
+∆ITT (y ,y ) = ∆ATT (y ,y ) . (28)
+x 1 2 x 1 2
+z
+0
+Equation (26) showed the close link between the differential ATT and the firm component
+of wages. Moreover, under the random search assumption, we can measure the job accep-
+tance probability using worker flow data. This suggests an empirical approach to estimating
+the differential ITT using the firm component of wages and worker flow data under the
+assumption that z¯ = z¯ for all y.
+x,y x
+In our model, however, z¯ varies systematically with both worker and firm types. We
+x,y
+argue in Section 4 that this systematic selection is empirically reasonable and evident in the
+data: it generates realistic assortative matching between workers and firms. High produc-
+tivity workers are more likely to match with high productivity firms than low productivity
+workers are, even though low productivity workers gain proportionately more from such
+matches when they occur. This assortative matching pattern arises because selection differs
+systematically across worker-firm pairs. Observed sorting patterns thus provide independent
+empirical validation of our model’s key mechanism, systematic selection, which simultane-
+ously explains both assortative matching and the shape of average log wages.
+14
+
+===== PDF PAGE 16 =====
+
+3.3 Estimation
+In this section we use our model to explore whether “conventionally estimated firm-specific
+pay premiums predict the wage changes associated with exogenously induced job accessions
+and separations” (Card, Cardoso, Heining and Kline, 2018, p. S16).5 We have already
+answered part of that question: equation (26) shows that the difference between the firm
+component of wages for the same worker at two different types of firms, ψ ψ , is equal
+y∗
+1 −
+y∗
+2
+to the differential ATT at those two firms, after accounting for discounting and separations.
+Here we show that conventionally estimated firm-specific pay premiums are unbiased, and
+in some cases consistent, estimators of the difference in the firm component of wages. Hence
+firm-specific pay premium do predict the wage change from accessions conditional on the
+worker and firm agreeing to match. But since the ITT differs systematically from the ATT,
+such pay premiums do not predict the expected value of a meeting between a worker and
+firm.
+Toestablishtheseclaimsformally, weimaginealargeadministrativepaneldatasetwhich
+records the wage of many workers over the course of two or more years. In particular, for
+each worker i and year t, the data set records a single wage w and a single employer
+i,t i,t
+J
+for worker i. The underlying data generating process comes from our model with a Pareto
+distribution of the idiosyncratic shock.6 In this section we ask what standard estimators
+would yield in this environment.
+First, consider an omniscient econometrician who knows the types of all workers and
+firms. He uses OLS to estimate
+¯
+w = α¯ +ψ +e . (29)
+i,t xi yJi,t i,t
+Proposition 2 tells us that this equation is correctly specified when the dependent variable
+is the wage level. Hence it yields unbiased estimates of the worker and firm components of
+wages, up to an additive constant: E (αˆ¯ ) = α κ and E (ψ ˆ¯ ) = ψ +κ, where α and ψ are
+x x∗
+−
+y y∗ x∗ y∗
+defined in equation (29) and κ can be any constant. As is well-known, the constant arises
+because the econometrician can lower the estimates of all the worker effects by κ and raise
+5Card, Heining and Kline (2013), Abowd, McKinney and Schmutte (2019), and others call the assump-
+tionsneededforanaffirmativeanswertothisquestion“exogenousmobility.” Section3inKline(2024)care-
+fully lays out these conditions. Our model violates strict exogeneity because worker i’s error term in period
+t depends on the firm they work at. For example, if worker i would have been exogenously induced to work
+at a firm j with idiosyncratic shock z <z¯ in period t, the error term would have been negative.
+xi,yj
+6In Appendix C.3, we describe how we generate data sets with a finite number of workers and firms
+from our model structure. Our approach allows firms to have multiple workers, with systematic differences
+inemploymentlevelsacrossemployers. Hereweassumethatallworkersandfirmsbelongtoaconnectedset
+and, when needed, to a leave-one-out connected set (Kline, Saggio and Sølvsten, 2020).
+15
+
+===== PDF PAGE 17 =====
+
+the estimates of all the firm effects by κ without affecting the model fit. For many purposes,
+this indeterminacy is irrelevant; for example, it does not effect estimates of the difference
+¯ ¯
+between two firm components ψ ψ , nor does it affect estimates of the variance of the
+yj1
+−
+yj2
+firm component σ2 .
+ψ∗
+We next turn to the problem faced by a real-world econometrician who cannot observe
+workers’ or firms’ types, but insteadobserves their identifiers. The real-world econometrician
+thus estimates a fixed effect for each worker and each firm, the standard Abowd, Kramarz
+and Margolis (1999) regression in levels:
+w = α +ψ +ε . (30)
+i,t i i,t i,t
+J
+Again, it is well-known that OLS in this setup gives unbiased estimates of the worker and
+firm components of wages, up to the same indeterminate additive constant, E (αˆ ) = α κ
+i x∗
+i −
+and E (ψ ˆ ) = ψ +κ.
+j y∗
+j
+The important difference between the real-world and omniscient econometrician arises
+when we study consistency of these estimators, or alternatively estimates of the variance of
+the worker and firm components of wages. Consider a large data set with many workers
+and firms but a fixed number of worker and firm types. For the omniscient econometrician,
+the number of parameters is equal to the number of types, and so is fixed as the number
+of workers and firms grows. This means that under standard regularity conditions, αˆ¯ and
+x
+ˆ¯
+ψ are not only unbiased estimates of α and ψ (up to the additive constant), but also
+y x∗ y∗
+consistent estimates of them.
+In contrast, for the real-world econometrician, the number of parameters is equal to the
+number of workers plus firms, and so grows with the size of the data set. This means that the
+ˆ
+asymptotic variances of the estimates αˆ and ψ are positive. As a result, the sample variance
+i j
+of ψ ˆ across firms is equal to the variance of the firm component, σ2 , plus the variance of
+j ψ∗
+ˆ
+the error in the parameter estimate ψ ψ . This leads a na¨ıve real-world econometrician
+j
+−
+y∗
+j
+to overestimate the variance of the firm component of wages σ2 .
+ψ∗
+Econometricians have at least two solutions to this problem. The first, proposed by
+Bonhomme,LamadonandManresa(2019),istouseak-meansalgorithmtoclassifyfirmsinto
+types in an initial step.7 Proposition B1 in their paper shows that under certain conditions,
+this approach correctly classifies firms up to an arbitrary labeling of types. In this case, we
+can estimate equation (29) in first differences, using only those workers who switch employer
+7A related possibility is that the real-world econometrician observes y , say the firm’s industry, but not
+j
+the worker’s type x . This is equivalent to the approach in the inter-industry wage differentials literature
+i
+(Gibbons and Katz, 1992).
+16
+
+===== PDF PAGE 18 =====
+
+type between years t and t+1:
+¯ ¯
+w w = ψ ψ +ε ε . (31)
+i,t+1
+−
+i,t yJi,t+1
+−
+yJi,t i,t+1
+−
+i,t
+This drops all the worker fixed effects and yields unbiased estimates of the firm component of
+wages up to the same indeterminate constant, E (ψ ˆ¯ ) = ψ +κ. In particular, this procedure
+y y∗
+estimates the difference in the firm components of wages consistently when the number
+of firm types is fixed but the number of workers who switch firms types goes to infinity:
+ˆ¯ ˆ¯
+ψ ψ ψ ψ .
+y1
+−
+y2
+→
+y∗
+1 −
+y∗
+2
+Second, Kline, Saggio and Sølvsten (2020) propose a bias reduction method which yields
+consistent estimates of the variance of the firm component of wages, σˆ2 σ2 .8 Like
+ψ → ψ∗
+Bonhomme, Lamadon and Manresa (2019), this approach uses a short panel with only two
+years of data for each worker.
+In summary, if this simple model is the data generating process, it may be possible to
+estimate the difference in the firm component of wages, or at least the variance of the firm
+component, consistently. This means that if we have consistent estimates of the discount
+and separation rates, we can recover the differential ATT, or at least the variance in the
+ATT across firms, consistently.
+On the other hand, the wage regressions do not directly tell us the ITT since they do
+not tell us the likelihood that a meeting results in a match,
+(cid:0)z¯x,y (cid:1)
+−
+θ
+. Of course, one may be
+z0
+able to recover this probability by structurally estimating the model, but we cannot recover
+the ITT (or the differential ITT or the variance of the ITT) by examining “conventionally
+estimated firm-specific pay premiums” alone.
+3.4 Log Wages
+To this point, we have discussed the behavior of wages. Since Abowd, Kramarz and Mar-
+golis (1999), authors have regressed log wages, not the level of wages, on worker and firm
+fixed effects. There are several reasons why we present our results in terms of the level of
+wages. Most importantly, our model tells us that the wages are additively separable in levels
+(Proposition 2), not in logs, and so we should run the regression that way. Additionally, in
+Appendix D, we use Veneto data to run the two-way fixed effects regression in both levels
+and logs. We show that the results are extremely similar. There are no policy conclusions
+8For much of their analysis, Kline, Saggio and Sølvsten (2020) assume that the residual in the wage
+regression (30) is independently and identically distributed over time for a given worker. This is assumption
+is violated in our model. However, their estimates of the variance of the firm component of wages and
+the covariance between the worker and firm components are unbiased even when the residual is serially
+correlated; see Remark 4 in Kline, Saggio and Sølvsten (2020), p. 1870.
+17
+
+===== PDF PAGE 19 =====
+
+onewoulddrawfromonespecificationbutrejectfromtheother. Andfinally, whilethemodel
+is analytically tractable in levels because it is additively separable, we show in Section 6 that
+our results are quantitatively similar in levels and logs.
+Here we show that monotonicity of the wage in worker and firm type, if not additive
+separability, carry over to the log specification. Define the average log wage in an (x,y)
+match as
+(cid:82)
+w z¯ ∞ x,y logW x,y (z)g(z)dz .
+x∗,y
+≡ 1 G(z¯ )
+xy
+−
+The average log wage is of considerable empirical interest. Bonhomme, Lamadon and Man-
+resa (2019) prove that under certain conditions, the average log wage is identified in admin-
+istrative wage data. They also estimate it using Swedish data and find that the average log
+wage is increasing in worker and firm type and perhaps slightly submodular, meaning that
+the lowest type workers get a slightly larger increase in their log wage by moving to more
+productive jobs. Here we show how it behaves in our model with a Pareto distribution of
+shocks:
+Proposition 3 Assume z has a Pareto distribution with scale parameter z , 0 < z <
+0 0
+min z¯ , and shape parameter θ > 1. Then
+x,y x,y
+(cid:90)
+w = ∞ log (cid:0) w¯ +γ(w¯ +π¯ )q (cid:1) θ(1+q) θ 1dq. (32)
+x∗,y x x y − −
+0
+In particular,
+1. for all x and x with w¯ < w¯ , w < w for all y;
+1 2 x1 x2 x∗ 1,y x∗ 2,y
+2. for all y and y with π¯ < π¯ , w < w for all x;
+1 2 y1 y2 x∗,y1 x∗,y2
+3. for all x , x , y , and y with w¯ < w¯ and π¯ < π¯ , w +w > w +w .
+1 2 1 2 x1 x2 y1 y2 x∗ 1,y2 x∗ 2,y1 x∗ 1,y1 x∗ 2,y2
+In particular, if f is strictly increasing, the average log wage is strictly increasing and
+x,y
+strictly submodular.
+Our proof in Appendix A.2 allows for any transformation H of the wage, not just the
+log. The average H wage is strictly submodular for a concave transformation of the wage,
+strictlysupermodularforaconvextransformationofthewageand, aswehavealreadyshown,
+additively separable without any transformation.
+18
+
+===== PDF PAGE 20 =====
+
+4 Assortative Matching
+This section shows that our model can generate (positively) assortative matching between
+workers and firms. We only use two equations from our model. The first in the steady state
+¯
+equation (13), which explains how the measure of matches ϕ depends on both meeting
+x,y
+rates and the selection threshold z¯ . The second is again the selection equation (6).
+x,y
+¯
+We find conditions under which ϕ satisfies a strong notion of assortative matching, the
+monotone likelihood ratio order. We say that ϕ ¯ has the monotone likelihood ratio order if
+for all x < x and y < y ,
+1 2 1 2
+¯ ¯
+ϕ ϕ
+x2,y2
+>
+x1,y2.
+¯ ¯
+ϕ ϕ
+x2,y1 x1,y1
+This means that high type workers are relatively more likely to match with high type firms.
+Manipulating the fractions, we find that this is equivalent to stating that high type firms
+are relatively more likely to match with high type workers. A well-known implication of
+the monotone likelihood ratio order is that higher type workers and firms have a better
+distribution of match partners in the sense of first order stochastic dominance and that the
+correlation between the types of matched workers and firms is strictly positive.
+We first find conditions for assortative matching between high productivity workers and
+firms:
+Proposition 4 Assume z has a Pareto distribution with scale parameter z , 0 < z <
+0 0
+min z¯ , and shape parameter θ > 1. Also assume f is strictly increasing and weakly
+x,y x,y x,y
+log-supermodular. Then the measure of matches ϕ ¯ has the monotone likelihood ratio order.
+The proof is in Appendix A.3. Weak log-supermodularity of f is equivalent to f f
+x1,y1 x2,y2
+≥
+f f for all x < x and y < y . Since f is strictly positive, it is a statement that
+x1,y2 x2,y1 1 2 1 2
+more productive workers have a weak comparative advantage working at more productive
+firms (f /f is nondecreasing in x when y > y ) and that more productive firms have a
+x,y2 x,y1 2 1
+weak comparative advantage hiring more productive workers (f /f is nondecreasing in
+x2,y x1,y
+y when x > x ).
+2 1
+Lemma 1 and equation (22) tells us that if f is strictly increasing, then worker wage
+x,y
+components and firm wage components are strictly increasing as well. Propositions 4 then
+implies that when f is strictly increasing and weakly log-supermodular, high wage are more
+likely to have high wage partners in the sense of first order stochastic dominance. That is,
+we have found conditions not only for assortative matching of more productive workers to
+more productive firms, but also of high wage workers to high wage firms.
+Intheintroductionofourpaper, wenotedthepuzzleraisedbyBonhomme, Lamadonand
+Manresa (2019, p. 701): “the presence of strong sorting, together with the absence of strong
+19
+
+===== PDF PAGE 21 =====
+
+complementarities in wages, is difficult to reconcile with models where sorting is driven by
+complementarities in production, as in Becker (1973).” Propositions 2 and 4 provide the
+reconciliation, selection. Administrative wage data only capture the wage that a firm pays
+toitsemployees. Suchdatasetsdonothaveinformationaboutmeetingsthatdonotresultin
+matches, i.e. about wage offers that are below the worker’s reservation wage or unacceptable
+to the firm. According to our model, low wage workers rarely get wage offers from high
+wage firms, and so rarely match there; but when such wage offers do materialize, our model
+predicts that the average wage is higher than at a low productivity firm.
+5 Endogenous Separations
+In this section, we extend our basic model to allow for endogenous separations by allowing
+match specific productivity to vary over time within a match. We show that most of our
+analytical results carry over from the basic model to this framework. In particular, we prove
+the same log-supermodularity conditions ensures positive assortative matching. In addition,
+we prove that wages are additively separable into a component that depends on the worker
+type, a component that depends on the firm type, and a heteroskedastic error term.
+At the same time, we establish additional selection biases in the two-way fixed effects
+regression. We prove that with endogenous separations, feasible estimators of the two-way
+fixed effects model, including the ones proposed by Bonhomme, Lamadon and Manresa
+(2019) and Kline, Saggio and Sølvsten (2020), yield biased estimates of the variance of the
+firm component of wages. The source of the bias is again selection. As is well-known, firm
+wage components are identified from the wage changes of movers, those workers who switch
+employers. This will identify the firm component of wages only if the wage change of movers
+reflectsthebroaderwagedifferentialsamongstayers. Thiswastrueinthebasicmodel, where
+all workers were equally likely to move, but is no longer true with endogenous separations.
+We show that bias in estimates of the firm wage component may be quantitatively large, yet
+difficult to detect using the exogenous mobility test proposed by Card, Heining and Kline
+(2013) and widely implemented in the literature. Finally, we discuss how one could try to
+construct a data set that would consistently estimate the firm wage component, as well why
+doing so is impractical.
+The biases emanating from endogenous selection add on to the issues with estimating
+treatment effects. As in the basic model, an econometrician with access to administrative
+wage data cannot recover the ITT both because the econometric approach looks only on
+wages that are acceptable to the worker and because of the unidentified constant κ. But
+now, only the omniscient econometrician who knows the types of all workers and firms can
+20
+
+===== PDF PAGE 22 =====
+
+consistently estimate the differential ATT from a policy that matches unemployed workers to
+different types of jobs. Feasible estimators of the two-way fixed effects model, including the
+ones proposed by Bonhomme, Lamadon and Manresa (2019) and Kline, Saggio and Sølvsten
+(2020), yield biased estimates of the differential ATT.
+5.1 Model and Key Results
+We change only one piece of our model: We assume that for every worker i with type x and
+i
+every firm j with type y , match-specific productivity z (t) follows a geometric Brownian
+j i,j
+motion,
+dz (t) = µz (t)dt+σz (t)dB(t), (33)
+i,j i,j i,j
+with drift µ < 0, standard deviation σ > 0, and reflecting barrier at some z > 0. A standard
+0
+resultfromstochasticcalculustellsusthatthestationarydistributionofz (t)isParetowith
+i,j
+shape parameter θ = 1 2µ > 1 and lower bound z . We assume that from the perspective
+− σ2 0
+of any worker i, the distribution of z (t) across all firms j at any point in time t is in fact
+i,j
+Pareto, and similarly from the perspective of any firm j.
+Worker i and firm j meet as in the baseline model. When they meet, they observe z (t)
+i,j
+anddecidewhethertoformthematch. Byconstruction, atthemomentofthemeeting, z (t)
+i,j
+has a Pareto distribution with shape parameter θ. If they match, the produce z (t)f
+i,j ′ xi,yj
+at time t. Wages are set so that the worker keeps a fraction γ of the match surplus at
+′
+each point in time, consistent with continual wage renegotiation under the Nash bargaining
+solution. The match ends endogenously by mutual agreement of the worker and firm, when
+it is not sufficiently productive. It also ends exogenously at rate δ. Even after the match
+ends, the match-specific productivity z (t) continues to evolve according to (33), but the
+i,j
+worker and firm almost surely never meet again.
+We write down the equations characterizing an equilibrium and simplify them in Ap-
+pendix B. Here we give some key results. First, worker i of type x and firm j of type y
+i j
+form a match and stay matched if and only if z (t) z¯ , where the threshold satisfies
+i,j
+≥
+xi,yj
+(cid:18) (cid:19)
+ξ +θ 1 w¯ +π¯
+x y
+z¯ − . (34)
+x,y
+≡ ξ +θ f
+x,y
+Here w¯ is the flow value of a type-x unemployed worker, π¯ is the flow value of a type-y
+x y
+vacancy, and
+(cid:32)(cid:114) (cid:33)
+1 8(r+δ)
+ξ +θ2 θ (35)
+≡ 2 σ2 −
+is a positive constant.
+21
+
+===== PDF PAGE 23 =====
+
+To understand the threshold equation, fix θ and take the limit as σ 0. Equation (35)
+→
+implies ξ . Thus equation (34) reduces to equation (6) in this limit. But for any σ > 0,
+→ ∞
+ξ is a finite positive constant and so 0 < ξ+θ 1 < 1. This means that for productivity
+−
+ξ+θ
+slightly above the separation threshold z¯ , flow output zf is less than the flow value
+x,y x,y
+unemployment plus the flow value of a vacancy w¯ + π¯ . The willingness to stay matched
+x y
+even when there is a static gain from breaking up reflects the option value of continuing a
+match when productivity is stochastic.
+Second, the measure of (x,y) matches satisfies
+δaϕ ¯ = ρu v zθz¯ θ, (36)
+x,y x y 0 x−,y
+where
+(cid:32)(cid:114) (cid:33)
+1 8δ
+ζ +θ2 θ (37)
+≡ 2 σ2 −
+and
+1
+δa σ2(ζ +θ)2 (38)
+≡ 2
+is the sum of the exogenous separation rate δ and the endogenous separation rate 1σ2θ(ζ+θ)
+2
+that comes from matches ending when productivity hits the separation threshold.
+Equation (36) has the same mathematical structure as equation (13) for the Pareto case,
+and so it follows that the assortative matching results are completely unchanged by the
+presence of idiosyncratic shocks to match-specific productivity:
+Proposition 5 Assume z (t) follows the geometric Brownian motion in equation (33),
+i,j
+µ = σ2 (1 θ) < 0 < σ, with reflecting barrier z satisfying 0 < z < min z¯ . Also assume
+2 − 0 0 x,y x,y
+f is strictly increasing and weakly log-supermodular. Then the measure of matches ϕ ¯ has
+x,y
+the monotone likelihood ratio order.
+¯
+The proof, essentially unchanged from the proof of Proposition 4, is in Appendix B.4: ϕ has
+the monotone likelihood ratio order if and only if it is strictly log-supermodular. From equa-
+¯
+tion (36), ϕ is strictly log-supermodular if and only if z¯ is strictly log-submodular. And
+x,y x,y
+from equation (34), strict log-submodularity of z¯ follows from weak log-supermodularity
+x,y
+of f and strict monotonicity of w¯ and π¯ , which are in turn assured by strict monotonicity
+x,y x y
+of f.
+Third, we find that the share of the stock of (x,y) matches with z < qz¯ for any
+x,y
+threshold q 1 is
+≥
+ζ +θ θ
+Φ(q) = 1 q θ + q ζ θ, (39)
+− − −
+− ζ ζ
+22
+
+===== PDF PAGE 24 =====
+
+5
+4
+3
+2
+1
+0
+1 1.2 1.4 1.6 1.8 2
+z/z¯
+x,y
+ytisned
+new matches
+all matches
+Figure 1: The red line shows the stationary density of z/z¯ in all new matches (Pareto with
+x,y
+shape parameter θ), while the blue line shows the same object for all matches ϕ(q) = Φ(q)
+′
+defined in equation (39). The figure sets σ = 0.025, δ = 0.2, and θ = 5.
+the same for all (x,y) pairs. The fact that all (x,y) pairs have the same distribution of
+the ratio z/z¯ is a property of the Pareto distribution of z/z¯ in new matches and the
+x,y x,y
+geometric Brownian motion of z/z¯ in surviving matches.
+x,y
+The functional form of distribution Φ(q) and associated density ϕ(q) = Φ(q) will play
+′
+an important role in our analysis, and so we show the density in Figure 1. Notably, the
+continuous process of ending bad matches shifts the distribution of surviving matches to
+the right compared to the Pareto distribution of new matches. In particular, endogenous
+separations at the threshold implies it acts as an absorbing barrier for productivity, so
+ϕ(1) = 0. How important selection is depends on ζ, defined in equation (37). When ζ is
+large, as is the case if δ is large (so selection has little time to operate before an exogenous
+breakdown) or σ is small (so productivity is nearly constant in a match), then the two
+distributions are very similar. At the opposite extreme, when ζ 0, the mean of z in all
+→
+matches is (θ/(θ 1))2 times the threshold, while the mean of z in new matches is just
+−
+θ/(θ 1) times the threshold.
+−
+Finally, we show that the wage equation (9) carries over to this environment unchanged.
+Using the threshold equation (36), this gives us a simple expression for the wage when a
+23
+
+===== PDF PAGE 25 =====
+
+type x worker is employed at a type y job in a match with productivity z at a point in time:
+(cid:18)(cid:18) (cid:19) (cid:19)
+ξ +θ 1 z
+W (z) = w¯ +γ − 1 (w¯ +π¯ ). (40)
+x,y x x y
+ξ +θ z¯ −
+x,y
+Since the distribution of z/z¯ is Φ(q) for all (x,y), this leads to our next result, a natural
+x,y
+generalization of Proposition 2, expressing wages as an additively separable function of a
+worker component, a firm component, and an error term:
+Proposition 6 Assume z (t) follows the geometric Brownian motion in equation (33),
+i,j
+µ = σ2 (1 θ) < 0 < σ, with reflecting barrier z satisfying 0 < z < min z¯ . Let ω (t)
+2 − 0 0 x,y x,y i,j
+denote the wage that worker i receives while employed by firm j at time t. Then
+ω (t) = α +ψ +ϵ (t) (41)
+i,j x∗
+i
+y∗
+j
+i,j
+where
+(cid:18) (cid:19)
+ξ +θ 1
+α (1+C )w¯ ; ψ C π¯ ; ϵ (t) γ − (w¯ +π¯ )ν (t); (42)
+x∗
+≡
+∗ x y∗
+≡
+∗ y i,j
+≡ ξ +θ
+xi yj i,j
+ν (t) is a serially correlated random variable, independently and identically distributed across
+i,j
+(i,j) pairs, with mean zero and a known stationary distribution; and
+(cid:18) (cid:19)
+θ(ζ +θ)(ξ +θ 1)
+C γ − 1 . (43)
+∗
+≡ (θ 1)(ξ +θ)(ζ +θ 1) −
+− −
+The proof is in Appendix B.4 and gives the stationary distribution of ν (t). In the limit
+i,j
+withoutdiscounting(r 0),wehaveξ = ζ fromequations(35)and(37). Thenequation(43)
+→
+implies C = γ , exactly as in Proposition 2.
+∗ θ 1
+−
+5.2 Treatment Effects
+We turn next to treatment effects. We again consider a policy which introduces an unem-
+ployedworkeritoajobj. Sinceweknowthatselection-on-gainsmakesitdifficulttomeasure
+the intent-to-treat even without endogenous separations, we focus here on the ATT, the ex-
+pected value of a worker’s surplus conditional on the match being acceptable, z z¯ . In
+≥
+xi,yj
+the model with endogenous separations, we find that a type x worker’s share of surplus when
+matched to a type y firm with current idiosyncratic shock z is
+ 
+w¯ +π¯ ξ (cid:0) z (cid:1) + (cid:0) z (cid:1) − ξ
+γVs (z) = γ x y  z¯x,y z¯x,y 1.
+x,y r+δ ξ +1 −
+24
+
+===== PDF PAGE 26 =====
+
+The ATT is the expected value of this in a new match, i.e. one where z is drawn from a
+Pareto distribution:
+ξ(w¯ +π¯ ) γ w¯ +π¯
+x y x y
+ATT (y) = γ = . (44)
+x (r+δ)(θ 1)(θ+ξ) θ 1 1σ2(θ+ξ)2
+− − 2
+Again define ∆ATT (j ,j ) ATT (j ) ATT (j ). We see immediately from equation (44)
+i 1 2 i 1 i 2
+≡ −
+that the differential ATT is still the same for all workers.
+In the limiting economy without discounting, r 0, recall that C = γ and ξ = ζ.
+→ ∗ θ 1
+−
+Thus equations (38) and (42) imply
+ψ ψ
+∆ATT (y ,y ) =
+y∗
+1 −
+y∗
+2, (45)
+x 1 2 δa
+where δa is the rate that employed workers become unemployed. Since the omniscient econo-
+metrician estimates the numerator consistently, and since we can easily recover δa from
+worker flow data, the omniscient econometrician consistently estimates the differential ATT,
+at least in the no-discounting limit. That is, the close link between the ATT and the firm
+component of wages is unchanged by the separation shock.
+5.3 Two-Way Fixed Effects Regressions
+We turn next to what happens when an econometrician regresses wages on worker and firm
+fixed effects. We focus on the estimated firm effects because these are relevant to the firm
+component of wages and hence the ATT, as seen in equation (45).
+We again start with an omniscient econometrician who knows the types of all workers
+and firms, where the number of types is held fixed as we increase the number of observations.
+Rather than regressing on individual fixed effects, he regresses on type-specific fixed effects,
+using OLS to estimate
+¯
+w = α¯ +ψ +e . (46)
+i,t xi yJi,t i,t
+Proposition 6 implies that using either cross-sectional or panel data, his estimate of the firm
+fixed effects satisfy
+E(cid:0)
+ψ
+ˆ¯ (cid:1)
+= ψ + κ, where κ is a constant reflecting the standard lack of
+y y∗
+identification of the level of the worker and firm wage components. Thus the omniscient
+econometrician’s estimates of the firm fixed effects reveal the difference in, and variance of,
+the firm wage components.
+We now turn to a real-world econometrician who cannot observe workers’ and firms’
+types, and so instead regresses wages on worker and firm fixed effects. In many practical
+situations, the econometrician has only a short panel, and indeed important recent papers
+25
+
+===== PDF PAGE 27 =====
+
+focus on data sets with only two years of data (e.g., Bonhomme, Lamadon and Manresa,
+2019; Kline, Saggio and Sølvsten, 2020). Here we ask what the econometrician estimates in
+that case. The following Lemma provides a useful step towards that answer:
+Lemma 2 Consider a panel data set with observations of wages w and employers for
+i,t i,t
+J
+a large number of workers i and at least two years. A worker is a mover in year t, i ,
+t
+∈ M
+if = . Assume that for all i , Ew = α +ψ and Ew = α+ +ψ+ .
+J i,t ̸ J i,t+1 ∈ M t i,t i− − i,t i,t+1 i i,t+1
+J J
+Also assume that for all i , j , and j , the worker is as likely to move from firm j
+t 1 2 1
+∈ M
+to j as from firm j to j . Then the OLS estimate of the two-way fixed effects regression
+2 2 1
+w = α +ψ +ε using only two years of data satisfies
+i,t i Ji,t i,t
+ψ +ψ+
+E (ψ ˆ ) = j− j +κ, (47)
+j
+2
+where κ is an arbitrary constant, independent of j.
+An immediate corollary of this result is that, under the assumptions of Lemma 2, the ex-
+pected value of the estimated firm fixed effect E (ψ ˆ ) is equal to the expected value of the
+j
+ψ−+ψ+
+firm component of wages (up to the additive constant κ) if and only if j j = ψ .
+2 y∗ j
+Our main result in this section is that our model satisfies the assumptions of Lemma 2,
+ψ−+ψ+
+but violates j j = ψ . This means that the real-world econometrician’s estimated firm
+2 y∗ j
+effects are biased estimates of the firm component of wages. We stress that this is not about
+the unindentified constant κ, but holds when looking at the expected difference between two
+firms’ estimated fixed effects or at the variance of expected firms fixed effects.
+Tounderstandthebias, westartbyexplainingwhyourmodelsatisfiestheassumptionsof
+Lemma 2. First, the wage in an (x,y) match depends on z/z¯ according to equation (40).
+x,y
+Moreover, the distribution of z/z¯ before the move is the same for all (x,y), as is the
+x,y
+distribution of z/z¯ after the move. This means that the expected wage in these jobs is
+x,y
+additively separable between a worker and a firm component. Second, all workers are as
+likely to accept a job at firm j , endogenously or exogenously lose their job, and then accept
+1
+a job at firm j , as to take the two jobs in the opposite sequence. Thus we are in the realm
+2
+of Lemma 2.
+We turn next to whether the real-world econometrician’s estimate of firm wage compo-
+nents is biased. To answer this, we need to take a stance on what the wage in new and old
+jobs is. To be concrete, we suppose that we can measure movers’ wages immediately before
+(w ) and immediately after (w ) a move. This leads to the following result:
+i,t i,t+1
+Proposition 7 Assume z follows the geometric Brownian motion in equation (33), µ =
+i,j
+σ2 (1 θ) < 0 < σ, with reflecting barrier z satisfying 0 < z < min z¯ . Consider a data
+2 − 0 0 x,y x,y
+26
+
+===== PDF PAGE 28 =====
+
+set containing the last wage in the old job and the first wage in the new job for all movers.
+Let ψ ˆ denote the OLS estimate of the firm effect from the two-way fixed effects regression
+j
+w = α +ψ +ε . Then for all firms j and j ,
+i,t i Ji,t i,t 1 2
+E(cid:0)
+ψ
+ˆ
+ψ
+ˆ (cid:1)
+= B
+(cid:0)
+ψ ψ
+(cid:1)
+, (48)
+j1
+−
+j2
+×
+y∗
+j1 −
+y∗
+j2
+where B < 1 depends only on r, δ, σ, and θ. For small σ, B = 1 θσ to a first order.
+− √2δ
+In what follows, we call B < 1 the bias in estimating the firm component of wages.
+The proof in appendix B.4 proceeds in a few steps. First, according to our model, the
+last wage before the move can come from one of two densities, depending on whether the
+separation is exogenous or endogenous. For an exogenous separation, which occurs at rate δ,
+z/z¯ is drawn from the blue density in Figure 1, the density of z/z¯ in existing matches.
+x,y x,y
+For an endogenous separation, which occurs at rate 1σ2θ(ζ +θ), z/z¯ is degenerate at 1.
+2 x,y
+Using this and the wage equation (40), we prove in Appendix B.4 that, in the notation of
+Lemma 2, α = (1+C )π¯ and ψ = C π¯ , where
+j− − yj j− − yj
+(cid:18) (cid:19)
+ζξ(ζ +2θ 1) θ(θ 1)2
+C γ − − − . (49)
+−
+≡ (θ 1)(ζ +θ)(ξ +θ)(ζ +θ 1)
+− −
+In the second step, we turn to turn to the wage immediately after the move. In this case,
+z/z¯ hasaParetodistributionwithminimumvalue1, thereddensityinFigure1. Usingthis
+x,y
+and the wage equation (40), we prove that this implies α+ = (1+C+)π¯ and ψ = C+π¯ ,
+j yj j− yj
+where
+(cid:18) (cid:19)
+ξ
+C+ γ . (50)
+≡ (θ 1)(ξ +θ)
+−
+Putting this together, Lemma 2 implies E (ψ ˆ ) = C−+C+ π¯ + κ, and so E(cid:0) ψ ˆ ψ ˆ (cid:1) =
+j 2 yj j1 − j2
+C−+C+
+(π¯ π¯ ). Using equation (42), we also know ψ ψ = C (π¯ π¯ ). This gives
+2 yj1 − yj2 y∗ 1− y∗ 2 ∗ y1− y2
+us equation (48) as well as our formula for the bias, B
+C−+C+
+.
+≡ 2C∗
+As we can anticipate from the expressions for C , C , and C+ in equations (43), (49),
+∗ −
+and (50), the expression for B is messy. Here we offer a simpler expression in the limit
+without discounting, where ξ = ζ:
+θ(2ζ +3θ 1)
+B = 1 − . (51)
+− 2(ζ +θ)2
+This is increasing in ζ, hence increasing in δ and decreasing in σ (equation 37). Intuitively,
+B is smaller (there is more bias) when exogenous breakdowns are less frequent, so selection
+plays a bigger role in determining who switches jobs and also in determining the wage of
+27
+
+===== PDF PAGE 29 =====
+
+1
+0.9
+0.8
+0.7
+0.6
+0 0.01 0.02 0.03 0.04 0.05
+σ
+S
+noitceleS
+dna
+B
+saiB
+Bias B
+Selection S
+Figure 2: The blue line is the bias B from OLS estimation of the firm component of wages
+in a two period panel, E (ψ ˆ ) = Bψ +κ. Note that B = 1 corresponds to no bias. The red
+j y∗
+j
+line S is power of the selection test in Card, Heining and Kline (2013), with S = 1 implying
+that the wage gains of workers going from j to j equals the wage loss of workers going from
+1 2
+j to j . The figure sets r = 0.05, δ = 0.2, and θ = 5.
+2 1
+stayers, the blue distribution in Figure 1. Similarly, there is more bias when the standard
+deviation of the idiosyncratic shock is bigger, for the same reason: it enhances the selection
+of which matches end and raises the wage in those that survive.
+The blue line in Figure 2 depicts the bias graphically. We see that when σ = 0, the bias
+disappears (B = 1), but even a small amount of variation in σ creates a noticeable bias,
+consistent with the first order approximation B = 1 θσ .
+− √2δ
+The econometric approaches in Bonhomme, Lamadon and Manresa (2019) and Kline,
+Saggio and Sølvsten (2020) are designed to address an incidental parameters problem, not
+this selection bias. For example, even if the k-means step in Bonhomme, Lamadon and
+Manresa (2019) correctly identifies firm types, they still estimate firm type effects using
+only movers, and so their estimate of the firm component of wages is biased down by B.
+Similarly, the bias reduction procedure in Kline, Saggio and Sølvsten (2020) gives a bias-
+corrected estimate of the variance of the firm component of wages σ2 equal to B2 times the
+ψ∗
+true variance.9
+To obtain unbiased estimates of the firm component of wages, we need a different data
+set. If we observed two complete employment spells for each worker, we could use data on
+9Theseclaimsareconsistentwiththepropositionsinthosepapersandwehaveverifiedtheminnumerical
+examples.
+28
+
+===== PDF PAGE 30 =====
+
+all the wages in the two jobs. Using OLS on the resulting data set would give us unbiased
+estimates of ψ , up to the additive constant κ. The problem is that in real-world data,
+y∗
+j
+we are unlikely to be able to observed two complete employment spells for each worker.
+Some workers are lucky and keep a job for a long time. Those workers typically experience
+unusually high values for their idiosyncratic shock and hence unusually high wage growth.
+Dropping these workers will reintroduce selection bias. Still, we expect that using longer
+panels will mitigate, albeit not eliminate, selection bias.
+5.4 Testing for Selection Bias
+Selection in which matches form violates the exogenous mobility assumption (Card, Heining
+and Kline, 2013; Abowd, McKinney and Schmutte, 2019; Kline, 2024), and hence leads
+to biased estimates of the ITT. Moreover, selection of which matches end leads to further
+violations of exogenous mobility, and hence biased estimates of the firm component of wages
+and the ATT. Of course, researchers have long recognized these possibilities and have sought
+to test for selection in the data.
+Testing and correcting for selection requires some sort of exclusion restriction, but un-
+fortunately there is no obvious ones in this environment. Instead, researchers have come up
+indirect tests looking for evidence of particular types of selection. Here we use our model
+as a laboratory for evaluating the power of one popular test, the event study proposed by
+Card, Heining and Kline (2013). They looked at whether the wage gains of workers who
+move from one establishment to another are equal in magnitude and opposite in sign to the
+wage gains of workers who move in the opposite direction. They argue that this would not
+be the case in models where workers select which jobs to take based on the wage. Card,
+Heining and Kline (2013) and subsequent research by these authors find remarkable support
+for the “equal in magnitude and opposite in sign” prediction.
+We just argued that according to our model, the expected wage of a type x worker
+at the moment before they leave a type y firm, either endogenously or exogenously is
+1
+(1+C )w¯ +C π¯ , while the expected wage the moment after they start at a type y firm
+− x − y1 2
+is (1+C+)w¯ +C+π¯ . This means that the expected wage increase of a type x worker going
+x y2
+from a type y firm to a type y firm is
+1 2
+(C+ C )w¯ +C+π¯ C π¯ .
+−
+− x y2
+−
+− y1
+For this to be equal in magnitude and opposite to the expected wage increase of the same
+type of worker moving in the opposite direction, we require S C /C+ = 1. Put differently,
+−
+≡
+the Card, Heining and Kline (2013) event study test effectively looks at whether the wage
+29
+
+===== PDF PAGE 31 =====
+
+distribution of workers leaving a type y firm is the same as the wage distribution of those
+going to this type of firm, which holds if and only if S = 1. In contrast, estimates of the
+ATT are unbiased if and only if B
+C++C−
+= 1, where C is a third constant reflecting
+≡ 2C∗ ∗
+the true firm component of wages. Obviously B and S are different objects, and these are
+different statements.
+The exact expression for S is messy, but it simplifies in key cases. In particular, in the
+limit without discounting, r 0 we have
+→
+σ2θ(θ 1)
+S = 1 − .
+− 2δ
+This is also the second order approximation to S for small idiosyncratic shocks σ.
+The fact that 1 B is a linear function of σ while 1 S is a quadratic function means
+− −
+that in an economy with a small idiosyncratic shock, the bias may be significant even if it is
+hard to detect selection using the Card, Heining and Kline (2013) event study test. Figure 2
+shows this by plotting B and S as functions of σ with r = 0.05, θ = 10, δ = 0.2. Setting
+σ = 0.01 we find S = 0.98 but B = 0.85, leading to an 15 percent understatement of the
+ATT and a 28 percent (1 B2) understatement of the variance of the firm component of
+−
+wages. We conclude that the event study test may fail to detect selection in data generated
+from this model, even when it is quantitatively important.
+5.5 Match Effects
+Before closing this section, we stress one attractive feature of this model, that wages change
+during an employment spell due to the evolution of the idiosyncratic shock. Moreover, since
+workers will (almost surely) match at most once with a particular firm, there is no law of
+large numbers to smooth out the average wage of the worker in the job. That is, if our model
+is the data generating process, a data set constructed from it will (almost surely) contain
+information from at most one interval of one realization of the stochastic process for z (t)
+i,j
+for any pair (i,j).
+An interesting implication of this is that, using an approach like Woodcock (2008), an
+econometrician would uncover evidence of not only worker effects α and firm effects ψ , but
+i j
+also match effects equal to the average value of ϵ (t) during the duration of the match. Here
+i,j
+theestimatedmatcheffectsrepresentaparticularrealizationofastochasticprocessforz (t),
+i,j
+however, and not some intrinsic characteristic of the worker-firm match. Unfortunately, we
+cannot derive a simple analytical expression for the match effects, but one could estimate
+them using model-generated data.
+30
+
+===== PDF PAGE 32 =====
+
+6 Quantitative Evaluation
+In this section, we explore the quantitative predictions of our model. Since we will solve
+the model numerically, we are able to relax a few assumptions that allowed us to obtain
+analytical results in the first part of the paper.
+First, we previously assumed that workers only search while unemployed. In this section,
+we extend the model with endogenous separations to allow for on-the-job search. We assume
+that both employed and unemployed workers search for jobs. As before, unemployed workers
+accept a job when it has a positive match surplus, while employed workers move to a new
+job when it has a higher match surplus than their old job. Allowing for wage-induced job
+mobilityisrealistic, butisoftenseenasbeingatoddswithobservedmobilitypatterns, where
+workers often accept wage cuts. We show that our model generates realistic wage dynamics.
+Second, our analytical results examined the behavior of the level of wages, rather than
+log wages. The related empirical literature focuses on log wages. Since we are solving the
+model numerically, here we too work with log wages. In the appendix we show that results
+with the level of wages are similar.
+Third, when evaluating bias in estimates of the ATT, we assumed that we measured the
+last wage before a job separation and the first wage after a job accession. Here we again
+follow the empirical literature and assume that we measure the average wage in the main
+job in a calendar year and measures either earnings or average wage in that job. As we will
+see, none of these more realistic assumptions change our main results.
+6.1 Setup and Calibration
+Themodelisthesameasthebaselinemodelwithendogenousseparations(Section5), butwe
+nowassumethatworkerscanmeetvacanciesbothwhenemployedandwhenunemployed. An
+unemployed worker i contacts a type-y vacancy according to a Poisson process with arrival
+rateρ v , whileanemployedworkercontactsatype-y vacancyaccordingtoaPoissonprocess
+0 y
+with arrival rate ρ v , where ρ and ρ are positive constants. When the worker and firm
+1 y 0 1
+meet at time t, they observe z (t), which follows a geometric Brownian motion with drift
+i,j
+µ < 0, standard deviation σ > 0, and a reflecting lower boundary z > 0, as in the model
+0
+withendogenousseparations. Thisimpliesthatthewhenaworkermeetsafirm, productivity
+is distributed Pareto with shape parameter θ = 1σ2(θ 1) and scale parameter z .
+2 − 0
+We assume that wages are set according to the competing offers framework in Cahuc,
+Postel-Vinay and Robin (2006), with a natural extension to accommodate time-varying
+match-specific productivity z (t). More precisely, an unemployed worker gets a share γ
+i,j 0
+of the surplus in a match. When a worker with surplus share γ meets a vacant job, he
+31
+
+===== PDF PAGE 33 =====
+
+switches jobs if the surplus is higher in the new job than in the old one. In this case, his
+surplus share adjusts to γ which leaves him indifferent between taking the new job with
+′
+surplus share γ versus keeping the old job and getting the entire surplus from it. If the
+′
+surplus in the old job is higher than in the new job offer, the worker stays in his current
+job, but his surplus share may increase. This happens if he would prefer to take the new job
+with all the surplus rather than stay in the old job at the old surplus share. We present the
+full model in Appendix C.
+Here we describe its parametrization and main results. Our parameterization is pre-
+liminary, intended to illustrate how our analytical results carry over to this more realistic
+environment and to illustrate wage dynamics in a model with ex ante heterogeneity, time-
+varying match-specific shocks, and on-the-job search.
+We set the discount rate to r = 0.05, and so think of a time unit as a year. The exogenous
+match dissolution rate is δ = 0.2, which implies that the expected duration of employment,
+absent endogenous separations, is 5 years. We set the number of types at X = Y = 10 and
+assume equal measures of each type, so m = 1 and n = 1. This implies in particular
+x X y Y
+that the total measure of workers and firms are the same. The production function is
+(cid:112)
+f = (1+∆ )x 1(1+∆ )y 1, where ∆ and ∆ are numbers that govern the amount
+x,y w − f − w f
+of heterogeneity across workers and firms, respectively; we set ∆ = 0.15 and ∆ = 0.6.
+w f
+We normalize ρ = 1 and choose ρ = 0.1. Finally, we choose σ = 0.025 and the shape
+0 1
+parameter of Pareto distribution θ = 5. Using the stationary relationship between Pareto
+distribution and geometric Brownian motion, this implies that µ = 0.00125.
+−
+6.2 Sorting, Wages, and Treatment Effects
+This section begins our presentation of results from our model with on-the-job search. To
+do so, we use the model to generate artificial data for a million workers. For each worker,
+we construct a two-year sample where we record worker and firm identifiers and types, as
+well as wages associated with these employment relationships; see Appendix C.3 for details
+on data construction.
+Ineachyear, weselectthemainjobbasedonhighesttotalearningsforthatcalendaryear,
+and measure average wage in that job. Following the sample constructions in Bonhomme,
+LamadonandManresa(2019)orKline, SaggioandSølvsten(2020), thetwoyearscorrespond
+to years t and t+2, that is, we drop the intermediate year t+1. We focus on log wages but
+report results for level of wages in the Appendix. In our sample, 97 percent of workers have
+at least one wage observation in years t and t+2, and 81 percent have two.
+Westartbyshowingaveragelogwageandsortingpatterns, analogoustoFigures2andS7
+32
+
+===== PDF PAGE 34 =====
+
+Average log wage w x∗,y Share of worker types
+1
+1.5
+0.8
+1 0.6
+0.4
+0.5
+0.2
+0 0
+2 4 6 8 10 1 2 3 4 5 6 7 8 9 10
+firm type y firm type y
+x = 1 x = 2 x = 3 x = 4 x = 5
+x = 6 x = 7 x = 8 x = 9 x = 10
+Figure 3: Average wages and distribution of worker types conditional on firm type in the
+model with on-the-job. The left panel shows the average log wage w paid by different firms
+x∗,y
+for different worker types. Each line represents one worker type. The right panels show the
+distribution of worker types x in firms with different firm types y.
+in Bonhomme, Lamadon and Manresa (2019). Figure 8 in Appendix C shows similar pattern
+for wages measured in levels. We stress that these results use the workers’ and firms’ actual
+types, and so estimating them in model-generated data may not be feasible. We discuss
+feasible estimators in Section 6.3.
+The left panel of Figure 3 shows the average log wage as a function of firm type y. Each
+line corresponds to a different worker type x. For the model without on-the-job search, we
+proved in Proposition 6 that the average wage is increasing and additively separable in the
+worker type x and the firm type y. In the model with on-the-job search, the average log
+wages is increasing in x and y. Moreover, the fact that the lines are nearly parallel tells us
+that the average log wage is nearly additively separable.
+The right panel of Figure 3 shows the distribution of worker types in the different firm
+types, ϕ
+¯
+/
+(cid:80)X
+ϕ
+¯
+. We observe that distribution satisfies the monotone likelihood ratio
+x,y x′=1 x′,y
+order, withhigh-typefirmssystematicallyemployingrelativelymorehigh-typeworkers. This
+is again consistent with the theoretical prediction without on-the-job search (Proposition 5).
+Wenextconsiderthetreatmenteffectfromapolicythatintroducesanunemployedworker
+to a vacant type y job. We look at the impact of this event on the expected present value of
+the worker’s income, the ITT, as a function of the worker’s type and the firm’s type. We also
+look at the impact conditional on the worker taking the job, the ATT. In the model with
+33
+
+===== PDF PAGE 35 =====
+
+Average Treatment on the Treated (ATT) Intent to Treat (ITT)
+4 4
+3 3
+2 2
+1 1
+0 0
+2 4 6 8 10 2 4 6 8 10
+firm type y firm type y
+x = 1 x = 2 x = 3 x = 4 x = 5
+x = 6 x = 7 x = 8 x = 9 x = 10
+Figure 4: Average treatment on the treated, ATT, and intent to treat, ITT, for an unem-
+ployed worker with type x when meeting a firm with type y in the model with on-the-job
+search. The left panel shows ATT, the right panel ITT. Each line represents one worker
+type.
+on-the-job search, the surplus of the match is the same as in the model without it, and hence
+ATT (y)isgivenbyequation(44). Theintent-to-treatisthenITT (y) = ATT (y)(z /z¯ )θ,
+x x x 0 x,y
+as implied by equation (19).
+Figure 4 reveals an important distinction between the ATT and ITT from this policy.
+The highest worker type always has the highest ATT at a given type y firm. However, the
+lowest worker type has the highest ITT at the lowest firm type and the lowest ITT at the
+highest firm type. For the highest worker type, it is the opposite: they have the lowest
+ITT at the lowest firm type and the highest at the highest firm type. In other words, when
+meeting y = 1 firm, it is the lowest worker type x = 1 that benefits the most from such
+meeting. When meeting the highest-type firm y = 10, it is the highest type worker, x = 10,
+who benefits the most from this meeting.
+Finally, we note that the relationship between the ATT and the firm component of
+wages is quantitatively close to the one implied by the model without on-the-job search.
+Setting ρ = 0 but keeping all other parameters unchanged, equations (42)–(44) imply that
+1
+∆ATTx(y1,y2) = 3.3. In the model with on-the-job search, this ratio varies between 3.4 and 3.7
+ψ∗ ψ∗
+y1− y2
+depending on the worker type. We therefore conclude that firm component of wages remains
+informative about ATT even in the model with on-the-job search.
+34
+
+===== PDF PAGE 36 =====
+
+6.3 Bias in Estimating the Firm Component of Wages
+The results so far assume that we are able to observe workers’ and firms’ true types x and
+y. This section examines the bias coming from our inability to do so in real-world data sets,
+as stressed in Section 5.3.
+We focus on a regression of log wages on worker and firm fixed effects. To start, we
+assume that we can observe the true types, and hence estimate the infeasible regression
+¯
+logw = α¯ +ψ +ε , (52)
+i,t xi yJi,t i,t
+recovering estimates αˆ¯ and ψ
+ˆ¯
+of the type-specific fixed effects, as well as estimates eˆ of
+x y i,t
+¯
+the error term. We refer to α¯ and ψ as the worker and firm components of wages.
+x y
+We think this notion of the worker and firm component is natural for two reasons: first,
+the econometrics literature on two-way fixed effects models has attempted to estimate these
+objects, or at least their variance; and second, they correspond to the ATT from a natural
+policy experiment. However, a real-world econometrician cannot run this regression because
+he does not know the true worker and firm types.
+Column (1) in Table 1 decomposes the variance of log wages using this specification. The
+variance decomposition is simply
+var(logw) = var(α)+var(ψ)+2cov(α,ψ)+var(ε),
+(cid:99) (cid:99) (cid:99) (cid:99) (cid:99)
+where var(α) is the variance of αˆ¯ in our sample, var(ψ) is the variance of ψ
+ˆ¯
+, cov(α,ψ) is
+(cid:99) x (cid:99) y (cid:99)
+the covariance between them in our sample, and var(ε) is the variance of the residual eˆ .
+(cid:99) i,t
+In our calibrated model, the worker component accounts for 41 percent of the variance of
+wages, the firm component accounts for only 5 percent, (twice) the covariance accounts for
+6 percent, and the remaining 48 percent comes from the residual.
+In column (2), we consider an econometrician who knows the true firm types but observes
+only the worker identifiers. For example, he may be able to use the k-means algorithm to
+classify firms, as in Bonhomme, Lamadon and Manresa (2019).10 He thus estimates
+¯
+logw = α +ψ +ε . (53)
+i,t i yJi,t i,t
+With two years of data, the econometrician will effectively first difference the data to elim-
+inate the worker fixed effects. This means that he only uses those workers who switch
+employers between t and t+2 to estimate the firm component of wages.
+10Here we ignore issues having to do with firm misclassification.
+35
+
+===== PDF PAGE 37 =====
+
+(1) (2) (3) (4)
+var(logw) 0.2758 0.2758 0.2758 0.2763
+(cid:99)
+var(α) 0.1431 0.2204 0.2320 0.2078
+(cid:99)
+var(ψ) 0.0147 0.0096 0.0226 0.0095
+(cid:99)
+cov(α,ψ) 0.0187 0.0174 0.0059 0.0173
+(cid:99)
+var(ε) 0.0806 0.0110 0.0094 0.0243
+(cid:99)
+corr(α,ψ) 0.4086 0.3768 0.0808 0.3887
+(cid:100)
+worker type observed yes no no no
+firm type observed yes yes no no
+method OLS OLS OLS KSS
+no. of observations 1786 1786 1764 1560
+no. of workers 975 975 962 780
+no. of movers 542 542 271 261
+no. of firms 51 51 45 35
+Table 1: Quantification of biases in log wage variance decomposition in artificial data. We
+use largest connected set for OLS, and largest leave-one-out connected set for KSS (Kline,
+Saggio and Sølvsten, 2020). Numbers of observations, workers, movers and firms are in
+thousands.
+We find that estimating equation (53) rather than (52) reduces the estimated vari-
+ance of the firm component considerable, by 35 percent. This is the selection bias, B =
+(cid:112)
+0.0096/0.0147 = 0.81. Additionally, the estimated variance of the worker component is
+now higher than in column (1), due to overfitting of the large number of parameters. This
+also leads to a reduction in the variance of the error term. Interestingly, these errors have
+little effect on either the estimated covariance of the worker and firm components (decreases
+from 0.0187 to 0.0174 or the correlation between them (drops from 0.41 to 0.38).
+Next, we run the specification that a real-world econometrician could run, regressing log
+wages on worker and firm fixed effects.
+logw = α +ψ +ε . (54)
+i,t i i,t i,t
+J
+ˆ
+In column (3), we use the sample moments of the estimated fixed effects, αˆ and ψ , to com-
+i j
+pute estimates of variances and covariances of the worker and firm components of wages. It
+is well-known that this estimator of second moments is biased due to the incidental param-
+eters problem, often called limited mobility bias in this setting. This hugely overestimates
+the variance of the worker and firm components and drives the covariance between them, as
+well as the correlation, to zero.
+In column (4), we use Kline, Saggio and Sølvsten (2020) estimator, which is designed to
+correctforlimitedmobilitybias. Thisestimatorrequiresaleave-one-outconnectedset,sothe
+36
+
+===== PDF PAGE 38 =====
+
+sample size is smaller than in column (3).11 As one would expect, we find the bias-correction
+method delivers estimates of the variance of the firm component and the covariance between
+the worker and firm components that are in line with column (2), not those in column (1).
+That is, the Kline, Saggio and Sølvsten estimator corrects for limited mobility bias coming
+from the fact that we need to estimate many firm fixed effects, but it does not correct for
+the bias coming from endogenous separations.
+We can also see that the estimates of the variance of the worker component in column
+(4) are somewhat smaller than those in columns (2) and (3), but much larger than the
+correct ones in column (1). The Kline, Saggio and Sølvsten (2020) estimator does not yield
+consistent estimates of the variance of the worker component because it assumes that the
+error term ε in equation (54) is independently and identically distributed over time, while
+i,t
+in our model it is serially correlated.12
+In summary, the current literature, including Kline, Saggio and Sølvsten (2020), focuses
+on designing methods to address limited mobility bias (going from column (3) to column (4)
+to get results in line with column (2)). These methods are not designed, and indeed do not
+address, selection bias in estimating the firm component of wages, the difference between
+columns (1) and (2). This selection bias arises because two wage observations for a worker
+who changes jobs are not drawn from the stationary wage distribution.
+Figure 5 shows the selection bias directly by comparing estimated fixed effects from
+regression (1) and (3) in Table 1. On the horizontal axis, we plot estimated worker-type and
+firm-type fixed effects, αˆ¯ and ψ
+ˆ¯
+. On the vertical axis, we show the mean value of estimated
+x y
+worker fixed effects from column (3) among workers i whose true type is x, so E[αˆ x = x].
+i i
+|
+We do the analogous exercise for firm fixed effects. If the estimates of worker types were
+unbiased, then we would have E[αˆ x = x] = αˆ¯ and E[ψ ˆ y = y] = ψ ˆ¯ . This is the case
+i i x j j y
+| |
+for the worker fixed effects, as the dots in the left panel are aligned along the 45-degree line.
+Indeed, regressing αˆ on αˆ¯ confirms that the slope is 1. For the firm fixed effects, however,
+i x
+we see a bias as the mean firm fixed effects lie below the 45-degree line, with the slope of
+0.80; this is again the magnitude of selection bias in estimating the firm component of wages.
+Since we know workers’ and firms’ true types, we can also evaluate the magnitude of
+limited mobility bias, i.e. of noise in estimates of the worker and firm fixed effects. We find
+that it is substantial. The standard deviation of estimated worker fixed effects αˆ conditional
+i
+11The leave-one-out connected set is the largest set such that all workers and firms are still linked after
+dropping any single worker-firm match. In Table 2 in the Appendix, we show that the results in columns
+(1)–(3) are nearly unchanged if we use the leave-one-out connected set rather than the full sample.
+12Remark 4 in Kline, Saggio and Sølvsten (2020), p. 1870 notes that even if the autocorrelation of the
+error term is misspecified, their estimators of the variance of firm effects and the covariance between worker
+and firm effects are consistent; however, their estimator of the variance of worker effects (and hence of the
+variance of the residual) are consistent only when the error term is independent over time for every worker.
+37
+
+===== PDF PAGE 39 =====
+
+ˆ
+E[αˆ x = x] E[ψ y = y]
+i i j j
+| |
+0.4
+1
+0.3
+0.2
+0.5
+0.1
+0 0
+0 0.2 0.4 0.6 0.8 1 1.2 0 0.1 0.2 0.3 0.4
+αˆ¯ ˆ¯
+x ψ
+y
+Figure 5: Estimated type fixed effects and mean of estimated individual fixed effects. The
+left panel shows αˆ¯ from column (1) and the mean of αˆ from column (3) among workers i
+x i
+ˆ¯ ˆ
+with true type x. Similarly, the right panel shows ψ and the mean of ψ among firms j with
+y j
+true type y. The dashed line is the 45-degree line and the red lines are a linear fit through
+the origin. In the left panel, we normalize αˆ¯ = E[αˆ x = 1] = 0. In the right panel, we
+1 i i
+|
+ˆ¯ ˆ
+normalize ψ = E[ψ y = 1] = 0.
+1 j j
+|
+ˆ
+on the true worker type is 0.29. The standard deviation of estimated firm fixed effects ψ
+j
+conditional on the true firm type is only slightly smaller, 0.24. Figure 10 in the Appendix
+shows how noisey estimates of worker and firm fixed effects are by showing the interval
+corresponding to 2 standard deviations from the mean for each worker and firm type.
+±
+6.4 Testing for Selection
+Next, we apply the (Card, Heining and Kline, 2013) event study test to data generated from
+our model. The left panel of Figure 6 shows the mean log wages of movers in the model-
+generated data. In the figure, the move happens between years -1 and 0. We comment on a
+few features of the figure and compare them to the data.
+First, a worker going from quartile q to quartile q generally earns more in both jobs if
+1 2
+q or q is bigger. Card, Heining and Kline (2013) observe this in the data, writing on page
+1 2
+985 that “different mobility groups have different wage levels before and after a move.” The
+same forces that lead to a firm effect in wages explains the impact of q on the first wage
+1
+and q on the second wage.
+2
+To understand the impact of q on the first wage, we note that the event study does
+2
+not condition on the worker’s type. In the model, the worker’s wage depends on their
+38
+
+===== PDF PAGE 40 =====
+
+type and their employer’s type, but not on future employers. However, future employers’
+types are correlated with the workers’ type because of assortative matching, and thus help to
+predict the workers’ wage. The same correlation explain why q is correlated with the second
+1
+wage. Additionally, there is a second channel coming from competition between employers.
+However, the symmetry of the impact of q on the first wage and q on the second wage
+2 1
+suggests that this channel is quantitatively weak.
+The second feature is the absence of a strong pre-trend in wages. There is little evidence
+that workers experience unusual wage cuts before a move, nor that they experience unusual
+wage growth after a move.
+Third, the mean log changes for upward and downward moves are nearly symmetric.
+This is easier to see in the right panel of Figure 6. The figure shows pairs of quartiles q
+1
+and q , with q = q , and depicts the mean log wage change associated with the upward
+2 1 2
+̸
+and downward move. If the gains were exactly symmetric, they would be aligned along the
+minus 45 degree line, shown in red. We see that the data points are close to this line, which
+illustrates that it is easy to interpret this test as supporting exogenous mobility and hence
+no selection, even in a model with selection.
+6.5 Wage Dynamics
+Finally, we explore the dynamics of individual wages in our model. Our first result is that
+our model generates an equal number of wage increases and wage cuts. In the sample of
+workers employed in both years t and t+2, 49.9 percent experience wage cuts between these
+two years, with cumulative average wage growth of 0.07 percent over the two year period.
+To understand wage dynamics better, we split the sample into stayers, those workers
+who have the same employer in both years t and t+2; and movers, who switch employers
+between the two years. Stayers account for 66.6 percent of all workers employed in both
+periods, while movers account for the other 33.6 percent.
+Among stayers, mean wage growth is 0.11 percent over two years, with a standard de-
+viation of 5.35 percent; see the left panel of Figure 7. 50.8 percent of stayers experience a
+wage cut. These wage changes come from changes in productivity, both systematic (µ) and
+idiosyncratic (σ), as well as wage changes coming from competing offers.
+Amongmovers, the meanwagegrowth isslightlynegativeat -0.01percentovertwoyears,
+with a much higher standard deviation, 39.4 percent; see the right panel of Figure 7. Almost
+half of all movers experience a wage cut. The share of wage cuts may seem surprising, since
+models where workers move up a ladder typically have difficulty generating many wage cuts.
+The significant share of wage cuts reflects two factors in our model. First, in line with
+39
+
+===== PDF PAGE 41 =====
+
+Mean log wage of movers
+0
+1
+1 2
+↔ 3 4
+0.1 2 3 ↔
+− ↔
+0.5
+1 3
+↔
+2 4
+0.2 ↔
+−
+0
+1 4
+↔ 0.3
+2 1 0 1
+− 0 0.1 0.2 0.3
+− −
+year
+wage growth for upward move
+4 to 4 4 to 3 4 to 2 4 to 1
+1 to 4 1 to 3 1 to 2 1 to 1
+evom
+drawnwod
+rof
+htworg
+egaw
+Mean wage growth
+Figure 6: Mean log wages of movers in the artifical data generated from our model with on-
+the-job search. We select movers who change jobs between times -1 and 0, and have at least
+two years of tenure in both origin and destination firm. In the left panel, we show average
+log wage of these workers in years -2,-1,0,1. In the right panel, we show log wage change of
+upward and downward movers from our model with on-the-job search. Each square labeled
+q q represents a pair of firm quartiles (q ,q ), with q < q . The horizontal axis shows
+1 2 1 2 1 2
+↔
+the mean log wage gain of moving from q to q , while the vertical axis shows the mean log
+1 2
+wage gain of moving from q to q . The red dashed line represents symmetric changes for
+2 1
+upward and downward movers.
+0.3
+0.2
+0.1
+0
+1 0.5 0 0.5 1 1.5
+− −
+wage growth log(w ) log(w )
+i,t+2 i,t
+−
+ytisneD
+Stayers Movers
+0.1
+0.05
+0
+2 0 2
+−
+wage growth log(w ) log(w )
+i,t+2 i,t
+−
+Figure 7: Distribution of wage growth between years t and t+2 for stayers and movers.
+40
+
+===== PDF PAGE 42 =====
+
+empirical literature, we do not distinguish movers who make a direct job-to-job transition
+from workers who go through unemployment. Some of the wage cuts thus reflect workers
+who experience unemployment.
+But this is far from the full story. Since we know the data-generating process, we can
+measure the wage change at the moment of a job-to-job transition, i.e. a voluntary wage
+change. We find that 29.1 percent of job-to-job transitions are associated with a wage cut.
+The full distribution is shown in Figure 9 in the Appendix. Voluntary wage cuts come
+primarily from workers who are close to separation threshold z¯ and accept a new job that
+x,y
+is somewhat further from the threshold, thus trading off a lower wage for job stability and
+wage growth prospects.
+7 Conclusion
+We have developed a random search model of the labor market with ex ante heterogeneous
+workers and firms and ex post match-specific productivity shocks that are possibly time-
+varying. A single selection equation determines which meetings result in matches and the
+resulting model can explain multiple empirical patterns. When the distribution of match-
+specific shocks is Pareto, this selection mechanism delivers four results. First, we prove that
+wagesareadditivelyseparableintoaworkercomponent, afirmcomponent, andaconditional
+mean zero error term. Second, we prove that when high type workers have a comparative
+advantage in high type jobs, there is assortative matching. Third, we prove that the firm
+component is closely related to the effect of creating a meeting between a worker and random
+firm, conditional on the meeting resulting in a match. Fourth, we prove that the estimates
+from a standard two-way fixed effects regression may be biased by endogenous mobility, and
+that it may be difficult to detect this using conventional approaches.
+41
+
+===== PDF PAGE 43 =====
+
+References
+Abowd, John M., Francis Kramarz, and David N. Margolis, “High Wage Workers
+and High Wage Firms,” Econometrica, 1999, 67 (2), 251–333.
+, Kevin L. McKinney, and Ian M. Schmutte, “Modeling Endogenous Mobility in
+Earnings Determination,” Journal of Business & Economic Statistics, 2019, 37 (3), 405–
+418.
+Alvarez, Jorge, Felipe Benguria, Niklas Engbom, and Christian Moser, “Firms
+and the Decline in Earnings Inequality in Brazil,” American Economic Journal: Macroe-
+conomics, 2018, 10 (1), 149–189.
+Andrews, Martyn J., Leonard Gill, Thorsten Schank, and Richard Upward, “High
+Wage Workers and Low Wage Firms: Negative Assortative Matching or Limited Mobility
+Bias?,” Journal of the Royal Statistical Society: Series A (Statistics in Society), 2008, 171
+(3), 673–697.
+Bagger, Jesper and Rasmus Lentz, “An Empirical Model of Wage Dispersion with
+Sorting,” Review of Economic Studies, 2019, 86 (1), 153–190.
+Becker, Gary S., “A Theory of Marriage: Part I,” Journal of Political Economy, 1973, 81
+(4), 813–846.
+Belot, Michele, Philipp Kircher, and Paul Muller, “Providing Advice to Jobseekers
+at Low Cost: An experimental study on online advice,” Review of Economic Studies, 2019,
+86 (4), 1411–1447.
+Bilal, Adrien, “The Geography of Unemployment,” Quarterly Journal of Economics, 2023,
+138 (3), 1507–1576.
+Bonhomme, St´ephane, Kerstin Holzheu, Thibaut Lamadon, Elena Manresa,
+Magne Mogstad, and Bradley Setzler, “How Much Should We Trust Estimates of
+Firm Effects and Worker Sorting?,” Journal of Labor Economics, 2023, 41 (2), 291–322.
+Bonhomme, St´ephane, Thibaut Lamadon, and Elena Manresa, “A Distributional
+Framework for Matched Employer Employee Data,” Econometrica, 2019, 87 (3), 699–738.
+Bonneton, Nicolas and Christopher Sandmann, “Non-Stationary Search and Assor-
+tative Matching,” 2023. mimeo.
+42
+
+===== PDF PAGE 44 =====
+
+Borjas, George J., “Self-Selection and the Earnings of Immigrants,” American Economic
+Review, 1987, 77 (4), 531–553.
+Buera, Francisco J. and Ezra Oberfield, “TheGlobalDiffusionofIdeas,” Econometrica,
+2020, 88 (1), 83–114.
+Burdett, Ken and Melvyn G. Coles, “Marriage and Class,” Quarterly Journal of Eco-
+nomics, 1997, 112 (1), 141–168.
+Cahuc, Pierre, Fabien Postel-Vinay, and Jean-Marc Robin, “Wage Bargaining with
+On-the-Job Search: Theory and Eevidence,” Econometrica, 2006, 74 (2), 323–364.
+Card, David, Ana Rute Cardoso, and Patrick Kline, “Bargaining, Sorting, and the
+Gender Wage Gap: Quantifying the Impact of Firms on the Relative Pay of Women,”
+Quarterly Journal of Economics, 2016, 131 (2), 633–686.
+, , Joerg Heining, and Patrick Kline, “Firms and Labor Market Inequality: Evi-
+dence and Some Theory,” Journal of Labor Economics, 2018, 36 (S1), S13–S70.
+, Jo¨rg Heining, and Patrick Kline, “Workplace Heterogeneity and the Rise of West
+German Wage Inequality,” Quarterly Journal of Economics, 2013, 128 (3), 967–1015.
+Diamond, Peter A. and Eric Maskin, “An Eequilibrium Analysis of Search and Breach
+of Contract, I: Steady States,” Bell Journal of Economics, 1979, 10 (1), 282–316.
+Eeckhout, Jan and Philipp Kircher, “Sorting and Decentralized Price Competition,”
+Econometrica, 2010, 78 (2), 539–574.
+and , “Identifying Sorting—In Theory,” Review of Economic Studies, 2011, 78 (3),
+872–906.
+Flinn, Christopher and James Heckman, “NewMethodsforAnalyzingStructuralMod-
+els of Labor Force Dynamics,” Journal of Econometrics, 1982, 18 (1), 115–168.
+Gibbons, Robert and Lawrence Katz, “Does Unmeasured Ability Explain Inter-
+industry Wage Differentials?,” Review of Economic Studies, 1992, 59 (3), 515–535.
+Gouss´e, Marion, Nicolas Jacquemet, and Jean-Marc Robin, “Marriage, Labor Sup-
+ply, and Home Production,” Econometrica, 2017, 85 (6), 1873–1919.
+Hagedorn, Marcus, Tzuo Hann Law, and Iourii Manovskii, “Identifying Equilibrium
+Models of Labor Market Sorting,” Econometrica, 2017, 85 (1), 29–65.
+43
+
+===== PDF PAGE 45 =====
+
+Heckman, James J. and Bo E. Honore, “The Empirical Content of the Roy model,”
+Econometrica, 1990, 58 (5), 1121–1149.
+Hong, Guangbin, “Two-Sided Sorting of Workers and Firms: Implications for Spatial
+Inequality and Welfare,” 2024. University of Toronto mimeo.
+Kline, Patrick, “Firm Wage Effects,” 2024. NBER Working Paper 33084.
+, Raffaele Saggio, and Mikkel Sølvsten, “Leave-out Estimation of Variance Compo-
+nents,” Econometrica, 2020, 88 (5), 1859–1898.
+Lamadon, Thibaut, Jeremy Lise, Costas Meghir, and Jean-Marc Robin, “Labor
+Market Matching, Wages, and Amenities,” 2024. NBER Working Paper 32687.
+, Magne Mogstad, and Bradley Setzler, “Imperfect Competition, Compensating
+Differentials, and Rent Sharing in the US Labor Market,” American Economic Review,
+2022, 112 (1), 169–212.
+Lopes de Melo, Rafael, “Firm Wage Differentials and Labor Market Sorting: Reconciling
+Theory and Evidence,” Journal of Political Economy, 2018, 126 (1), 313–346.
+Noe, Thomas, “Comparing the Chosen: Selection Bias when Selection is Competitive,”
+Journal of Political Economy, 2020, 128 (1), 342–390.
+Oberfield, Ezra, “A Theory of Input-Output Architecture,” Econometrica, 2018, 86 (2),
+559–589.
+Roy, Andrew Donald, “SomeThoughtsontheDistributionofEarnings,” Oxford economic
+papers, 1951, 3 (2), 135–146.
+Shi, Shouyong, “Frictional Assignment. I. Efficiency,” Journal of Economic Theory, 2001,
+98 (2), 232–260.
+, “Frictional Assignment, Part II: Infinite Horizon and Unequality,” Review of Economic
+Dynamics, 2005, 8 (1), 106–137.
+Shimer, Robert, “The Assignment of Workers to Jobs in an Economy with Coordination
+Frictions,” Journal of Political Economy, 2005, 113 (5), 996–1025.
+and Lones Smith, “Assortative Matching and Search,” Econometrica, 2000, 68 (2),
+343–369.
+44
+
+===== PDF PAGE 46 =====
+
+Smith, Lones, “The Marriage Model with Search Frictions,” Journal of political Economy,
+2006, 114 (6), 1124–1144.
+Song, Jae, David J. Price, Fatih Guvenen, Nicholas Bloom, and Till Von Wachter,
+“Firming up Inequality,” Quarterly Journal of Economics, 2019, 134 (1), 1–50.
+Woodcock, Simon D., “Wage Differentials in the Presence of Unobserved Worker, Firm,
+and Match Heterogeneity,” Labour Economics, 2008, 15 (4), 771–793.
+45
+
+===== PDF PAGE 47 =====
+
+Appendix
+A Baseline Model Proofs
+A.1 Existence and Monotonicity
+Proof of Lemma 1. We prove that w¯ is strictly increasing. The proof that π¯ is strictly
+x y
+increasing is analogous.
+To find a contradiction, suppose there exists an x < x with w¯ w¯ . Since f is
+1 2 x1
+≥
+x2
+monotonic, f > f for all y. Then using equation (6), we have z¯ > z¯ for all y.
+x2,y x1,y x1,y x2,y
+(cid:82)
+Additionally, observe that ∞(z z¯)g(z)dz is strictly positive for all z¯, since G(z) < 1 for
+z¯ −
+all z. Additionally, the integral is decreasing in z¯, as can be confirmed directly. This means
+(cid:82) (cid:82)
+that z¯ ∞ x2,y (z − z¯ x2,y )g(z)dz > z¯ ∞ x1,y (z − z¯ x1,y )g(z)dz > 0.
+Putting this together, if there exists an x < x with w¯ w¯ ,
+1 2 x1
+≥
+x2
+Y (cid:90)
+γρ (cid:88) ∞
+w¯ = v f (z z¯ )g(z)dz
+x2
+r+δ
+y x2,y
+−
+x2,y
+y=1 z¯x2,y
+Y (cid:90)
+γρ (cid:88) ∞
+> v f (z z¯ )g(z)dz = w¯ ,
+r+δ
+y x1,y
+−
+x1,y x1
+y=1 z¯x1,y
+where the two equations use the value function (11) and the inequality uses f > f
+x2,y x1,y
+(cid:82) (cid:82)
+and z¯ ∞ x2,y (z − z¯ x2,y )g(z)dz > z¯ ∞ x1,y (z − z¯ x1,y )g(z)dz > 0, together with strict positivity of the
+remaining terms. But this is a contradiction, proving w¯ < w¯ .
+x1 x2
+Proof of Proposition 1. Consider the following 2(X +Y) functions of (w¯ ,u )X and
+x x x=1
+(π¯ ,v )Y :
+y y y=1
+Y (cid:90)
+γρ (cid:88) ∞
+T (w¯,π¯,u,v) = v f (z z¯ )g(z)dz,
+1,x y x,y x,y
+r+δ −
+y=1 z¯x,y
+X (cid:90)
+(1 γρ) (cid:88) ∞
+T (w¯,π¯,u,v) = − u f (z z¯ )g(z)dz,
+2,y x x,y x,y
+r+δ −
+x=1 z¯x,y
+Y
+(cid:88) ρu v (1 G(z¯ ))
+x y x,y
+T (w¯,π¯,u,v) = m − ,
+3,x x
+− δ
+y=1
+X
+(cid:88) ρu v (1 G(z¯ ))
+x y x,y
+T (w¯,π¯,u,v) = n − ,
+4,y y
+− δ
+x=1
+46
+
+===== PDF PAGE 48 =====
+
+where z¯ = (w¯ + v¯ )/f , as in equation (6). We refer to this mapping collectively as
+x,y x y x,y
+T = (T ,T ,T ,T ). It is immediate that any vector (w¯,π¯,u,v), together with z¯ solving
+1 2 3 4
+¯
+equation (6) and ϕ solving equation (13), is an equilibrium if and only if it is a fixed point
+of T, i.e. T(w¯,π¯,u,v) = (w¯,π¯,u,v).
+˜
+Now define the mapping T:
+T ˜ (w¯,π¯,u,v) = min T (w¯,π¯,u,v),w¯¯ ,
+1,x 1,x x
+{ }
+T ˜ (w¯,π¯,u,v) = min T (w¯,π¯,u,v),π¯¯ ,
+2,y 2,y y
+{ }
+˜
+T (w¯,π¯,u,v) = max T (w¯,π¯,u,v),0 ,
+3,x 3,x
+{ }
+˜
+T (w¯,π¯,u,v) = max T (w¯,π¯,u,v),0 ,
+4,y 4,y
+{ }
+where
+Y (cid:90)
+w¯¯ = γρ (cid:88) n f ∞ (z w¯¯ /f )g(z)dz,
+x y x,y x x,y
+r+δ −
+y=1
+w¯¯x/fx,y
+X (cid:90)
+π¯¯ = (1 − γ)ρ (cid:88) m f ∞ (z π¯¯ /f )g(z)dz.
+y x x,y y x,y
+r+δ −
+x=1
+π¯¯y/fx,y
+The mapping T ˜ is continuous. Moreover, it maps points satisfying w¯ [0,w¯¯ ], π¯ [0,π¯¯ ],
+x x y y
+∈ ∈
+u [0,m ], and v [0,n ] for all x 1,...,X and y 1,...,Y into itself. Therefore
+x x y y
+∈ ∈ ∈ { } ∈ { }
+˜
+T has a fixed point by Brouwer’s fixed point theorem.
+˜ ˜
+We prove that at any (w¯,π¯,u,v) which is a fixed point of T, T(w¯,π¯,u,v) = T(w¯,π¯,u,v),
+and thus (w¯,π¯,u,v) is also a fixed point of T. In the first step we prove that u > 0 for all
+x
+˜
+x. This is because if u = 0, T (w¯,π¯,u,v) = m , contradicting (w¯,π¯,u,v) being a fixed
+x 3,x x
+˜
+point. This implies T (w¯,π¯,u,v) = T (w¯,π¯,u,v) for all x at any fixed point. Similarly
+3,x 3,x
+˜ ˜
+v > 0 at any fixed point of T and so T (w¯,π¯,u,v) = T (w¯,π¯,u,v) for all y at any fixed
+y 4,y 4,y
+point.
+˜
+Next, any fixed point has w¯ > 0 for all x: T (w¯,π¯,u,v) is continuous and decreasing
+x 1,x
+in w¯ and is strictly positive at w¯ = 0 since v > 0 for all y. Similarly any fixed point has
+x x y
+π¯ > 0 for all y.
+y
+Finally, in any fixed point of T ˜ , any solution to T ˜ (w¯,π¯,u,v) = w¯ has w¯ < w¯¯ because
+1,x x x x
+˜ ˜
+π¯ > 0. This implies that the fixed point of T also solves T (w¯,π¯,u,v) = T (w¯,π¯,u,v) for
+y 1,x 1,x
+˜
+all x. The same logic implies T (w¯,π¯,u,v) = T (w¯,π¯,u,v) for all y in any fixed point.
+2,y 2,y
+˜
+In summary, we have proved that there exists a vector (w¯,π¯,u,v) with T(w¯,π¯,u,v) =
+˜
+(w¯,π¯,u,v), that at any such vector T(w¯,π¯,u,v) = T(w¯,π¯,u,v) and so (w¯,π¯,u,v) is a fixed
+point of T, and that any fixed point of T is an equilibrium. This proves an equilibrium
+47
+
+===== PDF PAGE 49 =====
+
+exists.
+Along the way we also proved that w¯ > 0 for all x and π¯ > 0 for all y at any fixed
+x y
+˜
+point of T, and hence in any equilibrium.
+A.2 Wages
+Proof of Proposition 2. Eliminate f from equation (9) using equation (6) to get an
+x,y
+expression for the wage in an (i,j) match:
+(cid:18) (cid:19)
+z
+i,j
+ω = w¯ +γ 1 (w¯ +π¯ ). (55)
+i,j xi
+z¯ −
+xi yj
+xi,yj
+Let
+z θ
+i,j
+ν .
+i,j
+≡ z¯ − θ 1
+xi,yj
+−
+It is easy to confirm that ν is independently and identically distributed across matches,
+i,j
+has a mean zero, and a cumulative distribution Φ . Then equation (55) become
+ν
+(cid:18) (cid:19)
+1
+ω = w¯ +γ ν + (w¯ +π¯ ). (56)
+i,j xi i,j
+θ 1
+xi yj
+−
+Using the definitions in equation (22), this immediately reduces to equation (21).
+Proof of Proposition 3. We prove a more general version of this proposition. For any
+strictly increasing function H : R R , define
++
+→
+(cid:82)
+wH = z¯ ∞ x,y H(W x,y (z))g(z)dz . (57)
+x,y 1 G(z¯ )
+x,y
+−
+From equations (6) and (9), we have
+(cid:18) (cid:19)
+z
+W (z) = w¯ +γ(w¯ +π¯ ) 1 .
+x,y x x y
+z¯ −
+x,y
+Using equation (57) and the functional form of the Pareto distribution, we obtain
+(cid:16) (cid:17)
+(cid:82) (cid:0) (cid:1)
+wH = z¯ ∞ x,y H w¯ x +γ(w¯ x +π¯ y ) z/z¯ x,y − 1 θz − θ − 1dz .
+x,y z¯ θ
+x−,y
+48
+
+===== PDF PAGE 50 =====
+
+Now let q = z/z¯ 1 and perform a change in the variable of integration to obtain
+x,y
+−
+(cid:90)
+wH ∞ H (cid:0) w¯ +γ(w¯ +π¯ )q (cid:1) θ(1+q) θ 1dq.
+x,y ≡ x x y − −
+0
+Setting H(w) = log(w) for all w gives us equation (32). This equation implies that wH is
+x,y
+(cid:0) (cid:1)
+simply a weighted average of H w¯ +γ(w¯ +π¯ )q , with the same weights for all (x,y). This
+x x y
+means that x and y only affect wH through w¯ and π¯ .
+x,y x y
+Now since H is strictly increasing, it is straightforward to verify that increasing either
+w¯ or π¯ raises the integrand in equation (32) at all q > 0, and hence raises wH . This
+x y x,y
+establishes the first two enumerated points.
+We next prove the third point if H is strictly concave. If H is strictly convex, we prove
+wH + wH < wH + wH . If H is linear, this is an equality. Take x and x with
+x1,y2 x2,y1 x1,y1 x2,y2 1 2
+w¯ < w¯ ; and y and y with π¯ < π¯ . Let
+x1 x2 1 2 y1 y2
+(1+γq)(w¯ w¯ )
+λ
+x2
+−
+x1
+.
+≡ (1+γq)(w¯ w¯ )+γq(π¯ π¯ )
+x2
+−
+x1 y2
+−
+y1
+The assumptions on x , x , y , and y ensure that λ (0,1) for all q > 0. Then verify
+1 2 1 2
+∈
+algebraically that
+w¯ +γ(w¯ +π¯ )q = λ(w¯ +γ(w¯ +π¯ )q)+(1 λ)(w¯ +γ(w¯ +π¯ )q), and
+x1 x1 y2 x1 x1 y1
+−
+x2 x2 y2
+w¯ +γ(w¯ +π¯ )q = (1 λ)(w¯ +γ(w¯ +π¯ )q)+λ(w¯ +γ(w¯ +π¯ )q).
+x2 x2 y1
+−
+x1 x1 y1 x2 x2 y2
+Thus H concave (convex) implies
+H(w¯ +γ(w¯ +π¯ )q) > (<)λH(w¯ +γ(w¯ +π¯ )q)+(1 λ)H(w¯ +γ(w¯ +π¯ )q), and
+x1 x1 y2 x1 x1 y1
+−
+x2 x2 y2
+H(w¯ +γ(w¯ +π¯ )q) > (<)(1 λ)H(w¯ +γ(w¯ +π¯ )q)+λH(w¯ +γ(w¯ +π¯ )q).
+x2 x2 y1
+−
+x1 x1 y1 x2 x2 y2
+Summing these gives
+(cid:0) (cid:1) (cid:0) (cid:1)
+H w¯ +γ(w¯ +π¯ )q +H w¯ +γ(w¯ +π¯ )q
+x1 x1 y2 x2 x2 y1
+(cid:0) (cid:1) (cid:0) (cid:1)
+> (<)H w¯ +γ(w¯ +π¯ )q +H w¯ +γ(w¯ +π¯ )q
+x1 x1 y1 x2 x2 y2
+when H is concave (convex). Integrating over the density θ(1+q) θ 1 for q > 0 delivers the
+− −
+third bullet point.
+Finally, we note that if f is strictly increasing in x and y, Lemma 1 implies w¯ and
+x,y x
+π¯ are strictly increasing. Then the three numbered conditions in the statement of the
+y
+49
+
+===== PDF PAGE 51 =====
+
+proposition imply that wH is strictly increasing and strictly submodular (supermodular) in
+x,y
+x and y when H is strictly concave (convex).
+A.3 Assortative Matching
+Proof of Proposition 4. We first prove that z¯ is strictly log-submodular. Substituting
+x,y
+equation (6) for z¯, we must prove that for x < x and y < y ,
+1 2 1 2
+(cid:18) (cid:19)(cid:18) (cid:19) (cid:18) (cid:19)(cid:18) (cid:19)
+w¯ +π¯ w¯ +π¯ w¯ +π¯ w¯ +π¯
+x1 y1 x2 y2
+<
+x1 y2 x2 y1
+.
+f f f f
+x1,y1 x2,y2 x1,y2 x2,y1
+Weak log supermodularity of f implies f f f f . And we see that the product
+x1,y1 x2,y2
+≥
+x1,y2 x2,y1
+of the numerators on the left hand side is smaller than the product of the numerators on the
+right hand side if and only if
+w¯ π¯ +w¯ π¯ < w¯ π¯ +w¯ π¯ (w¯ w¯ )(π¯ π¯ ) > 0.
+x1 y2 x2 y1 x1 y1 x2 y2
+⇔
+x2
+−
+x1 y2
+−
+y1
+This is immediate because w¯ and π¯ are strictly increasing (Lemma 1).
+We now use the assumption that G(z) = 1 (z/z ) θ. Then since logz¯ is strictly
+0 − x,y
+−
+submodular, log(1 G(z¯ )) = θlogz θlogz¯ is strictly supermodular. Finally, equa-
+x,y 0 x,y
+− −
+¯
+tion(13)impliesthatlogϕ inheritsthestrictsupermodularityoflog(1 G(z¯ )); andstrict
+x,y x,y
+−
+¯ ¯
+log-supermodularity of ϕ is equivalent to ϕ having the monotone likelihood ratio order.
+B Endogenous Separations
+We first solve the model, beginning with value functions, then state variables, and finally
+wages. All proofs are in Appendix A.1.
+B.1 Value Functions
+We start by formulating the value function for the match surplus, Vs (z), defined as in
+x,y
+equation (5) as the sum of the value of an employed worker and a filled job, in excess of their
+values while unmatched. This satisfies
+1
+rVs (z) = zf w¯ π¯ δVs (z)+µzVs (z)+ σ2z2Vs (z), (58)
+x,y x,y − x − y − x,y x,′y 2 x,′y′
+50
+
+===== PDF PAGE 52 =====
+
+where w¯ rVu is the flow value of unemployment and π¯ rVv is the flow value of a
+x ≡ x y ≡ y
+vacancy. Thelefthandsideistheflowvalueofsurplus. Thisisequaltothecontemporaneous
+output of the match zf in excess of the outside options, the flow value of unemployment
+x,y
+plus the flow value of a vacancy; minus the rate matches end exogenously, δ, times the
+surplus, plus two terms that account for the fact that z will change over time.
+The solution to this value function satisfies three additional conditions. First, let z¯
+x,y
+denote the threshold for ending the match. At this threshold, we have the value matching
+condition
+Vs (z¯ ) = 0,
+x,y x,y
+which reflects the fact that when z is a bit larger than z¯ , it is very likely to cross the
+x,y
+threshold in the near future. The second is the smooth pasting condition,
+Vs (z¯ ) = 0,
+x,′y x,y
+which is the optimality condition for the choice of threshold. The third is a no-bubble
+condition,
+f
+lim Vs (z) = x,y ,
+z
+x,′y
+r+δ µ
+→∞ −
+which states that when z is large, we can effective ignore the option to endogenously end
+the match in the future.
+Using these three conditions, we can solve the differential equation (58) explicitly:
+(cid:32) (cid:33)
+(cid:18) (cid:19) ξ
+Vs (z) = zf x,y w¯ x +π¯ y 1 1 z − for z z¯ , (59)
+x,y r+δ µ − r+δ − ξ +1 z¯ ≥ x,y
+x,y
+−
+and Vs (z) = 0 otherwise, where ξ > 0 is a known function of model parameters:
+x,y
+(cid:32)(cid:114) (cid:33)
+1 8(r+δ)
+ξ +θ2 θ . (60)
+≡ 2 σ2 −
+Additionally, we can derive an explicit expression for the threshold for continuing a match:
+(cid:18) (cid:19)
+ξ +θ 1 w¯ +π¯
+x y
+z¯ = − . (61)
+x,y
+ξ +θ f
+x,y
+This is equation (34) in the text.
+Next, usingequations(59)–(61)aswellasµ =
+σ2
+(1 θ), wecanrewritethevaluefunction
+2 −
+51
+
+===== PDF PAGE 53 =====
+
+as
+ 
+w¯ +π¯ ξ (cid:0) z (cid:1) + (cid:0) z (cid:1) − ξ
+Vs (z) = x y  z¯x,y z¯x,y 1 for z z¯ , (62)
+x,y r+δ ξ +1 − ≥ x,y
+and Vs (z) = 0 otherwise. This form is convenient for what follows. Note that the worker’s
+x,y
+share of surplus is Ve (z,w) Vu = γVs (z), a result we use in equation (44) in the text.
+x,y − x,y x,y
+Next we turn to the value of an unemployed worker. The worker meets a type y firm at
+rate ρv and realizes the value of z drawn from a Pareto distribution. The match is formed
+y
+if z > z¯ , in which event the worker gets a fraction γ of the surplus
+x,y
+Y (cid:90)
+w¯ = γρθzθ (cid:88) v ∞ Vs (z)z θ 1dz. (63)
+x 0 y x,y − −
+y=1 z¯x,y
+Using (62) and integrating gives
+γρzθξ (cid:88) Y
+w¯ = 0 v (w¯ +π¯ )z¯ θ. (64)
+x
+(r+δ)(θ 1)(ξ +θ)
+y x y x−,y
+− y=1
+There is a symmetric expression for the flow value of vacancy, which keeps a fraction (1 γ)
+−
+of the surplus:
+(1 γ)ρzθξ (cid:88) X
+π¯ = − 0 u (w¯ +π¯ )z¯ θ. (65)
+y
+(r+δ)(θ 1)(ξ +θ)
+x x y x−,y
+− x=1
+If we knew u and v , equations (61), (64), and (65) would characterize the flow value of an
+x y
+unemployed worker, the flow value of a vacancy, and the threshold z¯ .
+x,y
+B.2 State Variables
+¯
+We turn next to the stationary distribution of z in (x,y) matches. Let ϕ denote the
+x,y
+measure of these matches and ϕ (z) denote the stationary density of z in the surviving
+x,y
+matches. Matches only form when z > z¯ and they end the first time z z¯ , so selection
+x,y x,y
+≤
+changes the shape of ϕ (z) compared to the stationary distribution of z, which is Pareto.
+x,y
+The stationary distribution of z in (x,y) matches must satisfy the Kolmogorov forward
+equation
+(cid:18) (cid:19)
+ϕ ¯ δϕ (z)+ ∂ (cid:0) µzϕ (z) (cid:1) 1 ∂2 (cid:0) σ2z2ϕ (z) (cid:1) = ρu v θzθz θ 1 (66)
+x,y x,y ∂z x,y − 2∂z2 x,y x y 0 − −
+forz z¯ . Thelefthandsideisthemeasureof(x,y)matchesmultipliedbytheoutflowfrom
+x,y
+≥
+thedensityatapointz. Thiscomesfromthreeterms: exogenousseparations, thesystematic
+52
+
+===== PDF PAGE 54 =====
+
+decline in z due to the drift µ, and movement to nearby points due to the Brownian shock.
+The inflow comes from meetings according to the Pareto sampling distribution.
+¯
+We are interested in finding both the measure of (x,y) matches, ϕ , and the density of
+x,y
+z within those matches, ϕ (z). To do so, we first solve the differential equation (66):
+x,y
+2ρu v θzθz θ 1
+ϕ ¯ ϕ (z) = x y 0 − − +c z ζ θ 1 +c zζ 1,
+x,y x,y ζ(ζ +θ)σ2 1 − − − 2 −
+where ζ is a positive constant:
+(cid:32)(cid:114) (cid:33)
+1 8δ
+ζ +θ2 θ . (67)
+≡ 2 σ2 −
+¯
+Wethenfindϕandϕ,pinningdowntheconstantsc andc ,usingthreeadditionalconditions.
+1 2
+(cid:82)
+First, ϕ x,y (z) is a density, z¯ ∞ x,y ϕ x,y (z)dz = 1, which implies c 2 = 0. Second, the measure
+of matches at the separation threshold is zero, ϕ (z¯ ) = 0. And third, the inflows and
+x,y x,y
+outflows from (x,y) matches balance:
+(cid:18) (cid:19)
+σ2
+ϕ ¯ δ + z¯2 ϕ (z¯ ) = ρu v zθz¯ θ. (68)
+x,y 2 x,y ′x,y x,y x y 0 x−,y
+The left hand side is the rate that these matches end both exogenously (rate δ) and endoge-
+nously (rate σ2 z¯2 ϕ (z¯ ), from the probability flux condition combined with ϕ (z¯ ) =
+2 x,y ′x,y x,y x,y x,y
+0). The right hand side is the rate that these matches are created.
+The solution to this system of equations is
+δaϕ ¯ = ρu v zθz¯ θ, (69)
+x,y x y 0 x−,y
+where δa 1σ2(ζ +θ)2 is the total separation rate; and
+≡ 2
+(cid:32) (cid:33)
+θ(ζ +θ) z¯θ z¯θ+ζ
+x,y x,y
+ϕ (z) = , (70)
+x,y ζ zθ+1 − zθ+ζ+1
+(cid:82)z
+so the associated cumulative distribution function Φ (z) ϕ (z )dz depends only on
+x,y ≡ z¯x,y x,y ′ ′
+the ratio z/z¯ , as shown in equation (39) in the body of the paper.
+x,y
+Finally, we can close the model by finding the unemployment and vacancy rates, which
+53
+
+===== PDF PAGE 55 =====
+
+are just the measure of individuals left over after we account for matches.
+Y
+(cid:88)
+¯
+u = m ϕ (71)
+x x x,y
+−
+y=1
+X
+(cid:88)
+¯
+v = n ϕ . (72)
+y y x,y
+−
+x=1
+¯
+An equilibrium is then values of w¯ , π¯ , z¯ , ϕ , u , and v solving equations (61), (64),
+x y x,y x,y x y
+(65), (69), (71), and (72).
+B.3 Wages
+We are now in a position to characterize wages. The value function for a type-x worker
+employed at a type-y firm with match-specific productivity z and wage w is
+(cid:0) (cid:1) 1
+rVe (z,w) = w+δ Vu Ve (z,w) +µzVe (z)+ σ2z2Ve (z). (73)
+x,y x − x,y x,′y 2 x,′y′
+The basic structure is familiar: the flow value of employment is the wage plus the capital
+gain when the match ends, plus terms that come from the stochastic process for z.
+We assume that the worker gets a constant share γ of the total surplus, Ve (z,w) Vu =
+x,y − x,y
+γVs (z). Moreover, we defined w¯ rVu. Then we can invert this equation to find the
+x,y x ≡ x
+equilibrium wage W (z):
+x,y
+(cid:32) (cid:33)
+1
+W (z) = w¯ +γ (r+δ)Vs (z) µzVs (z) σ2z2Vs (z) . (74)
+x,y x x,y − x,′y − 2 x,′y′
+Equation (58) tells us that the term in parenthesis is simply the flow surplus zf w¯ π¯ ,
+x,y x y
+− −
+giving a simple expression for the wage:
+W (z) = w¯ +γ(zf w¯ π¯ ). (75)
+x,y x x,y x y
+− −
+This is identical to the wage in the model with constant z, but there is one important
+difference: the worker continues to work even in some jobs paying less than w¯ . In particular,
+x
+at the reservation productivity level z¯ defined in equation (61), we have
+x,y
+w¯ +π¯
+x y
+W (z¯ ) = w¯ γ .
+x,y x,y x
+− ξ +θ
+A worker is willing to take a job earning less than the flow value of unemployment because
+54
+
+===== PDF PAGE 56 =====
+
+of the possibility that its productivity will increase.
+It is useful to reexpress the wage as
+(cid:18)(cid:18) (cid:19) (cid:19)
+ξ +θ 1 z
+W (z) = w¯ +γ − 1 (w¯ +π¯ ), (76)
+x,y x x y
+ξ +θ z¯ −
+x,y
+which we obtain by eliminating f from equation (75) using equation (61).
+x,y
+B.4 Proofs
+Proof of Proposition 5. We first prove that w¯ is strictly increasing. Plugging equa-
+x
+tion (61) into equation (64), we have
+γρzθξ (cid:18) ξ +θ 1 (cid:19) − θ (cid:88) Y
+w¯ = 0 − v (w¯ +π¯ ) θ+1fθ .
+x (r+δ)(θ 1)(ξ +θ) ξ +θ y x y − x,y
+− y=1
+To find a contradiction, suppose there exists an x < x with w¯ w¯ . Since θ > 1, this
+1 2 x1
+≥
+x2
+implies (w¯ +π¯ ) θ+1 (w¯ +π¯ ) θ+1. Since f is monotonic, f < f for all y. Thus
+x1 y −
+≤
+x2 y − x1,y x2,y
+the right hand side of the previous equation is smaller when evaluated at x than at x , a
+1 2
+contradiction. This proves w¯ < w¯ . The proof that π¯ is strictly increasing is analogous.
+x1 x2 y
+Next,theproofthatz¯ isstrictlylog-supermodularisidenticaltothestepsintheproofof
+x,y
+Proposition4,sincewestillhavez¯ (w¯ +π¯ )/f fromequation(61). Thenequation(69)
+x,y x y x,y
+∝
+¯
+immediately implies ϕ is log-supermodular, and hence has the monotone likelihood ratio
+ordering.
+Proof of Proposition 6. In the notation of this proposition, equation (76) implies
+(cid:18)(cid:18) (cid:19) (cid:19)
+ξ +θ 1 z (t)
+i,j
+ω (t) = w¯ +γ − 1 (w¯ +π¯ ). (77)
+i,j xi
+ξ +θ z¯ −
+xi yj
+x,y
+Let
+z (t)
+i,j
+ν (t) D,
+i,j
+≡ z¯ −
+xi,yj
+where
+θ(ζ +θ)
+D (78)
+≡ (θ 1)(ζ +θ 1)
+− −
+is the expected value of q drawn from the distribution Φ in equation (39). Then among
+employed workers, ν +D inherits the distribution of q z/z¯ from equation (39), so ν has
+≡
+55
+
+===== PDF PAGE 57 =====
+
+stationary distribution
+ζ +θ θ
+Φ ν (ν) = 1 (ν +D)− θ + (ν +D)− ζ − θ for all ν > 1 D. (79)
+− ζ ζ −
+By construction, ν has mean zero.
+Now use
+zi,j(t)
+= ν (t) + D in equation (77) and take expectations. Since ν has mean
+z¯xi,yj i,j
+zero, this gives
+(cid:18) (cid:19)
+ξ +θ 1
+E (ω (t)) = w¯ +γ − D 1 (w¯ +π¯ ) (80)
+i,j xi
+ξ +θ −
+xi yj
+Thus defining
+(cid:18) (cid:19)
+θ(ζ +θ)(ξ +θ 1)
+C γ − 1 , (81)
+∗
+≡ (θ 1)(ξ +θ)(ζ +θ 1) −
+− −
+we get the desired expressions in equation (42). Finally, from equations (60) and (67), we
+get that when r = 0, ξ = ζ and so C = γ .
+∗ θ 1
+−
+Proof of Lemma 2. With two years of data, estimates of the firm fixed effects are
+equivalent to what is obtained by running the regression in first differences:
+w w = ψ ψ +ε ε . (82)
+i,t+1 − i,t J i,t+1 − J i,t i,t+1 − i,t
+As is well-known, this means that firm fixed effects are only identified from movers, i .
+∈ M
+By minimizing the sum of squared residuals, the OLS estimate of ψ must satisfy
+j
+(cid:88) (cid:88)
+ˆ ˆ ˆ ˆ
+(w w ψ +ψ ) = (w w ψ +ψ ). (83)
+i,t+1 − i,t − J i,t+1 j i,t+1 − i,t − j J i,t
+ij= i,t= i,t+1 ij= i,t+1= i,t
+| J ̸ J | J ̸ J
+Now take expectations, using the fact that each worker is as likely to move from j to j as
+′
+from j to j:
+′
+(cid:16) (cid:12) (cid:17)
+E α+ α +ψ+ ψ Eψ ˆ + Eψ ˆ (cid:12)i moves from j to j
+i − i− j′ − j− − j′ j(cid:12) ′
+(cid:16) (cid:17)
+= E α+ α +ψ+ ψ Eψ ˆ + Eψ ˆ i moves from j to j .
+i − i− j − j−′ − j j′ | ′
+The outer expectations are taken over the number and type of people who move away from
+firm j (LHS) and move to firm j (RHS). Because each worker i is as likely to move from j
+56
+
+===== PDF PAGE 58 =====
+
+to j as from j to j, the worker fixed effects cancel. Thus we have
+′ ′
+(cid:16) (cid:12) (cid:17)
+E ψ+ ψ Eψ ˆ + Eψ ˆ (cid:12)i moves from j to j
+j′
+−
+j−
+−
+j′ j(cid:12) ′
+(cid:16) (cid:17)
+= E ψ+ ψ Eψ ˆ + Eψ ˆ i moves from j to j .
+j − j−′ − j j′ | ′
+Equation (47) follows immediately.
+Proof of Proposition 7. Start by looking at the first wage after a move. In a brand new
+job z (t)/z¯ has a Pareto distribution with shape parameter θ and minimum value 1.
+i,j′ xi,y j′
+That is, the expected value of z (t)/z¯ immediately after a move is θ/(θ 1). Since the
+i,j′ xi,y j′ −
+wage satisfies equation (76), this implies
+E (w = ) = (1+C+)w¯ +C+π¯ ,
+i,t+1
+|J
+i,t+1
+̸ J
+i,t xi yJi,t+1
+(cid:18) (cid:19)
+ξ
+C+ γ . (84)
+≡ (θ 1)(ξ +θ)
+−
+Then in the language of Lemma 2, α+ = (1+γC+)w¯ and ψ+ = γC+π¯ .
+i xi j yj
+Now turn to the last wage before the move. We distinguish exogenous from endogenous
+moves. Workers move exogenously at rate δ. In this case, the last wage comes from a
+random draw from the stationary density of productivity ϕ (z), and so the expected value
+x,y
+of z (t)/z¯ is D = θ(ζ+θ) , as in equation (78).
+i,j′ xi,y j′ (θ 1)(ζ+θ 1)
+− −
+Workers also move endogenously. From the probability flux condition in equation (68),
+we get that the endogenous separation rate is σ2 z¯2 ϕ (z¯ ) = σ2 θ(ζ +θ). For endogenous
+2 x,y ′x,y x,y 2
+moves, the last wage comes from the bottom of the distribution, z (t) = z¯ . Putting
+i,j′ xi,y j′
+this together, the expected value of z/z¯ in exiting matches is
+δ θ(ζ+θ) + σ2 θ(ζ +θ)
+(θ 1)(ζ+θ 1) 2
+− − .
+δ + σ2θ(ζ +θ)
+2
+We can further simplify this by eliminating δ using equation (67). Then since the wage still
+satisfies equation (76), we get that the expected wage in exiting (old) matches is
+E (w = ) = (1+C )w¯ +C π¯ ,
+i,t
+|J
+i,t+1
+̸ J
+i,t − xi − yJi,t
+where
+(cid:18) (cid:19)
+ζξ(ζ +2θ 1) θ(θ 1)2
+C γ − − − . (85)
+−
+≡ (θ 1)(ζ +θ)(ξ +θ)(ζ +θ 1)
+− −
+Again in the language of Lemma 2, this implies α = (1+C )w¯ and ψ = C π¯ .
+i− − xi j− − yj
+57
+
+===== PDF PAGE 59 =====
+
+Finally, equation (47) in Lemma 2 tells us that the expected value of the estimated firm
+effect using movers is the average of ψ+ and ψ (up to an additive constant κ). It follows
+j j−
+immediately that the expected value of the estimated difference between two firm effects is
+E(cid:0) ψ ˆ ψ ˆ (cid:1) = ψ j + 1 +ψ j− 1 − ψ j + 2 − ψ j− 2 = C+ +C − (π¯ π¯ ).
+j1
+−
+j2
+2 2
+yj1
+−
+yj2
+In contrast, from equation (42), the firm component of wages satisfies
+ψ ψ = C (π¯ π¯ ),
+y∗
+j1 −
+y∗
+j2
+∗ yj1
+−
+yj2
+where C is defined in equation (43). Combining these gives us equation (48), with B
+∗
+≡
+C++C−
+. Note that this depends only on r, δ, θ, and σ. With some simplifications, we get
+2C∗
+2ζξ(ζ +2θ 1)+(θ 1)θ(ξ θ+1)
+B = (cid:0)− − − (cid:1) . (86)
+2(ζ +θ) ξ(ζ +2θ 1)+(θ 1)θ
+− −
+The proof that B < 1, the expression for B when r = 0, and the first order approximation
+to B when σ is small all follow from manipulating this expression.
+C Model with On-the-Job Search
+C.1 Model
+We now add on-the-job search in the manner of Cahuc, Postel-Vinay and Robin (2006).
+Importantly, on-the-job search does not affect the joint surplus of a type x worker matched
+to a type y firm in a match with idiosyncratic shock z. This is because when the worker
+leaves the match to take a new job, her continuation value is exactly the outside option plus
+the full surplus, while the firm’s continuation value is its outside option.
+C.1.1 Equilibrium Equations
+Match surplus must satisfy equation (62), rewritten here for convenience
+ 
+w¯ +π¯ ξ (cid:0) z (cid:1) + (cid:0) z (cid:1) − ξ
+Vs (z) = x y  z¯x,y z¯x,y 1, (87)
+x,y r+δ ξ +1 −
+58
+
+===== PDF PAGE 60 =====
+
+for z z¯ , with Vs (z) = 0 otherwise. We still have
+≥ x,y x,y
+(cid:18) (cid:19)
+ξ +θ 1 w¯ +π¯
+x y
+z¯ = − (88)
+x,y
+ξ +θ f
+x,y
+and
+(cid:32)(cid:114) (cid:33)
+1 8(r+δ)
+ξ +θ2 θ . (89)
+≡ 2 σ2 −
+Equation(87)implicitlydefinestheinverseofVs (z),Z (ν),theidiosyncraticshockz z¯
+x,y x,y ≥ x,y
+that gives a type x worker and a type y firm surplus ν 0. This satisfies
+≥
+1
+Z (ν) = .
+x′,y
+Vs (Z (ν))
+x,′y x,y
+Likewise, the flow value of an unemployed worker solves equation (64), again rewritten here
+for convenience
+γ ρ zθξ (cid:88) Y
+w¯ = 0 0 0 v (w¯ +π¯ )z¯ θ. (90)
+x
+(r+δ)(θ 1)(ξ +θ)
+y x y x−,y
+− y=1
+The only change is that the worker’s initial bargaining power is γ .
+0
+¯
+Let ϕ denote the measure of (x,y) matches and ϕ (z) denote the stationary density
+x,y x,y
+(cid:82)
+of z in surviving matches, so that z¯ ∞ x,y ϕ x,y (z)dz = 1. The flow value of a vacancy is
+X (cid:90)
+π¯ = (1 γ )ρ zθ (cid:88) u ∞ Vs (z)θz θ 1dz
+y − 0 0 0 x x,y − −
+x=1 z¯x,y
+(cid:32) (cid:33)
++ρ zθ (cid:88) X (cid:90) ∞ (cid:88) Y (cid:90) Z x,y′(V x s ,y (z)) (Vs (z) Vs (z ))ϕ ¯ ϕ (z )dz θz θ 1dz. (91)
+1 0 x,y − x,y′ ′ x,y x,y′ ′ ′ − −
+x=1 z¯x,y y′=1 z¯ x,y′
+The first term gives the surplus that the firm gets from meeting an unemployed worker, a
+fraction (1 γ ) of the total surplus ν. The second term gives the surplus from meeting
+0
+−
+an employed worker, Vs (z) Vs (z ) if the current match has surplus Vs (z) and the
+x,y − x,y′ ′ x,y
+previous match had lower surplus Vs (z ), weighted by the probability of these events. Here
+x,y′ ′
+¯
+ϕ ϕ (z) represents the probability that a type x worker is matched with a type y firm and
+x,y x,y
+has productivity z, an object we will find later.
+To proceed, we use integration-by-parts. For the first term, this gives
+(cid:90) (cid:90)
+∞ Vs (z)θz θ 1dz = ∞ Vs (z)z θdz
+x,y − − x,′y −
+z¯x,y z¯x,y
+59
+
+===== PDF PAGE 61 =====
+
+For the second term, we get
+(cid:32) (cid:33)
+(cid:90) ∞ (cid:88) Y (cid:90) Z x,y′(V x s ,y (z)) (Vs (z) Vs (z ))ϕ ¯ ϕ (z )dz θz θ 1dz
+x,y − x,y′ ′ x,y′ x,y′ ′ ′ − −
+z¯x,y y′=1 z¯ x,y′
+(cid:90)
+= ∞ Vs (z)Φ ˜ (Vs (z))z θdz,
+x,′y x x,y −
+z¯x,y
+where
+(cid:88) Y (cid:90) Z x,y′(ν)
+˜ ¯
+Φ (ν) = ϕ ϕ (z)dz (92)
+x x,y′ x,y′
+y′=1 z¯ x,y′
+is the probability that a type x worker is in a match with surplus less than ν. Combining
+terms, we get
+X (cid:90)
+π¯ = zθ (cid:88) ∞ (cid:0) (1 γ )ρ u +ρ Φ ˜ (Vs (z)) (cid:1) Vs (z)z θdz. (93)
+y 0 − 0 0 x 1 x x,y x,′y −
+x=1 z¯x,y
+Furthermore, using the functional form for Vs in equation (87) and z¯ in equation (88), we
+get
+(cid:16) (cid:17)
+ξ(θ+ξ)f 1 (cid:0) z (cid:1) − ξ − 1
+Vs (z) = x,y − z¯x,y . (94)
+x,′y
+(ξ +1)(θ+ξ 1)(δ +r)
+−
+Next we turn to the Kolmogorov forward equation:
+(cid:32) (cid:33)
+ϕ ¯ ϕ (z) δ +ρ zθ (cid:88) Y v Z (Vs (z)) θ + ∂ (cid:0) µzϕ ¯ ϕ (z) (cid:1) 1 ∂2 (cid:0) σ2z2ϕ ¯ ϕ (z) (cid:1)
+x,y x,y 1 0 y′ x,y′ x,y − ∂z x,y x,y −2∂z2 x,y x,y
+y′=1
+(cid:16) (cid:17)
+= v θzθz θ 1 ρ u +ρ Φ ˜ (Vs (z)) . (95)
+y 0 − − 0 x 1 x x,y
+The first term on the left hand side gives the rate that workers exit these matches. This
+happens either exogenously at rate δ or endogenously when they encounter a higher value
+match, i.e. a type y firm with shock z Z (Vs (z)), the level that gives them the same
+′ ≥ x,y′ x,y
+value as they have in their current match. The remaining terms on the left hand side capture
+the evolution of z within the current match, as in the model without on-the-job search. The
+right hand side shows the rate that unemployed worker or employed workers at type y firms
+′
+with idiosyncratic shock z < Z (Vs (z)) meet a type y firm and realize idiosyncratic shock
+x,y′ x,y
+z.
+Foreachxandy, equation(95)isaseparatesecondorderdifferentialequationforϕ (z).
+x,y
+It has the usual terminal conditional ϕ (z¯ ) = 0. The second boundary condition comes
+x,y x,y
+60
+
+===== PDF PAGE 62 =====
+
+from balancing out total inflows and total outflows into (x,y) matches:
+(cid:32) (cid:33)
+(cid:90) Y
+∞ ϕ ¯ ϕ (z) δ +ρ zθ (cid:88) v Z (Vs (z)) θ dz + 1 σ2z¯2 ϕ ¯ ϕ (z¯ )
+x,y x,y 1 0 y′ x,y′ x,y − 2 x,y x,y ′x,y x,y
+z¯x,y y′=1
+(cid:90)
+(cid:16) (cid:17)
+= ∞ v θzθz θ 1 ρ u +ρ Φ ˜ (Vs (z)) dz. (96)
+y 0 − − 0 x 1 x x,y
+z¯x,y
+The first term on the first line is the total outflow from (x,y) matches through exogenous
+separations and separations due to moving to a poaching firm. The second term captures
+endogenous separations through match specific-productivity hitting the boundary z¯ . The
+x,y
+second line captures inflows into (x,y) matches which comes either from unemployment or
+employment.
+Finally, to close the model, we compute the unemployment and vacancy rates
+Y
+(cid:88)
+¯
+u = m ϕ , (97)
+x x x,y
+−
+y=1
+X
+(cid:88)
+¯
+v = n ϕ . (98)
+y y x,y
+−
+x=1
+Equations (87), (90), (92), (93), (95), (96), (97), and (98) is a closed system that can be
+solved for Vs (z), w¯ , π¯ , Φ ˜ (ν), ϕ ¯ ϕ (z), u , and v .
+x,y x y x x,y x,y x y
+C.1.2 Wages
+We now turn to wages. Assume the wage depends on worker type, firm type, idiosyncratic
+shock, andbargainingshareγ, whereγ istheshareofsurplusthattheworkerkeeps. Between
+meetings, γ stays constant. If a worker in a meeting with surplus ν meets a firm with surplus
+ν > ν, the worker moves to the new firm and gets bargaining power ν/ν . If the new firm
+′ ′
+has γν < ν ν, the worker stays in the old firm but bargaining power updates to γ = ν /ν.
+′ ′ ′
+≤
+If ν γν, nothing changes. A worker hired from unemployment gets bargaining power γ.
+′
+≤
+Surplusshareγ meansVe (z,γ) Vu = γVs (z). Wethusneedtowritethevaluefunction
+x,y − x x,y
+Ve (z,γ), recognizing how z changes, how the employer changes, and how bargaining power
+x,y
+61
+
+===== PDF PAGE 63 =====
+
+changes. We have
+∂Ve (z,γ) 1 ∂2Ve (z,γ)
+rVe (z,γ) = W (z,γ)+δ(Vu Ve (z,γ))+µz x,y + σ2z2 x,y
+x,y x,y x − x,y ∂z 2 ∂z2
+(cid:88) Y (cid:90) V x s ,y (z)(cid:18) (cid:18) ν (cid:19) (cid:19)
++ρ zθ v Ve z, ′ Ve (z,γ) θZ (ν ) θ 1Z (ν )dν
+1 0 y′ x,y Vs (z) − x,y x,y′ ′ − − x′,y′ ′ ′
+y′=1 γV x s ,y (z) x,y
++ρ zθ (cid:88) Y v (cid:90) ∞ (cid:18) Ve (cid:18) Z (ν ), V x s ,y (z) (cid:19) Ve (z,γ) (cid:19) θZ (ν ) θ 1Z (ν )dν .
+1 0 y′ x,y′ x,y′ ′ ν − x,y x,y′ ′ − − x′,y′ ′ ′
+y′=1 V x s ,y (z) ′
+The first line reflects the wage, exogenous separations, and the evolution of z. The second
+line reflects meeting a new type y firm with surplus ν between γ times current surplus and
+′ ′
+full current surplus. This leads to a change in bargaining power but no change in employer.
+The third line reflects meetings with type y firms and surplus above current surplus, which
+′
+leads to a change in employer and a new bargaining power.
+Using Ve (z,γ) Vu = γVs (z), we can rewrite this as
+x,y − x x,y
+1
+(r+δ)γVs (z) = W (z,γ) rVu +µzγVs (z)+ σ2z2γVs (z)
+x,y x,y − x x,′y 2 x,′y′
+(cid:88) Y (cid:90) V x s ,y (z) (cid:0) (cid:1)
++ρ zθ v ν γVs (z) θZ (ν ) θ 1Z (ν )dν
+1 0 y′ ′ − x,y x,y′ ′ − − x′,y′ ′ ′
+y′=1 γV x s ,y (z)
+Y
+(cid:88)
++ρ zθ(1 γ)Vs (z) v Z (Vs (z)) θ.
+1 0 − x,y y′ x,y′ x,y −
+y′=1
+The last line simplifies considerably, reflecting the fact that when a type x worker at a type
+y firm with match shock z meets a type y firm with match shock z , the new surplus is
+′ ′
+higher if z > Z (Vs (z)); in the special case of y = y, this boils down to z > z. In this
+′ x,y′ x,y ′ ′
+event, the worker gets the full surplus from the old match, so the capital gain is 1 γ times
+−
+that surplus.
+Match surplus still satisfies the second order differential equation (58), so we can simplify
+62
+
+===== PDF PAGE 64 =====
+
+this considerably:
+(cid:0) (cid:1)
+W (z,γ) = w¯ +γ zf w¯ π¯
+x,y x x,y x y
+− −
+(cid:88) Y (cid:90) V x s ,y (z) (cid:0) (cid:1)
+ρ zθ v ν γVs (z) θZ (ν ) θ 1Z (ν )dν
+− 1 0 y′ ′ − x,y x,y′ ′ − − x′,y′ ′ ′
+y′=1 γV x s ,y (z)
+Y
+(cid:88)
+ρ zθ(1 γ)Vs (z) v Z (Vs (z)) θ.
+− 1 0 − x,y y′ x,y′ x,y −
+y′=1
+We can also do integration-by-parts on the remaining integral:
+(cid:88) Y (cid:90) V x s ,y (z) (cid:0) (cid:1)
+ρ zθ v ν γVs (z) θZ (ν ) θ 1Z (ν )dν
+1 0 y′ ′ − x,y x,y′ ′ − − x′,y′ ′ ′
+y′=1 γV x s ,y (z)
+(cid:88) Y (cid:88) Y (cid:90) V x s ,y (z)
+= ρ zθ(1 γ)Vs (z) v Z (Vs (z)) θ +ρ zθ v Z (ν ) θdν
+1 0 − x,y y′ x,y′ x,y − 1 0 y′ x,y′ ′ − ′
+y′=1 y′=1 γV x s ,y (z)
+This cancels nicely with the last term in the wage equation
+(cid:0) (cid:1) (cid:88) Y (cid:90) V x s ,y (z)
+W (z,γ) = w¯ +γ zf w¯ π¯ ρ zθ v Z (ν ) θdν .
+x,y x x,y − x − y − 1 0 y′ x,y′ ′ − ′
+y′=1 γV x s ,y (z)
+This formulation of the wage equation appears to be new to the literature, although it is
+clearly related to some existing expressions.
+To proceed further, we do a change-in-variables. Let ν = Vs (z ) so dν = Vs (z )dz .
+′ x,y′ ′ ′ x,′y′ ′ ′
+Then we have
+W x,y (z,γ) = w¯ x +γ (cid:0) zf x,y − w¯ x − π¯ y (cid:1) − ρ 1 z 0 θ (cid:88) Y v y′ (cid:90) Z x,y′(V x s ,y (z)) V x s ,′y′ (z ′ )z ′− θ dz ′ . (99)
+y′=1 Z x,y′(γV x s ,y (z))
+Note from equation (87) that Vs (z ) is a polynomial in z and so the integral can be solved
+x,′y′ ′ ′
+explicitly.
+C.2 Numerical Solution
+We solve the model iteratively. Each iteration has two parts:
+˜
+1. Given u , v and Φ , use (87),(88), (90), and (93) to find w¯ ,π¯ ,z¯ .
+x y x x y x,y
+¯
+2. Given w¯ ,π¯ ,z¯ , update ϕ ϕ (z).
+x y x,y x,y x,y
+63
+
+===== PDF PAGE 65 =====
+
+˜
+(a) We treat u , v and Φ as known, and discretize (95) on a grid for z. We use two
+x y x
+boundary conditions: ϕ(z¯ ) = 0 and (96). This gives us a linear system to find
+x,y
+¯
+new ϕ ϕ (z) on grid.
+x,y x,y
+¯ ˜
+(b) We use ϕ ϕ (z) to update u , v and Φ .
+x,y x,y x y x
+(c) We repeat steps 2a and 2b until the updates in u and v are small enough.
+x y
+3. We repeat steps 1 and 2 until the updates are small enough.
+C.3 Generating Artificial Data
+To generate artificial data, we choose number of workers N, number of firms M and the
+number of periods T to follow them. Moreover, we choose a vector tm with measurement
+dates, when we will record employment status of all workers.
+To start, we draw type for each worker i and each firm j in the sample according to their
+corresponding type distribution m and n .
+x y
+We describe how we update worker’s state separately for employed and unemployed
+workers.
+Employed worker i with type x.
+The initial state is (t,j,y,z,ν,γ) where t is the calendar time; j,y are firm’s name and type;
+and z,ν,γ are value of match-specific productivity, match surplus and worker’s bargaining
+power at time t. To update, we determine time of four events:
+1. Time until exogenous separation, τ . This is a draw from exponential distribution with
+1
+expected duration 1/δ.
+2. Time until endogenous separation, τ . This is a draw from Inverse Gaussian (IG)
+2
+distribution describing first hitting time for log(z). The two parameters describing IG
+distribution is the distance from the barrier relative to the standard deviation, which
+is (log(z) log(z¯ ))/σ and the drift relative to standard deviation, (µ
+σ2
+)/σ.
+− x,y − 2
+3. Time until meeting a firm and drawing a match-specific productivity above the separa-
+tion threshold, τ . This is a draw from exponential distribution with expected duration
+3
+1/λe, where λe = ρ zθ (cid:80)Y v z¯ θ .
+x x 1 0 y′=1 y′ x−,y′
+4. Time until the next measurement date, τ . This is the time from t until the closest
+4
+tm t.
+≥
+64
+
+===== PDF PAGE 66 =====
+
+Evaluate which event happens first, τ = min τ ,...τ , and update worker’s state
+min 1 4
+{ }
+accordingly:
+1. τ = τ : Workerleavestounemployment. Weupdatehisstateto(t+τ , , , , , ).
+min 1 1
+− − − − −
+We proceed as with unemployed worker (described below).
+2. τ = τ : Workerleavestounemployment. Weupdatehisstateto(t+τ , , , , , ).
+min 2 2
+− − − − −
+We proceed as with unemployed worker (described below).
+3. τ = τ : Wefirstupdatethematch-specificproductivitytogetitsvalueattimet+τ .
+min 3 3
+That is, conditional on starting at z, we draw the value of match-specific productivity
+τ periods later, conditional on the value of match-specific productivity staying above
+3
+the separation barrier z¯ during τ periods. We denote this draw z˜ and evaluate the
+x,y 3
+corresponding match surplus ν˜ = Vs (z˜). Next, we determine a poaching firm: We
+x,y
+draw y according to v z¯ θ / (cid:80) v z¯ θ , j from the distribution of firms with type
+′ y′ x−,y′ y′′ y′′ x−,y′′ ′
+y according to sampling weights b , and z from the Pareto distribution with scale
+′ j′ ′
+parameter z¯ . Then ν = Vs (z ). We distinguish three cases:
+x,y′ ′ x,y′ ′
+(a) ν˜ < ν : worker moves, and we update the state to (t + τ ,j ,y ,z ,ν ,γ ) where
+′ 3 ′ ′ ′ ′ ′
+γ = ν˜/ν
+′ ′
+(b) γν˜ < ν < ν˜: workers stays and but updates his bargaining power, so the new
+′
+state is (t+τ ,j,y,z˜,ν˜,γ ) where γ = ν /ν˜
+3 ′ ′ ′
+(c) v < γν˜: worker stays and does not update his bargaining power, so the new state
+′
+is (t+τ ,j,y,z˜,ν˜,γ)
+3
+4. τ = τ : Weupdatethematch-specificproductivitytocorrespondtotimet+τ . That
+min 4 4
+is, conditional on starting at z, we draw the value of match-specific shock in τ periods,
+4
+conditional on the value of match-specific productivity staying above the separation
+barrier z¯ during τ periods. Denote this draw z˜ and compute the corresponding
+x,y 4
+match surplus ν˜ = Vs (z˜). The updated state is (t+τ ,j,y,γ,z˜,v˜). Since t+τ is also
+x,y 4 4
+the measurement date, we save (t+τ ,j,y,γ,z˜,ν˜) together with (i,x).
+4
+Unemployed worker i with type x.
+For a worker who is unemployed at t, we draw the unemployment duration τ from an
+u
+exponential distribution with expected duration 1/λu, where λu = ρ zθ (cid:80)Y v z¯ θ . We
+x x 0 0 y′=1 y′ x−,y′
+then draw y according to v z¯ θ/ (cid:80) v z¯ θ , j from the distribution of firms with type y
+y x−,y y′ y′ x−,y′
+according to sampling weights b , and z from the Pareto distribution with scale parameter
+j
+65
+
+===== PDF PAGE 67 =====
+
+(1) (2) (3) (4)
+var(logw) 0.2763 0.2763 0.2763 0.2763
+(cid:99)
+var(α) 0.1430 0.2198 0.2286 0.2078
+(cid:99)
+var(ψ) 0.0148 0.0096 0.0197 0.0095
+(cid:99)
+cov(α,ψ) 0.0187 0.0174 0.0087 0.0173
+(cid:99)
+var(ε) 0.0810 0.0122 0.0106 0.0243
+(cid:99)
+corr(α,ψ) 0.4074 0.3776 0.1291 0.3887
+(cid:100)
+worker type observed yes no no no
+firm type observed yes yes no no
+method OLS OLS OLS KSS
+no. of observations 1560 1560 1560 1560
+no. of workers 780 780 780 780
+no. of movers 261 261 261 261
+no. of firms 35 35 35 35
+Table 2: Quantification of biases in log wage variance decomposition in artificial data on
+leave-one-out connected set, as in (Kline, Saggio and Sølvsten, 2020). Numbers of observa-
+tions, workers, movers and firms are in thousands.
+z¯ . Then ν = Vs (z) and bargaining power γ = γ . Hence, the updated state is (t +
+x,y x,y 0
+τ ,j,y,z,ν,γ).
+u
+Loop
+We keep updating workers’ states until every workers’ current time is t T. We initialize
+≥
+every worker as unemployed at time t = 0 and discard several first periods to make sure
+the economy is in a steady state. We use log-normal distribution as sampling weights b for
+j
+firms with the given type y.
+C.4 Additional Statistics from the Model
+In this section, we present additional results for the parametrized model.
+Table 2 is an analog of Table 1 but using leave-one-out connected set, as defined by
+(Kline, Saggio and Sølvsten, 2020), for all columns (1)–(4).
+Figure 8 shows average wage, rather than average log wage, paid in an (x,y) match and
+distribution of worker types in different firm types. We note that the distribution is the same
+as in Figure 3, which shows the average log wage.
+The model generates a considerable share of job-to-job transitions which are associated
+with a wage cut. In Figure 9, we plot the histogram of log(w ) log(w ) for workers
+i,t+ i,t
+− −
+who move to a different employer at time t, using w to denote the wage of worker i an
+i,t+
+66
+
+===== PDF PAGE 68 =====
+
+Average wage Share of worker types
+1
+5
+0.8
+4
+0.6
+3
+0.4
+2
+0.2
+1 0
+2 4 6 8 10 1 2 3 4 5 6 7 8 9 10
+firm type y firm type y
+Figure 8: Average wages and distribution of worker types conditional on firm type in the
+model with on-the-job. The left panels show the average wage paid by different firms for
+different worker types. Each line represents one worker type. The right panels show the
+distribution of worker types x in firms with different firm types y.
+instant after the move, and w an instant before the move. On average, wages increase
+i,t
+−
+by 7.9 percent at the instant of a job-to-job move (standard deviation 14.4 percent), but
+29.8 percent of workers take a wage cut. This cannot be observed in the data due to time-
+aggregation
+D Variance Decomposition in Veneto Data
+We use Veneto data to conduct the variance decomposition of wages measured in levels or
+logs. We follow Kline, Saggio and Sølvsten (2020) in constructing the sample from Veneto
+datafortheyears1985–2001. Fromthisdata, weconstruct15sampleswithtwoyearsofdata
+each. We first winsorize the data by dropping top and bottom 1% of the wage observations.
+We further deflate wages by the average wage in the given calendar year. For each sample,
+we run the two-way fixed effects regression with wages on the right-hand side, measured
+either in levels or logs.
+Across the samples, we find that the correlation between worker fixed effects estimated
+using logs and using levels is 0.966; and the correlation between firm fixed effects estimated
+in logs and levels is 0.964. This suggests that measuring wages in logs or levels does not
+affect much estimation of fixed effects.
+We next examine whether measuring wages in logs or levels affects the variance decom-
+67
+
+===== PDF PAGE 69 =====
+
+0.1
+0.08
+0.06
+0.04
+0.02
+0
+1 0.5 0 0.5 1 1.5 2
+− −
+wage growth log(w ) log(w )
+i,t+ i,t
+− −
+ytisned
+Figure 9: Distribution of wage growth from an instant before to an instant after a job-to-job
+move.
+ˆ
+E[αˆ x = x] E[ψ y = y]
+i i j j
+| |
+1
+1 0.5
+0
+0
+0.5
+−
+0 0.2 0.4 0.6 0.8 1 1.2 0 0.1 0.2 0.3 0.4
+αˆ¯ ˆ¯
+x ψ
+y
+Figure 10: Estimated type fixed effects, mean of estimated individual fixed effects and its
+variance. The left panel shows αˆ¯ from column (1) and the mean of αˆ from column (3)
+x i
+ˆ¯ ˆ
+among workers i with true type x. Similarly, the right panel shows ψ and the mean of ψ
+y j
+among firms j with true type y. The whiskers show mean plus 2 standard deviation. In
+±
+the left panel, we normalize αˆ¯ = 0. In the right panel, we normalize ψ
+ˆ¯
+= 0.
+1 1
+68
+
+===== PDF PAGE 70 =====
+
+position. For each sample and for each measure of wages, we do an OLS-based variance
+decomposition, which we know is biased, as well as the KSS method which is designed to
+correct the bias. Figure 11 shows the time series of the variance decomposition, using solid
+lines for KSS and dashed lines for OLS. We see that the trend in each component of the
+decomposition is similar whether measured in logs or levels.
+E Exponentially-Distributed Match Quality
+E.1 Wages
+Here we characterize the average log wage under the assumption that z has an exponential
+distribution with parameter θ > 0, so G(z) = 1 e θz for all z 0.
+−
+− ≥
+Proposition 8 Assume z has an exponential distribution with parameter θ > 0. Then
+(cid:90)
+w = θ ∞ log(w¯ +γqf )e θqdq. (100)
+x∗,y x x,y −
+0
+Assume that for all x < x and y, f < f . Then w < w . Additionally, take any
+1 2 x1,y x2,y x∗ 1,y x∗ 2,y
+x, y , and y . Then w ⋛ w if and only if f ⋛ f .
+1 2 x∗,y1 x∗,y2 x,y1 x,y2
+If f = f1f2 for strictly increasing functions f1 and f2, then w is strictly increasing
+x,y x y x∗,y
+and strictly submodular.
+Our proof of the first part of the Proposition below allows for any transformation of the
+wage, not just the log. The submodularity result for a multiplicatively-separable production
+function relies on the logarithmic assumption.
+Before proving Proposition 8, we establish a preliminary result:
+Lemma 3 Assume f = f1f2 for strictly positive and strictly increasing functions f1 and
+x,y x y
+f2. Then w¯ /f1 and π¯ /f2 are strictly increasing.
+x x y y
+Proof. We prove that w¯ /f1 is strictly increasing. To find a contradiction, assume there
+x x
+is an x < x with w¯ /f1 w¯ /f1 . Note x < x implies 1/f1 > 1/f1 . Equation (6)
+1 2 x1 x1 ≥ x2 x2 1 2 x1 x2
+states
+w¯x + π¯y
+f1 f1
+z¯ = x x ,
+x,y f2
+y
+and so z¯ > z¯ for all y. Moreover, equation (11) implies
+x1,y x2,y
+Y (cid:90)
+w¯ x = γρ (cid:88) v f2 ∞ (z z¯ )g(z)dz.
+f1 r+δ y y − x,y
+x y=1 z¯x,y
+69
+
+===== PDF PAGE 71 =====
+
+0.1
+0.08
+0.06
+0.04
+0.02
+0
+1985 1990 1995 2000
+segaw
+fo
+ecnairaV
+0.06
+0.04
+0.02
+0
+1985 1990 1995 2000
+α
+fo
+ecnairaV
+0.03
+0.02
+0.01
+0
+1985 1990 1995 2000
+ψ
+fo
+ecnairaV
+0.01
+0
+0.01
+−
+0.02
+− 1985 1990 1995 2000
+ψ,α
+ecnairavoC
+2
+×
+0.03
+0.02
+0.02
+0.01
+0.01
+0
+1985 1990 1995 2000
+year
+ε
+fo
+ecnairaV
+0.2
+0
+0.2
+−
+1985 1990 1995 2000
+year
+log, OLS level, OLS
+log, KSS level, KSS
+noitalerroC
+Figure 11: Variance decomposition in Veneto data, years 1986–2000, using wages in logs and
+levels, leave-one-one-connected set, OLS and KSS variance decomposition.
+70
+
+===== PDF PAGE 72 =====
+
+Since the integral is decreasing in z¯ , we have
+w¯x1
+<
+w¯x2,
+a contradiction.
+x,y f1 f1
+x1 x2
+Theproofthatπ¯ /f2 isstrictlyincreasingisidentical, manipulatingequation(12)instead
+y y
+of equation (11).
+Proof of Proposition 8. For the first part of the Proposition, we again work with the
+more general version, using wH defined in equation (57) for an arbitrary increasing function
+H. From the wage equation (9) and the exponential distribution, we have
+(cid:90)
+wH = θ ∞ H(w¯ +γ(zf w¯ π¯ ))e θ(z z¯x,y)dz.
+x,y x x,y − x − y − −
+z¯x,y
+Let q = z z¯ to get
+x,y
+−
+(cid:90)
+wH = θ ∞ H(w¯ +γ((q +z¯ )f w¯ π¯ ))e θqdq.
+x,y x x,y x,y − x − y −
+0
+From equation (6), we can reduce this to
+(cid:90)
+wH = θ ∞ H(w¯ +γqf )e θqdq,
+x,y x x,y −
+0
+which is equivalent to equation (100) when H(w) = logw for all w. If f is strictly increasing,
+so is w¯ (Lemma 1). And since H is strictly increasing, then the integrand in equation (100)
+x
+is strictly increasing in both x and y for all q. Thus wH is strictly increasing.
+Finally we turn to the multiplicatively separable case, f = f1f2. Here we assume
+x,y x y
+H(w) = logw. We use equation (100). w is strictly submodular if
+∗
+log(w¯ +γqf1f2)
+x x y
+is strictly submodular for all q > 0. So take x < x and y < y . Strict submodularity
+1 2 1 2
+requires
+log(w¯ +γqf1 f2 )+log(w¯ +γqf1 f2 ) < log(w¯ +γqf1 f2 )+log(w¯ +γqf1 f2 ),
+x1 x1 y1 x2 x2 y2 x1 x1 y2 x2 x2 y1
+or equivalently
+(w¯ +γqf1 f2 )(w¯ +γqf1 f2 ) < (w¯ +γqf1 f2 )(w¯ +γqf1 f2 ).
+x1 x1 y1 x2 x2 y2 x1 x1 y2 x2 x2 y1
+Expand the products and cancel common terms to get
+w¯ f1 f2 +w¯ f1 f2 < w¯ f1 f2 +w¯ f1 f2
+x1 x2 y2 x2 x1 y1 x1 x2 y1 x2 x1 y2
+71
+
+===== PDF PAGE 73 =====
+
+or
+(cid:18) (cid:19)
+w¯ w¯
+x2 x1 (f2 f2 ) > 0.
+f1 − f1 y2 − y1
+x2 x1
+Lemma 3 implies the first term is positive for all x < x and the second term is positive by
+1 2
+assumption.
+Some of these results parallel the earlier results for a Pareto distribution. In particular,
+if f is strictly increasing in both x and y, then so is the average log wage. Thus the model
+predicts that more productive workers are paid higher wages at any firm, and that more
+productive firms pay higher wages to any worker.
+On the other hand, when G is exponential, the average log wage depends on the entire
+production function f, not just on the reservation wage and profit, as was the case with a
+Pareto. This allows for some interesting possibilities. For example, a type-x worker’s average
+log wage at a type-y firm is increasing in f , and so different types of workers may have a
+x,y
+different ordering of average log wages across firm types.
+When f is strictly increasing and multiplicatively separable. Proposition 8 establishes
+x,y
+that the average log wage is increasing and submodular, exactly as we established in Propo-
+sition 3 with the Pareto distribution. Thus once again we see that complementarity in the
+production function does not necessarily carry over to the average log wage.
+E.2 Assortative Matching
+We now give conditions for assortative matching in the exponential case. This requires
+somewhat stronger assumptions that the Pareto case.
+Proposition 9 Assume z has an exponential distribution with parameter θ > 0. Also as-
+sume f is strictly increasing and either 1/f is weakly supermodular or f is mul-
+x,y x,y x,y
+−
+tiplicatively separable. Then the measure of matches ϕ ¯ has the monotone likelihood ratio
+order.
+For a strictly increasing function f, the assumption that 1/f is weakly supermodular im-
+x,y
+−
+plies that f is strictly log supermodular, while multiplicative separability is the borderline
+x,y
+case for weak log supermodularity.
+Proof of Proposition 9. We split the proof into two pieces.
+72
+
+===== PDF PAGE 74 =====
+
+1/f weakly supermodular. Take any x < x and y < y . Then
+x,y 1 2 1 2
+−
+(cid:18) (cid:19)
+1 1
+(w¯ w¯ ) < 0,
+f − f
+x2
+−
+x1
+x2,y2 x2,y1
+(cid:18) (cid:19)
+1 1
+(π¯ π¯ ) < 0,
+f − f
+y2
+−
+y1
+x2,y2 x1,y2
+since in both cases the first term is negative (since f is positive and strictly increasing) and
+the second term is positive by Lemma 1. Additionally, 1/f submodular implies
+1 1 1 1
++ + .
+f f ≤ f f
+x1,y1 x2,y2 x1,y2 x2,y1
+Multiply each term in the last inequality by w¯ +π¯ and add to the preceding inequalities
+x1 y1
+to get
+w¯ +π¯ w¯ +π¯ w¯ +π¯ w¯ +π¯
+x1 y1
++
+x2 y2
+<
+x1 y2
++
+x2 y1,
+f f f f
+x1,y1 x2,y2 x1,y2 x2,y1
+From equation (6), this implies that z¯ is strictly submodular.
+x,y
+Next, in steady state with an exponential distribution, we have from equation (13) that
+¯
+logϕ = log(ρ/δ)+logu +logv θz¯ .
+x,y x y x,y
+−
+¯
+Since z¯ is strictly submodular and the other terms are amodular, this proves that logϕ
+x,y x,y
+¯
+is strictly supermodular, i.e. that ϕ has the monotone likelihood ratio order.
+f multiplicatively separable. Assume f = f1f2 for some strictly positive and
+x,y x,y x y
+strictly increasing functions f1 and f2. As in the other case, we must prove that for all
+x > x and y > y , z¯ is strictly submodular:
+2 1 2 1 x,y
+w¯ +π¯ w¯ +π¯ w¯ +π¯ w¯ +π¯
+x1 y1
++
+x2 y2
+<
+x1 y2
++
+x2 y1.
+f1 f2 f1 f2 f1 f2 f1 f2
+x1 y1 x2 y2 x1 y2 x2 y1
+Regroup terms to write this as
+(cid:18) (cid:19)(cid:18) (cid:19) (cid:18) (cid:19)(cid:18) (cid:19)
+w¯ w¯ 1 1 π¯ π¯ 1 1
+x1 x2
++
+y1 y2
+< 0.
+f1 − f1 f2 − f2 f2 − f2 f1 − f1
+x1 x2 y1 y2 y1 y2 x1 x2
+Lemma 3 establishes that of w¯ /f1 is increasing. A parallel (omitted) proof establishes
+x x
+monotonicity of π¯ /f2. Thus both of the terms on the left hand side are negative, proving
+y y
+the result.
+73
+
+===== PDF PAGE 75 =====
+
+E.3 Other Distributions
+A natural question is whether monotonicity of the production function f guarantees mono-
+tonicity of the average log wage for other distributions of the match-specific shock z. In
+general, the answer is no. First, if the distribution of match-specific productivity shocks is
+degenerate, wages are generally a hump-shaped function of a firm’s type for a given worker
+(Shimer and Smith, 2000; Eeckhout and Kircher, 2011; Lopes de Melo, 2018). Second, we
+are able to construct an economy where the production function is strictly increasing and
+z has a continuous distribution on the positive real line, yet the average log wage is not
+monotonic in the firm type. Still, it is easy to construct other examples where the wage is
+monotone in both the worker and firm types, and for this reason we believe that the special
+cases we highlight here are useful for understanding more general properties of the model.
+74

@@ -1,0 +1,552 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/wdw2jj",
+    "id": "wdw2jj",
+    "slide": 11,
+    "layoutId": "f4a45b2d-a165-41aa-a743-0923c43a574a",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "82378df2-dc0e-4aa0-b5f4-c07656602ab7",
+    "masterLayoutName": "Master",
+    "backgroundColor": "#FFFFFF",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "bg1": "#FFFFFF",
+      "bg2": "#000000",
+      "tx1": "#1F1F1F",
+      "tx2": "#FFFFFF",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "typefaces": [
+      "+mn-lt"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "f4a45b2d-a165-41aa-a743-0923c43a574a",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "82378df2-dc0e-4aa0-b5f4-c07656602ab7",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "82378df2-dc0e-4aa0-b5f4-c07656602ab7",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/czu9svqp",
+      "id": "1",
+      "bbox": [
+        72,
+        40,
+        900,
+        20
+      ],
+      "geometry": "rect",
+      "text": "NONPARAMETRIC BENCHMARK",
+      "textPreview": "NONPARAMETRIC BENCHMARK",
+      "resolvedFontSize": 12,
+      "resolvedTextStyle": {
+        "fontSize": 12,
+        "typeface": "+mn-lt",
+        "color": "#666666",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "NONPARAMETRIC BENCHMARK"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "NONPARAMETRIC BENCHMARK",
+          "resolvedTextStyle": {
+            "fontSize": 12,
+            "color": "#666666",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "NONPARAMETRIC BENCHMARK",
+              "fontSize": 12,
+              "color": "#666666",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/byl8jqp4",
+      "id": "2",
+      "bbox": [
+        72,
+        74,
+        1130,
+        74
+      ],
+      "geometry": "rect",
+      "text": "Without structure, sparse graph support generically fails for cardinal quadratic targets",
+      "textPreview": "Without structure, sparse graph support generically fails for cardinal quadratic targets",
+      "resolvedFontSize": 35,
+      "resolvedTextStyle": {
+        "fontSize": 35,
+        "typeface": "+mn-lt",
+        "color": "#000000",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Without structure, sparse graph support generically fails for cardinal"
+          },
+          {
+            "index": 2,
+            "text": "quadratic targets"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Without structure, sparse graph support generically fails for cardinal quadratic targets",
+          "resolvedTextStyle": {
+            "fontSize": 35,
+            "color": "#000000",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Without structure, sparse graph support generically fails for cardinal quadratic targets",
+              "fontSize": 35,
+              "color": "#000000",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/axcrql8j",
+      "id": "3",
+      "bbox": [
+        86,
+        172,
+        1105,
+        440
+      ],
+      "geometry": "rect",
+      "text": "Stack the full schedule as m in R^{IJ}. Let R_E select observed cells.\nMissing-cell perturbations are K_E = kernel(R_E).\n\nLinear target l'm:\n  identified iff l'd = 0 for every d in K_E.\n\nQuadratic target q(m)=m'A m:\n  identified iff q(m+d)=q(m) for every d in K_E and every admissible m.\n\nImplication:\n  Connectedness is not enough. If a target depends on unobserved cell levels or contrasts, graph support and maintained structure enter the estimand.",
+      "textPreview": "Stack the full schedule as m in R^{IJ}. Let R_E select observed cells. | Missing-cell perturbations are K_E = kernel(R_E). |  | Linear ta...",
+      "resolvedFontSize": 20,
+      "resolvedTextStyle": {
+        "fontSize": 20,
+        "typeface": "+mn-lt",
+        "color": "#000000",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 12,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Stack the full schedule as m in R^{IJ}. Let R_E select observed cells."
+          },
+          {
+            "index": 2,
+            "text": "Missing-cell perturbations are K_E = kernel(R_E)."
+          },
+          {
+            "index": 3,
+            "text": ""
+          },
+          {
+            "index": 4,
+            "text": "Linear target l'm:"
+          },
+          {
+            "index": 5,
+            "text": "  identified iff l'd = 0 for every d in K_E."
+          },
+          {
+            "index": 6,
+            "text": ""
+          },
+          {
+            "index": 7,
+            "text": "Quadratic target q(m)=m'A m:"
+          },
+          {
+            "index": 8,
+            "text": "  identified iff q(m+d)=q(m) for every d in K_E and every admissible m."
+          },
+          {
+            "index": 9,
+            "text": ""
+          },
+          {
+            "index": 10,
+            "text": "Implication:"
+          },
+          {
+            "index": 11,
+            "text": "  Connectedness is not enough. If a target depends on unobserved cell levels or contrasts, graph support and maintained structure"
+          },
+          {
+            "index": 12,
+            "text": "enter the estimand."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Stack the full schedule as m in R^{IJ}. Let R_E select observed cells.",
+          "resolvedTextStyle": {
+            "fontSize": 20,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Stack the full schedule as m in R^{IJ}. Let R_E select observed cells.",
+              "fontSize": 20,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "Missing-cell perturbations are K_E = kernel(R_E).",
+          "resolvedTextStyle": {
+            "fontSize": 20,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Missing-cell perturbations are K_E = kernel(R_E).",
+              "fontSize": 20,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 4,
+          "text": "Linear target l'm:",
+          "resolvedTextStyle": {
+            "fontSize": 20,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Linear target l'm:",
+              "fontSize": 20,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 5,
+          "text": "  identified iff l'd = 0 for every d in K_E.",
+          "resolvedTextStyle": {
+            "fontSize": 20,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "  identified iff l'd = 0 for every d in K_E.",
+              "fontSize": 20,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 7,
+          "text": "Quadratic target q(m)=m'A m:",
+          "resolvedTextStyle": {
+            "fontSize": 20,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Quadratic target q(m)=m'A m:",
+              "fontSize": 20,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 8,
+          "text": "  identified iff q(m+d)=q(m) for every d in K_E and every admissible m.",
+          "resolvedTextStyle": {
+            "fontSize": 20,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "  identified iff q(m+d)=q(m) for every d in K_E and every admissible m.",
+              "fontSize": 20,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 10,
+          "text": "Implication:",
+          "resolvedTextStyle": {
+            "fontSize": 20,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Implication:",
+              "fontSize": 20,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 11,
+          "text": "  Connectedness is not enough. If a target depends on unobserved cell levels or contrasts, graph support and maintained structure enter the estimand.",
+          "resolvedTextStyle": {
+            "fontSize": 20,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "  Connectedness is not enough. If a target depends on unobserved cell levels or contrasts, graph support and maintained structure enter the estimand.",
+              "fontSize": 20,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/l4nap076",
+      "id": "4",
+      "bbox": [
+        72,
+        655,
+        940,
+        22
+      ],
+      "geometry": "rect",
+      "text": "Source: LOO note, pp. 19-21; Proposition 4 and Corollary 1",
+      "textPreview": "Source: LOO note, pp. 19-21; Proposition 4 and Corollary 1",
+      "resolvedFontSize": 11,
+      "resolvedTextStyle": {
+        "fontSize": 11,
+        "typeface": "+mn-lt",
+        "color": "#666666",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Source: LOO note, pp. 19-21; Proposition 4 and Corollary 1"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Source: LOO note, pp. 19-21; Proposition 4 and Corollary 1",
+          "resolvedTextStyle": {
+            "fontSize": 11,
+            "color": "#666666",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Source: LOO note, pp. 19-21; Proposition 4 and Corollary 1",
+              "fontSize": 11,
+              "color": "#666666",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/k3e9wvql",
+      "id": "5",
+      "bbox": [
+        1150,
+        655,
+        60,
+        22
+      ],
+      "geometry": "rect",
+      "text": "11",
+      "textPreview": "11",
+      "resolvedFontSize": 11,
+      "resolvedTextStyle": {
+        "fontSize": 11,
+        "typeface": "+mn-lt",
+        "color": "#666666",
+        "alignment": "right",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "11"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "11",
+          "resolvedTextStyle": {
+            "fontSize": 11,
+            "color": "#666666",
+            "alignment": "right"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "11",
+              "fontSize": 11,
+              "color": "#666666",
+              "alignment": "right"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    }
+  ],
+  "composeRuns": []
+}

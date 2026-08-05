@@ -1,0 +1,1177 @@
+===== PDF PAGE 1 =====
+Assortative Matching and Search 
+Author(s): Robert Shimer and Lones Smith 
+Source: Econometrica , Mar., 2000, Vol. 68, No. 2 (Mar., 2000), pp. 343-369 
+Published by: The Econometric Society 
+Stable URL: https://www.jstor.org/stable/2999430
+JSTOR is a not-for-profit service that helps scholars, researchers, and students discover, use, and build upon a wide 
+range of content in a trusted digital archive. We use information technology and tools to increase productivity and 
+facilitate new forms of scholarship. For more information about JSTOR, please contact support@jstor.org. 
+ 
+Your use of the JSTOR archive indicates your acceptance of the Terms & Conditions of Use, available at 
+https://about.jstor.org/terms
+The Econometric Society  is collaborating with JSTOR to digitize, preserve and extend access to 
+Econometrica
+This content downloaded from 
+65.112.8.31 on Fri, 05 Jun 2026 20:28:48 UTC 
+All use subject to https://about.jstor.org/terms
+
+===== PDF PAGE 2 =====
+ Econloin7etrica, Vol. 68, No. 2 (March, 2000), 343-369 
+ ASSORTATIVE MATCHING AND SEARCH' 
+ BY ROBERT SHIMER AND LONES SMITH_ 
+ In Becker's (1973) neoclassical marriage market model, matching is positively assorta- 
+ tive if types are complements: i.e., match output f(x, y) is suipermoddlar in x and y. We 
+ reprise this famous result assuming time-intensive partner search and transferable output. 
+ We prove existence of a search equilibrium with a continuum of types, and then 
+ characterize matching. After showing that Becker's conditions on match output no longer 
+ suffice for assortative matching, we find sufficient conditions valid for any search frictions 
+ and type distribution: supermodularity not only of output f, but also of log f, and log f 
+ Symmetric submodularity conditions imply negatively assortative matching. Examples 
+ show these conditions are necessary. 
+ KEYWORDS: Search frictions, matching, assignment. 
+ 1. INTRODUCTION 
+ THIS PAPER REEXAMINES a classic insight of the assignment literature when 
+ matching is assortative in an environment with search frictions. We assume a 
+ continuum of heterogeneous agents who can produce only in pairs. If two agents 
+ form a match, they generate a flow of divisible output. We depart from the 
+ neoclassical assignment literature (e.g., Becker (1973)) in assuming that match 
+ creation is time consuming: each unmatched agent faces a Poisson arrival of 
+ potential mates (Diamond (1982), Mortensen (1982), Pissarides (1990)). As 
+ matching precludes further search, agents must weigh the opportunity cost of 
+ ceasing to search for better options, against the benefit of producing immedi- 
+ ately.
+ Individuals' behavior is described by their acceptance sets, which specify with 
+ whom they are willing to match; only mutually acceptable matches are consum- 
+ mated. When agents match, they evenly divide the match surplus, i.e., their 
+ output flow in the match less their values while searching, as in the Nash 
+ bargaining solution. Equilibrium requires that everyone's acceptance set maxi- 
+ 'This paper answers questions stemming from a 1994 version of our mimeo "Matching, Search, 
+ and Heterogeneity." The current version of that paper solves a constrained social planner's problem 
+ and focuses on the relationship between equilibrium and socially optimal matching patterns. 
+ 2We thank Daron Acemoglu, Susan Athey, Richard Boylan, Peter Diamond, Ed Schlee, Peter 
+ S0rensen, and Charles Wilson, as well as a co-editor and two anonymous referees, for useful 
+ comments on this paper. We also thank seminar participants at NYU, Princeton, Copenhagen, LSE, 
+ Harvard-MIT, Chicago, Rochester, Michigan, Georgetown, Penn State, Iowa, and UCSB, the Yale 
+ NBER GE Conference, the 1997 Canadian Theory Meetings, the 1997 Summer Meeting of the 
+ Econometric Society, the 1997 Northwestern Summer Micro Theory Conference, and the 1998 
+ Cleveland Fed NBER Conference. While we have since found an alternate proof, we are grateful to 
+ Sheldon Chang (M.I.T. Math Dept.) for fixing a serious flaw in a continuity assertion needed for 
+ existence. We acknowledge help received via sci.math.research. Marcos Chamon provided valuable 
+ simulations assistance. Financial support from NSF Grants SBR-9709881 for Shimer and SBR- 
+ 9422988 and SBR-9711885 for Smith are gratefully acknowledged. 
+ 343 
+This content downloaded from 
+65.112.8.31 on Fri, 05 Jun 2026 20:28:48 UTC 
+All use subject to https://about.jstor.org/terms
+
+===== PDF PAGE 3 =====
+ 344 R. SHIMER AND L. SMITH 
+ mizes her expected payoff, and the distribution of unmatched agents is in steady 
+ state. We provide what we believe to be the first general existence theorem for 
+ search models with ex ante heterogeneous agents. The proof is complicated by 
+ the obselvation that agents' acceptance sets affect the steady state unmatched 
+ distribution, and thus the agents' matching opportunities and their willingness to 
+ accept matches. 
+ We then turn to assortative matching. Becker's (1973) sufficient condition in 
+ the frictionless model is well-known. Assume that types x and y in [0, 1] produce 
+ f(x, y) when matched and nothing otherwise. With complementarity (fr, > 0), 
+ the marginal product of a higher partner rises in one's type; therefore, in a core 
+ allocation, matching is positively assortative-matched partners are identical. 
+ The easy derivation of this famous result offers hope that it naturally extends to 
+ a model with search frictions: Agents match with an interval of types around 
+ their own. Examples in Figure 3 disprove this. First, for the complementary 
+ function f(x, y) = (x + y - 1)2, type 4 produces nothing in the core allocation. 
+ With search frictions, nearby agents will match with ^. When type 9 agents meet 
+ each other, they then prefer to wait for a profitable match, as matching produces 
+ nothing, but precludes further search. By continuity, this argument extends to 
+ types near l. These agents match with higher and lower types, but not among 
+ themselves. 
+ That (+, ) minimizes f is inessential to this critique. Let f(x,y)=(x?y)2 
+ and suppose "high" types are willing to match with "middle" types. This 
+ opportunity is wonderful for middle types, and so if two of them should meet, 
+ they prefer to continue to search for high types. On the other hand, if they meet 
+ a "low" type without such a valuable option, matching is mutually agreeable. 
+ Despite these setbacks, we find restrictions on the production function alone 
+ that ensure assortative matching for any search frictions or type distribution. By 
+ this we formally mean that any two matches can be severed, and the greater two 
+ and lesser two types agreeably rematched. Observe that our motivational fail- 
+ ures of assortative matching in Figure 3 featured individuals with nonconvex 
+ matching sets some agents only willing to match with higher and lower types. 
+ In fact, we show that matching set convexity is logically necessary for assortative 
+ matching, and-along with simple conditions that orient matching sets-suffices 
+ as well. Convexity, in turn, follows if all agents' preferences over partners' types 
+ are single-peaked. 
+ This suggests an indirect attack on assortative matching. We show that 
+ single-peaked preferences, and hence assortative matching, ask that not only the 
+ production function be supermodular,3 but also its log first- and cross-partial 
+ derivatives, log gf and log f Supermodularity of f ensures that any high 
+ enough type's utility rises in her partner's type; supermodularity of log f' yields 
+ single-peaked preferences for low types; and supermodularity of log , provides 
+ a single-crossing property which allows us to classify every type as either low or 
+ high. Finally, we prove that negatively assortative matching-matching with 
+ opposite types-obtains under symmetric submodularity conditions. 
+ 3We define supermodularity in Assumption Al-Sup. See Topkis (1998) for details. 
+This content downloaded from 
+65.112.8.31 on Fri, 05 Jun 2026 20:28:48 UTC 
+All use subject to https://about.jstor.org/terms
+
+===== PDF PAGE 4 =====
+ MATCHING AND SEARCH 345 
+ We are aware of two other papers that consider "transferable utility" (i.e., 
+ shared output) search models with ex ante heterogeneity.4 Sattinger (1995) does 
+ not explore the link with models in the frictionless assignment literature. Lu and 
+ McAfee (1996) establishes assortative matching when f(x, y) xy, a production 
+ function that satisfies our sufficient conditions. However, they do not consider 
+ other production functions, and so do not touch on the necessary and sufficient 
+ conditions that are central to our paper. In addition, Lu and McAfee's (1996) 
+ existence proof sidesteps the endogeneity of the unmatched distribution. While 
+ Sattinger (1995) endogenizes the unmatched distribution, he does not prove 
+ existence of a search equilibrium. 
+ By way of overview, Section 2 summarizes Becker's two frictionless results, 
+ and then introduces our search model. We define and characterize search 
+ equilibria in Section 3, and establish their existence in Section 4. Section 5 first 
+ defines assortative matching and shows that it requires convex matching sets. 
+ We then prove that convex matching sets and Becker's condition ensure assorta- 
+ tive matching. Finally, we prove that our three supermodularity condition imply 
+ convex matching sets, and address necessity with counterexamples. Less intuitive 
+ proofs are appendicized. 
+ 2. THE MODEL 
+ There is an atomless continuum of agents, each indexed by her exogenously 
+ given and publicly observable productivity type x E [0, 1]. Normalize the mass of 
+ agents to unity, and let L: [0, 1] -> [0, 1] be the type distribution. Associated with 
+ this is a type density function 1. For the existence of an equilibrium, we require 
+ that 1 be positive and boundedly finite: 0 < 1 < 1(x) < I < c/c for all x. Our 
+ language in the paper, as well as the interpretation we lend to it, implicitly 
+ assumes a continuum of every type of agent. Agents then belong to the graph 
+ {(x, i)Ix E [0, 1], 0 < i < l(x)} in R' with Lebesque measure, where i is an index 
+ number of the type x agent. 
+ Without loss of generality, normalize the flow output of an unmatched agent 
+ to 0. When agents (types) x and y are matched together, their flow output 
+ depends on their types, f: [0, 1]2 -> R. We later refer to a basic set of assump- 
+ tions: 
+ A0 (REGULARITY CONDITIONS): The production fiunction f(x, y) is nonnegative, 
+ symmetric (f(x, y) =f(y, x)), continuous, and twice differentiable, with uniformly 
+ bounded first partial derivatives on [0, 1] x [0, 1]. 
+ 2.1. The Frictionless MatchingBenchmark 
+ In the core allocation, prices allocate the scarce resource, high productivity 
+ agents. When is there positively assortative matchinzg (PAM), where each agent 
+ 4Morgan (1995), Burdett and Coles (1997), and Smith (1998) study heterogeneous-agent search 
+ models with nontransferable utility (NTU), i.e., with exogenous output sharing rules. 
+This content downloaded from 
+65.112.8.31 on Fri, 05 Jun 2026 20:28:48 UTC 
+All use subject to https://about.jstor.org/terms
+
+===== PDF PAGE 5 =====
+ 346 R. SHIMER AND L. SMITH 
+ matches with another of the same type? A sufficient condition is that types be 
+ complementary: 
+ Al -Sup (STRICT SUPERMODULARITY): The production function f is strictly super- 
+ modular. That is, the own marginalproduict of any x > 0 is strictly increasinig in her 
+ partner's type; or if x > x' and y > y', then f(x, y) + f(x', y') > f(x, y') + f(x', y). 
+ If Al-Sup obtains, all agents have higher marginal products when they match 
+ with high productivity agents. In the core allocation there must be PAM. The 
+ proof of this well-known result of Becker is simple: Any allocation in which 
+ some type x agents match with type x' o x agents admits a Pareto-improvement. 
+ Output rises if all such agents rematch with another of their own type, since 
+ Al-Sup implies f(x, x) + f(x', x') > 2f(x, x') whenever x 7&x'. Thus the unique 
+ output-maximizing allocation entails PAM, and hence so must the core. 
+ Al-SUB (STRICT SUBMODULARITY): The production function f is str-ictly subnmod- 
+ ular: if x>x' an1d) >>y', then f(x, y) +f(x', y') <f(x, y') +f(x', y). 
+ Under Al-Sub, the unique core allocation entails negativ)ely assortatiVe match- 
+ ing (NAM): Each agent x matches with her "opposite" type y(x), where 
+ L(x) + L(y(x)) 1. For Al-Sub implies that if there are four agents, z1 < Z2 < 
+ Z3 < Z4, the allocation in which z1 and z4 are matched and z2 and z3 are 
+ matched Pareto dominates the two other possible allocations in which these four 
+ agents match in pairs. 
+ Throughout, we maintain Al-Sup or Al-Sub. This excludes production func- 
+ tions with nonmonotonic marginal products (like f(x, y) maxKx2y,xy2>, in 
+ Kremer and Maskin (1995)), for which matching patterns are not easily charac- 
+ terized. 
+ 2.2. Matching with Search 
+ We now develop a continuous time, infinite horizon matching model with 
+ search frictions, in which meeting other agents is time-consuming and hap- 
+ hazard. 
+ Action Sets: At any instant in continuous time, an agent is either matched or 
+ utinmatched. Only the unmatched engage in (costless) search for a new partner. 
+ When two unmatched agents meet, they immediately observe each other's type. 
+ Either may veto the proposed match; it is only consummated if both accept. 
+ Since in a steady state environment, a match that is profitable to accept is 
+ profitable to sustain, we simplify our notation by ignoring the possibility of quits. 
+ To maintain a steady state population of unmatched agents, we assume 
+ exogenous match dissolutions. Thus, nature randomly destroys any match with a 
+ constant flow probability (Poisson rate) S > 0, i.e., it lasts an elapse time of t 
+This content downloaded from 
+65.112.8.31 on Fri, 05 Jun 2026 20:28:48 UTC 
+All use subject to https://about.jstor.org/terms
+
+===== PDF PAGE 6 =====
+ MATCHING AND SEARCH 347 
+ with chance e At the moment the match is destroyed, both agents re-enter 
+ the pool of searchers. 
+ Preferences: Each agent maximizes her expected present value of payoffs, 
+ discounted at the interest rate r > 0. As in Becker, we assume that match output 
+ f(x, y) is shared. Thus, x earns an endogenous flow payoff -T(xIy) when 
+ matched with y. Because payoffs exhaust match output, 7T(xly)+ ?7T(yx)- 
+ f(x, y). 
+ Unmatched Agents and Search: Let u < 1 denote the unmatched density flnc- 
+ tion, i.e., fX u(x) dx is the mass of unmatched agents with types x E X c [0, 1]. 
+ Search frictions capture the following story. Were it possible, an unmatched 
+ individual would meet a random unmatched or matched agent at the flow rate 
+ p > 0. However, it is infeasible to meet someone who is already matched she is 
+ engaged, and so misses any meeting. Thus, one simply meets any y E Y c [0, 1] at 
+ a rate proportional to the mass of those unmatched in Y: pf , u(y) dy. Our 
+ conclusion underscores that our descriptive theory extends well beyond this 
+ search technology, but we use this assumption in our equilibrium existence 
+ proof. 
+ Strategies: A steady state (pure) strategy for agent of type x is a time-in- 
+ variant5 Borel measurable set A(x) of agents with whom x is willing to match. 
+ (That agents of the same type use the same strategy is not a restriction, as will 
+ follow from ?3.1.) The strategy depends only on the unmatched density function 
+ u, the sole payoff-relevant state variable. 
+ Next, agent x's matching set /,?(x) -A(x) n {y x eA(y)} is the set of accept- 
+ able types y who are willing to match with her. Call a match (x, y) m.1utually 
+ agreeable if y e 4//(x). By construction, matching sets are symmetric, y e //Y(x) if 
+ and only if x ea-//(y). We shall sometimes consider the matching correspon- 
+ dence, /4': [0, 1]0u [0, 1]. Finally, for use in our existence result, Proposition 1, we 
+ define a match indicator function a: a (x, y) = 1 if y E .11(x) and 0 otherwise. 
+ Steady State. In steady state, the flow creation and flow destruction of matches 
+ for every type of agent must exactly balance. The density of matched agents 
+ x E [0, 1] is 1(x) - u(x); these agents' matches exogenously dissolve with flow 
+ probability (. The flow of matches created by unmatched agents of type x is 
+ pU(X)f/,(,)U(y) dy. Putting this together, in steady state for all types x E [0, 1], 
+ (1) 8(((x) - u(x)) = pu(x)f u(y) dy = pu(x)f ax(x,y)ut(y) dy. 
+ LY/( .x) 0 
+ 5In a stationary world, assuming stationary acceptance sets is without loss of generality: As the 
+ strategy of no single agent affects the future state of the economy, if an acceptance set is optimal at 
+ time s, it remains so at time t > s. 
+This content downloaded from 
+65.112.8.31 on Fri, 05 Jun 2026 20:28:48 UTC 
+All use subject to https://about.jstor.org/terms
+
+===== PDF PAGE 7 =====
+ 348 R. SHIMER AND L. SMITH 
+ 3. SEARCH EQUILIBRIUM 
+ In a steady state search equilibrium (SE), (i) eveiyone maximizes her expected 
+ payoff, taking all other strategies as given; (ii) if matching weakly increases both 
+ agents' payoffs, then they both accept the match;6 and (iii) all unmatched rates 
+ are in steady-state. This section formalizes (i) and (ii) in a compact, recursive 
+ way.
+ 3.1. Analytic Desc4iption of Search Equilibrium
+ The Two Bellmnan Equations: Let W(x) denlote the expected value of an 
+ unmatched agent x. Similarly, let W(xly) be the present value for x while 
+ matched with y, and thus S(x I y) W(x I y) - W(x) is her "personal" surplus 
+ when matched. We begin by providing the Bellman equations solved by these 
+ values. 
+ While unmatched, x earns nothing, but at flow rate pf/(x)u(y) dy, she meets 
+ and matches with some y E-(x), enjoying a capital gain S(xly). Summarizing: 
+ (2) rW(x)= pf S(xly)u(y)dy. 
+ Similarly, x gets an endogenous flow payoff -w(xly) when matched with y. With 
+ Poisson rate S, her match is destroyed, and she suffers a capital loss S(xly). 
+ Hence, 
+ (3) rW(xIy) = 7T(xly) - S(xly). 
+ Match Suiplus Division: Search frictions create temporary bilateral rents, 
+ since an agreeable match now is generically strictly preferred to waiting for a 
+ better future match. This shifts the determination of the flow payoffs 7- into the 
+ realm of bargaining theory. We follow a number of authors, e.g., Pissarides 
+ (1990), closing the model with the Nash bargaining solution: namely, S(xly) 
+ S(ylx) for all (x, y). Using this, equation (3), and the resource constraint 
+ d(xly) + -T(yIx) -f(x, y), we have 
+ (4) S(xly) f f(x, y) -rW(x) -rW(y) 
+ Personal surplus is half the excess of flow match output over both flow 
+ unmatched values. Discounting accounts both for impatience and match imper- 
+ manence. 
+ Matching Sets: In a SE, an agent's strategy is to accept any match that weakly 
+ exceeds her expected present unmatched value: S(xly) ? 0 if and only if 
+ 6In our 1996 working paper (available on request), we allow that agents may reject a match if they 
+ are just indifferent. This generalization does not affect our conclusions. We omit it here, as it 
+ complicates our analysis throughout the paper. 
+This content downloaded from 
+65.112.8.31 on Fri, 05 Jun 2026 20:28:48 UTC 
+All use subject to https://about.jstor.org/terms
+
+===== PDF PAGE 8 =====
+ MATCHING AND SEARCH 349 
+ y E A(x). Since S(x I y) =- S(y I x), this implies y E A(x) if and only if x E A(y), 
+ and so /Al(x) A(x). Thus by (4), the mutual optimality condition is 
+ (5) S(x, y) f(x,y) - w(x) - w(y) ? 0 '= 'y E/f(x) 
+ where w(x) rW(x) is the average present value of an unmatched agent, her 
+ "reservation wage," and S(x, y) is the (flow) match sttplus. 
+ The Value Equation: Substituting (4) into (2) yields an implicit value equation 
+ (6) w(x) = o (f(x,y) - w(x) - w(y))u(y) dy 
+ x/(t )
+ o 0 s(x, y)u(y) dy 
+ *1(x) 
+ where 0 p/2(r + S). An agent's unmatched value is proportional to her share 
+ of match surplus. 
+ Summary: A SE is fully described by specifying: (i) who is matched with whom 
+ (matching sets 40; (ii) the measure of types searching (unmatched density u); 
+ and (iii) how much everyone's time is worth (unmatched value w). 
+ DEFINITION (SE CHARACTERIZATION): A SE can be represented as a triple 
+ (w,/, u) where: w solves the implicit system (6), given ( u', u); . is optimal 
+ given w, i.e., it obeys (5); and u solves the steady state equation (1) given c'. 
+ Figure 1 graphically depicts the matching sets for the production function 
+ f(x,y) = xy as well as a particular choice of search frictions, impatience, and type 
+ distribution.7 Since this production function satisfies Al-Sup, in the frictionless 
+ benchmark agents are only willing to match with their own type. With search 
+ frictions, agents match with an interval of types, including their frictionless 
+ partner. 
+ 3.2. Properties of Value Functions anid Matching Sets 
+ We now summarize the critical properties of the value function. 
+ LEMMA 1: Given AO, the valuie function w satisfies the value inequality 
+ (7) w(x) ?> (f (x, y) - w(x) - w(y))u(y) dy 
+ for arbitraiy MC [0,1]. In particular, w is nonnegative. Also, w is Lipschitz, 
+ 7Figures in this paper represent numerical approximations of the equilibrium matching sets. To 
+ create them, we divided the type space into 500 discrete types. We posited a matching set, calculated 
+ the associated steady state unmatched rates using (1), calculated the value function using (6), and 
+ then calculated a new matching set using (5). This taitonnement process converged, and thus by 
+ definition, to a SE. The program is available upon request. 
+This content downloaded from 
+65.112.8.31 on Fri, 05 Jun 2026 20:28:48 UTC 
+All use subject to https://about.jstor.org/terms
+
+===== PDF PAGE 9 =====
+ 350 R. SHIMER AND L. SMITH 
+ 1.0 -
+ y 8 .4'(x) also), then the;points (x, y) and (y, x) are shaded in the graph. The graph is therefore
+ ..... ''.: ............... 
+ X,.,.'.,.,,,,,--.-',-',''''"'" ''-.'' -'. -.. -- ---- .......
+ this''"' picture is,,similar.to,t,cir,Fi e 1 ( 12- . 9)..RR.R
+ continuous, anD a.e. differentiae in a- SE'. When differentiabl, its derivative.is
+ ; :' S''~~~~~~~~~~~~~~~~~~~~~~~~~." .,--'-........... ,' ,-,:'............
+ ,..,:., :... S. - - ,,,,-,,RRR ............... ....... 
+ n n n b E ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~---- --.R-.''.""'- 
+ /'--':,'.'~ ~~ ~ ~~~~~ .., ...........g" .. . .... 
+ (8)r w'(x)r an + uiorm (X)riu(Y)n dyaet,Lx= o x[,] fxX s 
+ Here issoan intuitiveeoverviewno the points(x,y)a arof (d in Apeni A).ph. F. .r.hirst, therefo 
+ valuetric inequality follows bhecsaus maoductionfunchsn thar agr and onlyee if996) use; theyefore, 
+ produc nongtv mac surplus.t F or Lisht an cotnut, non and 
+ allmostas we1Slml as nearby typres1 simply byimitatingtheirmatchingpattern,since 
+ theproductiond function disfe ntiableinuouSE. IfWthey otim tize, t will dobetatver stil 
+ diferentisabl intxuiw'(x ovIis on yaplcto of the Fuo funnApndameta TheoFrs,tem 
+ ofvalcuus Surplus vanishes bealong mthes bonary ofreethe matchng set; thrforhe, 
+ weos can igoelasnrb theefcpohnes sinpl the imiatcing st,ei mandcsimpl different iate  LEMMAe 2:lPositnAGio Allamatchingp.setsall(,)ware nonemptcyiandsclosedsandathe 
+ of Calculus. Surplus vanishes along the boundaw of the matching set; therefore,~~ . . . .. .. .. .. .. .. .. .. .. . 
+ matching correspondence X is upper hemicontinuous (u.h.c.). 
+ These conclusions are established in the proof of Lemma 1 (Part 3, Step 1). 
+This content downloaded from 
+65.112.8.31 on Fri, 05 Jun 2026 20:28:48 UTC 
+All use subject to https://about.jstor.org/terms
+
+===== PDF PAGE 10 =====
+ MATCHING AND SEARCH 351 
+ 4. EXISTENCE OF A SEARCH EQUILIBRIUM 
+ PROPOSITION 1 (SE EXISTENCE): Given A0 aid Al-Sup or Al-Sub, a SE exists. 
+ Since values w play an analogous role to prices in Walrasian models, we look 
+ for a fixed point in an appropriate map from the space of players' value 
+ functions into itself. Even though a SE is a triple, this program works because 
+ values encode all the information needed to recover matching sets .' and 
+ unmatched densities u. 
+ The proof demonstrates the continuity of three maps: condition (5) maps 
+ value functions w into matching sets .7 (Lemma 3); equation (1) maps matching 
+ sets //7 into steady state unmatched densities u (Lemma 4); and equation (6) is 
+ the composite map .of values and induced matching sets and unmatched densi- 
+ ties into new values (Proposition 1). SE's are fixed points of these mappings. 
+ Previous existence theorems for heterogeneous agent search models exploit 
+ an a priori known threshold structure of NTU matching sets to prove existence 
+ by construction (Morgan (1995), Burdett and Coles (1997)). Some have also 
+ assumed that the unmatched density u does not depend on agents' matching 
+ sets, an interaction that we believe is of significant economic interest. 
+ We consider value functions w as elements of the space C[O, 1] of continuous 
+ maps on [0, 1] with the sup norm: llw1jK_ = supX E [0, l]lw(x)l. Instead of matching 
+ sets ./, for Lemma 3, we work with the associated match indicator functions a, 
+ and the norm a fL = l f a (x, y)l dx cly < oc, for a e1 ([0 1]2 ). However, we 
+ restrict focus to the convex set V of a's with range in [0,1]. Finally, to satisfy 
+ Lemma 4, unmatched densities u must be given the norm Ilull = IfIIu(x)l clx. 
+ LEMMA 3: PositAO and A1-Sup o0 A1-Sub. Any Borel measurable map w I > a,,, 
+ froM Value functions to match indicator functions in "V solving (5) is continluous. 
+ Al-Sup or Al-Sub rule out an atom of zero surplus matches, a possibility that 
+ would invalidate Lemma 3 and considerably complicate the proof of Proposi- 
+ tion 1. 
+ LEMMA 4: The map a- I > ua fr-om match indicator functionis in ,W to the 
+ unmatched density implied by the steady-state equation (1) is both well-definied anld 
+ continuous. 
+ PROOF: Step 1: ao ua is well definied, so there exists a unique solution Ua to 
+ (1). The critical idea is a log transformation of the unmatched density. Let us for 
+ convenience define p- p78. Let F be the set of measurable maps L) of [0,1] 
+ into [log I - log(l + p31), log I]. For all x E [0, 1] and tu E F, define 
+ ((x) 
+ @v(x -- log 1 pOo'a ( x, y )e' (Y) cly. 
+This content downloaded from 
+65.112.8.31 on Fri, 05 Jun 2026 20:28:48 UTC 
+All use subject to https://about.jstor.org/terms
+
+===== PDF PAGE 11 =====
+ 352 R. SHIMER AND L. SMITH 
+ Here, u et? solves the steady-state condition (1) if and only if P,) = v. To 
+ prove the steady state unmatched density is unique, we show that (P has a 
+ unique fixed point. 
+ As 0 < a((x, y) < 1 and I < I(x) < 1, one can verify that (Pa maps F into itself. 
+ In this step alone, and not the continuity proof, we will use the sup-norm: 
+ }II.=IK supE[O,jl]Iv(x)I, so that v belongs to the complete space -2"([0,1]) of 
+ essentially bounded functions. By the Contraction Mapping Theorem, (Pa has a 
+ unique fixed point if there is a X E (0, 1) with IyvPaU - av2I. < xIIv1 - u211 for 
+ any VL, IV2 e F. 
+ Use the definition of 'Pa for arbitrary x E [0, 1] and L), V2 E F: 
+ 1 + Vfla (x, y)e`l'(Y) dy 
+ ,I P 2(X) - (PaL)(X) = log 1 + 23f c(x y)et (Y) dy J 
+ 1(1 + plea Jcx ( x,y' e) ey dy 
+ <logV 1 + pJefu (x y)ea (xt'' dy ) 
+ f 1 + I 
+ < log +p J
+ The first inequality uses e'!tY) < ell-v' vII-eL2) for all y. Since ell"v2 > 1, the
+ resulting fraction is increasing in the integral. That the integral is less than I 
+ yields the second inequality. To bound this final expression, observe 
+ log(1 + 13le ) - log(1 + 1^1) 
+ 11r V' -V211.z
+ _log( + 1 32(1 + 13)) log(i(1 ? P3)) XE (0 1) 
+ log I - log / + log(1 + /31) 
+ as the left hand side rises in flbv' - V2 log/ - log I+ log( + P) given v1, v2 
+ eT. 
+ Reversing the roles of v' and v2 proves that I(VP 2(X) - PaV1(X)| <xII1 - 
+ v2jKJ. Since this holds for all x, we have proven that IvP2 - PIVll <xIIvl - 
+ V21IJ.. Everywhere uniqueness of the solution to v = Pav follows. 
+ Step 2: a - ua is continuous on the space Q/. Intuitively, (1) forms a system of 
+ equations G(Ua, a) = 0, with G continuous. By some implicit function theorem, 
+ at points ,3 near a, the unique solution to this equation u. must lie near u. 
+ This logic requires that the derivative of G with respect to u be invertible and 
+ continuous, which we address in Appendix B. Q.E.D. 
+This content downloaded from 
+65.112.8.31 on Fri, 05 Jun 2026 20:28:48 UTC 
+All use subject to https://about.jstor.org/terms
+
+===== PDF PAGE 12 =====
+ MATCHING AND SEARCH 353 
+ PROOF OF PROPOSITION 1: Given values w in C[0, 1], we follow the Schauder 
+ Fixed Point Theorem program in ?17.4 of Stokey and Lucas (1989). 
+ * STEP 1: THE BEST RESPONSE VALUE: Consider the map T: C[0, 1] - C[0, 1] 
+ (9) TW(X)_ OJ01max(f(x,y) -w(y),w(x))u"'(y)dy 
+ where u" - , u, is the unmatched density implied by the value function w (by 
+ Lemmas 3 and 4), and UV' f 0 uU'(z) dz is the implied mass of unmatched 
+ agents. By definition, a fixed point of the mapping Tw = w is a SE. 
+ * STEP 2: THE FAMILY S: To establish the existence of a fixed point of the 
+ operator T, we need a nonempty, closed, bounded, and convex domain space 
+ g c C[0, 1] such that (i) T: 9 --> ; (ii) T(9) is an equicontinuous family; and 
+ (iii) T is a continuous operator. Let S be the space of Lipschitz functions w on 
+ [0, 1] satisfying 0?< w(x) < sup,f (x, y) for all x and Iw(x2) - W(XI)l < Kix2 -X1X 
+ for all xl, x, where K SUp,, 3fj(x, y)L, as in the proof of Lemma 1. This subset 
+ of C[0, 1] is clearly nonempty, closed, bounded, and convex. 
+ * STEP 3: T: ' - IS CONTINUOUS AND T(9) IS EQUICONTINUOUS: Quite 
+ easily, if w E [0, sup,,f(, y)], then so is Tw. Next, I Tw(x2) - Tw(x )! is at most 
+ 1 + '' f1ImaxKf(x2,y) -w(y),w(x,)) 
+ - maxKf(xl, y) - w(y), w(x,))Hu"'(y) dy 
+ 0f'imaxKf(x2, y) -f(x1, y), w(x) - w(x))Iu"'(y) dy 
+ 1 + 0uiTi
+ Since f(x, y) and w(x) are each Lipschitz in x with modulus K, Tw is Lipschitz 
+ with modulus KOU V/(l + OR'") < K. A family of Lipschitz functions of the same 
+ modulus is equicontinuous. Finally, Appendix B proves continuity of T alge- 
+ braically. Q.E.D. 
+ 5. DESCRIPTIVE THEORY 
+ 5.1. AssortatiLe Matching 
+ In the frictionless world, supermodularity (Al-Sup) ensures PAM-any type x 
+ only matches with another type x. In a frictional setting, individuals are 
+ generally willing to match with sets of agents, and so mismatch is the rule. Our 
+ first step is to formulate a sensible generalization of assortative matching to this 
+ environment. 
+ DEFINITION: Take xi <x2 and YI <Y2. There is PAM if the matching sets 
+ form a lattice in R2: Yi cG1(x1) and Y2 CG1(x2) whenever Y, cG.(x,) and 
+ Y2 c /'(x1). There is NAM if Yi c/,(x,) and Y2 c /e(xI) whenever Yi cv/1'(x,) 
+This content downloaded from 
+65.112.8.31 on Fri, 05 Jun 2026 20:28:48 UTC 
+All use subject to https://about.jstor.org/terms
+
+===== PDF PAGE 13 =====
+ 354 R. SHIMER AND L. SMITH 
+ and Y2 e.,'(x2). This definition8 generalizes Becker's frictionless one in Section 
+ 2.1, x e M(x) for all x. The presumed contrary matches do not exist with 
+ singleton matching sets, and so the implications are true. Moreover, with PAM 
+ and symmetric matching sets, an agent who is willing to match with someone, 
+ will match with her own type: y Gc,(x) implies x E4 /(y) by symmetry, so 
+ x e4Y(x) and y EY//(y) by PAM. 
+ The definition also captures the intuition that PAM (NAM) describes a 
+ preference for matching with similar (opposite) types. To understand why, we 
+ must explore the links between assortative matching and matching set convexity. 
+ First, we have the following proposition. 
+ PROPOSITION 2 (ASSORTATIVE MATCHING =. CONVEXITY): Given PAM or- NAM, 
+ if all matching sets are nonempt, then they are coVwex as well. 
+ PROOF: Since the two cases are symmetric, assume PAM. Take any x1 <x2 < 
+ X3 and Y2 E [0, 1], with xl and X3 in ./(Y2). By assumption, there exists 
+ y' E k1(X2). If y' >Y9, like Y3 in Figure 2, then xX E ,'(y') and X3 C (Y2) imply 
+ x2 E.1(y2), using PAM. If y'<Y2, like y1 in Figure 2, then x2 e/(y') and 
+ y3 ------------- - 9 
+ Y2 -------0--------9 
+ iI---. I 
+ XI :2 I 
+ FIGURE 2.-Proposition 2 Illustrated. If low and high types (xl and X3) match with some agent 
+ Y2, then so must middle types (x,), given PAM 01 NAM. 
+ S
+ 'An equivalent formulation, valid in hiighier dimensions, is simply to say that the matching 
+ indicator funiction a is affiliated: ax( J8A 8')a( J8V 18') ? a( fla( 8') for any two matches 8 = (x, y) 
+ and /3' =(x', Y'). As usual, V and A denote componentwise vector maxima and minima. Matching 
+ is negatively assortative if the reverse inequality obtains (negative affiliation). This also extends our 
+ formulation to probabilistic acceptance decisions, as would be necessai-y if there were atoms in the 
+ type distribution; the probability-of-matching, function must be affiliated. Milgrom and Weber (1982) 
+ is the classic (auction-theory) economic application of affiliation. 
+This content downloaded from 
+65.112.8.31 on Fri, 05 Jun 2026 20:28:48 UTC 
+All use subject to https://about.jstor.org/terms
+
+===== PDF PAGE 14 =====
+ MATCHING AND SEARCH 355 
+ x1 E d'(y2) imply x2 e/4'(y2). Finally, if y' =Y2' then obviously x, .2/z(y). 
+ Q.E.D. 
+ Next, suppose matching sets are convex, closed, and nonempty; the last two 
+ assumptions follow in particular from Assumption AO, by Lemma 2. Then they 
+ are fully described by lower and upper bound fuinctions: a(x) min{yIy Ec /(x)} 
+ and b(x) max{yly e.'(x)}. These easily-visualized functions provide an intu- 
+ itive characterization of assortative matching: 
+ PROPOSITION 3 (MATCHING SET BOUND FUNCTIONS): AssttmIe that miiatchinig 
+ sets are closed and nonenipty. Then there is PAM (NAM) if anid only if matching 
+ sets are colvLex anid the bound ftuctions a anid b are inon1decreasinig (noninc;-easinig). 
+ (The proof is in Appendix C.) This confirms higher types have higher (lower) 
+ matching sets under PAM (NAM). For example, higher types have higher mean 
+ and median partners under PAM. 
+ Establishing PAM or NAM requires a comparison of a 4-tuple of values, a 
+ complex task that prevents us from directly finding conditions that ensure 
+ assortative matching. Instead, we assault the problem indirectly. We first show 
+ that convex matching sets and conditions that orient matching sets are sufficient 
+ for assortative matching, essentially the converse of Proposition 2. In Section 
+ 5.2, we complete the argument by finding primitive sufficient conditions for 
+ convexity. 
+ PROPOSITION 4 (SUFFICIENT CONDITIONS FOR ASSOCIATIVE MATCHING): As- 
+ suine symnmetric, convex, and nio0senepty mtatching sets /1'(x) for all x, and an upper 
+ hemicontinuous matchintg correspontdence iii. There is PAM if antd onlly if 0 EC A(O) 
+ antd 1 E/(1). There is NAM if antd only if 0 E7(1) antd 1 EI'(O). 
+ PROOF: As the two cases are identical, we concentrate on PAM. We have 
+ already argued that PAM and symmetric, nonempty matching sets imply x E 
+ ,@'(x) for all x. Hence, 0 Ec,7/(O) and 1 Ed'(1). 
+ To prove sufficiency of these conditions, take x1 <xX and Yi <Y2 with 
+ x2 E ,/1f(y1) and x,1 E/,1#(y,). We first prove x,1 E ?/4Y(yl). Our 'Intermediate Value 
+ Theorem' in Claim 1 of Appendix C then applies, since the matching correspon- 
+ dence is nonempty- and convex-valued and u.h.c. Consequently, 0 eC/k'(O) and 
+ Y2 E- G/(x1) (by symmetry) imply that there is x0 E [0, x1] with y1 eI-'(x0), and 
+ thus x0 E #/(y1), again by symmetry. If x0 =x1, we are done. Otherwise, with 
+ XO < X 1 < X2, convexity of C/11(y 1), x0 E .v1(y 1 ), and x2 EIct'(y ), ensure that x l E 
+ ik'(y1). A parallel construction uses 1 e/'(1) to prove that x2 ec//'(x,), establish- 
+ ing PAM. Q.E.D. 
+ 5.2. Sufficient Conzditiois for Convexity 
+ Since we have shown that convex matching sets are necessary and, with 
+ conditions that orient matching patterns, sufficient for assortative matching, it is 
+ logical to attack assortative matching indirectly by finding conditions under 
+This content downloaded from 
+65.112.8.31 on Fri, 05 Jun 2026 20:28:48 UTC 
+All use subject to https://about.jstor.org/terms
+
+===== PDF PAGE 15 =====
+ 356 R. SHIMER AND L. SMITH 
+ which matching sets are convex. As matches occur at points where the match 
+ surplus function s is nonnegative valued, according to condition (5), we look for 
+ conditions under which s is quasi-concave in each argument-i.e., each agent 
+ has single-peaked preferences. 
+ The logic of the frictionless model of Section 2.1 suggests that Assumption Al 
+ might suffice. For assume PAM, so identical types match. Competition ensures 
+ that output is evenly split: x earns w0(x) = f(x, x)/2, where w? is the 'zero 
+ search frictions' value function, analogous to w. Define a frictionless surplus 
+ function, s(x, y) -f(x, y) - wo(x) - w?(y). If so() <0 for all matches, then 
+ the wages wo decentralize this allocation. For given x, an increase in her 
+ partner's type yields marginal surplus 
+ s?,(x, y) f (X, y) - f(y y) /2 - f,(y, y) /2 =(x, y) - f,(y, y) 
+ since f is symmetric. If Al-Sup obtains, then fj,(x, y) fj(y, y) as x Q y. So for a 
+ given x, the surplus function is increasing or decreasing in her partner's type y 
+ as x y. Thus, s?(x, ) is quasiconcave and maximized at x, with s?(x, x) = 0. 
+ Parallel results obtain given NAM and Al-Sub. 
+ If frictions reduce everyone's value equally, the surplus function would shift 
+ up, but the set of points y with s(x, y) > 0 would remain convex, the result we 
+ desire. 
+ Examples disprove this conjecture. The production function f(x, y) = (x + y 
+ - 1)2 in the top panel of Figure 3 obeys Al-Sup, and yet equilibrium matching 
+ sets are not convex, given appropriate search frictions. For any x close enough 
+ to l won't match with another x, but will match with both higher and lower 
+ types. The intuition for this example is clear- produces nothing when 
+ matched with her own type. 
+ The bottom panel of Figure 3 uses the function f(x, y) = (x +y)2 to illustrate 
+ that the nonconvexity is quite general, and does not require f nonmonotonic. 
+ With enough search frictions, types near 1 are willing to match with intermedi- 
+ ate types like 0.2. This opportunity offers a windfall for 0.2: When two of them 
+ meet, they prefer to continue to search for types near 1. On the other hand, if 
+ 0.2 meets a sufficiently low type, with no such valuable outside option, match 
+ surplus is once again positive, and the match is mutually agreeable. 
+ We now introduce additional conditions on the production function f that 
+ ensure convex matching sets. We hope the serious interplay of three forms of 
+ supermodularity makes for an interesting application of the ongoing research 
+ program here. 
+ A2-Sup: The first partial derivatitve of the production function is log-supermod- 
+ ular:9 for all xl x2 and y1 Y2, fx(x1I Y)f (X2, Y2) 2 fJ(x1, Y9)fx(x2, Y1) 
+ A3-Sup: The cross partial derivative of the production function is log-supernod- 
+ ular: for all x1 ?x2I Y IY2, fv JxI, y )fy,(x2, Y2) ? fy(XI, y2)fy(x2, Y1)' 
+ 9A positive function is log-supermodular if its log is supermodular. These definitions extend this 
+ notion to possibly negative functions, in the way needed in this paper. 
+This content downloaded from 
+65.112.8.31 on Fri, 05 Jun 2026 20:28:48 UTC 
+All use subject to https://about.jstor.org/terms
+
+===== PDF PAGE 16 =====
+ MATCHING AND SEARCH 357 
+ 1.0 - 
+ \................................. ...... ..........
+ 0.8- 0' =,4.= 
+ 1..0.......................
+ 0.8
+ 0.6
+ 0.1 
+ ..., .- i -.- - .j. 
+ 0.2
+ ..-.--,j .i.-..... .... - .-.----j; 
+ --,i , j; .....,. ., ........ j ............. O.....jj.j:.g,:: ....:.:
+ 02
+ 0 0.2 0.1 0.6 0.8 1.0 
+ I .0 .......
+ ,... ... ... .... ... ... .... ... ... ... ..... . . .. .. . ... . .. .. .. ..... .. .. . .. .
+ FIGURE 3.-Non-ConvexMatching.Th t pal d t m a t h . g . . r f ). . + - 1
+ FIGUR, E lO. aond-L(x)ex ont[0,11. The botom panel depicts matching sets for f(x, y) - (X +y-1)2,
+ 8 =r, p =35r, and L(x) =x on [0,11]. 
+ A2-SUB: The first partial derivative of the production fuxnction is log-submodular: 
+ for all x1 ?x2 and y1 ?Y2, fX(x1, y1)fX(x2, Y2) ?fX(X1, y2)fX(X2, Y1) 
+ A3-SUB: T=he cross partial derivative of the production function is log-submod- 
+ ular: for all x1 ?x2 andy ?l<Y2, fXY(x1, y)fXY(x2, Y2) ?fXY(x1, Y2)fXY(X2,y1). 
+This content downloaded from 
+65.112.8.31 on Fri, 05 Jun 2026 20:28:48 UTC 
+All use subject to https://about.jstor.org/terms
+
+===== PDF PAGE 17 =====
+ 358 R. SHIMER AND L. SMITH 
+ While Assumptions Al, A2, A3-Sup are independent, as are Al, A2, A3-Sub, 
+ they jointly are interrelated. For example, A3-Sup and A3-Sub simultaneously 
+ hold for production functions of the form f(x, y) c1 + c2(g(x) + g(y)) + 
+ c3h(x)h(y). Under the additional restriction g h, A2-Sup and A2-Sub obtain 
+ as well. Thus, A2-Sup and A2-Sub jointly imply A3-Sup and A3-Sub, but not 
+ conversely. 
+ To better understand these assumptions, consider the constant elasticity of 
+ substitution (CES) production function f(x, y) = (x(xa +ya))t/a with Cobb- 
+ Douglas limit f(x, y) =(xy) I2 when a = 0. This satisfies Al-Sup when the 
+ elasticity of substitution is negative, a < 1. For a < 0-an elasticity of substitu- 
+ tion between - 1 and 0-A2-Sup and A3-Sup are satisfied as well. When inputs 
+ are more easily substituted, a > 0, A2-Sup is violated. Finally, A3-Sup obtains 
+ when a < 1/2. 
+ PROPOSITION 5 (CONVEX MATCHING): Posit AO. GiUen Al-Suip, A2-Sup, and 
+ A 3-Sup, or- A l-Sub, A 2-Sub, and A 3-Sub, all matching sets are convex. 
+ This is proven in Section 5.3. The importance of Al is clear from the 
+ frictionless benchmark. The production functions in Figure 3 satisfy Al-Sup, 
+ A2-Sub, and both A3-Sup and A3-Sub, proving A2 necessary. We postpone the 
+ subtle issue of the necessity of A3. 
+ As an important robustness check, both the primary premises of Proposition 5 
+ -Al, A2, A3-and the convexity conclusion in R, are scale- and order-indepen- 
+ dent. Consider the cardinal specification of the type distribution. For instance, 
+ relabel each agent x by her type's percentile L(x), and let f(L(x), L(y)) 
+ f(x, y). Then f satisfies the assumptions in Proposition 5 if and only if f does. 
+ Likewise, we may reverse agents' ordering by relabeling each x as 1-x, and 
+ letting f(l - x, 1 - y) -f(x, y). This observation will play a key role in the proof 
+ of Lemma 5. 
+ Our main result follows from Propositions 4 and 5. 
+ PROPOSITION 6 (ASSORTATIVE MATCHING CHARACTERIZATION): PositAO. Thenl 
+ A 1-Sup, A 2-Sup, A 3-Suip and f,,(O, y) < 0 < f?1, y) for- all y imply PAM; A l-Sub, 
+ A 2-Sub, A 3-Sub and f(O, y) ? 0 for all y or 0 2 fy(1, y) for all y imply NAM. 
+ We use Al, A2, and A3 to establish matching set convexity through Proposi- 
+ tion 5. These assumptions do not guarantee assortative matching, as Figure 4 
+ attests. The function f(x, y) = x + y + obeys all three supermodularity as- 
+ sumptions, but matching sets violate the additional requirement from Proposi- 
+ tion 4 that 0 E //'(0). With search frictions, some agents y > 0 match with 0, 
+ since such matches are productive. Therefore, w(0) > 0 by (6), and the match 
+ surplus of (0,0) is negative. By (5), 0 0 /./2(0). We preempt such difficulties via 
+ the boundary conditions on the marginal product of f. 
+ PROOF OF PROPOSITION 6: By construction, matching sets are symmetric. They 
+ are convex by Proposition 5, and nonempty, with a u.h.c. correspondence by 
+This content downloaded from 
+65.112.8.31 on Fri, 05 Jun 2026 20:28:48 UTC 
+All use subject to https://about.jstor.org/terms
+
+===== PDF PAGE 18 =====
+ MATCHING AND SEARCH 359 
+ 0 0. 0. 0._ . . 
+ 1.0~ ~~~~~~~~~~~. -"" -""""" - - -::':': - -"::'"'"""" ........ ................ ' - : " ':'
+ FIGUE.4.A.Falu .o. . . Ths t m s for.f(x, y) i xyx
+ Indeed~~~~~~~~~~~~~~~{,, tha f(, 0). 0- hut f-(,.y)> 0- fores
+ .. . . .... . .i .........' 
+ f........... ..... v .......... ... .....--.,,.......... ....
+ " ' ' ' Ei, ,, i E, i i! E, E ~~~~~. .... ........ . 
+ Lemma 2. As all the assumptions of Propositn 4 ae s d, t e i f.................... 
+ A.'-- ,.,' ',.',.~~~~~~~~~~~~~---'--,-''.-''-'- ' ........,.''.- 
+ fa'' -- '---- ,:-- - .. .......... .f < . -: -; - i - - ~ ~ ~~~~~~~... . :. ............... : : . .. .i-- .. . .. --
+ .,.,.,.,.,~~~~~. . ......... , .. . . .. .... .. .... . ,, i
+ 0 ZO)~~ and 1 ....) an thr is NAM if 0 -A (- an i e.f() 
+ U .- ''.'"," "".<,. f , ~~~~~~~~~~~~................. :. , 
+ ,.,a-...,..,.., .--. .. . ........... . .... 
+ 0 O 0. . .6 ..8....0 
+ We first show that 0 e A(0) under the supermodularity and associated bound- 
+ ary assumptions. (That 1 eXt(l) is similar.) For y with w'(y) ? 0, f$0, y) ? 0 
+ trivially implies sy(O, y) ? 0. For all other y, by (8): 
+ _ Ofw(y)f5(X,y)ul(X) dX f/,()fy(X,Y)Ul(X)dx 
+ Y 1 + O f,(y,() z Ivty)() ?fy(Oy) 
+ where the first inequality follows from the negative numerator (as w'(y) <0O), 
+ and the second from Al-Sup. In either case, sy(O, y) ? 0, so that type 0 prefers 
+ matching with lower types. Finally, 0O A'(O), as matching sets are nonempty 
+ (Lemma 2). 
+ Next take the submodularity assumptions, with fy(1 y) ? 0. If w'(y)> 0O then 
+ we trivially have s/il, y) ? 0. Otherwise, use Al-Sub in the above supermodular- 
+ ity argument to prove w'(y) ?f/l, y). Hence, 1 prefers to match with lower 
+ types; thus, 0 e.#(l) by nonemptiness, and 1 w.4(0) by symmetry. The proo)f 
+ with f$0O, y) > 0 is similar. Q.E.D. 
+ 5.3. Convexity Argument: Proof of Proposition 5 
+ We prove that match surplus is quasiconcave in each argument. 
+ LEMMA 5 (QUASICONCAVITY): Posit AO and fzx z. Given Al1, A 2, A 3-Sup or Al1, 
+ A2, A 3-Sub, the match surplus function s(z, y) is quasiconcave in y. 
+This content downloaded from 
+65.112.8.31 on Fri, 05 Jun 2026 20:28:48 UTC 
+All use subject to https://about.jstor.org/terms
+
+===== PDF PAGE 19 =====
+ 360 R. SHIMER AND L. SMITH 
+ By condition (5), Proposition 5 follows immediately from Lemma 5. 
+ Each of the three assumptions plays a distinct role in our proof. In the 
+ frictionless model, Al-Sup ensures that the highest type has an increasing 
+ surplus function, s?(1, y) ? 0. Search frictions depress and flatten all value 
+ functions w. As a result, the highest type's match surplus is strictly increasing in 
+ her partner's type. By continuity, this argument extends to other high types. 
+ For the lowest type, Al-Sup implies that the frictionless surplus function is 
+ decreasing. Flattening the value function changes this in complex ways. A2-Sup 
+ imposes that the percentage decline in productivity from 'mismatch' is smaller 
+ for high types than for low types. As a result, low types suffer a larger 
+ percentage decline in value. This ensures that low types continue to prefer to 
+ match with relatively cheap low types. Finally, A3-Sup provides a single crossing 
+ property (SCP), Lemma 6 below, which allows us to treat everyone as either a 
+ high type or a low type. 
+ The formal proof of Lemma 5 rules out local minima in any z's surplus 
+ function, showing that if s(z, ) is falling at Yi, it is falling at Y2 > Y1 Here let us 
+ assume w'(y) > 0. Let z solve f,(z,y) y w'(yI). By Al-Sup, f,,(z, Y1) >f,(i, Y1) 
+ for z > i, so that s(z,) is increasing at Yi 
+ Dealing with z < uses the other assumptions. By A2-Sup, fy(i, yY)fy(z, Y2) 
+ <?f,(z, y )f,(i, Y2) for any Y2 >Yi* By the definition of z, the left-hand side is 
+ equal to w'(y1)f5,(z, Y2) If we are in the interesting case where z's surplus 
+ function is decreasing at Yi, the right-hand side is less than w'(y1)f(i, Y2) 
+ Putting these together, fy,(z, Y2) <f,,(i, Y2) Now if we can prove that fy(, Y2) < 
+ w'(y2) we will have shown that z's surplus function is decreasing at Y2' 
+ completing the proof. 
+ For this last step, we use the SCP. Diamond and Stiglitz (1974) showed 
+ (Theorem 3, equivalence of (ii) and (iii)) that a gambler has a higher coefficient 
+ of absolute risk aversion if and only if he requires a higher risk premium for any 
+ gamble. Formally, let utility h depend on a prize x and preference parameter y. 
+ Then the coefficient of absolute risk aversion -hxxl/hx is smoothly falling in y 
+ if and only if the certainty equivalent of any gamble is smoothly rising in y. We 
+ extend this result by assuming that utility is just once differentiable in 
+ income but that log marginal utility log h, is supermodular in (x, y). As such, 
+ the Arrow-Pratt risk aversion measure need no longer exist, yet alone its 
+ derivative in y. We can find no way of patching their proof, as it includes 
+ repeated integration by parts of a third derivative. Our proof in Appendix C 
+ explicitly exploits the supermodular structure, our main focus. 
+ LEMMA 6 (A SCP FOR GAMBLES): Consider h: [0, 1]2 -* R, differentiable, with 
+ h. either positive and log-supermodular, or negative and log-submodular. For all 
+ Ye [0, 1] and probability densities with support Mc [0, 1], there is a unique 
+ certainty equivalent z: h(z, y1) E,E Mh(x, y1). For all y' >y1, h(z, y') < 
+ E Mh(x, y'). If h, > 0 is log-submodular or hx < 0 is log-supermodular, then 
+ h(z.') > EX h(~mOx, y'). 
+This content downloaded from 
+65.112.8.31 on Fri, 05 Jun 2026 20:28:48 UTC 
+All use subject to https://about.jstor.org/terms
+
+===== PDF PAGE 20 =====
+ MATCHING AND SEARCH 361 
+ In our case, w'(yl) is proportional to the certainty equivalent Exfy(x, yl), 
+ according to (8), and is also equal to fy$, yl) by definition. Similarly, w'(Y2) is 
+ proportional to the certainty equivalent Exfy(x, Y2). Thus A3-Sup, log-super- 
+ modularity of fxy, ensures W'(Y2) 2f y(i, Y2)* 
+ Our formal proof of Lemma 5 tightens this argument and uses a slightly 
+ different characterization of quasiconcavity. A well-behaved non-quasiconcave 
+ function o- has a local minimum x. The characterization in the next lemma 
+ (proof appendicized) focuses on a critical property of points Yi and Y2 to the left 
+ and right of x. 
+ LEMMA 7: Assume a continuous and a.e. differentiable map o-: [0,1] R obeys: 
+ O(Y1) < O(Y2) for 0 <Y1 <Y2 implies f'(y1) 2 0 when defined. Then o- is 
+ quasiconcave. 
+ Now we have the tools to prove that the match surplus function is quasicon- 
+ cave. 
+ PROOF OF LEMMA 5: Since f is continuous and differentiable by A0, and w is 
+ continuous and a.e. differentiable by Lemma 1, surplus s is continuous and a.e. 
+ differentiable. We will use Lemma 7 to prove that an arbitrary s(z, y) is 
+ quasiconcave in y under the supermodularity assumptions. We omit the sym- 
+ metric submodularity proof. 
+ Fix 0 <Yj < 1. If w'(yl) is defined, we may assume without loss of generality 
+ that w'(y1) is nonnegative. For if w'(y1) < 0, we could instead work in the world 
+ with a reversed type ordering, recalling the discussion after Proposition 5. 
+ Letting f(x, y) f(1 - x, 1 - y) denote the production function and L(x) 1- 
+ L(1 - x) denote the type distribution in such a world, there would be a SE with 
+ value function wi(1 -y) w(y), and in particular w(1 -y1) = -w'(y1) > 0. We 
+ could instead proceed with the analysis of type 1 - Y1, proving that s(1 - z, 1 - yi ) 
+ is quasiconcave in its second argument. By construction, this would establish 
+ quasiconcavity of s(z, y), as desired. 
+ Next, fix Y2 E (yl, 1) and z. We must prove that if s(z, Yl) <s(z, Y2), then 
+ SY(z, Y) ? 0 when defined. If w'(y1) is undefined, then so is sy(z, yl) and we are 
+ done. Otherwise, implicitly define 2 so fy(, yl) is the expected value of the 
+ gamble fY(x,yd): 
+ (10) fy($2 Y ) f,f(y1)f$X, y)u(x) dx 
+ * STEP 1: Sy(Z,yj) 2 0 FOR ALL Z 2z. 
+ 0O?<w'(y1) = X O(Y,)fY(x, yl)u(x) dx fy($2, yl)Of,(Yl)u(x) dx 
+ 1 + OI(5,)u(x) dx 1 + Of(5)u(x) dx 
+ ?fy(2, Yi)
+ by (8) and (10), so sy(2, yl) 2 0. By Al-Sup, sy(z, y1) > sy(Z, y1) 2 0 for all z > 2.
+This content downloaded from 
+65.112.8.31 on Fri, 05 Jun 2026 20:28:48 UTC 
+All use subject to https://about.jstor.org/terms
+
+===== PDF PAGE 21 =====
+ 362 R. SHIMER AND L. SMITH 
+ * STEP 2: w(Y1) < W(Y2) AND f(Z,YI) <f(Z,Y2) WHENEVER S(Z,Y1) < S(Z,Y2) 
+ AND z <2. At Y2 with s(Z, YI) ? s(z, Y2), there is nothing to verify. Otherwise: 
+ (11) f(z, Y2) -f(z, Y1) > W(Y2) - W(Y1) 
+ >OfO(y 1)((X I Y 2) -f(X,I Y I )) u(x) dx 
+ 1 + Ofj(y,)u(x) dx 
+ where the second inequality applies equation (6) and inequality (7). 
+ By Al-Sup and A3-Sup, h =fy meets Lemma 6's conditions. So for all y' > Yi, 
+ f-f,(Y)fY(x, y')u(x) dx M2 ) 
+ f.(,Y,)u( xY) dx(zyt 
+ by (10). For Y2 >Y1, integrate this over y' E [Yi, Y2], and use Al-Sup with 2 > z: 
+ (12) fJ(y()(f(X, Y2) -f(X, yl))u(x) dx 
+ f..(yl)u(x) dx 
+ ?f(f,Y2) -f(2,y1) >f(Z,Y2) -f(Z,Y1). 
+ By transitivity, the last term in (11) is smaller than the first term in (12): 
+ JJ(yj)(f(X, Y2) -f(X, Y1))u(x) dx 
+ Lf,(Y)u(x) dx
+ > Off(y,)(f(X9 Y2) -f(X, Yl))U(X) dx
+ 1 + OJ,(Y()u(x) dx
+ Hence, fe(y()(f(X,Y2)-f(x,yl))u(x)dx>0. Using this, (11) implies w(y2)> 
+ w(y1) and f(Z, Y2) > f(z, y1). Note that (12) then implies f(, Y2) > f(2, Y1) 
+ STEP 3: sY(Z, Y,) 2 0 WHENEVER S(Z, YI) < S(Z, Y2) AND z < 2. Divide (8) by 
+ (11), and then (10) by (12), verifying that the relevant terms are positive: 
+ (13) w Yl <r(y,)fy(x,yl)u(x) dx 
+ W(y2) - W(yd) fj(yj)(f(X Y2) -f(x, yl))u(x) dx 
+ < y(il Yd)
+ f(Z, Y2) -f(Z, Yl)
+ Integrating A2-Sup implies that for Yi <Y2 and z <z, 
+ fy(29 Yd)(f(Z9 Y2) -f(Z, Y)) <fy(Z' Yd)(f(2, Y2) -t(, Yd)) 
+ Divide by f(Z, Y2) -f(Z, Y) > 0 and f(, Y2) -f(2, Y1) > 0, and combine with 
+ (13):
+ w,(yl) < y(zg Yd)
+This content downloaded from 
+65.112.8.31 on Fri, 05 Jun 2026 20:28:48 UTC 
+All use subject to https://about.jstor.org/terms
+
+===== PDF PAGE 22 =====
+ MATCHING AND SEARCH 363 
+ As 0 < W(y2) - W(y1) <f(Z,Y2) -f(z, Y1), multiplication yields w'(y1) <?f(z, y1) 
+ or sY,(z, yI) ? 0, completing the proof. Q.E.D. 
+ One can prove that Al-Sup and A2-Sup preclude all but holes in the center of 
+ acceptance sets, a pattern we are unable to produce. Instead, we offer an 
+ example showing that A3 is necessary for surplus quasiconcavity, and therefore 
+ critical to any general proof of matching set convexity. Consider the production 
+ function f(x, y) = 1000 - (xy)3 + 9(xy)2 + 3(x + y), obeying Al-Sup, A2-Sup, 
+ and A3-Sub (but not A3-Sup). Let p =50000r, =r, and L(x) = x on [0, 1]. 
+ Since a partner's type has a negligible effect on output, not surprisingly all 
+ matches are acceptable. In Appendix C, we show that this model is analytically 
+ solvable: w(x) =495.1144 + 2.9472(x +x2) - 0.2456x3. Thus, the surplus func- 
+ tion of x E [0.560,0.562] is not quasiconcave. For example, s(O.560, y) is mini- 
+ mized at y = 0.913. 
+ 6. CONCLUSION 
+ This paper has pushed the assortative matching insights into a plausible 
+ search setting. We have generalized PAM and NAM for this frictional environ- 
+ ment, and have identified the three supermodularity (submodularity) assump- 
+ tions under which matching sets are convex and, with additional boundary 
+ conditions, increasing (decreasing). We have also developed a general existence 
+ theorem for search models with endogenous type distributions, and general 
+ matching sets. 
+ We have investigated this model because it can be fully solved. In proving 
+ existence of a SE, we made assumptions on the search technology to avoid 
+ significant complications; however, our descriptive theory in Section 5 applies 
+ for any anonymotts search technology, where the rate that searchers meet is 
+ independent of their types. This includes, for example, a linear search technol- 
+ ogy, in which the meeting rate is independent of the measure of unmatched 
+ agents. 
+ Likewise, we have assumed that a steady-state is maintained through deaths 
+ of existing agents. We could alternatively posit an inflow of entrants, and assume 
+ that all matches are permanent. While our assortative matching and convexity 
+ conclusions do not depend on this modeling choice, our existence proof does. 
+ This model may be generalized in several important ways. For example, so as 
+ not to double the notation, we have assumed one class of agents. All our results 
+ extend to a model with workers and firms, or men and women. Our definition of 
+ assortative matching generalizes to multiple dimensions, while convex coordi- 
+ nate slices (biconvexity) is the scale-independent extension of convexity in one 
+ dimension. 
+ Department of Economics, Princeton Unitlersity, 204 Fisher Hcll, Princeton, NJ 
+ 08544 U.S.A.; shimers@princeton. edu; www.princeton. edu / shimer / 
+This content downloaded from 
+65.112.8.31 on Fri, 05 Jun 2026 20:28:48 UTC 
+All use subject to https://about.jstor.org/terms
+
+===== PDF PAGE 23 =====
+ 364 R. SHIMER AND L. SMITH 
+ and 
+ Department of Economics, University of Michigan, 611 Tappan Street, Ann 
+ Arbor, MI 48109, U.S.A.; econ-theorist@earthling.net; www.umich.edu / lones7. 
+ Manuscript received December, 1996; final revision received February, 1999. 
+ APPENDICES: OMITTED PROOFS 
+ A. VALUE FUNCTION PROPERTIES 
+ PART 1 OF LEMMA 1: VALUE INEQUALITY. If (7) were violated, (6) would yield either y e (x), 
+ y 4 M, and f(x, y) - w(x) - w(y) < O; or y e M, y 4AX(x), and f(x, y) - w(x) - w(y) > O. Either 
+ possibility contradicts (5). Q.E.D. 
+ PART 2 OF LEMMA 1: LIPSCHITZ AND THUS CONTINUITY. Since fx is continuous on [0,1]2, 
+ K maxX, yIf(x, y)l is well-defined. Also, by (6) and (7), for all xl <x2, 
+ of X(x)(f(x2,y)-f(xl,y) - W(X2) + W(X))u(y) dy 
+ 2 W(X2) - W(X1) 2 of ((x2, y) -f(xI ,y) - W(X2) + W(X0))U(Y) dy. 
+ Solving each inequality for w(x2) - w(x1) and using If(x2,y) -f(xI,y)l ?< K(x2 -x1), 
+ K(X2-_XI)'OL,r(X2)U(y) dy - K (X2 -x1 X OffA(X1)u(Y) dY 
+ y( dy W(X2) -W(Xd > (~ I O 
+ 1 + OJ'f(X2)U(y) dy (x? 1 + 6IXl)u(y) dy 
+ So w is Lipschitz, Iw(x2) - W(X1)l/(X2 -x1) < K, and thus continuous. Q.E.D. 
+ PART 3 OF LEMMA 1: DIFFERENTIABILITY. Let D(B, C) be the Hausdorff distance between sets B 
+ and C: namely, D(B, C) = inf{dlV(b, c) E (B, C), 3(b', c') E (C, B), with lb - b'l < d and Ic - c'l < d}. 
+ Call a correspondence M continuous at x if for all e > 0, there is a neighborhood Nx of x, such that 
+ D(M(x), M(x')) < e if x' E Nx. 
+ * STEP 1: AX IS CONTINUOUS AT A.E. x. First, ,f is nonempty-valued: if X'(x) = 0 for some x, 
+ then w(x) = 0 by (6). Thus f(x, x) - 2w(x) 2 0 by A0, and (5) implies x e .A(x), a contradiction. 
+ Next, X' is u.h.c.: Take any sequence (xv, yY) -- (x, y), with yn E A'(xn) for all n. Then s(x", yn) ? 0 
+ for all n, and so s(x, y) ? 0 as well, since s is continuous by AO and Part 2 of this Lemma. Thus, 
+ y E:A'(x), establishing u.h.c. Fixing xn = x for all n, X.(x) is closed too. Also, A'(x) 5 [0,1] is 
+ bounded, whence X' is compact-valued. 
+ We call x an --continuity point of a correspondence M, and say x belongs to WM(e), if for all x' 
+ sufficiently close to x, D(M(x), M(x')) < e. Since A' is u.h.c. and compact valued, Theorem 
+ I-B-III-4 in Hildenbrand (1974) implies that (given our nonatomic density u) for all ? > 0, a.e. x is 
+ an e-continuity point of X'. Then for all n = 1,2,..., a.e. x E FM(1/n), and the countable 
+ intersection n, FM(l/n) contains a.e. x as well. That is, for a.e. x, for all n, if x' is sufficiently close 
+ to x, D(A'(x), X'(x')) < 1/n. So A' is a.e. continuous. 
+ * STEP 2: DECOMPOSITION OF THE VALUE FUNCrION'S SLOPE. Take any sequence x, -. x. Add and 
+ subtract OJr.tx)(f(xn, y) - w(xn) - w(y))u(y) dy from w(xn) - w(x) for each n, and divide through 
+ by x -x: 
+ W(Xn) -WWX f(Xn, Y) -W(X,) -W(Y) 
+ (14) x = 0 - u(y) dy 
+ Xn -x X') .-4X(x3 Xn -x 
+ (f(xn, y) -f(x,y)) - (w(xn) -w(x)) ( d 
+ f Xn -xuyd) 
+This content downloaded from 
+65.112.8.31 on Fri, 05 Jun 2026 20:28:48 UTC 
+All use subject to https://about.jstor.org/terms
+
+===== PDF PAGE 24 =====
+ MATCHING AND SEARCH 365 
+ where JA - B JAIA-IB. The first term in brackets vanishes if Xf is continuous at x, because 
+ continuity of f and w and condition (5) imply surplus vanishes at changes in X'(x). The remaining 
+ terms tend to the desired expression for w'(x) at a.e. x. Q.E.D. 
+ B. EQUILIBRIUM EXISTENCE 
+ CONTINUITY OF W c4 a(W): PROOF OF LEMMA 3. 
+ * STEP 1: SURPLUS FUNCTION IS RARELY CONSTANT IN ONE VARIABLE. Define ZW(x) = {Y: s(x, y) 
+ = 0} and Z, = {(x, y): s(x, y) = 0}, and let ,.t be Lebesgue measure on [0,1]. We claim that under 
+ Al-Sup or Al-Sub, g(Zs(x)) = 0 for a.e. x. Let x # x' and y # y', with s(x, y) = s(x', y) = s(x, y') = 0. 
+ Under Al-Sup or Al-Sub, f(x, y) +f(x', y') #f(x', y) +f(x, y'), from which s(x', y') 0 O follows. 
+ Thus, Z,(x) n Z,(x') contains at most one point whenever x ox'. 
+ Assume A(Zs(x)) > 0 for an uncountable number of x.10 Then for some k, there are infinitely 
+ many (xv > with tL(Zs(xn)) > 1/k, whereupon En = I /(Z,(xn)) = oo? Since xij = Z,(xi) n Z,(xj) con- 
+ tains at most one point, N = U j 1= xij is countable, and so ,u(N) =0. Also, Z,(xi)\N and 
+ Zs(xj)\N are disjoint for all i j. Thus 
+ 1 2 I.L U Z,(x,)\N E , .(Z,(xn)\N) = (Z,(x")) = ??. 
+ n=1 n=1 n=1 
+ Given this contradiction, there are only countably many x with 11(Z(x)) > 0. So pu(Z,(x)) = 0 for 
+ a.e. x, and by Fubini's theorem (A X uXXZs) = 0. 
+ * STEP 2: CLOSE SURPLUS FUNCTIONS RARELY DIFFER IN SIGN. As q 0, the set l(ti) = {(x, y) 
+ with Is(x,y)1G[0,1J]} shrinks monotonically to nk=l, s(l1/k)=s-1(0)=Zs. By the countable 
+ intersection property of measures, 
+ 00
+ lim ( A x t,u)(.Xsq)) = lim ( ,u x a) ( (1/k)) = (,u x u) n s(llk)
+ ,q- 0 k oo k=/ 1 
+ -( x X L)(Z5) = O. 
+ Finally, let w, and w2 be value functions, with IIwI(x) - w2(x)II <? i/2, and a1, a2 corresponding 
+ match indicator functions. If sl(x, y) af(x, y) - wl(x) - wl(y) > 71, then s2(x, y) =f(x, y) - w2(x) 
+ - w2(y) > 0, and so al(x, y) = a2(x, y) = 1, while if sl(x, y) < - -, then s2(x, y) < 0, and al(x, y) = 
+ a2(x, y) = 0. Consequently, {(x, y)l al(x, y) ?# a2(x, y)} c Xs1(1), whose Lebesgue measure vanishes 
+ as 1 -* 0. This implies the desired continuity lim IWl -W211 Dolal1 - a211L' = 0- 
+ CONTINUITY OF a C-! u(a): FINISHING THE PROOF OF LEMMA 4. Normalize 8 = 1. 
+ For fixed a0, let uo be the associated unique unmatched density: i.e., 1(x) - uo(x) = 
+ pu0(x)Jgca0(x, y)uo(y) dy. Defining G(a, u) = u(xXl + pJa(x, y)u(y) dy) - 1(x), we see that U = ua 
+ solves (1) given a iff G(a, u) = 0. As proven, u,y is unique. 
+ * STEP 1: AN INVERTIBLE STEADY-STATE DERIVATIVE OPERATOR. The derivative Gu(a, U) is a 
+ bounded linear operator on 22[0, 1], defined as the following limit: 
+ Gu(a, u)(g) = lim (G(a, u + tg) - G(a, u))/t = g (l + p au) + puf 1ag 
+ that is also clearly continuous in u. Write GU(a, u) I + pH. Since a is symmetric (a(x, y)= 
+ a(y, x)), the operator H is self-adjoint, and positive-definite on the space 2 2([0, 1], 1/u) of 
+ 10Toby Gifford (Math Dept., Washington U. in St. Louis) tightened the logic of this paragraph. 
+This content downloaded from 
+65.112.8.31 on Fri, 05 Jun 2026 20:28:48 UTC 
+All use subject to https://about.jstor.org/terms
+
+===== PDF PAGE 25 =====
+ 366 R. SHIMER AND L. SMITH 
+ functions square-integrable with respect to density 1/lt, because'1 
+ 2Kg, Hg)= 2 g(x)Hg(x)/ii(x) clx 
+ 0
+ =2f (g(x)ti (y)/l r(x) +g(x)g(y)) a(x,y) dxdy 
+ fo o
+ 0 0 
+ flfI[g(X)2t(y)/1(x) + 2g(x)g(y) +g(y)2 u(x)/It(y)]cIa(x, y) dxdy 
+ 0 -0
+ f1f1[g(x)Vit(y)/-i(x) +g(y) it(x)/It(y) ]a(x,y) dxdy >0. 
+ Since it is boitindedly positive (given p < sc, I > 1> 0) and finite (11 < 1 < cG), y2([o 1], 1/u) =y2[0, 1]. 
+ So H is a self-adjoint and positive definite linear operator in 52[0, 1], and its spectrum is thus real 
+ and nonnegative; the spectrum of Gja, it) is then contained in [1,cc), and excludes 0. Hence, 
+ G(a, it) is invertible in 22[0, 1]. 
+ * STEP 2: G is LIPSCHITZ IN a. First, we have the subtraction: 
+ G(a, it)(x) - G( /, it)(x) = pit(x)f 1[ a(x,y) - f(x,y)]ui(y) dy 
+ 0
+ f)[G(a,li)(x) - G( f X,,2)(x)]2 dx?p2i4fl( f[a(x,y)Y- (Xy)]dy) dx
+ ? p9if'f ' [a(x,y) -ff3(x,y)]axdydx
+ fo o
+ 0 0 
+ since t(x) ? 1. Then IIG( a, ii) - G( :, ti)ll < pl11 a - 11, both norms in y2 
+ * STEP 3: CONTINUITY OF a -> it.. Since G(a, it) has Lipschitz constant L = pl2 > 0 in a, we 
+ have IIG(a', ita)|I = IIG(a', it.) - G(a, ")11 < Llla - all, and so 
+ 11 G(a', ilHa ) + (ll a - U) 1 = 1I G( a', ilt. + lick - uta') =G(a', 'la)) < Ll a - a'll 
+ for some J, = G(a', tula + (1 - O)uit,') and t E [0,1] by the mean value theorem, given continuity of 
+ Gi, in it. By Step 1, J, is an invertible linear operator in y2[0, 1] with spectrum contained in [1,oc). 
+ So its inverse K, exists, and IIK,11 < 1 for all t. Hence, 
+ |lltia- lia'|| = ||K,J,(lta , -taC')II < IIKt II lljt(tla - la,)l < Lll a-a'11 
+ since IIK,II ? IIKtIl lull <l|ull by the norm inequality and IIK,i ? 1. So when a is near a' in 
+ y ([0 1]2), t is close to itu in 52[0,1]. Finally, continuity holds for both norms in Yl: The 
+ Cauchy-Schwarz inequality implies ll_'(a - ua'IK" ? llu ? - ua,IK2; and lla' - a'll,,_2 <?I I -a - Il" 
+ holds in our restricted domain, as I a - a''l < 1. 
+ CONTINUITY OF THE OPERATOR T: FINISHING THE PROOF OF PROPOSITION 1. 
+ For all w1,w E2 3 and xE= [0,1], the triangle inequality implies lTw2(x) - Tw1(x)l < D(x) + 
+ D2(x), where 
+ D (x) _ | oo? max<f(x,y) - w(y),w(x))it ,(y) dy 
+ 1 + 06W"'
+ 6j0 max<f(x,y) - w2(y),w2(y),w2(x))l,v(y) dy 
+ 1 + w W) w l 
+ l1We thank Robert Israel (UBC Math Dept.) for remarking on this fact. 
+This content downloaded from 
+65.112.8.31 on Fri, 05 Jun 2026 20:28:48 UTC 
+All use subject to https://about.jstor.org/terms
+
+===== PDF PAGE 26 =====
+ MATCHING AND SEARCH 367 
+ We will show that D1 and D2 converge to zero when w1 converges to w2. First, supx D1(x) < 
+ sup, I w(z) - w2(z)I, since 
+ D (x) OfoImax<f(x,y) - w2(y),w2(x)> - max<f(x,y) - w1(y),wl(x)>Iuw (y) dy 
+ 1 + Oii 
+ 0fo'Imax(w1(y) - w2(y),w2(x) - w1(x)>Iuwl(y) dy 
+ < - 1 < ~~~~~~~~sup Iwt(z)- w2(z)I 
+ 1 + oi-w, 
+ Second, we can bound D2(x) through a series of algebraic manipulations. 
+ I - W2(y)W2(X)> OU2 O(y) WIY 
+ D2(x) <fmax<f(x, y)w2(y),w2(x)> |+O - 2 | dy 
+ 21 Xuw(y) uwf(y) 
+ < supf(x,y)f - OU 2 - W dy 
+ y 0 1 + ouw 1 + ouw 
+ O OUW2(y) OuW'(y) I Ouwl(y) 0Wu'(y) I 
+ supf(z,y) 1 + OW2 1 + oUw2 | + |1+ W2 1 + O dy 
+ < Osupf(z,y)(fIIuw2(y) - uwl(y)l dy + IiuW2 _ -WI, 
+ According to Lemmas 3 and 4, fJ10uW2(y) - uw'(y)l dy converges to zero when w2 converges to w'. 
+ An immediate implication is that the difference between the mass of unmatched agents, Ilw -w 1iWI 
+ must converge to zero as well. 
+ C. DESCRIPTIVE THEORY PROOFS 
+ MATCHING SET BOUND FUNCTIONS: PROOF OF PROPOSITION 3. 
+ * STEP 1: MONOTONIC BOUND FUNCTIONS > ASSORTATIVE MATCHING. As the two cases are 
+ analogous, we prove that nondecreasing bounds a, b imply PAM. Choose xl <x2 and Yl <Y2 with 
+ Yi E X(x2) and Y2 EA'(xj). Then b(x2) 2 b(xl) 2 Y2, where the first inequality follows from b's 
+ monotonicity, and the second from the fact that Y2 E2f(xX). Also, Y2 >Y1 2 a(x2), where the second 
+ inequality follows from Yl I E`(x2). In summary, b(x2) ?Y2 > a(x2), and since matching sets are 
+ closed and convex, Y2 E. f(x2). Similarly, a nondecreasing lower bound function a ensures that 
+ Yi E .#(xd), whence matching is positively assortative. 
+ * STEP 2: ASSORTATIVE MATCHING => MONOTONIC BOUND FUNCTIONS. Proposition 2 proved that 
+ assortative matching implies convex matching sets. To avoid tedious repctition among four similar 
+ cases, we simply prove that b is nondecreasing with PAM. If not, b(x1) > b(x2) for some pair 
+ x1 <x2. Then since b(xl) c#(xj) and b(x2) e'f(x2) (matching sets being closed), PAM implies 
+ b(x1) EJ((x2), contradicting that b(x2) is the upper bound of x2's matching set. Q.E.D. 
+ AN INTERMEDIATE VALUE THEOREM 
+ CLAIM 1: Let the correspondence X(: [0, 1] [0,1] be upper hemicontinuous (u.h.c.), and convex- 
+ and nonempty-valued. Take yO 2, Zo E 1(yo), and Z2 E#(Y2). If ZO <Z2, then for all z1 E [ZO, Z2], 
+ there existsy1 E [Yo,Y2] with Z1 e fO(Y1)- 
+ PROOF: Define Yl = sup{y e [Yo Y2 ]L(y) n [0, z1] # 0}, the largest point whose image includes 
+ points less than z1. Since X' is u.h.c., A'(yj) n [0, z1] 0 as well. If Yl =Y2' then convexity of 
+ -X(Y2) implies z1 XE A(Y2). Otherwise, take a convergent sequence of points yf Y with Y2 ?yn >Yi 
+ for all n. Associate with this another sequence of points {zn} with En e A(Yn) for all n. By the 
+This content downloaded from 
+65.112.8.31 on Fri, 05 Jun 2026 20:28:48 UTC 
+All use subject to https://about.jstor.org/terms
+
+===== PDF PAGE 27 =====
+ 368 R. SHIMER AND L. SMITH 
+ construction of Yl, zn E (z1, 1] for all n. Since Xf is u.h.c., there is a convergent subsequence of {z"} 
+ whose limit point z E [z1, 1] is in X(y1). We have shown that A(y1) includes points weakly greater 
+ than and weakly less than zl. Since it is convex, z1 E f(yl). Q.E.D. 
+ SINGLE CROSSING PROPERTY: PROOF OF LEMMA 6. We need a preliminary result: 
+ CLAIM 2 (DENSITY-FREE INTEGRAL COMPARISON): Take M c [0, 1] and u: M R+t + . Let 4, f': [0, 1] 
+ lR be increasing (decreasing) functions with a nondecreasing (nonincreasing) ratio i/fl. If 
+ fM 0f(x)u(x) dx = 0, then mIM (x)u(x) dx 2 0. 
+ PROOF: Assume without loss of generality that i and qi are increasing, as in Figure 5. If 
+ M # [0,1], extend u to [0,1] by defining u(x) 0 for all x - M. Define A(x) Jfxi(x')u(x') dx'. 
+ Clearly I(O) = 0, while I(l) = 0 by assumption. Then I is quasiconvex, as if is increasing, and so 
+ I(x) < 0 for all x E [0, 1]. 
+ Substituting with I and the nondecreasing quotient q(x) +'(x)/+f(x) yields 
+ M (x)u(x) dx-f q(x)I'(x) dx = q()I() - q(O)I() - I(x) dq(x) 
+ where we have integrated by parts. The first two terms in the last expression are zero, and the final 
+ term nonnegative, as I() < 0, dq(-) ? 0. So fMP(x)u(x) dx 2 0. Q.E.D. 
+ PROOF OF LEMMA 6: We just establish the supermodular case. First, z is uniquely defined, as 
+ h(2,yl) is strictly increasing in 2. Next, integrating hx(x2,y')hx(xl,yl) > hx(x2,yl)hx(xl,y') over 
+ xI E [2, x2] and then x2 E [xI, 21, we discover that 
+ hx(X, y')(h(x,yl) - h(2, yl)) 2 hx(x, y1)(h(x, y') - h(2, y')) 
+ for all y' >yl, and for all x > 2 and crucially also all x < z. This is equivalent to 
+ d h(x,y')-h(2,y') 
+ Ax h(x, yl) )-h(:z, y) - 
+ Let +(x) h(x, y') - h(2, y') and +i(x) - h(x, Yl) - h(2, yl), increasing. Since q5/If is nondecreas- 
+ ing and Ex e M if(x) =0 by construction, Ex m M+(X) 0 by Claim 2. Q.E.D. 
+ FIGURE 5.-Illustration of Claim 2. This illustrates the increasing case. As Jm if'(x)u(x) dx =0, a 
+ z exists such that qif(x) >< 0 for all x ~t z. And since 4O/if is nondecreasing, 40 must equal zero at the 
+ same point. Then the ratio condition implies that, since the positive and negative areas of if' 
+ balance, the positive area of 4 must outweigh the negative area. 
+This content downloaded from 
+65.112.8.31 on Fri, 05 Jun 2026 20:28:48 UTC 
+All use subject to https://about.jstor.org/terms
+
+===== PDF PAGE 28 =====
+ MATCHING AND SEARCH 369 
+ PROOF OF LEMMA 7: We will prove the contrapositive: If u- is not quasiconcave, there exist 
+ 0 <yj <y2 such that u'(v1) < 0 and o-(yl) < o(y2). Since u- is not quasiconcave, there are three 
+ points Yo <Yj <Y2 with o-(9,) < min< o(y0), (d(Y2))> 
+ First take the case where u(y) < 0(Y2) for all y E [yo, 91]1 Then as J'Y$Q'(z)odz , )- (yO) 
+ < 0, there exists Yi E (yo,.91) with o-'(yl) < 0. By construction, 0(y1) < o(y,) as well, the desired 
+ counterexample. 
+ Alternatively, if max,,, ]o-(y) > (y,), define 90 =sup{y <911jo(y) ? 0(y1)}. Note 90 <9 
+ because o- is continuous and U(91) < u(y2). Then we can proceed as before, with 90 playing the 
+ role of yo, to prove that there is )' E (9I,9E ) with o'(yi) < 0 and, by construction, (y) < (y,). 
+ Q.E.D. 
+ ANALYTICAL SOLUTION FOR THE VALUE FUNCTION: If all imatches are acceptable, it is possible to 
+ solve analytically for the value function. First, equation (1) implies the unmatched density function 
+ satisfies ii(x) -tl(x) for all x, where Ti is the aggregate unemployment rate, the larger root of the 
+ quadratic equation 8(1 -Ky)= pl2: 
+ -8+ 82+48p 
+ 2 p
+ Next, (8) yields an analytical solution for w'(x) for all x. Finally, to pin down the level of the value 
+ function, use the implicit value equation (6) for type 0: 
+ W(0) = Of'(f(O,Y) -w(O) -w(O) -J YW/ (z) dz)u(y) dy 
+ where we use w(y) -w(O) + Jj'w'(z) cz. This can be solved explicitly for w(O). 
+ REFERENCES 
+ BECKER, G. (1973): "A Theory of Marriage: Part I," Joulrtnal of Political Economs,y, 81, 813-846. 
+ BURDETT, K., AND M. COLES (1997): "Marriage and Class," Qtiaicterly Jowtiinal of Econlomiics, 112, 
+ 141-168. 
+ DIAMOND, P. (1982): "Aggregate Demand Management in Search Equilibrium," Jouirnllal o Political 
+ Econooimy, 90, 881-894. 
+ DIAMOND, P., AND J. STIGLITZ (1974): "Increases in Risk and Risk Aversion," Journ-iial of Economic 
+ Theoiy, 8, 337-360. 
+ HILDENBRAND, W. (1974): Coie and Equilibria of a Laige Econioiny. Prinicetoin: Priniceton University 
+ Press. 
+ KREMER, M., AND E. MASKIN (1995): "Wage Inequality and Segregation by Skill," NBER Working 
+ Paper 5718. 
+ Lu, X., AND R. P. McAFEE (1996): "Matching and Expectations in a Market with Heterogeneous 
+ Agents," in Advances in Appliedl Microecononmics, Vol. 6, ed. by M. Baye, Greenwich, CT: JAI 
+ Press, pp. 121-156. 
+ MILGROM, P., AND R. WEBER (1982): "A Theory of Auctions and Competitive Bidding,' Econlomelet- 
+ rica, 50, 1089-1122. 
+ MORGAN, P. (1995): "A Model of Search, Coordination, and Market Segmentation," revised mimeo, 
+ SUNY Buffalo. 
+ MORTENSEN, D. (1982): "Property Rights and Efficiency in Mating, Racing, and Related Games," 
+ Amemicani Economic Review, 72, 968-979. 
+ PISSARIDES, C. (1990): Equilibrilun Unemploymnent Theoy. Oxford: Blackwell. 
+ SATTINGER, M. (1995): "Search and the Efficient Assignment of Workers to Jobs," Iliterlationlal 
+ Ecotionzic Review, 36, 283-302. 
+ SMITH, L. (1998): "The Marriage Model with Search Frictions," MIT miimeo. 
+ STOKEY, N. L., AND R. E. LUCAS (1989): Recuirsiv!e Methiods in Econiomic Dynamiiics. Cambridge, 
+ Mass.: Harvard University Press. 
+ ToPKIs, D. M. (1998): Supenrodularity anid Complementarity, Frontiers of Economic Research. 
+ Princeton, N.J.: Princeton University Press. 
+This content downloaded from 
+65.112.8.31 on Fri, 05 Jun 2026 20:28:48 UTC 
+All use subject to https://about.jstor.org/terms

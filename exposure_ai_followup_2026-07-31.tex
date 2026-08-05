@@ -1,0 +1,1051 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,booktabs,array,longtable,enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\MSE}{\operatorname{MSE}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\plim}{\operatorname{plim}}
+
+\title{Exposure-Map Feedback and AI-Validation Design:\\
+A July 31 Continuation Note}
+\author{}
+\date{July 31, 2026}
+
+\begin{document}
+\maketitle
+
+\section*{Purpose and source convention}
+
+This is a new, separate continuation note. It does not modify the July 27 or
+July 30 exposure drafts, the feedback documents, or the earlier AI-project
+note. It answers four questions:
+\begin{enumerate}[leftmargin=2em]
+    \item Does the injectivity problem for a scalar exposure index require a
+    continuous parameter, and how does it depend on finite, countable, or
+    uncountable support?
+    \item Does replacing \(Y_i(W)\) by \(Y_i\) solve the graph-HAC centering
+    problem?
+    \item Which feedback items were actually addressed between the July 27 and
+    July 30 exposure drafts?
+    \item How does AI-project MSE depend on the number of validated cells, what
+    is the resulting threshold rule, and when must validation sites be sampled
+    rather than chosen for convenience?
+\end{enumerate}
+
+The exposure sources are the July 27 feedback, the July 29 proof-review note,
+the July 27 draft, the July 30 redline, Gao, Harshaw, S\"avje, and Wang (2026),
+and the earlier June exposure reviews in the project record. The AI sources are
+the project proposal and
+\texttt{ai\_project\_three\_papers\_whiteboard\_note.tex}.
+Statements labeled ``derived'' are derived below.
+
+\section{Exposure-map feedback}
+
+\subsection*{Notation}
+
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.23\linewidth}
+                  >{\raggedright\arraybackslash}p{0.69\linewidth}}
+\toprule
+Symbol & Meaning \\
+\midrule
+\endfirsthead
+\toprule
+Symbol & Meaning \\
+\midrule
+\endhead
+\(n,N_n\) & Sample index or number of units, and number of analysis units in
+sample \(n\). \\
+\(i,v,m\) & Unit index, village index, and number of included annuli. \\
+\(D_n\) & Known assignment law in sample \(n\). \\
+\(\mathcal A_n\) & Ambient assignment space. \\
+\(\mathcal W_n=\supp(D_n)\) & Support of assignments that the design can
+generate. \\
+\(W\) & Random assignment drawn from \(D_n\). \\
+\(Y_i(\cdot)\) & Fixed potential-outcome schedule for unit \(i\). \\
+\(Y_i=Y_i(W)\) & Realized-outcome random variable under the design. \\
+\(\widetilde Y_i\) & Outcome function of the sufficient exposure at the truth. \\
+\(W',y_i^{\rm obs}\) & Fresh placebo assignment and the fixed observed outcome
+used in the comparison thought experiment. \\
+\(A_v(W)\in\R^m\) & Vector of the first \(m\) annular assignment summaries for
+village \(v\). \\
+\(S_v=\supp\{A_v(W)\}\) & Support of the annular vector under \(D_n\). \\
+\(a,a',h\) & Two distinct support points and a generic support difference. \\
+\(\theta\in\Theta\) & Candidate exposure-map parameter. \\
+\(\theta_m\in\Theta_m\) & Annular-index weight vector, normalized by
+\(\mathbf 1'\theta_m=1\). \\
+\(g_v^{(m)}(W;\theta_m)\) & Scalar annular index
+\(\theta_m'A_v(W)\). \\
+\(H_m,\mathcal B(S_v)\) & Weight-normalization hyperplane and collision set. \\
+\(\psi(W)\) & Design-side function used in a moment. \\
+\(\phi(Y_i)\) & Outcome transformation used in a moment. \\
+\(R_{i,\theta}\psi(W)\) & Exact design residual
+\(\psi(W)-\E[\psi(W)\mid g_i(W;\theta)]\). \\
+\(\Psi_i(\theta)\) & Unit score
+\(\phi(Y_i)R_{i,\theta}\psi(W)\), or a vector of such scores. \\
+\(Z_{i,n}(\theta)\) & Infeasibly centered score
+\(\Psi_i(\theta)-\E[\Psi_i(\theta)]\). \\
+\(\theta_0,\widehat\theta_n\) & True exposure parameter and its estimator. \\
+\(\widehat\Omega_n^u(\theta)\) & Feasible graph-HAC estimator formed from
+uncentered scores. \\
+\(\Omega\) & Limiting covariance matrix at \(\theta_0\). \\
+\(M,M_n\) & Fixed and growing numbers of moment functions. \\
+\(b_n\) & Maximal affinity-set size. \\
+\(V_M^\star,V^\star\) & Finite-dictionary and limiting oracle variances. \\
+\(B_n,A,\widehat A,K_\beta,V_\beta\) & Stage-2 centering-bias matrix,
+population and estimated derivative matrices, selector for \(\beta\), and the
+asymptotic variance of \(\widehat\beta\). \\
+\bottomrule
+\end{longtable}
+
+\subsection*{1.1 The exact injectivity condition}
+
+The scalar annular index is
+\[
+    g_v^{(m)}(W;\theta_m)=\theta_m'A_v(W),
+    \qquad
+    \mathbf 1'\theta_m=1.
+\]
+For a fixed support \(S_v\), define the collision set
+\[
+    \mathcal B(S_v)
+    =
+    \bigcup_{\substack{a,a'\in S_v\\a\neq a'}}
+    \left\{
+       \theta_m\in\Theta_m:
+       \theta_m'(a-a')=0
+    \right\}.
+\]
+The index is one-to-one on \(S_v\) exactly when
+\[
+    \theta_m\notin\mathcal B(S_v).
+\]
+Equivalently, using the difference set
+\[
+    S_v-S_v=\{a-a':a,a'\in S_v\},
+\]
+injectivity is equivalent to
+\[
+    \ker(\theta_m')\cap
+    \{(S_v-S_v)\setminus\{0\}\}
+    =
+    \varnothing.
+\]
+This is the general condition. Cardinality is useful for diagnosing it, but
+cardinality alone is not the condition.
+
+\subsection*{1.2 Finite support}
+
+Suppose \(S_v\) is finite and \(\Theta_m\) has nonempty relative interior in
+the normalization hyperplane
+\[
+    H_m=\{\theta_m:\mathbf 1'\theta_m=1\}.
+\]
+For each pair \(a\neq a'\), the collision equation
+\[
+    \theta_m'(a-a')=0
+\]
+cuts out a lower-dimensional hyperplane in \(H_m\), or is empty there. Since
+there are finitely many pairs, \(\mathcal B(S_v)\) is a finite union of
+lower-dimensional sets. Therefore almost every \(\theta_m\), with respect to
+Lebesgue measure on \(H_m\), makes the scalar index injective on \(S_v\).
+This is the finite-support result in the July 29 proof-review note.
+
+Continuity of the map \(\theta_m\mapsto g_v^{(m)}\) is not what causes the
+problem. The relevant feature is that the admissible parameter set contains a
+weight vector outside the collision hyperplanes. A finite or discrete
+parameter grid can also contain an injective weight vector; it simply no
+longer supports an ``almost every weight'' statement. Conversely, a continuous
+parameter set can be deliberately restricted to collision-producing weights,
+such as equal annular weights.
+
+\subsection*{1.3 Countably infinite support}
+
+The finite-support conclusion extends to countably infinite support. If \(S_v\)
+is countable, then the set of distinct pairs is countable, so
+\[
+    \mathcal B(S_v)
+\]
+is a countable union of lower-dimensional hyperplanes. It still has Lebesgue
+measure zero in a full-dimensional parameter region. Thus, for almost every
+continuously valued weight vector, the scalar index is injective on a
+countably infinite support.
+
+A simple example is \(S_v\subset\mathbb Z^m\). A vector whose coordinates are
+rationally independent can distinguish all integer vectors in \(S_v\).
+Therefore moving from finite to countably infinite support does not by itself
+restore exact residual variation.
+
+The same point survives a triangular array. If every \(S_{v,n}\) is finite,
+then
+\[
+    \bigcup_{n=1}^{\infty}\mathcal B(S_{v,n})
+\]
+is a countable union of hyperplanes. A generic fixed weight vector can be
+injective for every \(n\) simultaneously. Merely allowing the assignment
+support to grow with the sample is not a remedy.
+
+\subsection*{1.4 Uncountable support}
+
+Uncountability alone is not sufficient to prevent injectivity. For example,
+the uncountable set
+\[
+    S=\{(t,0,\ldots,0):t\in[0,1]\}
+\]
+is mapped injectively by every \(\theta\) with \(\theta_1\neq0\).
+
+Geometry supplies the useful distinction. If \(m>1\) and \(S_v\) contains an
+open subset of \(\R^m\), no scalar linear map can be injective on \(S_v\).
+Every nonzero \(\theta_m\) has an \((m-1)\)-dimensional kernel. For an interior
+point \(a\in S_v\), a sufficiently small nonzero \(h\in\ker(\theta_m')\)
+satisfies both \(a\in S_v\) and \(a+h\in S_v\), while
+\[
+    \theta_m'a=\theta_m'(a+h).
+\]
+The same conclusion holds under other full-dimensional support conditions.
+But an uncountable support lying on a one-dimensional curve can remain
+injectively encodable. The correct question is whether the support has
+nontrivial differences in \(\ker(\theta_m')\), not simply whether it is
+uncountable.
+
+\subsection*{1.5 Why this does not doom every exposure map}
+
+Suppose \(\psi(W)=h\{A_v(W)\}\). If
+\(\theta_m'A_v(W)\) is injective on \(S_v\), then \(A_v(W)\), and hence
+\(\psi(W)\), is measurable with respect to the scalar index. Therefore
+\[
+    R_{v,\theta_m}\psi(W)=0
+\]
+almost surely. This makes the corresponding exact moment uninformative.
+
+This conclusion is important but narrower than ``every exposure map is
+doomed.'' Residual variation remains when, for example:
+\begin{enumerate}[leftmargin=2em]
+    \item the exposure deliberately coarsens assignment, such as a treated
+    count with many assignments producing the same count;
+    \item symmetry or equal-weight restrictions force collisions;
+    \item the design function \(\psi(W)\) depends on assignment features not
+    recoverable from the exposure;
+    \item the support is full-dimensional relative to the scalar index; or
+    \item the researcher bins or otherwise coarsens the exposure as part of the
+    maintained estimand, rather than using approximation error to imitate
+    coarsening.
+\end{enumerate}
+
+This degeneracy is also distinct from the Gao--Harshaw--S\"avje--Wang
+impossibility theorem. Their theorem says no test is uniformly informative
+against every bounded potential-outcome schedule in an unrestricted larger
+exposure model. It does not say that every test has zero power against every
+specific structured alternative. Park's moments may be useful against
+restricted alternatives visible through the selected moments, provided the
+exact residuals are nondegenerate. Injectivity is an additional failure mode:
+for an injective candidate, Park's selected exact moment itself can collapse
+before the minimax issue is reached. (Gao et al., Theorem 3.1 and Section 4,
+PDF pp.~10--12.)
+
+\subsection*{1.6 Application implication}
+
+For every estimated annular support and weight vector, the application should
+report:
+\begin{enumerate}[leftmargin=2em]
+    \item the probability that distinct annular vectors have the same index;
+    \item the design variance of each exact residual;
+    \item projection-approximation error relative to exact residual variance;
+    and
+    \item the smallest singular value of the Stage-1 Jacobian.
+\end{enumerate}
+If exact collisions are numerically delicate, the paper should state the
+tolerance used and show a tolerance path. A quadratic smoother cannot repair
+an exactly zero residual. If its approximation error is first-order
+negligible, the estimated moment inherits the degeneracy. If the error is
+first-order relevant, the moment is driven by approximation error.
+
+\subsection*{1.7 Replacing \(Y_i(W)\) by \(Y_i\) does not fix feedback 0.3}
+
+Under the design-based convention, \(Y_i(\cdot)\) is a fixed schedule and
+\[
+    Y_i:=Y_i(W)
+\]
+is the realized-outcome random variable. These are different notational
+objects, but \(Y_i\) is still a function of random assignment. Thus
+\[
+    \E_D[\Psi_i(\theta)]
+    =
+    \E_D\!\left[
+       \phi\{Y_i(W)\}R_{i,\theta}\psi(W)
+    \right]
+\]
+can be written explicitly as
+\[
+    \sum_{w\in\mathcal W_n}
+       D_n(w)\,
+       \phi\{Y_i(w)\}
+       R_{i,\theta}\psi(w)
+\]
+for a finite design. Away from \(\theta_0\), this expression generally depends
+on potential outcomes \(Y_i(w)\) at assignments that were not realized.
+Writing \(\phi(Y_i)\) instead of \(\phi\{Y_i(W)\}\) shortens the notation; it
+does not change this expectation or make it computable.
+
+One could instead hold the observed value \(y_i^{\rm obs}\) fixed while drawing
+a fresh placebo assignment \(W'\). Then
+\[
+    \E_{W'}\!\left[
+       \phi(y_i^{\rm obs})R_{i,\theta}\psi(W')
+    \right]
+    =
+    \phi(y_i^{\rm obs})
+    \E_{W'}[R_{i,\theta}\psi(W')]
+    =
+    0
+\]
+for every \(\theta\). But this is a different probability experiment. It is
+not the design expectation of the original score, because it artificially
+holds the outcome fixed as assignment changes. It therefore cannot be used to
+justify the claimed centering of the design-based score.
+
+At the truth, exposure sufficiency does solve the centering problem:
+\[
+    Y_i=\widetilde Y_i\{g_i(W;\theta_0)\}.
+\]
+Then
+\begin{align*}
+    \E_D[\Psi_i(\theta_0)]
+    &=
+    \E_D\!\left[
+       \phi\!\left(\widetilde Y_i\{g_i(W;\theta_0)\}\right)
+       R_{i,\theta_0}\psi(W)
+    \right]\\
+    &=
+    \E_D\!\left[
+       \phi\!\left(\widetilde Y_i\{g_i(W;\theta_0)\}\right)
+       \E_D\{R_{i,\theta_0}\psi(W)\mid g_i(W;\theta_0)\}
+    \right]\\
+    &=0.
+\end{align*}
+Therefore the feasible graph-HAC estimator may use uncentered scores at
+\(\theta_0\). Evaluating at \(\widehat\theta_n\) still requires the separate
+plug-in condition
+\[
+    \left\|
+       \widehat\Omega_n^u(\widehat\theta_n)
+       -
+       \widehat\Omega_n^u(\theta_0)
+    \right\|_{\rm op}
+    =
+    o_p(1),
+\]
+together with consistency at the truth,
+\[
+    \left\|
+       \widehat\Omega_n^u(\theta_0)-\Omega
+    \right\|_{\rm op}
+    =
+    o_p(1).
+\]
+For a smooth parameter this can follow from a local Lipschitz or derivative
+bound and the rate of \(\widehat\theta_n\). For a ring it needs a local
+shell-oscillation condition. Consistency of \(\widehat\theta_n\) alone is not
+enough.
+
+\subsection*{1.8 July 27 versus July 30: July 27 feedback ledger}
+
+This comparison is restricted to items 0.1--0.5 in the July 27 feedback
+document.
+
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.09\linewidth}
+                  >{\raggedright\arraybackslash}p{0.39\linewidth}
+                  >{\raggedright\arraybackslash}p{0.13\linewidth}
+                  >{\raggedright\arraybackslash}p{0.29\linewidth}}
+\toprule
+Item & Requested correction & Status in July 30 & Evidence \\
+\midrule
+\endfirsthead
+\toprule
+Item & Requested correction & Status in July 30 & Evidence \\
+\midrule
+\endhead
+0.1 & Diagnose injectivity of the annular index; report collisions, exact
+residual variance, approximation error, and Jacobian strength. &
+Not addressed &
+The annular index remains on p.~30, but the application reports none of the
+four requested diagnostics. \\
+\addlinespace
+0.2 & State that smoothing estimates the exact projection and cannot create
+design variation when the exact residual is zero. &
+Not addressed &
+Remark 2.8 retains the sentence saying pooling over neighboring exposure
+values is the response to degeneracy (p.~13). \\
+\addlinespace
+0.3 & Use feasible uncentered scores at the truth and add a local plug-in
+continuity condition for graph-HAC. &
+Not addressed &
+Assumption 3.9 still says the design centering is computable and invokes only
+consistency of \(\widehat\theta_n\) (p.~21). \\
+\addlinespace
+0.4 & Do not present \(M_n^2b_n/N_n\to0\) as alone proving growing-sieve
+attainment. &
+Addressed &
+The July 30 draft replaces the assumed growing-dimensional expansion with
+pointwise fixed-\(M\) feasible theory and a diagonal argument establishing the
+existence of a sufficiently slow deterministic \(M_n\). It explicitly says the
+rate does not validate every prespecified sequence (pp.~22 and 71--73). \\
+\addlinespace
+0.5 & Replace expectation ordering by a probability-limit result and require
+\(\widehat A\to_p A\). &
+Not addressed &
+Remark D.5 still begins from \(\E[\widehat\Omega_\Phi]\) and concludes
+asymptotic conservativeness without proving the needed probability limit
+(pp.~79--80). \\
+\bottomrule
+\end{longtable}
+
+The July 30 file is a redline rather than a clean replacement. Its main
+substantive theoretical improvement is the new slow-sieve theorem. It also
+reorganizes and expands the applications. Those edits do not supply the
+annular residual diagnostics or the other requested corrections.
+
+\section{AI-project MSE and validation design}
+
+\subsection*{Notation}
+
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.23\linewidth}
+                  >{\raggedright\arraybackslash}p{0.69\linewidth}}
+\toprule
+Symbol & Meaning \\
+\midrule
+\endfirsthead
+\toprule
+Symbol & Meaning \\
+\midrule
+\endhead
+\(j=1,\ldots,J\) & Occupation-task cell and total number of target cells. \\
+\(\theta_j\) & True productivity gain in cell \(j\). \\
+\(p_j,\bar\theta\) & Cell weight and aggregate
+\(\bar\theta=\sum_jp_j\theta_j\). \\
+\(S_j\) & Broad score observed in every cell. \\
+\(\mu,\tau^2,a,b,\sigma_S^2\) & Gaussian score-channel parameters. \\
+\(\psi\) & Parameter vector
+\((\mu,\tau^2,a,b,\sigma_S^2)\). \\
+\(\eta_j\) & Score error. \\
+\(R_j,\pi_j,\pi_{jk}\) & Validation indicator, first-order inclusion
+probability, and joint inclusion probability. \\
+\(m\) & Number of validated cells. \\
+\(\widehat v_j,\varepsilon_j,s_j^2\) & Experimental validation estimate,
+experimental error, and its design variance. \\
+\(h(S_j;\psi)\) & Oracle posterior mean based on the score; this is \(m_j\) in
+the earlier AI note. \\
+\(\widehat\theta_j\) & Feasible held-out-cell prediction
+\(h(S_j;\widehat\psi)\). \\
+\(D_S,x_j\) & Score variance \(b^2\tau^2+\sigma_S^2\) and centered score
+\(S_j-a-b\mu\). \\
+\(\omega^2\) & Oracle posterior variance given only the score. \\
+\(\omega_v^2\) & Oracle posterior variance given the score and a validation
+estimate with common variance \(s^2\). \\
+\(\lambda\) & Score reliability ratio
+\(b^2\tau^2/(b^2\tau^2+\sigma_S^2)\). \\
+\(\widehat\psi,V_\psi\) & Estimated channel parameter and the covariance in
+\(\sqrt m(\widehat\psi-\psi_0)\Rightarrow N(0,V_\psi)\). \\
+\(\dot h(S_j;\psi_0)\) & Gradient of the posterior mean with respect to
+\(\psi\). \\
+\(\Lambda,\Lambda_{\bar\theta}\) & Delta-method sensitivity constants for a
+held-out cell and the aggregate. \\
+\(I_\psi\{s^2(m)\}\) & Per-cell Fisher information when experimental
+precision depends on \(m\). \\
+\(T_{\rm MSE},\epsilon,r,\kappa\) & Total-MSE target, excess-MSE tolerance,
+RMSE target, and marginal-value tolerance. \\
+\(\widehat{\bar\theta}_{\rm EB},
+\widehat{\bar\theta}_{\rm PPI}\) & Empirical-Bayes aggregate and design-based
+difference estimator. \\
+\(g_j=g(S_j)\) & Fixed calibrated prediction used in the design-based
+difference estimator. \\
+\(e_j,S_e^2\) & Cell residual \(\theta_j-g_j\) and its finite-population
+variance. \\
+\(S_e,\sigma_v\) & Square roots of \(S_e^2\) and \(\sigma_v^2\). \\
+\(\bar s^2\) & Population average \(J^{-1}\sum_js_j^2\). \\
+\(B,n_j,\sigma_v^2\) & Total worker-task experimental budget, allocation to
+cell \(j\), and per-observation validation variance. \\
+\(c\) & Per-site budget overhead, measured in worker-task observation
+equivalents. \\
+\(d,D\) & Enterprise/site index and number of independently sampled sites. \\
+\(Q_d,q_d\) & Site inclusion indicator and probability. \\
+\(r_{j\mid d}\) & Conditional cell-inclusion probability within site \(d\). \\
+\(X_d,X_j\) & Pre-treatment site and cell covariates used for stratification
+or transport. \\
+\(\rho\) & Intraclass correlation among validation information from cells in
+the same site. \\
+\(m_{\rm eff}\) & Approximate effective number of independent validation
+cells. \\
+\(\bar c=m/D\) & Average number of validated cells per site. \\
+\bottomrule
+\end{longtable}
+
+\subsection*{2.1 The Gaussian channel and its oracle floor}
+
+The project model is
+\[
+    \theta_j\sim N(\mu,\tau^2),
+\]
+\[
+    S_j=a+b\theta_j+\eta_j,
+    \qquad
+    \eta_j\sim N(0,\sigma_S^2).
+\]
+Write
+\[
+    D_S=b^2\tau^2+\sigma_S^2,
+    \qquad
+    x_j=S_j-a-b\mu.
+\]
+The oracle posterior mean for an unvalidated cell is
+\[
+    h(S_j;\psi)
+    =
+    \mu+\frac{b\tau^2}{D_S}x_j,
+\]
+and the irreducible posterior variance is
+\[
+    \omega^2
+    =
+    \frac{\tau^2\sigma_S^2}{D_S}.
+\]
+Even if the channel parameters were known exactly, the held-out-cell MSE would
+not fall below \(\omega^2\). The \(m^{-1}\) statement in the proposal must
+therefore refer to \emph{excess risk over the oracle floor}, not total MSE.
+
+\subsection*{2.2 Held-out-cell MSE as a function of \(m\)}
+
+Suppose \(\widehat\psi\) is learned from \(m\) randomly validated cells and is
+independent of the held-out cell being evaluated. Assume
+\[
+    \sqrt m(\widehat\psi-\psi_0)
+    \Rightarrow
+    N(0,V_\psi).
+\]
+The prediction is
+\[
+    \widehat\theta_j=h(S_j;\widehat\psi).
+\]
+Add and subtract the oracle posterior mean:
+\[
+    \widehat\theta_j-\theta_j
+    =
+    \{h(S_j;\psi_0)-\theta_j\}
+    +
+    \{h(S_j;\widehat\psi)-h(S_j;\psi_0)\}.
+\]
+The cross term is zero because
+\[
+    \E[\theta_j-h(S_j;\psi_0)\mid S_j]=0
+\]
+and the validation sample is independent of the held-out cell. Therefore
+\begin{align*}
+    \MSE_{\rm held}(m)
+    &=
+    \omega^2
+    +
+    \E\!\left[
+      \{h(S_j;\widehat\psi)-h(S_j;\psi_0)\}^2
+    \right]\\
+    &=
+    \omega^2+\frac{\Lambda}{m}+o(m^{-1}),
+\end{align*}
+where
+\[
+    \Lambda
+    =
+    \E\!\left[
+      \dot h(S_j;\psi_0)'V_\psi
+      \dot h(S_j;\psi_0)
+    \right].
+\]
+This is the proposal's claimed expansion with the sensitivity constant made
+explicit as a delta-method quadratic form. It is a derived expansion under the
+displayed asymptotic-normality and sample-separation conditions; it is not
+proved by the five-page proposal.
+
+For completeness, order the parameters as
+\[
+    \psi=(\mu,\tau^2,a,b,\sigma_S^2).
+\]
+Then
+\[
+\dot h(S_j;\psi_0)
+=
+\begin{pmatrix}
+\displaystyle \frac{\sigma_S^2}{D_S}\\[0.8em]
+\displaystyle \frac{b\sigma_S^2x_j}{D_S^2}\\[0.8em]
+\displaystyle -\frac{b\tau^2}{D_S}\\[0.8em]
+\displaystyle
+\frac{\tau^2(\sigma_S^2-b^2\tau^2)x_j}{D_S^2}
+-\frac{b\tau^2\mu}{D_S}\\[0.8em]
+\displaystyle -\frac{b\tau^2x_j}{D_S^2}
+\end{pmatrix}.
+\]
+Thus \(\Lambda\) is computable once the validation design determines
+\(V_\psi\).
+
+A transparent special case illustrates the rate. Suppose all channel
+parameters except \(\mu\) are known and
+\[
+    \widehat\mu=\frac1m\sum_{j:R_j=1}\widehat v_j,
+    \qquad
+    s_j^2=s^2.
+\]
+Then
+\[
+    \Var(\widehat\mu)=\frac{\tau^2+s^2}{m},
+\]
+and
+\[
+    \frac{\partial h}{\partial\mu}
+    =
+    1-\lambda
+    =
+    \frac{\sigma_S^2}{D_S}.
+\]
+Hence
+\[
+    \MSE_{\rm held}(m)
+    =
+    \omega^2
+    +
+    \frac{(1-\lambda)^2(\tau^2+s^2)}{m}.
+\]
+
+\subsection*{2.3 MSE thresholds and the meaning of a ``knee''}
+
+Let \(T_{\rm MSE}\) be a desired total held-out-cell MSE. Since the oracle floor
+is \(\omega^2\), the target is feasible only if
+\[
+    T_{\rm MSE}>\omega^2.
+\]
+Ignoring the lower-order term, the required number of validated cells is
+\[
+    m_{\rm MSE}
+    \approx
+    \left\lceil
+      \frac{\Lambda}{T_{\rm MSE}-\omega^2}
+    \right\rceil.
+\]
+If the goal is to come within \(\epsilon\) MSE units of the oracle floor, then
+\[
+    m_\epsilon
+    \approx
+    \left\lceil\frac{\Lambda}{\epsilon}\right\rceil.
+\]
+For an RMSE target \(r>\omega\),
+\[
+    m_{\rm RMSE}
+    \approx
+    \left\lceil
+      \frac{\Lambda}{r^2-\omega^2}
+    \right\rceil.
+\]
+The marginal MSE reduction from one additional cell is approximately
+\[
+    \MSE(m)-\MSE(m+1)
+    =
+    \frac{\Lambda}{m(m+1)}
+    \approx
+    \frac{\Lambda}{m^2}.
+\]
+A ``knee'' can therefore be defined by a marginal-value tolerance
+\(\kappa>0\):
+\[
+    m_{\rm knee}\approx\sqrt{\frac{\Lambda}{\kappa}}.
+\]
+The proposal's numerical value \(m\approx40\) cannot be justified from the
+rate alone. It requires an empirical estimate or simulation calibration of
+\(\omega^2\), \(V_\psi\), and hence \(\Lambda\), together with a stated
+accuracy or marginal-value threshold.
+
+\subsection*{2.4 Full-map risk when validated cells are also evaluated}
+
+If a validated cell has
+\[
+    \widehat v_j=\theta_j+\varepsilon_j,
+    \qquad
+    \Var(\varepsilon_j)=s^2,
+\]
+its oracle posterior variance is
+\[
+    \omega_v^2
+    =
+    \left(
+      \frac1{\tau^2}
+      \frac{b^2}{\sigma_S^2}
+      \frac1{s^2}
+    \right)^{-1}.
+\]
+If \(m\) of \(J\) cells are randomly validated, the oracle average map risk is
+\[
+    R_{\rm oracle,map}(m)
+    =
+    \left(1-\frac mJ\right)\omega^2
+    +
+    \frac mJ\omega_v^2.
+\]
+With cross-fitting to separate channel estimation from cell prediction, a
+first-order feasible-risk approximation is
+\[
+    R_{\rm map}(m)
+    =
+    \left(1-\frac mJ\right)\omega^2
+    +
+    \frac mJ\omega_v^2
+    +
+    \frac{\overline\Lambda(m)}{m}
+    +
+    o(m^{-1}).
+\]
+The held-out-cell curve in the proposal instead excludes the directly
+validated cells, so its oracle floor remains \(\omega^2\). These two risk
+curves should not be conflated.
+
+\subsection*{2.5 Aggregate empirical-Bayes MSE}
+
+Define
+\[
+    \widehat{\bar\theta}_{\rm EB}
+    =
+    \sum_{j=1}^Jp_jh(S_j;\widehat\psi).
+\]
+Conditional on the scores and under independent Gaussian cell residuals,
+\[
+    \Var\!\left[
+       \sum_jp_j\{h(S_j;\psi_0)-\theta_j\}
+       \,\middle|\, S_1,\ldots,S_J
+    \right]
+    =
+    \omega^2\sum_jp_j^2.
+\]
+Let
+\[
+    \bar d_p=\sum_{j=1}^Jp_j\dot h(S_j;\psi_0).
+\]
+Then
+\[
+    \MSE(\widehat{\bar\theta}_{\rm EB})
+    =
+    \omega^2\sum_jp_j^2
+    +
+    \frac{\Lambda_{\bar\theta}}{m}
+    +
+    o(m^{-1}),
+\]
+where
+\[
+    \Lambda_{\bar\theta}
+    =
+    \bar d_p'V_\psi\bar d_p.
+\]
+With equal weights, the oracle term is \(\omega^2/J\). If \(J\) is large
+relative to \(m\), the channel-estimation term dominates, so aggregate RMSE is
+of order \(m^{-1/2}\), as asserted in the proposal.
+
+\subsection*{2.6 Exact design-based MSE for the aggregate}
+
+The aggregate does not require the Gaussian channel. Let
+\[
+    g_j=g(S_j),
+    \qquad
+    e_j=\theta_j-g_j,
+\]
+with \(g_j\) fixed relative to validation selection and experimental noise.
+Under a simple random sample without replacement of \(m\) cells,
+\[
+    \widehat{\bar\theta}_{\rm PPI}
+    =
+    \frac1J\sum_{j=1}^Jg_j
+    +
+    \frac1m\sum_{j:R_j=1}
+       (\widehat v_j-g_j).
+\]
+Let
+\[
+    S_e^2
+    =
+    \frac1{J-1}
+    \sum_{j=1}^J(e_j-\bar e)^2,
+    \qquad
+    \bar s^2=\frac1J\sum_{j=1}^Js_j^2.
+\]
+Conditional on the finite cell population, with independent experimental
+errors,
+\[
+    \MSE_{\rm PPI}(m)
+    =
+    \frac1m\left(1-\frac mJ\right)S_e^2
+    +
+    \frac{\bar s^2}{m}.
+\]
+Equivalently,
+\[
+    \MSE_{\rm PPI}(m)
+    =
+    \frac{S_e^2+\bar s^2}{m}
+    -
+    \frac{S_e^2}{J}.
+\]
+The first term is the error from sampling only \(m\) of the finite population
+of residuals. The second is experimental estimation noise.
+
+For unequal weights and a general known sampling design, the estimator is
+\[
+    \widehat{\bar\theta}_{\rm PPI}
+    =
+    \sum_jp_jg_j
+    +
+    \sum_j\frac{R_jp_j}{\pi_j}
+       (\widehat v_j-g_j).
+\]
+Ignoring cross-cell experimental-error covariance, its design variance is
+\[
+    \sum_{j=1}^J\sum_{k=1}^J
+    \frac{\pi_{jk}-\pi_j\pi_k}{\pi_j\pi_k}
+    p_jp_ke_je_k
+    +
+    \sum_{j=1}^J\frac{p_j^2}{\pi_j}s_j^2.
+\]
+This formula makes the role of site clustering and unequal validation
+probabilities explicit.
+
+\subsection*{2.7 Fixed precision per cell versus a fixed total budget}
+
+\paragraph{Fixed precision per validated cell.}
+If \(s_j^2=s^2\) does not change with \(m\), then
+\[
+    \MSE_{\rm PPI}(m)
+    =
+    \frac1m\left(1-\frac mJ\right)S_e^2+\frac{s^2}{m}.
+\]
+Both the sampling component and the experimental-noise component fall at rate
+\(m^{-1}\).
+
+\paragraph{Fixed total worker-task budget.}
+Suppose the total number of experimental worker-task observations is \(B\),
+allocated evenly across \(m\) cells:
+\[
+    n_j=\frac Bm.
+\]
+If the per-observation variance is \(\sigma_v^2\), then
+\[
+    s_j^2
+    =
+    \frac{\sigma_v^2}{n_j}
+    =
+    \frac{\sigma_v^2m}{B}.
+\]
+The design-based aggregate MSE becomes
+\[
+    \MSE_{\rm PPI}(m;B)
+    =
+    S_e^2\left(\frac1m-\frac1J\right)
+    +
+    \frac{\sigma_v^2}{B}.
+\]
+Increasing the number of sites or cells reduces the population-coverage
+component, but it does not reduce the total within-cell experimental-noise
+component when \(B\) is fixed. Without site overhead, using more representative
+cells weakly improves this aggregate estimator.
+
+If each new site consumes an overhead of \(c\) observation-equivalents, the
+usable within-cell budget is \(B-cm\), and
+\[
+    \MSE_{\rm PPI}(m;B,c)
+    =
+    S_e^2\left(\frac1m-\frac1J\right)
+    +
+    \frac{\sigma_v^2}{B-cm},
+    \qquad
+    m<\frac Bc.
+\]
+The continuous interior optimum, before imposing integer and \(m\leq J\)
+constraints, is
+\[
+    m^\star
+    =
+    \frac{S_eB}{cS_e+\sigma_v\sqrt c},
+\]
+where \(S_e=\sqrt{S_e^2}\) and
+\(\sigma_v=\sqrt{\sigma_v^2}\).
+
+For empirical Bayes, fixed total budget also changes \(V_\psi\). The general
+first-order formula becomes
+\[
+    \MSE_{\rm held}(m;B)
+    =
+    \omega^2
+    +
+    \frac1m
+    \E\!\left[
+       \dot h'
+       I_\psi\{s^2(m)\}^{-1}
+       \dot h
+    \right]
+    +
+    o(m^{-1}),
+\]
+where \(I_\psi\{s^2(m)\}\) is per-cell Fisher information and
+\[
+    s^2(m)=\frac{\sigma_v^2m}{B}.
+\]
+Because per-cell measurements become noisier as \(m\) grows, the constant is
+not fixed. For example, information about \(\mu\) from validation outcomes is
+proportional to
+\[
+    \frac{m}{\tau^2+\sigma_v^2m/B}
+    \longrightarrow
+    \frac{B}{\sigma_v^2}.
+\]
+Thus pure \(m^{-1}\) decay cannot be extrapolated indefinitely under a fixed
+worker-level budget. The number of cells and the precision per cell must be
+chosen jointly.
+
+\subsection*{2.8 Must the project choose which sites receive RCTs?}
+
+Yes, if the target is an economy-wide cell map rather than the causal effect in
+the firms that happen to participate. There are two separate randomizations:
+\begin{enumerate}[leftmargin=2em]
+    \item \emph{Site or cell sampling} determines whether the validated cells
+    represent the target population.
+    \item \emph{AI-access randomization within a chosen site} identifies the
+    causal effect for that chosen site and cell.
+\end{enumerate}
+The second does not supply the first. Randomizing AI access, model tier, or
+``technology per se'' within a convenience partner produces internal validity
+for that partner. It does not make the partner's occupation-task effects
+representative of the national target.
+
+Unconditional
+\[
+    R_j\perp\theta_j
+\]
+is sufficient but not necessary. A workable weaker condition is conditional
+selection on pre-treatment information:
+\[
+    R_j\perp\theta_j
+    \mid
+    X_j,S_j,
+\]
+together with overlap
+\[
+    0<\pi_j(X_j,S_j)<1
+\]
+for every target stratum. In a finite-population design, the clean statement
+is that the known sampling probability may depend on observed pre-treatment
+\((X_j,S_j)\) but not on the unobserved gain. The resulting moments or
+aggregate estimator must then use the known inclusion probabilities. Simple
+unweighted moment matching is valid only when the validation sample is
+self-weighting or when the channel is correctly modeled conditional on the
+selection variables.
+
+Useful stratification variables include occupation cluster, task family,
+industry, firm size, baseline digital intensity, pre-AI task mix, geography,
+and the broad score \(S_j\). The conditioning set must be fixed before
+validation outcomes are observed. If a target stratum has zero probability of
+validation, its effect is not design-identified; inference for that stratum is
+an extrapolation or bounds exercise.
+
+\subsection*{2.9 Sites are clusters, so forty cells may not mean forty
+independent anchors}
+
+The proposal describes roughly ten enterprise deployments yielding roughly
+forty validated cells. Cells from one enterprise share technology, management,
+worker composition, and implementation shocks. They therefore need not supply
+forty independent channel observations.
+
+Let the average number of validated cells per site be
+\[
+    \bar c=\frac mD
+\]
+and let \(\rho\) be an intraclass correlation for the information relevant to
+channel estimation. A standard approximation is
+\[
+    m_{\rm eff}
+    \approx
+    \frac{m}{1+(\bar c-1)\rho}.
+\]
+The channel-estimation term is then closer to
+\[
+    \frac{\Lambda}{m_{\rm eff}}
+\]
+than to \(\Lambda/m\). The exact analysis should use site-level inclusion
+probabilities, joint cell inclusion probabilities, and cluster-robust or
+design-based covariance calculations. If only ten sites are independently
+sampled, the site count \(D\), not just the raw cell count \(m\), governs the
+external-validity and dependence problem.
+
+\subsection*{2.10 Recommended validation design}
+
+A defensible design is:
+\begin{enumerate}[leftmargin=2em]
+    \item Define \(\theta_j\) over an explicit target distribution of sites,
+    workers, and tasks.
+    \item Stratify candidate sites using pre-treatment \(X_d\) and the cells
+    they cover.
+    \item Randomly sample sites within strata with known \(q_d>0\).
+    \item Randomly or probability-sample cells within selected sites, giving
+    \(\pi_j=q_dr_{j\mid d}\).
+    \item Randomize AI access or model tier within each selected site-cell.
+    \item Estimate the channel with sampling weights and site-clustered
+    covariance.
+    \item Report both \(m\) and the number \(D\) of independent sites, along
+    with a design-effect or effective-sample-size calculation.
+    \item If convenience sites must be used, state the conditional transport
+    assumption and overlap diagnostics. Do not call the resulting anchor
+    randomized with respect to the target population.
+\end{enumerate}
+
+\section*{Main conclusions}
+
+\begin{enumerate}[leftmargin=2em]
+    \item The annular injectivity problem does not require a continuous map in
+    \(\theta\). Finite and countably infinite supports are generically
+    injectively encodable by a scalar real-valued index when the weight space
+    is rich enough. For uncountable supports, geometry rather than cardinality
+    is decisive.
+    \item Not every exposure map is uninformative. The problem arises when the
+    exposure encodes all assignment features used by the design functions.
+    It is separate from the broader minimax impossibility result.
+    \item \(Y_i\) is the shorthand random variable \(Y_i(W)\) in the
+    design-based framework. Renaming it does not make off-truth score means
+    design-computable.
+    \item Of the five July 27 feedback items, the July 30 redline
+    substantively addresses only item 0.4, the growing-sieve objection.
+    \item AI held-out-cell total MSE has an oracle floor:
+    \[
+        \MSE_{\rm held}(m)=\omega^2+\Lambda/m+o(m^{-1}).
+    \]
+    Therefore a budget threshold must be stated relative to that floor.
+    \item The design-based aggregate has an exact finite-population MSE
+    formula. Under fixed total worker-level budget, adding cells reduces
+    representativeness error but not the total within-cell noise component.
+    \item Within-site treatment randomization is not a substitute for
+    representative site or cell sampling. Conditional selection can replace
+    unconditional random sampling only with pre-treatment conditioning,
+    overlap, and correct weighting or transport assumptions.
+\end{enumerate}
+
+\section*{Files reviewed}
+
+\begin{enumerate}[leftmargin=2em]
+    \item \texttt{feedback\_exposure\_0727 (1).pdf}.
+    \item \texttt{Exposure\_Feedback\_7\_28 (1) (1).pdf}.
+    \item \texttt{park exposure 0727.pdf}.
+    \item \texttt{park exposure 0730.pdf}.
+    \item \texttt{gao harshaw savje et al 2026 impossibility of testing exposure
+    mapping.pdf}.
+    \item \texttt{Exposure\_Proof\_Review\_0615.pdf}.
+    \item \texttt{feedback\_comments\_response\_0630.pdf}.
+    \item \texttt{gao\_park\_exposure\_writeup\_revised.tex}.
+    \item \texttt{openai\_exchange\_proposal\_v4\_for\_ext.pdf}.
+    \item \texttt{ai\_project\_three\_papers\_whiteboard\_note.tex}.
+\end{enumerate}
+
+\end{document}

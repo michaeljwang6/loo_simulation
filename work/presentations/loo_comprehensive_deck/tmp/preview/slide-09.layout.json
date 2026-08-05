@@ -1,0 +1,548 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/6qdkep",
+    "id": "6qdkep",
+    "slide": 9,
+    "layoutId": "f4a45b2d-a165-41aa-a743-0923c43a574a",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "82378df2-dc0e-4aa0-b5f4-c07656602ab7",
+    "masterLayoutName": "Master",
+    "backgroundColor": "#FFFFFF",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "bg1": "#FFFFFF",
+      "bg2": "#000000",
+      "tx1": "#1F1F1F",
+      "tx2": "#FFFFFF",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "typefaces": [
+      "+mn-lt"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "f4a45b2d-a165-41aa-a743-0923c43a574a",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "82378df2-dc0e-4aa0-b5f4-c07656602ab7",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "82378df2-dc0e-4aa0-b5f4-c07656602ab7",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/hsrqxcba",
+      "id": "1",
+      "bbox": [
+        72,
+        40,
+        900,
+        20
+      ],
+      "geometry": "rect",
+      "text": "ASSIGNMENT",
+      "textPreview": "ASSIGNMENT",
+      "resolvedFontSize": 12,
+      "resolvedTextStyle": {
+        "fontSize": 12,
+        "typeface": "+mn-lt",
+        "color": "#666666",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "ASSIGNMENT"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "ASSIGNMENT",
+          "resolvedTextStyle": {
+            "fontSize": 12,
+            "color": "#666666",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "ASSIGNMENT",
+              "fontSize": 12,
+              "color": "#666666",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/up07mxsz",
+      "id": "2",
+      "bbox": [
+        72,
+        74,
+        1130,
+        74
+      ],
+      "geometry": "rect",
+      "text": "The mean interaction assignment object isolates one clean nonadditive margin",
+      "textPreview": "The mean interaction assignment object isolates one clean nonadditive margin",
+      "resolvedFontSize": 35,
+      "resolvedTextStyle": {
+        "fontSize": 35,
+        "typeface": "+mn-lt",
+        "color": "#000000",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "The mean interaction assignment object isolates one clean nonadditive"
+          },
+          {
+            "index": 2,
+            "text": "margin"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "The mean interaction assignment object isolates one clean nonadditive margin",
+          "resolvedTextStyle": {
+            "fontSize": 35,
+            "color": "#000000",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "The mean interaction assignment object isolates one clean nonadditive margin",
+              "fontSize": 35,
+              "color": "#000000",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/fq98v2tk",
+      "id": "3",
+      "bbox": [
+        86,
+        172,
+        1105,
+        440
+      ],
+      "geometry": "rect",
+      "text": "Because observed and product assignment preserve the same worker and firm marginals:\n  E_obs[m_IJ] - E_prod[m_IJ] = E_obs[h_IJ] = A_h.\n\nWhy additive terms drop out:\n  E_obs[a_I] = E_prod[a_I] and E_obs[b_J] = E_prod[b_J].\n\nInterpretation:\n  A_h > 0 means observed matches occupy wage cells with positive interaction residuals.\n\nCaution:\n  A_h is a fixed-wage-schedule statement. It is not automatically welfare, production complementarity, or surplus.",
+      "textPreview": "Because observed and product assignment preserve the same worker and firm marginals: |   E_obs[m_IJ] - E_prod[m_IJ] = E_obs[h_IJ] = A_h. ...",
+      "resolvedFontSize": 21,
+      "resolvedTextStyle": {
+        "fontSize": 21,
+        "typeface": "+mn-lt",
+        "color": "#000000",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 11,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Because observed and product assignment preserve the same worker and firm marginals:"
+          },
+          {
+            "index": 2,
+            "text": "  E_obs[m_IJ] - E_prod[m_IJ] = E_obs[h_IJ] = A_h."
+          },
+          {
+            "index": 3,
+            "text": ""
+          },
+          {
+            "index": 4,
+            "text": "Why additive terms drop out:"
+          },
+          {
+            "index": 5,
+            "text": "  E_obs[a_I] = E_prod[a_I] and E_obs[b_J] = E_prod[b_J]."
+          },
+          {
+            "index": 6,
+            "text": ""
+          },
+          {
+            "index": 7,
+            "text": "Interpretation:"
+          },
+          {
+            "index": 8,
+            "text": "  A_h > 0 means observed matches occupy wage cells with positive interaction residuals."
+          },
+          {
+            "index": 9,
+            "text": ""
+          },
+          {
+            "index": 10,
+            "text": "Caution:"
+          },
+          {
+            "index": 11,
+            "text": "  A_h is a fixed-wage-schedule statement. It is not automatically welfare, production complementarity, or surplus."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Because observed and product assignment preserve the same worker and firm marginals:",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Because observed and product assignment preserve the same worker and firm marginals:",
+              "fontSize": 21,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "  E_obs[m_IJ] - E_prod[m_IJ] = E_obs[h_IJ] = A_h.",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "  E_obs[m_IJ] - E_prod[m_IJ] = E_obs[h_IJ] = A_h.",
+              "fontSize": 21,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 4,
+          "text": "Why additive terms drop out:",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Why additive terms drop out:",
+              "fontSize": 21,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 5,
+          "text": "  E_obs[a_I] = E_prod[a_I] and E_obs[b_J] = E_prod[b_J].",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "  E_obs[a_I] = E_prod[a_I] and E_obs[b_J] = E_prod[b_J].",
+              "fontSize": 21,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 7,
+          "text": "Interpretation:",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Interpretation:",
+              "fontSize": 21,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 8,
+          "text": "  A_h > 0 means observed matches occupy wage cells with positive interaction residuals.",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "  A_h > 0 means observed matches occupy wage cells with positive interaction residuals.",
+              "fontSize": 21,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 10,
+          "text": "Caution:",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Caution:",
+              "fontSize": 21,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 11,
+          "text": "  A_h is a fixed-wage-schedule statement. It is not automatically welfare, production complementarity, or surplus.",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "  A_h is a fixed-wage-schedule statement. It is not automatically welfare, production complementarity, or surplus.",
+              "fontSize": 21,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/snipknat",
+      "id": "4",
+      "bbox": [
+        72,
+        655,
+        940,
+        22
+      ],
+      "geometry": "rect",
+      "text": "Source: LOO note, pp. 16-17, 40-41",
+      "textPreview": "Source: LOO note, pp. 16-17, 40-41",
+      "resolvedFontSize": 11,
+      "resolvedTextStyle": {
+        "fontSize": 11,
+        "typeface": "+mn-lt",
+        "color": "#666666",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Source: LOO note, pp. 16-17, 40-41"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Source: LOO note, pp. 16-17, 40-41",
+          "resolvedTextStyle": {
+            "fontSize": 11,
+            "color": "#666666",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Source: LOO note, pp. 16-17, 40-41",
+              "fontSize": 11,
+              "color": "#666666",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/torqtsbe",
+      "id": "5",
+      "bbox": [
+        1150,
+        655,
+        60,
+        22
+      ],
+      "geometry": "rect",
+      "text": "9",
+      "textPreview": "9",
+      "resolvedFontSize": 11,
+      "resolvedTextStyle": {
+        "fontSize": 11,
+        "typeface": "+mn-lt",
+        "color": "#666666",
+        "alignment": "right",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "9"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "9",
+          "resolvedTextStyle": {
+            "fontSize": 11,
+            "color": "#666666",
+            "alignment": "right"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "9",
+              "fontSize": 11,
+              "color": "#666666",
+              "alignment": "right"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    }
+  ],
+  "composeRuns": []
+}

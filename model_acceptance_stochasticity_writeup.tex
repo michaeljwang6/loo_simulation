@@ -1,0 +1,1404 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{longtable}
+\usepackage{hyperref}
+
+\title{Search, Acceptance, Selection, and Stochasticity in Four Sorting Models}
+\author{}
+\date{\today}
+
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\1}{\mathbf{1}}
+
+\begin{document}
+\maketitle
+
+\section{Purpose}
+
+This note writes out four models from scratch, focusing on three questions:
+\begin{enumerate}[label=(\roman*)]
+    \item What are the model primitives?
+    \item What is the acceptance, matching, or sector-choice condition?
+    \item Where does stochasticity enter, if at all?
+\end{enumerate}
+
+The main point is that ``random'' can mean different things. In Shimer and Smith (2000), the search process is random, but match output conditional on types is deterministic. In Borovickova and Shimer (2025), the search process is random and match quality is also random. In Eeckhout and Kircher, the relevant acceptance set is deterministic conditional on the initially paired worker and firm, although the first-stage pairing is random. In Gibbons, Katz, Lemieux, and Parent, the model is not primarily an acceptance-threshold search model; stochasticity enters through unobserved productivity shocks and learning about worker skill.
+
+\section{Notation}
+
+Symbols are reused across papers. For example, $x$ and $y$ denote two agent types in Shimer--Smith, worker and firm types in Borovickova--Shimer and Eeckhout--Kircher, while $y_{ijt}$ denotes output in Gibbons--Katz--Lemieux--Parent. The definitions below are therefore local to the relevant paper or section.
+
+\subsection*{General Symbols Used Throughout}
+
+\begin{longtable}{p{0.28\textwidth}p{0.66\textwidth}}
+\toprule
+\textbf{Symbol} & \textbf{Meaning} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Symbol} & \textbf{Meaning} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+$\E[\cdot]$ & Expectation operator. \\
+$\R$ & Real line. \\
+$\1\{\cdot\}$ & Indicator function, defined in the preamble for possible use. \\
+$r$ & Continuous-time discount rate. \\
+$i,j,k$ & Generic indices. Their exact interpretation differs by paper. \\
+$t$ & Time index or continuous time argument, depending on context. \\
+$\delta$ & Exogenous separation or destruction rate in Shimer--Smith and Borovickova--Shimer. \\
+\end{longtable}
+
+\subsection*{Shimer--Smith Notation}
+
+\begin{longtable}{p{0.28\textwidth}p{0.66\textwidth}}
+\toprule
+\textbf{Symbol} & \textbf{Meaning} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Symbol} & \textbf{Meaning} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+$x,y$ & Agent productivity types in $[0,1]$. \\
+$L$ & Distribution of agent types. \\
+$\ell(x)$ & Density of type $x$ agents. \\
+$f(x,y)$ & Deterministic flow output produced by a match between types $x$ and $y$. \\
+$u(y)$ & Density of unmatched type $y$ agents. \\
+$Y$ & A subset of types used when describing the rate of meeting agents with types in that set. \\
+$p$ & Contact-rate parameter for unmatched agents. \\
+$W(x)$ & Present value of being unmatched for a type $x$ agent. \\
+$W(x\mid y)$ & Present value to type $x$ when matched with type $y$. \\
+$\Sigma(x\mid y)$ & Personal capital surplus for type $x$ from being matched with $y$: $W(x\mid y)-W(x)$. \\
+$w(x)$ & Flow value of being unmatched for type $x$: $w(x)=rW(x)$. \\
+$\pi(x\mid y)$ & Flow payoff to type $x$ when matched with type $y$. \\
+$M(x)$ & Matching or acceptance set for type $x$: the set of types $y$ that $x$ is willing to match with. \\
+$(w,M,u)$ & Search equilibrium objects: reservation-value function, matching correspondence, and unmatched density. \\
+$\frac{p}{2(r+\delta)}$ & Effective coefficient in the value equation after Nash surplus division. \\
+\end{longtable}
+
+\subsection*{Borovickova--Shimer Notation}
+
+\begin{longtable}{p{0.28\textwidth}p{0.66\textwidth}}
+\toprule
+\textbf{Symbol} & \textbf{Meaning} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Symbol} & \textbf{Meaning} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+$x$ & Worker type. In the finite-type setup, $x=1,\ldots,X$. \\
+$y$ & Firm or job type. In the finite-type setup, $y=1,\ldots,Y$. \\
+$X$ & Number of worker types. \\
+$Y$ & Number of firm types. \\
+$u_x$ & Measure of unemployed workers of type $x$. \\
+$v_y$ & Measure of vacant jobs or firms of type $y$. \\
+$\rho$ & Contact-rate parameter. An unemployed type $x$ worker contacts vacant type $y$ firms at rate $\rho v_y$. \\
+$z$ & Match-specific productivity shock drawn at a worker-firm meeting. \\
+$G(z)$ & Cumulative distribution function of the match-specific productivity shock $z$. \\
+$g(z)$ & Density of the match-specific productivity shock $z$. \\
+$f_{x,y}$ & Systematic productivity component for worker type $x$ and firm type $y$. \\
+$z f_{x,y}$ & Flow output of a match between worker type $x$ and firm type $y$ with shock $z$. \\
+$V_x^u$ & Present value of unemployment for a type $x$ worker. \\
+$V_y^v$ & Present value of a vacancy for a type $y$ firm. \\
+$\bar w_x$ & Worker type $x$ flow reservation wage: $\bar w_x=rV_x^u$. \\
+$\bar \pi_y$ & Firm type $y$ flow reservation profit: $\bar \pi_y=rV_y^v$. \\
+$V^e_{x,y}(z,w)$ & Value to a type $x$ worker employed at a type $y$ firm with shock $z$ and wage $w$. \\
+$V^f_{y,x}(z,w)$ & Value to a type $y$ firm employing a type $x$ worker with shock $z$ and wage $w$. \\
+$w$ & Generic wage argument inside the value functions $V^e_{x,y}(z,w)$ and $V^f_{y,x}(z,w)$. \\
+$V^s_{x,y}(z)$ & Total match surplus from an $(x,y,z)$ match. \\
+$\bar z_{x,y}$ & Reservation productivity threshold: $\bar z_{x,y}=(\bar w_x+\bar \pi_y)/f_{x,y}$. \\
+$\gamma$ & Worker bargaining weight in Nash bargaining, with $\gamma\in(0,1)$. \\
+$W_{x,y}(z)$ & Equilibrium wage in an accepted $(x,y,z)$ match. \\
+$\bar\phi_{x,y}$ & Steady-state stock or measure of matches between worker type $x$ and firm type $y$. \\
+$z_0$ & Scale or lower-bound parameter of the Pareto distribution for $z$. \\
+$\theta$ & Pareto shape parameter for $z$, with $\theta>1$. Larger $\theta$ means a thinner upper tail. \\
+$q$ & Generic value of the accepted-match productivity ratio $Q$. \\
+$Q$ & Accepted-match productivity ratio: $Q=z/\bar z_{x,y}$ conditional on $z\geq \bar z_{x,y}$. \\
+$z_{ij}(t)$ & Match-specific productivity process for worker $i$ and firm $j$ in the endogenous-separation extension. \\
+$\mu$ & Drift parameter in the geometric Brownian motion for $z_{ij}(t)$. \\
+$\sigma$ & Volatility parameter in the geometric Brownian motion for $z_{ij}(t)$. \\
+$B(t)$ & Brownian motion in the endogenous-separation extension. \\
+\end{longtable}
+
+\subsection*{Eeckhout--Kircher Notation}
+
+\begin{longtable}{p{0.28\textwidth}p{0.66\textwidth}}
+\toprule
+\textbf{Symbol} & \textbf{Meaning} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Symbol} & \textbf{Meaning} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+$x$ & Worker type, with $x\in[0,1]$. \\
+$y$ & Firm type, with $y\in[0,1]$. \\
+$f(x,y)$ & Output produced by worker type $x$ and firm type $y$. \\
+$c$ & Search cost paid by each side if the pair waits for the second-stage market. \\
+$w^*(x)$ & Worker type $x$ payoff in the stage-two frictionless assignment market. \\
+$\pi^*(y)$ & Firm type $y$ payoff in the stage-two frictionless assignment market. \\
+$w(x,y)$ & Wage paid to worker type $x$ by firm type $y$ in the stage-one match. \\
+$f^+(x,y)$ & Example production function used to illustrate the acceptance set. \\
+$\alpha$ & Scale parameter on the interaction term in the example production function. \\
+$\vartheta$ & Curvature exponent in the example production function. This note uses $\vartheta$ to avoid confusion with the Pareto shape parameter $\theta$ in Borovickova--Shimer. \\
+$h(x)$ & Worker-type-only component of the example production function. \\
+$g(y)$ & Firm-type-only component of the example production function. This is unrelated to the density $g(z)$ in Borovickova--Shimer. \\
+$k$ & Distance between worker and firm types in the wage-shape example, where $y=x+k$ or $y=x-k$. \\
+\end{longtable}
+
+\subsection*{Gibbons--Katz--Lemieux--Parent Notation}
+
+\begin{longtable}{p{0.28\textwidth}p{0.66\textwidth}}
+\toprule
+\textbf{Symbol} & \textbf{Meaning} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Symbol} & \textbf{Meaning} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+$i$ & Worker index. \\
+$j,k$ & Sector indices. \\
+$t$ & Time index. \\
+$y_{ijt}$ & Output of worker $i$ in sector $j$ at time $t$. \\
+$X_{it}$ & Vector of observed characteristics of worker $i$ at time $t$. \\
+$\beta_j$ & Sector-specific coefficient vector on observed characteristics $X_{it}$. \\
+$\psi_{ijt}$ & Unobserved productivity component for worker $i$ in sector $j$ at time $t$. \\
+$Z_i$ & Worker ability component valued equally in all sectors. \\
+$\eta_i$ & Worker ability component whose value differs across sectors. \\
+$b_j$ & Sector-specific price or return to $\eta_i$. \\
+$\varepsilon_{ijt}$ & Mean-zero idiosyncratic productivity shock. \\
+$c_j$ & Sector intercept. \\
+$\sigma_\varepsilon^2$ & Variance of $\varepsilon_{ijt}$. \\
+$w_{ijt}$ & Wage of worker $i$ in sector $j$ at time $t$. \\
+$m_{i,t-1}$ & Posterior mean belief about $\eta_i$ before period $t$. \\
+$\sigma_t^2$ & Predictive variance term under learning. \\
+$\mathcal I_t$ & Information available at time $t$ when forming expected output or wages. \\
+$\arg\max_k$ & Sector-choice operator selecting the sector $k$ with highest expected payoff. \\
+\end{longtable}
+
+\section{Shimer and Smith (2000): Random Search with Deterministic Type-Pair Output}
+
+\subsection{Primitives and Timing}
+
+Agents have observable productivity types
+\[
+x \in [0,1].
+\]
+The distribution of types is denoted by $L$, with density $\ell(x)$. An unmatched type $x$ agent produces zero. If type $x$ and type $y$ match, they produce deterministic flow output
+\[
+f(x,y).
+\]
+
+Time is continuous. At each instant, an agent is either unmatched or matched. Only unmatched agents search. Search is random: an unmatched agent meets other unmatched agents according to a Poisson process. If $u(y)$ is the density of unmatched type $y$ agents, then a type $x$ unmatched agent meets types in a set $Y$ at rate
+\[
+p\int_Y u(y)\,dy.
+\]
+
+Matches are destroyed exogenously at Poisson rate $\delta>0$. When a match is destroyed, both agents return to the pool of unmatched searchers.
+
+\subsection{Values}
+
+Let $W(x)$ be the present value of being unmatched for type $x$, and let $W(x\mid y)$ be the present value to type $x$ when matched with type $y$. Define the personal capital surplus
+\[
+\Sigma(x\mid y) = W(x\mid y)-W(x).
+\]
+Let
+\[
+w(x) = rW(x)
+\]
+be the flow value of unemployment, or reservation value.
+
+While unmatched, a type $x$ agent earns zero and receives capital gains when acceptable meetings occur. If $M(x)$ is the set of types acceptable to $x$, then
+\[
+rW(x)
+=
+p\int_{M(x)} \Sigma(x\mid y)u(y)\,dy.
+\]
+While matched with $y$, type $x$ receives flow payoff $\pi(x\mid y)$ and the match ends at rate $\delta$:
+\[
+rW(x\mid y)
+=
+\pi(x\mid y)-\delta \Sigma(x\mid y).
+\]
+
+Output is split, so
+\[
+\pi(x\mid y)+\pi(y\mid x)=f(x,y).
+\]
+With symmetric Nash bargaining,
+\[
+\Sigma(x\mid y)=\Sigma(y\mid x).
+\]
+
+\subsection{Deriving the Acceptance Condition}
+
+Start from the matched Bellman equations:
+\[
+rW(x\mid y)=\pi(x\mid y)-\delta \Sigma(x\mid y),
+\]
+\[
+rW(y\mid x)=\pi(y\mid x)-\delta \Sigma(y\mid x).
+\]
+Subtract the unmatched values in flow form. Since $\Sigma(x\mid y)=W(x\mid y)-W(x)$,
+\[
+(r+\delta)\Sigma(x\mid y)=\pi(x\mid y)-rW(x)
+=
+\pi(x\mid y)-w(x).
+\]
+Similarly,
+\[
+(r+\delta)\Sigma(y\mid x)=\pi(y\mid x)-w(y).
+\]
+Adding the two equations gives
+\[
+(r+\delta)\left[\Sigma(x\mid y)+\Sigma(y\mid x)\right]
+=
+f(x,y)-w(x)-w(y).
+\]
+Under symmetric Nash bargaining, the two personal surpluses are equal, so
+\[
+\Sigma(x\mid y)
+=
+\frac{f(x,y)-w(x)-w(y)}{2(r+\delta)}.
+\]
+
+Therefore the match is accepted if and only if the personal surplus is nonnegative:
+\[
+\Sigma(x\mid y)\geq 0
+\quad\Longleftrightarrow\quad
+f(x,y)-w(x)-w(y)\geq 0.
+\]
+Equivalently,
+\[
+\boxed{f(x,y)\geq w(x)+w(y).}
+\]
+
+Thus the acceptance set of type $x$ is
+\[
+M(x)=\left\{y: f(x,y)\geq w(x)+w(y)\right\}.
+\]
+
+\subsection{Value Equation and Steady State}
+
+Substituting the Nash surplus into the unmatched value equation gives
+\[
+w(x)
+=
+\frac{p}{2(r+\delta)}
+\int_{M(x)}
+\left[f(x,y)-w(x)-w(y)\right]u(y)\,dy.
+\]
+
+Steady state requires that the flow of matches destroyed equal the flow of matches created. For each type $x$,
+\[
+\delta\left(\ell(x)-u(x)\right)
+=
+p u(x)\int_{M(x)}u(y)\,dy.
+\]
+
+An equilibrium is a triple $(w,M,u)$ such that:
+\begin{enumerate}[label=(\alph*)]
+    \item $w$ satisfies the value equation;
+    \item $M(x)$ satisfies the acceptance condition;
+    \item $u$ satisfies the steady-state equation.
+\end{enumerate}
+
+\subsection{Where Stochasticity Enters}
+
+The model is stochastic at the individual level because:
+\begin{enumerate}
+    \item meetings arrive randomly through Poisson search;
+    \item the type of the next meeting is random, drawn from the unmatched population;
+    \item matches are destroyed randomly at Poisson rate $\delta$.
+\end{enumerate}
+
+But the model is not stochastic in match quality. Conditional on types $(x,y)$, output is always
+\[
+f(x,y).
+\]
+There is no match-specific productivity draw $z$. Given the equilibrium reservation values $w(\cdot)$, the acceptance decision for a pair $(x,y)$ is deterministic:
+\[
+f(x,y)\geq w(x)+w(y).
+\]
+
+So the best short description is:
+\[
+\boxed{\text{Shimer--Smith is random search with deterministic type-pair surplus.}}
+\]
+
+\section{Borovickova and Shimer (2025): Random Search with Stochastic Match Quality}
+
+\subsection{Primitives and Timing}
+
+Workers have types
+\[
+x=1,\ldots,X,
+\]
+and firms have types
+\[
+y=1,\ldots,Y.
+\]
+Let $u_x$ be the measure of unemployed workers of type $x$, and let $v_y$ be the measure of vacancies of type $y$.
+
+Search is random. An unemployed type $x$ worker contacts vacant type $y$ firms at Poisson rate
+\[
+\rho v_y.
+\]
+Symmetrically, a vacant type $y$ firm contacts unemployed type $x$ workers at rate
+\[
+\rho u_x.
+\]
+
+When a type $x$ worker and type $y$ firm meet, they draw a match-specific productivity shock
+\[
+z \sim G,
+\]
+with density $g$. Output from the match is
+\[
+z f_{x,y},
+\]
+where $f_{x,y}>0$ is the systematic component of productivity for the type pair $(x,y)$.
+
+Matches end exogenously at rate $\delta>0$ in the baseline model.
+
+\subsection{Values}
+
+Let $V_x^u$ be the value of unemployment for a type $x$ worker. Define the worker's flow reservation wage
+\[
+\bar w_x = rV_x^u.
+\]
+Let $V_y^v$ be the value of a vacancy for a type $y$ firm. Define the firm's flow reservation profit
+\[
+\bar \pi_y = rV_y^v.
+\]
+
+If a type $x$ worker is matched to a type $y$ firm with match-specific productivity $z$ and wage $w$, the worker value satisfies
+\[
+rV^e_{x,y}(z,w)
+=
+w+\delta\left(V_x^u-V^e_{x,y}(z,w)\right).
+\]
+The firm value satisfies
+\[
+rV^f_{y,x}(z,w)
+=
+z f_{x,y}-w+\delta\left(V_y^v-V^f_{y,x}(z,w)\right).
+\]
+
+\subsection{Match Surplus and Acceptance}
+
+The total match surplus is the value of the worker-firm match in excess of unemployment plus vacancy:
+\[
+V^s_{x,y}(z)
+=
+V^e_{x,y}(z,w)+V^f_{y,x}(z,w)-V_x^u-V_y^v.
+\]
+Using the Bellman equations,
+\[
+V^s_{x,y}(z)
+=
+\frac{\max\{z f_{x,y}-\bar w_x-\bar \pi_y,0\}}{r+\delta}.
+\]
+
+Thus the match has positive surplus if and only if
+\[
+z f_{x,y}\geq \bar w_x+\bar \pi_y.
+\]
+Equivalently, define the reservation productivity threshold
+\[
+\bar z_{x,y}
+=
+\frac{\bar w_x+\bar \pi_y}{f_{x,y}}.
+\]
+Then the acceptance condition is
+\[
+\boxed{z\geq \bar z_{x,y}.}
+\]
+
+This is the central selection equation. For a fixed type pair $(x,y)$, the meeting may be accepted or rejected depending on the realized $z$.
+
+\subsection{Wage Equation}
+
+When $z\geq \bar z_{x,y}$, Nash bargaining with worker bargaining weight $\gamma\in(0,1)$ gives
+\[
+W_{x,y}(z)
+=
+\bar w_x+\gamma\left(zf_{x,y}-\bar w_x-\bar \pi_y\right).
+\]
+Using the threshold equation
+\[
+\bar z_{x,y} f_{x,y}=\bar w_x+\bar \pi_y,
+\]
+we can rewrite
+\[
+z f_{x,y}
+=
+\frac{z}{\bar z_{x,y}}(\bar w_x+\bar \pi_y).
+\]
+Therefore,
+\[
+W_{x,y}(z)
+=
+\bar w_x
++\gamma
+\left(
+\frac{z}{\bar z_{x,y}}-1
+\right)
+(\bar w_x+\bar \pi_y).
+\]
+
+This expression is useful because $f_{x,y}$ affects the acceptance threshold $\bar z_{x,y}$, but the accepted wage can be written in terms of the ratio $z/\bar z_{x,y}$.
+
+\subsection{Steady-State Matching}
+
+The flow of newly formed $(x,y)$ matches is
+\[
+\rho u_x v_y\left[1-G(\bar z_{x,y})\right].
+\]
+The stock of $(x,y)$ matches, denoted $\bar \phi_{x,y}$, satisfies
+\[
+\boxed{
+\delta \bar \phi_{x,y}
+=
+\rho u_x v_y\left[1-G(\bar z_{x,y})\right].
+}
+\]
+
+Thus sorting comes from type-pair differences in the probability that a meeting clears the acceptance threshold.
+
+\subsection{Pareto Case and Additive Wages}
+
+Suppose
+\[
+G(z)=1-\left(\frac{z}{z_0}\right)^{-\theta},
+\qquad \theta>1.
+\]
+Then
+\[
+1-G(\bar z_{x,y})
+=
+\left(\frac{\bar z_{x,y}}{z_0}\right)^{-\theta}
+=
+z_0^\theta \bar z_{x,y}^{-\theta}.
+\]
+So
+\[
+\bar \phi_{x,y}
+=
+\frac{\rho}{\delta}u_xv_yz_0^\theta \bar z_{x,y}^{-\theta}.
+\]
+Since
+\[
+\bar z_{x,y}
+=
+\frac{\bar w_x+\bar \pi_y}{f_{x,y}},
+\]
+high-productivity pairs with high $f_{x,y}$ have lower thresholds and are more likely to form matches.
+
+Now condition on an accepted match, $z\geq \bar z_{x,y}$, and define
+\[
+Q = \frac{z}{\bar z_{x,y}}.
+\]
+For $q\geq 1$,
+\[
+\Pr(Q\geq q\mid z\geq \bar z_{x,y})
+=
+\frac{\Pr(z\geq q\bar z_{x,y})}{\Pr(z\geq \bar z_{x,y})}
+=
+\frac{(q\bar z_{x,y}/z_0)^{-\theta}}{(\bar z_{x,y}/z_0)^{-\theta}}
+=
+q^{-\theta}.
+\]
+Thus the conditional distribution of $Q$ is the same for every type pair $(x,y)$. Since
+\[
+\E[Q]=\frac{\theta}{\theta-1},
+\]
+we have
+\[
+\E[W_{x,y}(z)\mid z\geq \bar z_{x,y}]
+=
+\bar w_x
++\gamma\left(\E[Q]-1\right)(\bar w_x+\bar \pi_y)
+\]
+\[
+=
+\bar w_x
++\frac{\gamma}{\theta-1}(\bar w_x+\bar \pi_y)
+\]
+\[
+=
+\left(1+\frac{\gamma}{\theta-1}\right)\bar w_x
++\frac{\gamma}{\theta-1}\bar \pi_y.
+\]
+The conditional mean wage is additively separable in a worker component and a firm component.
+
+\subsection{Where Stochasticity Enters}
+
+The model has the same search randomness as Shimer--Smith:
+\begin{enumerate}
+    \item meetings arrive randomly;
+    \item meeting partners are random;
+    \item baseline separations are exogenous and random.
+\end{enumerate}
+
+But it adds a new and crucial source of stochasticity:
+\[
+z \sim G.
+\]
+Conditional on a type pair $(x,y)$, match output is not fixed. It is
+\[
+z f_{x,y}.
+\]
+Thus even if the same type $x$ worker meets the same type $y$ firm type many times, some meetings are accepted and others are rejected depending on the realized $z$.
+
+In the endogenous-separation extension, $z$ also evolves during the match according to a geometric Brownian motion:
+\[
+dz_{ij}(t)=\mu z_{ij}(t)\,dt+\sigma z_{ij}(t)\,dB(t).
+\]
+Then separations can occur endogenously when match quality falls below the relevant threshold.
+
+The best short description is:
+\[
+\boxed{\text{Borovickova--Shimer is random search with stochastic match-specific surplus.}}
+\]
+
+\section{Eeckhout and Kircher: Deterministic Acceptance Given a Random Initial Pair}
+
+\subsection{Primitives and Timing}
+
+Workers have types
+\[
+x\in[0,1],
+\]
+and firms have types
+\[
+y\in[0,1].
+\]
+If they produce together, output is
+\[
+f(x,y).
+\]
+
+The relevant model has two stages. In stage one, a worker and firm are paired. They can either match immediately or wait until stage two. If they wait, they enter the frictionless assignment market but each side pays a search cost $c>0$.
+
+Let $w^*(x)$ be the worker's payoff in the stage-two frictionless assignment market, and let $\pi^*(y)$ be the firm's payoff in that market. If the pair waits, the worker receives
+\[
+w^*(x)-c
+\]
+and the firm receives
+\[
+\pi^*(y)-c.
+\]
+
+\subsection{Acceptance Condition}
+
+The pair accepts the stage-one match if current output is at least as large as the joint continuation value from waiting:
+\[
+f(x,y)\geq w^*(x)+\pi^*(y)-2c.
+\]
+Equivalently,
+\[
+\boxed{
+f(x,y)-w^*(x)-\pi^*(y)+2c\geq 0.
+}
+\]
+
+This is a deterministic condition in $(x,y)$. Conditional on the pair's types, there is no match-specific productivity draw.
+
+\subsection{Wage Equation}
+
+Under equal Nash bargaining, the total surplus from accepting immediately rather than waiting is
+\[
+f(x,y)-w^*(x)-\pi^*(y)+2c.
+\]
+The worker receives her outside option plus one half of the surplus:
+\[
+w(x,y)
+=
+w^*(x)-c
++\frac{1}{2}\left[f(x,y)-w^*(x)-\pi^*(y)+2c\right].
+\]
+Simplifying,
+\[
+w(x,y)
+=
+\frac{1}{2}\left[f(x,y)+w^*(x)-\pi^*(y)\right].
+\]
+
+Thus the wage contains both the match output $f(x,y)$ and the firm's outside option $\pi^*(y)$.
+
+\subsection{Example: Acceptance Band}
+
+For the example technology
+\[
+f^+(x,y)=\alpha x^\vartheta y^\vartheta+h(x)+g(y),
+\]
+Eeckhout and Kircher derive an acceptance condition of the form
+\[
+\alpha(xy)^\vartheta-\frac{\alpha}{2}x^{2\vartheta}
+-\frac{\alpha}{2}y^{2\vartheta}
+\geq -2c.
+\]
+When $\vartheta=1$,
+\[
+\alpha xy-\frac{\alpha}{2}x^2-\frac{\alpha}{2}y^2\geq -2c.
+\]
+Multiplying by $-2/\alpha$ gives
+\[
+x^2-2xy+y^2\leq \frac{4c}{\alpha}.
+\]
+Therefore,
+\[
+(x-y)^2\leq \frac{4c}{\alpha},
+\]
+or
+\[
+\boxed{
+|x-y|\leq 2\sqrt{\frac{c}{\alpha}}.
+}
+\]
+The acceptance set is a band around the 45-degree line.
+
+\subsection{Wage Shape}
+
+In the same example, the wage can be written as
+\[
+w(x,y)
+=
+\frac{\alpha}{2}(xy)^\vartheta
++\frac{\alpha}{4}x^{2\vartheta}
+-\frac{\alpha}{4}y^{2\vartheta}
++h(x).
+\]
+When $\vartheta=1$ and $y=x+k$ or $y=x-k$,
+\[
+w(x,x-k)=w(x,x+k)
+=
+\frac{\alpha}{2}x^2-\frac{\alpha}{4}k^2+h(x).
+\]
+For a fixed worker type $x$, the wage is highest at $y=x$ and falls as the firm type moves away from the worker's type. This is why the wage is not generally a worker fixed effect plus a firm fixed effect.
+
+\subsection{Where Stochasticity Enters}
+
+Relative to the search models above, this model has much less stochastic structure. The relevant source of randomness is the initial pairing: the worker and firm may be randomly paired in stage one. But conditional on the pair $(x,y)$:
+\begin{enumerate}
+    \item output is deterministic, $f(x,y)$;
+    \item acceptance is deterministic;
+    \item the wage is deterministic.
+\end{enumerate}
+
+There is no match-specific productivity draw $z$. There is also no Poisson search process of the Shimer--Smith kind in the simple two-stage presentation.
+
+The best short description is:
+\[
+\boxed{\text{Eeckhout--Kircher has deterministic acceptance conditional on the initial pair.}}
+\]
+
+\section{Gibbons, Katz, Lemieux, and Parent: Sector-Specific Skill Prices and Learning}
+
+\subsection{Primitives}
+
+This model is not primarily a search-and-acceptance model. It is a wage-setting and sector-assignment model in which different sectors value worker skills differently.
+
+Let $i$ index workers, $j$ index sectors, and $t$ index time. Output for worker $i$ in sector $j$ at time $t$ is
+\[
+y_{ijt}
+=
+\exp\left(X_{it}\beta_j+\psi_{ijt}\right).
+\]
+Here $X_{it}$ is a vector of observed worker characteristics, $\beta_j$ is a sector-specific return to those characteristics, and $\psi_{ijt}$ is unobserved productivity.
+
+The unobserved component is
+\[
+\psi_{ijt}
+=
+Z_i+b_j(\eta_i+\varepsilon_{ijt})+c_j.
+\]
+The components are:
+\begin{itemize}
+    \item $Z_i$: worker ability valued equally in all sectors;
+    \item $\eta_i$: worker ability whose value differs across sectors;
+    \item $b_j$: sector-specific price of $\eta_i$;
+    \item $\varepsilon_{ijt}$: mean-zero productivity noise;
+    \item $c_j$: sector intercept.
+\end{itemize}
+
+\subsection{Wage Equation Under Perfect Information}
+
+Assume workers are risk neutral, firms are competitive, contracts are single-period, and there are no mobility costs. Then the wage equals expected output conditional on available information.
+
+Suppose $\eta_i$ is known. Since
+\[
+\log y_{ijt}
+=
+X_{it}\beta_j+Z_i+b_j\eta_i+b_j\varepsilon_{ijt}+c_j,
+\]
+and $b_j\varepsilon_{ijt}$ is normal with variance $b_j^2\sigma_\varepsilon^2$, the log of expected output is
+\[
+\log \E[y_{ijt}\mid \eta_i]
+=
+X_{it}\beta_j+Z_i+b_j\eta_i+c_j
++\frac{1}{2}b_j^2\sigma_\varepsilon^2.
+\]
+Thus the log wage is
+\[
+\boxed{
+\log w_{ijt}
+=
+X_{it}\beta_j+Z_i+b_j\eta_i+c_j
++\frac{1}{2}b_j^2\sigma_\varepsilon^2.
+}
+\]
+
+The key term is $b_j\eta_i$. The effect of worker skill depends on the sector. Therefore, wages need not be additively separable into a worker effect plus a sector effect.
+
+\subsection{Wage Equation Under Learning}
+
+If $\eta_i$ is not known, the market forms a posterior belief. Let
+\[
+m_{i,t-1}
+\]
+be the posterior mean of $\eta_i$ before period $t$, and let $\sigma_t^2$ summarize predictive uncertainty. Then the log wage is
+\[
+\boxed{
+\log w_{ijt}
+=
+X_{it}\beta_j+Z_i+b_jm_{i,t-1}+c_j
++\frac{1}{2}b_j^2\sigma_t^2.
+}
+\]
+
+The term
+\[
+\frac{1}{2}b_j^2\sigma_t^2
+\]
+is not a complementarity term in production. It is the log-normal mean correction. The sector-specific price $b_j$ appears squared because uncertainty in $\eta_i$ is scaled by $b_j$ in sector $j$.
+
+\subsection{Sector Choice as the Analogue of an Acceptance Condition}
+
+There is not a bilateral acceptance threshold analogous to
+\[
+f(x,y)\geq w(x)+w(y)
+\]
+or
+\[
+z f_{x,y}\geq \bar w_x+\bar \pi_y.
+\]
+Instead, the analogous object is sector choice. A worker chooses the sector that offers the highest wage, or highest expected payoff, given the worker's skill and the sector-specific skill prices.
+
+Suppressing observed covariates and the log-normal correction for simplicity, the relevant payoff in sector $j$ is approximately
+\[
+Z_i+c_j+b_jm_{i,t-1}.
+\]
+Since $Z_i$ is common across sectors, the worker chooses sector $j$ over sector $k$ when
+\[
+c_j+b_jm_{i,t-1}
+\geq
+c_k+b_km_{i,t-1}.
+\]
+Equivalently,
+\[
+(b_j-b_k)m_{i,t-1}
+\geq
+c_k-c_j.
+\]
+Thus sector choice is governed by the interaction between worker skill and sector-specific skill prices.
+
+\subsection{Where Stochasticity Enters}
+
+Stochasticity enters through productivity shocks and learning:
+\begin{enumerate}
+    \item $\varepsilon_{ijt}$ is an idiosyncratic productivity shock;
+    \item the market may not know $\eta_i$ and learns about it over time;
+    \item wages are expected outputs conditional on available information.
+\end{enumerate}
+
+But this is not search stochasticity of the Shimer--Smith or Borovickova--Shimer type. There is no Poisson meeting process and no bilateral acceptance threshold in the core wage equation. The model's central issue is that sectors have different prices of worker skill:
+\[
+b_j \eta_i
+\quad\text{or}\quad
+b_j m_{i,t-1}.
+\]
+
+The best short description is:
+\[
+\boxed{\text{Gibbons--Katz--Lemieux--Parent has stochastic productivity and learning, not search-threshold acceptance.}}
+\]
+
+\section{Comparison}
+
+\begin{center}
+\begin{tabular}{p{0.23\textwidth}p{0.23\textwidth}p{0.23\textwidth}p{0.23\textwidth}}
+\toprule
+Paper & Main matching or choice object & Acceptance or choice condition & Stochasticity \\
+\midrule
+Shimer--Smith & Search over agent types & $f(x,y)\geq w(x)+w(y)$ & Random meetings and random exogenous destruction; no random match quality \\
+\addlinespace
+Borovickova--Shimer & Search over worker-firm type pairs with match-specific quality & $z f_{x,y}\geq \bar w_x+\bar \pi_y$, or $z\geq \bar z_{x,y}$ & Random meetings, random match quality $z$, random destruction; possibly stochastic evolution of $z(t)$ \\
+\addlinespace
+Eeckhout--Kircher & Initial pair chooses whether to match now or wait & $f(x,y)\geq w^*(x)+\pi^*(y)-2c$ & Initial pair may be random; conditional on $(x,y)$, output, acceptance, and wage are deterministic \\
+\addlinespace
+Gibbons--Katz--Lemieux--Parent & Sector choice and wage setting with sector-specific skill prices & Choose sector $j$ if its expected wage is highest & Idiosyncratic productivity shocks and learning about skill; no search-threshold acceptance \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Takeaway}
+
+The models differ most sharply in what is random conditional on types.
+
+\begin{itemize}
+    \item In Shimer--Smith, the next meeting is random, but the surplus from an $(x,y)$ meeting is deterministic.
+    \item In Borovickova--Shimer, the next meeting is random and the surplus from an $(x,y)$ meeting is also random because of $z$.
+    \item In Eeckhout--Kircher, the initial pair may be random, but once $(x,y)$ is fixed, the accept/wait decision is deterministic.
+    \item In Gibbons--Katz--Lemieux--Parent, randomness comes from productivity shocks and beliefs, while sorting comes from sector-specific prices of skill.
+\end{itemize}
+
+Thus, for the acceptance-condition comparison, the cleanest map is
+\[
+\text{Shimer--Smith:}
+\qquad
+f(x,y)\geq w(x)+w(y),
+\]
+\[
+\text{Borovickova--Shimer:}
+\qquad
+z f_{x,y}\geq \bar w_x+\bar \pi_y,
+\]
+\[
+\text{Eeckhout--Kircher:}
+\qquad
+f(x,y)\geq w^*(x)+\pi^*(y)-2c,
+\]
+\[
+\text{Gibbons--Katz--Lemieux--Parent:}
+\qquad
+j\in\arg\max_k \E[y_{ikt}\mid \mathcal I_t].
+\]
+
+\section{Three Core AKM and Structural Papers}
+
+This section explains three papers that should be read together:
+\begin{enumerate}
+    \item Kline (2024/2025), on what AKM firm effects mathematically impose on mover wage changes;
+    \item Bonhomme, Lamadon, and Manresa (2019), henceforth BLM, on estimating richer worker-firm heterogeneity without imposing AKM additivity;
+    \item Lamadon, Lise, Meghir, and Robin (2025), henceforth LLMR, on giving BLM-type wage and mobility objects a structural interpretation.
+\end{enumerate}
+
+The mathematical chain is:
+\[
+\boxed{
+\text{mover wage changes}
+\quad\to\quad
+\text{latent worker-firm wage distributions}
+\quad\to\quad
+\text{surplus}
+\quad\to\quad
+\text{production and amenities}.
+}
+\]
+Kline studies the first arrow, BLM studies the second object, and LLMR studies the final structural inversion.
+
+\subsection{Kline: What AKM Firm Effects Really Mean}
+
+\subsubsection*{Question of the paper}
+
+The central question in Kline is not simply whether firms pay different wages. It is:
+\[
+\textit{When do the wage changes of movers justify summarizing each firm by one scalar wage effect?}
+\]
+The answer is that AKM firm effects are meaningful as firm ``levels'' only when mover wage changes are path independent. The graph mathematics is the way to make that statement precise.
+
+\subsubsection*{The AKM model}
+
+The AKM wage equation is
+\[
+Y_{it}
+=
+\alpha_i+\psi_{j(i,t)}+X_{it}'\beta+\varepsilon_{it},
+\]
+where $Y_{it}$ is log wage, $\alpha_i$ is the worker effect, $\psi_j$ is the firm effect, and $X_{it}$ contains observables.
+
+The strict exogeneity condition is
+\[
+\E[\varepsilon_{it}\mid \{j(i,s)\}_{s=1}^T,\{X_{is}\}_{s=1}^T,\alpha_i,\{\psi_j\}_{j=1}^J]=0.
+\]
+This condition does two jobs. First, it rules out mobility driven by transitory wage shocks. Second, it says that the conditional mean wage is additively separable in worker and firm components.
+
+For a worker moving from firm $j$ to firm $k$ between two periods,
+\[
+Y_{i2}-Y_{i1}
+=
+\psi_k-\psi_j+(X_{i2}-X_{i1})'\beta+(\varepsilon_{i2}-\varepsilon_{i1}).
+\]
+Define the residualized wage change
+\[
+R_i
+=
+Y_{i2}-Y_{i1}-(X_{i2}-X_{i1})'\beta.
+\]
+Then AKM implies
+\[
+\E[R_i\mid j(i,1)=j,j(i,2)=k]
+=
+\psi_k-\psi_j.
+\]
+
+This equation is the starting point. It says that movers identify differences in firm effects. Kline's contribution is to ask what restrictions are hidden inside this apparently simple statement.
+
+\subsubsection*{From firm effects to edge effects}
+
+Let
+\[
+\Delta_{jk}
+=
+\E[R_i\mid j(i,1)=j,j(i,2)=k]
+\]
+be the average residualized wage change for workers moving from $j$ to $k$. This is an \emph{edge effect}: it is attached to a directed move in the firm mobility graph.
+
+An unrestricted model of mover wage changes would be
+\[
+R_i
+=
+\Delta_{j(i,1),j(i,2)}+u_i.
+\]
+This model allows every origin-destination pair to have its own wage-change effect. AKM is more restrictive:
+\[
+\boxed{
+\Delta_{jk}=\psi_k-\psi_j.
+}
+\]
+
+This is the first main mathematical conclusion. AKM replaces many pair-specific edge effects with one scalar attached to each firm. The point is not only that this reduces dimension. The point is that it imposes a strong economic claim: the wage gain from moving to a firm depends only on the destination firm's level and the origin firm's level, not on the pair itself.
+
+\subsubsection*{Cycle restrictions: the real empirical content}
+
+Suppose the mobility graph contains a cycle:
+\[
+j_1\to j_2\to \cdots \to j_m\to j_1.
+\]
+If AKM is correct, then
+\[
+\Delta_{j_1j_2}+\Delta_{j_2j_3}+\cdots+\Delta_{j_mj_1}
+=0,
+\]
+because
+\[
+(\psi_{j_2}-\psi_{j_1})
++(\psi_{j_3}-\psi_{j_2})
++\cdots
++(\psi_{j_1}-\psi_{j_m})
+=0.
+\]
+
+This is where the math is leading. AKM requires that wage changes around any closed path sum to zero. In words:
+\[
+\boxed{
+\text{AKM firm effects exist as true firm wage levels only if mover wage changes are path independent.}
+}
+\]
+
+If moving from $A$ to $C$ directly gives a different wage implication than moving from $A$ to $B$ and then $B$ to $C$, then one firm effect per firm is not enough. In that case, firm effects become a projection of richer pair-specific wage-change objects.
+
+\subsubsection*{Incidence matrix version}
+
+Let $B$ be the firm-edge incidence matrix. Each column is an edge. For edge $e=(j,k)$, the column has $-1$ in row $j$, $+1$ in row $k$, and zeros elsewhere. If $\psi$ is the vector of firm effects, AKM says
+\[
+\Delta = B'\psi.
+\]
+An unrestricted edge model treats $\Delta$ as free. AKM restricts $\Delta$ to lie in the column space of $B'$.
+
+Any cycle vector $c$ satisfies
+\[
+Bc=0.
+\]
+Therefore, under AKM,
+\[
+c'\Delta
+=
+c'B'\psi
+=
+(Bc)'\psi
+=0.
+\]
+So the null space of $B$ is the set of cycle restrictions. This is why Kline's graph interpretation is useful: it turns the credibility of AKM into a question about whether edge effects have nonzero cyclic components.
+
+\subsubsection*{Novel result and why it matters}
+
+Kline's novel conceptual result is:
+\[
+\boxed{
+\text{AKM firm effects are restricted edge effects, not automatically structural firm primitives.}
+}
+\]
+This matters for interpretation. If the cycle restrictions hold approximately, AKM firm effects are a compact and meaningful ranking of firm wage levels. If they fail, $\psi_j$ is still a least-squares summary, but it should not be read literally as a structural firm premium. The paper then uses this framework to discuss causal interpretation, limited mobility bias, cross-fitting, and why effect sizes are often more useful than variance shares.
+
+\subsection{BLM: Estimating Heterogeneity Beyond AKM}
+
+\subsubsection*{Question of the paper}
+
+BLM begins where Kline's critique leaves off. If AKM's one-firm-effect structure is too restrictive, can we estimate richer worker-firm wage objects in matched data?
+
+The answer is yes. BLM replace additive worker and firm effects with latent worker types and latent firm classes, allowing wages to depend flexibly on both.
+
+\subsubsection*{The static model}
+
+AKM imposes
+\[
+\E[Y_{it}\mid \alpha_i,j(i,t)=j]
+=
+\alpha_i+\psi_j.
+\]
+BLM instead allow the conditional wage distribution to depend on a worker type $\alpha_i$ and a firm class $k_{it}=k(j_{it})$:
+\[
+Y_{it}\mid (\alpha_i,k_{it})
+\sim
+F_{k_{it},\alpha_i}.
+\]
+A simple interactive regression example is
+\[
+Y_{it}
+=
+a_t(k_{it})+b_t(k_{it})\alpha_i+X_{it}'c_t+\varepsilon_{it}.
+\]
+If $b_t(k)$ is constant across $k$, the model is close to additive. If $b_t(k)$ varies across $k$, the return to worker type depends on firm class, which is exactly the kind of complementarity AKM rules out.
+
+The static model assumes that, conditional on worker type and firm class, realized wage shocks do not directly drive mobility:
+\[
+(m_{it},k_{i,t+1})
+\perp
+Y_{it}
+\mid
+\alpha_i,k_{it},X_{it},\text{past classes and moves}.
+\]
+It also assumes that after a move, the new wage does not directly depend on the old wage or old firm class once we condition on type and the new firm class:
+\[
+Y_{i,t+1}
+\perp
+(Y_{it},k_{it})
+\mid
+\alpha_i,k_{i,t+1},X_{i,t+1},m_{it}=1.
+\]
+These assumptions are what make the post-move wage a new measurement of the same latent worker type in a new firm class.
+
+\subsubsection*{Mover wages as a mixture}
+
+Consider movers from firm class $k$ to firm class $k'$. Suppose worker types are discrete:
+\[
+\alpha\in\{1,\ldots,L\}.
+\]
+Let $F_{k\alpha}(y)$ be the pre-move wage CDF for type $\alpha$ in class $k$, $F^m_{k'\alpha}(y)$ the post-move wage CDF for type $\alpha$ in destination class $k'$, and $p_{kk'}(\alpha)$ the type distribution among movers from $k$ to $k'$.
+
+Then
+\[
+\boxed{
+\Pr(Y_{i1}\leq y_1,Y_{i2}\leq y_2
+\mid k_{i1}=k,k_{i2}=k',m_{i1}=1)
+=
+\sum_{\alpha=1}^L
+F_{k\alpha}(y_1)F^m_{k'\alpha}(y_2)p_{kk'}(\alpha).
+}
+\]
+
+This equation is the core. It says the observed distribution of wage pairs for movers is a mixture over unobserved worker types. The same unobserved type $\alpha$ appears on both sides of the move. That repeated-measurement structure is what identifies worker type and firm-class wage schedules.
+
+\subsubsection*{Where the identification theorem is going}
+
+The hard part is that $\alpha_i$ is unobserved. BLM's theorem says that if movers connect firm classes in sufficiently rich cycles, and if the mixture components satisfy rank conditions, then the objects
+\[
+F_{k\alpha},\qquad F^m_{k'\alpha},\qquad p_{kk'}(\alpha),\qquad q_k(\alpha)
+\]
+are identified up to relabeling of $\alpha$.
+
+The connecting-cycle condition is the analogue of graph connectedness, but for a nonlinear mixture model. A cycle such as
+\[
+k_1\to k_2,\quad k_2\to k_3,\quad \ldots,\quad k_R\to k_1
+\]
+lets the econometrician compare how the same latent worker types appear in different firm classes. The rank condition says that the type-specific wage distributions are distinct enough to be separated.
+
+The mathematical conclusion is therefore:
+\[
+\boxed{
+\text{short-panel mover data can identify worker-firm wage distributions, not just additive fixed effects.}
+}
+\]
+
+\subsubsection*{Dynamic model}
+
+BLM then allow current wages to affect mobility and allow post-move wages to depend on the previous wage and previous firm class. This is important because many structural search models imply endogenous mobility or state dependence.
+
+The dynamic model is first-order Markov:
+\[
+\Pr(m_{it},k_{i,t+1},X_{i,t+1}\mid \text{full past})
+=
+\Pr(m_{it},k_{i,t+1},X_{i,t+1}\mid Y_{it},\alpha_i,k_{it},X_{it}),
+\]
+and
+\[
+\Pr(Y_{i,t+1}\mid \text{full past})
+=
+\Pr(Y_{i,t+1}\mid Y_{it},\alpha_i,k_{it},k_{i,t+1},X_{i,t+1},m_{it}).
+\]
+
+Four periods are needed because the wages immediately before and after a move are part of the Markov state. The outer wages provide the additional measurements used to recover the latent type:
+\[
+Y_{i1}
+\quad
+Y_{i2}
+\quad
+\longrightarrow
+\quad
+Y_{i3}
+\quad
+Y_{i4}.
+\]
+Condition on $Y_{i2}$ and $Y_{i3}$; use $Y_{i1}$ and $Y_{i4}$ to separate types.
+
+\subsubsection*{Firm classes and estimation}
+
+BLM also solve a practical problem. Estimating an unrestricted type for each firm creates an incidental-parameters problem, because many firms have few movers. They instead group firms into latent classes by solving
+\[
+\min_{\{k(j)\},\{H_k\}_{k=1}^K}
+\sum_{j=1}^J
+n_j
+\int
+\left[
+\widehat F_j(y)-H_{k(j)}(y)
+\right]^2d\mu(y).
+\]
+Here $\widehat F_j$ is the empirical wage CDF in firm $j$, and $H_k$ is the CDF for class $k$.
+
+The novel estimation result is that, under a discrete firm-class structure, the first-step classification can be consistent; then the second-step wage and mobility estimates behave as if firm classes were known.
+
+\subsubsection*{Novel result and why it matters}
+
+BLM's novel result is:
+\[
+\boxed{
+\text{one can identify and estimate rich worker-firm wage distributions and sorting patterns in short panels.}
+}
+\]
+The empirical finding is striking: in Swedish data, log earnings are close to additive, but sorting is strong. Similar workers are not paid enormously different wages across employers, yet different workers work at very different firms. This creates the puzzle that later papers try to explain: how can strong sorting coexist with weak wage complementarities?
+
+\subsection{LLMR: A Structural Interpretation of Wages, Mobility, and Amenities}
+
+\subsubsection*{Question of the paper}
+
+LLMR ask the structural question left open by BLM:
+\[
+\textit{What economic primitives generate the wage and mobility objects estimated by BLM?}
+\]
+Their answer is an equilibrium search model with worker heterogeneity, firm heterogeneity, amenities, risk aversion, on-the-job search, and sequential auctions.
+
+\subsubsection*{Model ingredients}
+
+Worker type is $x$ and firm/job type is $y$. A match produces output
+\[
+f_{xy}.
+\]
+The worker receives wage $w$ and flow utility
+\[
+u(w)-c_{xy},
+\]
+where $c_{xy}$ is the disutility of working at firm type $y$ for worker type $x$, net of amenities. The firm receives flow profit
+\[
+f_{xy}-w.
+\]
+
+Workers search from unemployment and employment. An employed worker in match $(x,y)$ may meet a vacancy of type $y'$ and draw a mobility shock $\xi$. The incumbent and poaching firm then compete for the worker.
+
+\subsubsection*{The central object: worker surplus}
+
+The key state variable is $S_{xy}$, the maximum worker surplus that a type $y$ firm can promise to a type $x$ worker while still being willing to employ the worker. It is defined by
+\[
+\Pi^1_{xy}(S_{xy})=\Pi^0_y,
+\]
+where $\Pi^1_{xy}(R)$ is the firm value from employing type $x$ while promising worker surplus $R$, and $\Pi^0_y$ is the value of a vacancy.
+
+This definition is the structural pivot of the paper. Instead of trying to track an entire history of wages and offers, the model summarizes a match by the worker surplus $R$ promised by the contract. The maximum feasible promised surplus is $S_{xy}$.
+
+\subsubsection*{Theorem 1: why surplus is sufficient}
+
+Theorem 1 establishes three facts.
+
+First, $\Pi^1_{xy}(R)$ is decreasing and concave in $R$. Promising more surplus to the worker lowers firm value, and the marginal cost changes smoothly.
+
+Second, truthful bidding is weakly dominant:
+\[
+B(\xi)=S_{xy}.
+\]
+So in a poaching contest, the incumbent's bid is its true maximum credible worker surplus.
+
+Third, the wage implementing promised surplus $R$ satisfies
+\[
+\boxed{
+\frac{1}{u'(w)}
+=
+-\frac{\partial \Pi^1_{xy}(R)}{\partial R}.
+}
+\]
+This equation links observed wages to the firm's marginal cost of providing worker surplus. It is what lets wages identify the pecuniary part of job value.
+
+The theorem's economic meaning is:
+\[
+\boxed{
+\text{a complicated dynamic wage contract can be summarized by promised surplus }R.
+}
+\]
+Outside offers raise $R$ when necessary; otherwise the contract keeps the worker at the same promised value.
+
+\subsubsection*{Mobility identifies relative surplus}
+
+Suppose a worker of type $x$ currently at firm type $y$ meets firm type $y'$ and draws shock $\xi$. The worker moves when
+\[
+S_{xy'}+\xi>S_{xy}.
+\]
+Therefore the job-to-job transition probability has the form
+\[
+\boxed{
+p_{JJ}(y'\mid x,y)
+=
+\delta_{xy}\lambda^1\frac{v_{y'}}{V}
+G^1(S_{xy'}-S_{xy}),
+}
+\]
+up to the convention for writing $G^1$ as a CDF or tail probability.
+
+This equation is the structural analogue of revealed preference. If workers of type $x$ often move from $y$ to $y'$, after accounting for vacancy availability and shocks, then $S_{xy'}$ must be high relative to $S_{xy}$.
+
+\subsubsection*{Equilibrium flow equation}
+
+Steady state equates outflows and inflows for each match type $(x,y)$:
+\[
+\ell^1_{xy}
+\left[
+\delta_{xy}
++\delta_{xy}\lambda^1
+\sum_{y'}G^1(S_{xy}-S_{xy'})v_{y'}
+\right]
+\]
+\[
+=
+\lambda^0\frac{v_y}{V}G^0(-S_{xy})\ell^0_x
++
+\lambda^1\frac{v_y}{V}
+\sum_{y'}G^1(S_{xy'}-S_{xy})\delta_{xy'}\ell^1_{xy'}.
+\]
+The left side is the rate at which $(x,y)$ matches disappear. The right side is the rate at which they are formed, either from unemployment or from poaching. This equation links the observed allocation of workers across firms to the surplus matrix $S_{xy}$.
+
+\subsubsection*{Identification: from BLM to structural primitives}
+
+LLMR use BLM-type estimates as the first stage:
+\[
+F_{EE}(w\mid x,y),
+\qquad
+F_{UE}(w\mid x,y),
+\qquad
+F_{JJ}(w\mid x,y,y'),
+\]
+together with transition probabilities and match allocations.
+
+Then the structural inversion is:
+\[
+\text{mobility}
+\quad\Rightarrow\quad
+S_{xy},
+\]
+because transition rates reveal relative worker surplus;
+\[
+\text{wages}
+\quad\Rightarrow\quad
+\text{pecuniary value of surplus},
+\]
+because the optimal-contract condition maps promised surplus into wages;
+\[
+\text{surplus minus wage value}
+\quad\Rightarrow\quad
+\text{amenities/disutility}.
+\]
+
+Production is recovered using the fact that the maximum-surplus contract exhausts the firm's participation margin:
+\[
+\boxed{
+f_{xy}
+=
+w_{xy}(S_{xy})
++\frac{r}{1+r}\Pi^0_y.
+}
+\]
+The identified amenity/disutility object is
+\[
+\tilde c_{xy}=c_{xy}+b_x,
+\]
+because the data identify job utility relative to unemployment, not $c_{xy}$ and home production $b_x$ separately.
+
+\subsubsection*{Novel result and why it matters}
+
+LLMR's novel result is:
+\[
+\boxed{
+\text{wage and mobility data can identify production, amenities, surplus, and frictions in a rich equilibrium model.}
+}
+\]
+The paper's central empirical finding is that workers agree more about which firms pay high wages than about which firms they prefer. Nonpecuniary job values explain a large share of within-worker wage dispersion. Thus AKM firm effects are not simply productivity; they mix productivity, amenities, bargaining/search forces, and worker composition.
+
+\subsection{The Combined Lesson}
+
+The three papers form one logical sequence.
+
+\paragraph{Kline.}
+The observed primitive is a set of mover wage changes $\Delta_{jk}$. AKM is the restriction
+\[
+\Delta_{jk}=\psi_k-\psi_j.
+\]
+This is valid as a firm-level wage ranking only if cycle sums are zero.
+
+\paragraph{BLM.}
+If AKM additivity is too restrictive, estimate richer wage distributions:
+\[
+Y_{it}\mid(\alpha_i,k_{it})\sim F_{k_{it},\alpha_i}.
+\]
+Movers identify these latent objects through mixture equations and connecting cycles.
+
+\paragraph{LLMR.}
+Use those wage and mobility objects to identify worker surplus:
+\[
+S_{xy},
+\]
+then recover production and amenities:
+\[
+f_{xy},\qquad \tilde c_{xy}.
+\]
+
+So the full conceptual map is:
+\[
+\boxed{
+\Delta_{jk}
+\quad\to\quad
+F_{k\alpha}
+\quad\to\quad
+S_{xy}
+\quad\to\quad
+(f_{xy},\tilde c_{xy}).
+}
+\]
+This is the cleanest way to understand why these papers belong together.
+
+\end{document}

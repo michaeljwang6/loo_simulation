@@ -1,0 +1,781 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/1rk14e",
+    "id": "1rk14e",
+    "slide": 1,
+    "layoutId": "c95bf005-7278-411f-9b47-339cad498c5b",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "2c9bfb90-e09d-4877-86ec-e1d5e36eb6db",
+    "masterLayoutName": "Master",
+    "backgroundColor": "#FFFFFF",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "bg1": "#FFFFFF",
+      "bg2": "#000000",
+      "tx1": "#1F1F1F",
+      "tx2": "#FFFFFF",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "typefaces": [
+      "+mn-lt"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "c95bf005-7278-411f-9b47-339cad498c5b",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "2c9bfb90-e09d-4877-86ec-e1d5e36eb6db",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "2c9bfb90-e09d-4877-86ec-e1d5e36eb6db",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/6lk36t8r",
+      "id": "1",
+      "name": "title",
+      "bbox": [
+        62,
+        42,
+        1040,
+        64
+      ],
+      "geometry": "rect",
+      "text": "Firm Wage Effects Beyond Additivity",
+      "textPreview": "Firm Wage Effects Beyond Additivity",
+      "resolvedFontSize": 50,
+      "resolvedTextStyle": {
+        "fontSize": 50,
+        "typeface": "+mn-lt",
+        "color": "#111111",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Firm Wage Effects Beyond Additivity"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Firm Wage Effects Beyond Additivity",
+          "resolvedTextStyle": {
+            "fontSize": 50,
+            "color": "#111111",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Firm Wage Effects Beyond Additivity",
+              "fontSize": 50,
+              "color": "#111111",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/t8bmhori",
+      "id": "2",
+      "name": "subtitle",
+      "bbox": [
+        64,
+        112,
+        1060,
+        42
+      ],
+      "geometry": "rect",
+      "text": "Keep AKM's questions; replace scalar firm effects with invariant functionals of the pairwise wage schedule m_ij.",
+      "textPreview": "Keep AKM's questions; replace scalar firm effects with invariant functionals of the pairwise wage schedule m_ij.",
+      "resolvedFontSize": 20,
+      "resolvedTextStyle": {
+        "fontSize": 20,
+        "typeface": "+mn-lt",
+        "color": "#333333",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Keep AKM's questions; replace scalar firm effects with invariant functionals of the pairwise wage schedule m_ij."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Keep AKM's questions; replace scalar firm effects with invariant functionals of the pairwise wage schedule m_ij.",
+          "resolvedTextStyle": {
+            "fontSize": 20,
+            "color": "#333333"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Keep AKM's questions; replace scalar firm effects with invariant functionals of the pairwise wage schedule m_ij.",
+              "fontSize": 20,
+              "color": "#333333"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/s72l8jqx",
+      "id": "3",
+      "name": "top-rule",
+      "bbox": [
+        64,
+        168,
+        1152,
+        2
+      ],
+      "geometry": "rect",
+      "fillColor": "#111111",
+      "lineColor": "#111111",
+      "lineWidth": 0
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/fat4jy98",
+      "id": "4",
+      "name": "left-heading",
+      "bbox": [
+        72,
+        198,
+        420,
+        42
+      ],
+      "geometry": "rect",
+      "text": "Objects",
+      "textPreview": "Objects",
+      "resolvedFontSize": 30,
+      "resolvedTextStyle": {
+        "fontSize": 30,
+        "typeface": "+mn-lt",
+        "color": "#111111",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Objects"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Objects",
+          "resolvedTextStyle": {
+            "fontSize": 30,
+            "color": "#111111",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Objects",
+              "fontSize": 30,
+              "color": "#111111",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/u9k3at83",
+      "id": "5",
+      "name": "right-heading",
+      "bbox": [
+        680,
+        198,
+        480,
+        42
+      ],
+      "geometry": "rect",
+      "text": "Lecture Takeaways",
+      "textPreview": "Lecture Takeaways",
+      "resolvedFontSize": 30,
+      "resolvedTextStyle": {
+        "fontSize": 30,
+        "typeface": "+mn-lt",
+        "color": "#111111",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Lecture Takeaways"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Lecture Takeaways",
+          "resolvedTextStyle": {
+            "fontSize": 30,
+            "color": "#111111",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Lecture Takeaways",
+              "fontSize": 30,
+              "color": "#111111",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/hcbml8re",
+      "id": "6",
+      "name": "objects-body",
+      "bbox": [
+        76,
+        252,
+        520,
+        220
+      ],
+      "geometry": "rect",
+      "text": "Schedule:  m_ij = mu + a_i + b_j + h_ij\n\nFirm dispersion:  Q_F = E_i Var_j(m_ij)\n\nContrast heterogeneity:  H_F = E_jk Var_i(m_ik - m_ij)\n\nAssignment:  C_assign^w = 1/2[Var_obs(m) - Var_prod(m)]",
+      "textPreview": "Schedule:  m_ij = mu + a_i + b_j + h_ij |  | Firm dispersion:  Q_F = E_i Var_j(m_ij) |  | Contrast heterogeneity:  H_F = E_jk Var_i(m_ik ...",
+      "resolvedFontSize": 21,
+      "resolvedTextStyle": {
+        "fontSize": 21,
+        "typeface": "+mn-lt",
+        "color": "#111111",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 7,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Schedule:  m_ij = mu + a_i + b_j + h_ij"
+          },
+          {
+            "index": 2,
+            "text": ""
+          },
+          {
+            "index": 3,
+            "text": "Firm dispersion:  Q_F = E_i Var_j(m_ij)"
+          },
+          {
+            "index": 4,
+            "text": ""
+          },
+          {
+            "index": 5,
+            "text": "Contrast heterogeneity:  H_F = E_jk Var_i(m_ik - m_ij)"
+          },
+          {
+            "index": 6,
+            "text": ""
+          },
+          {
+            "index": 7,
+            "text": "Assignment:  C_assign^w = 1/2[Var_obs(m) - Var_prod(m)]"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Schedule:  m_ij = mu + a_i + b_j + h_ij",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "color": "#111111"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Schedule:  m_ij = mu + a_i + b_j + h_ij",
+              "fontSize": 21,
+              "color": "#111111"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "Firm dispersion:  Q_F = E_i Var_j(m_ij)",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "color": "#111111"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Firm dispersion:  Q_F = E_i Var_j(m_ij)",
+              "fontSize": 21,
+              "color": "#111111"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 5,
+          "text": "Contrast heterogeneity:  H_F = E_jk Var_i(m_ik - m_ij)",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "color": "#111111"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Contrast heterogeneity:  H_F = E_jk Var_i(m_ik - m_ij)",
+              "fontSize": 21,
+              "color": "#111111"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 7,
+          "text": "Assignment:  C_assign^w = 1/2[Var_obs(m) - Var_prod(m)]",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "color": "#111111"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Assignment:  C_assign^w = 1/2[Var_obs(m) - Var_prod(m)]",
+              "fontSize": 21,
+              "color": "#111111"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 7,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/gb2lc3qt",
+      "id": "7",
+      "name": "takeaways-body",
+      "bbox": [
+        684,
+        252,
+        520,
+        222
+      ],
+      "geometry": "rect",
+      "text": "AKM reduction:  (Q_F, H_F, C_assign^w) = (Var(psi_j), 0, Cov(alpha_i, psi_j))\n\nKey identity:  Q_F = Var(b_j) + 1/2 H_F\n\nAssignment beyond AKM: common assortativity + worker-interaction + firm-interaction + concentration",
+      "textPreview": "AKM reduction:  (Q_F, H_F, C_assign^w) = (Var(psi_j), 0, Cov(alpha_i, psi_j)) |  | Key identity:  Q_F = Var(b_j) + 1/2 H_F |  | Assignmen...",
+      "resolvedFontSize": 21,
+      "resolvedTextStyle": {
+        "fontSize": 21,
+        "typeface": "+mn-lt",
+        "color": "#111111",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 7,
+        "lines": [
+          {
+            "index": 1,
+            "text": "AKM reduction:  (Q_F, H_F, C_assign^w) = (Var(psi_j), 0,"
+          },
+          {
+            "index": 2,
+            "text": "Cov(alpha_i, psi_j))"
+          },
+          {
+            "index": 3,
+            "text": ""
+          },
+          {
+            "index": 4,
+            "text": "Key identity:  Q_F = Var(b_j) + 1/2 H_F"
+          },
+          {
+            "index": 5,
+            "text": ""
+          },
+          {
+            "index": 6,
+            "text": "Assignment beyond AKM: common assortativity +"
+          },
+          {
+            "index": 7,
+            "text": "worker-interaction + firm-interaction + concentration"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "AKM reduction:  (Q_F, H_F, C_assign^w) = (Var(psi_j), 0, Cov(alpha_i, psi_j))",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "color": "#111111"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "AKM reduction:  (Q_F, H_F, C_assign^w) = (Var(psi_j), 0, Cov(alpha_i, psi_j))",
+              "fontSize": 21,
+              "color": "#111111"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "Key identity:  Q_F = Var(b_j) + 1/2 H_F",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "color": "#111111"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Key identity:  Q_F = Var(b_j) + 1/2 H_F",
+              "fontSize": 21,
+              "color": "#111111"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 5,
+          "text": "Assignment beyond AKM: common assortativity + worker-interaction + firm-interaction + concentration",
+          "resolvedTextStyle": {
+            "fontSize": 21,
+            "color": "#111111"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Assignment beyond AKM: common assortativity + worker-interaction + firm-interaction + concentration",
+              "fontSize": 21,
+              "color": "#111111"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 8,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/3ed4nipk",
+      "id": "8",
+      "name": "middle-rule",
+      "bbox": [
+        64,
+        504,
+        1152,
+        2
+      ],
+      "geometry": "rect",
+      "fillColor": "#111111",
+      "lineColor": "#111111",
+      "lineWidth": 0
+    },
+    {
+      "order": 9,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/2d43ed8z",
+      "id": "9",
+      "name": "board-flow-heading",
+      "bbox": [
+        72,
+        532,
+        220,
+        36
+      ],
+      "geometry": "rect",
+      "text": "Board Flow",
+      "textPreview": "Board Flow",
+      "resolvedFontSize": 26,
+      "resolvedTextStyle": {
+        "fontSize": 26,
+        "typeface": "+mn-lt",
+        "color": "#111111",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Board Flow"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Board Flow",
+          "resolvedTextStyle": {
+            "fontSize": 26,
+            "color": "#111111",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Board Flow",
+              "fontSize": 26,
+              "color": "#111111",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 10,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ozud0zyt",
+      "id": "10",
+      "name": "board-flow",
+      "bbox": [
+        72,
+        578,
+        1110,
+        58
+      ],
+      "geometry": "rect",
+      "text": "Decomposition -> Proposition 2 -> Proposition 3 -> sparse-graph nonidentification -> low-rank completion and leave-out inference",
+      "textPreview": "Decomposition -> Proposition 2 -> Proposition 3 -> sparse-graph nonidentification -> low-rank completion and leave-out inference",
+      "resolvedFontSize": 22,
+      "resolvedTextStyle": {
+        "fontSize": 22,
+        "typeface": "+mn-lt",
+        "color": "#111111",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Decomposition -> Proposition 2 -> Proposition 3 -> sparse-graph nonidentification -> low-rank completion and leave-out"
+          },
+          {
+            "index": 2,
+            "text": "inference"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Decomposition -> Proposition 2 -> Proposition 3 -> sparse-graph nonidentification -> low-rank completion and leave-out inference",
+          "resolvedTextStyle": {
+            "fontSize": 22,
+            "color": "#111111"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Decomposition -> Proposition 2 -> Proposition 3 -> sparse-graph nonidentification -> low-rank completion and leave-out inference",
+              "fontSize": 22,
+              "color": "#111111"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 11,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/p03ut4fe",
+      "id": "11",
+      "name": "footer",
+      "bbox": [
+        72,
+        660,
+        1100,
+        28
+      ],
+      "geometry": "rect",
+      "text": "Interpretation boundary: wage schedule first; causal effects, surplus, and welfare require extra assumptions.",
+      "textPreview": "Interpretation boundary: wage schedule first; causal effects, surplus, and welfare require extra assumptions.",
+      "resolvedFontSize": 16,
+      "resolvedTextStyle": {
+        "fontSize": 16,
+        "typeface": "+mn-lt",
+        "color": "#555555",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Interpretation boundary: wage schedule first; causal effects, surplus, and welfare require extra assumptions."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Interpretation boundary: wage schedule first; causal effects, surplus, and welfare require extra assumptions.",
+          "resolvedTextStyle": {
+            "fontSize": 16,
+            "color": "#555555"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Interpretation boundary: wage schedule first; causal effects, surplus, and welfare require extra assumptions.",
+              "fontSize": 16,
+              "color": "#555555"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    }
+  ],
+  "composeRuns": []
+}

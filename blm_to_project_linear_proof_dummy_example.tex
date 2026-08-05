@@ -1,0 +1,1396 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{longtable,array}
+
+\newcommand{\E}{\mathbb E}
+\newcommand{\rank}{\operatorname{rank}}
+
+\begin{document}
+
+\begin{center}
+\textbf{From the Static BLM Regression to the Project Model}
+
+Complete proof and numerical example
+\end{center}
+
+\section*{Scope and notation}
+
+Bonhomme, Lamadon, and Manresa (2019, p.~704, equation~(1)) give the
+following static interactive regression:
+\[
+Y_{it}
+=
+a_t(k_{it})
++
+b_t(k_{it})\alpha_i^B
++
+X_{it}'c_t
++
+\varepsilon_{it}.
+\tag{BLM}
+\]
+The superscript \(B\) distinguishes the BLM worker type
+\(\alpha_i^B\) from the project's additive worker effect \(\alpha_i\).
+We fix one period \(t\), suppress time subscripts, and use \(K\) for the
+number of worker types and \(L\) for the number of firm classes.  This
+relabels BLM's firm-class index so that worker types and firm classes have
+different letters.
+
+\section*{Notation table}
+
+\begin{longtable}{
+  >{\raggedright\arraybackslash}p{0.22\linewidth}
+  >{\raggedright\arraybackslash}p{0.68\linewidth}}
+\hline
+Symbol & Meaning \\
+\hline
+\endfirsthead
+\hline
+Symbol & Meaning \\
+\hline
+\endhead
+\(t\) & Time-period index in the original BLM panel model. \\
+\(T\) & Number of periods in the original BLM panel and the endpoint of a full history. \\
+\(i\) & Individual worker index, \(i=1,\ldots,I\). \\
+\(j\) & Individual firm index, \(j=1,\ldots,J\). \\
+\(k\) & Worker-type index, \(k=1,\ldots,K\). \\
+\(\ell\) & Firm-class index, \(\ell=1,\ldots,L\). \\
+\(I\) & Number of individual workers. \\
+\(J\) & Number of individual firms. \\
+\(K\) & Number of discrete BLM worker types in the finite-type specialization. \\
+\(L\) & Number of BLM firm classes. \\
+\(j_{it}\) & Identity of worker \(i\)'s employer in period \(t\). \\
+\(k_{it}\) & BLM class of worker \(i\)'s employer in period \(t\). \\
+\(m_{it}\) & BLM indicator that worker \(i\) moves firms between periods \(t\) and \(t+1\); unrelated to the conditional mean \(m_{ij}\). \\
+\(k_i^T,m_i^T,X_i^T\) & Worker \(i\)'s complete firm-class, mobility, and covariate histories through period \(T\). \\
+\(g(i)\) & Worker-type membership map: worker \(i\) has type \(g(i)\). \\
+\(h(j)\) & Firm-class membership map: firm \(j\) belongs to class \(h(j)\). \\
+\(Y_{it}\) & Worker \(i\)'s observed log earnings in period \(t\). \\
+\(Y_{ij}\) & The same outcome after fixing a period and indexing the observation by worker \(i\) and employer \(j\). \\
+\(X_{it},X_{ij}\) & Observed wage covariates before and after fixing the period. \\
+\(c_t,c\) & BLM covariate coefficients before and after fixing the period. \\
+\(\delta\) & Project-model covariate coefficient; the mapping sets \(\delta=c\). \\
+\(\varepsilon_{it},\varepsilon_{ij}\) & Mean-zero wage residual before and after fixing the period. \\
+\(\alpha_i^B\) & BLM latent type of worker \(i\). \\
+\(\alpha_k^B\) & Numerical value of BLM worker type \(k\). \\
+\(\alpha_i\) & Project-model additive worker effect; this is not the BLM type. \\
+\(\alpha\) & The \(I\times1\) vector of project additive worker effects. \\
+\(a_t(k),a_\ell\) & BLM firm-class intercept before and after fixing the period. \\
+\(b_t(k),b_\ell\) & BLM firm-class loading on the BLM worker type before and after fixing the period. \\
+\(p_k\) & Reference probability of worker type \(k\), with \(\sum_k p_k=1\). \\
+\(q_\ell\) & Reference probability of firm class \(\ell\), with \(\sum_\ell q_\ell=1\). \\
+\(p\) & The \(K\times1\) vector with entries \(p_k\). \\
+\(q\) & The \(L\times1\) vector with entries \(q_\ell\). \\
+\(\bar\alpha\) & Reference mean of the BLM worker type, \(\sum_k p_k\alpha_k^B\). \\
+\(\bar a\) & Reference mean of the BLM firm-class intercept, \(\sum_\ell q_\ell a_\ell\). \\
+\(\bar b\) & Reference mean of the BLM firm-class loading, \(\sum_\ell q_\ell b_\ell\). \\
+\(m_{ij}\) & Conditional mean wage for worker \(i\) at firm \(j\). \\
+\(\mu_{k\ell}\) & Conditional mean net of covariates for worker type \(k\) at firm class \(\ell\). \\
+\(\mu_{k\cdot}\) & Mean of row \(k\), averaging \(\mu_{k\ell}\) over firm classes using \(q_\ell\). \\
+\(\mu_{\cdot\ell}\) & Mean of column \(\ell\), averaging \(\mu_{k\ell}\) over worker types using \(p_k\). \\
+\(\mu_{\cdot\cdot}\) & Grand mean of the type-class wage table using weights \(p_kq_\ell\). \\
+\(\mu\) & Project-model intercept; the mapping sets \(\mu=\mu_{\cdot\cdot}\). \\
+\(\psi_j\) & Project-model additive firm effect. \\
+\(\psi_\ell\) & Project additive effect shared by every firm in class \(\ell\). \\
+\(\psi\) & The \(J\times1\) vector of project additive firm effects. \\
+\(M_{k\ell}\) & Double-demeaned interaction between worker type \(k\) and firm class \(\ell\). \\
+\(M_{\cdot\ell}\) & Column \(\ell\) of \(M\). \\
+\(M\) & The \(K\times L\) matrix with entries \(M_{k\ell}\). \\
+\(u_i\) & Project worker interaction factor, \(\alpha_i^B-\bar\alpha\). \\
+\(v_j\) & Project firm interaction factor, \(b_{h(j)}-\bar b\). \\
+\(u\) & The \(I\times1\) vector with entries \(u_i\). \\
+\(v\) & The \(J\times1\) vector with entries \(v_j\). \\
+\(\Lambda\) & Project interaction coefficient; in the rank-one BLM mapping, \(\Lambda=[1]\). \\
+\(Z_{ik}\) & Worker-type indicator, \(\mathbf 1\{g(i)=k\}\). \\
+\(Z\) & The \(I\times K\) worker-type membership matrix. \\
+\(W_{j\ell}\) & Firm-class indicator, \(\mathbf 1\{h(j)=\ell\}\). \\
+\(W\) & The \(J\times L\) firm-class membership matrix. \\
+\(H_{ij}\) & Individual worker-firm interaction, \(M_{g(i),h(j)}\). \\
+\(H\) & The \(I\times J\) matrix with entries \(H_{ij}\). \\
+\(x\) & Generic \(K\times1\) vector used in the centered subspace \(\{x:p'x=0\}\). \\
+\(A\) & Generic matrix used only in the notation \(\rank(A)\). \\
+\('\) & Matrix or vector transpose. \\
+\(\E[\cdot]\) & Expectation. \\
+\(\rank(A)\) & Dimension of the column space of matrix \(A\). \\
+\hline
+\end{longtable}
+
+\section*{Complete linear-chain proof}
+
+\paragraph{Step 1. Take the conditional mean of the BLM equation.}
+
+After fixing \(t\), write the BLM equation as
+\[
+Y_{ij}
+=
+X_{ij}'c
++
+a_{h(j)}
++
+b_{h(j)}\alpha_i^B
++
+\varepsilon_{ij}.
+\tag{1}
+\]
+BLM impose
+\[
+\E[\varepsilon_{it}\mid
+\alpha_i^B,k_i^T,m_i^T,X_i^T]=0.
+\tag{2}
+\]
+The current variables \(X_{ij}\), \(\alpha_i^B\), and \(h(j)=k_{it}\) are
+contained in that full conditioning information.  The law of iterated
+expectations therefore gives
+\begin{align*}
+\E[\varepsilon_{ij}\mid X_{ij},\alpha_i^B,h(j)]
+&=
+\E\!\left[
+\E[\varepsilon_{it}\mid\alpha_i^B,k_i^T,m_i^T,X_i^T]
+\mid X_{ij},\alpha_i^B,h(j)
+\right]\\
+&=\E[0\mid X_{ij},\alpha_i^B,h(j)]\\
+&=0.
+\tag{2a}
+\end{align*}
+Take the conditional expectation of every term in (1):
+\begin{align*}
+m_{ij}
+&\equiv
+\E[Y_{ij}\mid X_{ij},\alpha_i^B,h(j)]\\
+&=
+X_{ij}'c
++
+a_{h(j)}
++
+b_{h(j)}\alpha_i^B
++
+\E[\varepsilon_{ij}\mid X_{ij},\alpha_i^B,h(j)]\\
+&=
+X_{ij}'c+a_{h(j)}+b_{h(j)}\alpha_i^B.
+\end{align*}
+Thus
+\[
+m_{ij}=X_{ij}'c+a_{h(j)}+b_{h(j)}\alpha_i^B.
+\tag{3}
+\]
+
+\paragraph{Step 2. Write the mean at the type-class level.}
+
+Suppose worker \(i\) has type \(g(i)\), so
+\[
+\alpha_i^B=\alpha_{g(i)}^B.
+\tag{4}
+\]
+For worker type \(k\) and firm class \(\ell\), define
+\[
+\mu_{k\ell}=a_\ell+b_\ell\alpha_k^B.
+\tag{5}
+\]
+Set \(k=g(i)\) and \(\ell=h(j)\) in (5):
+\[
+\mu_{g(i),h(j)}
+=
+a_{h(j)}+b_{h(j)}\alpha_{g(i)}^B
+=
+a_{h(j)}+b_{h(j)}\alpha_i^B.
+\tag{6}
+\]
+Substituting (6) into (3) gives
+\[
+m_{ij}=X_{ij}'c+\mu_{g(i),h(j)}.
+\tag{7}
+\]
+
+\paragraph{Step 3. Define the reference means.}
+
+Let
+\[
+\sum_{k=1}^Kp_k=1,
+\qquad
+\sum_{\ell=1}^Lq_\ell=1.
+\tag{8}
+\]
+Define
+\[
+\bar\alpha=\sum_{k=1}^Kp_k\alpha_k^B,
+\qquad
+\bar a=\sum_{\ell=1}^Lq_\ell a_\ell,
+\qquad
+\bar b=\sum_{\ell=1}^Lq_\ell b_\ell.
+\tag{9}
+\]
+
+\paragraph{Step 4. Calculate each row mean.}
+
+For worker type \(k\),
+\begin{align*}
+\mu_{k\cdot}
+&\equiv
+\sum_{\ell=1}^Lq_\ell\mu_{k\ell}\\
+&=
+\sum_{\ell=1}^Lq_\ell(a_\ell+b_\ell\alpha_k^B)\\
+&=
+\sum_{\ell=1}^Lq_\ell a_\ell
++
+\alpha_k^B\sum_{\ell=1}^Lq_\ell b_\ell\\
+&=
+\bar a+\bar b\alpha_k^B.
+\end{align*}
+Therefore,
+\[
+\mu_{k\cdot}=\bar a+\bar b\alpha_k^B.
+\tag{10}
+\]
+
+\paragraph{Step 5. Calculate each column mean.}
+
+For firm class \(\ell\),
+\begin{align*}
+\mu_{\cdot\ell}
+&\equiv
+\sum_{k=1}^Kp_k\mu_{k\ell}\\
+&=
+\sum_{k=1}^Kp_k(a_\ell+b_\ell\alpha_k^B)\\
+&=
+a_\ell\sum_{k=1}^Kp_k
++
+b_\ell\sum_{k=1}^Kp_k\alpha_k^B\\
+&=
+a_\ell+b_\ell\bar\alpha.
+\end{align*}
+Therefore,
+\[
+\mu_{\cdot\ell}=a_\ell+b_\ell\bar\alpha.
+\tag{11}
+\]
+
+\paragraph{Step 6. Calculate the grand mean.}
+
+Define
+\[
+\mu_{\cdot\cdot}
+\equiv
+\sum_{k=1}^K\sum_{\ell=1}^Lp_kq_\ell\mu_{k\ell}.
+\tag{12}
+\]
+Substitute (5):
+\begin{align*}
+\mu_{\cdot\cdot}
+&=
+\sum_{k=1}^K\sum_{\ell=1}^L
+p_kq_\ell(a_\ell+b_\ell\alpha_k^B)\\
+&=
+\left(\sum_{k=1}^Kp_k\right)
+\left(\sum_{\ell=1}^Lq_\ell a_\ell\right)
++
+\left(\sum_{k=1}^Kp_k\alpha_k^B\right)
+\left(\sum_{\ell=1}^Lq_\ell b_\ell\right)\\
+&=
+1\cdot\bar a+\bar\alpha\bar b.
+\end{align*}
+Hence
+\[
+\mu_{\cdot\cdot}=\bar a+\bar\alpha\bar b.
+\tag{13}
+\]
+The project intercept is
+\[
+\mu=\mu_{\cdot\cdot}=\bar a+\bar\alpha\bar b.
+\tag{14}
+\]
+
+\paragraph{Step 7. Obtain the project additive worker effect.}
+
+The additive worker effect is the worker's row mean minus the grand mean:
+\[
+\alpha_i
+\equiv
+\mu_{g(i),\cdot}-\mu_{\cdot\cdot}.
+\tag{15}
+\]
+Using (10), (13), and \(\alpha_{g(i)}^B=\alpha_i^B\),
+\begin{align*}
+\alpha_i
+&=
+\bar a+\bar b\alpha_i^B
+-
+(\bar a+\bar\alpha\bar b)\\
+&=
+\bar b\alpha_i^B-\bar b\bar\alpha\\
+&=
+\bar b(\alpha_i^B-\bar\alpha).
+\end{align*}
+Therefore,
+\[
+\alpha_i=\bar b(\alpha_i^B-\bar\alpha).
+\tag{16}
+\]
+
+\paragraph{Step 8. Obtain the project additive firm effect.}
+
+The additive firm effect is the firm's column mean minus the grand mean:
+\[
+\psi_j
+\equiv
+\mu_{\cdot,h(j)}-\mu_{\cdot\cdot}.
+\tag{17}
+\]
+Using (11) and (13),
+\begin{align*}
+\psi_j
+&=
+a_{h(j)}+b_{h(j)}\bar\alpha
+-
+(\bar a+\bar\alpha\bar b)\\
+&=
+(a_{h(j)}-\bar a)
++
+\bar\alpha(b_{h(j)}-\bar b).
+\end{align*}
+Therefore,
+\[
+\psi_j
+=
+(a_{h(j)}-\bar a)
++
+\bar\alpha(b_{h(j)}-\bar b).
+\tag{18}
+\]
+
+\paragraph{Step 9. Define and calculate the interaction matrix \(M\).}
+
+Double demeaning defines
+\[
+M_{k\ell}
+=
+\mu_{k\ell}
+-
+\mu_{k\cdot}
+-
+\mu_{\cdot\ell}
++
+\mu_{\cdot\cdot}.
+\tag{19}
+\]
+Substitute (5), (10), (11), and (13):
+\begin{align*}
+M_{k\ell}
+&=
+(a_\ell+b_\ell\alpha_k^B)
+-
+(\bar a+\bar b\alpha_k^B)\\
+&\quad
+-
+(a_\ell+b_\ell\bar\alpha)
++
+(\bar a+\bar\alpha\bar b)\\
+&=
+a_\ell+b_\ell\alpha_k^B
+-
+\bar a-\bar b\alpha_k^B
+-
+a_\ell-b_\ell\bar\alpha
++
+\bar a+\bar\alpha\bar b\\
+&=
+b_\ell\alpha_k^B
+-
+\bar b\alpha_k^B
+-
+b_\ell\bar\alpha
++
+\bar\alpha\bar b\\
+&=
+\alpha_k^B(b_\ell-\bar b)
+-
+\bar\alpha(b_\ell-\bar b)\\
+&=
+(\alpha_k^B-\bar\alpha)(b_\ell-\bar b).
+\end{align*}
+Thus
+\[
+M_{k\ell}
+=
+(\alpha_k^B-\bar\alpha)(b_\ell-\bar b).
+\tag{20}
+\]
+
+\paragraph{Step 10. Prove the rank of \(M\).}
+
+Writing all entries of \(M\) gives
+\[
+M
+=
+\begin{pmatrix}
+\alpha_1^B-\bar\alpha\\
+\vdots\\
+\alpha_K^B-\bar\alpha
+\end{pmatrix}
+\begin{pmatrix}
+b_1-\bar b&\cdots&b_L-\bar b
+\end{pmatrix}.
+\tag{21}
+\]
+For every \(\ell\), column \(\ell\) is
+\[
+M_{\cdot\ell}
+=
+(b_\ell-\bar b)
+\begin{pmatrix}
+\alpha_1^B-\bar\alpha\\
+\vdots\\
+\alpha_K^B-\bar\alpha
+\end{pmatrix}.
+\tag{22}
+\]
+Every column is therefore a scalar multiple of one vector.  The column space
+has dimension at most one:
+\[
+\rank(M)\leq1.
+\tag{23}
+\]
+This conclusion is obtained before \(H\) is introduced.
+
+\paragraph{Step 11. Prove the general double-centering bound.}
+
+For every worker type \(k\),
+\begin{align*}
+\sum_{\ell=1}^Lq_\ell M_{k\ell}
+&=
+(\alpha_k^B-\bar\alpha)
+\sum_{\ell=1}^Lq_\ell(b_\ell-\bar b)\\
+&=
+(\alpha_k^B-\bar\alpha)
+\left(
+\sum_{\ell=1}^Lq_\ell b_\ell
+-
+\bar b\sum_{\ell=1}^Lq_\ell
+\right)\\
+&=
+(\alpha_k^B-\bar\alpha)(\bar b-\bar b)\\
+&=0.
+\end{align*}
+Hence
+\[
+Mq=0.
+\tag{24}
+\]
+Because \(q\neq0\), the right null space of \(M\) has dimension at least one.
+Rank--nullity gives
+\[
+\rank(M)\leq L-1.
+\tag{25}
+\]
+Similarly, for every firm class \(\ell\),
+\begin{align*}
+\sum_{k=1}^Kp_kM_{k\ell}
+&=
+(b_\ell-\bar b)
+\sum_{k=1}^Kp_k(\alpha_k^B-\bar\alpha)\\
+&=
+(b_\ell-\bar b)
+\left(
+\sum_{k=1}^Kp_k\alpha_k^B
+-
+\bar\alpha\sum_{k=1}^Kp_k
+\right)\\
+&=
+(b_\ell-\bar b)(\bar\alpha-\bar\alpha)\\
+&=0.
+\end{align*}
+Hence
+\[
+p'M=0.
+\tag{26}
+\]
+The columns of \(M\) lie in the \((K-1)\)-dimensional subspace
+\(\{x\in\mathbb R^K:p'x=0\}\), so
+\[
+\rank(M)\leq K-1.
+\tag{27}
+\]
+Combining (23), (25), and (27),
+\[
+\rank(M)\leq\min\{1,K-1,L-1\}.
+\tag{28}
+\]
+
+\paragraph{Step 12. Recover the type-class decomposition.}
+
+Starting from (19),
+\[
+M_{k\ell}
+=
+\mu_{k\ell}-\mu_{k\cdot}-\mu_{\cdot\ell}+\mu_{\cdot\cdot}.
+\]
+Add \(\mu_{k\cdot}+\mu_{\cdot\ell}-\mu_{\cdot\cdot}\) to both sides:
+\[
+\mu_{k\ell}
+=
+\mu_{k\cdot}+\mu_{\cdot\ell}-\mu_{\cdot\cdot}+M_{k\ell}.
+\tag{29}
+\]
+Rewrite the right side by adding and subtracting one more grand mean:
+\[
+\mu_{k\ell}
+=
+\mu_{\cdot\cdot}
++
+(\mu_{k\cdot}-\mu_{\cdot\cdot})
++
+(\mu_{\cdot\ell}-\mu_{\cdot\cdot})
++
+M_{k\ell}.
+\tag{30}
+\]
+
+\paragraph{Step 13. Define the membership matrices.}
+
+Define
+\[
+Z_{ik}
+=
+\begin{cases}
+1,&g(i)=k,\\
+0,&g(i)\neq k,
+\end{cases}
+\qquad
+W_{j\ell}
+=
+\begin{cases}
+1,&h(j)=\ell,\\
+0,&h(j)\neq\ell.
+\end{cases}
+\tag{31}
+\]
+Each row of \(Z\) contains exactly one \(1\), and each row of \(W\) contains
+exactly one \(1\).
+
+\paragraph{Step 14. Define the individual interaction and prove \(H=ZMW'\).}
+
+The type-class interaction faced by worker \(i\) at firm \(j\) is
+\[
+H_{ij}=M_{g(i),h(j)}.
+\tag{32}
+\]
+Now calculate the \((i,j)\) entry of \(ZMW'\).  First,
+\[
+(ZMW')_{ij}
+=
+\sum_{\ell=1}^L(ZM)_{i\ell}W'_{\ell j}.
+\tag{33}
+\]
+Second,
+\[
+(ZM)_{i\ell}
+=
+\sum_{k=1}^KZ_{ik}M_{k\ell}.
+\tag{34}
+\]
+Substitute (34) into (33) and use \(W'_{\ell j}=W_{j\ell}\):
+\[
+(ZMW')_{ij}
+=
+\sum_{\ell=1}^L\sum_{k=1}^K
+Z_{ik}M_{k\ell}W_{j\ell}.
+\tag{35}
+\]
+For fixed \(i\), \(Z_{ik}=0\) except when \(k=g(i)\).  Therefore,
+\[
+\sum_{k=1}^KZ_{ik}M_{k\ell}
+=
+M_{g(i),\ell}.
+\tag{36}
+\]
+Use (36) in (35):
+\[
+(ZMW')_{ij}
+=
+\sum_{\ell=1}^LM_{g(i),\ell}W_{j\ell}.
+\tag{37}
+\]
+For fixed \(j\), \(W_{j\ell}=0\) except when \(\ell=h(j)\).  Therefore,
+\[
+\sum_{\ell=1}^LM_{g(i),\ell}W_{j\ell}
+=
+M_{g(i),h(j)}.
+\tag{38}
+\]
+Equations (32), (37), and (38) imply
+\[
+(ZMW')_{ij}=H_{ij}
+\]
+for every \(i,j\).  Hence
+\[
+H=ZMW'.
+\tag{39}
+\]
+No rank assumption is used in this selector argument.
+
+\paragraph{Step 15. Connect \(H\) to the established project factors.}
+
+The project interaction factors are
+\[
+u_i=\alpha_i^B-\bar\alpha,
+\qquad
+v_j=b_{h(j)}-\bar b.
+\tag{40}
+\]
+Using (20) and (32),
+\begin{align*}
+H_{ij}
+&=
+M_{g(i),h(j)}\\
+&=
+(\alpha_{g(i)}^B-\bar\alpha)
+(b_{h(j)}-\bar b)\\
+&=
+(\alpha_i^B-\bar\alpha)
+(b_{h(j)}-\bar b)\\
+&=
+u_iv_j.
+\end{align*}
+Therefore,
+\[
+H_{ij}=u_iv_j.
+\tag{41}
+\]
+The \((i,j)\) entry of \(uv'\) is \(u_iv_j\), so
+\[
+H=uv'.
+\tag{42}
+\]
+Combining (39) and (42),
+\[
+H=ZMW'=uv'.
+\tag{43}
+\]
+Because every column of \(uv'\) is a scalar multiple of \(u\),
+\[
+\rank(H)\leq1.
+\tag{44}
+\]
+This is a conclusion, not an assumption.
+
+\paragraph{Step 16. Arrive at the project model.}
+
+Set \(k=g(i)\) and \(\ell=h(j)\) in (30):
+\begin{align*}
+\mu_{g(i),h(j)}
+&=
+\mu_{\cdot\cdot}
++
+(\mu_{g(i),\cdot}-\mu_{\cdot\cdot})\\
+&\quad+
+(\mu_{\cdot,h(j)}-\mu_{\cdot\cdot})
++
+M_{g(i),h(j)}\\
+&=
+\mu+\alpha_i+\psi_j+H_{ij}\\
+&=
+\mu+\alpha_i+\psi_j+u_iv_j.
+\end{align*}
+Substitute this expression into (7):
+\[
+m_{ij}
+=
+X_{ij}'c+\mu+\alpha_i+\psi_j+u_iv_j.
+\tag{45}
+\]
+Set
+\[
+\delta=c,
+\qquad
+\Lambda=[1].
+\tag{46}
+\]
+Because \(u_i'\Lambda v_j=u_iv_j\) for scalar factors,
+\[
+m_{ij}
+=
+X_{ij}'\delta
++
+\mu
++
+\alpha_i
++
+\psi_j
++
+u_i'\Lambda v_j.
+\tag{Project}
+\]
+This is the project model.
+
+\paragraph{Step 17. Verify the map by direct substitution.}
+
+The map is
+\[
+\begin{aligned}
+\delta&=c,\\
+\mu&=\bar a+\bar\alpha\bar b,\\
+\alpha_i&=\bar b(\alpha_i^B-\bar\alpha),\\
+\psi_j&=(a_{h(j)}-\bar a)
+       +\bar\alpha(b_{h(j)}-\bar b),\\
+u_i&=\alpha_i^B-\bar\alpha,\\
+v_j&=b_{h(j)}-\bar b,\\
+\Lambda&=[1].
+\end{aligned}
+\tag{47}
+\]
+Substitute (47) into the project model:
+\begin{align*}
+m_{ij}
+&=
+X_{ij}'c
++
+(\bar a+\bar\alpha\bar b)
++
+\bar b(\alpha_i^B-\bar\alpha)\\
+&\quad+
+(a_{h(j)}-\bar a)
++
+\bar\alpha(b_{h(j)}-\bar b)\\
+&\quad+
+(\alpha_i^B-\bar\alpha)(b_{h(j)}-\bar b).
+\end{align*}
+Expand:
+\begin{align*}
+m_{ij}
+&=
+X_{ij}'c
++
+\bar a+\bar\alpha\bar b
++
+\bar b\alpha_i^B-\bar b\bar\alpha\\
+&\quad+
+a_{h(j)}-\bar a
++
+\bar\alpha b_{h(j)}-\bar\alpha\bar b\\
+&\quad+
+\alpha_i^Bb_{h(j)}
+-
+\alpha_i^B\bar b
+-
+\bar\alpha b_{h(j)}
++
+\bar\alpha\bar b.
+\end{align*}
+Cancel equal positive and negative terms:
+\[
+\bar a-\bar a=0,
+\qquad
+\bar b\alpha_i^B-\alpha_i^B\bar b=0,
+\]
+\[
+\bar\alpha b_{h(j)}-\bar\alpha b_{h(j)}=0,
+\]
+and the remaining \(\bar\alpha\bar b\) terms also sum to zero.  Therefore,
+\[
+m_{ij}
+=
+X_{ij}'c+a_{h(j)}+b_{h(j)}\alpha_i^B,
+
+\]
+which is exactly the BLM conditional mean in (3).
+
+\section*{Numerical example: Stefan, Michael, GS, Meta, and BoA}
+
+\paragraph{Step 1. Workers, firms, types, and classes.}
+
+There are two workers:
+\[
+I=2,
+\qquad
+i=1\text{ is Stefan},
+\qquad
+i=2\text{ is Michael}.
+\]
+There are three firms:
+\[
+J=3,
+\qquad
+j=1\text{ is GS},
+\quad
+j=2\text{ is Meta},
+\quad
+j=3\text{ is BoA}.
+\]
+There are two worker types and two firm classes:
+\[
+K=2,
+\qquad
+L=2.
+\]
+The worker-type assignments are
+\[
+g(\text{Stefan})=1,
+\qquad
+g(\text{Michael})=2.
+\tag{48}
+\]
+The firm-class assignments are
+\[
+h(\text{GS})=1,
+\qquad
+h(\text{Meta})=2,
+\qquad
+h(\text{BoA})=1.
+\tag{49}
+\]
+
+\paragraph{Step 2. Choose numerical BLM parameters.}
+
+Set the BLM worker-type values to
+\[
+\alpha_{\text{Stefan}}^B=\alpha_1^B=1,
+\qquad
+\alpha_{\text{Michael}}^B=\alpha_2^B=-1.
+\tag{50}
+\]
+Set the BLM class intercepts and slopes to
+\[
+a_1=4,
+\qquad
+a_2=5,
+\qquad
+b_1=2,
+\qquad
+b_2=-1.
+\tag{51}
+\]
+Set \(X_{ij}'c=0\) for every worker-firm pair.  The mean wage is therefore
+\[
+m_{ij}=a_{h(j)}+b_{h(j)}\alpha_i^B.
+\tag{52}
+\]
+
+\paragraph{Step 3. Calculate every BLM type-class mean.}
+
+For type 1 at class 1,
+\[
+\mu_{11}=a_1+b_1\alpha_1^B=4+2(1)=6.
+\]
+For type 1 at class 2,
+\[
+\mu_{12}=a_2+b_2\alpha_1^B=5+(-1)(1)=4.
+\]
+For type 2 at class 1,
+\[
+\mu_{21}=a_1+b_1\alpha_2^B=4+2(-1)=2.
+\]
+For type 2 at class 2,
+\[
+\mu_{22}=a_2+b_2\alpha_2^B=5+(-1)(-1)=6.
+\]
+Thus
+\[
+(\mu_{k\ell})
+=
+\begin{pmatrix}
+6&4\\
+2&6
+\end{pmatrix}.
+\tag{53}
+\]
+
+\paragraph{Step 4. Choose and interpret the reference weights.}
+
+Give Stefan and Michael equal worker weight:
+\[
+p_1=p_2=\frac12.
+\tag{54}
+\]
+Two of the three firms are in class 1, while one is in class 2:
+\[
+q_1=\frac23,
+\qquad
+q_2=\frac13.
+\tag{55}
+\]
+Therefore,
+\[
+\bar\alpha
+=
+\frac12(1)+\frac12(-1)
+=0,
+\tag{56}
+\]
+\[
+\bar a
+=
+\frac23(4)+\frac13(5)
+=
+\frac{13}{3},
+\tag{57}
+\]
+and
+\[
+\bar b
+=
+\frac23(2)+\frac13(-1)
+=1.
+\tag{58}
+\]
+
+\paragraph{Step 5. Calculate row, column, and grand means.}
+
+Stefan's row mean is
+\[
+\mu_{1\cdot}
+=
+\frac23(6)+\frac13(4)
+=
+\frac{16}{3}.
+\tag{59}
+\]
+Michael's row mean is
+\[
+\mu_{2\cdot}
+=
+\frac23(2)+\frac13(6)
+=
+\frac{10}{3}.
+\tag{60}
+\]
+The class-1 column mean is
+\[
+\mu_{\cdot1}
+=
+\frac12(6)+\frac12(2)
+=4.
+\tag{61}
+\]
+The class-2 column mean is
+\[
+\mu_{\cdot2}
+=
+\frac12(4)+\frac12(6)
+=5.
+\tag{62}
+\]
+The grand mean is
+\[
+\mu_{\cdot\cdot}
+=
+\frac12\left(\frac{16}{3}\right)
++
+\frac12\left(\frac{10}{3}\right)
+=
+\frac{13}{3}.
+\tag{63}
+\]
+Hence
+\[
+\mu=\frac{13}{3}.
+\tag{64}
+\]
+
+\paragraph{Step 6. Calculate the project additive effects.}
+
+For Stefan,
+\[
+\alpha_{\text{Stefan}}
+=
+\mu_{1\cdot}-\mu_{\cdot\cdot}
+=
+\frac{16}{3}-\frac{13}{3}
+=1.
+\tag{65}
+\]
+For Michael,
+\[
+\alpha_{\text{Michael}}
+=
+\mu_{2\cdot}-\mu_{\cdot\cdot}
+=
+\frac{10}{3}-\frac{13}{3}
+=-1.
+\tag{66}
+\]
+For a class-1 firm,
+\[
+\psi_1
+=
+\mu_{\cdot1}-\mu_{\cdot\cdot}
+=
+4-\frac{13}{3}
+=-\frac13.
+\tag{67}
+\]
+For a class-2 firm,
+\[
+\psi_2
+=
+\mu_{\cdot2}-\mu_{\cdot\cdot}
+=
+5-\frac{13}{3}
+=\frac23.
+\tag{68}
+\]
+Therefore,
+\[
+\alpha
+=
+\begin{pmatrix}
+1\\
+-1
+\end{pmatrix},
+\qquad
+\psi
+=
+\begin{pmatrix}
+-1/3\\
+2/3\\
+-1/3
+\end{pmatrix},
+\tag{69}
+\]
+where the entries of \(\psi\) are ordered as GS, Meta, and BoA.
+
+\paragraph{Step 7. Calculate every entry of \(M\).}
+
+\begin{align*}
+M_{11}
+&=
+6-\frac{16}{3}-4+\frac{13}{3}
+=1,\\
+M_{12}
+&=
+4-\frac{16}{3}-5+\frac{13}{3}
+=-2,\\
+M_{21}
+&=
+2-\frac{10}{3}-4+\frac{13}{3}
+=-1,\\
+M_{22}
+&=
+6-\frac{10}{3}-5+\frac{13}{3}
+=2.
+\end{align*}
+Thus
+\[
+M
+=
+\begin{pmatrix}
+1&-2\\
+-1&2
+\end{pmatrix}.
+\tag{70}
+\]
+It factors as
+\[
+M
+=
+\begin{pmatrix}
+1\\
+-1
+\end{pmatrix}
+\begin{pmatrix}
+1&-2
+\end{pmatrix},
+\tag{71}
+\]
+so
+\[
+\rank(M)=1.
+\tag{72}
+\]
+
+\paragraph{Step 8. Write the membership matrices.}
+
+Stefan is type 1 and Michael is type 2, so
+\[
+Z
+=
+\begin{pmatrix}
+1&0\\
+0&1
+\end{pmatrix}.
+\tag{73}
+\]
+GS, Meta, and BoA have classes 1, 2, and 1, so
+\[
+W
+=
+\begin{pmatrix}
+1&0\\
+0&1\\
+1&0
+\end{pmatrix},
+\qquad
+W'
+=
+\begin{pmatrix}
+1&0&1\\
+0&1&0
+\end{pmatrix}.
+\tag{74}
+\]
+
+\paragraph{Step 9. Calculate the established project interaction factors.}
+
+Using \(u_i=\alpha_i^B-\bar\alpha\),
+\[
+u_{\text{Stefan}}=1-0=1,
+\qquad
+u_{\text{Michael}}=-1-0=-1.
+\]
+Therefore,
+\[
+u=
+\begin{pmatrix}
+1\\
+-1
+\end{pmatrix}.
+\tag{75}
+\]
+Using \(v_j=b_{h(j)}-\bar b\),
+\[
+v_{\text{GS}}=2-1=1,
+\]
+\[
+v_{\text{Meta}}=-1-1=-2,
+\]
+\[
+v_{\text{BoA}}=2-1=1.
+\]
+Therefore,
+\[
+v=
+\begin{pmatrix}
+1\\
+-2\\
+1
+\end{pmatrix}.
+\tag{76}
+\]
+
+\paragraph{Step 10. Calculate \(H\) in both ways.}
+
+First use \(H=ZMW'\):
+\begin{align*}
+H
+&=
+\begin{pmatrix}
+1&0\\
+0&1
+\end{pmatrix}
+\begin{pmatrix}
+1&-2\\
+-1&2
+\end{pmatrix}
+\begin{pmatrix}
+1&0&1\\
+0&1&0
+\end{pmatrix}\\
+&=
+
+\begin{pmatrix}
+1&-2&1\\
+-1&2&-1
+\end{pmatrix}.
+
+\end{align*}
+Second use \(H=uv'\):
+\begin{align*}
+H
+&=
+\begin{pmatrix}
+1\\
+-1
+\end{pmatrix}
+\begin{pmatrix}
+1&-2&1
+\end{pmatrix}\\
+&=
+
+\begin{pmatrix}
+1&-2&1\\
+-1&2&-1
+\end{pmatrix}.
+
+\end{align*}
+The rows are Stefan and Michael.  The columns are GS, Meta, and BoA.
+
+\paragraph{Step 11. Reconstruct all six worker-firm means.}
+
+The project model is
+\[
+m_{ij}=\mu+\alpha_i+\psi_j+u_iv_j.
+\tag{77}
+\]
+For Stefan at GS,
+\[
+m_{\text{Stefan,GS}}
+=
+\frac{13}{3}+1-\frac13+(1)(1)
+=6.
+\]
+For Stefan at Meta,
+\[
+m_{\text{Stefan,Meta}}
+=
+\frac{13}{3}+1+\frac23+(1)(-2)
+=4.
+\]
+For Stefan at BoA,
+\[
+m_{\text{Stefan,BoA}}
+=
+\frac{13}{3}+1-\frac13+(1)(1)
+=6.
+\]
+For Michael at GS,
+\[
+m_{\text{Michael,GS}}
+=
+\frac{13}{3}-1-\frac13+(-1)(1)
+=2.
+\]
+For Michael at Meta,
+\[
+m_{\text{Michael,Meta}}
+=
+\frac{13}{3}-1+\frac23+(-1)(-2)
+=6.
+\]
+For Michael at BoA,
+\[
+m_{\text{Michael,BoA}}
+=
+\frac{13}{3}-1-\frac13+(-1)(1)
+=2.
+\]
+Therefore,
+\[
+(m_{ij})
+=
+\begin{pmatrix}
+6&4&6\\
+2&6&2
+\end{pmatrix}.
+\tag{78}
+\]
+The same matrix follows directly from the BLM equation
+\(m_{ij}=a_{h(j)}+b_{h(j)}\alpha_i^B\).
+
+\paragraph{Step 12. Numerical interpretation of every model component.}
+
+\begin{center}
+\begin{tabular}{
+  >{\raggedright\arraybackslash}p{0.22\linewidth}
+  >{\raggedright\arraybackslash}p{0.22\linewidth}
+  >{\raggedright\arraybackslash}p{0.46\linewidth}}
+\hline
+Object & Numerical value & Interpretation \\
+\hline
+\(\alpha_{\text{Stefan}}^B,\alpha_{\text{Michael}}^B\)
+& \(1,-1\)
+& BLM worker types. \\
+\(a_1,a_2\)
+& \(4,5\)
+& Baseline wages for firm classes 1 and 2 when the BLM worker type is zero. \\
+\(b_1,b_2\)
+& \(2,-1\)
+& Class-specific loadings on the BLM worker type. \\
+\(p_1,p_2\)
+& \(1/2,1/2\)
+& Worker-type reference weights. \\
+\(q_1,q_2\)
+& \(2/3,1/3\)
+& Firm-class reference weights. \\
+\(\bar\alpha,\bar a,\bar b\)
+& \(0,13/3,1\)
+& Reference means used for double demeaning. \\
+\(\mu\)
+& \(13/3\)
+& Overall project intercept. \\
+\(\alpha_{\text{Stefan}},\alpha_{\text{Michael}}\)
+& \(1,-1\)
+& Project additive worker effects. \\
+\(\psi_{\text{GS}},\psi_{\text{Meta}},\psi_{\text{BoA}}\)
+& \(-1/3,2/3,-1/3\)
+& Project additive firm effects. \\
+\(u_{\text{Stefan}},u_{\text{Michael}}\)
+& \(1,-1\)
+& Project worker interaction factors. \\
+\(v_{\text{GS}},v_{\text{Meta}},v_{\text{BoA}}\)
+& \(1,-2,1\)
+& Project firm interaction factors. \\
+\(M\)
+& \(\begin{psmallmatrix}1&-2\\-1&2\end{psmallmatrix}\)
+& Interaction at the worker-type/firm-class level. \\
+\(H\)
+& \(\begin{psmallmatrix}1&-2&1\\-1&2&-1\end{psmallmatrix}\)
+& Interaction at the individual worker/firm level. \\
+\(\Lambda\)
+& \(1\)
+& Rank-one project interaction coefficient. \\
+\hline
+\end{tabular}
+\end{center}
+
+\section*{Dependency check}
+
+The proof has the following one-directional dependency structure:
+\[
+\begin{aligned}
+\text{BLM equation and mean-zero residual}
+&\Longrightarrow
+\text{conditional mean }m_{ij}\\
+&\Longrightarrow
+\text{type-class means }\mu_{k\ell}\\
+&\Longrightarrow
+\text{row, column, and grand means}\\
+&\Longrightarrow
+\text{double-demeaned }M_{k\ell}\\
+&\Longrightarrow
+M_{k\ell}
+=(\alpha_k^B-\bar\alpha)(b_\ell-\bar b)\\
+&\Longrightarrow
+\rank(M)\leq1\\
+&\Longrightarrow
+H_{ij}=M_{g(i),h(j)}\\
+&\Longrightarrow
+H=ZMW'\\
+&\Longrightarrow
+H_{ij}=u_iv_j\\
+&\Longrightarrow
+H=uv'\\
+&\Longrightarrow
+m_{ij}
+=X_{ij}'\delta+\mu+\alpha_i+\psi_j+u_i'\Lambda v_j.
+\end{aligned}
+\]
+In particular, the rank of \(H\) is never used to prove the rank of \(M\).
+The rank of \(M\) is established first from the BLM coefficients.
+
+\section*{Scope of the result}
+
+The rank-one conclusion applies to BLM's displayed static interactive
+regression
+\[
+a_\ell+b_\ell\alpha_k^B.
+\]
+BLM's general static framework permits richer conditional earnings
+distributions.  For an arbitrary finite \(K\times L\) conditional-mean table,
+double demeaning still implies
+\[
+\rank(M)\leq\min\{K-1,L-1\},
+\]
+but it need not imply rank one.  The derivation above therefore proves exact
+rank-one nesting for BLM's displayed interactive regression and exact
+finite-rank nesting for a general finite type-class mean table.  It nests the
+static conditional-mean layer, not BLM's complete earnings distribution,
+assignment process, or dynamic mobility model.
+
+\begin{thebibliography}{9}
+\bibitem{BLM2019}
+Bonhomme, S., Lamadon, T., and Manresa, E. (2019).
+``A Distributional Framework for Matched Employer Employee Data.''
+\emph{Econometrica}, 87(3), 699--739.
+\end{thebibliography}
+
+\end{document}

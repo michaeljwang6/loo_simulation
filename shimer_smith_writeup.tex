@@ -1,0 +1,1543 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,booktabs,array,longtable}
+\usepackage[hidelinks]{hyperref}
+
+\title{Cumulative Notes on Wage Interaction Models and Firm Effects}
+\author{}
+\date{\today}
+
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\A}{\mathcal{A}}
+
+\begin{document}
+\maketitle
+
+\section{Shimer--Smith Bellman Derivation}
+
+\paragraph{Source convention.}
+Page citations to Shimer--Smith refer to the printed journal page numbers in
+the JSTOR PDF. Page citations to the lecture notes refer to the slide/PDF page
+number in the 325-page lecture deck. Formulas marked as ``derived'' are not
+written in exactly that form in the source; they are algebraic or first-order
+continuous-time implications of the cited source formulas.
+
+\subsection{Notation}
+
+To avoid overloading notation, I write the capitalized object $S(x\mid y)$ for
+the personal capital surplus and the lowercase object $s(x,y)$ for the flow match
+surplus. This is the same distinction Shimer--Smith use in substance when they
+move from equations (4) to (6). I also write the lecture-slide discount rate as
+$\rho_L$ when discussing the generic HJB, because Shimer--Smith use $\rho$ for
+the meeting-rate parameter. Similarly, I write the lecture-slide instantaneous
+payoff as $w_L$ because Shimer--Smith use $w(x)=rW(x)$ for the reservation
+wage. In Shimer--Smith, the lecture's $\rho_L$ is $r$.
+
+\begin{center}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.22\linewidth}
+                >{\raggedright\arraybackslash}p{0.70\linewidth}}
+\toprule
+Symbol & Meaning \\
+\midrule
+$x,y\in[0,1]$ & Agent types. Source: Shimer--Smith, p. 346. \\
+$\ell(x)$ & Exogenous population density of type $x$. Source: Shimer--Smith, p. 346. \\
+$u(x)$ & Steady-state density of unmatched agents of type $x$. Source: Shimer--Smith, p. 347. \\
+$\rho$ & Shimer--Smith meeting-rate parameter. An unmatched type $x$ meets unmatched types in a set $Y$ at rate $\rho\int_Y u(y)\,dy$. Source: Shimer--Smith, p. 347. \\
+$\delta$ & Shimer--Smith Poisson separation/dissolution rate of an existing match. This is distinct from the discount rate. Source: Shimer--Smith, pp. 346--348. \\
+$r$ & Shimer--Smith discount/interest rate. Source: Shimer--Smith, p. 347. \\
+$\rho_L$ & Lecture-slide discount rate in $\rho_L Vdt=w_L\,dt+E[dV]$. The slide writes this as $\rho$; I relabel it to avoid conflict with Shimer--Smith's meeting rate. Source: lecture deck, p. 193. \\
+$w_L$ & Lecture-slide instantaneous payoff. The slide writes this as $w(x,u,t)$; I relabel it to avoid conflict with Shimer--Smith's $w(x)=rW(x)$. Source: lecture deck, p. 193. \\
+$g_i$ & Instantaneous payoff in state $i$ in my derived jump-process translation of the lecture HJB. In Shimer--Smith, $g_{U_x}=0$ and $g_{M_{xy}}=\pi(x\mid y)$. Derived from Shimer--Smith, pp. 347--348, and lecture deck, p. 193. \\
+$\lambda_{ij}$ & Poisson transition rate from state $i$ to state $j$ in my derived jump-process translation. Derived from the Poisson event descriptions in Shimer--Smith, pp. 347--348. \\
+$f(x,y)$ & Flow output produced by a matched pair $(x,y)$. Source: Shimer--Smith, pp. 346--347. \\
+$\pi(x\mid y)$ & Endogenous flow payoff received by type $x$ while matched with type $y$. Feasibility requires $\pi(x\mid y)+\pi(y\mid x)=f(x,y)$. Source: Shimer--Smith, p. 347. \\
+$W(x)$ & Present discounted value of being unmatched for type $x$. Source: Shimer--Smith, p. 348. \\
+$W(x\mid y)$ & Present discounted value for type $x$ while matched with type $y$. Source: Shimer--Smith, p. 348. \\
+$S(x\mid y)$ & Personal capital surplus from the match: $S(x\mid y)\equiv W(x\mid y)-W(x)$. Source: Shimer--Smith, p. 348. \\
+$w(x)$ & Flow value of being unmatched, defined by $w(x)\equiv rW(x)$. Shimer--Smith call this a reservation wage. Source: Shimer--Smith, p. 349. \\
+$s(x,y)$ & Flow match surplus, $s(x,y)\equiv f(x,y)-w(x)-w(y)$. Source: Shimer--Smith, p. 349. \\
+$A(x)$ & Set of types type $x$ is willing to accept. Source: Shimer--Smith, p. 347. \\
+$\M(x)$ & Mutually agreeable matching set: $y\in\M(x)$ iff both $x$ and $y$ accept the match. Source: Shimer--Smith, p. 347. \\
+$\theta$ & Reduced meeting/friction coefficient in the value equation, $\theta\equiv \rho/[2(r+\delta)]$. Here $\rho$ is Shimer--Smith's meeting rate, not the lecture discount rate. Source: Shimer--Smith, p. 349. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{From the lecture-slide HJB to a Poisson-jump Bellman equation}
+
+The lecture slides write the continuous-time Bellman equation as
+\[
+\rho_L V(x,t)\,dt
+=
+\max_u\left\{w_L(x,u,t)\,dt+E[dV]\right\}.
+\]
+Source: lecture deck, p. 193, with $\rho$ relabeled as $\rho_L$ and the
+instantaneous payoff $w$ relabeled as $w_L$.
+For a diffusion state, Ito's Lemma gives
+\[
+E[dV]
+=
+\left[
+V_t+V_xa+\frac{1}{2}V_{xx}b^2
+\right]dt.
+\]
+Source: lecture deck, p. 194. Shimer--Smith do not have a diffusion state
+with drift $a$ and volatility $b$. Their value changes because Poisson events move
+the agent between discrete economic states: unmatched, matched with $y$, and
+back to unmatched after separation.
+
+For a stationary continuous-time jump process, the same lecture Bellman becomes
+\[
+\rho_L V_i\,dt
+=
+g_i\,dt+E[dV_i],
+\]
+where $i$ denotes the current state and $g_i$ is the current flow payoff. If state
+$i$ jumps to states $j$ at Poisson rates $\lambda_{ij}$, then
+\[
+E[dV_i]
+=
+\sum_j \lambda_{ij}\bigl(V_j-V_i\bigr)\,dt.
+\]
+Derived: this replaces the Ito expression for $E[dV]$ on lecture-deck p. 194
+with the first-order expectation of Poisson jumps. It is not written in this
+generic notation in Shimer--Smith.
+So the jump-process version of the lecture equation is
+\[
+\rho_L V_i
+=
+g_i+\sum_j \lambda_{ij}\bigl(V_j-V_i\bigr).
+\]
+Derived from the lecture HJB on p. 193 and the preceding Poisson-jump
+expectation.
+In Shimer--Smith, set $\rho_L=r$. The entire issue is therefore to identify, for
+each state, the current flow payoff $g_i$ and the expected capital gain or loss
+$\sum_j \lambda_{ij}(V_j-V_i)$.
+
+\subsection{Unmatched Bellman equation}
+
+For an unmatched type $x$, the flow payoff is normalized to zero. The only
+payoff-relevant event over a short interval $dt$ is meeting an acceptable unmatched
+type $y\in\M(x)$. This occurs at rate $\rho u(y)\,dy$, and when it occurs the value
+jumps from $W(x)$ to $W(x\mid y)$, a capital gain
+\[
+S(x\mid y)=W(x\mid y)-W(x).
+\]
+Source: Shimer--Smith, p. 348, for the definition of personal surplus.
+Using the lecture-slide Bellman with state $i=U_x$, value $V_i=W(x)$,
+instantaneous payoff $g_i=0$, and transition rate
+$\lambda_{U_x,M_{xy}}=\rho u(y)\,dy$ for $y\in\M(x)$, we have
+\[
+E[dW(x)]
+=
+\rho\int_{\M(x)}\bigl(W(x\mid y)-W(x)\bigr)u(y)\,dy\,dt
+=
+\rho\int_{\M(x)}S(x\mid y)u(y)\,dy\,dt.
+\]
+Derived from the meeting technology and matching-set definition on
+Shimer--Smith p. 347, plus the surplus definition on p. 348.
+Therefore the lecture equation $rVdt=g\,dt+E[dV]$ gives
+\[
+rW(x)\,dt
+=0\cdot dt+\rho\int_{\M(x)}S(x\mid y)u(y)\,dy\,dt.
+\]
+Dividing by $dt$ gives Shimer--Smith's unmatched Bellman equation:
+\begin{equation}
+rW(x)=\rho\int_{\M(x)}S(x\mid y)u(y)\,dy.
+\tag{SS-2}
+\end{equation}
+Source: Shimer--Smith equation (2), p. 348. The preceding lines derive it from
+the lecture HJB.
+
+\subsection{Matched Bellman equation}
+
+Now suppose type $x$ is currently matched with type $y$. The flow payoff is
+$\pi(x\mid y)$, not $w(x)$. The value $w(x)=rW(x)$ is a continuation-value object
+attached to the outside option of being unmatched.
+
+Apply the lecture-slide Bellman to the matched state $i=M_{xy}$, whose value is
+$V_i=W(x\mid y)$ and whose instantaneous payoff is
+$g_i=\pi(x\mid y)$. The only jump is separation, which moves $x$ from
+$M_{xy}$ to the unmatched state $U_x$ at Poisson rate $\delta$. Therefore
+\[
+E[dW(x\mid y)]
+=\delta dt\,[W(x)-W(x\mid y)]+o(dt)
+=-\delta S(x\mid y)\,dt+o(dt).
+\]
+Derived from the separation description on Shimer--Smith pp. 346--348 and the
+definition $S(x\mid y)=W(x\mid y)-W(x)$ on p. 348.
+Substituting this into the lecture equation yields
+\[
+rW(x\mid y)\,dt
+=\pi(x\mid y)\,dt-\delta S(x\mid y)\,dt+o(dt).
+\]
+Dividing by $dt$ and letting $dt\downarrow0$ gives
+\begin{equation}
+rW(x\mid y)=\pi(x\mid y)-\delta S(x\mid y).
+\tag{SS-3}
+\end{equation}
+Source: Shimer--Smith equation (3), p. 348. The expected-capital-loss line
+above derives the otherwise unstated $-\delta S(x\mid y)$ term from the lecture
+HJB.
+This is the term the paper states but does not derive: the ``loss from
+continuing'' is not an extra flow utility term. It is the expected capital loss from
+the Poisson jump out of the match into the unmatched state.
+
+\subsection{Equivalent small-\texorpdfstring{$dt$}{dt} derivation}
+
+The same matched equation can be derived by writing the recursive value directly:
+\[
+W(x\mid y)
+=\pi(x\mid y)dt
+ + e^{-rdt}\left[(1-\delta dt)W(x\mid y)+\delta dt\,W(x)\right]
+ + o(dt).
+\]
+Derived small-$dt$ recursion from Shimer--Smith's flow payoff and separation
+process on pp. 347--348. This recursive equation is not printed in the paper.
+Using $e^{-rdt}=1-rdt+o(dt)$, subtracting $W(x\mid y)$ from both sides, and
+dropping terms of order $o(dt)$ gives
+\[
+0=\pi(x\mid y)dt-rW(x\mid y)dt+\delta dt\,[W(x)-W(x\mid y)].
+\]
+Rearranging:
+\[
+rW(x\mid y)=\pi(x\mid y)-\delta\bigl(W(x\mid y)-W(x)\bigr)
+=\pi(x\mid y)-\delta S(x\mid y).
+\]
+
+\subsection{From Bellman equations to Shimer--Smith's surplus formula}
+
+Under Nash surplus division, Shimer--Smith impose
+\[
+S(x\mid y)=S(y\mid x).
+\]
+Source: Shimer--Smith, p. 348.
+Using the matched Bellman equation for both agents gives
+\[
+rW(x\mid y)=\pi(x\mid y)-\delta S(x\mid y),
+\qquad
+rW(y\mid x)=\pi(y\mid x)-\delta S(y\mid x).
+\]
+Since $W(x\mid y)=W(x)+S(x\mid y)$, the first equation can be rewritten as
+\[
+rW(x)+(r+\delta)S(x\mid y)=\pi(x\mid y).
+\]
+Similarly,
+\[
+rW(y)+(r+\delta)S(y\mid x)=\pi(y\mid x).
+\]
+Add these two equations, use feasibility
+$\pi(x\mid y)+\pi(y\mid x)=f(x,y)$, and use equal surplus division:
+\[
+rW(x)+rW(y)+2(r+\delta)S(x\mid y)=f(x,y).
+\]
+Derived algebraically from Shimer--Smith equations (3) and the feasibility
+condition on p. 347.
+Therefore
+\begin{equation}
+S(x\mid y)
+=\frac{f(x,y)-rW(x)-rW(y)}{2(r+\delta)}.
+\tag{SS-4}
+\end{equation}
+Source: Shimer--Smith equation (4), p. 348. The preceding lines show the
+algebra.
+Defining $w(x)=rW(x)$ and $s(x,y)=f(x,y)-w(x)-w(y)$, this is
+\[
+S(x\mid y)=\frac{s(x,y)}{2(r+\delta)}.
+\]
+Derived from the definitions on Shimer--Smith p. 349 and equation (4) on
+p. 348.
+Substituting into the unmatched Bellman equation gives
+\[
+rW(x)
+=\rho\int_{\M(x)}
+\frac{f(x,y)-w(x)-w(y)}{2(r+\delta)}u(y)\,dy.
+\]
+Since $w(x)=rW(x)$,
+\begin{equation}
+w(x)
+=\theta\int_{\M(x)}
+\bigl(f(x,y)-w(x)-w(y)\bigr)u(y)\,dy
+=\theta\int_{\M(x)}s(x,y)u(y)\,dy,
+\qquad
+\theta=\frac{\rho}{2(r+\delta)}.
+\tag{SS-6}
+\end{equation}
+Source: Shimer--Smith equation (6), p. 349, derived by substituting equation
+(4) into equation (2).
+
+\subsection{Main interpretation}
+
+The paper's equations are internally consistent once we keep three objects
+separate. First, $\pi(x\mid y)$ is the current flow payoff while matched. Second,
+$W(x)$ and $W(x\mid y)$ are capitalized continuation values. Third, $w(x)=rW(x)$
+is a flow-equivalent value of the unmatched outside option, not an additional
+matched flow payoff. The term $-\delta S(x\mid y)$ in the matched Bellman
+equation is the expected capital loss from separation: with probability
+$\delta dt$, the agent loses $W(x\mid y)-W(x)$ over the interval $dt$.
+
+\section{Crippa Appendix H: Cycles, Connectedness, and Identification}
+
+\paragraph{Source convention.}
+Page citations in this section refer to the printed page numbers in Crippa
+(2025), \emph{Identification, Estimation, and Inference in Two-Sided Interaction
+Models}. The relevant source passages are Theorems 1--3 and Assumptions 1--3
+on pp. 14--19, and proofs H.1--H.3 on pp. 61--66. Formulas marked as
+``derived'' are algebraic unpackings of those cited formulas.
+
+\subsection{Notation}
+
+In this section, the user's ``$\beta$'' is Crippa's Tukey interaction parameter
+$\beta_0$.
+
+\begin{center}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.24\linewidth}
+                >{\raggedright\arraybackslash}p{0.68\linewidth}}
+\toprule
+Symbol & Meaning \\
+\midrule
+$I,J$ & Worker and firm node sets in the bipartite matching network. Source: Crippa, Definition 2, p. 14. \\
+$G_{IJ}$ & Bipartite matching network with observed edges. Source: Crippa, Definition 2, p. 14. \\
+$(i,j)$ & Observed worker-firm edge/match. Source: Crippa, p. 14. \\
+$\theta_{ij}$ & Systematic outcome on edge $(i,j)$. Source: Crippa, proofs H.1--H.2, pp. 61--64. \\
+$\alpha_i$ & Worker productivity/effect in the Tukey model. Source: Crippa, H.1--H.2, pp. 61--64. \\
+$\psi_j$ & Firm productivity/effect in the Tukey model. Source: Crippa, H.1--H.2, pp. 61--64. \\
+$\beta_0$ & Tukey interaction parameter. Source: Crippa, Theorem 1 and H.1, pp. 14, 61--63. \\
+$K$ & Half-length of a cycle. A cycle of length $2K$ has $K\geq2$. Source: Crippa, H.1, p. 62. \\
+$u_i,v_j$ & H.1 transformed variables $u_i=1+\beta_0\alpha_i$ and $v_j=1+\beta_0\psi_j$. Source: Crippa, H.1, p. 62. \\
+$S_r^{\mathrm{odd}},S_r^{\mathrm{even}}$ & Elementary symmetric sums of odd- and even-indexed cycle outcomes. Source: Crippa, H.1, pp. 62--63. \\
+$\Delta_r$ & Difference $S_r^{\mathrm{odd}}-S_r^{\mathrm{even}}$. Source: Crippa, H.1, p. 63. \\
+$\alpha_i',\psi_j',\theta_{ij}'$ & H.2 transformed variables: $\alpha_i'=1+\beta_0\alpha_i$, $\psi_j'=1+\beta_0\psi_j$, and $\theta_{ij}'=1+\beta_0\theta_{ij}$. Source: Crippa, H.2, p. 64. \\
+$a_j,b_j$ & Firm-specific intercept and slope in the BLM model. Source: Crippa, H.3, p. 65. \\
+$S_n^I,S_n^J$ & Worker and firm sets reached by the Seed-and-Snowballs construction. Source: Crippa, Definition 3 and H.3, pp. 17--18, 65. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{What H.1 Says About the Cycle Needed for \texorpdfstring{$\beta_0$}{beta0}}
+
+Crippa's Tukey model is
+\[
+\theta_{ij}=\alpha_i+\psi_j+\beta_0\alpha_i\psi_j .
+\]
+Source: Crippa, H.1 and H.2, pp. 61, 64.
+
+The main-text Assumption 1 is explicitly a \emph{length-4} informative cycle:
+the network contains a cycle $i_1,j_1,i_2,j_2$ with heterogeneous worker and firm
+productivities. Source: Crippa, Assumption 1, p. 14. Theorem 1 then says
+Assumption 1 is sufficient for identifying $\beta_0$, and, if the network contains
+no more than one cycle, it is also necessary. Source: Crippa, Theorem 1, p. 14.
+
+Appendix H.1 explains why the length matters. For a general cycle of length
+$2K$ with $K\geq2$, define
+\[
+u_i:=1+\beta_0\alpha_i,
+\qquad
+v_j:=1+\beta_0\psi_j.
+\]
+Then each observed edge satisfies
+\[
+1+\beta_0\theta_{ij}
+=1+\beta_0(\alpha_i+\psi_j+\beta_0\alpha_i\psi_j)
+=(1+\beta_0\alpha_i)(1+\beta_0\psi_j)
+=u_iv_j.
+\]
+Source: Crippa, H.1, p. 62.
+
+If the cycle is ordered as
+\[
+i_1-j_1-i_2-j_2-\cdots-i_K-j_K-i_1,
+\]
+then traversing the closed cycle gives
+\[
+\prod_{k=1}^{K}\left(1+\beta_0\theta^{(2k-1)}\right)
+=
+\prod_{k=1}^{K}u_{i_k}v_{j_k}
+=
+\prod_{k=1}^{K}u_{i_{k+1}}v_{j_k}
+=
+\prod_{k=1}^{K}\left(1+\beta_0\theta^{(2k)}\right),
+\qquad i_{K+1}=i_1.
+\]
+Source: Crippa, H.1, p. 62.
+
+This is the exact point where cycle traversal is used for $\beta_0$. The product
+collapse requires a closed path: the odd-edge product and even-edge product use
+the same multiset of worker factors and the same multiset of firm factors. Without
+closing the path, those factors would not cancel/rearrange into the same product.
+Derived interpretation of the source equality on Crippa, H.1, p. 62.
+
+Expanding the two products in elementary symmetric sums and subtracting gives
+\[
+\sum_{r=1}^{K}\left(S_r^{\mathrm{odd}}-S_r^{\mathrm{even}}\right)\beta_0^r=0.
+\]
+With $\Delta_r=S_r^{\mathrm{odd}}-S_r^{\mathrm{even}}$, this is
+\[
+\Delta_1\beta_0+\Delta_2\beta_0^2+\cdots+\Delta_K\beta_0^K=0.
+\]
+Source: Crippa, H.1, p. 63.
+
+Because $\beta_0=0$ is always an algebraic root, H.1 factors it out and focuses
+on
+\[
+\Delta_1+\Delta_2\beta_0+\Delta_3\beta_0^2+\cdots+\Delta_K\beta_0^{K-1}=0.
+\]
+Source: Crippa, H.1, p. 63.
+
+Thus a single cycle delivers one polynomial restriction:
+\[
+P(\beta_0)=\beta_0 Q(\beta_0)=0,\qquad \deg Q\le K-1.
+\]
+The root $\beta=0$ is algebraic and uninformative. After removing it, a 4-cycle
+has $K=2$, so $Q$ is linear and the nonzero root is unique under Crippa's
+informativeness condition. If $K>2$, $Q$ is higher degree, so one cycle gives a
+finite candidate set for $\beta_0$ rather than point identification. Source:
+Crippa, H.1, p. 63.
+
+The main text adds the important qualification: if there are multiple longer
+cycles, the intersection of their identification sets can reduce to a singleton.
+Source: Crippa, p. 15. So the answer to the practical question is:
+\[
+\text{Crippa's sufficient primitive condition is an informative 4-cycle.}
+\]
+\[
+\text{A longer }2K\text{-cycle gives restrictions, but one such cycle alone does not
+generically give a unique }\beta_0.
+\]
+\[
+\text{Multiple longer cycles may still point-identify by intersecting root sets.}
+\]
+
+For the special length-4 case, H.1 gives
+\[
+\beta_0
+=-
+\frac{\theta_{i_1j_1}+\theta_{i_2j_2}-\theta_{i_1j_2}-\theta_{i_2j_1}}
+{\theta_{i_1j_1}\theta_{i_2j_2}-\theta_{i_1j_2}\theta_{i_2j_1}},
+\]
+with Assumption 1 ensuring the denominator is nonzero. Source: Crippa, H.1,
+pp. 63--64.
+
+\subsection{What H.2 Uses Connectedness For}
+
+H.2 assumes $\beta_0$ is already known and proves identification of the Tukey
+productivities under connectedness. Source: Crippa, Theorem 2, p. 16; H.2,
+p. 64. If $\beta_0\neq0$, H.2 rewrites the Tukey model as
+\[
+1+\beta_0\theta_{ij}
+=(1+\beta_0\alpha_i)(1+\beta_0\psi_j),
+\]
+and sets
+\[
+\alpha_i'=1+\beta_0\alpha_i,
+\qquad
+\psi_j'=1+\beta_0\psi_j,
+\qquad
+\theta_{ij}'=1+\beta_0\theta_{ij}.
+\]
+Thus
+\[
+\theta_{ij}'=\alpha_i'\psi_j'.
+\]
+Source: Crippa, H.2, p. 64.
+
+Connectedness is enough here because identification can be propagated along any
+path. With the normalization $\alpha_{i_0}=0$, we have $\alpha_{i_0}'=1$.
+If workers $i$ and $i'$ both match with firm $j$, then
+\[
+\frac{\theta_{ij}'}{\theta_{i'j}'}
+=
+\frac{\alpha_i'\psi_j'}{\alpha_{i'}'\psi_j'}
+=
+\frac{\alpha_i'}{\alpha_{i'}'}.
+\]
+Source: Crippa, H.2, p. 64.
+
+For a path
+\[
+i_0-j_1-i_1-j_2-\cdots-j_m-i,
+\]
+H.2 multiplies these local ratios:
+\[
+\frac{\alpha_i'}{\alpha_{i_0}'}
+=
+\frac{\alpha_i'}{\alpha_{i_{m-1}}'}
+\cdot
+\frac{\alpha_{i_{m-1}}'}{\alpha_{i_{m-2}}'}
+\cdots
+\frac{\alpha_{i_1}'}{\alpha_{i_0}'}
+=
+\prod_{k=1}^{m}\frac{\theta_{i_kj_k}'}{\theta_{i_{k-1}j_k}'}.
+\]
+Source: Crippa, H.2, p. 64.
+
+This is a path propagation argument, not a cycle identification argument for
+$\beta_0$. Once $\beta_0$ is known, connectedness lets every worker be reached
+from $i_0$, and then each observed edge gives
+\[
+\psi_j'=\frac{\theta_{ij}'}{\alpha_i'}.
+\]
+Source: Crippa, H.2, p. 64. Necessity is the standard component-wise rescaling
+problem: if $G_{IJ}$ is disconnected, each component can be rescaled separately
+without changing products $\alpha_i'\psi_j'$. Source: Crippa, H.2, p. 64.
+
+\subsection{What H.3 Adds for BLM}
+
+H.3 concerns the BLM model, where firm-specific parameters enter as
+\[
+\theta_{ij}=a_j+b_j\alpha_i.
+\]
+This displayed form is source from H.3, p. 65. H.3 first notes that two
+normalizations are needed. In particular, the transformation
+\[
+\alpha_i'=c_1\alpha_i+c_2,
+\qquad
+b_j'=\frac{b_j}{c_1},
+\qquad
+a_j'=a_j-\frac{b_jc_2}{c_1}
+\]
+is observationally equivalent for $c_1\neq0$. Source: Crippa, H.3, p. 65.
+
+The sufficiency proof uses the Seed-and-Snowballs construction. If firm
+parameters $(a_j,b_j)$ are known for firms already in the snowball, then a
+worker connected to one such firm is identified by
+\[
+\alpha_i=\frac{\theta_{ij}-a_j}{b_j}.
+\]
+Source: Crippa, H.3, p. 65.
+
+Conversely, if a new firm is connected to two already-known workers $i,i'$ with
+distinct productivities, then
+\[
+\begin{cases}
+\theta_{ij}=a_j+b_j\alpha_i,\\
+\theta_{i'j}=a_j+b_j\alpha_{i'},
+\end{cases}
+\qquad\Longleftrightarrow\qquad
+\begin{cases}
+b_j=\dfrac{\theta_{i'j}-\theta_{ij}}{\alpha_{i'}-\alpha_i},\\[1.0em]
+a_j=\theta_{ij}-\dfrac{\theta_{i'j}-\theta_{ij}}{\alpha_{i'}-\alpha_i}\alpha_i.
+\end{cases}
+\]
+Source: Crippa, H.3, p. 65.
+
+This is why BLM needs more than connectedness. A firm-specific slope $b_j$ cannot
+be identified from a single already-known worker; two distinct worker
+productivities are needed. Seed-and-Snowballs imposes exactly this iterative
+structure: firms bring in workers, and firms newly added must connect to at
+least two already-reached workers. Source: Crippa, Definition 3, pp. 17--18;
+Assumption 3 and discussion, p. 19; H.3, p. 65.
+
+H.3's necessity argument shows what fails otherwise. If the graph is connected
+but the snowball stalls, an outer firm can have at most one bridge worker in the
+reached worker set. Crippa then constructs a one-parameter family indexed by
+$\lambda$:
+\[
+b_{j_\lambda}^{\lambda}=\lambda b_{j_\lambda},
+\qquad
+a_{j_\lambda}^{\lambda}
+=\theta_{i_\lambda j_\lambda}
+-b_{j_\lambda}^{\lambda}\alpha_{i_\lambda},
+\]
+which preserves the bridged observed outcome while changing the firm
+parameters. Source: Crippa, H.3, p. 66. Propagating this redefinition through the
+remaining outer nodes yields infinitely many distinct parameter vectors
+consistent with the same data. Source: Crippa, H.3, p. 66.
+
+\subsection{Clean Takeaways for Our Use}
+
+\begin{enumerate}
+\item For Tukey's $\beta_0$, Crippa's theorem uses an informative 4-cycle as the
+clean sufficient condition. A longer $2K$-cycle gives a degree-$(K-1)$ equation
+after removing the trivial zero root, so one longer cycle alone gives a finite set
+of candidate values, not guaranteed point identification. Multiple longer cycles
+can identify if their candidate sets intersect in one value. Source: Crippa,
+pp. 15, 62--63.
+\item The cycle traversal is used specifically to identify/restrict $\beta_0$:
+the product over odd cycle edges equals the product over even cycle edges because
+the closed traversal contains the same worker and firm multiplicative factors on
+both sides. Source: Crippa, H.1, p. 62.
+\item Once $\beta_0$ is known, connectedness is enough for $\alpha$ and $\psi$ in
+the Tukey model. H.2 propagates ratios along paths; no cycle is needed at this
+stage. Source: Crippa, H.2, p. 64.
+\item BLM requires the stronger Seed-and-Snowballs condition because each new
+firm has both an intercept and a slope. Identifying those two firm parameters
+requires two already-identified workers with distinct productivities. Source:
+Crippa, H.3, p. 65.
+\end{enumerate}
+
+\section{Card--Heining--Kline (2013): One-Page Empirical Summary}
+
+\paragraph{Source convention.}
+Page citations in this section refer to the NBER working-paper PDF
+\emph{Workplace Heterogeneity and the Rise of West German Wage Inequality}
+(NBER Working Paper 18522). Formulas and numerical claims are either directly
+from the paper or algebraic restatements of cited source equations.
+
+\subsection{Notation}
+
+\begin{center}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.24\linewidth}
+                >{\raggedright\arraybackslash}p{0.68\linewidth}}
+\toprule
+Symbol & Meaning \\
+\midrule
+$y_{it}$ & Log daily wage of worker $i$ in year $t$. Source: CHK, p. 16. \\
+$\alpha_i$ & Time-invariant worker component of pay. Source: CHK, p. 16. \\
+$\psi_{J(i,t)}$ & Establishment component for worker $i$'s establishment in year $t$. Source: CHK, p. 16. \\
+$x_{it}'\beta$ & Time-varying observable component, including year effects and age/education interactions. Source: CHK, pp. 16--17. \\
+$\eta_{iJ(i,t)}$ & Time-invariant match component for worker $i$ at establishment $J(i,t)$. Source: CHK, pp. 16--17. \\
+$\zeta_{it}$ & Unit-root component of worker wages. Source: CHK, p. 17. \\
+$\varepsilon_{it}$ & Transitory error. Source: CHK, p. 17. \\
+$r_{it}$ & Composite residual in the AKM estimating equation. Source: CHK, p. 17. \\
+$D,F,X$ & Worker, establishment, and covariate design matrices. Source: CHK, pp. 17--18. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Summary}
+
+CHK study whether rising West German wage inequality from 1985 to 2009 can be
+explained by workplace heterogeneity. Their core empirical model is
+\[
+y_{it}
+=
+\alpha_i+\psi_{J(i,t)}+x_{it}'\beta+\eta_{iJ(i,t)}+\zeta_{it}+\varepsilon_{it}
+=
+\alpha_i+\psi_{J(i,t)}+x_{it}'\beta+r_{it}.
+\]
+Source: CHK, equation (1), pp. 16--17. In matrix form,
+\[
+y=D\alpha+F\psi+X\beta+r.
+\]
+Source: CHK, equation (2), p. 17. The identifying orthogonality conditions are
+\[
+E[D'r]=0,\qquad E[F'r]=0,\qquad E[X'r]=0.
+\]
+Source: CHK, equation (4), p. 18. The main empirical concern is whether the
+composite error is orthogonal to establishment assignment, which CHK discuss as
+an exogenous mobility condition. Source: CHK, pp. 18--20.
+
+The paper uses German administrative data from the IAB/IEB for full-time West
+German men aged 20--60, split into four intervals over 1985--2009. Source: CHK,
+pp. 4, 8--11. The data are huge: in each interval CHK have about 85--90 million
+person-year observations and about 17 million workers; the largest connected set
+contains about 97 percent of person-year observations and about 95 percent of
+workers. Source: CHK, p. 21.
+
+The headline empirical result is that AKM-style worker and establishment effects
+explain most of the rise in West German wage inequality. CHK report that the
+standard deviation of log wages rises from 0.38 in 1985--1991 to 0.51 in
+2002--2009. Source: CHK, p. 21. Their estimated worker and establishment effects
+both become more dispersed, and the correlation between them rises from 0.03 to
+0.25. Source: CHK, p. 22. The residual component is small and rises only modestly:
+of the 13 log-point rise in the standard deviation of wages, only 1.5 log points
+remain unexplained. Source: CHK, p. 22.
+
+Their variance decomposition is the most useful one-line takeaway for us. Between
+the first and fourth intervals, the variance of worker effects rises from 0.084 to
+0.127, accounting for about 40 percent of the rise in wage variance; the variance of
+establishment effects rises from 0.025 to 0.053, contributing about 25 percent; and
+the covariance term rises from 0.003 to 0.041, adding about 34 percent. Source:
+CHK, p. 25. CHK interpret this as evidence that rising inequality reflects three
+forces: more dispersed worker components, more dispersed establishment premia,
+and stronger assortative matching between high-wage workers and high-wage
+establishments. Source: CHK, abstract p. 1 and p. 25.
+
+CHK also run diagnostics for match effects and endogenous mobility. A saturated
+match-effect model fits statistically better, but the gain is small: the implied
+standard deviation of match effects rises only from about 0.060 to 0.075. Source:
+CHK, pp. 20, 23. They also examine residuals by worker-effect and establishment-
+effect deciles; mean residuals in the 100 crossed cells are uniformly below 1 percent
+in magnitude, though the low-worker/low-establishment cells show small systematic
+departures from additivity. Source: CHK, p. 23. Event studies show roughly
+symmetric wage gains and losses for movers between high- and low-wage
+establishments, and little evidence of pre-move wage dips or blips. Source: CHK,
+pp. 14--16, 23--24. Their conclusion is therefore not that the AKM model is exact,
+but that it is a good first-order empirical approximation for their setting.
+
+\section{Sorkin--Warwar: Why the Event-Study Test Can Be Low Power}
+
+\paragraph{Source convention.}
+Page citations in this section refer to the PDF \emph{Paired Movers} by Isaac
+Sorkin and Lucas Warwar, March 2026. The event-study discussion is mainly on
+pp. 31--34, with the broader paper summary on pp. 1--4.
+
+\subsection{Notation}
+
+\begin{center}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.24\linewidth}
+                >{\raggedright\arraybackslash}p{0.68\linewidth}}
+\toprule
+Symbol & Meaning \\
+\midrule
+$A,B$ & Origin and destination firms for paired movers. Source: SW, p. 1. \\
+$h_i$ & Worker effect in SW's search model. Source: SW, p. 27. \\
+$p_j$ & Firm effect in SW's search model. Source: SW, p. 27. \\
+$m_{ij}$ & Match effect between worker $i$ and firm $j$. Source: SW, p. 27. \\
+EE & Employer-to-employer move. Source: SW, pp. 30--32. \\
+EUE & Employer-to-unemployment-to-employer move. Source: SW, pp. 30--32. \\
+$\lambda_1$ & On-the-job offer arrival parameter; varying it changes the share of EE moves in the simulations. Source: SW, pp. 28, 30--32. \\
+Event-study coefficient & Regression/IV coefficient of earnings changes on changes in firm effects. Source: SW, pp. 31--32. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{What the Diagnostic Is Testing}
+
+Sorkin--Warwar describe the CHK event-study test as asking whether changes in
+firm effects predict within-worker earnings changes. Source: SW, p. 31. In the
+AKM-style interpretation, the diagnostic is reassuring if a worker moving from a
+low firm effect to a high firm effect gains approximately the firm-effect difference,
+and a worker moving in the reverse direction loses approximately the same amount.
+This is why CHK emphasize symmetry of gains/losses and absence of pre-move dips.
+Source: CHK, pp. 14--16, 18--20, 23--24.
+
+The link to the no-match-effect/parallel-trends intuition is: if mobility is not
+driven by unobserved match-specific wage components, then the change in the
+estimated firm component should forecast the change in the worker's wage. In
+Kline's edge-effect language, AKM imposes restrictions on edge effects: the effect of
+walking around a cycle should sum to zero, so firm effects summarize edge wage
+changes without residual cycle effects. Source: Kline, pp. 18--19. SW's point is not
+that the event-study diagnostic is meaningless; it is that passing it does not rule out
+large match effects or endogenous mobility. Source: SW, pp. 31--34.
+
+\subsection{SW's Low-Power Mechanism}
+
+SW estimate a search model in which a worker's payoff at firm $j$ is
+\[
+h_i+p_j+m_{ij}.
+\]
+Source: SW, p. 27. The worker sees both firm and match components when deciding
+whether to accept offers, so the model violates both additive separability and
+exogenous mobility. Source: SW, p. 27.
+
+The surprising result is that this endogenous-mobility model still passes the
+pooled event-study test. In simulated data, SW report an event-study coefficient of
+0.99 in the full sample, even though 41 percent of moves are EE moves. Source: SW,
+p. 32. Split by move type, the diagnostic behaves as expected: the coefficient is
+0.57 for EE moves and 0.99 for EUE moves. Source: SW, pp. 31--32. Thus, the test
+does detect the problem in the EE subsample, but the pooled sample hides it.
+
+The reason is a pooling/composition effect. SW explain that OLS pooled coefficients
+combine subsamples using relative sample sizes, within-group variances, and
+between-group differences in sample means. Source: SW, p. 32. In their model, EE
+moves have larger increases in firm effects and earnings than EUE moves, because
+endogenous movers tend to accept offers with favorable match and firm components.
+This creates a between-sample slope above one, which pushes the pooled coefficient
+back toward one even when within-subsample coefficients are below one. Source: SW,
+pp. 32--34.
+
+SW show this mechanism is strong. As they vary $\lambda_1$ to increase the share
+of EE moves, both the EE and EUE event-study coefficients fall, but the pooled
+coefficient remains above 0.90 and can exceed the coefficient in either subsample.
+Source: SW, p. 32. In the data, the pooled Brazilian event-study coefficient is
+about 1.09, but when moves are split by whether firm effects increase or decrease,
+the coefficients are 1.28 and 1.50; SW interpret this as evidence that pooling makes
+the event-study test look better than the relevant subsamples. Source: SW, pp.
+33--34.
+
+\subsection{Takeaway}
+
+The standard event-study diagnostic is best read as a test of whether realized mover
+wage changes line up with estimated firm-effect changes in the pooled mover sample.
+It is not a high-power test against match-driven endogenous mobility. SW's
+mechanism is that endogenous and more exogenous moves can have different sample
+means; when pooled, the between-sample slope can offset within-subsample failures.
+So the diagnostic can pass even when a large part of the data violates the
+no-match-effect/exogenous-mobility logic. Source: SW, pp. 31--35.
+
+\section{Crippa's BLM Model, Real BLM, and LLMR}
+
+\paragraph{Source convention.}
+Page citations to Crippa refer to printed page numbers in Crippa (2025). Page
+citations to Bonhomme--Lamadon--Manresa refer to printed Econometrica pages in
+BLM (2019). Page citations to Lamadon--Lise--Meghir--Robin refer to the PDF
+pages of the December 30, 2025 draft.
+
+\subsection{Notation}
+
+\begin{center}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.24\linewidth}
+                >{\raggedright\arraybackslash}p{0.68\linewidth}}
+\toprule
+Symbol & Meaning \\
+\midrule
+$\theta_{ij}$ & Systematic outcome for worker $i$ matched to firm $j$ in Crippa's bipartite interaction framework. Source: Crippa, pp. 10, 65. \\
+$\alpha_i$ & Worker scalar productivity/type in Crippa's BLM model. Source: Crippa, pp. 10, 65. \\
+$a_j,b_j$ & Firm-specific intercept and slope in Crippa's BLM model. Source: Crippa, pp. 10, 65. \\
+$k(j)$ or $k_{it}$ & Firm class in BLM. Source: BLM, pp. 702--703. \\
+$K$ & Number of BLM firm classes. Source: BLM, pp. 702--703, 712. \\
+$\xi_i$ & Worker type in BLM. Source: BLM, p. 703. \\
+$Y_{it}$ & Log earnings in BLM. Source: BLM, p. 703. \\
+$X_{it}$ & Observed worker covariates in BLM. Source: BLM, p. 703. \\
+$m_{it}$ & Mobility indicator in BLM. Source: BLM, p. 703. \\
+$a_t(k),b_t(k)$ & Firm-class intercept and slope in BLM's simple interactive regression example. Source: BLM, p. 704. \\
+$x,y$ & Worker and firm types in LLMR. Source: LLMR, pp. 6--8. \\
+$f_{xy},c_{xy}$ & Match production and disutility/amenity in LLMR. Source: LLMR, pp. 7--9. \\
+$R,S_{xy}$ & Worker surplus and maximum feasible worker surplus in LLMR. Source: LLMR, p. 9. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Crippa's Stripped-Down BLM}
+
+Crippa defines the BLM model as
+\[
+\theta_{ij}=a_j+b_j\alpha_i.
+\]
+Source: Crippa, Section 2.3.1 and H.3, pp. 10, 65. The economic content is clean:
+each firm has an intercept $a_j$ and a slope $b_j$ multiplying the worker scalar
+productivity $\alpha_i$. The slope is the firm-specific complementarity parameter:
+firms can differ not only in level productivity, but also in how strongly worker
+productivity matters at that firm. Source: Crippa, p. 10.
+
+Crippa explicitly says this model is motivated by Bonhomme et al. (2019), but that
+there is a difference in granularity. In BLM, the functional form is embedded in a
+grouped setting where all firms and workers within a group share latent
+characteristics. In Crippa's bipartite-interaction framework, the BLM model is the
+case where each group consists of a single worker or a single firm. Source: Crippa,
+p. 10.
+
+This simplification is useful because it makes identification algebra transparent. In
+H.3, if $(a_j,b_j)$ are known for a firm and $b_j\neq0$, then a linked worker's
+productivity is recovered by
+\[
+\alpha_i=\frac{\theta_{ij}-a_j}{b_j}.
+\]
+If a new firm is linked to two already-identified workers $i,i'$ with distinct
+productivities, then
+\[
+\begin{cases}
+\theta_{ij}=a_j+b_j\alpha_i,\\
+\theta_{i'j}=a_j+b_j\alpha_{i'},
+\end{cases}
+\qquad\Longleftrightarrow\qquad
+\begin{cases}
+b_j=\dfrac{\theta_{i'j}-\theta_{ij}}{\alpha_{i'}-\alpha_i},\\[1.0em]
+a_j=\theta_{ij}-\dfrac{\theta_{i'j}-\theta_{ij}}{\alpha_{i'}-\alpha_i}\alpha_i.
+\end{cases}
+\]
+Source: Crippa, H.3, p. 65. This is why the Seed-and-Snowballs graph condition is
+needed: a new firm needs two already-known workers, not just one. Source: Crippa,
+pp. 18--19, 65.
+
+\subsection{What Real BLM Adds}
+
+BLM is not just Crippa's deterministic node-level equation with different notation.
+It adds four layers: grouping, distributions, estimation, and dynamics. Source: BLM
+abstract, p. 699.
+
+\begin{enumerate}
+\item \textbf{Grouping.} BLM use firm classes $k=k(j)\in\{1,\ldots,K\}$ rather than
+one parameter per firm. This reduces the incidental-parameter problem created by
+few movers per firm. Source: BLM, pp. 700--703. Classes are estimated first by
+k-means on earnings distributions, and the model is then estimated conditional on
+those classes. Source: BLM, pp. 701, 711--712.
+
+\item \textbf{Distributional worker heterogeneity.} Workers have latent type $\xi_i$,
+and BLM recover type--class earnings distributions and type proportions within firm
+classes, not just conditional means. Source: BLM, p. 703. In the static model,
+mobility may depend on worker type and firm classes, but not directly on earnings;
+post-move earnings depend on worker type and the new class, not on the previous
+class or previous earnings. Source: BLM, p. 703.
+\end{enumerate}
+
+BLM's simple interactive regression example is
+\[
+Y_{it}=a_t(k_{it})+b_t(k_{it})\xi_i+X_{it}'c_t+\varepsilon_{it}.
+\]
+Source: BLM, p. 704. This is the direct ancestor of Crippa's
+$\theta_{ij}=a_j+b_j\alpha_i$, but BLM's version has calendar-time dependence,
+covariates, firm classes rather than individual firms, latent worker types, and an
+error/distributional layer.
+
+\begin{enumerate}
+\setcounter{enumi}{2}
+\item \textbf{Mixture identification and estimation.} With two periods, BLM identify
+type- and class-specific earnings distributions and worker-type proportions, up to
+latent-type labels, using movers, firm-class cycles, and rank/linear-independence
+conditions. Source: BLM, pp. 706--709.
+
+\item \textbf{Dynamics.} BLM also study a dynamic model where mobility may depend
+on current earnings and post-move earnings may depend on previous earnings and
+previous firm class through a first-order Markov structure. Source: BLM, pp. 704--706.
+Their dynamic identification result uses four periods. Source: BLM, pp. 700, 710--711.
+\end{enumerate}
+
+\subsection{What Crippa Drops, and Whether It Is a Problem}
+
+\begin{enumerate}
+\item \textbf{Grouping/dimension reduction.} Crippa drops BLM's firm-class
+dimension reduction and works at the individual node level. This is excellent for
+transparent graph identification, but it is empirically much more demanding. Crippa
+himself says that BLM's additional flexibility is costly: the full node-level BLM
+condition requires a rich network, and in labor data many firms are not even in cycles;
+he concludes that point identification is challenging unless one imposes additional
+dimension-reduction restrictions such as BLM. Source: Crippa, p. 19.
+
+\item \textbf{Distributional/mixture structure.} Crippa studies a systematic outcome
+$\theta_{ij}$; BLM estimate earnings distributions, worker-type mixtures, and type
+composition by firm class. This is not a problem if our paper only needs a clean wage
+or production equation. It would be a problem if we tried to claim we inherit BLM's
+estimation strategy or distributional interpretation.
+
+\item \textbf{Covariates, time, noise, and likelihood.} Crippa abstracts from
+$X_{it}$, $t$-specific wage functions, residual distributions, and maximum-likelihood
+estimation. BLM include these because their goal is empirical estimation in panel
+data. Source: BLM, pp. 703--704, 713--714. For our modeling/nesting exercise, this
+is probably harmless; for empirical implementation, it is not.
+
+\item \textbf{Mobility assumptions.} Crippa's BLM identification result is a graph
+condition for recovering deterministic primitives from observed links. BLM's static
+model imposes restrictions on mobility and serial dependence, while the dynamic model
+relaxes strict exogeneity by allowing earnings to affect mobility. Source: BLM,
+pp. 703--706. So Crippa is not carrying over BLM's mobility model; he is isolating
+the wage-interaction form.
+
+\item \textbf{Dynamic dependence.} Crippa's BLM model is static. BLM's dynamic
+model and LLMR's structural model are outside the stripped-down BLM equation. This
+is fine for a static nesting argument, but not for claims about wage dynamics, previous
+employer effects, or endogenous mobility.
+\end{enumerate}
+
+Bottom line: Crippa's stripped-down BLM is the right object if we want the clean
+functional-form comparison
+\[
+\text{TWFE} \subset \text{Tukey} \subset \text{firm-specific-slope BLM}.
+\]
+It is not the full empirical BLM framework. The main thing he drops that could matter
+for us is BLM's dimension reduction. Without grouping, the graph requirement becomes
+so strong that identification may fail for a large share of real firms. That is not a
+logical problem for theory; it is a warning for empirical scope.
+
+\subsection{Brief Note on LLMR / Lamadon}
+
+LLMR is dynamic and structural. It builds an equilibrium labor-market model with
+worker heterogeneity, firm heterogeneity, compensating differentials, search
+frictions, and Becker-style complementarities. Source: LLMR abstract, p. 1. Workers
+and firms are forward-looking; employed and unemployed workers search; workers draw
+mobility shocks; matches have production $f_{xy}$ and disutility/amenity $c_{xy}$;
+and wages/contracts are determined in a search-and-bargaining environment. Source:
+LLMR, pp. 2--9.
+
+For our current paper, most of LLMR is probably out of scope because it is not just a
+static wage equation. It is an equilibrium model with search frictions, amenities,
+endogenous mobility, surplus equations, vacancy values, and contract determination.
+Source: LLMR, pp. 2--9. Importing that machinery would change the project from a
+static identification/nesting exercise into a structural search model.
+
+The reusable part is the BLM first stage. LLMR explicitly say that their
+identification first uses the nonlinear estimator of BLM to recover worker and firm
+types, wages, mobility, and allocations in a model-consistent way; then they invert
+those objects to recover structural primitives. Source: LLMR, pp. 1--4. Thus, for our
+purposes, LLMR reinforces the view that BLM is useful as a statistical/type-recovery
+layer. The structural inversion from BLM outputs into production, amenities, surplus,
+and policy counterfactuals is the part that is likely beyond our scope.
+
+\paragraph{Boundary check from LLMR's identification argument.}
+LLMR is not merely a bigger static wage equation. Their first-stage identified objects
+include the match distribution, moving probabilities, within-job wage dynamics, and
+post-move wage distributions. Source: LLMR, p. 18. Lemma 2 identifies viability,
+match surplus $S_{xy}$, the worker surplus function $R_{xy}(w)$, and the wage function
+$w_{xy}(R)$ using the match distribution, within-job wage-increase probabilities, and
+EU/JJ mobility probabilities. Source: LLMR, pp. 18--19. Lemma 3 then identifies the
+job-to-job mobility shock distribution $G^1$ from the distribution of wages after
+job-to-job moves, together with $R_{xy}(w)$ and $S_{xy}$. Source: LLMR, p. 20. This
+is the precise sense in which LLMR forces an enlarged interface: the sufficient data
+object is not just a cross-sectional wage surface, but a mobility-conditional dynamic
+wage-and-transition system.
+
+\subsection{Takeaway for Our Nesting Claim}
+
+It is reasonable to say our factor structure is aiming at the same reusable core as
+BLM: allow worker heterogeneity and firm heterogeneity to interact, rather than
+forcing additivity. But we should be precise about the level:
+\[
+\theta_{ij}=a_j+b_j\alpha_i
+\]
+nests a firm-specific-slope version of BLM's interactive mean equation. It does not by
+itself nest the full BLM distributional estimator or LLMR's dynamic structural model.
+If our factor form can represent $a_j+b_j\alpha_i$ as a low-rank worker-firm
+interaction, then we can claim it nests the static BLM wage-function core, while
+leaving BLM's grouping/mixture estimation and LLMR's structural dynamics as
+implementation or interpretation layers.
+
+\section{Modeling Section: The Low-Rank Interface}
+
+\paragraph{Source convention.}
+This section uses the synthesized note \emph{Beyond AKM note} as the project object
+to be checked. Page citations to that note refer to PDF page numbers in
+\texttt{loo\_full\_note\_v1.pdf}. Page citations to Shimer--Smith refer to printed
+Econometrica pages. Page citations to GKLP refer to the NBER working-paper PDF
+pages of Gibbons--Katz--Lemieux--Parent (2002), NBER Working Paper 8889. Page
+citations to LLMR refer to PDF pages of the December 30, 2025 draft.
+
+\subsection{Notation}
+
+\begin{center}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.24\linewidth}
+                >{\raggedright\arraybackslash}p{0.68\linewidth}}
+\toprule
+Symbol & Meaning \\
+\midrule
+$Y_{ij}$ & Wage or log-wage observation on worker--firm edge $(i,j)$ in the proposed statistical interface. Source: note, p. 8. \\
+$X_{ij}'\delta$ & Observed covariate component. In GKLP, this must be rich enough to include sector-specific observed-skill terms such as $X_{it}'\beta_j$ if those are not being treated as part of the interaction. Source: note, p. 8; GKLP, pp. 12--14. \\
+$\alpha_i,\psi_j$ & Additive worker and firm components in the interface. Source: note, p. 8. \\
+$u_i,v_j$ & Worker-side and firm-side interaction attributes, kept separate from $(\alpha_i,\psi_j)$ except in the Tukey/Crippa special case. Source: note, p. 8. \\
+$\Lambda$ & Low-rank interaction matrix; $\operatorname{rank}(\Lambda)=r$. Source: note, p. 8. \\
+$f(x,y)$ & Shimer--Smith flow output of a matched pair. Source: Shimer--Smith, pp. 346--347. \\
+$w(x)$ & Shimer--Smith reservation wage / flow value of being unmatched, $w(x)=rW(x)$. Source: Shimer--Smith, p. 349. \\
+$\pi(x\mid y)$ & Shimer--Smith endogenous flow payoff to type $x$ while matched with type $y$. Source: Shimer--Smith, p. 347. \\
+$Z_i,\eta_i$ & GKLP worker components: $Z_i$ is equally valued across sectors; $\eta_i$ is differentially valued across sectors. Source: GKLP, p. 7. \\
+$b_j,c_j$ & GKLP sector-specific return to $\eta_i$ and sector intercept. Source: GKLP, p. 7. \\
+$m_{i,t-1}$ & GKLP posterior mean of $\eta_i$ before date $t$ under learning. Source: GKLP, pp. 8, 13. \\
+$\sigma_t^2$ & GKLP posterior variance term appearing in the learning wage equation; it declines with labor-market experience and is interacted with $b_j^2$. Source: GKLP, pp. 10, 13--14. \\
+$u_{it},\sigma_{it}^2$ & State-augmented notation used only for embedding a learning cross-section or experience cell in the low-rank interface when the posterior-variance object is worker-time specific. This is a derived embedding of GKLP's equation (10), not GKLP's own notation. Source for equation: GKLP, pp. 13--14. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Project Scope and the No-Hallucination Rule}
+
+The project scope in the note is clear and, in my view, correctly disciplined:
+the first paper should be a static matched-data wage-interface paper, not a full
+structural search paper. The minimum viable object is
+\[
+Y_{ij}=X_{ij}'\delta+\alpha_i+\psi_j+u_i^\top\Lambda v_j+\varepsilon_{ij},
+\qquad
+\operatorname{rank}(\Lambda)=r\ll \min\{I,J\}.
+\tag{$\star$}
+\]
+Source: note, p. 8. The note's project spine says to first fix this interface and
+the reported functionals, then deliver de-biased inference for the smallest
+non-additive model, and only then generalize toward rank $r$. Source: note, p. 20.
+
+The simplification that looks right is the separation between exact nesting,
+approximate low-rank projection, and full structural coverage. The exact rows are
+safe only when the model's wage equation literally lands in $(\star)$ after declared
+normalizations. Approximate rows require an explicit projection target and an
+error-to-functional bound. The note already flags this as open. Source: note,
+pp. 22, 24--25. This distinction prevents the main hallucination risk: saying that
+the factor interface ``nests'' a whole dynamic structural model when it only nests a
+static wage-equation slice.
+
+With that convention, the note's broad claim is mostly right but needs careful
+wording:
+\[
+\text{AKM/KSS mean model} \subset \text{Tukey/Crippa} \subset
+\text{low-rank factor interface},
+\]
+and BLM's static type-pair wage surface is inside the interface after taking type
+indicators as factors. Source: note, p. 8. The qualifications are:
+\[
+\begin{array}{ll}
+\text{KSS} & \text{is inference for additive AKM, not a new wage equation,}\\
+\text{BLM} & \text{is a grouped distributional estimator, not only block means,}\\
+\text{LLMR} & \text{is dynamic and uses mobility-conditional wage laws.}
+\end{array}
+\]
+Source: KSS/Kline discussion in note, pp. 9--11; BLM comparison above; LLMR,
+pp. 18--20.
+
+\subsection{Shimer--Smith: What Fits the Interface}
+
+Shimer--Smith do not give a log-wage regression of the form $(\star)$. Their primitive
+matched output is the deterministic surface $f(x,y)$, and the endogenous flow payoff
+$\pi(x\mid y)$ is pinned down by Bellman equations and Nash surplus splitting. Source:
+Shimer--Smith, pp. 346--349. From the earlier Bellman derivation, we have
+\[
+rW(x\mid y)=\pi(x\mid y)-\delta S(x\mid y),
+\qquad
+S(x\mid y)=W(x\mid y)-W(x),
+\]
+and Shimer--Smith's Nash solution gives
+\[
+S(x\mid y)=S(y\mid x)
+=\frac{f(x,y)-rW(x)-rW(y)}{2(r+\delta)}.
+\]
+Source: Shimer--Smith, p. 348; derivation in the first section of this write-up.
+Using $w(x)=rW(x)$, the matched flow payoff can therefore be written as
+\[
+\begin{aligned}
+\pi(x\mid y)
+&=rW(x)+ (r+\delta)S(x\mid y) \\
+&=w(x)+\frac{f(x,y)-w(x)-w(y)}{2}\\
+&=\frac{1}{2}f(x,y)+\frac{1}{2}w(x)-\frac{1}{2}w(y).
+\end{aligned}
+\tag{SS-payoff}
+\]
+This last display is derived from Shimer--Smith's equations (3)--(4), pp. 348--349;
+it is not written in the paper in this exact form.
+
+Equation (SS-payoff) is the cleanest way to map Shimer--Smith into the project
+language. It says that the wage/payoff surface is additive plus one-half of the
+production surface:
+\[
+\pi(x\mid y)=\alpha_x+\psi_y+c_{xy},
+\qquad
+\alpha_x=\frac{1}{2}w(x),\quad
+\psi_y=-\frac{1}{2}w(y),\quad
+c_{xy}=\frac{1}{2}f(x,y).
+\]
+Therefore Shimer--Smith fits $(\star)$ \emph{if and only if} the relevant production
+surface $f(x,y)$, or its double-centered component after absorbing additive parts,
+has low rank or is well approximated by low rank:
+\[
+f(x,y)=f_x+f_y+2u_x^\top\Lambda v_y
+\quad\Longrightarrow\quad
+\pi(x\mid y)=\tilde\alpha_x+\tilde\psi_y+u_x^\top\Lambda v_y.
+\]
+This implication is derived from (SS-payoff). It is not an assumption in
+Shimer--Smith. Their assortative-matching assumptions are supermodularity/log-
+supermodularity conditions on $f$ that discipline matching sets; they do not imply
+that $f$ is low rank. Source: Shimer--Smith, pp. 344--346, 349--363. This confirms
+the caution in the note's coverage table: generic Shimer--Smith is better labeled
+``outside unless $f$ is low-rank or an approximation theory is supplied,'' not an exact
+nested row. Source: note, pp. 24--26.
+
+\subsection{GKLP in the Interface}
+
+GKLP start from output
+\[
+y_{ijt}=\exp(X_{it}'\beta_j+\psi_{ijt}),
+\]
+with
+\[
+\psi_{ijt}=Z_i+b_j(\eta_i+\varepsilon_{ijt})+c_j.
+\]
+Source: GKLP, pp. 6--7, equations (1)--(2). They distinguish $Z_i$, which is equally
+valued in all sectors, from $\eta_i$, which is differentially valued across sectors.
+Source: GKLP, p. 7.
+
+In the perfect-information comparative-advantage case, GKLP's log wage is
+\[
+\ln w_{ijt}=X_{it}'\beta_j+Z_i+b_j\eta_i+c_j+\frac{1}{2}b_j^2\sigma_\varepsilon^2.
+\tag{GKLP-PI}
+\]
+Source: GKLP, p. 12, equation (9). If $X_{it}'\beta_j$ is included in the observed
+covariate part $X_{ij}'\delta$, then (GKLP-PI) is exactly rank one:
+\[
+\alpha_i=Z_i,\qquad
+\psi_j=c_j+\frac{1}{2}b_j^2\sigma_\varepsilon^2,\qquad
+u_i=\eta_i,\qquad
+v_j=b_j,\qquad
+\Lambda=1.
+\]
+This is an exact substitution into $(\star)$, so the note's static GKLP row is correct.
+Source for the row: note, p. 8; source for the wage equation: GKLP, p. 12.
+
+Under learning and comparative advantage, GKLP's log wage is
+\[
+\ln w_{ijt}
+=X_{it}'\beta_j+Z_i+b_jm_{i,t-1}+c_j+\frac{1}{2}b_j^2\sigma_t^2.
+\tag{GKLP-L}
+\]
+Source: GKLP, p. 13, equation (10). For a single cross-section or experience cell,
+this again has a low-rank representation once the time/experience term is handled:
+$b_jm_{i,t-1}$ is rank one, and the $b_j^2\sigma_t^2/2$ term is either a firm/sector
+component when $\sigma_t^2$ is common within the slice, or a second factor if one
+lets the worker-side state include the relevant posterior-variance/experience object:
+\[
+u_{it}=
+\begin{pmatrix}
+m_{i,t-1}\\
+\sigma_{it}^2
+\end{pmatrix},
+\qquad
+v_j=
+\begin{pmatrix}
+b_j\\
+\frac{1}{2}b_j^2
+\end{pmatrix},
+\qquad
+\Lambda=I_2.
+\]
+The rank-two display is a derived embedding of (GKLP-L), matching the note's
+Remark 1. Source: note, pp. 8--9; GKLP, pp. 13--14.
+
+The important boundary is the pooled panel. In GKLP, $m_{i,t-1}$ is a posterior
+belief updated from the worker's output history, and sector choice is endogenous to
+expected ability. Source: GKLP, pp. 8, 13--16. So the pooled learning model is not a
+static worker--firm equation with time-invariant $u_i$. It is covered only as repeated
+cross-sectional/state-augmented slices, or by adding dynamic machinery. This is exactly
+the right way to state the note's conclusion: GKLP perfect-information/static
+comparative advantage is exact rank one; GKLP learning is rank one or rank two per
+slice depending on how the posterior-variance term is absorbed; the full pooled panel is
+at the dynamic boundary. Source: note, pp. 8--9, 21--22.
+
+\subsection{Bottom Line for the Nesting Claim}
+
+The nesting structure in the screenshot is basically right if the claim is about
+\emph{wage-equation cores}. The safest phrasing is:
+\[
+\begin{array}{ll}
+\text{AKM/KSS mean model:} & \Lambda=0,\\[0.25em]
+\text{Tukey/Crippa:} & u_i=\alpha_i,\; v_j=\psi_j,\; \Lambda=\beta_0,\\[0.25em]
+\text{BLM static type means:} & u_i=e_{k(i)},\; v_j=e_{\ell(j)},\; \Lambda=M,\\[0.25em]
+\text{GKLP perfect information:} & u_i=\eta_i,\; v_j=b_j,\; \Lambda=1,\\[0.25em]
+\text{Shimer--Smith restricted:} & c_{xy}=\frac{1}{2}f(x,y) \text{ is low-rank.}
+\end{array}
+\]
+The two qualifications I would keep visible next week are:
+
+\begin{enumerate}
+\item \textbf{Do not say the interface nests full BLM, KSS, GKLP learning, or LLMR.}
+It nests the static wage-equation cores. KSS contributes the leave-out inference problem;
+BLM contributes grouping, mixtures, and distributional estimation; GKLP learning and
+LLMR contribute dynamic state/mobility objects. Source: note, pp. 20--22, 24--26;
+LLMR, pp. 18--20.
+
+\item \textbf{Do not say generic Shimer--Smith is low rank.} The derived payoff equation is
+\[
+\pi(x\mid y)=\frac12 f(x,y)+\frac12 w(x)-\frac12 w(y).
+\]
+So the interaction is exactly $\frac12 f(x,y)$ after additive terms are absorbed.
+This lands in $(\star)$ only if $f$ is low rank or explicitly approximated by low rank.
+Source: Shimer--Smith, pp. 346--349; note, pp. 24--26.
+\end{enumerate}
+
+Thus, the current factor form plausibly covers the vast majority of \emph{static wage
+surfaces people actually estimate or summarize}: AKM/KSS means, Crippa/Tukey,
+static BLM type-cell means, and GKLP's static comparative-advantage equation. The
+honest frontier is dynamic structural content: amenities, on-the-job search, mobility
+histories, contracts, and policy counterfactuals. That frontier is important, not marginal,
+but it should be presented as the next interface enlargement rather than as something
+already nested by $(\star)$.
+
+\section{Kline Review: Edge Effects, Inference, and the Open Margin Notes}
+
+\paragraph{Source convention.}
+Page citations to Kline refer to the PDF page numbers in the NBER working-paper
+PDF, \emph{Firm Wage Effects}, October 2024, revised February 2025. The formulas
+below are either Kline's formulas or algebraic translations of them. When I map the
+Tukey interaction into Kline's edge-effect notation, I label the step as derived.
+
+\subsection{Notation}
+
+\begin{center}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.24\linewidth}
+                >{\raggedright\arraybackslash}p{0.68\linewidth}}
+\toprule
+Symbol & Meaning \\
+\midrule
+$Y_{it}$ & Log wage of worker $i$ in period $t$. Source: Kline, p. 15. \\
+$j(i,t)$ & Firm employing worker $i$ in period $t$. Source: Kline, p. 15. \\
+$\alpha_i,\psi_j$ & AKM worker and firm effects. Source: Kline, p. 15. \\
+$X_{it}'\beta$ & Time-varying covariate component, including year and experience controls. Source: Kline, p. 15. \\
+$R$ & Adjusted wage change $Y_2-Y_1-(X_2-X_1)'\beta$ in Kline's two-period edge notation. Source: Kline, p. 18. \\
+$E$ & Worker-by-edge matrix of directed origin-destination edge indicators. Source: Kline, p. 19. \\
+$B$ & Firm-by-edge incidence matrix: each edge column has $-1$ at the origin and $+1$ at the destination. Source: Kline, p. 18. \\
+$\Delta$ & Unrestricted vector of directed edge effects. Source: Kline, p. 19. \\
+$c$ & A vector in the cycle space of the mobility graph; equivalently, $Bc=0$. Source: Kline, p. 18. \\
+$C\dot\eta$ & Cycle component in Kline's decomposition $\Delta=B'\dot\psi+C\dot\eta$. Source: Kline, p. 20. \\
+$W$ & Diagonal edge-weight matrix recording the number of workers moving along each edge. Source: Kline, pp. 20, 27. \\
+$\hat\Delta,\tilde\Delta$ & Estimated unrestricted edge effects and AKM-predicted edge effects. Source: Kline, pp. 24--27. \\
+$H$ & Weighted projection matrix mapping estimated edge effects to AKM-predicted edge effects, $\tilde\Delta=H\hat\Delta$. Source: Kline, p. 24. \\
+$M$ & Residual-maker matrix $M=I-H$. Source: Kline, p. 27. \\
+$h_{\ell\ell}$ & Leverage of edge $\ell$ in the AKM edge projection. Source: Kline, pp. 24, 27. \\
+$n_\ell$ & Number of movers traversing edge $\ell$. Source: Kline, p. 27. \\
+$E_u[\cdot],V_u[\cdot]$ & Expectation and variance with respect to the edge-effect wage-change error $u$. Source: Kline, p. 27. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{What Section 3 Establishes}
+
+Kline starts from the AKM model
+\[
+Y_{it}=\alpha_i+\psi_{j(i,t)}+X_{it}'\beta+\varepsilon_{it}.
+\]
+Source: Kline, p. 15. His useful reminder is that the strict-exogeneity condition does
+two jobs at once: it rules out mobility driven by time-varying wage shocks, and it
+imposes additive separability of expected log wages in worker and firm heterogeneity.
+Source: Kline, p. 15.
+
+In the two-period mover graph, AKM implies
+\[
+R=EB'\psi+\varepsilon,
+\]
+where $R$ is the adjusted wage change and $E$ records which directed firm-to-firm
+edge each mover traverses. Source: Kline, pp. 18--19. The unrestricted edge-effect
+model is
+\[
+R=E\Delta+u.
+\]
+Source: Kline, p. 19. The AKM restriction is therefore
+\[
+\Delta=B'\psi.
+\]
+Source: Kline, p. 19.
+
+The key graph-theoretic implication is that AKM sets every cycle sum to zero:
+\[
+c'\Delta=c'B'\psi=0
+\qquad \text{for every cycle vector } c.
+\]
+Source: Kline, pp. 18--19. Kline also states the converse: within a connected set,
+these cyclic restrictions exhaust the restrictions that AKM places on edge effects.
+He writes
+\[
+\Delta=B'\dot\psi+C\dot\eta,
+\]
+where $C$ collects fundamental cycles, and AKM amounts to $\dot\eta=0$. Source:
+Kline, p. 20. This is the clean connection to Crippa: cycles are where additive
+firm effects become testable.
+
+\subsection{Section 3.2.2: Accounting for Noise}
+
+The inference issue in Section 3.2.2 is that estimated edge effects are noisy. A large
+residual between $\hat\Delta$ and the AKM prediction $\tilde\Delta$ does not by itself
+prove model failure, because some residual variation would arise even if AKM were
+true. Kline writes the AKM prediction as
+\[
+\tilde\Delta=H\hat\Delta,
+\qquad
+\hat\Delta-\tilde\Delta=M\hat\Delta,
+\qquad
+M=I-H.
+\]
+Source: Kline, pp. 24, 27. For the mover-weighted residual sum of squares,
+\[
+\hat\Delta'M'WM\hat\Delta,
+\]
+Kline decomposes the expectation as
+\[
+E_u[\hat\Delta'M'WM\hat\Delta]
+=\Delta'M'WM\Delta+
+\operatorname{trace}\!\left(M'WMV_u[\hat\Delta]\right).
+\]
+Source: Kline, p. 27. The first term is model error or squared approximation error.
+The second term is sampling noise in the estimated edge effects. Under exact AKM,
+$M\Delta=0$, so the first term vanishes, but the trace term remains. Source: Kline,
+p. 27.
+
+Under independent wage-change errors across movers, the trace term simplifies to
+\[
+\sum_{\ell\in E} n_\ell(1-h_{\ell\ell})V_u[\hat\Delta_\ell].
+\]
+Source: Kline, p. 27. This is the inferential object I had not fully internalized before:
+high-leverage edges mechanically leave less residual variation, while noisy edges leave
+more residual variation. Kline estimates $V_u[\hat\Delta_\ell]$ using within-edge
+wage-change dispersion for edges with at least two movers. Source: Kline, p. 27.
+
+Empirically, among non-bridge edges with at least two movers, the residual sum of
+squares is $360.51$, while the expected noise contribution under AKM is $207.58$.
+The difference, $152.92$, is Kline's estimate of squared approximation error. Relative
+to a noise-adjusted edge-effect sum of squares of $978.67$, this implies AKM captures
+about $84\%$ of the variation in true edge effects, with an implied edge-effect / AKM
+prediction correlation of $0.92$. Source: Kline, p. 28. Across edge samples, Kline's
+Table 1 gives noise-adjusted $R^2$ values ranging from roughly $72\%$ to $88\%$,
+and about $81\%$ when bridges are included with imputed singleton noise. Source:
+Kline, pp. 28--29.
+
+The interpretation is not that AKM is literally true. It is that, after accounting for
+edge noise, AKM is a strong low-dimensional summary of directed mover wage changes,
+with remaining model error concentrated in cycles. Source: Kline, p. 29.
+
+\subsection{Unrestricted Edge Effects and Tukey/Crippa}
+
+Short answer: unrestricted edge effects can \emph{absorb} Tukey/Crippa interactions,
+but they do not \emph{identify} the Tukey structure.
+
+Suppose the underlying wage equation is the Tukey/Crippa mean surface
+\[
+m_{ij}=\alpha_i+\psi_j+\beta_0\alpha_i\psi_j.
+\]
+For movers from firm $j$ to firm $k$, the expected wage change contributed by this
+surface is
+\[
+\begin{aligned}
+\Delta_{jk}
+&=E[m_{ik}-m_{ij}\mid i:j\to k] \\
+&=(\psi_k-\psi_j)\left(1+\beta_0 E[\alpha_i\mid i:j\to k]\right).
+\end{aligned}
+\tag{derived}
+\]
+Thus $\Delta_{jk}$ is flexible enough to summarize the Tukey model's implication
+for each observed mover edge. But it does \emph{not} recover $\beta_0$, $\alpha_i$,
+or $\psi_j$; it only records average directed wage changes. Tukey collapses to AKM
+only under special composition restrictions. For example, if
+$E[\alpha_i\mid i:j\to k]$ is constant across directed edges, then
+\[
+\Delta_{jk}=(1+\beta_0\bar\alpha)(\psi_k-\psi_j),
+\]
+which is just an additive firm-effect model with rescaled firm effects. In general, edge-
+specific mover composition makes the cycle sums nonzero:
+\[
+\sum_{(j,k)\in \text{cycle}}\Delta_{jk}\neq 0.
+\]
+This is derived from the Tukey formula and Kline's cycle restriction $c'\Delta=0$.
+Source for the edge/cycle restriction: Kline, pp. 18--20.
+
+\subsection{Margin Note 1: $\Delta_{jk}$ as a Statistical Interface AKM Does Not Use}
+
+The margin note should use $\Delta_{jk}$, not $\delta_{jk}$, if we follow Kline's notation.
+Kline's $\Delta_{jk}$ is the unrestricted directed edge effect: the average adjusted wage
+change for movers from $j$ to $k$. Source: Kline, p. 19. AKM does not estimate this
+object freely. Instead, it imposes $\Delta=B'\psi$, reducing potentially $|E|$ directed
+edge effects to $J-1$ independent firm effects. Source: Kline, p. 19.
+
+This is exactly why $\Delta_{jk}$ is a useful interface for us. It can summarize any
+model's implications for observed mover wage changes, including additivity, Tukey
+interactions, BLM-style type interactions, match effects, or selection. But AKM only
+uses the lower-dimensional projection of these edge effects onto firm differences.
+When cycles contain residual variation, that residual is the part of $\Delta$ AKM leaves
+on the table. Source: Kline, pp. 20, 24--29.
+
+\subsection{Margin Note 2: Match Effects and Cycle Restrictions}
+
+Unrestricted match effects generally violate AKM cycle restrictions. To see this, let
+the wage surface include a worker-firm match component $\mu_{ij}$:
+\[
+m_{ij}=\alpha_i+\psi_j+\mu_{ij}.
+\]
+Then the directed edge effect from $j$ to $k$ is
+\[
+\Delta_{jk}
+=\psi_k-\psi_j+
+E[\mu_{ik}-\mu_{ij}\mid i:j\to k].
+\tag{derived}
+\]
+The first term telescopes around a cycle; the second generally does not, because
+different directed edges are traversed by different selected mover populations. Hence
+match effects create a cycle component $C\dot\eta$ in Kline's decomposition unless
+their edge-specific averages happen to satisfy the same zero-cycle restrictions as firm
+effects. Source for the cycle decomposition: Kline, p. 20.
+
+This is the cleanest way to connect the margin note to the project. Match effects are
+not merely ``extra residual noise.'' If their conditional means vary systematically across
+directed mover edges, they show up as violations of AKM's cycle restrictions and as
+model error in Kline's noise-adjusted goodness-of-fit exercise. Source: Kline, pp. 27--29.
+
+\subsection{Connection to Event-Study Diagnostics}
+
+Kline's causal section interprets the AKM model as a many-treatment difference-in-
+differences problem. His Assumption 2 is a parallel-trends condition: among workers
+switching between any pair of firms, average potential wages at the origin firm would
+not have changed between periods. Source: Kline, p. 30. He notes that the standard
+event-study diagnostic from Card--Heining--Kline plots mover wage trajectories by
+origin/destination firm wage quartiles and asks whether movers to high-wage firms
+already had faster wage growth before the move. Source: Kline, p. 30.
+
+This matches the Sorkin--Warwar discussion above. The event study is a diagnostic
+for a parallel-trends/no-match-effect style restriction, but SW show it can have low
+power against endogenous match-driven mobility because pooled event-study slopes can
+look close to one even when subsamples reveal failures. Source: SW, pp. 31--35; Kline,
+p. 30.
+
+\section{Dropbox Note Cleanup: Section 10 Open Items}
+
+\paragraph{Source convention.}
+Page citations to ``the note'' refer to PDF page numbers in
+\texttt{loo\_full\_note\_v1.pdf}. I treat the note as an internal project document:
+when it states a result, I record whether this write-up has verified it against an
+external source, derived it here, or left it as future work.
+
+\subsection{Notation}
+
+\begin{center}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.24\linewidth}
+                >{\raggedright\arraybackslash}p{0.68\linewidth}}
+\toprule
+Symbol & Meaning \\
+\midrule
+Gate 1 & Fix the interface, estimands, exact nestings, and coverage audit. Source: note, p. 20. \\
+Gate 2 & First new inference theorem for the smallest non-additive model, especially de-biased functionals beyond additivity. Source: note, p. 20. \\
+Gate 3 & Extension from rank one to rank $r$ after normalizations, graph conditions, and computation are settled. Source: note, p. 20. \\
+T1--T3 & The note's tiers of open items: Tier 1 blocks the minimum viable paper, Tier 2 strengthens the core, Tier 3 is downstream/parked. Source: note, pp. 20--22. \\
+Block W & Wage-equation/interface block. Source: note, pp. 26--33. \\
+Block G & Match-graph / acceptance-probability block used for policy objects such as ITT. Source: note, pp. 31--33. \\
+ITT, ATT & Intent-to-treat and average-treatment-on-treated meeting values in Borovi\v{c}kova--Shimer. Source: BS, pp. 10--11. \\
+$R_{xy},S_{xy}$ & Worker surplus and maximum feasible worker surplus in LLMR; part of the enlarged dynamic interface. Source: LLMR, pp. 18--20. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Status Audit}
+
+The note's sequencing is correct: the paper should be built around the intersection of
+important reported functionals, models already used, and feasible new inference. Source:
+note, p. 20. The cleanup status is:
+
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.16\linewidth}
+                  >{\raggedright\arraybackslash}p{0.30\linewidth}
+                  >{\raggedright\arraybackslash}p{0.42\linewidth}}
+\toprule
+Item & Status & Reason / citation \\
+\midrule
+\endfirsthead
+\toprule
+Item & Status & Reason / citation \\
+\midrule
+\endhead
+T1.1 out-of-scope triage & Partly closed & The dynamic branch should be called important but outside, not marginal. LLMR verifies this: its identification uses mobility probabilities, within-job wage dynamics, and mobility-conditional wage distributions, not just wages. Source: note, pp. 21, 24--25; LLMR, pp. 18--20. \\
+Unrestricted match effects & Closed for current purposes & Kline's unrestricted edge effects absorb match effects statistically, but AKM does not; match effects generally create cycle components. Source: Kline, pp. 19--20, 27--29. \\
+T2.1 rank-$r$ identification & Still open theory & Crippa/Tukey and Appendix H are reviewed above, but the note's requested adversarial pass on the rectangle-graph condition, necessity, and data verification remains real theory/data work. Source: note, p. 21. \\
+T2.2 BS off-Pareto rank & Partly checked, not closed & The note's claimed generalized-Pareto rank result remains an internal derived claim. BS Appendix E confirms that outside Pareto, the average log wage can depend on the whole production function $f$, and in the exponential case multiplicative $f$ gives a structured wage surface, not automatic exact additivity. Source: note, p. 21; BS, pp. 69--73. \\
+T2.3 BS pseudo-true error bound & Open & This requires a formal projection target and a bound from approximation error to functional error. The note itself labels this as pending. Source: note, pp. 21--22. \\
+T2.4 BS bookkeeping & Partly checked & BS provides the selection threshold and ATT/ITT formulas; the note's stronger bookkeeping claim about $(\gamma,\theta,z_0,\kappa)$ still needs a line-by-line pass before being quoted as closed. Source: note, p. 21; BS, pp. 6--11. \\
+T2.5 paired-mover validation & Partly closed & Kline gives the edge-effect diagnostic and noise-adjusted model-error framework; SW gives the low-power event-study warning. The formal population object for a paired-mover regression under low-rank projection remains open. Source: note, p. 21; Kline, pp. 27--30; SW, pp. 31--35. \\
+T2.6 GKLP learning & Closed for current scope & Perfect-information GKLP is exact rank one; learning is rank one/rank two by slice and dynamic at the pooled-panel level. Source: note, pp. 21--22; GKLP, pp. 12--16. \\
+T2.7 novelty/literature sweep & Open & This still needs a web/literature pass on de-biased functionals combining two-way outcome and graph-formation blocks. Source: note, p. 22. \\
+T3.1 BS Appendix E & Partly closed & Appendix E was checked enough to know the exponential case is not a free exact-nesting result; full reconciliation with the note's Proposition 7 should be kept as a small follow-up. Source: note, p. 22; BS, pp. 69--73. \\
+T3.2 Block-G cycle scarcity & Open data task & Requires counting informative cycles in the target empirical graph. Source: note, p. 22. \\
+T3.3 LLMR boundary & Partly closed & Claim (b) is supported: LLMR needs surplus, wage dynamics, and mobility-conditional wage laws. The larger class-sufficiency theorem remains parked. Source: note, pp. 22, 36; LLMR, pp. 18--20. \\
+T3.4 Target B theorem & Parked & The note itself says to park it until the core gates clear. Source: note, p. 22. \\
+T3.5 pseudo-true projection & Open and important & Until this is formalized, coverage should be claimed only for exact rows; approximate rows should stay labeled approximate. Source: note, p. 22. \\
+\bottomrule
+\end{longtable}
+
+\subsection{Clean Boundary Map After the Cleanup}
+
+The current paper-facing boundary should read as follows:
+
+\begin{enumerate}
+\item \textbf{Covered exactly as static wage-equation cores:} AKM/KSS mean model,
+Tukey/Crippa, static BLM type-cell means, and GKLP perfect-information comparative
+advantage. Source: note, p. 8; Crippa section above; GKLP, p. 12.
+
+\item \textbf{Covered only by static slices or with explicit qualifications:} GKLP learning
+and low-rank restrictions/approximations to Shimer--Smith or BS off-Pareto wage
+surfaces. Source: note, pp. 8--9, 21--26; Shimer--Smith, pp. 346--349; BS, pp. 69--73.
+
+\item \textbf{Diagnostic/statistical-interface objects, not structural models:} Kline's
+unrestricted edge effects $\Delta_{jk}$ and paired-mover/event-study diagnostics. These
+are useful because they reveal cycle violations and low-power failures, but they do not
+by themselves identify $\beta_0$, match effects, production, amenities, or surplus.
+Source: Kline, pp. 19--20, 27--30; SW, pp. 31--35.
+
+\item \textbf{Important but outside the first paper's interface:} LLMR, on-the-job search
+with amenities, unrestricted dynamic wage contracts, and joint Block-W--Block-G policy
+counterfactuals. These require mobility-conditional dynamic objects beyond the
+cross-sectional wage surface. Source: note, pp. 24--25, 36; LLMR, pp. 18--20.
+\end{enumerate}
+
+So the main correction to the Dropbox note is not a rejection of the factor structure. It
+is a tightening of the verb ``nests.'' The factor model nests many static \emph{wage
+surfaces}. It does not nest the full empirical/inference/structural packages around those
+surfaces unless the extra assumptions and data objects are explicitly added.
+
+\subsection{Audit Against the Original Task List}
+
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.24\linewidth}
+                  >{\raggedright\arraybackslash}p{0.64\linewidth}}
+\toprule
+Original item & Where it is handled \\
+\midrule
+\endfirsthead
+\toprule
+Original item & Where it is handled \\
+\midrule
+\endhead
+Shimer--Smith Bellman derivation and $E[dV]$ / loss-from-continuing term & Section 1 derives the unmatched and matched Bellman equations from the lecture HJB and the Poisson jump calculation, with notation table and page citations to Shimer--Smith and the slides. \\
+Crippa Appendix H cycle questions & Section 2 answers the exactly-4-cycle versus longer-cycle question, isolates the product telescoping step for $\beta_0$, and separates connectedness for $\alpha,\psi$ from cycle traversal for $\beta_0$. \\
+CHK one-page summary and Sorkin--Warwar event study & Sections 3--4 summarize CHK and SW, including the low-power event-study mechanism and its connection to Kline's parallel-trends framing. \\
+Crippa BLM versus real BLM and LLMR & Section 5 compares Crippa's stripped-down BLM equation to BLM's grouped distributional framework and explains why LLMR is dynamic/out of scope while reusing BLM as a first-stage layer. \\
+Modeling section and $\alpha+\psi+u'\Lambda v$ form & Section 6 checks the Dropbox note's factor structure, derives the Shimer--Smith payoff mapping, verifies GKLP from the NBER paper, and states the exact/static versus dynamic-boundary claims. \\
+Kline Section 3, inference subsection, and margin notes & Section 7 covers Kline Section 3, especially 3.2.2, the unrestricted edge-effect object, Tukey/Crippa embedding, $\Delta_{jk}$ as a statistical interface, and match effects as cycle violations. \\
+Dropbox note Section 10 cleanup & Section 8 audits the open items from the note, marking which are closed for current purposes, partly checked, still open, or parked. \\
+\bottomrule
+\end{longtable}
+
+\end{document}

@@ -1,0 +1,571 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/38odee",
+    "id": "38odee",
+    "slide": 19,
+    "layoutId": "f4a45b2d-a165-41aa-a743-0923c43a574a",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "82378df2-dc0e-4aa0-b5f4-c07656602ab7",
+    "masterLayoutName": "Master",
+    "backgroundColor": "#FFFFFF",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "bg1": "#FFFFFF",
+      "bg2": "#000000",
+      "tx1": "#1F1F1F",
+      "tx2": "#FFFFFF",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "typefaces": [
+      "+mn-lt"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "f4a45b2d-a165-41aa-a743-0923c43a574a",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "82378df2-dc0e-4aa0-b5f4-c07656602ab7",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "82378df2-dc0e-4aa0-b5f4-c07656602ab7",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/0zahsjqp",
+      "id": "1",
+      "bbox": [
+        72,
+        40,
+        900,
+        20
+      ],
+      "geometry": "rect",
+      "text": "EMPIRICS",
+      "textPreview": "EMPIRICS",
+      "resolvedFontSize": 12,
+      "resolvedTextStyle": {
+        "fontSize": 12,
+        "typeface": "+mn-lt",
+        "color": "#666666",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "EMPIRICS"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "EMPIRICS",
+          "resolvedTextStyle": {
+            "fontSize": 12,
+            "color": "#666666",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "EMPIRICS",
+              "fontSize": 12,
+              "color": "#666666",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/zy10zep4",
+      "id": "2",
+      "bbox": [
+        72,
+        74,
+        1130,
+        74
+      ],
+      "geometry": "rect",
+      "text": "The empirical section should report decomposition objects and support diagnostics",
+      "textPreview": "The empirical section should report decomposition objects and support diagnostics",
+      "resolvedFontSize": 35,
+      "resolvedTextStyle": {
+        "fontSize": 35,
+        "typeface": "+mn-lt",
+        "color": "#000000",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "The empirical section should report decomposition objects and support"
+          },
+          {
+            "index": 2,
+            "text": "diagnostics"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "The empirical section should report decomposition objects and support diagnostics",
+          "resolvedTextStyle": {
+            "fontSize": 35,
+            "color": "#000000",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "The empirical section should report decomposition objects and support diagnostics",
+              "fontSize": 35,
+              "color": "#000000",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/exszq98j",
+      "id": "3",
+      "bbox": [
+        86,
+        172,
+        1105,
+        440
+      ],
+      "geometry": "rect",
+      "text": "Core table:\n  Q_F, Var(b_J), H_F/2, theta_H, C_assign^w, A_h.\n\nAssignment table:\n  Cov(a,b), Cov(a,h), Cov(b,h), 1/2[Var_obs(h)-Var_prod(h)].\n\nSupport diagnostics:\n  observed edge density; rectangle density; anchor strength; leverage distribution;\n  sensitivity to reference population and rank.\n\nInterpretation boundary:\n  These are maintained wage-schedule functionals. Production, surplus, bargaining, and welfare require extra structure.",
+      "textPreview": "Core table: |   Q_F, Var(b_J), H_F/2, theta_H, C_assign^w, A_h. |  | Assignment table: |   Cov(a,b), Cov(a,h), Cov(b,h), 1/2[Var_obs(h)-V...",
+      "resolvedFontSize": 20,
+      "resolvedTextStyle": {
+        "fontSize": 20,
+        "typeface": "+mn-lt",
+        "color": "#000000",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 12,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Core table:"
+          },
+          {
+            "index": 2,
+            "text": "  Q_F, Var(b_J), H_F/2, theta_H, C_assign^w, A_h."
+          },
+          {
+            "index": 3,
+            "text": ""
+          },
+          {
+            "index": 4,
+            "text": "Assignment table:"
+          },
+          {
+            "index": 5,
+            "text": "  Cov(a,b), Cov(a,h), Cov(b,h), 1/2[Var_obs(h)-Var_prod(h)]."
+          },
+          {
+            "index": 6,
+            "text": ""
+          },
+          {
+            "index": 7,
+            "text": "Support diagnostics:"
+          },
+          {
+            "index": 8,
+            "text": "  observed edge density; rectangle density; anchor strength; leverage distribution;"
+          },
+          {
+            "index": 9,
+            "text": "  sensitivity to reference population and rank."
+          },
+          {
+            "index": 10,
+            "text": ""
+          },
+          {
+            "index": 11,
+            "text": "Interpretation boundary:"
+          },
+          {
+            "index": 12,
+            "text": "  These are maintained wage-schedule functionals. Production, surplus, bargaining, and welfare require extra structure."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Core table:",
+          "resolvedTextStyle": {
+            "fontSize": 20,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Core table:",
+              "fontSize": 20,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "  Q_F, Var(b_J), H_F/2, theta_H, C_assign^w, A_h.",
+          "resolvedTextStyle": {
+            "fontSize": 20,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "  Q_F, Var(b_J), H_F/2, theta_H, C_assign^w, A_h.",
+              "fontSize": 20,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 4,
+          "text": "Assignment table:",
+          "resolvedTextStyle": {
+            "fontSize": 20,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Assignment table:",
+              "fontSize": 20,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 5,
+          "text": "  Cov(a,b), Cov(a,h), Cov(b,h), 1/2[Var_obs(h)-Var_prod(h)].",
+          "resolvedTextStyle": {
+            "fontSize": 20,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "  Cov(a,b), Cov(a,h), Cov(b,h), 1/2[Var_obs(h)-Var_prod(h)].",
+              "fontSize": 20,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 7,
+          "text": "Support diagnostics:",
+          "resolvedTextStyle": {
+            "fontSize": 20,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Support diagnostics:",
+              "fontSize": 20,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 8,
+          "text": "  observed edge density; rectangle density; anchor strength; leverage distribution;",
+          "resolvedTextStyle": {
+            "fontSize": 20,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "  observed edge density; rectangle density; anchor strength; leverage distribution;",
+              "fontSize": 20,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 9,
+          "text": "  sensitivity to reference population and rank.",
+          "resolvedTextStyle": {
+            "fontSize": 20,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "  sensitivity to reference population and rank.",
+              "fontSize": 20,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 11,
+          "text": "Interpretation boundary:",
+          "resolvedTextStyle": {
+            "fontSize": 20,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Interpretation boundary:",
+              "fontSize": 20,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 12,
+          "text": "  These are maintained wage-schedule functionals. Production, surplus, bargaining, and welfare require extra structure.",
+          "resolvedTextStyle": {
+            "fontSize": 20,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "  These are maintained wage-schedule functionals. Production, surplus, bargaining, and welfare require extra structure.",
+              "fontSize": 20,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/943i5o76",
+      "id": "4",
+      "bbox": [
+        72,
+        655,
+        940,
+        22
+      ],
+      "geometry": "rect",
+      "text": "Source: LOO note, pp. 39-41",
+      "textPreview": "Source: LOO note, pp. 39-41",
+      "resolvedFontSize": 11,
+      "resolvedTextStyle": {
+        "fontSize": 11,
+        "typeface": "+mn-lt",
+        "color": "#666666",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Source: LOO note, pp. 39-41"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Source: LOO note, pp. 39-41",
+          "resolvedTextStyle": {
+            "fontSize": 11,
+            "color": "#666666",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Source: LOO note, pp. 39-41",
+              "fontSize": 11,
+              "color": "#666666",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/o3uhwjql",
+      "id": "5",
+      "bbox": [
+        1150,
+        655,
+        60,
+        22
+      ],
+      "geometry": "rect",
+      "text": "19",
+      "textPreview": "19",
+      "resolvedFontSize": 11,
+      "resolvedTextStyle": {
+        "fontSize": 11,
+        "typeface": "+mn-lt",
+        "color": "#666666",
+        "alignment": "right",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "19"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "19",
+          "resolvedTextStyle": {
+            "fontSize": 11,
+            "color": "#666666",
+            "alignment": "right"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "19",
+              "fontSize": 11,
+              "color": "#666666",
+              "alignment": "right"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    }
+  ],
+  "composeRuns": []
+}

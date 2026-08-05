@@ -1,0 +1,507 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/xagojx",
+    "id": "xagojx",
+    "slide": 13,
+    "layoutId": "b4fc2449-9f47-4b68-93d2-0258226feee9",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "8b72b8a4-9a1b-4b61-bf0d-c72e554aafae",
+    "masterLayoutName": "Master",
+    "backgroundColor": "#FFFFFF",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "bg1": "#FFFFFF",
+      "bg2": "#000000",
+      "tx1": "#1F1F1F",
+      "tx2": "#FFFFFF",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "typefaces": [
+      "+mn-lt"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "b4fc2449-9f47-4b68-93d2-0258226feee9",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "8b72b8a4-9a1b-4b61-bf0d-c72e554aafae",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "8b72b8a4-9a1b-4b61-bf0d-c72e554aafae",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/rudsb6x4",
+      "id": "1",
+      "bbox": [
+        72,
+        38,
+        1080,
+        20
+      ],
+      "geometry": "rect",
+      "text": "STEP 12 | ADD THE MINIMAL STRUCTURE",
+      "textPreview": "STEP 12 | ADD THE MINIMAL STRUCTURE",
+      "resolvedFontSize": 12,
+      "resolvedTextStyle": {
+        "fontSize": 12,
+        "typeface": "+mn-lt",
+        "color": "#666666",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "STEP 12 | ADD THE MINIMAL STRUCTURE"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "STEP 12 | ADD THE MINIMAL STRUCTURE",
+          "resolvedTextStyle": {
+            "fontSize": 12,
+            "color": "#666666",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "STEP 12 | ADD THE MINIMAL STRUCTURE",
+              "fontSize": 12,
+              "color": "#666666",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/cvmt4ryp",
+      "id": "2",
+      "bbox": [
+        72,
+        72,
+        1136,
+        70
+      ],
+      "geometry": "rect",
+      "text": "Low rank is imposed on comparative advantage, not on worker or firm main effects",
+      "textPreview": "Low rank is imposed on comparative advantage, not on worker or firm main effects",
+      "resolvedFontSize": 34,
+      "resolvedTextStyle": {
+        "fontSize": 34,
+        "typeface": "+mn-lt",
+        "color": "#000000",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Low rank is imposed on comparative advantage, not on worker or firm main"
+          },
+          {
+            "index": 2,
+            "text": "effects"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Low rank is imposed on comparative advantage, not on worker or firm main effects",
+          "resolvedTextStyle": {
+            "fontSize": 34,
+            "color": "#000000",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Low rank is imposed on comparative advantage, not on worker or firm main effects",
+              "fontSize": 34,
+              "color": "#000000",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/wnyxsjqp",
+      "id": "3",
+      "bbox": [
+        82,
+        154,
+        1116,
+        96
+      ],
+      "alt": "Typeset equation: lowrank",
+      "contentType": "image/png",
+      "imageFit": "contain",
+      "asset": {
+        "assetId": "1794a6b8-16da-481d-9d1c-212e9e4afd37",
+        "contentType": "image/png",
+        "byteLength": 22334
+      }
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/i5kryhgn",
+      "id": "4",
+      "bbox": [
+        86,
+        278,
+        1100,
+        297
+      ],
+      "geometry": "rect",
+      "text": "The additive components remain unrestricted; only the centered interaction is factorized. Setting the interaction matrix to zero nests AKM. Grouped BLM mean layers imply a low-rank double-demeaned interaction after type cells are lifted to workers and firms.\n\nKline-style mover restrictions concern edge differences rather than a complete level schedule, so they are diagnostics implied by this model, not a substitute for its level structure.",
+      "textPreview": "The additive components remain unrestricted; only the centered interaction is factorized. Setting the interaction matrix to zero nests AK...",
+      "resolvedFontSize": 18.51,
+      "resolvedTextStyle": {
+        "fontSize": 18.51,
+        "typeface": "+mn-lt",
+        "color": "#000000",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 5,
+        "lines": [
+          {
+            "index": 1,
+            "text": "The additive components remain unrestricted; only the centered interaction is factorized. Setting the interaction matrix to zero nests AKM."
+          },
+          {
+            "index": 2,
+            "text": "Grouped BLM mean layers imply a low-rank double-demeaned interaction after type cells are lifted to workers and firms."
+          },
+          {
+            "index": 3,
+            "text": ""
+          },
+          {
+            "index": 4,
+            "text": "Kline-style mover restrictions concern edge differences rather than a complete level schedule, so they are diagnostics implied by this model, not"
+          },
+          {
+            "index": 5,
+            "text": "a substitute for its level structure."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "The additive components remain unrestricted; only the centered interaction is factorized. Setting the interaction matrix to zero nests AKM. Grouped BLM mean layers imply a low-rank double-demeaned interaction after type cells are lifted to workers and firms.",
+          "resolvedTextStyle": {
+            "fontSize": 18.51,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "The additive components remain unrestricted; only the centered interaction is factorized. Setting the interaction matrix to zero nests AKM. Grouped BLM mean layers imply a low-rank double-demeaned interaction after type cells are lifted to workers and firms.",
+              "fontSize": 18.51,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "Kline-style mover restrictions concern edge differences rather than a complete level schedule, so they are diagnostics implied by this model, not a substitute for its level structure.",
+          "resolvedTextStyle": {
+            "fontSize": 18.51,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Kline-style mover restrictions concern edge differences rather than a complete level schedule, so they are diagnostics implied by this model, not a substitute for its level structure.",
+              "fontSize": 18.51,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/3qts7mh8",
+      "id": "5",
+      "bbox": [
+        72,
+        602,
+        1136,
+        1
+      ],
+      "geometry": "rect",
+      "fillColor": "#BDBDBD",
+      "lineWidth": 0
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/4rmt0ryt",
+      "id": "6",
+      "bbox": [
+        86,
+        615,
+        1090,
+        34
+      ],
+      "geometry": "rect",
+      "text": "Low rank becomes empirically useful because observed rectangles cancel the unrestricted main effects and expose interaction contrasts.",
+      "textPreview": "Low rank becomes empirically useful because observed rectangles cancel the unrestricted main effects and expose interaction contrasts.",
+      "resolvedFontSize": 16,
+      "resolvedTextStyle": {
+        "fontSize": 16,
+        "typeface": "+mn-lt",
+        "color": "#666666",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Low rank becomes empirically useful because observed rectangles cancel the unrestricted main effects and expose interaction contrasts."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Low rank becomes empirically useful because observed rectangles cancel the unrestricted main effects and expose interaction contrasts.",
+          "resolvedTextStyle": {
+            "fontSize": 16,
+            "color": "#666666",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Low rank becomes empirically useful because observed rectangles cancel the unrestricted main effects and expose interaction contrasts.",
+              "fontSize": 16,
+              "color": "#666666",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 7,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/psva9wfy",
+      "id": "7",
+      "bbox": [
+        72,
+        676,
+        1040,
+        18
+      ],
+      "geometry": "rect",
+      "text": "Source: LOO note, pp. 21-23, 41-44; merged TeX Part I",
+      "textPreview": "Source: LOO note, pp. 21-23, 41-44; merged TeX Part I",
+      "resolvedFontSize": 10.51,
+      "resolvedTextStyle": {
+        "fontSize": 10.51,
+        "typeface": "+mn-lt",
+        "color": "#666666",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Source: LOO note, pp. 21-23, 41-44; merged TeX Part I"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Source: LOO note, pp. 21-23, 41-44; merged TeX Part I",
+          "resolvedTextStyle": {
+            "fontSize": 10.51,
+            "color": "#666666",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Source: LOO note, pp. 21-23, 41-44; merged TeX Part I",
+              "fontSize": 10.51,
+              "color": "#666666",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 8,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/m1obalgr",
+      "id": "8",
+      "bbox": [
+        1150,
+        676,
+        58,
+        18
+      ],
+      "geometry": "rect",
+      "text": "13",
+      "textPreview": "13",
+      "resolvedFontSize": 10.51,
+      "resolvedTextStyle": {
+        "fontSize": 10.51,
+        "typeface": "+mn-lt",
+        "color": "#666666",
+        "alignment": "right",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "13"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "13",
+          "resolvedTextStyle": {
+            "fontSize": 10.51,
+            "color": "#666666",
+            "alignment": "right"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "13",
+              "fontSize": 10.51,
+              "color": "#666666",
+              "alignment": "right"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    }
+  ],
+  "composeRuns": []
+}

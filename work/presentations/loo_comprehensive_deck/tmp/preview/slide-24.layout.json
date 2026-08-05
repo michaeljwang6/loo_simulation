@@ -1,0 +1,886 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/17gt7k",
+    "id": "17gt7k",
+    "slide": 24,
+    "layoutId": "9bdd9c64-b2d0-42da-8f76-367a1b7a4a71",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "0f93b2e5-0afc-4b42-a870-ef027b719635",
+    "masterLayoutName": "Master",
+    "backgroundColor": "#FFFFFF",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "bg1": "#FFFFFF",
+      "bg2": "#000000",
+      "tx1": "#1F1F1F",
+      "tx2": "#FFFFFF",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "typefaces": [
+      "+mn-lt"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "9bdd9c64-b2d0-42da-8f76-367a1b7a4a71",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "0f93b2e5-0afc-4b42-a870-ef027b719635",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "0f93b2e5-0afc-4b42-a870-ef027b719635",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/lcfeh0fq",
+      "id": "1",
+      "bbox": [
+        72,
+        44,
+        900,
+        26
+      ],
+      "geometry": "rect",
+      "text": "LITERATURE ALIGNMENT",
+      "textPreview": "LITERATURE ALIGNMENT",
+      "resolvedFontSize": 14,
+      "resolvedTextStyle": {
+        "fontSize": 14,
+        "typeface": "+mn-lt",
+        "color": "#000000",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "LITERATURE ALIGNMENT"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "LITERATURE ALIGNMENT",
+          "resolvedTextStyle": {
+            "fontSize": 14,
+            "color": "#000000",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "LITERATURE ALIGNMENT",
+              "fontSize": 14,
+              "color": "#000000",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/e9ov6lgz",
+      "id": "2",
+      "bbox": [
+        72,
+        78,
+        1080,
+        62
+      ],
+      "geometry": "rect",
+      "text": "The note aligns with the semistructural framing but narrows the first step",
+      "textPreview": "The note aligns with the semistructural framing but narrows the first step",
+      "resolvedFontSize": 36,
+      "resolvedTextStyle": {
+        "fontSize": 36,
+        "typeface": "+mn-lt",
+        "color": "#000000",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "The note aligns with the semistructural framing but narrows the first"
+          },
+          {
+            "index": 2,
+            "text": "step"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "The note aligns with the semistructural framing but narrows the first step",
+          "resolvedTextStyle": {
+            "fontSize": 36,
+            "color": "#000000",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "The note aligns with the semistructural framing but narrows the first step",
+              "fontSize": 36,
+              "color": "#000000",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/zaxwfqxk",
+      "id": "3",
+      "bbox": [
+        72,
+        154,
+        1136,
+        1.3
+      ],
+      "geometry": "rect",
+      "lineWidth": 0
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/c76d4byt",
+      "id": "4",
+      "bbox": [
+        95,
+        205,
+        1090,
+        68
+      ],
+      "geometry": "rect",
+      "lineWidth": 0
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/d8fudgfe",
+      "id": "5",
+      "bbox": [
+        125,
+        222,
+        230,
+        24
+      ],
+      "geometry": "rect",
+      "text": "Kline / KSS",
+      "textPreview": "Kline / KSS",
+      "resolvedFontSize": 20.51,
+      "resolvedTextStyle": {
+        "fontSize": 20.51,
+        "typeface": "+mn-lt",
+        "color": "#000000",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Kline / KSS"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Kline / KSS",
+          "resolvedTextStyle": {
+            "fontSize": 20.51,
+            "color": "#000000",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Kline / KSS",
+              "fontSize": 20.51,
+              "color": "#000000",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/q5ov2lg3",
+      "id": "6",
+      "bbox": [
+        390,
+        218,
+        705,
+        34
+      ],
+      "geometry": "rect",
+      "text": "Use mobility restrictions and leave-out logic as diagnostics for additive wage changes.",
+      "textPreview": "Use mobility restrictions and leave-out logic as diagnostics for additive wage changes.",
+      "resolvedFontSize": 18.51,
+      "resolvedTextStyle": {
+        "fontSize": 18.51,
+        "typeface": "+mn-lt",
+        "color": "#000000",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Use mobility restrictions and leave-out logic as diagnostics for additive wage changes."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Use mobility restrictions and leave-out logic as diagnostics for additive wage changes.",
+          "resolvedTextStyle": {
+            "fontSize": 18.51,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Use mobility restrictions and leave-out logic as diagnostics for additive wage changes.",
+              "fontSize": 18.51,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 7,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/r6xcbqxo",
+      "id": "7",
+      "bbox": [
+        95,
+        297,
+        1090,
+        68
+      ],
+      "geometry": "rect",
+      "lineWidth": 0
+    },
+    {
+      "order": 8,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/4jmd0byx",
+      "id": "8",
+      "bbox": [
+        125,
+        314,
+        230,
+        24
+      ],
+      "geometry": "rect",
+      "text": "BLM",
+      "textPreview": "BLM",
+      "resolvedFontSize": 20.51,
+      "resolvedTextStyle": {
+        "fontSize": 20.51,
+        "typeface": "+mn-lt",
+        "color": "#000000",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "BLM"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "BLM",
+          "resolvedTextStyle": {
+            "fontSize": 20.51,
+            "color": "#000000",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "BLM",
+              "fontSize": 20.51,
+              "color": "#000000",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 9,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/pkvu9gfi",
+      "id": "9",
+      "bbox": [
+        390,
+        310,
+        705,
+        34
+      ],
+      "geometry": "rect",
+      "text": "Use finite latent types as one route to low-rank mean layers, not as the whole model.",
+      "textPreview": "Use finite latent types as one route to low-rank mean layers, not as the whole model.",
+      "resolvedFontSize": 18.51,
+      "resolvedTextStyle": {
+        "fontSize": 18.51,
+        "typeface": "+mn-lt",
+        "color": "#000000",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Use finite latent types as one route to low-rank mean layers, not as the whole model."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Use finite latent types as one route to low-rank mean layers, not as the whole model.",
+          "resolvedTextStyle": {
+            "fontSize": 18.51,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Use finite latent types as one route to low-rank mean layers, not as the whole model.",
+              "fontSize": 18.51,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 10,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/lczet8bq",
+      "id": "10",
+      "bbox": [
+        95,
+        389,
+        1090,
+        68
+      ],
+      "geometry": "rect",
+      "lineWidth": 0
+    },
+    {
+      "order": 11,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/0bqx03a5",
+      "id": "11",
+      "bbox": [
+        125,
+        406,
+        230,
+        24
+      ],
+      "geometry": "rect",
+      "text": "Search / Roy sorting",
+      "textPreview": "Search / Roy sorting",
+      "resolvedFontSize": 20.51,
+      "resolvedTextStyle": {
+        "fontSize": 20.51,
+        "typeface": "+mn-lt",
+        "color": "#000000",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Search / Roy sorting"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Search / Roy sorting",
+          "resolvedTextStyle": {
+            "fontSize": 20.51,
+            "color": "#000000",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Search / Roy sorting",
+              "fontSize": 20.51,
+              "color": "#000000",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 12,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/zahwrytk",
+      "id": "12",
+      "bbox": [
+        390,
+        402,
+        705,
+        34
+      ],
+      "geometry": "rect",
+      "text": "Treat observed matches as selected; do not call wage schedule estimates production primitives.",
+      "textPreview": "Treat observed matches as selected; do not call wage schedule estimates production primitives.",
+      "resolvedFontSize": 18.51,
+      "resolvedTextStyle": {
+        "fontSize": 18.51,
+        "typeface": "+mn-lt",
+        "color": "#000000",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Treat observed matches as selected; do not call wage schedule estimates production"
+          },
+          {
+            "index": 2,
+            "text": "primitives."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Treat observed matches as selected; do not call wage schedule estimates production primitives.",
+          "resolvedTextStyle": {
+            "fontSize": 18.51,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Treat observed matches as selected; do not call wage schedule estimates production primitives.",
+              "fontSize": 18.51,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 13,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/y98fytsf",
+      "id": "13",
+      "bbox": [
+        95,
+        481,
+        1090,
+        68
+      ],
+      "geometry": "rect",
+      "lineWidth": 0
+    },
+    {
+      "order": 14,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/d8zepobu",
+      "id": "14",
+      "bbox": [
+        125,
+        498,
+        230,
+        24
+      ],
+      "geometry": "rect",
+      "text": "Project implication",
+      "textPreview": "Project implication",
+      "resolvedFontSize": 20.51,
+      "resolvedTextStyle": {
+        "fontSize": 20.51,
+        "typeface": "+mn-lt",
+        "color": "#000000",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Project implication"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Project implication",
+          "resolvedTextStyle": {
+            "fontSize": 20.51,
+            "color": "#000000",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Project implication",
+              "fontSize": 20.51,
+              "color": "#000000",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 15,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/c76xwja9",
+      "id": "15",
+      "bbox": [
+        390,
+        494,
+        705,
+        34
+      ],
+      "geometry": "rect",
+      "text": "First estimate invariant wage-schedule functionals; add bargaining, surplus, or welfare later.",
+      "textPreview": "First estimate invariant wage-schedule functionals; add bargaining, surplus, or welfare later.",
+      "resolvedFontSize": 18.51,
+      "resolvedTextStyle": {
+        "fontSize": 18.51,
+        "typeface": "+mn-lt",
+        "color": "#000000",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "First estimate invariant wage-schedule functionals; add bargaining, surplus, or welfare later."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "First estimate invariant wage-schedule functionals; add bargaining, surplus, or welfare later.",
+          "resolvedTextStyle": {
+            "fontSize": 18.51,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "First estimate invariant wage-schedule functionals; add bargaining, surplus, or welfare later.",
+              "fontSize": 18.51,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 16,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/b6xwneto",
+      "id": "16",
+      "bbox": [
+        72,
+        652,
+        930,
+        28
+      ],
+      "geometry": "rect",
+      "text": "Source: LOO note, pp. 41-44; TeX Part II, semistructural comparison",
+      "textPreview": "Source: LOO note, pp. 41-44; TeX Part II, semistructural comparison",
+      "resolvedFontSize": 11.51,
+      "resolvedTextStyle": {
+        "fontSize": 11.51,
+        "typeface": "+mn-lt",
+        "color": "#666666",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Source: LOO note, pp. 41-44; TeX Part II, semistructural comparison"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Source: LOO note, pp. 41-44; TeX Part II, semistructural comparison",
+          "resolvedTextStyle": {
+            "fontSize": 11.51,
+            "color": "#666666",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Source: LOO note, pp. 41-44; TeX Part II, semistructural comparison",
+              "fontSize": 11.51,
+              "color": "#666666",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 17,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/q5ovuts3",
+      "id": "17",
+      "bbox": [
+        1160,
+        652,
+        48,
+        28
+      ],
+      "geometry": "rect",
+      "text": "24",
+      "textPreview": "24",
+      "resolvedFontSize": 12,
+      "resolvedTextStyle": {
+        "fontSize": 12,
+        "typeface": "+mn-lt",
+        "color": "#666666",
+        "alignment": "right",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "24"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "24",
+          "resolvedTextStyle": {
+            "fontSize": 12,
+            "color": "#666666",
+            "alignment": "right"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "24",
+              "fontSize": 12,
+              "color": "#666666",
+              "alignment": "right"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    }
+  ],
+  "composeRuns": []
+}

@@ -1,0 +1,503 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/spudql",
+    "id": "spudql",
+    "slide": 2,
+    "layoutId": "b4fc2449-9f47-4b68-93d2-0258226feee9",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "8b72b8a4-9a1b-4b61-bf0d-c72e554aafae",
+    "masterLayoutName": "Master",
+    "backgroundColor": "#FFFFFF",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "bg1": "#FFFFFF",
+      "bg2": "#000000",
+      "tx1": "#1F1F1F",
+      "tx2": "#FFFFFF",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "typefaces": [
+      "+mn-lt"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "b4fc2449-9f47-4b68-93d2-0258226feee9",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "8b72b8a4-9a1b-4b61-bf0d-c72e554aafae",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "8b72b8a4-9a1b-4b61-bf0d-c72e554aafae",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/zitwb61c",
+      "id": "1",
+      "bbox": [
+        72,
+        38,
+        1080,
+        20
+      ],
+      "geometry": "rect",
+      "text": "STEP 1 | WHY THE OBJECT MUST CHANGE",
+      "textPreview": "STEP 1 | WHY THE OBJECT MUST CHANGE",
+      "resolvedFontSize": 12,
+      "resolvedTextStyle": {
+        "fontSize": 12,
+        "typeface": "+mn-lt",
+        "color": "#666666",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "STEP 1 | WHY THE OBJECT MUST CHANGE"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "STEP 1 | WHY THE OBJECT MUST CHANGE",
+          "resolvedTextStyle": {
+            "fontSize": 12,
+            "color": "#666666",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "STEP 1 | WHY THE OBJECT MUST CHANGE",
+              "fontSize": 12,
+              "color": "#666666",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/0j2x4b2x",
+      "id": "2",
+      "bbox": [
+        72,
+        72,
+        1136,
+        70
+      ],
+      "geometry": "rect",
+      "text": "AKM is complete only when every worker faces the same firm ladder",
+      "textPreview": "AKM is complete only when every worker faces the same firm ladder",
+      "resolvedFontSize": 34,
+      "resolvedTextStyle": {
+        "fontSize": 34,
+        "typeface": "+mn-lt",
+        "color": "#000000",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "AKM is complete only when every worker faces the same firm ladder"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "AKM is complete only when every worker faces the same firm ladder",
+          "resolvedTextStyle": {
+            "fontSize": 34,
+            "color": "#000000",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "AKM is complete only when every worker faces the same firm ladder",
+              "fontSize": 34,
+              "color": "#000000",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/czqlgz21",
+      "id": "3",
+      "bbox": [
+        82,
+        154,
+        1116,
+        96
+      ],
+      "alt": "Typeset equation: ladder",
+      "contentType": "image/png",
+      "imageFit": "contain",
+      "asset": {
+        "assetId": "aafd4993-e48f-4d17-82ff-279fe0008dc6",
+        "contentType": "image/png",
+        "byteLength": 19331
+      }
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/mlkf6lk3",
+      "id": "4",
+      "bbox": [
+        86,
+        278,
+        1100,
+        297
+      ],
+      "geometry": "rect",
+      "text": "AKM summarizes the firm side with a common premium and sorting with a worker-firm covariance. The displayed restriction is exactly what makes those two objects complete: every firm comparison is invariant across workers.\n\nOnce comparative firm advantages vary by worker, the coefficient vector is no longer the economic object. The primitive must be the full pairwise wage schedule.",
+      "textPreview": "AKM summarizes the firm side with a common premium and sorting with a worker-firm covariance. The displayed restriction is exactly what m...",
+      "resolvedFontSize": 20,
+      "resolvedTextStyle": {
+        "fontSize": 20,
+        "typeface": "+mn-lt",
+        "color": "#000000",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 5,
+        "lines": [
+          {
+            "index": 1,
+            "text": "AKM summarizes the firm side with a common premium and sorting with a worker-firm covariance. The displayed restriction is"
+          },
+          {
+            "index": 2,
+            "text": "exactly what makes those two objects complete: every firm comparison is invariant across workers."
+          },
+          {
+            "index": 3,
+            "text": ""
+          },
+          {
+            "index": 4,
+            "text": "Once comparative firm advantages vary by worker, the coefficient vector is no longer the economic object. The primitive must be the"
+          },
+          {
+            "index": 5,
+            "text": "full pairwise wage schedule."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "AKM summarizes the firm side with a common premium and sorting with a worker-firm covariance. The displayed restriction is exactly what makes those two objects complete: every firm comparison is invariant across workers.",
+          "resolvedTextStyle": {
+            "fontSize": 20,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "AKM summarizes the firm side with a common premium and sorting with a worker-firm covariance. The displayed restriction is exactly what makes those two objects complete: every firm comparison is invariant across workers.",
+              "fontSize": 20,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "Once comparative firm advantages vary by worker, the coefficient vector is no longer the economic object. The primitive must be the full pairwise wage schedule.",
+          "resolvedTextStyle": {
+            "fontSize": 20,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Once comparative firm advantages vary by worker, the coefficient vector is no longer the economic object. The primitive must be the full pairwise wage schedule.",
+              "fontSize": 20,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/nmtwfq1o",
+      "id": "5",
+      "bbox": [
+        72,
+        602,
+        1136,
+        1
+      ],
+      "geometry": "rect",
+      "fillColor": "#BDBDBD",
+      "lineWidth": 0
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/on2x8b29",
+      "id": "6",
+      "bbox": [
+        86,
+        615,
+        1090,
+        34
+      ],
+      "geometry": "rect",
+      "text": "Therefore the analysis must first declare the wage schedule and the assignment distribution used to average it.",
+      "textPreview": "Therefore the analysis must first declare the wage schedule and the assignment distribution used to average it.",
+      "resolvedFontSize": 16,
+      "resolvedTextStyle": {
+        "fontSize": 16,
+        "typeface": "+mn-lt",
+        "color": "#666666",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Therefore the analysis must first declare the wage schedule and the assignment distribution used to average it."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Therefore the analysis must first declare the wage schedule and the assignment distribution used to average it.",
+          "resolvedTextStyle": {
+            "fontSize": 16,
+            "color": "#666666",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Therefore the analysis must first declare the wage schedule and the assignment distribution used to average it.",
+              "fontSize": 16,
+              "color": "#666666",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 7,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/9obehgju",
+      "id": "7",
+      "bbox": [
+        72,
+        676,
+        1040,
+        18
+      ],
+      "geometry": "rect",
+      "text": "Source: LOO note, pp. 6-10",
+      "textPreview": "Source: LOO note, pp. 6-10",
+      "resolvedFontSize": 10.51,
+      "resolvedTextStyle": {
+        "fontSize": 10.51,
+        "typeface": "+mn-lt",
+        "color": "#666666",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Source: LOO note, pp. 6-10"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Source: LOO note, pp. 6-10",
+          "resolvedTextStyle": {
+            "fontSize": 10.51,
+            "color": "#666666",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Source: LOO note, pp. 6-10",
+              "fontSize": 10.51,
+              "color": "#666666",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 8,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ap4falkz",
+      "id": "8",
+      "bbox": [
+        1150,
+        676,
+        58,
+        18
+      ],
+      "geometry": "rect",
+      "text": "2",
+      "textPreview": "2",
+      "resolvedFontSize": 10.51,
+      "resolvedTextStyle": {
+        "fontSize": 10.51,
+        "typeface": "+mn-lt",
+        "color": "#666666",
+        "alignment": "right",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "2"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "2",
+          "resolvedTextStyle": {
+            "fontSize": 10.51,
+            "color": "#666666",
+            "alignment": "right"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "2",
+              "fontSize": 10.51,
+              "color": "#666666",
+              "alignment": "right"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    }
+  ],
+  "composeRuns": []
+}

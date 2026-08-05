@@ -1,0 +1,507 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/yd6fyf",
+    "id": "yd6fyf",
+    "slide": 10,
+    "layoutId": "b4fc2449-9f47-4b68-93d2-0258226feee9",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "8b72b8a4-9a1b-4b61-bf0d-c72e554aafae",
+    "masterLayoutName": "Master",
+    "backgroundColor": "#FFFFFF",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "bg1": "#FFFFFF",
+      "bg2": "#000000",
+      "tx1": "#1F1F1F",
+      "tx2": "#FFFFFF",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "typefaces": [
+      "+mn-lt"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "b4fc2449-9f47-4b68-93d2-0258226feee9",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "8b72b8a4-9a1b-4b61-bf0d-c72e554aafae",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "8b72b8a4-9a1b-4b61-bf0d-c72e554aafae",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/4r6x4j2l",
+      "id": "1",
+      "bbox": [
+        72,
+        38,
+        1080,
+        20
+      ],
+      "geometry": "rect",
+      "text": "STEP 9 | CHECK THE NESTED MODELS",
+      "textPreview": "STEP 9 | CHECK THE NESTED MODELS",
+      "resolvedFontSize": 12,
+      "resolvedTextStyle": {
+        "fontSize": 12,
+        "typeface": "+mn-lt",
+        "color": "#666666",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "STEP 9 | CHECK THE NESTED MODELS"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "STEP 9 | CHECK THE NESTED MODELS",
+          "resolvedTextStyle": {
+            "fontSize": 12,
+            "color": "#666666",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "STEP 9 | CHECK THE NESTED MODELS",
+              "fontSize": 12,
+              "color": "#666666",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/3qxwbel0",
+      "id": "2",
+      "bbox": [
+        72,
+        72,
+        1136,
+        70
+      ],
+      "geometry": "rect",
+      "text": "Additivity, Tukey interactions, and free factors impose distinct restrictions",
+      "textPreview": "Additivity, Tukey interactions, and free factors impose distinct restrictions",
+      "resolvedFontSize": 34,
+      "resolvedTextStyle": {
+        "fontSize": 34,
+        "typeface": "+mn-lt",
+        "color": "#000000",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Additivity, Tukey interactions, and free factors impose distinct restrictions"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Additivity, Tukey interactions, and free factors impose distinct restrictions",
+          "resolvedTextStyle": {
+            "fontSize": 34,
+            "color": "#000000",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Additivity, Tukey interactions, and free factors impose distinct restrictions",
+              "fontSize": 34,
+              "color": "#000000",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/n2pwneds",
+      "id": "3",
+      "bbox": [
+        82,
+        154,
+        1116,
+        156
+      ],
+      "alt": "Typeset equation: cases",
+      "contentType": "image/png",
+      "imageFit": "contain",
+      "asset": {
+        "assetId": "cc58390b-27c4-438c-8cf7-019e80eefd97",
+        "contentType": "image/png",
+        "byteLength": 34861
+      }
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/dwfeh83i",
+      "id": "4",
+      "bbox": [
+        86,
+        338,
+        1100,
+        237
+      ],
+      "geometry": "rect",
+      "text": "Additivity eliminates interaction-based firm relevance and assignment. A centered Tukey term ties comparative advantage to the same worker and firm indices that generate the main effects. A free-factor interaction permits a rank-one surface without forcing that economic interpretation.\n\nThus algebraic rank one does not by itself deliver a low-dimensional parameterization: unrestricted worker and firm factors can still be numerous incidental objects.",
+      "textPreview": "Additivity eliminates interaction-based firm relevance and assignment. A centered Tukey term ties comparative advantage to the same worke...",
+      "resolvedFontSize": 18.51,
+      "resolvedTextStyle": {
+        "fontSize": 18.51,
+        "typeface": "+mn-lt",
+        "color": "#000000",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 6,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Additivity eliminates interaction-based firm relevance and assignment. A centered Tukey term ties comparative advantage to the same worker"
+          },
+          {
+            "index": 2,
+            "text": "and firm indices that generate the main effects. A free-factor interaction permits a rank-one surface without forcing that economic"
+          },
+          {
+            "index": 3,
+            "text": "interpretation."
+          },
+          {
+            "index": 4,
+            "text": ""
+          },
+          {
+            "index": 5,
+            "text": "Thus algebraic rank one does not by itself deliver a low-dimensional parameterization: unrestricted worker and firm factors can still be"
+          },
+          {
+            "index": 6,
+            "text": "numerous incidental objects."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Additivity eliminates interaction-based firm relevance and assignment. A centered Tukey term ties comparative advantage to the same worker and firm indices that generate the main effects. A free-factor interaction permits a rank-one surface without forcing that economic interpretation.",
+          "resolvedTextStyle": {
+            "fontSize": 18.51,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Additivity eliminates interaction-based firm relevance and assignment. A centered Tukey term ties comparative advantage to the same worker and firm indices that generate the main effects. A free-factor interaction permits a rank-one surface without forcing that economic interpretation.",
+              "fontSize": 18.51,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "Thus algebraic rank one does not by itself deliver a low-dimensional parameterization: unrestricted worker and firm factors can still be numerous incidental objects.",
+          "resolvedTextStyle": {
+            "fontSize": 18.51,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Thus algebraic rank one does not by itself deliver a low-dimensional parameterization: unrestricted worker and firm factors can still be numerous incidental objects.",
+              "fontSize": 18.51,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/sv6x832x",
+      "id": "5",
+      "bbox": [
+        72,
+        602,
+        1136,
+        1
+      ],
+      "geometry": "rect",
+      "fillColor": "#BDBDBD",
+      "lineWidth": 0
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ruxwfylc",
+      "id": "6",
+      "bbox": [
+        86,
+        615,
+        1090,
+        34
+      ],
+      "geometry": "rect",
+      "text": "These definitions are coherent on a complete schedule; the next issue is whether sparse observed matches identify them.",
+      "textPreview": "These definitions are coherent on a complete schedule; the next issue is whether sparse observed matches identify them.",
+      "resolvedFontSize": 16,
+      "resolvedTextStyle": {
+        "fontSize": 16,
+        "typeface": "+mn-lt",
+        "color": "#666666",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "These definitions are coherent on a complete schedule; the next issue is whether sparse observed matches identify them."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "These definitions are coherent on a complete schedule; the next issue is whether sparse observed matches identify them.",
+          "resolvedTextStyle": {
+            "fontSize": 16,
+            "color": "#666666",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "These definitions are coherent on a complete schedule; the next issue is whether sparse observed matches identify them.",
+              "fontSize": 16,
+              "color": "#666666",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 7,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/qtof6tkr",
+      "id": "7",
+      "bbox": [
+        72,
+        676,
+        1040,
+        18
+      ],
+      "geometry": "rect",
+      "text": "Source: LOO note, pp. 17-23; Appendix E",
+      "textPreview": "Source: LOO note, pp. 17-23; Appendix E",
+      "resolvedFontSize": 10.51,
+      "resolvedTextStyle": {
+        "fontSize": 10.51,
+        "typeface": "+mn-lt",
+        "color": "#666666",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Source: LOO note, pp. 17-23; Appendix E"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Source: LOO note, pp. 17-23; Appendix E",
+          "resolvedTextStyle": {
+            "fontSize": 10.51,
+            "color": "#666666",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Source: LOO note, pp. 17-23; Appendix E",
+              "fontSize": 10.51,
+              "color": "#666666",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 8,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/t0ve543y",
+      "id": "8",
+      "bbox": [
+        1150,
+        676,
+        58,
+        18
+      ],
+      "geometry": "rect",
+      "text": "10",
+      "textPreview": "10",
+      "resolvedFontSize": 10.51,
+      "resolvedTextStyle": {
+        "fontSize": 10.51,
+        "typeface": "+mn-lt",
+        "color": "#666666",
+        "alignment": "right",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "10"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "10",
+          "resolvedTextStyle": {
+            "fontSize": 10.51,
+            "color": "#666666",
+            "alignment": "right"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "10",
+              "fontSize": 10.51,
+              "color": "#666666",
+              "alignment": "right"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    }
+  ],
+  "composeRuns": []
+}

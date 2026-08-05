@@ -1,0 +1,319 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,booktabs,array}
+\usepackage[hidelinks]{hyperref}
+
+\title{From Shimer--Smith to Borovi\v{c}kov\'a--Shimer}
+\author{}
+\date{\today}
+
+\newcommand{\E}{\mathbb{E}}
+
+\begin{document}
+\maketitle
+
+\section*{Source Convention}
+
+Page citations to Shimer--Smith refer to the printed Econometrica pages in
+\emph{Assortative Matching and Search}. Page citations to Borovi\v{c}kov\'a--Shimer
+refer to the paper page numbers printed in the October 23, 2025 draft,
+\emph{Assortative Matching and Wages: The Role of Selection}. When I reuse a
+result from the prior project notes, I cite the prior result PDF
+\texttt{7\_15\_Meeting (1).pdf} and the source \TeX{} files
+\texttt{shimer\_smith\_writeup.tex} or
+\texttt{model\_acceptance\_stochasticity\_writeup.tex}. Displays or claims not
+directly sourced are labeled as derived comparisons or derived identities.
+
+\section{Notation}
+
+\begin{center}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.24\linewidth}
+                >{\raggedright\arraybackslash}p{0.68\linewidth}}
+\toprule
+Symbol & Meaning \\
+\midrule
+$x,y$ & Types. In Shimer--Smith, both sides are symmetric agent types; in BS, $x$ is a worker type and $y$ is a firm/job type. Source: Shimer--Smith, p. 346; BS, pp. 4--5. \\
+$u(y),u_x$ & Unmatched density or measure. Shimer--Smith use $u(y)$ for unmatched type-$y$ agents; BS use $u_x$ for unemployed type-$x$ workers. Source: Shimer--Smith, p. 347; BS, p. 5. \\
+$v_y$ & Measure of vacant type-$y$ firms/jobs in BS. Source: BS, p. 5. \\
+$\rho$ & Meeting/contact-rate parameter. Source: Shimer--Smith, p. 347; BS, p. 5. \\
+$r,\delta$ & Discount rate and exogenous match-separation rate. Source: Shimer--Smith, pp. 347--348; BS, pp. 4--5. \\
+$f(x,y),f_{x,y}$ & Type-pair production surface. Shimer--Smith output is deterministic $f(x,y)$; BS output is $zf_{x,y}$. Source: Shimer--Smith, pp. 346--347; BS, p. 5. \\
+$z,G,g,z_0,\theta$ & BS match-specific productivity shock, its distribution and density, and the Pareto scale and shape parameters used in Proposition 2. Source: BS, pp. 5, 11. \\
+$W(x),W(x\mid y)$ & Shimer--Smith values of being unmatched and matched with type $y$. Source: Shimer--Smith, p. 348. \\
+$S(x\mid y)$ & Shimer--Smith personal capital surplus, $W(x\mid y)-W(x)$. Source: Shimer--Smith, p. 348. \\
+$\mathcal M(x)$ & Shimer--Smith mutually agreeable matching set for type $x$. Source: Shimer--Smith, p. 347. \\
+$w(x)$ & Shimer--Smith reservation wage / flow value of being unmatched, $w(x)=rW(x)$. Source: Shimer--Smith, p. 349. \\
+$\pi(x\mid y)$ & Shimer--Smith flow payoff to type $x$ while matched with type $y$. Source: Shimer--Smith, pp. 347--348. \\
+$\alpha_x,\psi_y,c_{xy}$ & Derived additive worker-side term, additive other-side term, and interaction term used to rewrite the Shimer--Smith payoff as $\pi(x\mid y)=\alpha_x+\psi_y+c_{xy}$. Source for derivation: prior result PDF, Sec. 6.3; \texttt{shimer\_smith\_writeup.tex}, Sec. 6.3. \\
+$V_x^u,V_y^v$ & BS values of unemployment for worker type $x$ and vacancy for firm type $y$. Source: BS, pp. 5--6. \\
+$V^e_{x,y}(z,w),V^f_{y,x}(z,w)$ & BS employed-worker and matched-firm values for match quality $z$ and wage $w$. Source: BS, pp. 5--6. \\
+$\bar w_x,\bar\pi_y$ & BS worker reservation wage and firm reservation profit, $\bar w_x=rV_x^u$ and $\bar\pi_y=rV_y^v$. Source: BS, p. 6. \\
+$V^s_{x,y}(z)$ & BS total match surplus. Source: BS equation (5), p. 6. \\
+$\bar z_{x,y}$ & BS reservation productivity threshold, $(\bar w_x+\bar\pi_y)/f_{x,y}$. Source: BS equation (6), p. 6. \\
+$\gamma$ & BS worker bargaining weight in Nash bargaining. Source: BS, p. 5. \\
+$W_{x,y}(z)$ & BS equilibrium wage in an accepted match. Source: BS equation (9), p. 7. \\
+$ITT_x(y),ATT_x(y)$ & BS intent-to-treat and average treatment on the treated from creating a meeting with a type-$y$ firm for a type-$x$ worker. Source: BS equations (17)--(19), pp. 9--10. \\
+$\omega_{i,j},\alpha_x^*,\psi_y^*,\epsilon_{i,j}$ & BS observed accepted-match wage and Proposition 2 worker component, firm component, and residual. Source: BS Proposition 2, pp. 11--12. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{The Clean Mapping}
+
+The old notes had the right informal comparison: Shimer--Smith is random search
+with deterministic type-pair surplus, while Borovi\v{c}kov\'a--Shimer is random
+search with stochastic match-specific surplus. Source: prior result PDF, Secs.
+1 and 8.4; \texttt{model\_acceptance\_stochasticity\_writeup.tex}, Secs. 3--4.
+The mapping is:
+
+\[
+\begin{array}{>{\raggedright\arraybackslash}p{0.27\linewidth}
+                >{\raggedright\arraybackslash}p{0.31\linewidth}
+                >{\raggedright\arraybackslash}p{0.31\linewidth}}
+\toprule
+Object & Shimer--Smith & Borovi\v{c}kov\'a--Shimer \\
+\midrule
+Side structure & Symmetric agents of types $x,y$ & Workers $x$ and firms/jobs $y$ \\
+Meetings & Unmatched type $x$ meets unmatched type $y$ at rate
+$\rho u(y)\,dy$ & Unemployed type $x$ worker contacts vacant type $y$ firm at
+rate $\rho v_y$ \\
+Match output & Deterministic $f(x,y)$ & Stochastic $z f_{x,y}$, with $z\sim G$ drawn at the meeting \\
+Worker outside flow value & $w(x)=rW(x)$ & $\bar w_x=rV_x^u$ \\
+Other side outside flow value & $w(y)=rW(y)$ & $\bar\pi_y=rV_y^v$ \\
+Accepted-match payoff/wage & $\pi(x\mid y)$, the worker's flow payoff & $W_{x,y}(z)$, the equilibrium wage \\
+Surplus split & Symmetric Nash, $S(x\mid y)=S(y\mid x)$ & Generalized Nash, worker share $\gamma$ \\
+Acceptance & $f(x,y)\geq w(x)+w(y)$ & $z f_{x,y}\geq \bar w_x+\bar\pi_y$ \\
+\bottomrule
+\end{array}
+\]
+
+The following correspondence is a derived notational map across the two models:
+\[
+f(x,y)
+\quad\longleftrightarrow\quad
+z f_{x,y},
+\qquad
+w(x)
+\quad\longleftrightarrow\quad
+\bar w_x,
+\qquad
+w(y)
+\quad\longleftrightarrow\quad
+\bar\pi_y.
+\]
+Derived comparison: with $\gamma=1/2$ and a degenerate productivity draw $z=z^\ast$, the algebraic
+structure of the matched payoff is the Shimer--Smith structure with asymmetric
+worker/firm labels. But with nondegenerate $z$, the type pair $(x,y)$ does not
+map to one deterministic payoff. It maps to a distribution of possible realized
+surpluses, observed only after the acceptance threshold is crossed.
+
+\section{Where the Models Actually Diverge}
+
+The divergence is not the Bellman logic. In both papers, value equations have
+current flow payoffs plus expected capital gains/losses from Poisson events. In
+Shimer--Smith, an unmatched type $x$ receives a capital gain when a mutually
+agreeable type $y$ is met, and a matched agent loses the personal surplus when
+the match is destroyed. Source: Shimer--Smith, pp. 347--349; prior result PDF,
+Secs. 1.3--1.6; \texttt{shimer\_smith\_writeup.tex}, Sec. 1.
+
+The divergence is also not simply that one model is random and the other is
+deterministic. Both have random meetings and random separations. The exact
+divergence is the timing and role of match quality. In Shimer--Smith, once the
+types $(x,y)$ are fixed, match output is fixed at $f(x,y)$. Therefore the
+equilibrium acceptance rule is deterministic at the type-pair level:
+\[
+y\in \mathcal M(x)
+\quad\Longleftrightarrow\quad
+f(x,y)-w(x)-w(y)\geq 0 .
+\]
+Source: Shimer--Smith, equation (5), p. 349.
+
+In Borovi\v{c}kov\'a--Shimer, a type $x$ worker and type $y$ firm draw $z$ after
+they meet. Holding $(x,y)$ fixed, some meetings are accepted and others are
+rejected. The type-pair acceptance probability is
+\[
+\Pr(\text{accept}\mid x,y)=1-G(\bar z_{x,y}),
+\qquad
+\bar z_{x,y}=\frac{\bar w_x+\bar\pi_y}{f_{x,y}}.
+\]
+Source: BS equations (6) and (13), pp. 6--8. That is the selection wedge. It
+creates a difference between the value of creating a meeting and the value of an
+observed accepted match.
+
+\section{Bellman to Threshold to ITT}
+
+BS write the worker and firm Bellman equations for a realized match quality
+$z$ and arbitrary wage $w$ as
+\[
+rV^e_{x,y}(z,w)=w+\delta\left(V_x^u-V^e_{x,y}(z,w)\right),
+\]
+\[
+rV^f_{y,x}(z,w)=z f_{x,y}-w+\delta\left(V_y^v-V^f_{y,x}(z,w)\right).
+\]
+Source: BS equations (2)--(4), pp. 6--7. Define
+\[
+\bar w_x=rV_x^u,\qquad \bar\pi_y=rV_y^v.
+\]
+Adding the worker and firm values and subtracting outside values gives total
+match surplus
+\[
+V^s_{x,y}(z)
+=
+\frac{\max\{z f_{x,y}-\bar w_x-\bar\pi_y,0\}}{r+\delta}.
+\]
+Source: BS equation (5), p. 6.
+
+Thus the selection threshold is exactly
+\[
+z\geq \bar z_{x,y},
+\qquad
+\bar z_{x,y}
+=
+\frac{\bar w_x+\bar\pi_y}{f_{x,y}}.
+\]
+Source: BS equation (6), p. 6. This is the BS analogue of Shimer--Smith's
+$f(x,y)\geq w(x)+w(y)$, except that the left-hand side is realized only after
+the meeting.
+
+Under Nash bargaining with worker share $\gamma$, the worker's gain from an
+accepted meeting is $\gamma V^s_{x,y}(z)$. BS define the value of creating a
+meeting before seeing $z$ as the intent-to-treat:
+\[
+ITT_x(y)
+=
+\gamma\int_0^\infty V^s_{x,y}(z)g(z)\,dz
+=
+\gamma\int_{\bar z_{x,y}}^\infty V^s_{x,y}(z)g(z)\,dz.
+\]
+Source: BS equations (17)--(18), p. 9. The average treatment on the treated,
+conditional on the meeting actually becoming a match, is
+\[
+ATT_x(y)
+=
+\gamma
+\frac{\int_{\bar z_{x,y}}^\infty V^s_{x,y}(z)g(z)\,dz}
+{1-G(\bar z_{x,y})}.
+\]
+Source: BS equation (19), pp. 9--10. Dividing the ITT integral by the ATT
+conditional mean gives the derived identity
+\[
+ITT_x(y)=\left[1-G(\bar z_{x,y})\right]ATT_x(y).
+\]
+Under the Pareto case used in BS Section 3, this becomes
+\[
+ITT_x(y)
+=
+\left(\frac{\bar z_{x,y}}{z_0}\right)^{-\theta}ATT_x(y).
+\]
+Source: BS equation (27), pp. 13--14. BS emphasize the empirical content of this
+identity: wage data on accepted matches reveal objects tied to the ATT, not the
+ITT, unless one also knows the probability that a meeting clears the acceptance
+threshold. Source: BS equation (20), p. 10, and Sec. 3.2, pp. 13--14.
+
+\section{Is $\pi(x\mid y)$ a Wage?}
+
+For Shimer--Smith, yes in the limited sense that $\pi(x\mid y)$ is the flow payoff
+received by type $x$ while matched with type $y$. It is the worker-side flow
+payment in the Bellman equation, and feasibility imposes
+\[
+\pi(x\mid y)+\pi(y\mid x)=f(x,y).
+\]
+Source: Shimer--Smith, pp. 347--348. The old note derived the useful expression
+\[
+\pi(x\mid y)
+=
+\frac12 f(x,y)+\frac12 w(x)-\frac12 w(y).
+\tag{SS-payoff}
+\]
+Source: prior result PDF, Sec. 6.3; \texttt{shimer\_smith\_writeup.tex},
+Sec. 6.3. This is not printed in Shimer--Smith; it follows from their equations
+(3)--(4), pp. 348--349.
+
+For BS, the actual wage object is not $\pi(x\mid y)$. BS use $\bar\pi_y$ for the
+firm's reservation profit, while the accepted-match wage is $W_{x,y}(z)$. The
+structural wage equation is
+\[
+W_{x,y}(z)
+=
+\bar w_x+\gamma\left(zf_{x,y}-\bar w_x-\bar\pi_y\right),
+\qquad z\geq \bar z_{x,y}.
+\]
+Source: BS equation (9), p. 7. Derived comparison to SS: this is exactly parallel to the SS-payoff formula,
+outside value plus worker bargaining share times realized net surplus. Setting
+$\gamma=1/2$ and replacing $z f_{x,y}$ by deterministic $f(x,y)$ gives
+\[
+W_{x,y}
+=
+\frac12 f_{x,y}+\frac12\bar w_x-\frac12\bar\pi_y,
+\]
+which is the same additive-plus-half-production structure as SS-payoff.
+
+\section{Check Against BS Proposition 2}
+
+Proposition 2 is the payoff from adding the stochastic $z$ and then conditioning
+on accepted matches. Under a Pareto distribution for $z$, BS prove that the wage
+observed in an accepted match can be written
+\[
+\omega_{i,j}
+=
+\alpha^*_{x_i}+\psi^*_{y_j}+\epsilon_{i,j},
+\]
+where
+\[
+\alpha^*_x
+=
+\left(1+\frac{\gamma}{\theta-1}\right)\bar w_x,
+\qquad
+\psi^*_y
+=
+\frac{\gamma}{\theta-1}\bar\pi_y,
+\]
+and the residual is mean zero conditional on the worker and firm types. Source:
+BS Proposition 2, pp. 11--12.
+
+BS then connect the firm wage component to treatment effects. In the Pareto
+case,
+\[
+ATT_x(y)
+=
+\frac{\gamma(\bar w_x+\bar\pi_y)}{(\theta-1)(r+\delta)}
+=
+\frac{\frac{\gamma}{\gamma+\theta-1}\alpha^*_x+\psi^*_y}{r+\delta}.
+\]
+Therefore, for a fixed worker type,
+\[
+ATT_x(y_1)-ATT_x(y_2)
+=
+\frac{\psi^*_{y_1}-\psi^*_{y_2}}{r+\delta}.
+\]
+Source: BS equations (24)--(26), p. 13. This is the precise sense in which
+firm wage premia line up with the ATT: they recover differences in accepted
+match values, not differences in the ex ante value of creating meetings.
+
+Derived comparison: this does line up with the SS additive-plus-$\frac12 f$ result, but with an
+important twist. In SS, the payoff surface is additive plus one-half of the
+deterministic production surface. In BS with Pareto $z$, conditioning on
+acceptance makes the normalized overshoot $z/\bar z_{x,y}$ have the same
+distribution for every type pair. Since
+\[
+\bar z_{x,y}f_{x,y}=\bar w_x+\bar\pi_y,
+\]
+the accepted wage can be rewritten in terms of $(\bar w_x,\bar\pi_y)$ and the
+accepted overshoot, rather than in terms of $f_{x,y}$ directly. That is why
+Proposition 2 says the accepted wage is additively separable even though the
+matching probabilities still depend on $f_{x,y}$ through $\bar z_{x,y}$.
+
+So the exact slogan should be:
+\[
+\text{SS: deterministic type-pair surplus gives payoff } 
+\frac12 f+\text{additive outside values.}
+\]
+\[
+\text{BS: stochastic type-pair surplus plus Pareto selection gives accepted wages }
+\text{additive in reservation values.}
+\]
+The wage surface can look additively separable in BS while the match graph is
+strongly shaped by nonadditive production through selection thresholds. This is
+the real bridge from Bellman to selection to ITT.
+
+\end{document}

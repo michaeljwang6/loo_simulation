@@ -1,0 +1,4408 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,booktabs,array,longtable,enumitem,xcolor}
+\usepackage[hidelinks]{hyperref}
+
+\title{Merged Notes From This Chat: BLM, LOO, Econ AI/PPI, and Borovickova--Shimer 2020}
+\author{}
+\date{\today}
+
+\newtheorem{claim}{Claim}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\one}{\mathbf{1}}
+\newcommand{\ind}{\mathbf{1}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\row}{\operatorname{row}}
+\newcommand{\kerop}{\operatorname{ker}}
+\newcommand{\corr}{\operatorname{corr}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\thetav}{\boldsymbol{\theta}}
+\newcommand{\Yhat}{\widehat Y}
+\newcommand{\Vhat}{\widehat V}
+\newcommand{\se}{\operatorname{se}}
+
+\begin{document}
+\maketitle
+
+\section*{File Convention}
+
+This is the single TeX file for the notes created in this chat. It does not include or modify older project files. Citations to handoff files, earlier project notes, or source \TeX{} files are provenance citations only: the explanations below are intended to be readable on their own. The one PowerPoint slide requested earlier remains a separate PPTX artifact for the LOO note.
+
+
+\clearpage
+\section*{Part I: BLM, Double Demeaning, and Kline Nesting}
+
+\section*{Main finding}
+
+The earlier double-demeaning draft had the right algebra but did not put the algebra
+to work. The point of double demeaning is not just to rewrite a type-cell mean
+matrix. The point is to prove a low-rank restriction for the BLM static mean
+layer after additive worker and firm components have been partialled out.
+
+The clean statement is:
+\[
+\text{BLM static type/class mean layer}
+\quad\Longrightarrow\quad
+\rank(\text{double-demeaned interaction})\leq \min\{K-1,L-1\}.
+\]
+Here \(K\) is the number of worker types and \(L\) is the number of firm
+classes. This is the sense in which the project low-rank wage interface nests
+BLM: it nests BLM's static wage-equation or type-cell mean layer. It does not
+nest the full BLM framework, which also specifies earnings distributions,
+worker-type proportions, firm-class estimation, and dynamic mobility.
+
+For Kline, the answer is different. AKM is nested in the project model as the
+rank-zero case. Kline's complete unrestricted edge model is not nested in the
+current wage-level low-rank model because Kline's model lives on mover
+transitions, not wage levels. To nest Kline completely while preserving the
+existing BLM and AKM nesting results, the smallest clean change is to augment
+the supermodel with an edge-effect layer. The wage-level layer continues to
+nest BLM/AKM/low-rank surfaces; the edge layer nests Kline's unrestricted
+\(\Delta_{jk}\).
+
+\section{Source convention}
+
+Page citations to Bonhomme--Lamadon--Manresa refer to the printed Econometrica
+pages in Bonhomme, Lamadon, and Manresa (2019), \emph{A Distributional
+Framework for Matched Employer Employee Data}. Page citations to Kline refer to
+the PDF pages in Kline (2024, revised 2025), \emph{Firm Wage Effects}. Claims
+labeled ``derived'' are algebraic consequences of the displayed model
+definitions or synthesis from the cited handoff source files
+\texttt{handoff\_2026-07-22\_search\_lowrank\_memo.md} and
+\texttt{semistructural\_project\_handoff.md}.
+
+\section{Notation}
+
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.24\linewidth}
+                  >{\raggedright\arraybackslash}p{0.68\linewidth}}
+\toprule
+Symbol & Meaning \\
+\midrule
+\endfirsthead
+\toprule
+Symbol & Meaning \\
+\midrule
+\endhead
+\(i,j,t\) & Worker, firm, and time indices. \\
+\(Y_{it}\) & Log earnings of worker \(i\) in period \(t\). Source: BLM, p. 703; Kline, p. 15. \\
+\(X_{it}\) & Observed covariates. Source: BLM, p. 703; Kline, p. 15. \\
+\(\alpha_i\) & Worker type or worker effect. In BLM it is the worker type, possibly discrete or continuous; in AKM/Kline it is the worker fixed effect. Source: BLM, p. 703; Kline, p. 15. \\
+\(k,\ell\) & Worker type and firm class indices in the derived type-cell construction. \\
+\(K,L\) & Number of worker types and firm classes in the derived type-cell construction. \\
+\(g(i),h(j)\) & Maps from worker \(i\) to worker type \(g(i)\) and firm \(j\) to firm class \(h(j)\). Derived notation. \\
+\(\mu_{k\ell}\) & Static mean wage for worker type \(k\) at firm class \(\ell\), after covariates are fixed or partialled out. Derived from BLM's static wage layer. \\
+\(\mu_{k\cdot},\mu_{\cdot\ell},\mu_{\cdot\cdot}\) & Row, column, and grand means of the type-cell matrix. Derived notation. \\
+\(H_K,H_L\) & Centering matrices \(I_K-\one_K\one_K'/K\) and \(I_L-\one_L\one_L'/L\). Derived notation. \\
+\(p,q\) & Population probability vectors for worker types and firm classes in the weighted double-demeaning extension. Derived notation. \\
+\(M_{p,q}\) & Weighted double-centered table, \((I_K-\one_Kp')\mu(I_L-q\one_L')\). Derived notation. \\
+\(Q_K,Q_L\) & Orthonormal bases for the centered worker-type and firm-class subspaces. Derived notation. \\
+\(M\) & Double-demeaned interaction matrix, \(M=H_K\mu H_L\). This is not Kline's residual-maker matrix. \\
+\(Z,W\) & Worker-type and firm-class membership matrices in the lifted worker-by-firm mean matrix. Derived notation. \\
+\(A_r,\Sigma_r,B_r\) & Thin singular-value decomposition of the centered BLM interaction, \(M=A_r\Sigma_rB_r'\). Derived notation. \\
+\(\psi_j\) & Firm effect in AKM/Kline or additive firm component in the project wage surface. Source: Kline, p. 15. \\
+\(u_i,v_j,\Lambda\) & Worker factors, firm factors, and interaction matrix in the project low-rank wage interface. Derived project notation used throughout this merged note. \\
+\(R,E,B,\Delta\) & Kline adjusted wage changes, worker-by-edge matrix, firm-by-edge incidence matrix, and unrestricted directed edge effects. Source: Kline, pp. 18--19. \\
+\(\Delta_{jk}\) & Kline mean adjusted wage change for movers from origin firm \(j\) to destination firm \(k\). Source: Kline, p. 19. \\
+\(c,C,\eta\) & Cycle vector, matrix of fundamental cycles, and cycle-effect coefficients in Kline's edge decomposition. Source: Kline, pp. 18--20. \\
+\(\tau_{jk}\) & Proposed unrestricted transition/edge wedge used to augment the project supermodel so that it nests Kline completely. Derived notation. \\
+\bottomrule
+\end{longtable}
+
+\section{The project wage interface}
+
+Suppress observed covariates unless they matter. The project's static
+mean-surface interface is
+\[
+m_{ij}
+=
+\alpha_i+\psi_j+u_i'\Lambda v_j.
+\tag{LR-level}
+\]
+Equivalently, with covariates,
+\[
+\E[Y_{ij}\mid i,j,X_{ij}]
+=
+X_{ij}'\delta+\alpha_i+\psi_j+u_i'\Lambda v_j.
+\]
+The rank restriction is a restriction on the interaction part after additive
+worker and firm terms have been removed. It is not a restriction on the raw
+wage matrix \(m=(m_{ij})\), because even the additive part
+\(\alpha_i+\psi_j\) can have rank two as an \(I\times J\) matrix. The relevant
+object is the residualized interaction surface.
+
+\section{BLM's static layer and the corrected double-demeaning proof}
+
+\subsection{What BLM contributes}
+
+BLM propose a framework for matched employer-employee panel data with two-sided
+unobserved heterogeneity and complementarities in earnings. They introduce a
+static model with nonlinear worker-firm interactions and a dynamic model with
+Markovian earnings dynamics and endogenous mobility. Source: BLM, pp. 699--700.
+
+Their firm heterogeneity is summarized by firm classes. They write
+\(k_{it}=k(j_{it})\) for the class of the firm employing worker \(i\) at time
+\(t\), and the classes partition firms. Source: BLM, p. 702. Workers have
+unobserved types \(\alpha_i\), which can be discrete or continuous depending on
+the specification. Source: BLM, p. 703. The objects of interest include
+earnings distributions for workers of a given type in a given firm class and
+the proportions of worker types in firm classes. Source: BLM, p. 703.
+
+BLM's simple static regression example is
+\[
+Y_{it}
+=
+a_t(k_{it})+b_t(k_{it})\alpha_i+X_{it}'c_t+\varepsilon_{it}.
+\tag{BLM-simple}
+\]
+Source: BLM, p. 704. BLM note that this simplifies to AKM when the interaction
+is absent, \(b_t(k)=1\), and firms and classes coincide. Source: BLM, p. 704.
+
+For the low-rank proof, the BLM object we use is the static type/class
+conditional mean surface:
+\[
+\mu_{k\ell}
+=
+\E[Y\mid \text{worker type }k,\text{ firm class }\ell],
+\qquad
+k=1,\ldots,K,\quad \ell=1,\ldots,L.
+\tag{BLM-mean}
+\]
+This is a projection of BLM's richer framework onto a static mean object. The
+projection is deliberate: the low-rank wage interface is a mean-surface model,
+while full BLM is a distributional panel-data framework.
+
+\subsection{Double demeaning in matrix form}
+
+Let
+\[
+\mu
+=
+\begin{bmatrix}
+\mu_{11} & \cdots & \mu_{1L}\\
+\vdots   &        & \vdots\\
+\mu_{K1} & \cdots & \mu_{KL}
+\end{bmatrix}
+\in \R^{K\times L}.
+\]
+Define
+\[
+H_K=I_K-\frac{1}{K}\one_K\one_K',
+\qquad
+H_L=I_L-\frac{1}{L}\one_L\one_L'.
+\]
+The double-demeaned interaction matrix is
+\[
+M
+=
+H_K\mu H_L.
+\tag{DD-matrix}
+\]
+Entry by entry this is
+\[
+M_{k\ell}
+=
+\mu_{k\ell}-\mu_{k\cdot}-\mu_{\cdot\ell}+\mu_{\cdot\cdot},
+\tag{DD-entry}
+\]
+where
+\[
+\mu_{k\cdot}=\frac{1}{L}\sum_{\ell=1}^L\mu_{k\ell},
+\qquad
+\mu_{\cdot\ell}=\frac{1}{K}\sum_{k=1}^K\mu_{k\ell},
+\qquad
+\mu_{\cdot\cdot}=\frac{1}{KL}\sum_{k=1}^K\sum_{\ell=1}^L\mu_{k\ell}.
+\]
+
+The additive row and column pieces are
+\[
+a_k=\mu_{k\cdot}-\mu_{\cdot\cdot},
+\qquad
+b_\ell=\mu_{\cdot\ell}.
+\]
+Then
+\[
+\mu_{k\ell}
+=
+a_k+b_\ell+M_{k\ell}.
+\tag{ANOVA}
+\]
+This is the two-way ANOVA decomposition. The row and column means absorb the
+additive worker-type and firm-class components. The remaining matrix \(M\) is
+the nonadditive part of the type/class wage surface.
+
+\subsection{Proof that the double-demeaned BLM interaction is low rank}
+
+The key point is that \(M\) lives in centered worker-type and firm-class
+spaces. First,
+\[
+M\one_L
+=
+H_K\mu H_L\one_L
+=
+H_K\mu\cdot 0
+=
+0.
+\]
+Thus every row of \(M\) sums to zero. Similarly,
+\[
+\one_K'M
+=
+\one_K'H_K\mu H_L
+=
+0'\mu H_L
+=
+0'.
+\]
+Thus every column of \(M\) sums to zero.
+
+Because \(M\one_L=0\), the rows of \(M\) lie in the \((L-1)\)-dimensional
+subspace of \(\R^L\) orthogonal to \(\one_L\). Because \(\one_K'M=0\), the
+columns of \(M\) lie in the \((K-1)\)-dimensional subspace of \(\R^K\)
+orthogonal to \(\one_K\). Therefore
+\[
+\rank(M)\leq K-1
+\qquad\text{and}\qquad
+\rank(M)\leq L-1.
+\]
+Combining the two bounds gives
+\[
+\boxed{\rank(M)\leq \min\{K-1,L-1\}.}
+\tag{BLM-rank}
+\]
+
+\paragraph{What ``the missing point'' means.}
+The phrase refers to the omission in the earlier project note, not to an
+omission by Bonhomme--Lamadon--Manresa.  The earlier note described double
+demeaning as a normalization but stopped before proving the implication needed
+for this project: after removing additive type and class means, the remaining
+BLM mean surface belongs to a low-rank interaction class.  The logical chain is
+therefore
+\[
+\text{finite BLM type/class mean table}
+\Longrightarrow
+\text{double-centered interaction}
+\Longrightarrow
+\rank(M)\leq \min\{K-1,L-1\}
+\Longrightarrow
+\text{low-rank worker--firm mean surface after lifting}.
+\]
+BLM supply the finite type/class mean object; the rank conclusion is the
+linear-algebra bridge that connects that object to the project's low-rank wage
+interface.  Source for the BLM mean/type/class objects: BLM, pp. 702--704.
+
+\paragraph{A one-line rank proof.}
+The centering matrices are idempotent projections with
+\[
+\rank(H_K)=K-1,
+\qquad
+\rank(H_L)=L-1.
+\]
+Consequently the standard product-rank inequality gives
+\[
+\rank(H_K\mu H_L)
+\leq
+\min\{\rank(H_K),\rank(\mu),\rank(H_L)\}
+\leq
+\min\{K-1,L-1\}.
+\]
+The row-space and column-space argument above explains \emph{why} this
+inequality holds; this display shows that it is also an immediate projection
+result.
+
+\paragraph{Centered-coordinate representation.}
+Let \(Q_K\in\R^{K\times(K-1)}\) and
+\(Q_L\in\R^{L\times(L-1)}\) have orthonormal columns spanning the subspaces
+orthogonal to \(\one_K\) and \(\one_L\).  Then
+\[
+H_K=Q_KQ_K',
+\qquad
+H_L=Q_LQ_L',
+\]
+and hence
+\[
+M
+=
+Q_K\underbrace{(Q_K'\mu Q_L)}_{\widetilde M\in
+\R^{(K-1)\times(L-1)}}Q_L'.
+\tag{BLM-centered-core}
+\]
+Thus all nonzero singular directions of \(M\) live in the centered core
+\(\widetilde M\).  In particular,
+\(\rank(M)=\rank(\widetilde M)\leq\min\{K-1,L-1\}\).  This factorization is
+useful for estimation because it removes the two mechanically null constant
+directions before any numerical rank selection is performed.
+
+\paragraph{Unequal type and class frequencies.}
+The equal-weight matrices \(H_K,H_L\) are pedagogically convenient.  If worker
+types have probabilities \(p\in\R^K\) and firm classes have probabilities
+\(q\in\R^L\), with positive entries and \(p'\one_K=q'\one_L=1\), the relevant
+weighted double demeaning is
+\[
+M_{p,q}
+=
+(I_K-\one_Kp')\mu(I_L-q\one_L').
+\tag{weighted-DD}
+\]
+Its entries are
+\[
+(M_{p,q})_{k\ell}
+=
+\mu_{k\ell}
+-\sum_{s=1}^L q_s\mu_{ks}
+-\sum_{r=1}^K p_r\mu_{r\ell}
++\sum_{r=1}^K\sum_{s=1}^L p_rq_s\mu_{rs}.
+\]
+The left and right centering operators each have rank one less than full rank,
+so the same argument yields
+\[
+\boxed{\rank(M_{p,q})\leq\min\{K-1,L-1\}.}
+\]
+This weighted version is the correct population statement when latent types and
+firm classes occur with unequal frequencies.  The rank bound is therefore not
+an artifact of assigning equal mass to type cells.
+
+The substantive restriction is small \(K,L\), not double demeaning by itself.
+Every \(K\times L\) table satisfies the displayed bound after centering.  The
+bound becomes economically useful only when the number of latent types and
+classes is small relative to the number of workers and firms, or when the
+centered core has still lower numerical rank.
+
+\subsection{Lifting the BLM type-cell proof to the worker-by-firm matrix}
+
+Let \(Z\in\{0,1\}^{I\times K}\) be the worker-type membership matrix:
+\[
+Z_{ik}=1\{g(i)=k\}.
+\]
+Let \(W\in\{0,1\}^{J\times L}\) be the firm-class membership matrix:
+\[
+W_{j\ell}=1\{h(j)=\ell\}.
+\]
+The worker-by-firm mean matrix implied by the BLM static type/class surface is
+\[
+\mathcal{M}=Z\mu W'.
+\tag{lifted-mean}
+\]
+The lifted additive pieces are \(Za\one_J'\) and \(\one_I b'W'\). The lifted
+interaction is
+\[
+\mathcal{R}=ZMW'.
+\tag{lifted-interaction}
+\]
+By the rank inequality,
+\[
+\rank(\mathcal{R})
+=
+\rank(ZMW')
+\leq
+\rank(M)
+\leq
+\min\{K-1,L-1\}.
+\tag{lifted-rank}
+\]
+If every worker type and firm class is represented, then \(Z\) and \(W\) have
+full column rank.  In that case the inequality sharpens to
+\[
+\rank(ZMW')=\rank(M).
+\tag{lifted-rank-equality}
+\]
+To see this, let \(Z^+=(Z'Z)^{-1}Z'\) and \(W^+=(W'W)^{-1}W'\) be left
+inverses.  Since
+\[
+M=Z^+(ZMW')(W^+)',
+\]
+we have \(\rank(M)\leq\rank(ZMW')\), while the reverse inequality follows
+from the product-rank bound.  Lifting therefore replicates type rows and class
+columns but does not create new singular directions.
+This is the exact worker-by-firm version of the BLM low-rank claim. The large
+\(I\times J\) residual interaction matrix has rank bounded by the number of
+latent worker types and firm classes, not by the number of observed workers and
+firms.
+
+\subsection{Embedding the BLM static layer in the project interface}
+
+Take
+\[
+\alpha_i=a_{g(i)},
+\qquad
+\psi_j=b_{h(j)},
+\qquad
+u_i=e_{g(i)},
+\qquad
+v_j=e_{h(j)},
+\qquad
+\Lambda=M.
+\]
+Then
+\[
+u_i'\Lambda v_j
+=
+e_{g(i)}'M e_{h(j)}
+=
+M_{g(i),h(j)}.
+\]
+Therefore
+\[
+\alpha_i+\psi_j+u_i'\Lambda v_j
+=
+a_{g(i)}+b_{h(j)}+M_{g(i),h(j)}
+=
+\mu_{g(i),h(j)}.
+\]
+So the project interface exactly reproduces any BLM static discrete
+type/class mean surface. The interaction rank is bounded by
+\(\min\{K-1,L-1\}\).
+
+\paragraph{Dimensions and a minimal-rank parameterization.}
+The indicator construction above uses \(K\)- and \(L\)-dimensional factors,
+but it does not claim that those coordinates are identified or minimal.  Let
+the thin singular-value decomposition of the centered table be
+\[
+M=A_r\Sigma_r B_r',
+\qquad
+A_r\in\R^{K\times r},
+\quad
+B_r\in\R^{L\times r},
+\quad
+r=\rank(M).
+\]
+An observationally equivalent \(r\)-dimensional embedding is
+\[
+\widetilde u_i=\Sigma_r^{1/2}A_r'e_{g(i)},
+\qquad
+\widetilde v_j=\Sigma_r^{1/2}B_r'e_{h(j)},
+\]
+because
+\[
+\widetilde u_i'\widetilde v_j
+=e_{g(i)}'A_r\Sigma_rB_r'e_{h(j)}
+=M_{g(i),h(j)}.
+\]
+Hence the type-indicator representation proves surface inclusion, while the
+SVD representation exhibits the smallest algebraic interaction dimension.
+Neither representation identifies BLM's structural latent types without the
+additional distributional and mobility restrictions in the full BLM model.
+
+\paragraph{Exactly what has been nested.}
+For every static BLM type/class conditional mean table \(\mu\), the map above
+constructs parameters \((\alpha,\psi,U,V,\Lambda)\) that reproduce
+\(\mu_{g(i),h(j)}\) for every worker--firm pair.  This is an existence statement
+about conditional means.  It does not claim equality of latent labels,
+earnings distributions, type proportions, assignment probabilities, or
+transition laws.  This distinction follows the project handoff's separation
+between surface nesting and factor identification and the distinction between
+BLM's static and dynamic objects on pp. 703--706.
+
+\subsection{Special case: BLM's simple interactive regression is rank one}
+
+Now use BLM's displayed static regression example, suppressing \(t\) and
+covariates:
+\[
+\E[Y_{it}\mid \alpha_i,k_{it}=\ell]
+=
+a(\ell)+b(\ell)\alpha_i.
+\]
+Let \(\bar \alpha\) be the mean of \(\alpha_i\) over the relevant worker
+population, and let \(\bar b\) be the mean of \(b(\ell)\) over firm classes.
+After removing worker and firm additive components, the interaction is
+\[
+(\alpha_i-\bar\alpha)(b(h(j))-\bar b).
+\tag{rank-one-BLM}
+\]
+This is an outer product: a centered worker scalar times a centered firm-class
+scalar. Hence its algebraic rank is at most one.
+
+This special case is useful because it prevents a common confusion. The BLM
+simple regression can be rank one as a wage surface while still allowing one
+worker type value \(\alpha_i\) per worker. Algebraic low rank of the wage
+interaction is not the same thing as a small number of worker fixed-effect
+parameters. The project restriction is about the rank of the residualized
+interaction surface.
+
+\subsection{What is and is not nested from BLM}
+
+The nesting statement is:
+\[
+\Pi_{\mathrm{mean}}(\cP_{\mathrm{BLM,static}})
+\subseteq
+\cF_{\mathrm{LR}},
+\]
+where \(\Pi_{\mathrm{mean}}\) maps a BLM data-generating process to its static
+conditional mean wage surface, and \(\cF_{\mathrm{LR}}\) is the set of mean
+surfaces generated by (LR-level).
+
+The stronger statement
+\[
+\cP_{\mathrm{BLM}}\subseteq \cF_{\mathrm{LR}}
+\]
+is not well typed. BLM is a class of joint panel-data distributions. The
+low-rank interface is a class of conditional mean functions. BLM's full
+framework includes earnings distributions, worker-type proportions, firm-class
+assignment, mobility laws, and, in the dynamic model, dependence of mobility on
+current earnings and dependence of future earnings on previous earnings and
+previous firm class. Source: BLM, pp. 703--706. Those objects are not specified
+by (LR-level).
+
+The precise phrase to use is therefore:
+\[
+\text{the project model nests BLM's static wage-equation/type-cell mean layer,}
+\]
+not
+\[
+\text{the project model nests the full BLM empirical framework.}
+\]
+
+\section{Kline's edge model and the nesting question}
+
+\subsection{Kline's model}
+
+Kline starts from the AKM wage equation
+\[
+Y_{it}
+=
+\alpha_i+\psi_{j(i,t)}+X_{it}'\beta+\varepsilon_{it}.
+\tag{AKM}
+\]
+Source: Kline, p. 15. For two-period movers, define adjusted wage changes
+\[
+R=Y_2-Y_1-(X_2-X_1)'\beta.
+\]
+Let \(E\) be the worker-by-edge matrix of directed origin-destination
+indicators, and let \(B\) be the firm-by-edge incidence matrix. Kline shows
+that AKM implies
+\[
+R=EB'\psi+\varepsilon.
+\tag{AKM-edge}
+\]
+Source: Kline, pp. 18--19.
+
+Kline contrasts this with the unrestricted edge-effect model
+\[
+R=E\Delta+u,
+\tag{Kline-unrestricted}
+\]
+where \(\Delta\in\R^{|E|}\) contains a separate directed edge effect for every
+observed origin-destination firm pair. Source: Kline, p. 19. AKM imposes
+\[
+\Delta=B'\psi.
+\tag{Kline-AKM-restriction}
+\]
+This reduces the \(|E|\) directed edge effects to \(J-1\) linearly independent
+firm effects in a connected mobility graph. Source: Kline, p. 19.
+
+The empirical content of this restriction is path independence. If \(c\) is any
+cycle vector in the mobility graph, then \(Bc=0\). Hence under AKM,
+\[
+c'\Delta=c'B'\psi=0.
+\]
+Kline states that these cyclic restrictions exhaust the empirical restrictions
+of AKM on edge effects within a connected set and writes the decomposition
+\[
+\Delta=B'\dot\psi+C\dot\eta,
+\]
+where \(C\dot\eta\) is the cycle component and AKM imposes
+\(\dot\eta=0\). Source: Kline, pp. 18--20.
+
+\subsection{AKM is nested in the project model}
+
+Set \(\Lambda=0\) in (LR-level):
+\[
+m_{ij}=\alpha_i+\psi_j.
+\]
+A worker moving from \(j\) to \(k\) has mean wage change
+\[
+m_{ik}-m_{ij}
+=
+\psi_k-\psi_j.
+\]
+Therefore
+\[
+\Delta_{jk}=\psi_k-\psi_j,
+\]
+which is exactly Kline's AKM edge restriction \(\Delta=B'\psi\). AKM is the
+rank-zero case of the project wage-level interface.
+
+\subsection{Low-rank wage levels imply structured Kline edge effects}
+
+Now allow the interaction:
+\[
+m_{ij}
+=
+\alpha_i+\psi_j+u_i'\Lambda v_j.
+\]
+For a mover from \(j\) to \(k\),
+\[
+m_{ik}-m_{ij}
+=
+\psi_k-\psi_j+u_i'\Lambda(v_k-v_j).
+\]
+Averaging over workers who actually move from \(j\) to \(k\) gives
+\[
+\Delta_{jk}
+=
+\psi_k-\psi_j+\mu_{jk}'\Lambda(v_k-v_j),
+\qquad
+\mu_{jk}=\E[u_i\mid i:j\to k].
+\tag{LR-implied-edge}
+\]
+This is the bridge from the low-rank wage-level model to Kline's edge language.
+The low-rank model can generate nonzero cycle effects:
+\[
+\sum_{(j,k)\in C}\Delta_{jk}
+=
+\sum_{(j,k)\in C}\mu_{jk}'\Lambda(v_k-v_j),
+\tag{LR-cycle}
+\]
+because the additive firm effects telescope around the cycle. But these cycle
+effects are not arbitrary. The same \(u_i\), \(v_j\), and \(\Lambda\) must
+generate all edge deviations.
+
+\subsection{Why Kline's complete unrestricted edge model is not nested}
+
+Kline's unrestricted model gives every observed directed edge its own parameter
+\(\Delta_{jk}\). The current project model requires every edge to be generated
+by the shared representation
+\[
+\Delta_{jk}
+=
+\psi_k-\psi_j+\mu_{jk}'\Lambda(v_k-v_j).
+\]
+That is a restriction, not a tautology.
+
+There are two reasons the complete Kline model is not nested.
+
+\paragraph{Reason 1: object-space mismatch.}
+The project model is a wage-level model:
+\[
+(i,j)\mapsto m_{ij}.
+\]
+Kline's unrestricted model is a transition model:
+\[
+(j,k)\mapsto \Delta_{jk}.
+\]
+Knowing one mean wage change for each selected mover edge does not determine a
+worker-by-firm potential wage surface. It only records average changes for
+workers who actually traverse each edge.
+
+\paragraph{Reason 2: dimension and rank.}
+Holding the mover-composition moments \(\mu_{jk}\) fixed, the low-rank induced
+edge model uses the shared parameters
+\[
+(\psi_1,\ldots,\psi_J),\qquad
+(v_1,\ldots,v_J),\qquad
+\Lambda.
+\]
+With firm-factor dimension \(d_v\) and worker-factor dimension \(d_u\), this is
+at most
+\[
+J+Jd_v+d_ud_v
+\]
+raw degrees of freedom before normalizations. Kline's unrestricted
+\(\Delta\) has one free parameter per observed directed edge, hence
+\(|E|\) degrees of freedom. When \(|E|\) is large relative to the factor
+dimensions, a generic edge table cannot be generated by the fixed low-rank
+wage surface.
+
+Making \(d_u\) and \(d_v\) large enough to fit every edge would remove the
+low-rank content. It would become a saturated representation, not the intended
+low-rank restriction.
+
+\section{How to modify the supermodel to nest Kline completely}
+
+\subsection{The smallest clean augmentation}
+
+To nest Kline's complete unrestricted edge model while preserving the existing
+BLM and AKM nesting results, add an edge layer to the supermodel:
+\[
+\Delta_{jk}
+=
+\underbrace{\psi_k-\psi_j}_{\text{AKM edge}}
++
+\underbrace{\mu_{jk}'\Lambda(v_k-v_j)}_{\text{edge effect induced by low-rank wage levels}}
++
+\underbrace{\tau_{jk}}_{\text{unrestricted transition wedge}}.
+\tag{augmented-edge}
+\]
+Then model mover adjusted wage changes as
+\[
+R_i
+=
+\Delta_{j(i,1),j(i,2)}+\xi_i.
+\tag{augmented-Kline}
+\]
+
+This is the minimal useful supermodel:
+\[
+\boxed{
+\begin{aligned}
+\text{Level layer:}\quad
+&m_{ij}=\alpha_i+\psi_j+u_i'\Lambda v_j,\\
+\text{Edge layer:}\quad
+&\Delta_{jk}=\psi_k-\psi_j+\mu_{jk}'\Lambda(v_k-v_j)+\tau_{jk}.
+\end{aligned}
+}
+\tag{level-plus-edge}
+\]
+
+\subsection{Nested cases}
+
+\begin{enumerate}
+\item \textbf{AKM.} Set \(\Lambda=0\) and \(\tau_{jk}=0\). Then
+\(\Delta_{jk}=\psi_k-\psi_j\).
+
+\item \textbf{Current low-rank wage model.} Set \(\tau_{jk}=0\). Then Kline edge
+effects are exactly those induced by the low-rank wage-level surface.
+
+\item \textbf{BLM static mean layer.} Use the double-demeaned construction from
+Section 4 for \(m_{ij}\). The edge layer can be left inactive
+\((\tau_{jk}=0)\) when the object is a static wage mean rather than mover edge
+effects.
+
+\item \textbf{Kline complete unrestricted edge model.} Leave \(\tau_{jk}\)
+unrestricted. For any desired Kline edge table \(\Delta^K_{jk}\), set
+\[
+\tau_{jk}
+=
+\Delta^K_{jk}
+-\psi_k+\psi_j
+-\mu_{jk}'\Lambda(v_k-v_j).
+\]
+In particular, one can set \(\psi=0\) and \(\Lambda=0\), giving
+\(\tau_{jk}=\Delta^K_{jk}\). Then \(R=E\Delta^K+u\), exactly Kline's
+unrestricted edge model.
+\end{enumerate}
+
+\subsection{What happens to the rank restriction}
+
+The rank restriction is solved only if we are clear about which layer it applies
+to.
+
+For BLM and the project wage model, the rank restriction applies to the
+residualized wage-level interaction:
+\[
+\rank(H_K\mu H_L)\leq \min\{K-1,L-1\}.
+\]
+That result remains intact.
+
+For Kline's complete edge model, there is no fixed low-rank restriction on
+\(\Delta\). Kline deliberately uses an unrestricted edge table. If we force
+\(\Delta\) to be low rank, we no longer nest the complete Kline model. We nest
+only a low-rank approximation to Kline's edge interface.
+
+Thus the correct modeling choice is:
+\[
+\text{keep low rank on the wage-level layer,}
+\qquad
+\text{allow unrestricted edge residuals if complete Kline nesting is required.}
+\]
+The unrestricted \(\tau_{jk}\) is not a failure of the low-rank result. It is a
+separate transition wedge that records edge variation not rationalized by a
+static low-rank wage surface.
+
+\section{Final wording to reuse}
+
+\begin{quote}
+Double demeaning proves the BLM low-rank claim. Given a BLM static type/class
+mean surface \(\mu_{k\ell}\), remove additive worker-type and firm-class
+components by forming \(M=H_K\mu H_L\). Since \(M\) is orthogonal to the all-ones
+direction on both sides, \(\rank(M)\leq \min\{K-1,L-1\}\). Lifting this matrix
+back to the worker-by-firm panel through type and class membership matrices
+preserves the bound. Therefore the project low-rank wage interface nests BLM's
+static mean layer. It does not nest BLM's full distributional/dynamic framework.
+
+Kline is different. AKM is nested as the rank-zero wage-level case, and any
+low-rank wage surface implies structured Kline edge effects. But Kline's
+complete unrestricted edge model is not nested in the current wage-level model
+because it places a free parameter on each directed mover edge. To nest it
+completely, augment the supermodel with an unrestricted edge wedge
+\(\tau_{jk}\). This preserves the BLM low-rank wage-layer result while allowing
+the transition layer to reproduce Kline's full edge table.
+\end{quote}
+
+\begin{thebibliography}{9}
+
+\bibitem{BLM2019}
+Bonhomme, Stephane, Thibaut Lamadon, and Elena Manresa. 2019. ``A
+Distributional Framework for Matched Employer Employee Data.''
+\emph{Econometrica} 87(3): 699--739.
+
+\bibitem{Kline2024}
+Kline, Patrick M. 2024, revised 2025. ``Firm Wage Effects.'' NBER Working Paper
+33084.
+
+\bibitem{AKM1999}
+Abowd, John M., Francis Kramarz, and David N. Margolis. 1999. ``High Wage
+Workers and High Wage Firms.'' \emph{Econometrica} 67(2): 251--333.
+
+\end{thebibliography}
+
+
+
+
+\clearpage
+\section*{Part II: LOO Note Teaching Writeup}
+
+\section*{How to use this note}
+
+This is a teaching companion to the July 2026 working draft
+\emph{Firm Wage Effects and Assignment Beyond Additivity}, referred to below as
+the LOO note. Page citations refer to \texttt{loo\_full\_note\_v2.pdf}. The
+goal is to make the paper's logic teachable: first the economic question, then
+the target objects, then the proofs, then the graph/inference agenda, and
+finally the relation to the semistructural literature framing.
+
+The central message is simple:
+\[
+\text{AKM asks firm-side wage questions under additivity.}
+\]
+\[
+\text{The LOO note keeps the questions but removes additivity from the definition.}
+\]
+Instead of defining firm wage dispersion as \(\Var(\psi_J)\) and assignment as
+\(\Cov(\alpha_I,\psi_J)\), the paper defines functionals of a completed
+worker-firm wage schedule \(m_{ij}\). Under additive AKM, the new objects reduce
+exactly to the old objects. Away from additivity, they reveal what AKM was
+suppressing.
+
+\section{Notation table}
+
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.24\linewidth}
+                  >{\raggedright\arraybackslash}p{0.68\linewidth}}
+\toprule
+Symbol & Meaning \\
+\midrule
+\endfirsthead
+\toprule
+Symbol & Meaning \\
+\midrule
+\endhead
+\(i\in I\), \(j,k\in J\) & Worker and firm indices. Source: LOO note, p. 9. \\
+\(t\) & Time index. \\
+\(J_{it}\) & Employer of worker \(i\) at time \(t\). Source: LOO note, p. 9. \\
+\(Y_{it}\) & Observed log wage or log earnings. Source: LOO note, p. 9. \\
+\(X_{it}'\beta\) & Observed covariate component. Source: LOO note, p. 9. \\
+\(m_{ij}\) & Maintained systematic wage schedule for worker \(i\) at firm \(j\). Source: LOO note, pp. 9--10. \\
+\(m^E_{ij}\) & Observed conditional wage object on an observed worker-firm edge. Source: LOO note, p. 10. \\
+\(m^w_{ij}\) & Maintained pairwise wage schedule on the target pair set. Source: LOO note, p. 10. \\
+\(w_{ij}\) & Causal potential wage \(E[Y_i(j)]\), when extra causal assumptions are imposed. Source: LOO note, p. 10. \\
+\(S_{ij}\) & Total match surplus; outside the first paper unless a structural model is added. Source: LOO note, p. 10. \\
+\(G=(I,J,E)\) & Observed worker-firm bipartite graph; \((i,j)\in E\) if worker \(i\) is observed at firm \(j\). Source: LOO note, p. 9. \\
+\(T\) & Target pair set where the schedule/functionals are meant to live. Source: LOO note, p. 9. \\
+\(P_I\), \(P_J\) & Declared worker and firm reference distributions. Source: LOO note, p. 10. \\
+\(P_{IJ}^{obs}\) & Observed joint worker-firm assignment distribution. Source: LOO note, pp. 15--16. \\
+\(P_I P_J\) & Product or independent-assignment benchmark preserving marginals. Source: LOO note, p. 10. \\
+\(p_i,q_j\) & Finite-support worker and firm probabilities used to write product-weight identities explicitly. \\
+\(\mu,a_i,b_j,h_{ij}\) & Canonical constant, worker average component, common firm component, and worker-specific firm component. Source: LOO note, p. 11. \\
+\(Q_F\) & Average within-worker cross-firm wage variance. Source: LOO note, pp. 6, 12--13. \\
+\(H_F\) & Average heterogeneity across workers in pairwise firm wage contrasts. Source: LOO note, pp. 6, 13. \\
+\(\theta_H\) & Share of firm-related wage dispersion not summarized by a common firm ladder, \(H_F/(2Q_F)\). Source: LOO note, p. 14. \\
+\(C^w_{\mathrm{assign}}\) & Fixed-wage-schedule assignment contribution to wage variance. Source: LOO note, pp. 6, 15. \\
+\(A_h\) & Mean assignment into favorable worker-specific firm cells, \(E_{obs}[h_{IJ}]\). Source: LOO note, pp. 7, 16--17. \\
+\(R_E\) & Selection matrix extracting observed cells from the full vectorized schedule. Source: LOO note, p. 19. \\
+\(K_E\) & Kernel of \(R_E\), the missing-cell perturbation space. Source: LOO note, p. 19. \\
+\(A\) & Symmetric matrix defining a quadratic functional \(m'Am\). Source: LOO note, pp. 19, 28. \\
+\(\alpha_i,\psi_j,u_i,v_j,\Lambda\) & Additive worker effect, additive firm effect, worker factor, firm factor, and low-rank interaction matrix in the statistical model. Source: LOO note, pp. 21--23. \\
+\(R,E,B,\Delta\) & Kline adjusted wage changes, worker-by-edge matrix, firm-edge incidence matrix, and directed edge effects. Used for the LOO note's Kline comparison. \\
+\(G_F,G_B\) & Directed firm-mobility graph and worker--firm bipartite support graph. \\
+\(D_{ii';jk}\) & Alternating wage-level sum around a worker--firm rectangle; under rank one it equals \((u_i-u_{i'})(v_j-v_k)\). \\
+\bottomrule
+\end{longtable}
+
+\section{One-page flowchart of the paper}
+
+\[
+\begin{array}{c}
+\boxed{\text{Problem: AKM firm variance and AKM covariance assume common firm wage gaps}}\\[0.5em]
+\Downarrow\\[0.5em]
+\boxed{\text{Primitive statistical object: completed pairwise wage schedule }m_{ij}}\\[0.5em]
+\Downarrow\\[0.5em]
+\boxed{\text{Estimand discipline: separate schedule }m,\text{ assignment }P_{IJ},
+\text{ and functional }T(m;P)}\\[0.5em]
+\Downarrow\\[0.5em]
+\boxed{\text{Canonical decomposition: }m_{ij}=\mu+a_i+b_j+h_{ij}}\\[0.5em]
+\Downarrow\\[0.5em]
+\boxed{\text{Firm dispersion: }Q_F=\Var(b_J)+\frac{1}{2}H_F}\\[0.5em]
+\Downarrow\\[0.5em]
+\boxed{\text{Assignment: }C^w_{\mathrm{assign}}
+=\text{AKM channel}+3\text{ interaction channels}}\\[0.5em]
+\Downarrow\\[0.5em]
+\boxed{\text{Nonparametric graph benchmark: sparse observed edges do not identify
+cardinal targets}}\\[0.5em]
+\Downarrow\\[0.5em]
+\boxed{\text{Low-rank interaction: complete missing wage contrasts without
+clustering main effects}}\\[0.5em]
+\Downarrow\\[0.5em]
+\boxed{\text{Graph identification: rectangles identify interaction contrasts;
+support is target-specific}}\\[0.5em]
+\Downarrow\\[0.5em]
+\boxed{\text{Econometrics: bias-corrected inference for invariant quadratic
+functionals under sparse mobility}}\\[0.5em]
+\Downarrow\\[0.5em]
+\boxed{\text{Interpretation boundary: wage schedule first; causal/production/welfare
+only with extra assumptions}}
+\end{array}
+\]
+
+\section{Section-by-section explanation}
+
+\subsection{Introduction}
+
+The introduction begins with the standard AKM wage equation
+\[
+Y_{it}=X_{it}'\beta+\alpha_i+\psi_{J_{it}}+\varepsilon_{it}.
+\]
+The familiar firm-side statistics are \(\Var(\psi_J)\) and
+\(\Cov(\alpha_I,\psi_J)\). The paper argues that these are complete only if
+firm wage gaps are common across workers:
+\[
+m_{ik}-m_{ij}=\psi_k-\psi_j
+\qquad\text{for every worker }i.
+\]
+This is the common-firm-ladder restriction. It says there is one firm ranking
+and one pairwise wage gap for everyone. Source: LOO note, p. 6.
+
+The paper generalizes the two AKM questions:
+\[
+\text{How much do firms matter for wages?}
+\]
+\[
+\text{How much does assignment to firms matter for wage dispersion?}
+\]
+It does this with three objects:
+\[
+Q_F=\E_I[\Var_J(m_{IJ})],
+\]
+\[
+H_F=\E_{J,K}[\Var_I(m_{IK}-m_{IJ})],
+\]
+\[
+C^w_{\mathrm{assign}}
+=
+\frac{1}{2}\left\{\Var_{P^{obs}_{IJ}}(m_{IJ})
+-\Var_{P_I P_J}(m_{IJ})\right\}.
+\]
+Source: LOO note, pp. 6--7. Under additive AKM these become
+\[
+(Q_F,H_F,C^w_{\mathrm{assign}})
+=
+(\Var(\psi_J),0,\Cov(\alpha_I,\psi_J)).
+\]
+So the new objects are not detached from AKM. They are AKM's own objects after
+the additive restriction is removed.
+
+\subsection{Economic setup and estimand discipline}
+
+Section 2 is mostly a discipline section. It forces four distinctions.
+
+\paragraph{First distinction: observed edge means versus target schedules.}
+Observed data reveal wages only on the graph
+\[
+G=(I,J,E),
+\qquad
+(i,j)\in E
+\text{ if worker }i\text{ is observed at firm }j.
+\]
+But the target functionals often need wages for pairs not observed in the data.
+For example, \(Q_F\) may average worker \(i\)'s wage across many firms at which
+that worker is never observed. Completion is therefore an assumption, not a fact
+delivered by connectedness. Source: LOO note, p. 9.
+
+\paragraph{Second distinction: schedule, assignment, and functional.}
+The paper separates
+\[
+\boxed{\text{pairwise wage schedule }m}
+\quad
+\boxed{\text{assignment }P_{IJ}}
+\quad
+\boxed{\text{functional }T(m;P_{IJ})}.
+\]
+Changing \(m\) changes wage determination. Changing \(P_{IJ}\) changes who is
+matched to whom. Changing \(T\) changes the question. This is why
+\(C^w_{\mathrm{assign}}\) is not a policy effect: it holds the wage schedule
+fixed and changes only the assignment distribution. Source: LOO note, pp. 9--10.
+
+\paragraph{Third distinction: maintained, causal, production, and surplus objects.}
+The hierarchy is
+\[
+\text{observed conditional wages}
+\Rightarrow
+\text{maintained wage schedule}
+\Rightarrow
+\text{causal potential wages}
+\Rightarrow
+\text{production or surplus}
+\Rightarrow
+\text{welfare}.
+\]
+Moving right requires additional assumptions. The first paper lives mainly at
+the maintained wage-schedule layer. Source: LOO note, p. 10.
+
+\paragraph{Fourth distinction: reference populations.}
+The functionals depend on the declared worker and firm populations
+\((P_I,P_J)\). Equal-weighting firms, employment-weighting firms, and restricting
+to an opportunity set answer different questions. This is not a standard-error
+choice; it changes the estimand. Source: LOO note, pp. 10--11.
+
+\subsection{Canonical additive-interaction decomposition}
+
+Relative to \(P_I P_J\), define
+\[
+\mu=\E_{P_I P_J}[m_{IJ}],
+\]
+\[
+a_i=\E_{P_J}[m_{iJ}]-\mu,
+\]
+\[
+b_j=\E_{P_I}[m_{Ij}]-\mu,
+\]
+\[
+h_{ij}=m_{ij}-\mu-a_i-b_j.
+\]
+Then
+\[
+\E_{P_I}[a_I]=0,\qquad
+\E_{P_J}[b_J]=0,\qquad
+\E_{P_J}[h_{iJ}]=0\ \forall i,\qquad
+\E_{P_I}[h_{Ij}]=0\ \forall j.
+\]
+Source: LOO note, p. 11.
+
+Interpretation:
+\[
+a_i=\text{worker }i\text{'s average wage position across firms},
+\]
+\[
+b_j=\text{firm }j\text{'s average contribution across workers},
+\]
+\[
+h_{ij}=\text{worker-specific firm component}.
+\]
+This is not the same as choosing a factor normalization. It is a canonical
+projection of the completed schedule itself. If a factor model rotates or
+rescales \(u_i\) and \(v_j\), \(m\) and therefore \((\mu,a,b,h)\) do not change.
+
+\section{Proof explanations}
+
+\subsection{Proposition 1: uniqueness and orthogonality}
+
+\paragraph{Statement.}
+For any square-integrable schedule \(m\), the decomposition
+\[
+m_{ij}=\mu+a_i+b_j+h_{ij}
+\]
+with the zero-mean restrictions above is unique. Moreover, the constant
+component, \(a\), \(b\), and \(h\) are mutually orthogonal under \(P_I P_J\).
+Source: LOO note, p. 11.
+
+\paragraph{Proof unpacked.}
+Existence means: if we define \(\mu,a,b,h\) by the displayed formulas for the
+grand mean, worker term, firm term, and residual interaction, the
+decomposition works. Substitute \(h_{ij}=m_{ij}-\mu-a_i-b_j\), and rearrange.
+
+The row restrictions follow because
+\[
+\E_{P_J}[h_{iJ}]
+=
+\E_{P_J}[m_{iJ}]-\mu-a_i-\E_{P_J}[b_J].
+\]
+By definition, \(a_i=\E_{P_J}[m_{iJ}]-\mu\), and
+\(\E_{P_J}[b_J]=0\). Hence \(\E_{P_J}[h_{iJ}]=0\). The column restriction is
+parallel.
+
+Uniqueness uses repeated averaging. Suppose another decomposition exists:
+\[
+m_{ij}=\tilde\mu+\tilde a_i+\tilde b_j+\tilde h_{ij}
+\]
+with the same zero-mean restrictions. Average over \(i\) and \(j\). All
+nonconstant parts integrate to zero, so \(\tilde\mu=\mu\). Average over \(j\)
+holding \(i\) fixed. The firm and interaction terms average to zero, so
+\(\tilde a_i=a_i\). Average over \(i\) holding \(j\) fixed to get
+\(\tilde b_j=b_j\). The residual is then forced to be \(h_{ij}\).
+
+Orthogonality is iterated expectations. For example,
+\[
+\E[a_I h_{IJ}]
+=
+\E_I\left[a_I \E_J[h_{IJ}\mid I]\right]
+=
+\E_I[a_I\cdot 0]
+=0.
+\]
+Similarly, \(\E[b_J h_{IJ}]=0\), \(\E[a_I b_J]=\E[a_I]\E[b_J]=0\), and the
+constant is orthogonal to every mean-zero component. This is the Hilbert-space
+reason the decomposition behaves like a two-way ANOVA projection.
+
+\subsection{Proposition 2: firm-dispersion decomposition}
+
+\paragraph{Statement.}
+For any square-integrable schedule,
+\[
+Q_F=\Var(b_J)+Q_h,
+\]
+\[
+H_F=2Q_h,
+\]
+where
+\[
+Q_h=\E_{P_I P_J}[h_{IJ}^2].
+\]
+Therefore
+\[
+\boxed{Q_F=\Var(b_J)+\frac{1}{2}H_F.}
+\]
+Source: LOO note, pp. 13--14.
+
+\paragraph{Step 1: rewrite \(Q_F\).}
+For fixed worker \(i\),
+\[
+m_{iJ}=\mu+a_i+b_J+h_{iJ}.
+\]
+The terms \(\mu+a_i\) are constants across firms, so they drop out of the
+within-worker firm variance:
+\[
+\Var_J(m_{iJ})=\Var_J(b_J+h_{iJ}).
+\]
+Expand:
+\[
+\Var_J(b_J+h_{iJ})
+=
+\Var_J(b_J)+\Var_J(h_{iJ})
++2\Cov_J(b_J,h_{iJ}).
+\]
+The cross term is zero because \(E_I[h_{Ij}]=0\) after averaging over workers;
+more directly, after averaging over \(i\),
+\[
+\E_I\Cov_J(b_J,h_{iJ})
+=
+\E_{I,J}[b_J h_{IJ}]
+=
+\E_J\left[b_J \E_I[h_{IJ}\mid J]\right]
+=0.
+\]
+Thus
+\[
+Q_F=\E_I[\Var_J(m_{iJ})]
+=
+\Var(b_J)+\E_{I,J}[h_{IJ}^2].
+\]
+This proves \(Q_F=\Var(b_J)+Q_h\).
+
+\paragraph{Step 2: rewrite \(H_F\).}
+For a firm pair \((j,k)\),
+\[
+m_{ik}-m_{ij}
+=
+(b_k-b_j)+(h_{ik}-h_{ij}).
+\]
+The first term is constant across workers, so the cross-worker variance is
+\[
+\Var_I(m_{Ik}-m_{Ij})
+=
+\Var_I(h_{Ik}-h_{Ij}).
+\]
+Average over independent \(J,K\). Because \(E_J[h_{iJ}]=0\),
+\[
+\E_{J,K}\Var_I(h_{IK}-h_{IJ})
+=
+2\E_{I,J}[h_{IJ}^2]
+=
+2Q_h.
+\]
+This proves \(H_F=2Q_h\).
+
+\paragraph{The complete finite-weight calculation.}
+The identities use the declared product reference measure, not the observed
+assignment measure.  Write
+\[
+\Pr(I=i)=p_i,
+\qquad
+\Pr(J=j)=q_j,
+\qquad
+\sum_i p_i=\sum_j q_j=1,
+\]
+and impose the weighted centering restrictions
+\[
+\sum_i p_i a_i=0,
+\qquad
+\sum_j q_j b_j=0,
+\qquad
+\sum_j q_j h_{ij}=0\ \forall i,
+\qquad
+\sum_i p_i h_{ij}=0\ \forall j.
+\tag{weighted-centering}
+\]
+For the first identity, row centering gives
+\(\Var_J(h_{iJ})=\sum_jq_jh_{ij}^2\).  Therefore
+\begin{align*}
+Q_F
+&=\sum_i p_i\Var_J(b_J+h_{iJ})\\
+&=\sum_i p_i\left[
+\sum_jq_jb_j^2
++\sum_jq_jh_{ij}^2
++2\sum_jq_jb_jh_{ij}
+\right]\\
+&=\sum_jq_jb_j^2
++\sum_i\sum_jp_iq_jh_{ij}^2
++2\sum_jq_jb_j\underbrace{\sum_ip_ih_{ij}}_{=0}\\
+&=\Var_J(b_J)+Q_h.
+\end{align*}
+This expansion shows where the two centering restrictions enter.  Row
+centering converts each interaction variance into a second moment; column
+centering eliminates the additive--interaction cross term after averaging over
+workers.  The covariance need not vanish for each worker separately.
+
+For the second identity, column centering implies
+\[
+\E_I[h_{Ik}-h_{Ij}]
+=\sum_i p_i h_{ik}-\sum_i p_i h_{ij}=0,
+\]
+so the cross-worker variance equals the second moment.  If \(J\) and \(K\)
+are independent draws from the same firm reference distribution \(q\), then
+\begin{align*}
+H_F
+&=\sum_{j,k}q_jq_k\sum_i p_i(h_{ik}-h_{ij})^2\\
+&=\sum_i p_i\sum_{j,k}q_jq_k
+\left(h_{ik}^2+h_{ij}^2-2h_{ik}h_{ij}\right)\\
+&=2\sum_i\sum_jp_iq_jh_{ij}^2
+-2\sum_i p_i
+\left(\sum_kq_kh_{ik}\right)
+\left(\sum_jq_jh_{ij}\right)\\
+&=2Q_h.
+\end{align*}
+The last cross term is zero by row centering.  Independence of \(J\) and \(K\)
+is what turns the average product into the product of row means.
+
+\paragraph{Why the reference measure matters.}
+If the same algebra were carried out under the observed assignment distribution
+\(P_{IJ}^{\mathrm{obs}}\), worker and firm draws would not generally be
+independent and the product-weight orthogonality conditions would not eliminate
+all cross terms.  The decomposition in Proposition 2 is therefore an identity
+for the wage schedule under the declared product reference population.  The
+difference between product and observed weighting is handled separately by the
+assignment functionals in Proposition 3.  This separation is the mathematical
+reason the paper defines wage relevance before assignment.
+
+\paragraph{Interpretation.}
+The decomposition says that firm wage dispersion has two pieces:
+\[
+\Var(b_J)=\text{dispersion in the common firm ladder},
+\]
+\[
+\frac{1}{2}H_F=\text{dispersion in worker-specific firm gaps}.
+\]
+The share
+\[
+\theta_H=\frac{H_F}{2Q_F}
+\]
+is therefore the fraction of firm-related wage dispersion not summarized by a
+common firm premium. Source: LOO note, p. 14.
+
+\subsection{Relation to total systematic wage dispersion}
+
+Under the product population,
+\[
+\Var_{P_I P_J}(m_{IJ})
+=
+\Var(a_I)+\E_I[\Var_J(m_{IJ})].
+\]
+The second term is \(Q_F\). Using Proposition 2,
+\[
+\Var_{P_I P_J}(m_{IJ})
+=
+\Var(a_I)+\Var(b_J)+\frac{1}{2}H_F.
+\]
+Source: LOO note, p. 14. This is the nonadditive analogue of a
+between-worker / firm / interaction decomposition.
+
+\subsection{Proposition 3: assignment decomposition}
+
+\paragraph{Statement.}
+The generalized assignment contribution is
+\[
+C^w_{\mathrm{assign}}
+=
+\frac{1}{2}\left\{
+\Var_{obs}(m_{IJ})-\Var_{prod}(m_{IJ})
+\right\}.
+\]
+With the canonical decomposition,
+\[
+\boxed{
+C^w_{\mathrm{assign}}
+=
+\Cov_{obs}(a_I,b_J)
++\Cov_{obs}(a_I,h_{IJ})
++\Cov_{obs}(b_J,h_{IJ})
++\frac{1}{2}\{\Var_{obs}(h_{IJ})-\Var_{prod}(h_{IJ})\}.
+}
+\]
+Source: LOO note, p. 16.
+
+\paragraph{Proof unpacked.}
+Under both observed and product assignment, the marginal distributions of
+\(a_I\) and \(b_J\) are the same, because the product benchmark preserves the
+observed worker and firm marginals. Under the product assignment,
+\[
+m_{IJ}=\mu+a_I+b_J+h_{IJ}
+\]
+has mutually orthogonal components by Proposition 1, so
+\[
+\Var_{prod}(m_{IJ})
+=
+\Var(a_I)+\Var(b_J)+\Var_{prod}(h_{IJ}).
+\]
+Under observed assignment, orthogonality need not hold. Expanding the variance
+under \(P^{obs}_{IJ}\) gives
+\[
+\Var_{obs}(m_{IJ})
+=
+\Var(a_I)+\Var(b_J)+\Var_{obs}(h_{IJ})
+\]
+\[
+\quad
++2\Cov_{obs}(a_I,b_J)
++2\Cov_{obs}(a_I,h_{IJ})
++2\Cov_{obs}(b_J,h_{IJ}).
+\]
+Subtract the product variance. The \(\Var(a_I)\) and \(\Var(b_J)\) terms cancel.
+Divide by two. The result is Proposition 3.
+
+\paragraph{Economic meaning of the four channels.}
+The first channel is the standard AKM-style covariance:
+\[
+\Cov_{obs}(a_I,b_J).
+\]
+The second asks whether high-average-wage workers occupy especially favorable
+worker-specific firm cells:
+\[
+\Cov_{obs}(a_I,h_{IJ}).
+\]
+The third asks whether high-common-wage firms employ workers for whom the firm
+is unusually favorable:
+\[
+\Cov_{obs}(b_J,h_{IJ}).
+\]
+The fourth asks whether observed assignment puts more mass on extreme
+interaction cells than independent assignment:
+\[
+\frac{1}{2}\{\Var_{obs}(h_{IJ})-\Var_{prod}(h_{IJ})\}.
+\]
+Under additive AKM, \(h=0\), so only the first channel remains.
+
+\subsection{The mean assignment object \(A_h\)}
+
+Because observed and product assignment have the same marginals,
+\[
+\E_{obs}[m_{IJ}]-\E_{prod}[m_{IJ}]
+=
+\E_{obs}[h_{IJ}]
+\equiv A_h.
+\]
+Source: LOO note, pp. 16--17. The additive parts disappear because they depend
+only on one marginal. Thus \(A_h\) measures whether observed matches occupy
+worker-specific firm cells with positive wage residuals.
+
+The paper correctly treats \(A_h\) as secondary. A positive \(A_h\) is a
+fixed-wage-schedule wage statement, not a welfare statement. It may reflect
+bargaining, amenities, or selection rather than productive surplus.
+
+\subsection{Special cases}
+
+\paragraph{Additive AKM.}
+If \(h_{ij}=0\), then
+\[
+Q_F=\Var(b_J),\qquad H_F=0,\qquad A_h=0,\qquad
+C^w_{\mathrm{assign}}=\Cov(a_I,b_J).
+\]
+This proves the bridge back to the familiar AKM objects. Source: LOO note,
+p. 17.
+
+\paragraph{Centered Tukey interaction.}
+If
+\[
+m_{ij}=\mu+\alpha_i+\psi_j+\beta_0\alpha_i\psi_j,
+\qquad
+\E[\alpha_I]=\E[\psi_J]=0,
+\]
+then
+\[
+h_{ij}=\beta_0\alpha_i\psi_j.
+\]
+The mean interaction assignment object becomes
+\[
+A_h=\beta_0\Cov_{obs}(\alpha_I,\psi_J).
+\]
+So assignment into favorable interaction cells depends on both the wage-schedule
+complementarity \(\beta_0\) and the realized association between the worker and
+firm interaction coordinates. Source: LOO note, p. 17.
+
+\paragraph{Free-factor rank one.}
+If
+\[
+h_{ij}=u_i v_j
+\]
+with centered factors, then
+\[
+Q_h=\Var(u_I)\Var(v_J),
+\]
+\[
+H_F=2\Var(u_I)\Var(v_J),
+\]
+\[
+A_h=\E_{obs}[u_I v_J].
+\]
+This separates heterogeneity in firm wage contrasts from assignment on that
+heterogeneity. The former can be large even if assignment is independent of the
+interaction factors. Source: LOO note, p. 17.
+
+\subsection{Proposition 4: unrestricted target identification}
+
+\paragraph{Setup.}
+Stack the full \(I\times J\) wage schedule into \(m\in\R^{IJ}\). Let \(R_E\)
+select observed cells, so
+\[
+m_E=R_E m.
+\]
+The unrestricted model puts no restrictions on unobserved cells. The
+observational-equivalence directions are
+\[
+K_E=\ker(R_E)=\{z:R_E z=0\}.
+\]
+Source: LOO note, p. 19.
+
+\paragraph{Linear target.}
+For a linear functional
+\[
+T_\ell(m)=\ell'm,
+\]
+the target is identified if and only if
+\[
+\ell'z=0\qquad\forall z\in K_E.
+\]
+Equivalently, \(\ell\in \row(R_E)\). Source: LOO note, p. 19.
+
+Why? If \(m\) and \(m+z\) agree on observed cells, identification requires
+\[
+T_\ell(m+z)-T_\ell(m)=\ell'z=0.
+\]
+This must hold for every missing-cell perturbation. The fundamental theorem of
+linear algebra gives the row-space version.
+
+\paragraph{Quadratic target.}
+For a symmetric quadratic target
+\[
+T_A(m)=m'Am,
+\]
+the target is identified if and only if
+\[
+Az=0\qquad\forall z\in K_E.
+\]
+Source: LOO note, p. 19 and Appendix A.1, p. 39.
+
+The expansion is
+\[
+T_A(m+z)-T_A(m)
+=
+2m'Az+z'Az.
+\]
+If \(Az=0\), both terms vanish. Conversely, if the target is invariant for every
+\(m\) and every missing-cell direction \(z\), then
+\[
+2m'Az+z'Az=0\qquad\forall m.
+\]
+Holding \(z\) fixed and varying \(m\) forces \(Az=0\). Hence every missing-cell
+direction must lie in the null space of \(A\).
+
+\paragraph{Intuition.}
+This proposition is the paper's clean nonparametric benchmark. It says:
+\[
+\text{A target is identified exactly when it is blind to every missing cell.}
+\]
+It does not ask whether all model parameters are identified. It asks whether the
+specific economic functional is identified.
+
+\subsection{Corollary 1: generic nonidentification on incomplete graphs}
+
+\paragraph{Statement.}
+If the product target population puts positive weight on a worker-firm cell that
+is not observed, then the unrestricted model generally does not identify
+\[
+Q_F,\qquad H_F,\qquad C^w_{\mathrm{assign}},\qquad A_h.
+\]
+Moreover, with unbounded missing wages, the identified sets for \(Q_F\) and
+\(H_F\) are unbounded above, \(C^w_{\mathrm{assign}}\) is unbounded below, and
+\(A_h\) is unbounded in both directions. Source: LOO note, p. 20 and Appendix
+A.2, p. 39.
+
+\paragraph{Constructive proof unpacked.}
+Pick one unobserved cell \((i_0,j_0)\) with positive product weight
+\[
+w_0=p_{i_0}q_{j_0}>0.
+\]
+Let \(e_0\) be the vector that changes only this cell. The schedules
+\[
+m(c)=m+c e_0,\qquad c\in\R,
+\]
+are observationally equivalent because the changed cell is unobserved.
+
+For \(Q_F\), the within-worker firm variance for worker \(i_0\) changes. Its
+leading \(c^2\) coefficient is positive:
+\[
+p_{i_0}q_{j_0}(1-q_{j_0})>0.
+\]
+Thus \(Q_F(m(c))\to\infty\) as \(|c|\to\infty\).
+
+For \(H_F\), the perturbation changes the double-centered interaction matrix.
+With at least two workers and two firms and nondegenerate weights, the weighted
+norm of the double-centered perturbation has a positive \(c^2\) coefficient.
+Thus \(H_F\to\infty\).
+
+For \(C^w_{\mathrm{assign}}\), the observed variance does not change because
+the altered cell is not observed. But the product variance increases like
+\[
+w_0(1-w_0)c^2.
+\]
+Since
+\[
+C^w_{\mathrm{assign}}
+=
+\frac{1}{2}\{\Var_{obs}(m)-\Var_{prod}(m)\},
+\]
+the target tends to \(-\infty\).
+
+For \(A_h\), the changed product-support cell shifts the fixed-schedule mean
+comparison linearly:
+\[
+A_h(m(c))-A_h(m)=w_0 c.
+\]
+As \(c\) ranges over \(\R\), the identified set is unbounded in both directions.
+
+\subsection{Monotone seriation benchmark}
+
+The note then places Crippa-style monotone seriation between unrestricted
+ignorance and low-rank completion. Suppose
+\[
+m_{ij}=f_m(\alpha_i,\psi_j),
+\]
+with \(f_m\) increasing in both arguments. This may identify rankings under
+strong graph conditions, but rankings do not generally identify cardinal wage
+dispersion or assignment functionals. Source: LOO note, pp. 20--21.
+
+If row and column orders are known, unobserved cells can be bounded by monotone
+envelopes:
+\[
+L_{ij}=\max\{m_{i'j'}:(i',j')\in E,\ i'\leq i,\ j'\leq j\},
+\]
+\[
+U_{ij}=\min\{m_{i'j'}:(i',j')\in E,\ i'\geq i,\ j'\geq j\}.
+\]
+The identified set for a target is then the range of the target over all
+monotone completions. Source: LOO note, pp. 20--21 and Appendix A.3, p. 39.
+
+The key teaching point: monotonicity can tighten bounds, but cardinal AKM-style
+objects need cardinal values of missing cells, not just order.
+
+\section{Low-rank model and graph identification}
+
+\subsection{The low-rank schedule}
+
+The statistical model is
+\[
+Y_{ij}=X_{ij}'\beta+\alpha_i+\psi_j+u_i'\Lambda v_j+\varepsilon_{ij},
+\qquad
+\rank(\Lambda)=r,
+\]
+with the same systematic formula maintained on the target pair set. Source:
+LOO note, p. 21.
+
+The restriction falls only on the interaction. Worker and firm main effects
+remain unrestricted. This matters because the paper wants to relax additivity
+without clustering away the main worker and firm heterogeneity that AKM was
+designed to measure. Source: LOO note, p. 22.
+
+\subsection{Algebraic rank versus effective dimension}
+
+The LOO note is careful about a distinction that is central for the BLM
+comparison:
+\[
+\text{algebraic rank}\neq\text{effective parameter dimension}.
+\]
+A free-factor rank-one interaction
+\[
+h_{ij}=u_i v_j
+\]
+has algebraic rank one but \(O(I+J)\) free factor parameters. Grouped BLM with
+\(K\) worker types and \(L\) firm classes has a block interaction with at most
+\(KL\) cell means and double-centered rank at most \(\min\{K,L\}-1\). Source:
+LOO note, p. 22 and Appendix E, pp. 41--42.
+
+This is exactly the issue addressed in Part I: low rank of the interaction surface
+does not automatically mean a low-dimensional parameter problem.
+
+\subsection{Baseline rank one and the Tukey proving ground}
+
+The minimum viable model is
+\[
+m_{ij}=\alpha_i+\psi_j+u_i v_j.
+\]
+Source: LOO note, p. 22. The technical proving ground is narrower:
+\[
+m_{ij}=\mu+\alpha_i+\psi_j+\beta_0\alpha_i\psi_j,
+\]
+with \(\beta_0\) initially known. Source: LOO note, pp. 23, 46. This
+shared-factor Tukey form has special algebra that makes the first leave-out
+argument more tractable. The intended target, however, is the free-factor
+rank-one model where the additive and interaction coordinates need not be the
+same.
+
+\subsection{Rectangles identify interaction contrasts}
+
+Take two workers \(i,i'\) and two firms \(j,k\). If all four worker-firm cells
+are observed, the double difference
+\[
+D_{ii';jk}
+=
+m_{ij}-m_{ik}-m_{i'j}+m_{i'k}
+\]
+eliminates additive components. Under rank one,
+\[
+D_{ii';jk}
+=
+(u_i-u_{i'})(v_j-v_k).
+\]
+Source: LOO note, p. 25.
+
+\paragraph{Context from Kline: cycles test whether edge effects are gradients.}
+Let \(G_F=(\mathcal J,\mathcal E_F)\) be Kline's directed firm-mobility graph.
+For an oriented edge \(e=(j,k)\), let \(\Delta_e=\Delta_{jk}\) denote the mean
+adjusted wage change of movers from \(j\) to \(k\).  Under AKM,
+\[
+\Delta_{jk}=\psi_k-\psi_j.
+\tag{Kline-gradient}
+\]
+If \(B\) is the firm-by-edge incidence matrix, this restriction is
+\(\Delta=B'\psi\).  For any directed cycle
+\(c=(j_1,j_2,\ldots,j_s,j_1)\), telescoping gives
+\[
+\sum_{r=1}^s\Delta_{j_rj_{r+1}}
+=
+\sum_{r=1}^s(\psi_{j_{r+1}}-\psi_{j_r})=0.
+\tag{Kline-cycle}
+\]
+Equivalently, if the columns of \(C\) span the cycle space, then
+\[
+C'\Delta=0.
+\]
+On a connected firm graph, these cycle restrictions are equivalent to the
+existence of a global firm potential \(\psi\).  Kline uses them to characterize
+the empirical restrictions imposed by a worker-invariant firm ranking.  Source:
+Kline (2024, revised 2025), pp. 18--20; project Kline handoff, Sections 3.2--3.3.
+
+\paragraph{The rectangle condition is a different cycle condition.}
+The low-rank level model is observed on the bipartite support graph
+\[
+G_B=(\mathcal I\cup\mathcal J,\mathcal E_B),
+\qquad
+(i,j)\in\mathcal E_B\iff m_{ij}\text{ is observed}.
+\]
+A rectangle is the four-edge cycle
+\[
+i\longleftrightarrow j\longleftrightarrow i'
+\longleftrightarrow k\longleftrightarrow i,
+\]
+which exists only when the support contains the complete biclique
+\(\{i,i'\}\times\{j,k\}\).  Its alternating sum is
+\begin{align*}
+D_{ii';jk}
+&=(\alpha_i+\psi_j+u_iv_j)
+ -(\alpha_i+\psi_k+u_iv_k)\\
+&\quad -(\alpha_{i'}+\psi_j+u_{i'}v_j)
+ +(\alpha_{i'}+\psi_k+u_{i'}v_k)\\
+&=(u_i-u_{i'})(v_j-v_k).
+\end{align*}
+Kline's cycle sum removes a global firm potential from \emph{edge changes}; the
+rectangle alternating sum removes worker and firm main effects from
+\emph{wage levels}.  They therefore live in different graphs and identify
+different restrictions.
+
+\paragraph{Why one graph can be rich while the other is poor.}
+Suppose worker 1 moves \(A\to B\), worker 2 moves \(B\to C\), and worker 3
+moves \(C\to A\).  The projected firm graph contains the directed cycle
+\(A\to B\to C\to A\), so Kline's restriction can be tested.  But no two
+workers are jointly observed at the same two firms, so the bipartite graph has
+no \(K_{2,2}\) rectangle.  Additive firm contrasts may therefore be well
+disciplined while rank-one interaction contrasts remain unidentified.  This is
+the precise content of the highlighted sentence.  Source: LOO note, pp. 25,
+44; Kline, pp. 18--20.
+
+\subsection{Anchor and propagation}
+
+The rank-one identification agenda is more accurately written as:
+\[
+\text{anchor subgraph with overlapping nonzero rectangles}
+\Rightarrow
+\text{fix gauge}
+\Rightarrow
+\text{add workers observed at two anchored firms}
+\Rightarrow
+\text{add firms observed for two anchored workers}
+\Rightarrow
+\text{propagate schedule}.
+\]
+Source: LOO note, p. 25, with the anchor condition sharpened here.
+
+\paragraph{A single rectangle is not sufficient.}
+One observed rectangle supplies the scalar equation
+\[
+D_{ii';jk}=(u_i-u_{i'})(v_j-v_k).
+\]
+It identifies a product of contrasts, not the four factor coordinates or the
+four additive effects.  Thus ``anchor rectangle'' in the draft should not be
+read as a completed identification theorem.  An anchor region needs enough
+overlapping nonzero rectangles to recover relative worker and firm contrasts
+after normalizations.
+
+For example, fix workers \(i_0,i_1\) with \(u_{i_1}\neq u_{i_0}\).  If
+rectangles are observed for firm pairs \((j_0,j)\) and \((j_0,j_1)\), with a
+nonzero denominator, then
+\[
+\frac{D_{i_1i_0;j_0j}}
+     {D_{i_1i_0;j_0j_1}}
+=
+\frac{v_{j_0}-v_j}{v_{j_0}-v_{j_1}}.
+\tag{firm-contrast-ratio}
+\]
+This identifies firm-factor differences relative to an affine normalization.
+Holding an anchored firm pair fixed gives the symmetric worker ratio
+\[
+\frac{D_{ii_0;j_0j_1}}
+     {D_{i_1i_0;j_0j_1}}
+=
+\frac{u_i-u_{i_0}}{u_{i_1}-u_{i_0}}.
+\tag{worker-contrast-ratio}
+\]
+The required nonzero rectangle is a relevance condition: if either anchor
+contrast is zero, the ratio carries no factor information.
+
+\paragraph{Gauge and propagation.}
+The level schedule is unchanged after the affine factor transformation
+\[
+\widetilde u_i=a+c u_i,
+\qquad
+\widetilde v_j=b+c^{-1}v_j,
+\qquad c\neq0,
+\]
+provided the induced constant, worker-only, and firm-only terms are absorbed
+into \((\alpha_i,\psi_j)\).  Hence factor locations, scale, and sign require a
+gauge such as
+\[
+u_{i_0}=0,
+\quad u_{i_1}=1,
+\quad v_{j_0}=0,
+\]
+plus a sign convention.  These normalizations do not change the completed
+schedule or any functional of it.
+
+Once \((\psi_j,v_j)\) are known for two firms \(j,k\) with
+\(v_j\neq v_k\), two observed wages for a new worker identify
+\[
+u_i
+=
+\frac{(m_{ij}-m_{ik})-(\psi_j-\psi_k)}{v_j-v_k},
+\qquad
+\alpha_i=m_{ij}-\psi_j-u_iv_j.
+\tag{add-worker}
+\]
+Symmetrically, if \((\alpha_i,u_i)\) are known for two workers \(i,i'\)
+with \(u_i\neq u_{i'}\), then a new firm's coordinates satisfy
+\[
+v_j
+=
+\frac{(m_{ij}-m_{i'j})-(\alpha_i-\alpha_{i'})}{u_i-u_{i'}},
+\qquad
+\psi_j=m_{ij}-\alpha_i-u_iv_j.
+\tag{add-firm}
+\]
+These equations make the propagation claim precise.  A full theorem still has
+to state an anchor subgraph, an ordering that reaches every target node, and
+nondegeneracy conditions that keep all denominators away from zero.
+
+\subsection{Functional identification versus full completion}
+
+Full schedule completion is sufficient but not necessary. A quadratic target
+\[
+T_A(m)=m_T' A m_T
+\]
+is identified at a schedule \(m\) if every observationally equivalent schedule
+\(m+d\) in the maintained model satisfies
+\[
+T_A(m+d)-T_A(m)
+=2m_T'Ad_T+d_T'Ad_T=0.
+\tag{functional-invariance}
+\]
+The stronger condition \(Ad_T=0\) for every observationally invisible feasible
+direction is sufficient, but it is not necessary at a fixed \(m\).  The exact
+condition is invariance of the quadratic functional over the observational
+equivalence class.  Source: LOO note, p. 26; Proposition 4 above.  This repeats
+the unrestricted logic inside the low-rank model class: do not ask whether
+every latent coordinate is identified; ask whether any remaining ambiguity can
+change the reported target.
+
+\section{Estimation, bias correction, and inference}
+
+\subsection{Point estimation}
+
+For fixed rank, the proposed point estimator solves weighted least squares on
+observed edges:
+\[
+\min_{\alpha,\psi,U,V,\Lambda}
+\sum_{(i,j)\in E}
+n_{ij}\left(\bar Y_{ij}-X_{ij}'\beta-\alpha_i-\psi_j-u_i'\Lambda v_j\right)^2,
+\]
+subject to normalizations. Source: LOO note, p. 28.
+
+Conditional on firm factors, the problem is linear in worker-side parameters.
+Conditional on worker factors, it is linear in firm-side parameters. This
+motivates alternating weighted least squares, with multiple initializations and
+stability checks for invariant functionals.
+
+\subsection{Quadratic representation}
+
+The target quantities can be written as quadratic forms:
+\[
+Q_F=m'A_{Q_F}m,\qquad
+H_F=m'A_{H_F}m,\qquad
+C^w_{\mathrm{assign}}=m'A_Cm.
+\]
+The first-moment object is linear:
+\[
+A_h=d_A'm.
+\]
+Source: LOO note, p. 28 and Appendix J, p. 45.
+
+This operator notation matters because bias correction should be target-specific.
+The relevant leverage correction for \(Q_F\) need not be the same as the one for
+\(C^w_{\mathrm{assign}}\).
+
+\subsection{Why plug-in quadratic estimators are biased}
+
+Let \(\hat m=m+\eta\). Then
+\[
+\hat m'A\hat m-m'Am
+=
+2m'A\eta+\eta'A\eta.
+\]
+Source: LOO note, p. 28.
+
+In a low-dimensional problem, \(\eta'A\eta\) often vanishes asymptotically. Here
+it need not. Worker effects, firm effects, and factor loadings are local
+incidental parameters estimated from sparse observations. Aggregating many noisy
+local estimates can produce a first-order quadratic bias. This is the
+nonadditive analogue of KSS limited-mobility bias.
+
+\subsection{Leave-worker-out and cavity logic}
+
+The current conjecture deletes one worker and all incident edges, estimates the
+firm side without that worker, then reconstructs the worker. The purpose is to
+break the leading dependence between worker \(i\)'s noise and the fitted object
+used to estimate its contribution to a quadratic functional. Source: LOO note,
+pp. 29, 46.
+
+The broader program wants an approximation of deletion effects of the form
+\[
+\hat\theta^{(-e)}-\hat\theta
+\approx
+\hat H^{-1}\hat s_e
++\text{higher-order correction},
+\]
+with attention to sparse Hessians, graph feedback, and gauge directions. Source:
+LOO note, p. 29.
+
+The draft is candid that this is not yet a theorem. The immediate conjecture is
+a one-sided Tukey variance correction:
+\[
+\widehat{\Var(\alpha_I)}_{bc}-\Var(\alpha_I)=o_p(1),
+\]
+under known \(\beta_0\), identification, bounded-degree graph conditions, and a
+valid cavity closure. Source: LOO note, p. 29 and Appendix L, pp. 46--47.
+
+\subsection{Inference agenda}
+
+The asymptotic sequence lets workers, firms, and observed edges grow jointly:
+\[
+I,J,|E|\to\infty,\qquad J/I\to\kappa\in(0,\infty).
+\]
+Source: LOO note, p. 31. Individual effects need not be consistently estimated.
+The target is consistency and inference for aggregate functionals after the
+leading quadratic noise is removed.
+
+The limit theory agenda is:
+\[
+\hat T_A^{bc}-T_A\overset{p}{\to}0,
+\]
+then
+\[
+\frac{\hat T_A^{bc}-T_A}{\hat s_e(\hat T_A^{bc})}
+\Rightarrow N(0,1),
+\]
+or a graph-aware non-Gaussian approximation when high-leverage configurations
+dominate. Source: LOO note, pp. 31--32.
+
+\section{Monte Carlo and empirical sections}
+
+\subsection{Monte Carlo design}
+
+The Monte Carlo program is staged to match the theorem agenda. The first
+simulation block should test the shared-factor Tukey proving ground:
+\[
+m_{ij}=\mu+\alpha_i+\psi_j+\beta_0\alpha_i\psi_j,
+\]
+first with known \(\beta_0\), then with \(\beta_0\) estimated. The performance
+targets are bias correction for the worker- and firm-side variances and the
+implied \(Q_F,H_F\) formulas. Source: LOO note, p. 33.
+
+The second simulation block is the intended free-factor rank-one model:
+\[
+Y_{ij}=\alpha_i+\psi_j+u_i v_j+\varepsilon_{ij}.
+\]
+The assignment regimes should distinguish independent graph formation, sorting
+on common components only, and sorting on both common components and interaction
+gains. This separation mirrors the paper's substantive distinction:
+\[
+H_F>0
+\quad\text{means heterogeneous firm wage contrasts exist,}
+\]
+while interaction-related assignment means the realized graph uses those
+heterogeneous contrasts. Source: LOO note, pp. 33--34.
+
+The most important stress tests are graph stress tests: removing rectangles,
+creating articulation points, and concentrating target weight on high-leverage
+firms. These tests are not cosmetic. They check whether the graph diagnostics
+predict estimator failure precisely when the identification logic says they
+should fail. Source: LOO note, p. 34.
+
+\subsection{Empirical application}
+
+The empirical section should begin by declaring the wage concept, covariates,
+worker population, firm population, connected set, and target support. The note
+is explicit that the target population is not automatically ``the labor
+market.'' It is the worker and firm population reached and supported by the
+graph plus the maintained model. Source: LOO note, pp. 34--35.
+
+The empirical sequence is:
+\[
+\text{network diagnostics}
+\Rightarrow
+\text{additive AKM benchmark}
+\Rightarrow
+\text{direct additivity diagnostics}
+\Rightarrow
+\text{main }(Q_F,H_F,\theta_H)\text{ estimates}
+\Rightarrow
+\text{assignment decomposition}
+\Rightarrow
+\text{robustness/support sensitivity}.
+\]
+Source: LOO note, pp. 34--36.
+
+The paper's preferred headline statement should be in log-wage units:
+\[
+\sqrt{Q_F}
+=
+\text{RMS cross-firm systematic wage dispersion for a fixed worker,}
+\]
+\[
+\sqrt{H_F}
+=
+\text{RMS heterogeneity across workers in the same firm-pair contrast,}
+\]
+\[
+\theta_H
+=
+\text{share of firm-related dispersion not captured by a common firm ladder.}
+\]
+This is a strong presentation choice because it makes the new quantities as
+interpretable as AKM standard deviations.
+
+The empirical section also insists that support sensitivity is central. Varying
+the firm reference distribution, opportunity sets, graph trimming, interaction
+rank, small-firm treatment, and direct versus model-propagated target weight is
+not just robustness theater. It is part of the estimand discipline. Source: LOO
+note, pp. 36--37.
+
+\section{Appendix algebra explained}
+
+\subsection{Weighted matrix form}
+
+Let \(M\) be the matrix with entries \(m_{ij}\). Let \(p\) and \(q\) be worker
+and firm weights. Define weighted centering matrices
+\[
+L_p=I_I-\one_I p',
+\qquad
+R_q=I_J-\one_J q'.
+\]
+Then the canonical interaction matrix is
+\[
+H=L_p M R_q.
+\]
+Source: LOO note, p. 40.
+
+The formulas
+\[
+Q_h=\|H\|_{p,q}^2,
+\qquad
+Q_F=b'\diag(q)b+\|H\|_{p,q}^2,
+\qquad
+H_F=2\|H\|_{p,q}^2
+\]
+are the matrix versions of Proposition 2. Source: LOO note, p. 40.
+
+\subsection{Assignment matrix form}
+
+Let \(W=(w_{ij})\) be observed assignment weights and \(pq'\) be product weights.
+Because \(W\) and \(pq'\) share marginals,
+\[
+\langle W-pq',\mu\one\one'+a\one'+\one b'\rangle=0.
+\]
+Therefore
+\[
+A_h=\langle W-pq',M\rangle=\langle W,H\rangle.
+\]
+Source: LOO note, p. 40.
+
+For variance, define
+\[
+V(W)=\diag(\operatorname{vec}W)-\operatorname{vec}(W)\operatorname{vec}(W)'.
+\]
+Then
+\[
+A_C=\frac{1}{2}\{V(W)-V(pq')\},
+\qquad
+C^w_{\mathrm{assign}}=m'A_Cm.
+\]
+Source: LOO note, pp. 40, 45.
+
+\subsection{Selection and Roy sorting appendix}
+
+Appendix D translates the wage-schedule objects into treatment-effect language.
+With firms as treatments, worker \(i\) has a vector of potential wages
+\(\{Y_i(j):j\in J\}\). General selection means the chosen firm depends on this
+vector. Selection on gains means assignment depends on contrasts such as
+\[
+Y_i(k)-Y_i(j).
+\]
+Under a causal interpretation of the canonical schedule,
+\[
+Y_i(k)-Y_i(j)
+=
+(b_k-b_j)+(h_{ik}-h_{ij}).
+\]
+Thus \(H_F\) measures the variance of the worker-specific gain component
+\((h_{ik}-h_{ij})\) across workers and firm pairs. Assignment-related
+interaction channels measure whether observed assignment uses those
+heterogeneous gains. Source: LOO note, p. 41.
+
+The appendix also reinforces the Kline point: edge-specific mover effects are
+conditional on the population moving along that edge. A global schedule requires
+transporting those contrasts across worker populations. Graph connectedness and
+causal transportability are separate assumptions. Source: LOO note, p. 41.
+
+\subsection{Representation map appendix}
+
+Appendix F is a map from established wage models to the low-rank wage schedule.
+It is best read as a representation map, not a claim that the first paper nests
+every structural model in full.
+
+\begin{enumerate}
+\item AKM is \(r=0\). KSS is an inferential benchmark for additive quadratic
+functionals, not a different wage equation. Source: LOO note, p. 42.
+
+\item Tukey/Crippa is shared-factor rank one:
+\[
+m_{ij}=\alpha_i+\psi_j+\beta_0\alpha_i\psi_j.
+\]
+Crippa's identification uses special shared-coordinate cycle restrictions; the
+free-factor LOO model relaxes that structure. Source: LOO note, p. 42.
+
+\item Firm-specific slopes \(a_j+b_j\alpha_i\) are free-factor rank one after
+putting \(a_j\) into the firm main effect and using \(u_i=\alpha_i\),
+\(v_j=b_j\). Source: LOO note, p. 42.
+
+\item Grouped BLM mean cells are represented by worker and firm type indicators
+and a double-centered type-cell matrix. Full BLM remains richer because it
+contains earnings distributions, class estimation, and mobility structure.
+Source: LOO note, p. 42.
+
+\item GKLP's perfect-information wage slice contains a rank-one comparative
+advantage term. Under learning, posterior means and predictive variances become
+time-varying state objects, which push the model toward the dynamic boundary of
+the static schedule. Source: LOO note, p. 43.
+
+\item Eeckhout--Kircher's leading search example has an exactly rank-one wage
+interaction even though wages can be nonmonotone in firm type. This is a key
+substantive lesson: scalar AKM firm effects can fail even when the nonadditive
+wage schedule is algebraically simple. Source: LOO note, p. 43.
+
+\item Shimer--Smith fits the static wage interface only through the payoff
+surface, not through the full search model. The nonadditive wage component
+inherits the rank or approximation quality of the double-centered production
+surface. Source: LOO note, p. 43.
+
+\item Borovickova--Shimer is an interpretation warning. Pareto selection can
+make accepted-match wages additive even with complementary production; away from
+that benchmark, the mean residual life can reintroduce interactions. Source:
+LOO note, p. 43.
+\end{enumerate}
+
+\subsection{Graph and diagnostic appendices}
+
+Appendix H separates two cycle spaces:
+\[
+\text{Kline cycles on the projected firm mobility graph}
+\]
+and
+\[
+\text{interaction rectangles on the worker-firm bipartite graph}.
+\]
+The first tests whether directed mover wage changes can be summarized by firm
+levels. The second identifies nonadditive wage-level contrasts. A data set can
+have one without the other. Source: LOO note, p. 44.
+
+Appendix I separates event-study and paired-mover diagnostics. An event-study
+slope near one can occur even with permanent match effects if match changes are
+not aligned with firm-effect changes. Paired movers test whether worker wage
+gaps are portable across a common firm transition. This is why paired movers are
+a closer diagnostic for additive separability, though still not the same
+population estimand as \(H_F\). Source: LOO note, pp. 44--45.
+
+\subsection{Computation and higher-rank appendices}
+
+Appendix K gives the algorithm: residualize wages, estimate additive AKM, form
+interaction residuals, initialize factors, alternate sparse weighted least
+squares, impose normalizations, evaluate invariant functionals, and compute
+target-specific corrections. Source: LOO note, p. 46.
+
+Appendix L is the proof agenda for the cavity expansion. The current conjecture
+is shared-factor Tukey with known \(\beta_0\); the harder target is free-factor
+rank one. The bridge requires tracking additive effects and both factor sides
+while controlling scale gauges and sparse-graph deletion feedback. Source: LOO
+note, pp. 46--47.
+
+Appendix M says higher rank adds several comparative-advantage dimensions:
+\[
+m_{ij}=\alpha_i+\psi_j+u_i'v_j,\qquad u_i,v_j\in\R^r.
+\]
+The economic targets do not change, but support, gauge, and weak-factor problems
+become harder. Source: LOO note, p. 47.
+
+\section{Interpretation: what the estimates would and would not establish}
+
+The paper's interpretation boundary is one of its strongest features. It says
+the estimates establish properties of a maintained systematic wage schedule:
+\[
+\text{how much firms matter for the same worker,}
+\]
+\[
+\text{how heterogeneous firm wage contrasts are across workers,}
+\]
+\[
+\text{how observed assignment changes wage variance relative to a benchmark.}
+\]
+They do not by themselves identify productive sorting, surplus, amenities,
+search frictions, bargaining, or welfare. Source: LOO note, pp. 37--38.
+
+The paper also separates four meanings of sorting:
+\[
+\text{assortative assignment of types,}
+\]
+\[
+\text{complementarity of the wage schedule,}
+\]
+\[
+\text{fixed-schedule wage assignment,}
+\]
+\[
+\text{productive or welfare sorting.}
+\]
+Source: LOO note, p. 37. This taxonomy is essential because these objects can
+move independently.
+
+\section{Comparison with the Semistructural Literature Notes}
+
+\subsection{Overall alignment}
+
+The LOO note aligns strongly with the semistructural framing used throughout this
+merged note. The working definition is:
+\[
+\text{semistructural}
+=
+\text{statistical interface}
++
+\text{limited economic structure for interpretation}
+-
+\text{full structural model}.
+\]
+The LOO note does exactly this. Its statistical interface is the maintained
+pairwise wage schedule \(m_{ij}\), its canonical functionals
+\((Q_F,H_F,C^w_{\mathrm{assign}},A_h)\), the observed worker-firm graph, and the
+low-rank interaction restriction. Its economic structure is limited: enough to
+interpret firm wage dispersion and assignment channels, but not enough to claim
+surplus or welfare. This is precisely the model-class robust version of
+semistructural work emphasized in the past notes.
+
+\subsection{Relation to Kline}
+
+The prior Kline notes framed AKM as a restriction on directed mover edge effects:
+\[
+\Delta=B'\psi,
+\]
+with cycle sums as the empirical content. The LOO note extends that logic from
+firm-mobility edges to worker-firm schedules. Kline asks:
+\[
+\text{When can mover wage changes be summarized by firm levels?}
+\]
+The LOO note asks:
+\[
+\text{When can firm wage dispersion and assignment be summarized by a common
+firm ladder?}
+\]
+The answer is no longer only about firm-mobility cycles. For nonadditive wage
+levels, the relevant graph object is also the bipartite rectangle:
+\[
+m_{ij}-m_{ik}-m_{i'j}+m_{i'k}.
+\]
+This is a clean extension of the prior Kline framing, not a departure from it.
+
+The note also matches Kline's causal caution. Kline says edge effects can be
+causal under exclusion, parallel trends, and stationarity, but global firm
+rankings require stronger restrictions. The LOO note similarly says the
+maintained wage schedule can be causal only with extra transportability and
+selection assumptions. That is exactly aligned.
+
+\subsection{Relation to BLM}
+
+The prior BLM notes emphasized that BLM nests richer worker-firm heterogeneity
+by grouping firms and modeling worker types, but that full BLM is a
+distributional panel framework rather than merely a mean equation. The LOO note
+gets this right. It uses grouped BLM as a representation of a static
+conditional-mean layer, while explicitly saying that BLM's full wage
+distributions, classification procedure, and mobility structure are not nested
+by the static low-rank schedule.
+
+The LOO note also preserves the key distinction from Part I:
+\[
+\text{algebraic rank of an interaction surface}
+\neq
+\text{low effective parameter dimension}.
+\]
+This matters because the LOO free-factor rank-one model has algebraic rank one
+but still has \(O(I+J)\) incidental factor parameters. That is the reason
+leave-out/cavity inference is central rather than cosmetic.
+
+\subsection{Relation to Sorkin--Warwar}
+
+The prior paired-mover notes argued that event studies can pass even with
+time-invariant match effects, while paired movers test portability of worker
+wage gaps more directly. The LOO note absorbs this lesson correctly. It treats
+paired movers as a direct diagnostic of additive separability for a selected
+population, not as the same estimand as \(H_F\). Source: LOO note, pp. 37, 44--45.
+
+This is well aligned. The LOO target \(H_F\) is broader: it averages
+heterogeneity in pairwise firm wage contrasts over a declared worker/firm
+population. Sorkin--Warwar provide a design-specific benchmark. The two should
+validate each other where their populations overlap, but they are not identical.
+
+\subsection{Relation to Shimer--Smith and Borovickova--Shimer}
+
+The prior search/selection notes emphasized that observed wages are selected
+accepted-match objects, not primitive production or surplus. The LOO note takes
+the same boundary seriously. It says wage nonadditivity can come from
+comparative advantage, outside options, bargaining, or selective acceptance, and
+that additive accepted wages can even arise from selection-induced cancellation.
+Source: LOO note, pp. 38, 43.
+
+This is exactly the right semistructural posture. The LOO note estimates wage
+schedule objects that many structural models can map into. It does not infer
+production or welfare from wages alone.
+
+\subsection{Where the LOO note sharpens the project}
+
+The biggest improvement introduced by the LOO note is estimand discipline.
+Low-rank wage surfaces, Kline edge effects, BLM type cells, and selection models
+are organized around a single paper spine:
+\[
+\text{define invariant wage functionals}
+\Rightarrow
+\text{show AKM reductions}
+\Rightarrow
+\text{show sparse-graph nonidentification without structure}
+\Rightarrow
+\text{impose low-rank completion}
+\Rightarrow
+\text{build target-specific inference}.
+\]
+This is more than a literature synthesis. It is a coherent econometric agenda.
+
+\subsection{Main caution}
+
+The current draft contains theorem agendas, not completed theorems, for the
+hardest parts: rank-one schedule identification, target-specific graph
+identification, cavity bias correction, and limit theory. The note is honest
+about this. The final paper should keep the same staging:
+\[
+\text{proved identities}
+\quad
+\neq
+\quad
+\text{conjectured bias correction}
+\quad
+\neq
+\quad
+\text{future higher-rank extension}.
+\]
+That staging is essential for credibility.
+
+\section{Teaching summary}
+
+The LOO note is best taught as a sequence of five moves.
+
+\begin{enumerate}
+\item \textbf{Replace AKM parameters with wage-schedule functionals.}
+The primitive object is \(m_{ij}\). AKM parameters are one special
+parameterization.
+
+\item \textbf{Use the canonical ANOVA decomposition.}
+The decomposition \(m_{ij}=\mu+a_i+b_j+h_{ij}\) separates worker position,
+common firm contribution, and worker-specific firm contribution.
+
+\item \textbf{Generalize firm dispersion.}
+The identity \(Q_F=\Var(b_J)+H_F/2\) says exactly how much of firm wage
+dispersion is common versus worker-specific.
+
+\item \textbf{Generalize assignment.}
+The AKM covariance is one channel. Nonadditivity adds worker-interaction
+alignment, firm-interaction alignment, and interaction concentration.
+
+\item \textbf{Make identification and inference target-specific.}
+Sparse graphs do not reveal missing wage cells. Low rank is introduced to
+complete the cardinal wage contrasts needed by the targets, and leave-out/cavity
+methods are needed because plug-in quadratic functionals are biased.
+\end{enumerate}
+
+The paper's semistructural contribution is therefore not merely ``estimate an
+interaction.'' It is:
+\[
+\boxed{
+\text{Build AKM-style wage-inequality accounting for a nonadditive wage schedule,
+with graph-aware identification and bias-corrected inference.}
+}
+\]
+
+\begin{thebibliography}{9}
+
+\bibitem{AKM1999}
+Abowd, John M., Francis Kramarz, and David N. Margolis. 1999. ``High Wage
+Workers and High Wage Firms.'' \emph{Econometrica} 67(2): 251--333.
+
+\bibitem{BLM2019}
+Bonhomme, Stephane, Thibaut Lamadon, and Elena Manresa. 2019. ``A
+Distributional Framework for Matched Employer Employee Data.''
+\emph{Econometrica} 87(3): 699--739.
+
+\bibitem{CHK2013}
+Card, David, Joerg Heining, and Patrick Kline. 2013. ``Workplace Heterogeneity
+and the Rise of West German Wage Inequality.'' \emph{Quarterly Journal of
+Economics} 128(3): 967--1015.
+
+\bibitem{Kline2024}
+Kline, Patrick M. 2024, revised 2025. ``Firm Wage Effects.'' NBER Working Paper
+33084.
+
+\bibitem{KSS2020}
+Kline, Patrick, Raffaele Saggio, and Mikkel Soelvsten. 2020. ``Leave-Out
+Estimation of Variance Components.'' \emph{Econometrica} 88(5): 1859--1898.
+
+\bibitem{ShimerSmith2000}
+Shimer, Robert, and Lones Smith. 2000. ``Assortative Matching and Search.''
+\emph{Econometrica} 68(2): 343--369.
+
+\end{thebibliography}
+
+
+
+
+\clearpage
+\section*{Part III: Econ AI Proposal, PPI, and Multi-Task PPI}
+
+\section*{Purpose and Reading Map}
+
+This note explains three closely related documents:
+\begin{enumerate}[leftmargin=*]
+  \item The proposal \emph{The Distributional Effects of AI's Productivity Gains: A Data Fusion Approach} (OpenAI Exchange proposal, v4).
+  \item Angelopoulos, Bates, Fannjiang, Jordan, and Zrnic, \emph{Prediction-Powered Inference} (Science 2023; arXiv:2301.09633v4).
+  \item Emmenegger, Stahler, and Podimata, \emph{Prediction-Powered Inference Across Many Tasks for AI Evaluation and Social Science Research} (arXiv:2605.29249, 2026).
+\end{enumerate}
+
+The organizing idea is simple: broad AI-generated or usage-derived scores are useful but biased, while randomized or human-validated measurements are credible but scarce. The proposal asks how to combine these two sources to estimate the distribution of AI productivity gains across occupation-task cells. PPI supplies design-based inference for scalar or low-dimensional functionals using many predictions and few labels. Multi-task PPI supplies a way to borrow calibration across related tasks while retaining task-specific validity.
+
+\section*{Source Map and Citation Convention}
+
+The note uses short parenthetical source tags in the text. The tags below say exactly where each main component comes from; the full references appear in the bibliography.
+
+\begin{center}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.28\linewidth}p{0.62\linewidth}}
+\toprule
+Source tag & What it anchors in this note \\
+\midrule
+Proposal, pp. 1--2 & Estimand hierarchy, two task baskets, broad-score measurement bias, and the need for a randomized validation anchor. \\
+Proposal, p. 3 & Compression example, debiasing figure, empirical-Bayes simulation, and the ``knee'' near $m\approx 40$ validated cells. \\
+Proposal, p. 4 & Gaussian score-channel model, score-alone nonidentification, moment identification from validation, and near-oracle accuracy statement. \\
+Angelopoulos et al. (2023), Secs. 1.1--1.3 & Basic PPI principle, mean estimator, variance formula, and interpretation. \\
+Angelopoulos et al. (2023), Sec. 2 and App. B & Convex-estimation theorem, examples, and finite-population version. \\
+Emmenegger et al. (2026), Secs. 2--3 & Multi-task finite-population setup, GREPPI, AREPPI, power tuning, affine invariance, and nonlinear necessity. \\
+Emmenegger et al. (2026), Sec. 4 & Election-information case study and human-annotation application. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Every displayed equation below has one of four jobs: define the target, define the measurement process, identify an unknown from observable moments, or give an estimator/variance formula. If an equation does not do one of those jobs, it has been omitted.
+
+\section*{Guarantee Map}
+
+\begin{center}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.22\linewidth}p{0.32\linewidth}p{0.34\linewidth}}
+\toprule
+Object & Recommended tool & Nature of guarantee \\
+\midrule
+Basket mean $\bar\theta^0$ or $\bar\theta^A$ & PPI / generalized regression estimator & Design-based validity from random validation, plus precision gain from broad scores. \\
+Cell means $\theta_j$ & Empirical Bayes score-channel model & Model-based posterior estimates; validity depends on the channel model and validation support. \\
+Dispersion of $\theta_j$ & EB or prediction-powered shrinkage & Separates true heterogeneity from score noise; raw-score dispersion is not credible. \\
+Top-$k$ rankings & Posterior rank probabilities or selective inference & Must correct winner's curse; raw top scores overstate extremes. \\
+Many related task means $\theta^{(t)}$ & GREPPI / AREPPI & Task-specific rectification with cross-task recalibration; gains require nonlinear proxy-truth structure. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section*{One-Page Synthesis}
+
+\begin{center}
+\fbox{\begin{minipage}{0.93\linewidth}
+\textbf{Core empirical problem.} Let $j=1,\ldots,J$ index occupation-task cells. The target is a vector of true AI productivity gains
+\[
+  \thetav=(\theta_1,\ldots,\theta_J),
+\]
+plus summaries such as the economy-wide average $\bar\theta=\sum_j p_j\theta_j$, dispersion, and top-$k$ cells. The broad score $S_j$ is observed for many cells but is compressed and noisy. The validation estimate $\widehat v_j$ is randomized and credible but available only for a small random subset.
+
+\textbf{Core inferential move.} Use the random validation anchor to learn the score-to-truth channel. Then use the calibrated channel to shrink or rectify the broad scores.
+
+\textbf{How the literatures fit.}
+\begin{itemize}[leftmargin=*]
+  \item The proposal is a \emph{latent-vector measurement model}: it wants $\theta_j$ cell by cell, not only a mean.
+  \item PPI is a \emph{rectification framework}: predictions improve precision, but labels keep inference valid.
+  \item Multi-task PPI is a \emph{cross-task recalibration framework}: related tasks help learn nonlinear score-truth maps, but each task still needs within-task labels for valid rectification.
+\end{itemize}
+
+\textbf{Best synthesis for the project.} Use PPI-style design-based estimators for scalar summaries like $\bar\theta$ and basket-specific means. Use empirical Bayes or prediction-powered adaptive shrinkage for the full latent vector, dispersion, and top-$k$ rankings. Use multi-task recalibration if the score-to-truth relation is nonlinear and partially shared across occupation clusters, task baskets, firms, or model versions.
+\end{minipage}}
+\end{center}
+
+\section{Notation Tables}
+
+\subsection*{Proposal: AI Productivity Atlas}
+
+\begin{center}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.18\linewidth}p{0.72\linewidth}}
+\toprule
+Symbol & Meaning \\
+\midrule
+$j=1,\ldots,J$ & Occupation-task cell, approximately $J\approx 1000$ in the proposal. \\
+$\theta_j$ & True productivity gain from AI for cell $j$. This is the primitive object. \\
+$\thetav$ & Full latent vector $(\theta_1,\ldots,\theta_J)$. \\
+$p_j$ & Economic weight for cell $j$, for example employment or task-time share. \\
+$\bar\theta$ & Economy-wide average gain, $\sum_j p_j\theta_j$. \\
+$S_j$ & Broad score from usage data or model scoring. It is available at scale but is compressed/noisy. \\
+$R_j$ & Indicator that cell $j$ is selected into randomized validation. \\
+$\pi_j$ & Validation inclusion probability, $\Pr(R_j=1)$. \\
+$m$ & Number of validated cells, about $40$ in the proposal's simulation. \\
+$\widehat v_j$ & Randomized validation estimate of $\theta_j$ for validated cell $j$. \\
+$s_j^2$ & Design-known sampling variance of $\widehat v_j$. \\
+$p^0_j,p^A_j$ & Weights for the pre-AI task basket and the tasks users actually bring to AI. \\
+$g(S_j)$ & Calibrated prediction of $\theta_j$ from the broad score. \\
+$\mu_\eta(S_j)$ & Empirical-Bayes prior mean for cell $j$, conditional on its broad score and any cell features. \\
+$\tau^2$ & Across-cell latent variance in the simple empirical-Bayes channel. \\
+$\omega_j$ & Experimental-data shrinkage weight, $\tau^2/(\tau^2+s_j^2)$, in the score-conditioned EB posterior. \\
+$g_j^{(-j)}$ & Cross-fitted prediction for cell $j$, trained without using that cell's validation noise. \\
+$\psi$ & Score-channel parameter vector, such as $(\mu,\tau^2,a,b,\sigma_S^2)$. \\
+$\lambda$ & Score reliability ratio, $b^2\tau^2/(b^2\tau^2+\sigma_S^2)$. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{Prediction-Powered Inference}
+
+\begin{center}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.18\linewidth}p{0.72\linewidth}}
+\toprule
+Symbol & Meaning \\
+\midrule
+$(X_i,Y_i)$ & Labeled/gold-standard observation. \\
+$n$ & Number of labeled observations. \\
+$\widetilde X_i$ & Unlabeled feature observation, with outcome not measured. \\
+$N$ & Number of unlabeled observations; usually $N\gg n$. \\
+$f(X)$ & Prediction from a black-box model trained independently of the labeled sample used for inference. \\
+$\theta^\star$ & Target parameter, such as $\E[Y]$ or a risk minimizer. \\
+$\ell_\theta(X,Y)$ & Loss function defining the parameter $\theta^\star=\arg\min_\theta \E[\ell_\theta(X,Y)]$. \\
+$g_\theta(X,Y)$ & Gradient or subgradient of the loss. \\
+$\Delta_\theta$ & Rectifier, $\E[g_\theta(X,Y)-g_\theta(X,f(X))]$. \\
+$T_{\alpha-\delta}(\theta)$ & Confidence set for the imputed gradient $\E[g_\theta(X,f(X))]$. \\
+$R_\delta(\theta)$ & Confidence set for the rectifier $\Delta_\theta$. \\
+$C_{PP}$ & Prediction-powered confidence set for $\theta^\star$. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{Multi-Task PPI}
+
+\begin{center}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.18\linewidth}p{0.72\linewidth}}
+\toprule
+Symbol & Meaning \\
+\midrule
+$t=1,\ldots,T$ & Task index. A task may be a model-prompt comparison, a domain, a cell family, or another repeated target. \\
+$Y_i^{(t)}$ & Ground-truth outcome for unit $i$ in task $t$. \\
+$\widehat Y_i^{(t)}$ & Proxy or model-generated outcome observed for all units in task $t$. \\
+$L^{(t)}$ & Labeled subset for task $t$. \\
+$\theta^{(t)}$ & Task mean, $\frac{1}{N}\sum_{i=1}^N Y_i^{(t)}$. \\
+$s^{(-t)}$ & Recalibrator trained using labels from tasks other than $t$. \\
+$\gamma_t$ & Power-tuning coefficient for task $t$. \\
+$u_i^{(t)}$ & Adaptive local/global recalibrated proxy in AREPPI. \\
+$S_Y^2,S_s^2,S_{Ys}$ & Finite-population outcome variance, surrogate variance, and outcome-surrogate covariance. \\
+$\rho_N^2(Y,s)$ & Finite-population squared correlation; it determines the oracle variance gain from a surrogate. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{The Proposal}
+
+\subsection{Research Question and Estimands}
+
+The proposal asks: Which occupations and tasks gain most from AI, and how reliably can the distribution of gains be measured? The important point is that the estimand is not just a single aggregate (Proposal, p. 1). The primitive object is
+\[
+  \thetav=(\theta_1,\ldots,\theta_J),
+\]
+where $\theta_j$ is the true productivity gain in occupation-task cell $j$. From that vector, the proposal wants:
+\[
+  \bar\theta=\sum_{j=1}^J p_j\theta_j,
+\]
+the cross-cell dispersion of $\theta_j$, and top-$k$ or targeting sets.
+
+The proposal also correctly separates two baskets:
+\[
+  \bar\theta^0=\sum_j p_j^0\theta_j,
+  \qquad
+  \bar\theta^A=\sum_j p_j^A\theta_j.
+\]
+Here $p_j^0$ weights the pre-AI allocation of tasks, while $p_j^A$ weights tasks that users actually bring to AI. This is not a cosmetic distinction. If users select tasks into AI, usage-weighted gains can overstate or understate gains for the whole pre-AI work bundle. The proposal's plan to report both baskets is therefore substantively aligned with the semistructural framing used in this file: define the economic object first, then map observed behavior to that object with explicit assumptions.
+
+\subsection{Why Broad Scores Alone Are Not Enough}
+
+The proposal's central measurement concern is that usage-derived model scores $S_j$ are broad but biased (Proposal, p. 2). In particular:
+\begin{itemize}[leftmargin=*]
+  \item $S_j$ may be compressed toward the middle.
+  \item noise in $S_j$ may masquerade as real cross-cell dispersion.
+  \item observed prompts are a selected sample of work, so the target basket is ambiguous.
+\end{itemize}
+
+The proposed fix is to add a small randomized validation anchor. For a randomly chosen set of cells, workers or teams are randomized to AI access or model tier, and the experiment measures time and independently graded output quality. This creates $\widehat v_j$, an unbiased design-based estimate of $\theta_j$ for selected cells.
+
+\subsection{Validation Design and Why It Solves the Right Problem}
+
+The proposed validation design has three distinct roles (Proposal, pp. 2--3). First, validation cells are selected before gains are known, so the anchor represents the occupation-task population rather than a hand-picked set of interesting examples. Second, within selected cells, AI access or model tier is randomized at the worker, team, or task level, so the validation estimate targets a causal productivity gain rather than a self-reported or model-imputed gain. Third, the validation outcome combines completion time and independent quality grading, which is necessary because pure time savings can be misleading if output quality changes.
+
+The design target is not to measure every cell experimentally. Its purpose is to learn the score-to-truth channel well enough that broad scores can be used without inheriting their raw compression. This is why the validation sample can be much smaller than $J$: it estimates the calibration map, while the broad score supplies cell coverage.
+
+\subsection{Baseline Measurement Model}
+
+The appendix model is (Proposal, p. 4):
+\[
+  \theta_j\sim N(\mu,\tau^2),
+\]
+\[
+  S_j=a+b\theta_j+\eta_j,\qquad \eta_j\sim N(0,\sigma_S^2),\qquad 0<b<1,
+\]
+\[
+  \widehat v_j=\theta_j+\varepsilon_j,\qquad \varepsilon_j\sim N(0,s_j^2),
+\]
+with validation assignment $R_j$ independent of $(\theta_j,S_j,\varepsilon_j)$.
+
+The parameter $b$ captures compression: if $0<b<1$, a true gap of 40 percentage points may appear as a score gap of only $40b$ percentage points. The variance $\sigma_S^2$ captures score noise. The validation equation says that $\widehat v_j$ is noisy but centered on the true gain.
+
+\subsection{Proof: Scores Alone Do Not Identify the Level or Scale}
+
+This proof formalizes the claim that broad scores can preserve some ordinal information while still failing to identify policy-relevant levels and dispersion. Marginalizing over $\theta_j$,
+\[
+  S_j\sim N(a+b\mu,\; b^2\tau^2+\sigma_S^2).
+\]
+Therefore the marginal distribution of $S_j$ identifies only
+\[
+  a+b\mu
+  \qquad\text{and}\qquad
+  b^2\tau^2+\sigma_S^2.
+\]
+It does not separately identify the level $\mu$, the cross-cell dispersion $\tau^2$, the compression $b$, or the noise variance $\sigma_S^2$.
+
+\begin{claim}
+Broad scores alone cannot identify the true dispersion of $\theta_j$.
+\end{claim}
+
+\begin{proof}
+Fix the observed score mean $m_S$ and variance $v_S$. Choose any candidate $\tau^2>0$ and any $b>0$ such that $b^2\tau^2<v_S$. Then set
+\[
+  \sigma_S^2=v_S-b^2\tau^2
+\]
+and choose $a=m_S-b\mu$ for any candidate $\mu$. All these parameter values generate the same marginal distribution of $S_j$, but imply different levels and dispersions for the true productivity gains. Hence the latent level and scale are not identified by broad scores alone.
+\end{proof}
+
+This is the mathematical version of the proposal's substantive point: a broad AI score can be good for rough ranking while still being inadequate for levels, dispersion, and policy-relevant magnitudes.
+
+\subsection{Proof: A Randomized Anchor Identifies the Score-to-Truth Channel}
+
+This proof shows exactly what the randomized anchor buys. For validated cells, observe $(S_j,\widehat v_j)$. Suppose first that $s_j^2=s^2$ is common and known. Then:
+\[
+  \E[\widehat v_j]=\mu,
+\]
+\[
+  \Var(\widehat v_j)=\tau^2+s^2,
+\]
+\[
+  \E[S_j]=a+b\mu,
+\]
+\[
+  \Cov(S_j,\widehat v_j)=\Cov(a+b\theta_j+\eta_j,\theta_j+\varepsilon_j)=b\tau^2,
+\]
+\[
+  \Var(S_j)=b^2\tau^2+\sigma_S^2.
+\]
+Thus the validation sample identifies:
+\[
+  \mu=\E[\widehat v_j],
+\]
+\[
+  \tau^2=\Var(\widehat v_j)-s^2,
+\]
+\[
+  b=\frac{\Cov(S_j,\widehat v_j)}{\tau^2},
+\]
+\[
+  a=\E[S_j]-b\mu,
+\]
+\[
+  \sigma_S^2=\Var(S_j)-b^2\tau^2.
+\]
+With heterogeneous known $s_j^2$, subtract the average validation noise contribution from $\Var(\widehat v_j)$, or estimate by the corresponding known-noise moment equation.
+
+The independence of $R_j$ matters. Because validation cells are selected randomly before gains are known, the validated moments are population moments, not selected moments. This is exactly why the proposal emphasizes a randomized anchor rather than only collecting convenient case studies.
+
+\subsection{Posterior Shrinkage Formula}
+
+The posterior formula is the cell-level atlas rule: it turns a broad score into a calibrated estimate of $\theta_j$. If the channel parameters were known and a cell only had a broad score $S_j$, Bayes' rule gives:
+\[
+  \theta_j\mid S_j\sim N(m_j,\omega^2),
+\]
+where
+\[
+  m_j=\mu+
+  \frac{b\tau^2}{b^2\tau^2+\sigma_S^2}
+  \left(S_j-a-b\mu\right),
+\]
+\[
+  \omega^2=
+  \tau^2-\frac{b^2\tau^4}{b^2\tau^2+\sigma_S^2}
+  =
+  \frac{\tau^2\sigma_S^2}{b^2\tau^2+\sigma_S^2}.
+\]
+
+This formula is the cleanest way to see what the empirical Bayes estimator is doing. It does not invert the score naively by $(S_j-a)/b$. Instead, it shrinks the score-implied value toward the population mean $\mu$, with shrinkage governed by the reliability ratio
+\[
+  \lambda=\frac{b^2\tau^2}{b^2\tau^2+\sigma_S^2}.
+\]
+When scores are precise, $\lambda$ is close to one. When scores are noisy, $\lambda$ is small and posterior means move toward $\mu$.
+
+If cell $j$ is validated as well, combine three Gaussian pieces:
+\[
+  \theta_j\sim N(\mu,\tau^2),\quad
+  S_j\mid\theta_j\sim N(a+b\theta_j,\sigma_S^2),\quad
+  \widehat v_j\mid\theta_j\sim N(\theta_j,s_j^2).
+\]
+The posterior precision is
+\[
+  P_j=\frac{1}{\tau^2}+\frac{b^2}{\sigma_S^2}+\frac{1}{s_j^2},
+\]
+and the posterior mean is
+\[
+  m_j^{val}=P_j^{-1}
+  \left(
+    \frac{\mu}{\tau^2}
+    +\frac{b(S_j-a)}{\sigma_S^2}
+    +\frac{\widehat v_j}{s_j^2}
+  \right).
+\]
+
+\subsection{Why $m\ll J$ Can Still Work}
+
+The proposal's simulation argument is not that 40 validation cells identify 1000 cell effects directly. Rather, 40 validation cells estimate a low-dimensional channel (Proposal, pp. 3--4)
+\[
+  (\mu,\tau^2,a,b,\sigma_S^2),
+\]
+which is then applied to all $J$ score observations. The first-order excess risk per cell from estimating the channel is of order $1/m$, not $1/J$. For smooth posterior rules $m_j(\psi)$ with channel parameter $\psi$, a delta-method expansion gives
+\[
+  m_j(\widehat\psi)-m_j(\psi_0)
+  \approx
+  \nabla_\psi m_j(\psi_0)'(\widehat\psi-\psi_0),
+\]
+so
+\[
+  \E\left[(m_j(\widehat\psi)-m_j(\psi_0))^2\right]
+  \approx
+  \nabla_\psi m_j(\psi_0)'
+  \Var(\widehat\psi)
+  \nabla_\psi m_j(\psi_0)
+  =
+  O(1/m).
+\]
+This explains the proposal's ``knee'' near $m\approx 40$: once the calibration channel is learned tolerably well, additional labels improve the map more slowly.
+
+\subsection{How to Read the Proposal's Simulation}
+
+The simulation has a specific teaching purpose (Proposal, p. 3). The raw score compresses the true productivity-gain scale; in the proposal's example, a slope around $0.4$ turns a 40-point true gap into a 16-point score gap. Dividing by the estimated channel removes compression but amplifies noise. Empirical-Bayes shrinkage then trades off debiasing and noise control, which is why it can beat both the naive score and validation-only extrapolation for held-out cells.
+
+The simulation therefore supports a precise claim: the validation anchor is not mainly a source of direct cell measurements. It is a way to learn how to use the broad score safely. That claim is narrower and stronger than saying ``40 labels are enough for the economy.''
+
+\section{Prediction-Powered Inference}
+
+\subsection{Problem Setup}
+
+Angelopoulos et al. study inference when one has (Angelopoulos et al. 2023, Sec. 1.1):
+\begin{itemize}[leftmargin=*]
+  \item a small labeled sample $(X_i,Y_i)$, $i=1,\ldots,n$;
+  \item a large unlabeled sample $\widetilde X_i$, $i=1,\ldots,N$;
+  \item black-box predictions $f(X_i)$ and $f(\widetilde X_i)$.
+\end{itemize}
+The model $f$ may be any algorithm. The validity of PPI does not require $f$ to be correct. Accuracy only affects precision. This is the key reason PPI is useful for AI-measurement settings: predictions can reduce standard errors without being granted the status of ground truth.
+
+\subsection{Mean Estimation: Derivation}
+
+The target is the population mean,
+\[
+  \theta^\star=\E[Y].
+\]
+The prediction-powered estimator is (Angelopoulos et al. 2023, Sec. 1.3)
+\[
+  \widehat\theta_{PP}
+  =
+  \frac{1}{N}\sum_{i=1}^N f(\widetilde X_i)
+  -
+  \frac{1}{n}\sum_{i=1}^n\left(f(X_i)-Y_i\right).
+\]
+Equivalently,
+\[
+  \widehat\theta_{PP}
+  =
+  \overline f_{unlab}
+  +
+  \overline{(Y-f)}_{lab}.
+\]
+The first term uses abundant predictions. The second term corrects prediction bias using gold-standard labels. This decomposition is the template for the AI productivity estimator later in the note.
+
+\begin{proposition}[Unbiasedness of the PPI Mean]
+If the labeled and unlabeled samples are drawn from the same population and $f$ is fixed independently of the labeled inference sample, then
+\[
+  \E[\widehat\theta_{PP}]=\E[Y].
+\]
+\end{proposition}
+
+\begin{proof}
+Taking expectations,
+\[
+  \E[\widehat\theta_{PP}]
+  =
+  \E[f(X)]-\E[f(X)-Y]
+  =
+  \E[f(X)]-\E[f(X)]+\E[Y]
+  =
+  \E[Y].
+\]
+No correctness assumption on $f$ is used.
+\end{proof}
+
+The large-sample variance is
+\[
+  \Var(\widehat\theta_{PP})
+  =
+  \frac{\sigma_f^2}{N}
+  +
+  \frac{\sigma_{f-Y}^2}{n},
+\]
+where
+\[
+  \sigma_f^2=\Var(f(X)),
+  \qquad
+  \sigma_{f-Y}^2=\Var(f(X)-Y).
+\]
+Thus an approximate 95 percent interval is
+\[
+  \widehat\theta_{PP}
+  \pm
+  1.96
+  \sqrt{
+    \frac{\widehat\sigma_f^2}{N}
+    +
+    \frac{\widehat\sigma_{f-Y}^2}{n}
+  }.
+\]
+When $N$ is large, the first term is small. Precision then depends mostly on the residual variance $\Var(Y-f(X))$. Good predictions reduce interval width; bad predictions do not invalidate coverage but may provide little gain.
+
+\subsection{General Convex Parameters}
+
+The mean example is only one case. The paper's general result covers parameters defined by convex risk minimization. Let the target be
+\[
+  \theta^\star
+  =
+  \arg\min_{\theta\in\R^d}
+  \E[\ell_\theta(X,Y)].
+\]
+Let $g_\theta(X,Y)$ be a gradient or subgradient. At the true parameter,
+\[
+  \E[g_{\theta^\star}(X,Y)]=0.
+\]
+PPI decomposes this true gradient into an imputed gradient plus a rectifier. The goal is to replace an unavailable expectation involving $Y$ with an available prediction expectation plus a labeled correction:
+\[
+  \E[g_\theta(X,Y)]
+  =
+  \E[g_\theta(X,f(X))]
+  +
+  \E[g_\theta(X,Y)-g_\theta(X,f(X))].
+\]
+Define
+\[
+  g_\theta^f=\E[g_\theta(X,f(X))],
+\]
+\[
+  \Delta_\theta=\E[g_\theta(X,Y)-g_\theta(X,f(X))].
+\]
+The inference problem becomes: build one confidence set for $g_\theta^f$ using many predictions, another for $\Delta_\theta$ using labeled data, and then test whether zero belongs to their sum.
+
+\subsection{Main Coverage Theorem: Proof Logic}
+
+Let $T_{\alpha-\delta}(\theta)$ be a confidence set for the imputed gradient $g_\theta^f$, and let $R_\delta(\theta)$ be a confidence set for the rectifier $\Delta_\theta$. Define
+\[
+  C_{PP}
+  =
+  \left\{
+    \theta:
+    0\in T_{\alpha-\delta}(\theta)+R_\delta(\theta)
+  \right\},
+\]
+where $A+B=\{a+b:a\in A,b\in B\}$ is the Minkowski sum.
+
+\begin{proposition}[PPI Coverage Theorem]
+If, for each $\theta$,
+\[
+  \Pr(g_\theta^f\in T_{\alpha-\delta}(\theta))\ge 1-(\alpha-\delta)
+\]
+and
+\[
+  \Pr(\Delta_\theta\in R_\delta(\theta))\ge 1-\delta,
+\]
+then
+\[
+  \Pr(\theta^\star\in C_{PP})\ge 1-\alpha.
+\]
+\end{proposition}
+
+\begin{proof}
+At $\theta^\star$,
+\[
+  g_{\theta^\star}^f+\Delta_{\theta^\star}
+  =
+  \E[g_{\theta^\star}(X,f(X))]
+  +
+  \E[g_{\theta^\star}(X,Y)-g_{\theta^\star}(X,f(X))]
+  =
+  \E[g_{\theta^\star}(X,Y)]
+  =
+  0.
+\]
+With probability at least $1-\alpha$ by the union bound, both events occur:
+\[
+  g_{\theta^\star}^f\in T_{\alpha-\delta}(\theta^\star),
+  \qquad
+  \Delta_{\theta^\star}\in R_\delta(\theta^\star).
+\]
+On that event, $0=g_{\theta^\star}^f+\Delta_{\theta^\star}$ belongs to
+$T_{\alpha-\delta}(\theta^\star)+R_\delta(\theta^\star)$, so $\theta^\star\in C_{PP}$.
+\end{proof}
+
+\subsection{Examples in the PPI Paper}
+
+\paragraph{Quantiles.}
+For a $q$-quantile, the estimating equation is based on
+\[
+  \E[\ind\{Y\le \theta\}-q]=0.
+\]
+The prediction-powered correction compares labels and predictions:
+\[
+  \E[\ind\{Y\le\theta\}-\ind\{f(X)\le\theta\}].
+\]
+The method scans candidate $\theta$ values and retains those for which zero is compatible with the imputed plus rectified estimating equation.
+
+\paragraph{Logistic regression.}
+For logistic regression, the score involves $X(Y-\mu_\theta(X))$. Replacing $Y$ with $f(X)$ creates an imputed score, and labels estimate the correction. The key rectifier is proportional to
+\[
+  \E[X(Y-f(X))],
+\]
+up to the sign convention used in the estimating equation.
+
+\paragraph{Linear regression.}
+For linear regression, predictions can be used to estimate the normal equations, and labels correct the residual bias. The paper gives a refined estimator and sandwich variance. Conceptually, it is the same decomposition:
+\[
+  \text{true moment}
+  =
+  \text{prediction moment}
+  +
+  \text{label correction}.
+\]
+
+\paragraph{What the examples share.}
+The examples differ in the estimating equation, not in the logic. Each writes a target-defining moment as
+\[
+  M(\theta;Y)
+  =
+  M(\theta;f)
+  +
+  \{M(\theta;Y)-M(\theta;f)\}.
+\]
+The first term is cheap because predictions are abundant; the bracketed term is credible because it is estimated on labeled data. This is the exact analogy to using broad AI productivity scores plus randomized validation cells.
+
+\subsection{Finite-Population Version}
+
+The finite-population version is especially relevant for the AI productivity atlas (Angelopoulos et al. 2023, App. B). Suppose the population contains $N$ fixed units with outcomes $Y_i$, but only a random subset is labeled. The target mean is
+\[
+  \theta_N=\frac{1}{N}\sum_{i=1}^N Y_i.
+\]
+Since $f(X_i)$ is observed for all $N$ units, the imputed term is known:
+\[
+  \frac{1}{N}\sum_{i=1}^N f(X_i).
+\]
+The only random correction is the labeled residual mean:
+\[
+  \frac{1}{n}\sum_{i\in L}(Y_i-f(X_i)).
+\]
+Thus
+\[
+  \widehat\theta_{PP,N}
+  =
+  \frac{1}{N}\sum_{i=1}^N f(X_i)
+  +
+  \frac{1}{n}\sum_{i\in L}(Y_i-f(X_i)).
+\]
+This is model-assisted survey sampling in modern notation. The predictions improve efficiency; random labeling preserves design-based validity. For the proposal, the fixed units are occupation-task cells or cell-level validation opportunities; the labels are randomized validation estimates; and the predictions are broad usage/model scores after calibration.
+
+\section{Multi-Task Prediction-Powered Inference}
+
+\subsection{Why a Multi-Task Version Is Needed}
+
+Emmenegger, Stahler, and Podimata start from a situation that looks like AI evaluation and social science measurement: there are many related tasks, each with few labels, and each has abundant proxy outcomes (Emmenegger et al. 2026, Secs. 1--2). If each task is analyzed separately, labels are too scarce. If tasks are pooled naively, task-specific validity may fail. Multi-task PPI tries to borrow calibration across tasks while keeping task-specific rectification.
+
+\subsection{Finite-Population Task Setup}
+
+For task $t$, the finite-population target is
+\[
+  \theta^{(t)}
+  =
+  \frac{1}{N}\sum_{i=1}^N Y_i^{(t)}.
+\]
+The proxy $\widehat Y_i^{(t)}$ is observed for all units. Labels $Y_i^{(t)}$ are observed only for $i\in L^{(t)}$, selected by simple random sampling without replacement. This finite-population setup is a close cousin of the occupation-task atlas: the finite population is the constructed evaluation set, and the scarce labels are expensive human or experimental measurements.
+
+Given a recalibrated proxy $s_i^{(t)}$, the general estimator is
+\[
+  \widehat\theta^{(t)}
+  =
+  \overline Y_{L}^{(t)}
+  +
+  \gamma_t
+  \left(
+    \overline s_{N}^{(t)}
+    -
+    \overline s_{L}^{(t)}
+  \right),
+\]
+where
+\[
+  \overline Y_L^{(t)}=\frac{1}{n_t}\sum_{i\in L^{(t)}}Y_i^{(t)},
+  \quad
+  \overline s_L^{(t)}=\frac{1}{n_t}\sum_{i\in L^{(t)}}s_i^{(t)},
+  \quad
+  \overline s_N^{(t)}=\frac{1}{N}\sum_{i=1}^N s_i^{(t)}.
+\]
+This is a generalized regression estimator. The term $\overline s_N-\overline s_L$ says: if the labeled sample has an unusual proxy mean relative to the full task population, correct the labeled outcome mean accordingly.
+
+\subsection{Power Tuning}
+
+Define the residual
+\[
+  r_i^{(t)}(\gamma)
+  =
+  Y_i^{(t)}-\gamma_t s_i^{(t)}.
+\]
+Under simple random sampling without replacement, the estimator's variance is proportional to the finite-population variance of this residual (Emmenegger et al. 2026, Sec. 2.4):
+\[
+  V(s,\gamma)
+  =
+  \frac{1}{n}
+  \left(1-\frac{n}{N}\right)
+  \left[
+    S_Y^2
+    -2\gamma S_{Ys}
+    +\gamma^2 S_s^2
+  \right],
+\]
+where $S_Y^2$, $S_s^2$, and $S_{Ys}$ are finite-population variance and covariance quantities. Differentiating with respect to $\gamma$ gives:
+\[
+  \frac{\partial V}{\partial \gamma}
+  =
+  \frac{1}{n}
+  \left(1-\frac{n}{N}\right)
+  \left[
+    -2S_{Ys}+2\gamma S_s^2
+  \right].
+\]
+Setting this derivative equal to zero yields the oracle coefficient
+\[
+  \gamma^\star(s)=\frac{S_{Ys}}{S_s^2}
+  =
+  \frac{\Cov_N(Y,s)}{\Var_N(s)}.
+\]
+Plugging $\gamma^\star$ back in gives
+\[
+  V(s)
+  =
+  \frac{1}{n}
+  \left(1-\frac{n}{N}\right)
+  S_Y^2
+  \left(1-\rho_N^2(Y,s)\right).
+\]
+Therefore, the efficiency gain depends on the finite-population squared correlation between the ground truth and the recalibrated proxy.
+
+\subsection{GREPPI}
+
+GREPPI, or globally recalibrated PPI, works as follows for each target task $t$ (Emmenegger et al. 2026, Algorithm 1):
+\begin{enumerate}[leftmargin=*]
+  \item Use labels from tasks other than $t$ to train a recalibrator $s^{(-t)}$.
+  \item Apply $s^{(-t)}$ to all proxy values in task $t$.
+  \item Use task-$t$ labels to estimate the power-tuning coefficient $\gamma_t$.
+  \item Report
+  \[
+    \widehat\theta_G^{(t)}
+    =
+    \overline Y_L^{(t)}
+    +
+    \widehat\gamma_t
+    \left(
+      \overline{s^{(-t)}}_N^{(t)}
+      -
+      \overline{s^{(-t)}}_L^{(t)}
+    \right).
+  \]
+\end{enumerate}
+The leave-one-task-out structure prevents the target task's labels from being used twice to learn the global recalibration function. The target labels still appear in the rectification and tuning step, which anchors validity to the target task.
+
+\subsection{AREPPI}
+
+AREPPI, or adaptive recalibrated PPI, handles heterogeneity across tasks (Emmenegger et al. 2026, Algorithm 2). It:
+\begin{enumerate}[leftmargin=*]
+  \item fits a global leave-task-out recalibrator;
+  \item splits the target task labels;
+  \item fits local cross-fitted recalibrators using the target task's own labels;
+  \item chooses a convex combination of global and local recalibration to maximize held-out correlation;
+  \item constructs a final power-tuned estimator using the adaptive proxy.
+\end{enumerate}
+The reason is practical. Some tasks share a common proxy-truth relationship; others do not. GREPPI is powerful when the common relationship is stable. AREPPI hedges when tasks are heterogeneous by mixing global recalibration with locally cross-fitted recalibration.
+
+\subsection{Affine Invariance}
+
+\begin{lemma}[Affine Invariance]
+If $s(\widehat Y)=a\widehat Y+b$ with $a\ne 0$, then power-tuned PPI using $s(\widehat Y)$ has the same oracle variance as power-tuned PPI using $\widehat Y$ (Emmenegger et al. 2026, Lemma 3.1).
+\end{lemma}
+
+\begin{proof}
+The oracle variance depends on
+\[
+  \rho_N^2(Y,s(\widehat Y)).
+\]
+For $a\ne0$, correlation is invariant to affine transformations:
+\[
+  \rho_N(Y,a\widehat Y+b)
+  =
+  \operatorname{sign}(a)\rho_N(Y,\widehat Y),
+\]
+so the squared correlation is unchanged. Therefore the oracle power-tuned variance is unchanged.
+\end{proof}
+
+This is an important warning. If the only error in the proxy is level shift or scale compression, power tuning already fixes it. Multi-task recalibration helps only when it learns shape, not just scale.
+
+\subsection{Nonlinear Necessity}
+
+Let $m(z)=\E_N[Y\mid \widehat Y=z]$ be the finite-population conditional mean. Among transformations $s=\phi(\widehat Y)$, the best proxy for reducing residual variance is the conditional mean $m(\widehat Y)$.
+
+\begin{proposition}[Nonlinear Necessity]
+Power-tuned recalibration strictly improves on the identity proxy only if the conditional mean $m(z)=\E_N[Y\mid \widehat Y=z]$ is not affine in $z$ on the population support (Emmenegger et al. 2026, Corollary 3.2).
+\end{proposition}
+
+\begin{proof}
+The oracle variance after tuning depends on $1-\rho_N^2(Y,s)$. Therefore one wants $s$ to maximize $\rho_N^2(Y,s)$. The best square-integrable function of $\widehat Y$ for predicting $Y$ is the conditional mean $m(\widehat Y)=\E_N[Y\mid \widehat Y]$, because it is the $L^2$ projection of $Y$ onto functions of $\widehat Y$.
+
+If $m(z)$ is affine, then $m(\widehat Y)=a\widehat Y+b$, so by affine invariance it has the same squared correlation as $\widehat Y$ itself. No strict improvement is available beyond power tuning. If $m(z)$ is nonlinear, then a nonlinear recalibrator can achieve a larger squared correlation than the identity proxy, reducing the tuned residual variance.
+\end{proof}
+
+This result is directly useful for the AI productivity proposal. It says that flexible calibration is worth the complexity only if the relationship between broad AI scores and true experimental gains has nonlinear structure. If the problem is just compression, the randomized anchor plus linear channel is enough.
+
+\subsection{Empirical Case Study in the Multi-Task Paper}
+
+The paper's case study audits language models on election-related information during the 2024 U.S. presidential election (Emmenegger et al. 2026, Sec. 4). It uses a setting where many related hypotheses have scarce high-quality labels, so analyzing each task separately wastes shared structure. The paper reports human-annotation applications in which model predictions are treated as surrogate outcomes and human annotations as ground truth; the motivating figure treats \texttt{gpt-5-mini} predictions as the surrogate outcomes. A later semi-synthetic experiment treats \texttt{gpt-5-mini} as ground truth and \texttt{gpt-4o-mini} as the annotator.
+
+The case study matters for the econ AI project because it demonstrates the exact failure mode we should expect in occupation-task measurement: each individual task may have too few labels for precise rectification, but related tasks can reveal a shared nonlinear proxy-truth relationship. The lesson is not to pool targets. The lesson is to share the calibration function while keeping the target-specific correction.
+
+\section{How These Papers Should Shape the Econ AI Project}
+
+\subsection{Where PPI Fits Exactly}
+
+For a scalar basket mean, the proposal can be written as finite-population PPI. Let the target be
+\[
+  \bar\theta_p=\sum_{j=1}^J p_j\theta_j.
+\]
+Let $g(S_j)$ be a calibrated prediction of $\theta_j$ based on the broad score. If validation cells are sampled randomly with known probabilities, a PPI-style estimator is:
+\[
+  \widehat{\bar\theta}_{PPI}
+  =
+  \sum_{j=1}^J p_j g(S_j)
+  +
+  \sum_{j=1}^J
+  \frac{R_j p_j}{\pi_j}
+  \left(\widehat v_j-g(S_j)\right),
+\]
+where $\pi_j=\Pr(R_j=1)$. If validation is simple random sampling and $p_j=1/J$, this reduces to the full-population prediction mean plus the sample mean residual. In a weighted atlas, the correction must use the basket weights and validation inclusion probabilities.
+
+The first term uses all broad scores. The second term rectifies bias using randomized validation. This is the cleanest design-based statement of the proposal's average-gain estimator.
+
+\subsection{Where Empirical Bayes Fits Better Than Plain PPI}
+
+\paragraph{The short answer.}
+PPI and empirical Bayes solve different inferential problems.  PPI uses a
+prediction as a control variate and a randomized labeled sample to obtain
+design-based inference for a low-dimensional aggregate.  Empirical Bayes (EB)
+posits a distribution for the latent cell effects and uses it to shrink noisy
+cell estimates, producing a model-based estimate of the full latent vector.
+PPI asks whether an aggregate remains valid after correcting prediction error;
+EB asks how information should be shared across heterogeneous cells.
+
+\paragraph{Common notation.}
+For cell \(j=1,\ldots,J\), let \(\theta_j\) be the true productivity effect,
+\(S_j\) the broad AI score, \(R_j\) the randomized validation indicator,
+\(\pi_j=\Pr(R_j=1)\), and \(\widehat v_j\) an experimental estimate satisfying
+\[
+\E[\widehat v_j\mid\theta_j]=\theta_j.
+\tag{validation-unbiasedness}
+\]
+The basket target is \(\bar\theta_p=\sum_jp_j\theta_j\).  The vector target is
+\(\thetav=(\theta_1,\ldots,\theta_J)'\).
+
+\paragraph{Why PPI is design based.}
+Treat \((\theta_j,S_j)_{j=1}^J\) as a fixed finite population and let
+\(g_j=g(S_j)\) be a prediction constructed without using cell \(j\)'s
+validation noise.  The PPI/GREG estimator is
+\[
+\widehat{\bar\theta}_{\mathrm{PPI}}
+=
+\sum_{j=1}^Jp_jg_j
++
+\sum_{j=1}^J\frac{R_jp_j}{\pi_j}
+(\widehat v_j-g_j).
+\tag{PPI-finite-population}
+\]
+Conditioning on the finite population and taking expectations over the
+validation design and experimental noise,
+\begin{align*}
+\E[\widehat{\bar\theta}_{\mathrm{PPI}}]
+&=\sum_jp_jg_j
++\sum_jp_j\frac{\E[R_j(\widehat v_j-g_j)]}{\pi_j}\\
+&=\sum_jp_jg_j
++\sum_jp_j\E[\widehat v_j-g_j\mid R_j=1]\\
+&=\sum_jp_jg_j+\sum_jp_j(\theta_j-g_j)\\
+&=\bar\theta_p.
+\end{align*}
+The second equality uses
+\(\E[R_jX_j]=\pi_j\E[X_j\mid R_j=1]\); it does not require factoring a
+product of potentially dependent random variables.  The third uses randomized
+validation and experimental unbiasedness, so that
+\(\E[\widehat v_j\mid R_j=1,\theta_j]=\theta_j\).
+The prediction may be biased cell by cell; random validation removes its
+aggregate bias.  A better \(g\) reduces the variance of the residual correction
+but is not the source of identification.  This is the prediction-powered
+principle in Angelopoulos et al. (2023), Sections 1.1--1.3 and Appendix B.
+When \(g\) is trained on the same validation sample, sample splitting or
+cross-fitting is the clean way to preserve this conditional argument.
+
+\paragraph{Why EB is model based.}
+A simple score-conditioned normal channel is
+\[
+\theta_j\mid S_j
+\sim
+N\!\left(\mu_\eta(S_j),\tau^2\right),
+\qquad
+\widehat v_j\mid\theta_j
+\sim
+N(\theta_j,s_j^2).
+\tag{EB-channel}
+\]
+For a validated cell, Bayes' rule gives
+\[
+\theta_j\mid S_j,\widehat v_j
+\sim
+N\!\left(
+\mu_\eta(S_j)+\omega_j[\widehat v_j-\mu_\eta(S_j)],
+(1-\omega_j)\tau^2
+\right),
+\]
+where
+\[
+\omega_j=\frac{\tau^2}{\tau^2+s_j^2}.
+\tag{EB-shrinkage-weight}
+\]
+Thus the posterior mean is
+\[
+\widehat\theta_j^{\mathrm{EB}}
+=(1-\omega_j)\mu_\eta(S_j)+\omega_j\widehat v_j.
+\tag{EB-posterior-mean}
+\]
+A noisy experiment has large \(s_j^2\), small \(\omega_j\), and strong
+shrinkage toward the score-conditioned population mean.  A precise experiment
+has \(\omega_j\approx1\).  For an unvalidated cell, the posterior mean is
+\(\mu_\eta(S_j)\), with uncertainty inherited from the channel and hyperparameter
+estimation.  Unlike PPI, this cell estimate is not design-unbiased; its quality
+depends on the hierarchical model and on validation support.
+
+\paragraph{What each method identifies.}
+\begin{center}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.20\linewidth}
+                >{\raggedright\arraybackslash}p{0.34\linewidth}
+                >{\raggedright\arraybackslash}p{0.34\linewidth}}
+\toprule
+Question & PPI/GREG & Empirical Bayes \\
+\midrule
+Primary target & A scalar or low-dimensional aggregate such as
+\(\sum_jp_j\theta_j\) & The full vector \(\thetav\), its distribution, ranks,
+and selected cells \\
+Source of validity & Random validation and known inclusion probabilities & A
+correct or useful hierarchical score--truth model \\
+Role of prediction & Control variate; residual correction removes aggregate
+bias & Prior mean/measurement channel; determines shrinkage and extrapolation \\
+Cell-level output & Not supplied by plain scalar PPI & Posterior means,
+variances, rank probabilities, and top-\(k\) probabilities \\
+Main failure mode & Nonrandom labels, incorrect inclusion weights, or poor
+overlap inflate bias/variance & Misspecified prior/channel or unsupported
+extrapolation distorts cells and ranks \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{The recommended hybrid.}
+The methods are complements rather than substitutes.  Fit the EB or multi-task
+model on training folds to obtain cross-fitted predictions
+\(g_j^{(-j)}\approx\E[\theta_j\mid S_j,z_j]\).  Use those predictions in the
+PPI residual correction for headline basket means:
+\[
+\widehat{\bar\theta}_{\mathrm{hybrid}}
+=
+\sum_jp_jg_j^{(-j)}
++\sum_j\frac{R_jp_j}{\pi_j}
+(\widehat v_j-g_j^{(-j)}).
+\]
+Use the EB posterior separately for the atlas, dispersion, rankings, and
+top-\(k\) statements.  The aggregate then has a design-based correction, while
+the high-dimensional layer makes its model dependence explicit.  This is also
+the clean connection to prediction-powered adaptive shrinkage: shrinkage
+handles the vector, and prediction-powered rectification protects chosen
+aggregates.  Source: Angelopoulos et al. (2023), Sections 1--2 and Appendix B;
+Li and Ignatiadis (2025); proposal measurement model and posterior-shrinkage
+section above.
+
+Plain PPI is strongest for scalar or low-dimensional parameters. The proposal also wants:
+\begin{itemize}[leftmargin=*]
+  \item cell-level posterior means;
+  \item dispersion of $\theta_j$;
+  \item rankings and top-$k$ sets;
+  \item uncertainty about which occupations drive aggregate gains.
+\end{itemize}
+Those are high-dimensional latent-vector targets. For them, the empirical Bayes channel model is not an add-on; it is central. It gives a disciplined way to separate true heterogeneity from score noise and to correct winner's curse in rankings.
+
+The recommended architecture is therefore:
+\begin{enumerate}[leftmargin=*]
+  \item Use PPI or generalized regression estimators for headline scalar summaries.
+  \item Use empirical Bayes or prediction-powered adaptive shrinkage for the full vector $\thetav$.
+  \item Report ranking uncertainty from the posterior, not from raw scores.
+\end{enumerate}
+
+\subsection{Where Multi-Task PPI Fits}
+
+The multi-task paper is relevant if the calibration problem repeats across related domains. In this project, possible tasks include:
+\begin{itemize}[leftmargin=*]
+  \item occupation clusters;
+  \item task families;
+  \item firms or enterprise deployments;
+  \item model versions or access tiers;
+  \item pre-AI versus AI-usage baskets.
+\end{itemize}
+
+For each task $t$, one could estimate
+\[
+  \theta^{(t)}=\frac{1}{N_t}\sum_i Y_i^{(t)}
+\]
+using broad proxies and scarce validation labels. GREPPI would learn a shared recalibrator from other tasks and apply it to task $t$. AREPPI would mix global and local calibration when task $t$ is idiosyncratic.
+
+The key diagnostic should be whether cross-task calibration learns a nonlinear score-truth relationship. If gains from recalibration are only affine, power tuning already captures them. If broad scores miss nonlinear regions -- for example, low-score and high-score cells are reliable but middle-score cells are ambiguous -- multi-task recalibration may materially improve precision.
+
+\subsection{Relation to the Semistructural Framing}
+
+The proposal is aligned with the semistructural framing in this merged note in three ways.
+
+First, it distinguishes the economic primitive from the measurement system. The primitive is $\theta_j$, the true productivity gain. The score $S_j$ is not treated as truth; it is a noisy measurement equation.
+
+Second, it separates behavior from technology. The pre-AI basket $p^0_j$ and the AI-usage basket $p^A_j$ answer different questions. This is exactly the distinction needed to avoid confusing ``what AI can do'' with ``what users choose to bring to AI.''
+
+Third, it uses credible local experiments to discipline broad observational measurement. That is the same architecture as a semistructural model that combines a behavioral map, a measurement map, and a small source of quasi-experimental or randomized variation.
+
+The main gap is inferential language. The proposal should more explicitly distinguish:
+\begin{itemize}[leftmargin=*]
+  \item design-based validity for scalar summaries, which can be supported by PPI-style rectification;
+  \item model-based posterior statements for the full latent vector and rankings;
+  \item sensitivity analysis for cells outside the validation support.
+\end{itemize}
+
+\section{Recommended Strengthening of the Proposal}
+
+\subsection{1. State the Estimand Hierarchy}
+
+The proposal should begin with a hierarchy:
+\[
+  \theta_j
+  \quad\rightarrow\quad
+  \bar\theta^0,\bar\theta^A
+  \quad\rightarrow\quad
+  \text{dispersion}
+  \quad\rightarrow\quad
+  \text{top-}k\text{ sets}.
+\]
+This makes clear which results can receive PPI-style confidence intervals and which require posterior or selective-inference machinery.
+
+\subsection{2. Write the PPI Estimator for the Basket Mean}
+
+For each basket $b\in\{0,A\}$ with weights $p_j^b$, define
+\[
+  \bar\theta^b=\sum_j p_j^b\theta_j.
+\]
+Then use
+\[
+  \widehat{\bar\theta}^{b}
+  =
+  \sum_j p_j^b g(S_j)
+  +
+  \sum_j
+  \frac{R_j p_j^b}{\pi_j}
+  \left(\widehat v_j-g(S_j)\right),
+\]
+where $\pi_j=\Pr(R_j=1)$, with finite-population correction and variance formulas adjusted to the exact sampling design. This makes the design-based anchor transparent.
+
+\subsection{3. Use EB for the Atlas Layer}
+
+For cell-level reporting, use the posterior mean formulas in the empirical-Bayes subsection. For top-$k$ sets, report posterior probabilities:
+\[
+  \Pr(j\in \operatorname{TopK}(\thetav)\mid S,\widehat v)
+\]
+or simultaneous credible sets for ranks. This avoids overinterpreting noisy extremes.
+
+\subsection{4. Add a Multi-Task Calibration Layer Only If It Buys Nonlinearity}
+
+Let $z_j$ denote features of the cell and $S_j$ the broad score. A flexible recalibrator might be
+\[
+  g(S_j,z_j)\approx \E[\theta_j\mid S_j,z_j].
+\]
+Train this using validation cells, possibly borrowing across clusters. But the multi-task PPI result says to check whether the learned map is materially nonlinear. If it is only affine in $S_j$, the extra machinery will not improve the oracle tuned variance.
+
+\subsection{5. Make Support and Extrapolation Explicit}
+
+Cells with no plausible validation analogue require either:
+\begin{itemize}[leftmargin=*]
+  \item a support restriction;
+  \item partial-identification bounds;
+  \item a sensitivity parameter governing extrapolation error.
+\end{itemize}
+This should be stated as part of the atlas, not hidden in robustness checks.
+
+\section{Teaching Flowchart}
+
+\[
+\begin{array}{c}
+\text{Define economic primitives: }\theta_j,\bar\theta^0,\bar\theta^A,\text{ dispersion, top-}k \\
+\Downarrow \\
+\text{Observe broad scores }S_j\text{ for many occupation-task cells} \\
+\Downarrow \\
+\text{Recognize measurement problem: compression, noise, selection of tasks into usage} \\
+\Downarrow \\
+\text{Randomly validate a small set of cells to obtain unbiased }\widehat v_j \\
+\Downarrow \\
+\text{Use validated pairs }(S_j,\widehat v_j)\text{ to learn score-to-truth channel} \\
+\Downarrow \\
+\begin{array}{cc}
+\text{Scalar basket means} & \text{Full atlas / rankings} \\
+\Downarrow & \Downarrow \\
+\text{PPI / GREG rectification} & \text{Empirical Bayes shrinkage} \\
+\Downarrow & \Downarrow \\
+\text{Design-based confidence intervals} & \text{Posterior means and rank uncertainty}
+\end{array} \\
+\Downarrow \\
+\text{If many related tasks exist, add GREPPI/AREPPI recalibration} \\
+\Downarrow \\
+\text{Report calibrated AI productivity atlas with basket-specific estimates and uncertainty}
+\end{array}
+\]
+
+\section{Bibliography}
+
+\begin{enumerate}[leftmargin=*]
+  \item Angelopoulos, A. N., Bates, S., Fannjiang, C., Jordan, M. I., and Zrnic, T. (2023). ``Prediction-Powered Inference.'' \emph{Science}, 382(6671), 669--674. DOI: 10.1126/science.adi6000. arXiv:2301.09633v4, submitted January 23, 2023 and revised November 9, 2023. arXiv DOI: 10.48550/arXiv.2301.09633. URL: \url{https://arxiv.org/abs/2301.09633}.
+  \item Brynjolfsson, E., Li, D., and Raymond, L. (2025). ``Generative AI at Work.'' \emph{Quarterly Journal of Economics}. Also NBER Working Paper 31161.
+  \item Chen, J., and Tamer, E. (2026). ``Generated Data: Inference and Experiments.'' arXiv:2606.15031.
+  \item Chetty, R., Friedman, J. N., Hendren, N., Jones, M. R., and Porter, S. R. (2025). ``The Opportunity Atlas: Mapping the Childhood Roots of Social Mobility.'' \emph{American Economic Review}, 115(1), 1--53.
+  \item Cunningham, T., and Whitfill, C. (2026). ``Measuring Model Capability at Work.'' METR blog post.
+  \item Dell'Acqua, F., McFowland, E., Mollick, E. R., Lifshitz-Assaf, H., Kellogg, K., Rajendran, S., Krayer, L., Candelon, F., and Lakhani, K. R. (2026). ``The Cybernetic Teammate: A Field Experiment on Generative AI Reshaping Teamwork and Expertise.'' \emph{Organization Science}, 37(2), 403--423.
+  \item Emmenegger, N., Stahler, E., and Podimata, C. (2026). ``Prediction-Powered Inference Across Many Tasks for AI Evaluation and Social Science Research.'' arXiv:2605.29249v1, submitted May 28, 2026. DOI: 10.48550/arXiv.2605.29249. URL: \url{https://arxiv.org/abs/2605.29249}.
+  \item Li, M., and Ignatiadis, N. (2025). ``Prediction-Powered Adaptive Shrinkage Estimation.'' \emph{Proceedings of the 42nd International Conference on Machine Learning}. arXiv:2502.14166.
+  \item Ludwig, J., Mullainathan, S., and Rambachan, A. (2025). ``Large Language Models: An Applied Econometric Framework.'' arXiv:2412.07031.
+  \item OpenAI Exchange proposal (v4). ``The Distributional Effects of AI's Productivity Gains: A Data Fusion Approach.'' Unpublished proposal PDF supplied by the user.
+  \item Peng, S., Kalliamvakou, E., Cihon, P., and Demirer, M. (2023). ``The Impact of AI on Developer Productivity: Evidence from GitHub Copilot.'' arXiv:2302.06590.
+  \item Tamkin, A., and McCrory, F. (2025). ``Which Economic Tasks are Performed with AI? Evidence from Millions of Claude Conversations.'' Anthropic report, November 5, 2025.
+\end{enumerate}
+
+
+
+
+\clearpage
+\section*{Part IV: Borovickova--Shimer 2020 Sorting Note}
+
+\section*{Purpose}
+
+This note processes Borovickova and Shimer's February 13, 2020 manuscript \emph{High Wage Workers Work for High Wage Firms}. The paper is close to our current goal because it cleanly separates three objects that are often conflated:
+\begin{enumerate}[leftmargin=*]
+  \item sorting as an economic object;
+  \item AKM fixed effects as one parametric wage decomposition;
+  \item an estimator that remains consistent when each worker and firm has only a few observations.
+\end{enumerate}
+
+The main lesson for us is that the relevant sorting object need not be the AKM correlation. Borovickova and Shimer define worker and firm ``types'' as expected log wages in the matched economy, then estimate the correlation between those types using nonparametric leave-out moments. This is a natural reduced-form target for a semistructural supermodel: the model can generate wages and matches however it wants, while the sorting statistic remains a transparent functional of the implied matched distribution.
+
+\section*{Direct Map Into the LOO-v2 Primitives}
+
+\paragraph{The answer to the nesting question.}
+The LOO-v2 primitives are rich enough to contain the
+Borovickova--Shimer sorting statistic as an additional functional.  This is a
+precise functional-inclusion result.  It is not, by itself, a claim that the
+static low-rank wage equation nests their complete dynamic data-generating
+process.
+
+Let
+\[
+m_{ij}=\E[w_{ij}\mid I=i,J=j,\text{match observed}]
+\]
+be the selected-match conditional mean wage schedule, and let
+\(P_{IJ}^{\mathrm{obs}}\) be the joint distribution of realized matches.  Define
+\[
+P_{J\mid i}^{\mathrm{obs}}(j)
+=\Pr(J=j\mid I=i,\text{ observed match}),
+\qquad
+P_{I\mid j}^{\mathrm{obs}}(i)
+=\Pr(I=i\mid J=j,\text{ observed match}).
+\]
+The Borovickova--Shimer wage types are then
+\[
+\psi_i^{\mathrm{BS}}
+=
+\E_{P^{\mathrm{obs}}}[m_{iJ}\mid I=i]
+=
+\sum_jP_{J\mid i}^{\mathrm{obs}}(j)m_{ij},
+\tag{BS-worker-type-LOO}
+\]
+and
+\[
+\phi_j^{\mathrm{BS}}
+=
+\E_{P^{\mathrm{obs}}}[m_{Ij}\mid J=j]
+=
+\sum_iP_{I\mid j}^{\mathrm{obs}}(i)m_{ij}.
+\tag{BS-firm-type-LOO}
+\]
+Their sorting statistic is the functional
+\[
+T_{\mathrm{BS}}(m,P_{IJ}^{\mathrm{obs}})
+=
+\Corr_{P_{IJ}^{\mathrm{obs}}}
+\left(\psi_I^{\mathrm{BS}},\phi_J^{\mathrm{BS}}\right).
+\tag{BS-functional-LOO}
+\]
+Thus any semistructural model that supplies a selected wage schedule and an
+observed assignment distribution supplies the BS statistic, regardless of
+whether the schedule is additive, low rank, or generated by a search model.
+Source: Borovickova and Shimer (2020), Section 2; LOO-v2 estimand discipline,
+Part II above.
+
+\paragraph{How BS types relate to the LOO product-weight decomposition.}
+Recall that LOO-v2 writes
+\[
+m_{ij}=\mu+a_i+b_j+h_{ij}
+\]
+using the product reference distribution \(P_IP_J\).  Substitution into the BS
+conditional means gives
+\[
+\psi_i^{\mathrm{BS}}
+=
+\mu+a_i
++\E_{P^{\mathrm{obs}}}[b_J+h_{iJ}\mid I=i],
+\tag{BS-worker-decomposition}
+\]
+and
+\[
+\phi_j^{\mathrm{BS}}
+=
+\mu+b_j
++\E_{P^{\mathrm{obs}}}[a_I+h_{Ij}\mid J=j].
+\tag{BS-firm-decomposition}
+\]
+These equations explain why BS types are not simply the LOO worker and firm
+main effects.  They combine a marginal wage component with the counterpart
+composition and comparative advantage selected by the observed assignment.
+Even when \(h_{ij}=0\), sorting makes
+\(\E[b_J\mid I=i]\) and \(\E[a_I\mid J=j]\) vary across types.  Conversely,
+under independent assignment all conditional counterpart means collapse to
+their product-weight means and the centered interaction means are zero, so the
+BS types reduce to \(\mu+a_i\) and \(\mu+b_j\).  Under dependent assignment,
+both counterpart composition and selected interactions can enter the BS types.
+
+\paragraph{What can be claimed as strict inclusion.}
+For every square-integrable pair \((m,P_{IJ}^{\mathrm{obs}})\) with positive BS
+type variances, \(T_{\mathrm{BS}}\) is well defined alongside
+\[
+Q_F,\quad H_F,\quad C_{\mathrm{assign}}^w,\quad A_h.
+\]
+The LOO target system is therefore strictly richer as a \emph{collection of
+functionals}: it can report the BS sorting correlation and also distinguish
+common-firm dispersion, heterogeneous firm gaps, and interaction assignment.
+Borovickova--Shimer do not target those additional decompositions.
+
+The stronger claim that ``LOO-v2 strictly nests the Borovickova--Shimer paper''
+is not well typed without an assignment and dynamic observation layer.  Their
+framework includes the joint distribution of accepted matches, match-specific
+wage shocks, durations, repeated jobs, and independence conditions used by the
+leave-out estimator.  A wage-level model alone specifies none of these.  The
+precise claim is:
+\[
+\boxed{
+\text{LOO-v2 contains the BS population sorting estimand as a functional of }
+(m,P_{IJ}^{\mathrm{obs}}).}
+\]
+With an added selection/assignment law and repeated-observation error process,
+the supermodel can also reproduce particular BS structural laboratories and
+their estimator environment.  The next structural-model section makes this
+distinction case by case.
+
+\section*{Source Map}
+
+\begin{center}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.28\linewidth}p{0.62\linewidth}}
+\toprule
+Source location & Role in this note \\
+\midrule
+Abstract and introduction & Motivation, headline findings, and contrast with AKM. \\
+Section 2 & Definition of worker type, firm type, and the sorting correlation. \\
+Section 3 & Structural-model laboratories comparing the new correlation with the AKM correlation. \\
+Section 4 & Dynamic statistical model, auxiliary assumptions, estimator, and consistency logic. \\
+Sections 5--6 & Austrian data construction, independence assumptions, main estimates, observables, and time trends. \\
+Section 7 & Comparison with OLS and bias-corrected AKM correlations. \\
+Appendices A--C & Proofs for Proposition 1, estimator consistency, artificial data construction, and alternative estimator. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{One-Page Summary}
+
+\begin{center}
+\fbox{\begin{minipage}{0.93\linewidth}
+\textbf{Question.} Do high-wage workers work for high-wage firms?
+
+\textbf{Problem with the standard answer.} The AKM fixed-effect correlation is often near zero or negative, but this can reflect both limited mobility bias and the fact that AKM fixed effects are not always the right economic measure of sorting.
+
+\textbf{New measure.} A worker's type is her expected log wage across employment relationships. A firm's type is the expected log wage it pays across employees. Sorting is the correlation between these two types among matched worker-firm pairs.
+
+\textbf{Estimator.} Use at least two independent wage observations per worker and per firm. Estimate worker and firm type variances using cross-products of distinct observations, and estimate the covariance using leave-out products that exclude the current match from both the worker and firm type estimates.
+
+\textbf{Main empirical finding.} In Austrian administrative data, the correlation between worker and firm types is around $0.4$ to $0.6$, much larger than the AKM fixed-effect correlation.
+
+\textbf{Why this matters for us.} This paper gives a nonparametric target moment for sorting that can discipline BLM/Kline/supermodel exercises without forcing sorting to be measured by AKM fixed effects or by a low-rank wage equation.
+\end{minipage}}
+\end{center}
+
+\section{Notation}
+
+\subsection*{Theory}
+
+\begin{center}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.20\linewidth}p{0.70\linewidth}}
+\toprule
+Symbol & Meaning \\
+\midrule
+$x\in X$ & Worker characteristic, possibly multidimensional and not directly ordered. \\
+$y\in Y$ & Firm or job characteristic, possibly multidimensional and not directly ordered. \\
+$F(x)$ & Distribution of worker characteristics. \\
+$\Phi_x(y)$ & Conditional distribution of employer characteristics for a worker with characteristic $x$. \\
+$G(y)$ & Employment-weighted unconditional distribution of firm/job characteristics. \\
+$\widetilde G(y),\widetilde g(y)$ & Exogenous distribution of firms available
+to workers in the discrete-choice laboratory and its density; generally
+distinct from the employment-weighted distribution $G$. \\
+$\Gamma_y(x)$ & Conditional distribution of worker characteristics at a firm with characteristic $y$. \\
+$z$ & Match-level wage-relevant residual or shock. \\
+$w(x,y,z)$ & Log wage in a match. \\
+$m_{ij}$ & Selected-match conditional mean wage schedule used in the LOO-v2 mapping. \\
+$P_{IJ}^{\mathrm{obs}}$ & Joint worker--firm distribution among realized matches. \\
+$P_{J\mid i}^{\mathrm{obs}},P_{I\mid j}^{\mathrm{obs}}$ & Conditional counterpart distributions induced by observed assignment. \\
+$\psi(x)$ & Worker type: expected log wage for worker characteristic $x$. \\
+$\phi(y)$ & Firm type: expected log wage paid by firm characteristic $y$. \\
+$\psi_i^{\mathrm{BS}},\phi_j^{\mathrm{BS}}$ & Discrete LOO-v2 versions of the Borovickova--Shimer worker and firm wage types. \\
+$\bar w$ & Mean log wage, also the mean worker type and mean firm type. \\
+$\sigma_\psi,\sigma_\phi$ & Cross-sectional standard deviations of worker and firm types. \\
+$c_{\psi\phi}$ & Covariance between matched worker and firm types. \\
+$\rho$ & Borovickova-Shimer sorting measure, $c_{\psi\phi}/(\sigma_\psi\sigma_\phi)$. \\
+$T_{\mathrm{BS}}(m,P_{IJ}^{\mathrm{obs}})$ & The BS sorting correlation written explicitly as a functional of the selected wage schedule and observed assignment. \\
+$\rho_{AKM}$ & Correlation between AKM worker and firm fixed effects in matched pairs. \\
+$s_x,s_y$ & Slopes of the affine worker- and firm-type maps in the correctly
+specified AKM laboratory. \\
+$M$ & Match-acceptance indicator in the search-laboratory mapping; distinct from the BLM interaction matrix in Part I. \\
+$a,s$ & Wage-curvature parameter and amenity-noise scale in the BS discrete-choice laboratory. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{Estimator}
+
+\begin{center}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.20\linewidth}p{0.70\linewidth}}
+\toprule
+Symbol & Meaning \\
+\midrule
+$i=1,\ldots,I$ & Worker index. \\
+$j=1,\ldots,J$ & Firm index. \\
+$m=1,\ldots,M_i$ & Match index for worker $i$. \\
+$n=1,\ldots,N_j$ & Match index for firm $j$. \\
+$w^w_{im}$ & Worker-side log wage observation for worker $i$ in match $m$. \\
+$w^f_{jn}$ & Firm-side log wage observation for firm $j$ in match $n$; the same wage viewed from the firm side. \\
+$t^w_{im},t^f_{jn}$ & Match duration weights. \\
+$T_i^w$ & Total observed employment duration for worker $i$. \\
+$T_j^f$ & Total observed employment duration at firm $j$. \\
+$\widehat\psi_i$ & Leave-in estimator of worker $i$'s type mean. \\
+$\widehat{\psi_i^2}$ & Leave-out cross-product estimator of worker $i$'s squared type. \\
+$\widehat\phi_j,\widehat{\phi_j^2}$ & Firm analogues. \\
+$\widehat c_{im}$ & Leave-out product estimator for the type product in match $(i,m)$. \\
+$\widehat\rho$ & Estimated correlation between matched worker and firm types. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{The Economic Object: Sorting Between Expected Wage Types}
+
+\subsection{Worker and Firm Types}
+
+The paper begins from a broad matched economy. Worker characteristics $x$ and firm characteristics $y$ can be vectors and need not have an ordinal interpretation. The authors therefore define types through wages, not through raw characteristics.
+
+The worker type is
+\[
+  \psi(x)
+  =
+  \int_Y\int_0^1 w(x,y,z)\,dz\,d\Phi_x(y).
+\]
+This equation has one job: it converts a possibly multidimensional worker characteristic into a scalar expected log wage, averaging over the jobs that this worker type actually takes.
+
+The firm type is
+\[
+  \phi(y)
+  =
+  \int_X\int_0^1 w(x,y,z)\,dz\,d\Gamma_y(x).
+\]
+This equation is the symmetric object for firms: it is the expected log wage paid by a firm of characteristic $y$, averaging over the workers it actually hires.
+
+The mean wage is
+\[
+  \bar w
+  =
+  \int_X \psi(x)\,dF(x)
+  =
+  \int_Y \phi(y)\,dG(y).
+\]
+This equality says the worker-weighted average wage received equals the firm-weighted average wage paid.
+
+\subsection{Sorting Correlation}
+
+The cross-sectional standard deviations of worker and firm types are
+\[
+  \sigma_\psi^2
+  =
+  \int_X(\psi(x)-\bar w)^2\,dF(x),
+  \qquad
+  \sigma_\phi^2
+  =
+  \int_Y(\phi(y)-\bar w)^2\,dG(y).
+\]
+The matched covariance is
+\[
+  c_{\psi\phi}
+  =
+  \int_X\int_Y
+  (\psi(x)-\bar w)(\phi(y)-\bar w)
+  \,d\Phi_x(y)\,dF(x).
+\]
+The sorting measure is then
+\[
+  \rho
+  =
+  \frac{c_{\psi\phi}}{\sigma_\psi\sigma_\phi}.
+\]
+
+This is the paper's central estimand. If high-wage workers are disproportionately matched to high-wage firms, $c_{\psi\phi}>0$ and $\rho>0$. If workers are equally likely to match with any job type, then $\Phi_x(y)=G(y)$ for all $x$, the inner average of $\phi(y)-\bar w$ is zero, and therefore $c_{\psi\phi}=0$.
+
+\section{AKM as a Different Object}
+
+AKM starts from the wage equation
+\[
+  w_{ij}=\alpha_i+\gamma_j+\varepsilon_{ij},
+\]
+or, in population notation,
+\[
+  w(x,y,z)=\alpha(x)+\gamma(y)+\varepsilon.
+\]
+The AKM sorting measure is
+\[
+  \rho_{AKM}
+  =
+  \corr(\alpha_i,\gamma_j\mid i\text{ matched to }j).
+\]
+
+This is not automatically the same as $\rho$. AKM fixed effects are units of wage variation holding the partner fixed. Borovickova-Shimer types are average wages in the actual matched economy. These agree in special linear environments, but can diverge sharply when the wage function is nonlinear, when amenities matter, or when realized matches are selected.
+
+\section{Structural Models as Laboratories}
+
+\subsection{Case 1: AKM Correctly Specified}
+
+Suppose $w(x,y)=x+y$ and the conditional expectations $\E[y\mid x]$ and $\E[x\mid y]$ are linear. Let the covariance matrix of matched $(x,y)$ be
+\[
+  \begin{pmatrix}
+  \sigma_x^2 & c_{xy}\\
+  c_{xy} & \sigma_y^2
+  \end{pmatrix}.
+\]
+Then the worker type is an affine function of $x$:
+\[
+  \psi(x)=A+\left(1+\frac{c_{xy}}{\sigma_x^2}\right)x,
+\]
+and the firm type is an affine function of $y$:
+\[
+  \phi(y)=B+\left(1+\frac{c_{xy}}{\sigma_y^2}\right)y.
+\]
+
+\begin{proposition}[Population equivalence benchmark]
+When AKM is correctly specified, conditional expectations are linear, and
+both type variances are positive, $\rho$ and $\rho_{AKM}$ have the same
+magnitude. Their signs agree when the two affine transformations above have
+the same slope sign and reverse when exactly one transformation is decreasing.
+\end{proposition}
+
+\begin{proof}
+Because $\psi(x)$ is affine in $x$ and $\phi(y)$ is affine in $y$, the correlation between $\psi$ and $\phi$ has the same magnitude as the correlation between $x$ and $y$. Affine transformations preserve correlation magnitude. The signs agree when the two nonzero slopes have the same sign and reverse when exactly one slope is negative. The sign-flip condition in the paper rewrites this slope condition in terms of the variances and covariance of the Borovickova-Shimer types.
+\end{proof}
+
+This proposition is useful because it says the new statistic does not reject AKM by construction. In the environment where AKM should work, the two concepts coincide up to possible sign flips.
+
+\paragraph{Full derivation of the affine type maps.}
+Let \(\mu_x=\E[x]\) and \(\mu_y=\E[y]\).  Linearity of the conditional
+expectations and the linear-projection formulas imply
+\[
+\E[y\mid x]
+=
+\mu_y+\frac{c_{xy}}{\sigma_x^2}(x-\mu_x),
+\qquad
+\E[x\mid y]
+=
+\mu_x+\frac{c_{xy}}{\sigma_y^2}(y-\mu_y).
+\]
+Since \(w(x,y)=x+y\),
+\begin{align*}
+\psi(x)
+&=\E[w(x,Y)\mid x]
+=x+\E[Y\mid x]\\
+&=\underbrace{\mu_y-
+\frac{c_{xy}}{\sigma_x^2}\mu_x}_{A}
++\underbrace{\left(1+
+\frac{c_{xy}}{\sigma_x^2}\right)}_{s_x}x,
+\end{align*}
+and similarly
+\[
+\phi(y)
+=
+\underbrace{\mu_x-
+\frac{c_{xy}}{\sigma_y^2}\mu_y}_{B}
++\underbrace{\left(1+
+\frac{c_{xy}}{\sigma_y^2}\right)}_{s_y}y.
+\]
+Therefore
+\[
+\rho_{\mathrm{BS}}
+=
+\Corr(s_xX,s_yY)
+=
+\operatorname{sign}(s_xs_y)\Corr(X,Y).
+\]
+Under the correctly specified AKM representation
+\(\alpha(x)=x\), \(\gamma(y)=y\), so
+\(\rho_{\mathrm{AKM}}=\Corr(X,Y)\).  Hence
+\[
+|\rho_{\mathrm{BS}}|=|\rho_{\mathrm{AKM}}|,
+\]
+with the same sign exactly when \(s_xs_y>0\).  This is the algebra behind the
+population equivalence benchmark in Borovickova--Shimer (2020), Section 3 and
+Appendix A.
+
+\paragraph{LOO-v2 interpretation of Case 1.}
+The schedule is additive, so \(h(x,y)=0\) and \(H_F=A_h=0\).  Nevertheless the
+BS types contain conditional counterpart means because they average over the
+\emph{observed} assignment.  This is why equality of the BS and AKM
+correlations requires the extra linear-conditional-expectation condition; wage
+additivity alone is not enough to make the two definitions identical.
+
+\subsection{Case 2: Two-Sided Search with Match-Specific Shocks}
+
+The paper next studies a Shimer-Smith style two-sided search model with match-specific productivity shocks. Workers and firms meet randomly, draw a match-specific productivity $z$, and form the match only if surplus is positive. Wages are determined by Nash bargaining.
+
+The point of this model is selection into observed matches. Even if workers meet firms randomly, only selected meetings become jobs. With enough complementarity, high-$x$ workers and high-$y$ firms are more likely to form productive matches.
+
+The model gives the authors a controlled environment where they know the true matching probabilities, wage function, and structural characteristics. They compute:
+\[
+  \rho_{xy}=\corr(x,y\mid \text{matched}),
+  \qquad
+  \rho,
+  \qquad
+  \rho_{AKM}.
+\]
+As meeting rates rise, workers can be more selective, and sorting increases. The Borovickova-Shimer correlation tracks that increase. This is the first substantive reason the statistic is attractive: it captures sorting created by selection, not just sorting built into an additive wage equation.
+
+\paragraph{Exact reduced-form map into LOO-v2.}
+Let \(M=1\) denote acceptance of a meeting and let \(Z\) be match-specific
+productivity.  The selected mean wage schedule is
+\[
+m(x,y)
+=
+\E[w(x,y,Z)\mid M=1,x,y].
+\tag{selected-mean-schedule}
+\]
+If meetings have baseline density \(f_X(x)g_Y(y)\), the observed assignment
+density is proportional to
+\[
+p^{\mathrm{obs}}(x,y)
+\propto
+f_X(x)g_Y(y)
+\Pr(M=1\mid x,y).
+\tag{selected-assignment}
+\]
+The BS worker and firm types are obtained by integrating
+\(m(x,y)\) against the two conditionals of this selected density.  Therefore
+the pair \((m,P^{\mathrm{obs}})\) is sufficient to reproduce the BS population
+sorting statistic in LOO-v2.
+
+This reduction integrates out the match shock and does not reproduce the
+structural acceptance threshold, bargaining rule, or meeting technology.  An
+arbitrary continuous selected schedule also need not have finite exact rank.
+With finite worker types and firm classes, however, the double-demeaning result
+in Part I gives an exact rank bound; with continuous types, a fixed-rank model
+is an additional approximation or restriction.  This is functional coverage,
+not automatic structural nesting of the full search model.
+
+\subsection{Case 3: Discrete Choice with Amenities}
+
+The most important laboratory for our purposes is the discrete-choice model inspired by Card, Cardoso, Heining, and Kline. A worker chooses among many firms based on wage plus idiosyncratic amenity shocks. If the standard deviation of amenities is $s$, the probability that worker type $x$ chooses firm type $y$ is proportional to
+\[
+  \exp\left(\frac{w(x,y)}{s}\right)d\widetilde G(y),
+\]
+where \(\widetilde G\) is the exogenous distribution of firms available to
+workers, not the employment-weighted distribution of filled jobs.
+When $s$ is small, wages dominate amenities and sorting is strong. When $s$ is large, amenities dominate wages and sorting weakens.
+
+The benchmark wage function is quadratic:
+\[
+  w(x,y)=x-\frac{(x-y)^2}{a}.
+\]
+This wage function is maximized near $y=x$, so the intuitive sorting object is clear: low amenity noise or high wage penalties should generate stronger assortative matching.
+
+\paragraph{The highlighted nesting result: the wage surface is exactly rank one after demeaning.}
+Expand the quadratic:
+\begin{align*}
+w(x,y)
+&=x-\frac{x^2-2xy+y^2}{a}\\
+&=\underbrace{\left(x-\frac{x^2}{a}\right)}_{\text{worker-only}}
++\underbrace{\left(-\frac{y^2}{a}\right)}_{\text{firm-only}}
++\underbrace{\frac{2}{a}xy}_{\text{interaction}}.
+\end{align*}
+Let \(\bar x=\E_{P_X}[X]\) and \(\bar y=\E_{P_Y}[Y]\) under the product
+reference population.  Since
+\[
+xy=(x-\bar x)(y-\bar y)+\bar y(x-\bar x)
++\bar x(y-\bar y)+\bar x\bar y,
+\]
+the last three terms other than the centered product can be absorbed into the
+constant and additive components.  The canonical interaction is therefore
+\[
+\boxed{
+h(x,y)=\frac{2}{a}(x-\bar x)(y-\bar y),
+}
+\tag{BS-discrete-choice-rank-one}
+\]
+which is an outer product and has algebraic rank at most one.  In the paper's
+nondegenerate normal benchmark, \(\Var(X),\Var(Y)>0\) and
+\(a\in(0,\infty)\),
+so the rank is exactly one.  Thus the LOO-v2 rank-one wage interface
+\emph{exactly nests the conditional wage surface used in this
+Borovickova--Shimer laboratory}.  No approximation is needed for the wage
+equation.
+
+\paragraph{The assignment mechanism is a separate layer.}
+Let \(\widetilde g\) denote the density of \(\widetilde G\), when it exists.
+The limiting conditional choice probability is
+\[
+P(y\mid x)
+=
+\frac{\exp(w(x,y)/s)\widetilde g(y)}
+{\int_Y\exp(w(x,y')/s)\widetilde g(y')\,dy'}.
+\tag{BS-logit-assignment}
+\]
+Given a worker distribution \(f(x)\), the observed joint assignment is
+\[
+p^{\mathrm{obs}}(x,y)=f(x)P(y\mid x),
+\]
+and Bayes' rule gives the worker composition at firm \(y\):
+\[
+P(x\mid y)
+=
+\frac{f(x)P(y\mid x)}
+{\int_X f(x')P(y\mid x')\,dx'}.
+\]
+Consequently
+\[
+\psi^{\mathrm{BS}}(x)=\int_Yw(x,y)P(y\mid x)\,dy,
+\qquad
+\phi^{\mathrm{BS}}(y)=\int_Xw(x,y)P(x\mid y)\,dx.
+\]
+The current LOO-v2 wage equation contains \(w(x,y)\) exactly.  If
+\(P^{\mathrm{obs}}\) is treated as an unrestricted primitive, it also computes
+the BS types and sorting correlation exactly.  To claim structural nesting of
+the laboratory, the supermodel must additionally include the logit random-utility
+assignment law, its amenity scale \(s\), and the firm-offer measure
+\(\widetilde G\).  The employment-weighted distribution of filled jobs
+\(G\) is endogenous and generally differs from \(\widetilde G\).
+
+\paragraph{What is strictly richer and what is not.}
+For this discrete-choice laboratory, the augmented supermodel with a rank-one
+wage layer and the logit assignment layer contains the BS specification as a
+special case.  It is strictly richer if it also permits higher-rank wage
+interactions or alternative assignment rules.  The wage-only LOO-v2 model is
+strictly richer in reported \emph{functionals} but does not by itself nest the
+structural amenity/choice mechanism.  This is the strongest correct version of
+the proposed nesting claim.  Source: Borovickova and Shimer (2020), pp. 14--17
+and Appendix A.3;
+Card, Cardoso, Heining, and Kline (2018) for the discrete-choice firm-amenity
+motivation; LOO-v2 Parts I--II above.
+
+The paper's key finding is that $\rho$ tracks this intuitive sorting pattern while $\rho_{AKM}$ can fail badly. In the limit as $s\to0$, workers sort almost perfectly by choosing wage-maximizing firms, but the AKM correlation can go to zero. When firms are critical for wages, AKM can even become negative. The reason is not limited mobility bias; it is conceptual misspecification. A linear AKM decomposition is the wrong summary of a nonlinear wage surface.
+
+\section{The Estimator}
+
+\subsection{Dynamic Statistical Setup}
+
+The empirical problem is that real linked employer-employee data have many workers and firms but few observations per worker and firm. The paper therefore builds an estimator that is consistent as the number of workers and firms grows, even if each worker has only a small number of independent jobs and each firm has only a small number of independent workers.
+
+For worker $i$, let $m=1,\ldots,M_i$ index observed matches. The wage observation is
+\[
+  w^w_{im}=\bar w^w_{x_i}+\varepsilon^w_{im},
+\]
+where $\bar w^w_{x_i}$ is the worker's latent expected wage type. For firm $j$, similarly,
+\[
+  w^f_{jn}=\bar w^f_{y_j}+\varepsilon^f_{jn}.
+\]
+The key assumptions are:
+\begin{enumerate}[leftmargin=*]
+  \item each worker has at least two independent wage observations conditional on type;
+  \item each firm has at least two independent wage observations conditional on type;
+  \item leave-out worker wage errors are independent of leave-out firm wage errors for the current match;
+  \item cross-worker and cross-firm shocks obey a law of large numbers as the economy is replicated.
+\end{enumerate}
+
+The repeated-observation requirement is not cosmetic. It is what lets the estimator distinguish persistent type variation from transitory wage noise.
+
+\subsection{Estimating Worker-Type Moments}
+
+Define the worker mean estimator
+\[
+  \widehat\psi_i
+  =
+  \frac{1}{M_i}\sum_{m=1}^{M_i}w^w_{im}.
+\]
+This estimates $\psi(x_i)$.
+
+The square of the type is estimated by the leave-out cross-product
+\[
+  \widehat{\psi_i^2}
+  =
+  \frac{1}{M_i(M_i-1)}
+  \sum_{m=1}^{M_i}\sum_{m'\ne m}w^w_{im}w^w_{im'}.
+\]
+This equation has one job: remove transitory wage variance. Since different observations are independent conditional on type,
+\[
+  \E[w^w_{im}w^w_{im'}\mid x_i]
+  =
+  \E[w^w_{im}\mid x_i]\E[w^w_{im'}\mid x_i]
+  =
+  \psi(x_i)^2
+  \qquad (m'\ne m).
+\]
+Thus the cross-product estimates the squared type rather than the noisy second moment of wages.
+
+The duration-weighted mean wage is
+\[
+  \widehat{\bar w}
+  =
+  \frac{\sum_i T_i^w\widehat\psi_i}{\sum_i T_i^w}.
+\]
+The worker-type variance estimator is
+\[
+  \widehat\sigma_\psi^2
+  =
+  \frac{\sum_i T_i^w\widehat{\psi_i^2}}{\sum_i T_i^w}
+  -
+  \widehat{\bar w}^{\,2}.
+\]
+
+\subsection{Estimating Firm-Type Moments}
+
+The firm-side analogues are
+\[
+  \widehat\phi_j
+  =
+  \frac{1}{N_j}\sum_{n=1}^{N_j}w^f_{jn},
+\]
+\[
+  \widehat{\phi_j^2}
+  =
+  \frac{1}{N_j(N_j-1)}
+  \sum_{n=1}^{N_j}\sum_{n'\ne n}w^f_{jn}w^f_{jn'}.
+\]
+The firm-type variance estimator is
+\[
+  \widehat\sigma_\phi^2
+  =
+  \frac{\sum_j T_j^f\widehat{\phi_j^2}}{\sum_j T_j^f}
+  -
+  \widehat{\bar w}^{\,2}.
+\]
+
+\subsection{Estimating the Matched Covariance}
+
+For a realized worker-firm match $(i,m)$ at firm $j(i,m)$, let $n(i,m)$ denote the corresponding match index in firm $j$'s history. The current wage cannot be used to estimate both the worker and firm type in that same match, because the match-specific wage shock would mechanically create covariance. The paper therefore uses leave-out type estimates:
+\[
+  \widehat c_{im}
+  =
+  \left(
+    \frac{1}{M_i-1}\sum_{m'\ne m}w^w_{im'}
+  \right)
+  \left(
+    \frac{1}{N_{j(i,m)}-1}
+    \sum_{n'\ne n(i,m)}w^f_{j(i,m)n'}
+  \right).
+\]
+Conditional on the worker and firm types, each factor is an unbiased estimate of the relevant type and the auxiliary assumptions make the factors independent. Therefore
+\[
+  \E[\widehat c_{im}\mid x_i,y_{j(i,m)}]
+  =
+  \psi(x_i)\phi(y_{j(i,m)}).
+\]
+
+The covariance estimator is
+\[
+  \widehat c_{\psi\phi}
+  =
+  \frac{\sum_i\sum_{m=1}^{M_i}t^w_{im}\widehat c_{im}}
+  {\sum_i T_i^w}
+  -
+  \widehat{\bar w}^{\,2}.
+\]
+Finally,
+\[
+  \widehat\rho
+  =
+  \frac{\widehat c_{\psi\phi}}
+  {\sqrt{\widehat\sigma_\psi^2\widehat\sigma_\phi^2}}.
+\]
+
+\subsection{Consistency Logic}
+
+\begin{proposition}[Worker and firm type means]
+Under the auxiliary assumptions, the worker's expected wage type is $\psi(x_i)=\bar w^w_{x_i}$ and the firm's expected wage type is $\phi(y_j)=\bar w^f_{y_j}$.
+\end{proposition}
+
+\begin{proof}
+For workers,
+\[
+  \E[w^w_{im}\mid x_i]
+  =
+  \bar w^w_{x_i}+\E[\varepsilon^w_{im}\mid x_i]
+  =
+  \bar w^w_{x_i}.
+\]
+With duration weights, the paper also requires duration to be independent of the wage error so that duration-weighted average log earnings remains centered on $\bar w^w_{x_i}$. The firm proof is identical.
+\end{proof}
+
+\begin{proposition}[Variance consistency]
+The estimators $\widehat\sigma_\psi^2$ and $\widehat\sigma_\phi^2$ are consistent as the number of workers and firms grows, even with bounded $M_i$ and $N_j$.
+\end{proposition}
+
+\begin{proof}
+The cross-products of distinct wage observations are unbiased for squared types. Averaging these unbiased objects across many workers or firms gives a law of large numbers. Subtracting the square of the consistent mean gives a consistent variance estimator.
+\end{proof}
+
+\begin{proposition}[Covariance consistency]
+The estimator $\widehat c_{\psi\phi}$ is consistent for the covariance between matched worker and firm types.
+\end{proposition}
+
+\begin{proof}
+For each match, leave out the current wage from both the worker and firm type estimates. This removes the mechanical covariance from the current match-specific wage shock. The auxiliary independence assumptions make the leave-out product unbiased for $\psi(x_i)\phi(y_j)$. Duration-weighted averaging over many matched observations gives a law of large numbers, and subtracting $\widehat{\bar w}^{\,2}$ converts the average type product into a covariance.
+\end{proof}
+
+\section{Data and Independence Assumptions}
+
+The empirical application uses Austrian linked employer-employee administrative data:
+\begin{itemize}[leftmargin=*]
+  \item ASSD: private-sector universe, 1972--2007, with richer demographics.
+  \item AMDB: labor-market database, 1986--2018, with unemployment spells and later coverage.
+\end{itemize}
+
+The wage measure is residual log daily wage: log annual earnings minus log days worked, residualized on year and age dummies. The analysis is separate by gender.
+
+The paper considers four empirical independence concepts:
+\begin{center}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.16\linewidth}p{0.74\linewidth}}
+\toprule
+Assumption & Meaning \\
+\midrule
+I & Treat annual firm-year observations as independent. Broad sample, least credible independence. \\
+II & Aggregate to worker-firm matches; treat different employers as independent. \\
+III & Use jobs separated by registered unemployment spells; motivated by job-ladder models where unemployment resets wage histories. \\
+IV & Use uncensored employment spells, with variants using longest, first, or last jobs. Most restrictive, more selected. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The preferred baseline is assumption III. It is designed to make independence plausible while avoiding the most severe sample selection in assumption IV.
+
+\section{Empirical Results}
+
+\subsection{Main Estimates}
+
+Using AMDB data for 1986--2018, the estimated correlation under the preferred independence assumption III is:
+\[
+  \widehat\rho_{\text{men}}\approx 0.473,
+  \qquad
+  \widehat\rho_{\text{women}}\approx 0.423.
+\]
+Across specifications, the estimates mostly lie between $0.4$ and $0.6$. Under assumption I, the estimates are higher, above $0.6$, but the paper does not treat those as credible because annual observations within a worker-firm match are likely serially correlated.
+
+\subsection{Observable Heterogeneity Raises Sorting}
+
+Using ASSD data, the authors let firm types vary by education category, blue/white collar status, or industry. The estimated correlations rise:
+\[
+  \text{men: }0.439\to 0.521,0.525,0.580,
+\]
+\[
+  \text{women: }0.418\to 0.505,0.523,0.527.
+\]
+The interpretation is important: a firm is a bundle of heterogeneous jobs. Treating the firm as a single type averages over within-firm job heterogeneity and likely understates sorting.
+
+\subsection{Time Trends}
+
+The year-by-year AMDB estimates under assumption III show:
+\begin{itemize}[leftmargin=*]
+  \item men: sorting rises from about $0.43$ in 1986 to about $0.55$ by 2018;
+  \item women: sorting declines over the sample, especially after 2001;
+  \item annual confidence intervals are tight.
+\end{itemize}
+The paper argues that pooled long-panel estimates may understate point-in-time sorting if worker and firm types change over time.
+
+\subsection{Top Coding and Confidence Intervals}
+
+Top-coding is not the main driver. In the baseline sample, top-coding affects about $4.7$ percent of men's observations and $2.1$ percent of women's observations. Artificially more severe top-coding barely changes men's estimated correlation and modestly lowers women's.
+
+Confidence intervals are constructed using artificial data sets matched to key empirical moments. For the baseline assumption III, the 95 percent intervals are extremely tight: approximately $[0.4719,0.4746]$ for men and $[0.4214,0.4249]$ for women. These intervals should be read as uncertainty under the paper's bootstrap design, not as eliminating all concerns about the auxiliary assumptions.
+
+\section{Comparison with AKM}
+
+The paper's Table 4 estimates the AKM correlation on comparable samples. Under the preferred assumption III:
+\[
+  \widehat\rho_{\text{BS, men}}\approx 0.473,
+  \qquad
+  \widehat\rho_{\text{AKM, men}}\approx 0.122,
+\]
+\[
+  \widehat\rho_{\text{BS, women}}\approx 0.423,
+  \qquad
+  \widehat\rho_{\text{AKM, women}}\approx 0.067.
+\]
+So the AKM correlation is much smaller.
+
+The paper gives two explanations:
+\begin{enumerate}[leftmargin=*]
+  \item The AKM estimator suffers from limited mobility bias when each worker and firm has few observations.
+  \item Even the population AKM correlation may be the wrong sorting object when the wage function is nonlinear or when amenities/selection shape observed matches.
+\end{enumerate}
+
+Bias corrections help but do not close the gap. In short-panel samples, AGSU and KSS corrections raise the AKM correlation modestly; BLM raises it more, but the corrected AKM correlations remain below the Borovickova-Shimer estimates in the reported samples.
+
+\section{Connection to Our Current Goal}
+
+\subsection{Why This Paper Is Closer Than It First Looks}
+
+This paper is close to our current goal because it gives a target moment that is:
+\begin{itemize}[leftmargin=*]
+  \item about sorting, not only wage decomposition;
+  \item nonparametric in the wage surface;
+  \item robust to few observations per worker and firm;
+  \item expressible in any structural or semistructural model that generates matched wages.
+\end{itemize}
+
+In our language, $\rho$ is a model-comparable functional. If a candidate BLM/Kline/supermodel generates a joint distribution of matched worker types, firm types, and wages, then it also generates $\psi(x)$, $\phi(y)$, and $\rho$. We can therefore compare models on whether they match this sorting moment without forcing the wage equation to be additive or low rank.
+
+\subsection{Relation to BLM}
+
+BLM is a discrete latent-type model that can recover richer wage distributions and worker-firm sorting than AKM. Borovickova-Shimer is complementary: it does not require discrete latent classes, but it targets a specific scalar sorting statistic. This is useful for our project because BLM can be judged partly by whether its implied type correlation agrees with the nonparametric Borovickova-Shimer estimate.
+
+The paper's comparison with BLM is also informative. BLM-corrected AKM-style correlations are higher than OLS, AGSU, or KSS estimates, but still often below the Borovickova-Shimer correlation. This suggests that correcting limited mobility bias is not enough; the target object matters.
+
+\subsection{Relation to Kline / KSS}
+
+KSS addresses limited mobility bias in AKM variance components. Borovickova-Shimer attacks a different problem: it constructs leave-out moments that estimate the variance-covariance matrix of expected wage types directly. Thus KSS is a correction for an AKM object; Borovickova-Shimer is a different sorting object.
+
+For our supermodel, this matters because we should not treat ``AKM corrected by KSS'' as the only empirical sorting target. It may be one diagnostic, but Borovickova-Shimer's $\rho$ is closer to the intuitive question: do high expected-wage workers work at high expected-wage firms?
+
+\subsection{Relation to the 2024 Borovickova-Shimer Selection Paper}
+
+The 2024 Borovickova-Shimer paper is structural: it explains how selection into observed matches can make high-productivity workers work at high-productivity firms even when low-productivity workers may gain proportionally more from high-productivity firms. The 2020 paper is measurement-first: it defines and estimates the sorting statistic.
+
+For our purposes, the 2020 paper should supply target moments. The 2024 paper supplies a mechanism that can rationalize those target moments. That is a clean division of labor.
+
+\subsection{Relation to Low-Rank Restrictions}
+
+The Borovickova-Shimer statistic does not require the wage surface $w(x,y,z)$ to be low rank. It works by projecting the whole matched wage process down to two scalar expected-wage types:
+\[
+  \psi(x)=\E[w\mid x,\text{matched}],
+  \qquad
+  \phi(y)=\E[w\mid y,\text{matched}].
+\]
+The sorting statistic is then the correlation of those scalar projections in matched pairs. This makes it a useful validation target for a low-rank model. If a low-rank BLM-style model fits wages but implies too little $\rho$, it is missing an economically important sorting dimension.
+
+There is no contradiction between this general nonparametric statement and the
+rank-one result in the structural-laboratory expansion above.  The
+Borovickova--Shimer \emph{definition} of \(\rho\) allows an arbitrary wage
+surface.  One particular discrete-choice laboratory uses
+\[
+w(x,y)=x-(x-y)^2/a,
+\]
+whose double-centered interaction is exactly
+\(2(x-\bar x)(y-\bar y)/a\) and therefore rank one.  Thus low rank is not an
+assumption needed to define or estimate \(\rho\); it happens to be an exact
+property of that important benchmark wage surface.  The distinction between a
+general estimand and a special structural laboratory should be maintained
+throughout the nesting discussion.
+
+\section{Teaching Flowchart}
+
+\[
+\begin{array}{c}
+\text{Start with matched wage data: worker }i,\text{ firm }j,\text{ wage }w_{ij} \\
+\Downarrow \\
+\text{Define worker type } \psi(x)=\E[w\mid x,\text{ accepted match}] \\
+\Downarrow \\
+\text{Define firm type } \phi(y)=\E[w\mid y,\text{ accepted match}] \\
+\Downarrow \\
+\text{Target sorting statistic } \rho=\corr(\psi,\phi\mid \text{matched}) \\
+\Downarrow \\
+\text{Use two or more independent observations per worker and firm} \\
+\Downarrow \\
+\text{Estimate } \Var(\psi)\text{ and }\Var(\phi)\text{ using cross-products of distinct observations} \\
+\Downarrow \\
+\text{Estimate } \Cov(\psi,\phi)\text{ using leave-out products for each match} \\
+\Downarrow \\
+\text{Compare } \widehat\rho\text{ to AKM and bias-corrected AKM correlations} \\
+\Downarrow \\
+\text{Conclusion: strong sorting, around }0.4\text{--}0.6\text{ in Austrian data}
+\end{array}
+\]
+
+\section{What to Carry Forward}
+
+\begin{enumerate}[leftmargin=*]
+  \item Use Borovickova-Shimer $\rho$ as a core reduced-form sorting target in the supermodel.
+  \item Keep AKM, KSS, and BLM moments as complementary diagnostics, not as the definition of sorting.
+  \item When fitting a structural or semistructural model, compute the model-implied $\psi(x)$, $\phi(y)$, and $\rho$ from the simulated matched economy.
+  \item Treat within-firm job heterogeneity as important. Ignoring it likely understates sorting.
+  \item Be explicit about time-varying types: long pooled panels can dilute point-in-time sorting.
+  \item Use leave-out logic whenever estimating type covariances; otherwise match-specific wage shocks contaminate sorting estimates.
+\end{enumerate}
+
+\section{Bibliography}
+
+\begin{enumerate}[leftmargin=*]
+  \item Abowd, J. M., Kramarz, F., and Margolis, D. N. (1999). ``High Wage Workers and High Wage Firms.'' \emph{Econometrica}, 67(2), 251--333.
+  \item Andrews, M. J., Gill, L., Schank, T., and Upward, R. (2008). ``High Wage Workers and Low Wage Firms: Negative Assortative Matching or Limited Mobility Bias?'' \emph{Journal of the Royal Statistical Society: Series A}, 171(3), 673--697.
+  \item Bonhomme, S., Lamadon, T., and Manresa, E. (2019). ``A Distributional Framework for Matched Employer Employee Data.'' \emph{Econometrica}, 87(3), 699--739.
+  \item Borovickova, K., and Shimer, R. (2020). ``High Wage Workers Work for High Wage Firms.'' Manuscript dated February 13, 2020. NBER Working Paper No. 24074, issued November 2017. DOI: 10.3386/w24074. URL: \url{https://www.nber.org/papers/w24074}.
+  \item Borovickova, K., and Shimer, R. (2024). ``Assortative Matching and Wages: The Role of Selection.'' NBER Working Paper No. 33184.
+  \item Card, D., Cardoso, A. R., Heining, J., and Kline, P. (2018). ``Firms and Labor Market Inequality: Evidence and Some Theory.'' \emph{Journal of Labor Economics}, 36(S1), S13--S70.
+  \item Kline, P., Saggio, R., and Solvsten, M. (2020). ``Leave-Out Estimation of Variance Components.'' \emph{Econometrica}, 88(5), 1859--1898. DOI: 10.3982/ECTA16410.
+  \item Shimer, R., and Smith, L. (2000). ``Assortative Matching and Search.'' \emph{Econometrica}, 68(2), 343--369.
+\end{enumerate}
+
+
+
+\end{document}
+

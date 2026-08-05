@@ -1,0 +1,4090 @@
+===== PDF PAGE 1 =====
+“rdq034” — 2011/6/14 — 7:09 — page 872 — #1
+Review of Economic Studies (2011)
+78
+, 872–906 doi: 10.1093/restud/rdq034
+c
+⃝
+The Author 2011. Published by Oxford University Press on behalf of The Review of Economic Studies Limited.
+Advance access publication 4 March 2011
+Identifying Sorting—In Theory
+JAN EECKHOUT
+ICREA at UPF
+and
+PHILIPP KIRCHER
+University of Oxford, University of Pennsylvania, and IZA
+First version received March2009; final version accepted October 2010 (Eds.)
+Assortative matching between workers and firms provides evidence of the complementarities or
+substitutes in production. The presence of complementarities is important for policies that aim to achieve
+the optimal allocation of resources, e.g. unemployment insurance. We argue that using wage data alone,
+it is virtually impossible to identify whether assortative matching is positive or negative. Even though
+we cannot identify the sign of the sorting, we can identify the strength, i.e. the magnitude of the cross-
+partial and the associated welfare loss. We first show that the wage for a given worker is non-monotonic
+in the type of his employer. This is due to the fact that in a sorting model, wages reflect the opportunity
+cost of mismatch. We analytically show that this non-monotonicity prevents standard firm fixed effects
+to correlate with the true type of the firm. We then propose an alternative procedure that measures the
+strength of sorting in the presence of search frictions. Knowing the strength of sorting facilitates the
+measurement of the output loss due to mismatch.
+Key words: Sorting, Assortative matching, Complementarities, Supermodularity, Identification
+JEL Codes: J31, C78
+1. INTRODUCTION
+Sorting of workers to jobs matters for the efficient production of output in the economy. If there
+are strong complementarities or substitutes between workers and jobs, the exact allocation has
+large efficiency implications. In contrast, when complementarities are nearly absent, not much
+output is lost from randomly allocating workers to jobs. This is important for policy,e.g. whether
+we want to design an unemployment insurance program that provides incentives for workers to
+look for the “right” job instead of accepting the first offer (see,e.g. Acemoglu and Shimer, 1999).
+Complementarities and sorting also have profound implications for wage inequality across dif-
+ferently skilled workers (see, e.g. Sattinger, 1975). Sorting based on complementarities is also
+the driving force in a variety of applications: it is central to the argument of skill-biased techno-
+logical change; it affects the impact of immigration on the domestic labor force; and it shapes
+the effect of subsidies to education.
+We address two questions in this work. First, we ask whether we can determine if more
+productive workers are employed in more productive jobs. Second, we ask whether we can de-
+termine the magnitude of the loss from mismatch when workers are not employed in the optimal
+firm. Both questions have attracted recent interest because of the availability of worker–firm
+match data (see Postel-Vinay and Robin, 2006, for an overview) that gives a panel dimension of
+872
+Downloaded from https://academic.oup.com/restud/article/78/3/872/1569928 by Harvard University Library user on 26 June 2026
+
+
+===== PDF PAGE 2 =====
+“rdq034” — 2011/6/14 — 7:09 — page 873 — #2
+EECKHOUT & KIRCHER IDENTIFYING SORTING 873
+observations for each worker and firm. When thinking about the answer to each of the questions,
+we focus on wage data only. While data on profits and output are also available, this is typically
+reported at the firm level and, therefore, it is not very informative about the productivity of each
+individual job in the firm.
+1
+The first question—whether more productive workers work in more productive jobs—is a
+positive exercise. It provides insights into the features of the production technology. If the an-
+swer is affirmative and there is positive sorting, it means that the inputs in production, worker
+skill, and job productivity, exhibits strong enough complementarities. The marginal product of
+a worker increases the better the firm is, i.e. the technology is supermodular. Alternatively, if
+sorting is negative, this provides evidence that inputs in production are substitutes and that
+the technology is submodular. The canonical example of negative sorting is the work of a
+consultant, where the better consultants may be needed in the firms that are currently least
+productive. Unfortunately, from our analysis, we conclude that we cannot identify the sign
+of sorting . Based on wage data alone, it is impossible to determine whether sorting is posi-
+tive or negative. The reason is that wages reflect a worker’s marginal product. Under comple-
+mentarity, this is high in productive jobs, while it is low under substitutability. Wages alone
+thus do not allow us to determine the ranking among firms, and it is not possible to find out
+whether more able workers derive their higher marginal product from more productive firms or
+not.
+Second, we ask how large the gains are from matching workers to the appropriate firms,
+and correspondingly, how big the losses are from mismatch. This question about the strength of
+sorting is normative. It allows us to evaluate the efficiency gains from improved job search and
+other labour market interventions. Our findings provide an affirmative answer: we can identify
+the strength of sorting. We propose a simple algorithm that allows us to back out (the absolute
+value of) the degree of complementarity, even without information on the sign of sorting. The
+main source of identification is the search behaviour by workers that differs when the degree of
+complementarity is high, and when as a result, sorting is important.
+In addition to answering these two identification questions, we also show that neither of these
+questions can be answered with the widely cited method that analyzes the correlation between
+firm and worker fixed effects from wage regressions. This method is first proposed in a seminal
+paper by Abowd, Kramarz and Margolis (1999), AKM henceforth. The obtained correlation
+aims to answer the sign and strength questions in one: whether it is positive or negative and
+how big the coefficient is. The idea is that more productive firms pay higher wages than less
+productive firms irrespective of the exact worker they hire, and the firm fixed effect therefore
+recovers the ranking of the firms. We show analytically that obtaining the firm ranking is not
+feasible due to the way wages are determined in equilibrium, and as a result, the correlation
+coefficient is not capable of informing us about the sign nor the strength.
+Our analysis builds on the most standard sorting model. We start from the assignment prob-
+lem analysed by Koopmans and Beckmann (1957), Shapley and Shubik (1971), and popularized
+by Becker (1973). In the Beckerian theory, high-type workers match with high productivity
+jobs when there are complementarities. Wages are set competitively and reflect the marginal
+contribution of a worker’s skill. Most importantly, even off the equilibrium allocation, the pos-
+sible wages paid to mismatched partners are constrained by equilibrium: off-equilibrium wages
+must be such that they prevent agents from knowingly deviating from the equilibrium alloca-
+tion. One innovation of our approach is to explore not only the properties of the wages along
+the Beckerian allocation but also the wages for mismatched agents that happen to “tremble”
+1. We further discuss the benefits and limitations of additional data beyond wages below.
+Downloaded from https://academic.oup.com/restud/article/78/3/872/1569928 by Harvard University Library user on 26 June 2026
+
+
+===== PDF PAGE 3 =====
+“rdq034” — 2011/6/14 — 7:09 — page 874 — #3
+874 REVIEW OF ECONOMIC STUDIES
+off the equilibrium path. The properties of those wages by mismatched pairs are crucial for our
+identification strategy. Once we introduce mismatch as an equilibrium outcome due to search
+frictions, we can actually link the properties of those wages from mismatch to actually observed
+wages.
+We find that wages of a given worker have an invertedU-shape around the optimal allocation,
+which corresponds to the frictionless wage. This non-monotonicity reflects the opportunity cost
+of a firm to match with an inappropriate worker type. For a given worker, wages are low if he
+matches with a “bad” firm because the value that is generated is low. Maybe less obviously, his
+wage is also low if he matches with a very “good” firm. The reason is that higher productivity
+firms have to be compensated for their willingness to match with a “bad” worker because it
+destroys their opportunity to match with a “good” worker. Under complementarities that firm
+has a disproportionately larger marginal product with the good worker. This leads to the highest
+compensation if a worker meets the “right” firm, rather than a wage schedule that is increasing
+everywhere in the type of firm. To see that the inverted U-shape is actually part of any sorting
+equilibrium with search frictions, observe that the set of eligible partners is bounded by those
+matches where the match surplus is zero relative to the value of continued search. These bounds
+in general arise both for low-type firms that are too inefficient and for high-type firms that rather
+wait for a better worker, while for intermediate firm types the surplus is strictly positive. Any
+bargaining procedure that pays wages that are monotonic in the surplus after accounting for the
+outside option of attracting a more appropriate type will therefore result in wages being non-
+monotonic in firm type.
+Because of the non-monotonic effect of firm type on wages, the wage cannot be decomposed
+in an additively separable firm and worker fixed effect. We show analytically that the misspec-
+ification is not innocuous: for the most common specifications in the literature, the firm fixed
+effect misses any direct connection to the true type of the firm.
+In spite of the fact that we cannot identify thesign with any procedure, we develop a method
+that enables us to identify the strength of sorting. We thus offer an alternative to remedy the
+shortcomings of the fixed-effects regression. Identification derives from the distinct features of
+the search behaviour of workers under different degrees of complementarities. First, we extract
+from the range of wages paid what the cost of search is. The highest observed wage corre-
+sponds to the wage obtained in a frictionless market and we use this to order the workers and
+obtain the type distribution. Likewise, we can obtain an order of the firms by the level of wages
+that they pay. The difference between the highest and the lowest wage corresponds to the cost
+of search. Second, given the search cost, the fraction of the firm population that an agent is
+willing to match with, i.e. the matching set, identifies the strength of the complementarity as
+expressed by the (absolute value of the) cross-partial of the production function. This is possible
+because the strength of the cross-partial directly reflects the output loss due to mismatch. We
+can relate our method of identification to the analysis in Gautier and Teulings (2004, 2006) of
+second-order approximations to infinite-horizon search models. We show that identification is
+ensured without knowledge of the sorting pattern, without approximations to the case of neg-
+ligible search costs, and in the presence of type-dependent costs, and we can do this in few
+transparent steps. But this comes at the cost of simplified economic and econometric modelling
+assumptions.
+The set-up of our economy is very simple with dynamics reduced to two periods. The objec-
+tive is to solve analytically what the standard infinite-horizon models cannot deliver. This makes
+the models very specific, but in Section5, we show that our insights extend to the fully dynamic
+steady-state models. We also discuss alternative models and argue that whenever wages reflect
+the competitively determined outside option, they must necessarily be non-monotonic in firm
+type.
+Downloaded from https://academic.oup.com/restud/article/78/3/872/1569928 by Harvard University Library user on 26 June 2026
+
+
+===== PDF PAGE 4 =====
+“rdq034” — 2011/6/14 — 7:09 — page 875 — #4
+EECKHOUT & KIRCHER IDENTIFYING SORTING 875
+1.1. Related Literature
+Given the importance of sorting, a large body of recent empirical literature has estimated whether
+sorting is positive or negative. As mentioned above, this renewed interest has been catalyzed by
+the availability of worker–firm match data, surveyed, e.g. in Postel-Vinay and Robin (2006).
+Using the AKM method, several papers find an insignificant or even negative correlation in
+fixed effects between worker and firm types. This result has been replicated for a number of
+countries including France, U.S., Denmark, and Brazil. The result is taken as indication that
+positive assortative matching between workers and firms does not play a major role in the labour
+market.
+AKM use matched employer–employee data to decompose wages into different effects re-
+lated to worker and firm characteristics. With unrestricted correlation among the effects, they are
+able to estimate the firm and worker components of wages. The generality of their econometric
+approach allows for many different estimation techniques to determine each of the components.
+A by-product of their contribution is a simple empirical measure of sorting that can be obtained
+by estimating a log-wage equation in which wages are a function of a worker fixed effect, a firm
+fixed effect, and an orthogonal error term: logw
+it
+=a
+it
+β+δ
+i
++ψ
+j(i,t)
++ε
+it
+,wherew
+it
+denotes
+the wage, a
+it
+are time varying observables of workers,δ
+i
+is a worker fixed effect,ψ
+j
+is the fixed
+effect of the firm j at which worker i is employed at time t,andε
+it
+is an orthogonal residual.
+That is,ψ
+j
+captures the average effect that a firm has on the wages of the workers that are willing
+to match with it. The correlation between δ
+i
+andψ
+j
+in a given match is taken as an estimate of
+the degree of sorting.
+We show in our theoretical exercise that the assumption that the firm effect is independent of
+the worker’s type is theoretically not justified in this setting. In particular, for those workers who
+are matched with a firm that has a lower rank than their own, the wage increases when the firm
+type increases because the worker–firm “fit” improves. In contrast, workers who are matched
+with a higher-ranked firm see a decrease in the wage when the firm becomes better because the
+worker–firm “fit” deteriorates. We argue above that this implies that the correlation between the
+firm and worker fixed effect cannot be taken as a measure of sorting.
+The AKM findings have been extensively cited in the literature. In the first instance, the
+methodology has been widely used to analyse sorting for many different countries. It has
+repeatedly been established in many matched employer–employee data that there is a small
+or insignificant correlation between the worker and firm fixed effects. The methodology has
+also been extended to include different aspects of sorting. For example, Combes, Duranton and
+Gobillon (2008) use the AKM methodology to estimate the geographical degree of sorting.
+In addition, there is an extensive literature leaning on the AKM ( 1999) fixed effects regres-
+sion, both in empirical and theoretical work. The fact that the correlation between the worker
+and firm fixed effect is small is interpreted in different ways. For example, in empirical work,
+Postel-Vinay and Robin (2002) analyse wage heterogeneity in a search model. They have no
+complementarities within occupations and cite AKM as evidence for the absence of sorting.
+In contrast, Bender and von Wachter (2006) argue that the small but significant correlation
+coefficient obtained for the French labour market is indeed evidence in favour of sorting. Simi-
+larly, theoretical work citing the results of AKM interpret them either way.Anderson and Smith
+(2010), e.g. justify the absence of sorting to motivate a matching model with learning that does
+not generate sorting in equilibrium. They cite AKM as evidence. Shimer (2005) justifies the
+use of complementarities and the resulting sorting based on AKM despite them finding a small
+effect. The interpretation is that the workers’ unobserved characteristics have a small but sta-
+tistically significant effect on firm profits, i.e. there is sorting. Cabrales, Calvó-Armengol and
+Pavoni (2008) also cite AKM to argue that the degree of sorting is on the increase over time.
+Downloaded from https://academic.oup.com/restud/article/78/3/872/1569928 by Harvard University Library user on 26 June 2026
+
+
+===== PDF PAGE 5 =====
+“rdq034” — 2011/6/14 — 7:09 — page 876 — #5
+876 REVIEW OF ECONOMIC STUDIES
+Beyond the use and citation of the AKM method and results, other work has singled out
+shortcomings of the fixed-effects regression. Simulations of search models with strong comple-
+mentarities and sorting nonetheless generate small or even negative correlations of the simulated
+fixed effects of workers and firms.De Melo (2008), Lise, Meghir and Robin (2008), and Bagger
+and Lentz (2008) study variations of structural labour search models with an infinite horizon and
+simulate as well as estimate those models with matched employer–employee data. Our objective
+is to provide a much simpler framework, but one that allows us to investigate theoretically how
+to measure the extent of sorting and to derive the correlation between fixed effects analytically.
+De Melo (2008) also reports correlations between worker fixed effects as a measure of sorting,
+and our approach highlights why this captures some (but not all) the relevant information on the
+importance of sorting. In particular, it captures the range in which workers accept jobs since a
+narrow acceptance range means that the workers at a firm are rather similar. This arises when
+sorting is very important, but may also arise simply because search costs are small, and a careful
+consideration of both forces is necessary.
+And in an approach related to our own, Gautier and Teulings (2004, 2006) allow for an
+infinite horizon and a richer econometric environment with measurement error while relying on
+second-order approximations. They restrict the match surplus function to insure that matching is
+positive assortative and thus cannot address whether their framework permits the identification
+of the sign or the strength if that restriction were relaxed. Given our results, we suspect that
+recovering the sign will be infeasible even in their model.
+2
+On the other hand, their estimates
+about the strength of sorting will remain valid even if one is agnostic about the matching patterns,
+as long as search costs are type-independent (below, we develop alternatives for type-dependent
+search costs within our framework). Thus, we believe that there is a multitude of ways (such as
+our approach, second-order approximations of Gautier and Teuling or other approaches under
+sign restrictions) that allow progress on the main policy-relevant issue without relying on the
+exact knowledge of the sorting pattern (for which additional data might be required). We return
+to this in Section 5.
+One alternative approach is to use profit data in addition to wage data. Clearly, if we have
+information on prices from both sides of the market, we know the total output for all matched
+pairs and therefore the technology. This immediately allows us to back out both the sign and
+the strength of sorting. This approach has been taken byHaltiwanger, Lane and Spletzer (1999),
+Van den Berg and van Vuuren (2002), Mendes, van den Berg, Lindeboom (2007) to estimate
+the performance of search models. With sorting, this immediately leads to identification. The
+problem is that in practice this is difficult because output and profit measures are usually only
+provided at the level of the firm or the establishment and attributing them to each individual
+worker is difficult. In the absence of job level profit data, one would need a theory of the firm
+with heterogenous agents (e.g. Eeckhout and Pinheiro, 2008) to attribute the firm-level profits to
+each individual job. Instead, the objective of our paper is to investigate the extent to which the
+two questions above can be answered from wage data alone. This has the great advantage that
+data on wages are available for each individual worker and are of high quality.
+Finally, there is also an extensive literature on hedonic models that are thought to be not
+identified. Hedonic models characterize the pricing of goods that consist of bundles of attributes
+(housing, e.g.). The focus is on multidimensional characteristics and the patterns of sorting based
+on those characteristics. Recently, Ekeland, Heckman and Nesheim (2002, 2004) show that
+the hedonic model is generically non-parametrically identified, despite the fact that the sorting
+2. We discuss the case of discounting explicitly in Section 5. Allowing for discounting, rather than fixed search
+costs will open some avenue for sign identification, but this possibility vanishes with a decreasing discount rate between
+matching opportunities, which is assumed in most approximation strategies.
+Downloaded from https://academic.oup.com/restud/article/78/3/872/1569928 by Harvard University Library user on 26 June 2026
+
+
+===== PDF PAGE 6 =====
+“rdq034” — 2011/6/14 — 7:09 — page 877 — #6
+EECKHOUT & KIRCHER IDENTIFYING SORTING 877
+equilibrium in a single market implies no exclusion restrictions. They show that the commonly
+used linearization strategies cause the identification problem because the hedonic model is gener-
+ically non-linear. In this class of models with multidimensional characteristics, Dupuy (2010)
+observes that in a combined matching-hedonic model with sorting on both skills and preferences,
+wages are a function of both preferences and worker attributes. This can result in non-positive
+dependence of wages on firm types since the firm types do not constitute a complete order com-
+mon to all agents. Of course, one can make this observation even in the simple matching model
+by relaxing the monotonicity assumption, i.e. output is not everywhere increasing in firm and/or
+worker type (see also Section 5).
+2. THE MODEL
+The basic primitives of our simple matching model build onBecker (1973). There is a unit mass
+of workers and a unit mass of firms. Workers and firms are heterogeneous in terms of their
+productivity. Workers draw their type x from distribution )Gamma1(x)with smooth density γ(x)on
+[0,1]. Firms draw their type y from distributionϒ(y)with smooth densityυ(y)on [0,1].
+When types x and y form a match, they produce a positive output f(x,y)≥0 while having
+an outside option of remaining unmatched. We assume that workers and firms can be ranked
+in terms of their productivity, i.e. f
+x
+> 0 and f
+y
+> 0. Then it is without loss of generality to
+index a worker by his rank in terms of productivity, i.e. by the fraction of workers that are less
+productive then him. Similarly, we can identify each firm by its rank in the distribution of firm
+productivities. This means that)Gamma1(∙)=ϒ(∙)=x, i.e. the distributions are uniform. Assume that
+workers who do not get matched obtain a pay-off of zero, and since output is non-negative, all
+agents will prefer to match.
+For the assignment of workers to firms, the cross-partial of the production function is impor-
+tant. We do not restrict the sign of the cross-partial since this will be instrumental in determining
+whether there is positive or negative assortative matching. Denote byF the class of all functions
+f that are monotonic: f
+x
+,f
+y
+> 0; and that have a monotonic marginal product:f
+xy
+(x,y)is either
+always positive or always negative.
+3
+The assumption that the cross-partial does not change sign
+allows us to unambiguously talk about positive or negative sorting. Production functions with
+complementarities ( f
+xy
+> 0) are in setF
++
+⊂F. Production functions with substitutes(f
+xy
+< 0)
+are in setF
+−
+⊂F.
+To demonstrate the implications of our analysis, we will illustrate our results for the follow-
+ing examples of production functions:
+f
++
+(x,y)=αx
+θ
+y
+θ
++h(x)+g(y), (1)
+f
+−
+(x,y)=αx
+θ
+(1−y)
+θ
++h(x)+g(y), (2)
+where g(∙)and h(∙)are increasing functions andα≥0 andθ>0 are parameters that indicate the
+strength of the complementarities. We assume that g(y)is such that higher-type firms produce
+higher output even under the second specification. It is obvious that f
++
+∈F
++
+and f
+−
+∈F
+−
+.
+2.1. The frictionless environment
+In the absence of frictions, the matching market is competitive. An assignment of workers x to
+firms y is denoted byμ, i.e.μ(x)=y means that workerx gets hired by firmy=μ(x). A market
+3. Later, in Eection 5, we discuss the virtues of relaxing these assumptions.
+Downloaded from https://academic.oup.com/restud/article/78/3/872/1569928 by Harvard University Library user on 26 June 2026
+
+
+===== PDF PAGE 7 =====
+“rdq034” — 2011/6/14 — 7:09 — page 878 — #7
+878 REVIEW OF ECONOMIC STUDIES
+equilibrium specifies an assignmentμbetween x’s and y’s and some wage schedule w(x)that
+determines the split of output between the worker and the firm that are matched. The pay-off to
+the worker is w(x)and the pay-off to the firm is π(x,y)=f(x,y)−w(x). Both workers and
+firms take the wage schedule as given. The tuple of functions(μ,w)is an equilibrium if there is
+no worker–firm pair that could do better by matching among themselves than with their current
+partners,
+4
+i.e.
+w(x,μ(x))+π(μ
+−1
+(y),y)≥f(x,y),∀ x,y (3)
+and no agent prefers to remain single, i.e.w(x,μ(x))≥0 for all x andπ(μ
+−1
+(y),y)≥0 for
+all y.
+We derive the main prediction of Becker (1973) model concerning the equilibrium solution
+in a competitive economy. Recall that π(x,y)=f(x,y)−w(x)and taking the wage schedule
+w(x)as given, the equilibrium profits for firm y must satisfy:
+max
+x
+f(x,y)−w(x).
+This yields the first-order condition
+f
+x
+(x,y)−dw(x
+)
+dx =0. (4)
+In equilibrium, this has to hold evaluated at y=μ(x), and therefore the equilibrium wage
+schedulew
+⋆
+(x)can be obtained by integrating equation (4) along the equilibrium path:
+w
+⋆
+(x)=
+∫
+x
+0
+f
+x
+(˜x,μ(˜x))d˜x+w
+0
+, (5)
+where the constant of integration w
+0
+∈ [0,min f(x,y)] can be thought of as some exogenous
+bargaining rule that splits the surplus between the lowest types in case these types have a positive
+surplus over remaining single.
+5
+Observe that the worker obtains exactly his marginal product
+along the equilibrium allocation. Therefore, equilibrium profits of type y are given by output
+minus the wagew
+⋆
+with the optimal workerμ
+−1
+(y).This can be rewritten as
+π
+⋆
+(y)=
+∫
+y
+0
+f
+y
+(μ
+−1
+(˜y),˜y)d˜y+f(0,0)−w
+0
+. (6)
+Furthermore, matching is positive assortative when the production function is supermodular
+( f
+xy
+> 0), in which caseμ(x)=x. Under submodularity ( f
+xy
+< 0) in equilibrium, the matching
+is negative assortative andμ(x)=1−x since the lower-type firms have a highermarginal value
+for better workers and are willing to pay more for them.
+2.2. On the equilibrium path
+We show that in this simple competitive model, the sign of sorting— i.e. the sign of the
+cross-partial—cannot be identified from wage data alone. We will first illustrate the result by
+4. It is well known that a strict cross-partial yields a one-to-one mapping
+μ(∙)
+in equilibrium. In general,
+μ(∙)
+is
+a correspondence, with the equilibrium definition extended to all pairs in that correspondence.
+5. When f
+(
+0
+,
+0
+)=
+0, then
+w
+0
+=
+0 and the wage schedule is uniquely determined. Otherwise, there are a con-
+tinuum of competitive equilibria associated with different
+w
+0
+, and we assume that the specific split
+w
+0
+is a primitive
+determined by some exogenous bargaining rule.
+Downloaded from https://academic.oup.com/restud/article/78/3/872/1569928 by Harvard University Library user on 26 June 2026
+
+
+===== PDF PAGE 8 =====
+“rdq034” — 2011/6/14 — 7:09 — page 879 — #8
+EECKHOUT & KIRCHER IDENTIFYING SORTING 879
+considering our restricted class of production functions outlined above, and then present the
+general theorem. Suppose the underlying production technology is not known and the true tech-
+nology is either one of the two example technologies f+given in (1) or f−given in equation
+(2). By equation (5), the wages under f+and f−are
+w⋆,+(x)=
+∫ x
+0
+f+
+x (˜x,˜x)d˜x+w0=α
+2 x2θ+h(x)−h(0)+w0,
+w⋆,−(x)=
+∫ x
+0
+f−
+x (˜x,1−˜x)d˜x+w0=α
+2 x2θ+h(x)−h(0)+w0.
+Under both technologies, the wages on the equilibrium path are exactly identical, and from wage
+data alone, one cannot distinguish between positive and negative sorting. The problem is obtain-
+ing the order of the firms. If we only have wage data and no profit data, and we derive the order
+on the firms by ranking them by increasing wages, we will obtain two different orders depending
+on whether we have complements or substitutes. To see this, observe that under positive assorta-
+tive matching (henceforth PAM) higher-type firms pay higher wages along the equilibrium path,
+whereas under negative assortative matching (NAM), higher-type firms pay lower wages. In the
+former,w(y,y)=αy2θ
+2 is increasing in y and in the latter w(1−y,y)=α(1−y)2θ
+2 is decreasing
+in y. This result is true for any general production technology as summarized in the proposition
+that follows below.
+In Figure 1, the solid line shows for each worker x his wage, the dashed line shows the
+profits of the firm that is matched to worker x, and the dotted line gives the total output that
+they produce. The left panel depicts these for the production function f+=xy+y, while the
+right panel covers the outcomes for production function f−=x(1−y)+y. If one only observes
+the wages according to the solid line, both cases look identical. The cases only differ in profits
+and total outputs. For example, the dashed line of the profits of the firm matched to worker x
+is decreasing in worker type x only under f−. While higher y firms have higher profits, in this
+case, higher x workers are matched with lower y firms who obtain lower profits. That is, even
+under NAMπ⋆,−(y)=y+(1−y)2
+2 is increasing in y even thoughπ−(x,μ(x))is decreasing in x.
+The pay-offs under both technologies are summarized in the following table.
+FIGURE 1
+Example. The solid line gives equilibrium wagesw(x), the dashed line profitsπ(x,μ(x)), and the dotted line total output
+f(x,μ(x))under f+=xy+y (left) and f−=x(1−y)+y (right) withw0=0
+Downloaded from https://academic.oup.com/restud/article/78/3/872/1569928 by Harvard University Library user on 26 June 2026
+
+
+===== PDF PAGE 9 =====
+“rdq034” — 2011/6/14 — 7:09 — page 880 — #9
+880 REVIEW OF ECONOMIC STUDIES
+TABLE 1
+Output and payoffs for e
+xample
+f
++
+=
+xy
++
+y f
+−
+=
+x
+(
+1
+−
+y
+)+
+y
+w(
+x
+)
+x
+2
+2
+x
+2
+2
+π(
+x
+,μ(
+x
+))
+x
+2
+2
++
+x
+x
+2
+2
++
+1
+−
+x
+f
+(
+x
+,μ(
+x
+))
+x
+2
++
+x x
+2
++
+1
+−
+x
+Proposition 1. For any production function f ∈F
++
+that induces positive sorting, there
+exists a production function f ∈F
+−
+that induces negative sorting and the equilibrium wages
+w
+∗
+(x)are identical under both production functions.
+Proof. In appendix. ∥
+2.3. Off the equilibrium path
+Identification needs variation. Identification of sorting from equilibrium wages may be difficult
+simply because there is no independent variation across firms and workers. In the frictionless
+case, workers sort perfectly in the sense that each type of firm attracts exactly one worker type.
+Even if workers became unemployed and could match again later without frictions, the panel
+dimension would not allow us to identify a separate effect for firms and workers because workers
+will always end up in the same type of firm. There would not be any wage variation, and it cannot
+be identified whether a high wage is due to the worker ability or the firm productivity.
+Here, we entertain the idea that workers “tremble” to off-the-equilibrium firms. Without
+specifying how those wages are determined, we start from the premise that such off-equilibrium
+wages are observed occasionally. This gives additional variation that one might suspect to be
+crucial for identification. This simple exposition is also useful to build intuition for the results in
+more realistic environments because it has a close connection to the mismatch that occurs under
+search frictions, as will become clear in the next section.
+And even though those wages obtained when “trembling” are not equilibrium wages, they
+must not induce agents on the equilibrium allocation to deviate. Therefore, those wagesw(x,y)
+must satisfy the on-the-equilibrium path restriction equation (3) as before: f(x,y)=w(x,y)+
+π(x,y)≤w(x,μ)+π(μ
+−1
+,y). A condition with more bite is obtained by requiring for a given
+wage schedulew(x,y)that there should be noindividual deviation by either worker or firm type:
+f(x,y)−w(x,y)≤π(μ
+−1
+(y),y), (7)
+w(x,y)≤w(x,μ(x)). (8)
+This is the standard competitive equilibrium notion of a matching market in which each agent
+takes the price (here: wage) schedule as given and assumes that he can obtain a partner at this
+transfer price. For markets to clear, the price has to be such that no agent individually wants to
+choose a different partner.
+For a given (x,y)combination, call the set of wages that are consistent with equations ( 7)
+and (8) W(x,y). This wage schedule is not uniquely determined and wages range between the
+lowest wage that is just high enough to prevent firms from deviating and the highest wage that
+is just low enough to prevent workers from deviating.
+It is important to note the implication of equation ( 8): wages are highest at the firm that is
+most appropriate for the worker. Even under PAM, a worker x who tries to trade with a firm
+Downloaded from https://academic.oup.com/restud/article/78/3/872/1569928 by Harvard University Library user on 26 June 2026
+
+
+===== PDF PAGE 10 =====
+“rdq034” — 2011/6/14 — 7:09 — page 881 — #10
+EECKHOUT & KIRCHER IDENTIFYING SORTING 881
+that is higher (or lower) than his optimal type μ(x)will earn lower wages. At less productive
+firms, this arises for the obvious reason that the surplus is too low. At more productive firms, this
+arises because the firm forgoes the benefit of hiring the more appropriate worker and has to be
+compensated for this opportunity cost.
+Even with observation of wages from mismatched pairs, we cannot determine the sign of
+sorting. It is easily verified that in the case of the technology f
++
+(x,y), any wage w(x,y)in
+W(x,y)satisfies
+α(xy)
+θ
+−
+α
+2 y
+2θ
+≤w(x,y)−h(x)≤
+α
+2 x
+2θ
+. (9)
+In the case of f
+−
+(x,y), any wagew(x,y)in W(x,y)satisfies
+αx
+θ
+(1−y)
+θ
+−
+α
+2(1−y)
+2θ
+≤w(x,y)−h(x)≤
+α
+2 x
+2θ
+, (10)
+which is identical to equation ( 9) if we misinterpret the types as ˆy=1−y. If we have no
+information on profits, as before we cannot derive the order on y simply from wage data, not
+even after observing off-the-equilibrium path wages. The bounds on the wages under PAM and
+NAM are identical if we use the order on wages to derive the order on y (in which case under
+NAM, we assign the order 1 −y to the firms). The static Beckerian model will therefore not
+allow for identification of assortative matching based on wage data alone.
+Proposition 2. For any production function f ∈F
++
+that induces positive sorting, there
+exists a production function f∈F
+−
+that induces negative sorting and the equilibrium wage sets
+W(x,y)in the former are identical to equilibrium wage set W(x,1−y)in the latter.
+Proof. The proof follows the same argument as in Proposition 1. ∥
+3. MISMATCH DUE TO SEARCH FRICTIONS
+We now consider an extended model with mismatch due to frictions caused by delay. Search
+frictions give a structural reason why workers may match with firms even if these firms would
+not be exactly optimal in the absence of frictions. Unlike the static Beckerian model, search
+frictions may induce different behaviour in the acceptance decision of matches. First, we derive
+the equilibrium allocation in the presence of search costs. We relate this to the previous section
+and find that there is a strong resemblance, even though the search frictions give an explicit
+bound on the mismatch that prevents very inefficient matches to materialize. We address the
+issue of identification of positive/negative sorting in this model, and whether we can identify the
+sign of sorting from wage data alone. Second, for this model, we analytically derive the firm
+fixed effect. We postpone the discussion of identification of the strength of sorting to the next
+section.
+3.1. Introducing search costs
+Our model has hiring in two stages. In stage one, each worker is paired with one firm. The
+pairings are random. One can think of this part of the hiring process as standing in for some
+connections that workers have to the labour market prior to engaging in an extensive search for
+jobs. The pair can either agree to stay together at some wage or search for a better partner. Firms
+have fixed types and cannot exit and reenter to take another draw. Those pairs who decide not
+to stay together each incur a search cost c due to the delay. The formulation with a constant
+search cost follows Chade (2001) and Atakan (2006). In the second stage, all remaining agents
+Downloaded from https://academic.oup.com/restud/article/78/3/872/1569928 by Harvard University Library user on 26 June 2026
+
+
+===== PDF PAGE 11 =====
+“rdq034” — 2011/6/14 — 7:09 — page 882 — #11
+882 REVIEW OF ECONOMIC STUDIES
+are matched according to the competitive, frictionless allocation as outlined above.
+6
+After the
+search process has ended, production starts. To allow for a panel dimension in the observations
+(i.e. over time, each worker matches with more than one firm, and each firm matches with more
+than one worker), we assume that each agent goes through this two-stages hiring process several
+times in his life.
+We consider the same class of production functionsF. For exposition, it will be convenient
+to restrict the supermodular function inF
++
+to functions with symmetric cross-partial such that
+f
+xy
+(x,y)=f
+xy
+(y,x). For submodular functions inF
+−
+which induce negative sorting, it will be
+convenient to restrict attention to symmetry of the form f
+xy
+(x,y)=f
+xy
+(1−y,1−x).
+We assume that the transfer in the first period is determined by Nash bargaining with equal
+bargaining weights. We illustrate this with our example production function f
++
+in equation (1).
+When a worker x meets a firm y, the pay-off from matching is f(x,y). Waiting until next period
+and matching in the perfectly competitive labour market yields pay-offw(x)
+⋆
+−c to the worker
+and π(y)
+⋆
+−c to the firm. A first-period match will therefore be accepted provided that the
+current match surplus over waiting is positive. This gives the following bounds on the degree of
+mismatch where a match is still tolerated:
+7
+f(x,y)−(w
+⋆
+(x)+π
+⋆
+(y)−2c)≥0. (11)
+For a given firm y, we call the set of worker types that fulfill equation ( 11) his acceptance set
+and denote it by A(y)for the firms and by B(x)for the workers.
+8
+Similar to the work by Atakan
+(2006), we can show that the bounds of this set are increasing if the production function is in
+F
++
+and decreasing if it is inF
+−
+, which naturally extends the notion of sorting to sets.
+For our example, production function f
++
+in equation ( 1), it is easy to verify that equation
+(11) reduces to
+α(xy)
+θ
+−
+α
+2 x
+2θ
+−
+α
+2 y
+2θ
+≥−2c (12)
+and therefore, the acceptance set becomes A(y)=[(y
+θ
+−2
+√c/α)
+1/θ
+,(y
+θ
++2
+√c/α)
+1/θ
+]. Due
+to symmetry, the acceptance set of the workers looks identical. The range of mutually accepted
+matches is illustrated by the area between the dashed lines in Figure 2 for the caseθ=1.
+Because the surplus is divided equally, the worker obtains half of this surplus on top of his
+outside option that is given by his value of waiting. Therefore, his wage is
+w(x,y)=
+1
+2[ f(x,y)−w
+⋆
+(x)−π
+⋆
+(y)+2c]+w
+⋆
+(x)−c
+=
+1
+2[ f(x,y)+w
+⋆
+(x)−π
+⋆
+(x)]. (13)
+6. Here, we need to worry about the possibility that when the acceptance sets span the entire type space ( e.g.
+because of high search costs or low complementarities), no agents are left in the second stage in which case the con-
+tinuation pay-off is not determined. Without modelling this explicitly, we think of a tremble that ensures that there are
+always some agents who end up in the next period. For many parameters, each worker and firm type rejects some agents
+on the other side of the market, and these agents will indeed move to the second stage.
+7. It may well be that for low types, the surplus in the next period does not exceed the total waiting cost of 2c. In
+order to avoid keeping track of endogenous entry, we assume that people will search even if that is the case. This may be
+due to the fact that the outside option (e.g. unemployment benefits) are contingent on searching. This issue never arises
+when f
+(
+0
+,
+0
+)−w
+0
+>
+c and
+w
+0
+>
+c, as all agents then have an incentive to search or when search costs are proportional
+as in Section 5.
+8. Note that for supermodular functions in
+F
++
+, this acceptance set is identical for workers and firms of the same
+type, which is a general consequence of the symmetry of f
+xy
+. Therefore, the distribution of types in the second stage is
+identical for workers and firms, and therefore, the equilibrium assignment is still
+μ(
+x
+)=
+x. Similarly, for submodular
+functions in F
+−
+can be shown that under our symmetry condition when x accepts y, then
+ˆ
+y
+=
+1
+−
+x accepts
+ˆ
+x
+=
+1
+−
+y,
+which leads to distributions that are symmetric around 1
+/
+2 and the equilibrium assignment indeed remains
+μ(
+x
+)=
+1
+−
+x.
+Downloaded from https://academic.oup.com/restud/article/78/3/872/1569928 by Harvard University Library user on 26 June 2026
+
+
+===== PDF PAGE 12 =====
+“rdq034” — 2011/6/14 — 7:09 — page 883 — #12
+EECKHOUT & KIRCHER IDENTIFYING SORTING 883
+FIGURE 2
+Acceptance sets with type-independent search costs forθ=1
+It is straightforward to see that this wage is exactly in the middle of the acceptance set W(x,y)
+outlined in equations ( 7) and (8) for off-equilibrium-wages of the frictionless model. It imme-
+diately implies that positive and negative sorting cannot be identified by observed wage data
+because the wages under supermodular production functions coincide with those under submod-
+ular production functions (under misinterpretation of the unobserved firm type).
+Proposition 3. For every supermodular production function f+∈F+that induces positive
+sorting, there is a submodular production function f−∈F−that induces exactly the same wages
+for workers when we reinterpret firm types asˆy=1−y.
+Proof. Wages in the second period coincide by Proposition1. Wages in the first period coin-
+cide because they are in the exact arithmetric middle of the wage setW(∙,∙)which by Proposition
+2 coincide under the reinterpretation. ∥
+For our example, production technology f+, we get as wages
+w(x,y)=α
+2(xy)θ+α
+4 x2θ−α
+4 y2θ+h(x).
+For some of the results, it will be instructive to rewrite the wages as a function of the distance
+k between the worker and the firm, which for the special case of θ=1 becomes particularly
+tractable:
+w(x,x−k)=w(x,x+k)=α
+2 x2−α
+4 k2+h(x).
+Now it becomes immediately apparent what we observed above: there exists an ideal firm
+in the interior of the set of matches where wages are highest. In this example, a worker has the
+highest wage when matching with a firm with identical type (k=0) and loses quadratically with
+the distance to the firm. The reason is that a worker who matches with a firm that has too low
+a type does not produce a lot of output. On the other hand, a worker who wants to induce a
+much better firm to match with him has to compensate the firm for not matching with a more
+appropriate worker. Therefore, a worker is not necessarily better off matching with a higher-type
+firm. In a large region i.e., whenever the firm is higher ranked than the worker—wages fall by
+matching with even better firms. Figure3 illustrates the wage schedule of a worker as a function
+Downloaded from https://academic.oup.com/restud/article/78/3/872/1569928 by Harvard University Library user on 26 June 2026
+
+
+===== PDF PAGE 13 =====
+“rdq034” — 2011/6/14 — 7:09 — page 884 — #13
+884 REVIEW OF ECONOMIC STUDIES
+FIGURE 3
+First-period wages under mismatch with a type y=x+k that is k away from the optimal match. (Parameter values
+x=0∙5,c=0∙25,α=θ=1, and h(x)=0.)
+of the distance to the firm he matches with and highlights the fact that the wage falls in firm type
+in part of the region. This result holds more generally:
+Proposition 4. For each x∈(0,1)wagesw(x,y)are non-monotone in y.
+Proof. Wagesw(x,y)are in the exact arithmetic middle of the wage set W(x,y).Since
+worker type x chooses the optimal wage, by equation ( 8), any wage in W(x,y′)is lower than
+the wagew⋆(x)under the optimal assignment. Since W(x,μ(x))=w⋆(x), the optimal wages
+arise in the first stage. Because search costs are positive, all firm types close to μ(x)have a
+positive surplus and thus will form a match with x in the first stage. Therefore, wages are non-
+monotone around the optimum wagew⋆(x).∥
+Note that none of the results depend on an equal split of the surplus or identical search costs
+for workers and firms. We consider the case of asymmetric bargaining shares and different, type-
+dependent search costs later. In what follows, we show that this non-monotonicity of the wage
+schedule makes it impossible for a fixed-effect estimator to detect the sign and the strength of
+sorting.
+3.2. Inconclusive firm-fixed-effects
+In this section, we assess the ability of the fixed-effects approach that we discussed in the intro-
+duction to detect the strength of sorting,i.e. the magnitude of the cross-partial. We already know
+that due to the non-monotonicity of equilibrium wages, the correlation between worker and firm
+fixed effects will provide a misspecified measure of the degree of complementarity. Nonethe-
+less, one might conjecture that some misspecification is unavoidable and the approach might
+nevertheless pick up at least the right qualitative properties. In this section, we show for the most
+popular example in the literature that the fixed effect of the firm does not correlate at all with its
+true underlying type. Therefore, the correlation between worker and firm fixed effects will also
+be zero and uninformative about either the sign or strength of sorting. This result in particular
+Downloaded from https://academic.oup.com/restud/article/78/3/872/1569928 by Harvard University Library user on 26 June 2026
+
+
+===== PDF PAGE 14 =====
+“rdq034” — 2011/6/14 — 7:09 — page 885 — #14
+EECKHOUT & KIRCHER IDENTIFYING SORTING 885
+involves verifying how the boundaries of the acceptance sets change in types, in addition to the
+change in the wage profile.
+We will consider the fixed-effect approach assuming a long panel of observations for each
+worker and firm. That is, each worker and firm goes through our two-step process many times.
+The fixed-effects approach decomposes the wage when worker x matches with firm y into the
+sum of the worker’s fixed effectsδ(x)and the firm’s fixed effectψ(y)plus a residualε
+xy
+:
+9
+w(x,y)=δ(x)+ψ(y)+ε
+xy
+, (14)
+For this approach, we require the fixed effects to be unbiased. We show in the appendix that this
+is the case when
+δ(x)=
+∫
+B(x)
+[w(x,y)−ψ(y)]dϒ(y|x), (15)
+ψ(y)=
+∫
+A(y)
+[w(x,y)−δ(x)]d)Gamma1(x|y), (16)
+where A(y)and B(x)are the acceptance sets and ϒ(y|x)and)Gamma1(x|y)are the distributions
+conditional on being in the acceptance set (with densities υ(y|x)andγ(x|y)).
+10
+Substituting
+equation (15) into equation (16), we can write the firm fixed effect as
+ψ(y)=
+∫
+A(y)
+[w(x,y)−w
+av
+(x)]d)Gamma1(x|y)
+
+ 
+=:)Psi1(y)
++
+∫
+A(y)
+∫
+B(x)
+ψ(˜y)dϒ(˜y|x)d)Gamma1(x|y), (17)
+wherew
+av
+(x)is the average wage of worker x,defined by w
+av
+(x)=
+∫
+B(x)
+w(x,y)dϒ(y|x).
+The fixed effect is therefore determined by a differential equation. This equation is governed
+by the characteristic term)Psi1(y)that captures the intuitive aspect that the firm fixed effect is the
+difference between the wage that the firm pays and the average wage that the worker receives. If
+the characteristic term)Psi1(y)is constant, it is immediate that the solution to equation (17) yields
+a constant fixed effect ψ(y)that does not vary across firms.
+11
+That is, in this case, the fixed
+effect does not pick up the differential willingness to pay by firms to hire better workers.
+To show that fixed effects are not suited to analyse sorting in this model, we consider a
+version of our example production function: f(x,y)=αxy+h(x)+g(y), where α>0. This
+yields acceptance sets of form A(y)=[y−K,y+K ] with K=2
+√c/α.These acceptance
+sets are independent of the type distributions )Gamma1andϒ. To preserve the simple structure of the
+acceptance set for illustration purposes, it will be convenient to allow the type distribution to
+possibly be non-uniform at this point, rather than to normalize them and to change the production
+function accordingly.
+For this example, we will calculate how the characteristic part of the fixed effect )Psi1(y)
+changes in y. For the formal analysis of the characteristic part, we focus on firms y∈(2K,
+1−2K)because their acceptance set as well as the acceptance sets of the workers they match
+9. Our analysis is in levels rather than in log-wages. The same decompositions ( 15–18) obtain similarly if we
+replaced the wage by the log-wage and the average wage by the average of the log-wages, and the qualitative results that
+the characteristic part of the fixed effect can be increasing, zero, or decreasing depending on the exact specification of
+the type distribution arises in a similar way. Only the exact shape of the type distribution is more complicated.
+10. Let
+a
+(
+y
+)=
+inf A
+(
+y
+)
+and
+ˉ
+a
+(
+y
+)=
+sup A
+(
+y
+),
+then
+)Gamma1(
+x
+|
+y
+)=)Gamma1(
+x
+)/
+[
+)Gamma1(ˉ
+a
+(
+y
+))−)Gamma1(
+a
+(
+y
+))
+]
+.
+Similar for
+ϒ(
+y
+|
+x
+).
+11. The characteristic term
+)Psi1(
+y
+)
+is constant iff it is zero because the integral over the wages minus the average
+wage is zero. Then equation (17) is solved trivially when
+ψ(
+y
+)
+equals zero.
+Downloaded from https://academic.oup.com/restud/article/78/3/872/1569928 by Harvard University Library user on 26 June 2026
+
+
+===== PDF PAGE 15 =====
+“rdq034” — 2011/6/14 — 7:09 — page 886 — #15
+886 REVIEW OF ECONOMIC STUDIES
+with is in the interior of the type space. That will avoid cumbersome discussions of corner prop-
+erties, which can be shown to have negligible impact if c is small. In the interior part, we obtain
+)Psi1
+′
+(y)=
+∫
+y+K
+y−K
+∂w(x,y
+)
+∂y γ(x|y)dx
++(w(y+K,y)−w
+av
+(y+K))γ(y+K|y)
+−(w(y−K,y)−w
+av
+(y−K))γ(y−K|y). (18)
+Call the first term)Psi1
+′
+1
+(y)and the second and third term )Psi1
+′
+2
+(y)so that)Psi1
+′
+(y)=)Psi1
+′
+1
+(y)+)Psi1
+′
+2
+(y).
+The first term )Psi1
+′
+1
+(y)accounts for the wage change across those workers with which this firm
+type matches. The second and third term)Psi1
+′
+2
+(y)reflect that the matching set is slightly changing
+when the firm type changes.
+We obtain the following results when the type distribution has a linear density:
+12
+)Psi1
+′
+1
+(y)>0 if γ
+′
+(x|y)>0 for all y, (19)
+)Psi1
+′
+2
+(y)<0 if γ
+′
+(x|y)>0 for all y. (20)
+The first effect arises because the wage change induced by a higher firm type is non-monotonic:
+∂w(x,y
+)
+∂y
+=
+α
+2
+x−
+α
+2
+y,decreasing when x< y and increasing when x> y. In this case, it depends
+whether there are more high or low worker types to determine which effect dominates, and for
+uniform-type distributions, this effect is exactly zero.
+13
+In general, this first effect is counteracted
+by the second effect that arises because the boundaries of the acceptance set change. Low types
+leave the acceptance set and high types join it. At the boundaries, workers earn the lowest wages,
+and therefore, an increasing density means that the firm gains more low-wage workers than it
+loses and its fixed effect tends to decrease, while for opposite density, it loses more low types
+than it gains high types and its fixed effect increases. We show this formally in the appendix.
+Again this effect is zero if the type distribution is uniform.
+Therefore, in this simple example with a multiplicative production function (which generates
+positive sorting) and uniform type distributions, the fixed effect of the firm is not correlated with
+its true type. It is independent of its true type, and the only variation might arise from small
+sample properties that introduce non-systematic noise. While for uniform distributions, the fixed
+effect does not vary with the type of the firm at all, it is possible to find type distributions that
+generate a fixed effect that is either decreasing, increasing, or non-monotone in the type of the
+firm. The reason is that taking out the worker effect from the firm effect in equation (15) means
+that a high-paying firm might have a low fixed effect because it employs mainly highly paid
+workers, rendering this identification strategy insufficient to back out the type of the firm. Our
+main conclusion is that even in a model with sorting, we can analytically show that the firm fixed
+effect is not sensitive to the firms’ true type. Whether sorting is positive or negative, the fixed
+effect is in general ambiguous and can be zero.
+12. Linear densities imply that the conditional density is constant in the sense that
+υ
+′
+(
+y
+|
+x
+)=
+r for some constant
+r since the acceptance sets of constant size 2 K
+.
+For symmetric distributions
+)Gamma1(∙)=ϒ(∙)
+, this means that
+υ
+′
+(
+y
+|
+x
+)=
+γ
+′
+(
+x
+|
+y
+)=
+r. The first result also obtains for any other type distribution.
+13. For the uniform distribution, we have
+)Psi1
+′
+1
+(
+y
+)=
+1
+2K
+∫
+y+K
+y−K
+(
+α
+2 x
+−
+α
+2 y
+)
+dx
+=
+1
+2K
+∫
+K
+−K
+(
+α
+2
+(
+y
++
+k
+)−
+α
+2 y
+)
+dk
+=
+0.
+Note also that the first effect does not depend on linear densities of the type distributions but holds in general.
+Downloaded from https://academic.oup.com/restud/article/78/3/872/1569928 by Harvard University Library user on 26 June 2026
+
+
+===== PDF PAGE 16 =====
+“rdq034” — 2011/6/14 — 7:09 — page 887 — #16
+EECKHOUT & KIRCHER IDENTIFYING SORTING 887
+4. IDENTIFYING THE STRENGTH OF SORTING
+We have shown that even in the simplest model it is not possible to distinguish negative sorting
+from positive sorting from wage data alone, and that in a Beckerian model of the world, fixed-
+effects estimation not only fails to identify the sign but also the strength of sorting. This raises
+the question whether the strength of sorting can be identified at all from wage data. In economic
+terms, this is the more pressing issue rather than finding the sign of sorting (positive or negative)
+since welfare depends on matching the right types by avoiding inefficient mismatch, not on who
+these types are. For the purpose of the exercise, we take the model literally, and see whether the
+model-generated data together with the assumption of a large panel allows for identification of
+the strength of sorting.
+We will show that the identification of the strength of sorting can be obtained. Identifica-
+tion does not rely on the exact simplifying assumptions we made in the previous section but
+obtains even when some of these assumptions are relaxed. Consider a generalization of the basic
+model, now with general, type-dependent search cost functions and different bargaining shares
+for workers and firms. Search costs might differ between workers and firms and they vary with
+the type of the agent x or y. Also bargaining shares might not be equal. Denote by c(x)the cost
+of search to the worker of type x and by k(y)the cost of having job y unfilled. The worker’s
+share of the bargaining surplus is denoted byγ∈(0,1).
+We maintain the assumptions on f(x,y)from Section 3 (symmetric cross-partials in par-
+ticular). To keep exposition tractable, we will also make assumptions on the search costs that
+ensure that matching bands are symmetric and monotone, and that higher types indeed get more
+when they have to wait for the second period. Symmetry implies that second-period wages are
+exactly the same as in the frictionless matching model. The entire analysis goes through even
+without symmetric matching bands but the algebra becomes much more involved. The follow-
+ing assumption is sufficient to ensure this: c
+′
+(x)=k
+′
+(x)<f
+x
+(x,x)in the case of PAM, and
+c
+′
+(x)=−k
+′
+(1−x)<f
+x
+(x,1−x)in the case of NAM. The equality ensures marginal cost
+symmetry and thereby the symmetry of the matching bands, the inequality ensures that second-
+period wages minus the costs of search are increasing in type, which implies that higher worker
+types always get higher wages than lower worker types.
+14
+We also assume monotone matching
+bands which obtains if costs do not change too rapidly by type.
+15
+The motivation for this as-
+sumption is that it allows us to use the wages to order the firms meaningfully, despite the fact
+that we cannot identify which firms are the more productive ones. While we show in Section 5
+that we can dispense with the symmetry assumption alltogether and how one can get identifica-
+tion even if matching sets are non-monotone, the current specification allows for a particularly
+tractable mathematical exposition.
+16
+We develop a simple procedure to identify the degree of complementarity of the production
+technology f(x,y). What we are after is to identify the magnitude of the cross-partial |f
+xy
+|in
+absolute value, which turns out to be the key determinant for the efficiency loss due to mismatch.
+The procedure makes use of two pieces of independent information that jointly identify the
+14. Differentiating the wages in equation ( 26) establishes this.
+15. Matching bands A
+(
+x
+)
+and B
+(
+y
+)
+are monotone if they form an interval whose boundaries are both either in-
+creasing or both decreasing in type. As shown in the previous section, this is trivally the case when costs are constant in
+type. It can be shown that for any f with
+|
+f
+xy
+|
+bounded away from zero, there exists a bound
+ψ>
+0 such that matching
+sets remain monotone whenever c
+′
+(
+x
+)<ψ
+and k
+′
+(
+y
+)<ψ
+for x
+,
+y
+.
+16. The identification method in equation ( 30) does not use any symmetry of either the cost or the production
+functions. Section 5, part 3 shows how monotonicity can be replaced by knowledge that costs are increasing in firm type,
+which naturally happens under discounting. Part 10 in that section discusses how an adapted version of this approach
+can be used even in settings that do not have any natural order of firms.
+Downloaded from https://academic.oup.com/restud/article/78/3/872/1569928 by Harvard University Library user on 26 June 2026
+
+
+===== PDF PAGE 17 =====
+“rdq034” — 2011/6/14 — 7:09 — page 888 — #17
+888 REVIEW OF ECONOMIC STUDIES
+two fundamentals of the economy, the search costs c(x),k(y), and the match surplus function
+f(x,y):
+1. The size of the wage gap: the difference between the highest and the lowest wage a given
+worker type receives. The wage gap allows us to identify the cost of search since the
+marginal wage offer must make the worker indifferent between accepting and rejecting
+the offer, thus relating the gross surplus (the wage gap) to the costs.
+17
+2. The matching range: the fraction of jobs that are being accepted out of all jobs in the econ-
+omy. This gives us independent information about the shape of the technologyf(x,y). To
+see this, observe that under strong complementarities, output changes fast when mov-
+ing away from the Beckerian allocation. As a result, the output loss from non-assortative
+matching is large and only a small range of matches is accepted. In contrast, under weak
+or no complementarities, little or no output is lost and for a given search cost a much larger
+range of matches is acceptable.
+In order to identify the model, we need repeated observations of wages of a given worker, and
+repeated observations of a given job. For some firms, a job does not directly have an identifier
+in existing data sets, and it might be more useful to think about jobs in the same occupation
+within the same firm as being identical. Again, suppose for expositional purposes that we have
+a long panel, i.e. each worker and job goes through our two-step hiring process many times so
+that we observe a long set of wages for each worker and for each job. In fact, we assume that the
+panel is long enough that we can abstract from issues of finite samples. In this case, the average
+wage of a worker is his true average wage. We name a worker “ x” if a fraction x of the other
+workers has a lower average wage and the remainder a higher average wage than him. Since
+higher-type workers in our model indeed obtain higher wages on average, this recovers the true
+type of the worker. Then we can rank the jobs based on the quality of their workers: we name
+a job “ˆy” if a fraction ˆy of all jobs have workers of lower quality. Monotone matching bands
+imply that the distribution of workers changes in the sense of first-order stochastic dominance,
+and we can measure the worker quality,e.g. by the average of the worker types employed in each
+job over time. Under PAM, higher firm types match with better firms and we haveˆy=y,while
+under NAM, higher firm types match with lower-quality workers and we have ˆy=1−y.
+18
+For the remainder of this section, we will also indicate with a “hat” any function that deals
+with the transform, in which case it represents the original function under PAM and represents
+the function evaluated at 1−y under NAM. In particular, consider production function ˆf(x,ˆy)
+which has the following definition:
+ˆf(x,ˆy)=
+{ f(x,ˆy) if PAM,
+f(x,1−ˆy)if NAM.
+We know from Section3 that we cannot identify from the wages whether PAM or NAM applies.
+The important point to note is that independent of the case we are in, the cross-partial of ˆf
+17. We cannot adopt the same strategy for the firms since we cannot rely on the “profit gap” for a given job if
+profits are hard to observe. Nevertheless, we will see that bargaining reflects variation on the firms side to a degree that
+allows identification of the firms’ costs up to sign and a constant, which is sufficient to back out the loss from mismatch
+and the magnitude of the cross-partial in production.
+18. We obtain the same ranking of firms if we rank them according to the best worker they match with, the worst
+worker they match with, or some other quantile in the distribution of workers they match with since the distribution
+moves in the direction of first-order stochastic dominance. Alternatively, we can rank firms by the highest or the lowest
+wage that they pay, both of which are increasing in type under PAM and decreasing under NAM when matching bands
+are monotone.
+Downloaded from https://academic.oup.com/restud/article/78/3/872/1569928 by Harvard University Library user on 26 June 2026
+
+
+===== PDF PAGE 18 =====
+“rdq034” — 2011/6/14 — 7:09 — page 889 — #18
+EECKHOUT & KIRCHER IDENTIFYING SORTING 889
+recovers the absolute value of the cross-partial of the original production function, i.e. we have
+ˆf
+xy
+=|f
+xy
+|or more precisely ˆf
+xy
+(x,ˆy)=|f
+xy
+(x,μ
+−1
+(ˆy))|. We will see below that the absolute
+value of the cross-partial is indeed the relevant information needed to identify the loss from
+mismatch (together with the costs of waiting).
+We now proceed along the two steps outlined above to back out the waiting costs and this
+cross-partial. It will be convenient to start with the second step (matching range), and then return
+to the first step (wage gap). We conclude this section with a parametric example of how to imple-
+ment this strategy for our example class of production functions and discuss various measures
+of efficiency loss that can be obtained.
+4.1. Matching range
+Assume that the costs of search have been identified from some variation in the data. Then the
+following allows a recovery of the strengh of the cross-partial, and therefore, the importance of
+sorting. As before, with general search costs and bargaining share, the surplus will be positive
+and results in the acceptance of a match provided that the value from the current match outweighs
+the benefit from waiting:
+f(x,y)−[w
+⋆
+(x)+π
+⋆
+(y)−c(x)−k(y)]≥0. (21)
+Given our symmetry assumption, second-period wages w
+⋆
+(x)and profits π
+⋆
+(y)are the same
+as in the frictionless case.
+19
+Rearranging and substituting the second-period wages according to
+equation (5) and profits according to equation (6) yields equivalently
+f(x,y)−
+[∫
+x
+0
+f
+x
+(x
+′
+,μ(x
+′
+))dx
+′
++
+∫
+y
+0
+f
+y
+(μ
+−1
+(y
+′
+),y
+′
+)dy
+′
++f(0,0)
+]
+≥−[c(x)+k(y)]. (22)
+The left-hand side of this expression gives exactly the loss in terms of efficiency between match-
+ing now and matching perfectly since the term in brackets captures the social contribution that
+each type achieves under perfect matching. Recalling the definitions of ˆy and ˆf above, in the
+appendix, we show that the loss on the left-hand side equation (22) when worker x matches with
+firmˆy can be expressed as
+L(x,ˆy)=−
+∫
+x
+ˆy
+∫
+x
+y
+′
+ˆf
+xy
+(x
+′
+,y
+′
+)dx
+′
+dy
+′
+. (23)
+Workers only match when this loss is smaller than the costs of waiting:L(x,ˆy)≥−[c(x)+ˆk(ˆy)].
+From the data, we can observe the lowest identity of firm with which workerx matches. Call this
+identity
+y(x).In a long panel, it is exactly the identity where the equality is binding. Therefore,
+we obtain the following identifying equation:
+L(x,
+y(x))=−[c(x)+ˆk(
+y(x))] (24)
+or equivalently
+−
+∫
+x
+y(x)
+∫
+x
+y
+′
+ˆf
+xy
+(x
+′
+,y
+′
+)dx
+′
+dy
+′
+=−[c(x)+ˆk(
+y(x))]. (25)
+19. Similar to the previous section, the matching set A
+(
+y
+)
+includes all x such that inequality (21) holds for
+(
+x
+,
+y
+),
+and B
+(
+x
+)
+includes all y such that inequality ( 21) holds for
+(
+x
+,
+y
+).
+Symmetry ensures that under PAM A
+(
+x
+)=
+B
+(
+x
+)
+,
+while under NAM A
+(
+x
+)={
+1
+−
+z : z
+∈
+B
+(
+1
+−
+x
+)}
+. Then assortative matching in the second period implies that
+μ(
+x
+)=
+x
+under PAM and
+μ(
+x
+)=
+1
+−
+x under NAM, and wages are exactly as in the frictionless case.
+Downloaded from https://academic.oup.com/restud/article/78/3/872/1569928 by Harvard University Library user on 26 June 2026
+
+
+===== PDF PAGE 19 =====
+“rdq034” — 2011/6/14 — 7:09 — page 890 — #19
+890 REVIEW OF ECONOMIC STUDIES
+Since for each worker x, the lowest firm
+y(x)can be observed, given knowledge of the costs
+of search this is a functional equation that identifies ˆf
+xy
+evaluated at(x,
+y(x)), for all x∈ [0,1]
+with
+y(x)>0. It identifies the strength of the cross-partial because it compares the noise in
+the matching sets (x−
+y(x))to the noise in the wage data due to the search costs. If the wages
+vary substantially but matching sets are small, there must be a large loss in matching by slightly
+deviating from the optimal type, i.e. the cross-partial must be large.
+The left-hand side of functional equation (25) only provides information about some average
+level of the absolute value of the cross-partial across the matching set of type x workers. We
+show at the end of this section that equation ( 25) provides enough information to back out the
+parameters for our family of example production functions with simple non-linear regression
+techniques. For classes of production functions with more parameters, we refer the reader to
+equation (30) which highlights that not only the average cross-partial for a given x worker but
+also variations of the cross-partial across different firm types for that same worker type can be
+identified. Clearly, the cross-partial can only be identified at points within the matching sets since
+we do not observe matches between firms and workers outside the matching sets because both
+rather wait then match together.
+20
+Importantly, for the application of the identifying equation
+(25), it is crucial to obtain a notion of the search costs from the data, which we consider now.
+4.2. Wage gap
+We now show how the difference in wages for a given worker can be used to identify the wage
+gap. Observe that this can be achieved from first-period wages alone, which is important since in
+our stylized environment the frictionless wages really represent a notion of continuation values
+(see also the continuous horizon extension in Section 5). Recall our notation, where every func-
+tion with “hat” is the original function under PAM and is the function evaluated at 1−y under
+NAM. Observed first-period wages for the match of worker x with firmˆy are
+ˆw(x,ˆy)=γ[ˆf(x,ˆy)−w
+⋆
+(x)−ˆπ
+⋆
+(ˆy)+c(x)+ˆk(ˆy)]+w
+⋆
+(x)−c(x), (26)
+representing the outside optionw
+⋆
+(x)−c(x)plus a shareγof the surplus.
+Note that the lowest possible wage of worker x is given by his continuation value in the
+case where the surplus is zero:
+w(x)=w
+⋆
+(x)−c(x).Substituting this into equation ( 26) and
+observing that atˆy=x the production is exactly ˆf(x,x)=w
+⋆
+(x)+ˆπ
+⋆
+(x),we obtain
+c(x)+ˆk(x)=ˆw(x,x)−
+w(x
+)
+γ , (27)
+where ˆw(x,x)denotes the wage along the diagonal. This equation already entails most of the
+relevant economic insights, and therefore warrants some brief comments. Assume the bargaining
+share is known or inferred through the construction that we show next, then equation (27) entails
+all relevant information for the case where firm costs are constant. In such a case,ˆw(x,x)is sim-
+ply the highest wage that the worker obtains, and therefore the right-hand side can be computed
+simply as the difference between the highest and the lowest wage, divided by the bargaining
+share. This can be directly fed into the right-hand side of equation (25), which then allows iden-
+tification of the cross-partial. Therefore, the combination of equations ( 25) and (27) are at the
+20. It is still possible to provide bounds on the cross-partial off the matching set because it is not possible that
+output improves extremely fast outside the matching range since in such a case, agents would like to match if they meet.
+While these bounds are relatively tight close to the actual matching set, they become fairly weak as one departs further
+from the matching set. See Eeckhout (2007) for a related exposition on such a phenomenon.
+Downloaded from https://academic.oup.com/restud/article/78/3/872/1569928 by Harvard University Library user on 26 June 2026
+
+
+===== PDF PAGE 20 =====
+“rdq034” — 2011/6/14 — 7:09 — page 891 — #20
+EECKHOUT & KIRCHER IDENTIFYING SORTING 891
+heart of the identification strategy and capture the intuitive ideas described in the beginning of
+this section.
+The final arguments provide technical details that establish that the variation in the data is in
+principle rich enough to uniquely back out the bargaining share and to account for the fact that
+equation (27) gives firm costs that are evaluated at x, while the right-hand side of equation (25)
+needs the firm’s cost evaluated at the lower bound
+y(x).Clearly, when matching sets are small
+the difference between x and
+y(x)is insubstantial.
+To see that there is only a unique bargaining share consistent with the wage data, observe
+that given the assumption of a long enough panel we identify the type x of the worker and the
+type y of the firm correctly except for the ordering. Enough observations then allow a precise
+inference on the wage ˆw(x,y)at the points in the matching set. This means that changes in the
+wages as matches change can be backed out from the observed wage data. In particular, the wage
+changesˆw
+x
+(x,x)andˆw
+y
+(x,x)when one moves away from the diagonal in the direction of better
+workers or firms can be inferred. From equations ( 5) and (6), we know that ˆw
+⋆
+x
+(x)=ˆf
+x
+(x,x)
+andˆπ
+⋆
+y
+(ˆy)=ˆf
+y
+(ˆy,ˆy),and therefore we obtain from differentiating equation (26) that
+ˆw
+x
+(x,x)=−(1−γ)c
+′
+(x)andˆw
+y
+(x,x)=γˆk
+′
+(x). (28)
+Using these relationships allows us to simplify the following difference between the value of
+equation (27) for worker types x and x
+′
+:
+ˆw(x,x)−
+w(x)−[ˆw(x
+′
+,x
+′
+)−
+w(x
+′
+)
+]
+γ =c(x)+ˆk(x)−c(x
+′
+)−ˆk(x
+′
+)
+⇔ ˆw(x,x)−
+w(x)−[ˆw(x
+′
+,x
+′
+)−
+w(x
+′
+)
+]
+γ =−
+1
+1−γ
+∫
+x
+x
+′
+ˆw
+x
+(˜x,˜x)d˜x+
+1
+γ
+∫
+x
+x
+′
+ˆw
+y
+(˜y,˜y)d˜y. (29)
+This enables the identification of γsince all wage terms in equation ( 29) can be inferred from
+the data, and only a unique value of gamma solves this equation.
+To be able to use equation (25), we need to recoverc(x)+ˆk(
+y(x)).While for small matching
+bands, it holds that
+y(x)≈x and we can safely use c(x)+k(x)as identified by equation (27),
+adjustments for larger matching bands might be non-trivial. Building on equations ( 27) and on
+(28) yields the following equations that identify the right-hand side of equation (25) exactly from
+the observable wages and the already identified bargaining power:
+c(x)+ˆk(
+y(x))=c(x)+ˆk(x)−[ˆk(x)−ˆk(
+y(x))]
+=−ˆw(x,x)−
+w(x
+)
+γ −
+∫
+x
+y(x)
+ˆk
+y
+(y)dy
+=−
+ˆw(x,x)−
+w(x)−
+∫
+x
+y(x)
+ˆw
+y
+(y,y)d
+y
+γ .
+As mentioned before, if either the variation in firm costs is small ( k
+′
+small means that ˆw
+y
+(y,y)
+is small) or if the matching bands are narrow and therefore
+y(x)≈x,then the third term in the
+numerator becomes negligible. In such cases, the search costs can effectively be obtained by
+taking the difference between the maximum and the minimum wage that workers obtain without
+any further adjustment, as outlined in the discussion of equation (27).
+The parametric example. To highlight the applicability of this identification strategy,
+we focus on the parametric family of production functions that we outlined as examples in
+Downloaded from https://academic.oup.com/restud/article/78/3/872/1569928 by Harvard University Library user on 26 June 2026
+
+
+===== PDF PAGE 21 =====
+“rdq034” — 2011/6/14 — 7:09 — page 892 — #21
+892 REVIEW OF ECONOMIC STUDIES
+equations (1) and (2) and consider the original case of constant and common search costsc(x)=
+k(y)=c and equal bargaining weights γ=1/2. Under our leading examples f
++
+and f
+−
+, the
+loss due to miscoordination in absolute terms is given by
+|L(x,y)|=|α
+|
+2 (x
+θ
+−y
+θ
+)
+2
+.
+By equation (25), we can identify the strength of sorting via equation
+|α|(x
+θ
+−
+y(x)
+θ
+)
+2
+=4c
+or equivalently
+x=(2(c/|α|)
+1/2
+−
+y(x)
+θ
+)
+1/θ
+as long as
+y(x)>0. The parameters|α|and θin this functional form can be identified by
+the joint behaviour of x and
+y(x).Simple non-linear regression techniques can assess these
+parameters. Knowing these parameters, it is easy to compute various statistics regarding the
+aggregate loss from mismatch. The simplest one is the dollar amount of lost output when agents
+match completely randomly relative to perfect matching (keeping search costs constant), which
+is simply:
+G=
+∫
+1
+0
+∫
+1
+0
+|L(x,y)|dxdy
+=|α
+|
+2
+∫
+1
+0
+∫
+1
+0
+(x
+θ
+−y
+θ
+)
+2
+dxdy =|α| θ
+2
+(2θ+1)(θ+1)
+2
+.
+Possibly more meaningful might be the loss from equilibrium play (including costs) relative
+to costless perfect matching, which is
+∫
+1
+0
+∫
+1
+0
+min{|L(x,y)|,2c}dxdy since losses larger than c
+are capped by the search costs. Finally, one can ask about the output loss from completely
+random matching without costs relative to equilibrium play including the search costs, which
+is the difference between the two previous computations: G−
+∫
+1
+0
+∫
+1
+0
+min{|L(x,y)|,2c}dxdy =∫
+1
+0
+∫
+1
+0
+min{|L(x,y)|−2c,0}dxdy.
+Givenαandθ, we know exactly the cross-partial f
+xy
+for all pairs x,y. This clearly depends
+on the normalization of the distribution functions (to uniform distributions) and the associated
+normalization of the technology f , but the dollar loss due to mismatch is invariant to the nor-
+malization. We can therefore obtain an indication of the efficiency loss of mismatch relative to
+the total wages for example.
+5. DISCUSSION
+Our analysis of Becker’s (1973) matching framework is rather specific. In this section, we dis-
+cuss questions of robustness and relate our results to other contributions in the literature.
+5.1. Alternative identification strategies
+First, we consider alternative strategies of identification and relate our approach to work by
+Gautier and Teulings (2004, 2006). They assess the loss from mismatch in a sorting model.
+Their model is similar in spirit but different along several substantial dimensions. They make
+assumptions on the output functions (log-supermodularity) that guarantee PAM from the out-
+set, while we remain agnostic about the direction of sorting. Additionally, they assume that the
+output is sold in a final goods market, and therefore the price is endogenous, yielding a model
+Downloaded from https://academic.oup.com/restud/article/78/3/872/1569928 by Harvard University Library user on 26 June 2026
+
+
+===== PDF PAGE 22 =====
+“rdq034” — 2011/6/14 — 7:09 — page 893 — #22
+EECKHOUT & KIRCHER IDENTIFYING SORTING 893
+of comparative advantage where all firms make equal profits. In contrast, our model is one of
+absolute advantage where more productive firms make more profits—but see the discussion on
+entry below. They use a second-order Taylor expansion around the frictionless benchmark, which
+generates a local concept to back out the cross-partial. This generates in Gautier and Teulings
+(2006), a constant cross-partial along the entire matching range, while in our specification, the
+cross-partial is allowed to vary. On the other hand, they are careful in specifying measurement
+error and short panels from which we have abstracted.
+Despite the differences, it is possible to investigate how the main ingredient in their approach
+fares in our environment. In particular, we can show in which environment there is a natural
+counterpart to their approach and provide an extension for environments that go beyond their
+analysis. In the following, we consider three identification strategies (A–C) that we depict in
+Figure 4 and discuss in turn. In all of these approaches, our exposition does not rely on knowing
+the sign of the cross-partial, and we ask whether we can back out its absolute value regardless.
+The main identification strategy in Section 4 relies on measuring the width of the matching
+bands. For a given search cost (which has to be backed out from the data), small matching bands
+is synonymous to rejecting a large fraction of firms, which only happens if it is important to
+match with the right firm. In Figure 4, we illustrate this approach as a measure of the distance
+between the matching bands, labelled (A).
+An alternative approach arises from the observation that wage changes contain information
+about the local cross-partial. In particular, given the definition of the wages in equation (26), the
+cross-partial
+ˆwxy(x,ˆy)=γˆfxy(x,ˆy). (30)
+Therefore, whenever we observe wages for(x,ˆy)and(x′,ˆy′)with x̸=x′ andˆy̸=ˆy′ and these
+tuples are close to each other, then the double difference in the wages ˆw(x′,ˆy′)−ˆw(x,ˆy′)−
+(ˆw(x′,ˆy)−ˆw(x,ˆy))divided by [ x′−x][ˆy′−ˆy] yields an approximation for the cross-partial
+locally. This allows approximately the identification of the cross-partial at any point in the match-
+ing range as long as enough wage observations close by are available. This identification strategy
+does also not rely on any symmetry assumption regarding the costs of search or the match value
+FIGURE 4
+Identification strategies to determine the absolute value of the cross-partial: (A) Global approach measuring size of and
+change in matching bounds; (B) Local analysis of taking cross-differences of two adjacent points as in equation (29);
+(C) Obtain curvature of wages along the y-axis locally around the 45-degree line
+Downloaded from https://academic.oup.com/restud/article/78/3/872/1569928 by Harvard University Library user on 26 June 2026
+
+
+===== PDF PAGE 23 =====
+“rdq034” — 2011/6/14 — 7:09 — page 894 — #23
+894 REVIEW OF ECONOMIC STUDIES
+function that was made in previous sections to simplify the characterization of second-period
+wages since the profits and wages at the second stage drop out here by taking cross-partials. We
+illustrate this approach in Figure 4 by the arrow labelled (B), which considers the wage change
+between two points(x,y)and(x
+′
+,y
+′
+). Clearly, this approach only applies when the arrow in (B)
+is neither horizontal nor vertical, as in those cases one would divide by zero.
+Gautier and Teulings (2004, 2006) exploit this idea further and find a way to use the wage
+variation in the vertical direction to back out the cross-partial. In the frictionless model, worker
+x chooses his optimal firmμ(x)such thatw
+y
+(x,μ(x))=0. The full derivative with respect to
+x along the equilibrium path gives a tight connection between the concavity of the wages and
+the cross-partial of the wages, and the latter is informative about the cross-partial in production
+according to equation ( 30). In particular, w
+yy
+(x,μ(x))=−w
+xy
+(x,μ(x))/μ
+′
+(x). Even in the
+model with search frictions and without knowledge of the direction of sorting, it is easy to show
+that concavity of the wage in equation (26) yields similarly
+ˆw
+yy
+(x,x)=ˆw
+xy
+(x,x)=γˆf
+xy
+(x,x), (31)
+provided the firms’ search costs are constant. That means that around the diagonal in Figure 4,
+we can measure the cross-partial by looking at the local curvature in wages for a given x when
+the firm type changes, depicted by arrow (C). This approach effectively relates to Figure 3. As
+search costs become small, the width of this figure becomes small and in the limit only contains
+firm types close to the optimal match for which equation ( 31) is approximately valid. In the
+limit, the relation of width to height of that figure determines the curvature ˆw
+yy
+and identifies
+the cross-partial (Gautier and Teulings, 2004). This approach resembles approach (A) but uses
+the limit when search costs are small and matches only occur in the proximity of the optimal
+match. Alternatively, Gautier and Teulings (2006) show that the curvature of a worker’s wage
+when the firm-type changes can be directly captured in standard wage regressions by including
+a quadratic firm effect. This generates a ingenious way of capturing sorting in a standard econo-
+metric specification, and the coefficient directly reflects the cross-partial. Our results suggest
+that this holds even in the absence of restrictions on the sign of sorting.
+The latter approach becomes problematic, though, when the firms’ search costs are non-
+constant, and in particular non-linear. Undertaking the same exercise of twice differentiating
+equation (26) reveals that in general
+ˆw
+yy
+(x,x)=γ[ˆf
+xy
+(x,x)+ˆk
+′′
+(x)], (32)
+and therefore the curvature in a worker’s wage due to changing firm type does not directly
+recover the cross-partial. Non-zero second derivatives of the cost function arise, e.g. under dis-
+counting with factorβ, for which the loss of the firm isˆk(y)=(1−β)ˆπ
+⋆
+(ˆy),which is quadratic
+when the output is multiplicative between the two matched types. Whether the second effect is
+large depends on the nature of the costs—in Gautier and Teulings (2006), this does not arise as
+costs are assumed to be type-independent (see their Assumption A1).
+To address the possibility of type-dependent costs, one can use the adjustments we proposed
+in the previous section. Alternatively, we can directly exploit the cross-partial of the wages (30).
+5.2. Infinite horizon
+The stylized nature of our two-period model was called for to be able to derive the results ana-
+lytically. For estimation purposes, one would obviously choose to use an infinite-horizon model
+as is standard in the search literature. We therefore propose the simplest model with constant
+Downloaded from https://academic.oup.com/restud/article/78/3/872/1569928 by Harvard University Library user on 26 June 2026
+
+
+===== PDF PAGE 24 =====
+“rdq034” — 2011/6/14 — 7:09 — page 895 — #24
+EECKHOUT & KIRCHER IDENTIFYING SORTING 895
+search costs inspired by Atakan (2006). Time is discrete, agents are infinitely lived, and un-
+matched agents meet a potential partner every period. Matched partners disappear from the mar-
+ket until there is exogenous breakup of the match, at which point they return to the market. For
+expositional simplicity, consider symmetry in the distribution of types x and y and a positive
+cross-partial. Denote the stationary distribution of unmatched types by G(∙). In each period,
+the output produced between a matched pair (x,y)is given by f(x,y), where f is symmetric:
+f(x,y)=f(y,x). If a match is rejected, the pay-off is equal to −c. Denote by v(x),v(y)the
+value functions of a type x and y, which are identical because of symmetry. The value function
+v(x)for a type x is given by the wage if the job is accepted and the value of continued search in
+case it is rejected:
+v(x)=
+∫
+M
+(x)
+w(x,y)dG(y)+
+∫
+y/∈
+M
+(x)
+dG(y)[v(x)−c], (33)
+wherew(x,y)is the expected wage paid over the duration of the match andM(x)is the match-
+ing set for type x.
+21
+Due to symmetry, the value function is identical for firm y.
+22
+Then the surplus of any match can be written as s(x,y)=f(x,y)−[v(x)+v(y)−2c].
+Matches stay together as long as surplus is positive, and the lowest firm type that a worker
+matches with is characterized by f(x,
+y(x))−v(x)−v(
+y(x))=−2c. This resembles the same
+trade-off between current match and continuation value that we had in our two-period model.
+The loss is now the loss relative to optimal search, which for small costs converges to the loss in
+the two-period model (for the convergence result, seeAtakan, 2006). We assume that the surplus
+is split equally, so the wage is equal to the outside option v(x)plus half the surplus minus the
+cost of search:
+w(x,y)=s(x,y
+)
+2 +v(x)−c
+=
+1
+2[ f(x,y)−v(x)−v(y)+2c]+v(x)−c. (34)
+This formulation of the wages allows us to generalize the most important points of our model:
+first, a fixed-effects model is again misspecified because the wages at the lowest and highest firm
+in the matching set are equal to the continuation value v(x)−c, and are higher in the middle,
+leading to a non-monotone pattern. Second, it is not hard to show that the sign of the cross-
+partial is still not identified, but the absolute value of the cross-partial can still be identified,
+e.g. through equation (30). Alternatively, the loss function between actual and optimal matching
+can be backed out by equation (24) where the loss represents the difference between output and
+optimal continuation, which converges to equation (23) for small search costs. Third, the oppor-
+tunity cost of search c can also be recovered in a similar way as before, with slight adjustment:
+letπ(x)=Prob{M}=
+∫
+u(x)
+l(x)
+dG(y)be the observed probability of forming a match for worker
+x when unemployed, let Ew(x)be his average wage, and let
+w(x)be the lowest wage accepted.
+Since the lowest wage is equal to the continuation value:
+w(x)=v(x)−c, we can substitute this
+into equation ( 33) and obtain the continuation value as the weighted average of expected and
+21. Note that we do not need to include the continuation value after the match breaks up exogenously because of
+the one-shot deviation principle, which requires optimal decisions this period and takes optimal decisions in the future
+as given, so that these continuation values after breakup constitute constants in the problem that can be neglected for the
+purpose of optimal acceptance decisions.
+22. The value function
+v(
+y
+)
+for a firm is given by
+v(
+y
+)=
+∫
+M
+(y)
+[ f
+(
+x
+,
+y
+)−w(
+x
+,
+y
+)
+]dG
+(
+x
+)+∫
+x/∈
+M
+(y)
+dG
+(
+x
+)
+[
+v(
+y
+)−
+c]. Given an equal split of the surplus and symmetry, the value functions are identical to
+that of the workers.
+Downloaded from https://academic.oup.com/restud/article/78/3/872/1569928 by Harvard University Library user on 26 June 2026
+
+
+===== PDF PAGE 25 =====
+“rdq034” — 2011/6/14 — 7:09 — page 896 — #25
+896 REVIEW OF ECONOMIC STUDIES
+minimum wagev(x)=πEw(x)+(1−π
+)w(x). Substituting this back into the minimum wage
+equation, we obtain
+c=[Ew(x)−
+w]π.
+Observe that the cost is calculated in the same way as before, except that due to random match-
+ing, now we use the average wage instead of the maximum wage, and we need to take into
+account the matching probability. This is quite intuitive since under random matching, the new
+matched wage is an average, rather than the maximum and in addition, with random matching
+frictions next period’s match is not necessarily accepted.
+5.3. Special cases of type-dependent costs: discounting and type-dependent arrival rates
+Discounting is a common assumption in many models of labour search. Here, we briefly out-
+line that discounting is a special case of type-dependent search costs. Similarly, type-dependent
+arrival rates of offers also constitutes a special form of type-dependent search costs. Given this
+insight, it is clear that the identification strategies in Section4 and at the beginning of this section
+can be applied to recover the strength of sorting. Also, we briefly outline that the problems when
+using the correlation of fixed effects carry over to such environments. We will start by exploring
+the properties of discounting because of its prominence in economic modelling, and then briefly
+return to type-dependent arrival rates.
+In Section 2, we initially analysed a Beckerian model with a fixed search cost, the infinite-
+horizon version of which is analysed by Atakan (2006). One direct result was that wages are
+non-monotonic in the type of the firm and, therefore, do not fulfill the assumptions of a fixed-
+effect estimator. In most search models, the cost of waiting is modelled by means of discounting
+as in Shimer and Smith (2000). We therefore now assume time discounting with factor β∈
+(0,1). In this case, the costs of search are the delay costs in obtaining the second-period match:
+c(x)=(1−β)w
+⋆
+(x), k(y)=(1−β)π
+⋆
+(y), where βis the discount factor. Waiting costs are
+now type-dependent as the loss is proportional to the outside option: higher types pay a higher
+cost from delay. This is a specific case of the general setting with type-dependent costs.
+When the matching sets are monotone, then our previous analysis applies and identification
+of the magnitude of sorting can be achieved. Under monotone matching bands, we obtain an
+order on the firms that reflects their willingness to hire better workers. Monotone matching
+bands imply improvements in the distribution of matches of the firms in the sense of first-order
+stochastic dominance and we get a consistent order, whether we order firms by the average type
+of the worker they employ, the minimum type or the maximum type. Shimer and Smith (2000)
+point out that the matching bands may not be monotone under discounting, though, unless the
+production function is sufficiently supermodular. Otherwise matching bands may be decreasing
+in some range even if the match value is supermodular. Therefore, it is worthwhile to point out
+that the identification can be achieved even when matching bands are non-monotone, as long as
+we know that k(y)is increasing as is the case under discounting.
+We can then recover the order of ˆy correctly ( i.e.ˆy=y under PAM and ˆy=1−y un-
+der NAM) even when matching sets are not increasing. The reason is that under PAM, the
+upper bound of the matching set is always increasing, while under NAM, the lower bound is
+always decreasing. To see this, consider some firm type y and the highest worker type x > y
+for which equation ( 22) holds. A slightly higher firm is then also willing to match with x be-
+cause the right-hand side of equation (22) decreases in firm type when costs are increasing, and
+under PAM, the left-hand side increases since the efficiency loss gets smaller as the distance be-
+tween x and y shrinks. As a result, the upper bound of the matching sets are strictly increasing.
+Under NAM consider the lowest bound of a given y where x< y and such that equation ( 22)
+Downloaded from https://academic.oup.com/restud/article/78/3/872/1569928 by Harvard University Library user on 26 June 2026
+
+
+===== PDF PAGE 26 =====
+“rdq034” — 2011/6/14 — 7:09 — page 897 — #26
+EECKHOUT & KIRCHER IDENTIFYING SORTING 897
+holds. A type above y would also match with x since the right-hand side of equation ( 22) has
+again decreased and under NAM, the increase in the distance between worker x and the firm
+reduces the loss from mismatch. This means that the lower bound is increasing in y in the case
+of NAM.
+Therefore, as long as we restrict ourselves to production functions that are either NAM or
+PAM, we can proceed as follows. First, order the firms according to the best worker they are
+matched with. If the matching was PAM, this recovers the firm type correctly given a long
+enough panel at least for those firms with interior matching sets. If the matching was NAM
+and matching sets are not increasing, then the non-monotonicity will imply that some firms of
+different type will get the same “identity” (because they have the same upper bound) and since
+the lower bounds of the matching sets are increasing (in ˆy), these firms have very different
+matching sets. When this is detected in the data, matching cannot have been PAM, and so the
+firms can be ordered according the lowest worker they match with, which is increasing in ˆy.
+Therefore, we can recover the order on the firms at least for those firms with interior matching
+sets, and the rest of the analysis proceeds as before. Clearly, if matching bands are monotone,
+this procedure does not help to distinguish PAM and NAM since ordering by either the best
+workers or the worst workers gives the same ranking and no inconsistencies.
+While the magnitude of sorting can be recovered, we briefly highlight that similar problems
+arise for the use of fixed effects as we discussed in Section3.2 for constant search costs. To show
+that similar caveats apply, we again focus on a simplified version of our production function
+f
++
+(x,y)=xy . When discounting replaces fixed waiting costs, a match betweenx and y will be
+formed provided the surplus exceeds the cost of delay:f(x,y)−βx
+2
+/2−βy
+2
+/2> 0. The match-
+ing set then is A(y)=[
+K y
+,K y], where
+K=β
+−1
+(1−
+√
+1−β
+2
+)and ˉK=β
+−1
+(1+
+√
+1−β
+2
+),
+and is monotone in type. The worker’s wage in a match (x,y)in the first period is given by
+w(x,y)with derivative∂w/∂y:
+w(x,y)=
+1
+2 xy+βx
+2
+4−βy
+2
+4 and ∂w(x,y
+)
+∂y =
+x
+2−β
+y
+2 . (35)
+The wage is hump-shaped. The derivative is negative when x <βy. Therefore, the wage is
+decreasing for all worker types in [
+K y,βy]. This set is non-empty for any discount factor .
+23
+While in this setting, identification of the sign of the cross-partial might be possible, the differ-
+ence between wages of positive and negative assorted production functions is of order (1−β)
+and therefore hard to detect when agents are patient.
+24
+Figure 5(a) illustrates the matching pattern. The matching sets are no longer constant as
+before. In general, they will also be non-linear (e.g. when output is x
+θ
+y
+θ
+, withθ̸=1). Figure 5(b)
+exhibits the wage pattern as a function of the distance k between the worker and the firm. The
+wages at the boundaries reflect the value from waiting and therefore necessarily are the same.
+The wage schedule is single-peaked, only that the peak is shifted to higher wages compared
+to the previous section. Still roughly for half of the acceptance set, the wage is decreasing in
+23. It is straightforward to show that
+K
+=β
+−1
+(
+1
+−
+√
+1
+−β
+2
+)
+y
+<β
+y if and only if 1
+−β
+2
+>(
+1
+−β
+2
+)
+2
+,
+which is
+true for all
+β∈(
+0
+,
+1
+).
+24. Under the submodular specification f
+−
+(
+x
+,
+y
+)=(
+1
+−
+y
+)
+x
++
+y, the wage will be as in equation ( 35) when we
+replace y by its transform
+ˆ
+y
+=
+1
+−
+y
+,
+plus an added term
+1
+2
+(
+1
+−β)(
+1
+−ˆ
+y
+)
+. This simple example shows that identification
+of the sign will be difficult in praxis because the difference in wages between PAM and NAM becomes neglegible when
+β
+is close to one. In fact, one can prove that identification of the sign is impossible without restrictions on the cost
+functions. If the costs themselves have to be identified and there are no further restrictions on these costs, it is easy to
+generalize the non-identification result in Proposition3 to the heterogeneous cost setting in Section 4. Since discounting
+implies the restriction that costs are increasing in type, this non-identification result does not readily apply to this setting,
+though.
+Downloaded from https://academic.oup.com/restud/article/78/3/872/1569928 by Harvard University Library user on 26 June 2026
+
+
+===== PDF PAGE 27 =====
+“rdq034” — 2011/6/14 — 7:09 — page 898 — #27
+898 REVIEW OF ECONOMIC STUDIES
+FIGURE 5
+(a) The acceptance sets under discounting. (b) First-period wages for under mismatch with a type that is k away from
+the optimal match. (Parameter values: x=0∙5,β=0∙98)
+y and falls to the value of waiting at the boundary. As we illustrated above for the case of
+constant search costs, going to an infinite-horizon model even with discounting does not change
+the analysis much.
+Finally, we briefly outline that discouting can be augmented by type-dependent arrival rates
+and still be captured as a special case of type-dependent costs. One can imagine that different
+types of agents have access to trading partners at different rates. Maybe more skilled workers are
+better connected and therefore more easily find a partner. As it happens, the general case of type-
+dependent arrival rates is isomorphic to the case of type-dependent search costs that we analysed
+in Section 4. This captures the notion that different types may have more difficulty in finding a
+job, e.g. it may be harder to find a job for a high-skilled chief executive officer (CEO) than a low-
+skilled assembly line worker. To see that this is equivalent to the case of general search costs,
+observe that we can model arrival rates via a probability α(x)of entering the second period of
+our model. Then the condition is
+f(x,y)−(α(x)βw⋆(x)+α(y)βπ⋆(y))≥0,
+where as before, the equivalent cost function is c(x)=(1−α(x)β)w⋆(x).
+5.4. Entry
+The model can easily be accommodated to allow for entry of firms at a type-dependent entry
+cost (see, e.g. Shi, 2001). Assume that machines of quality y costκ(y).Clearly, as long asκ(y)
+is identical to the expected profits of a firm of type y, the firms are willing to enter exactly
+in the amounts needed to justify the distributions that we assumed in the equilibrium analy-
+sis. A sufficient condition for this to be feasible is that f(0,0)−w0 > c andw0 > c,in which
+case the expected pay-offs for all firms and workers outweigh the costs of search and the addi-
+tional element of initial entry costs leads to zero profits for all firms. Obviously, it is important
+that more productive machines are more expensive, otherwise all firms would acquire the same
+machines and the firm-type-distribution would be degenerate. While also the reverse result that
+Downloaded from https://academic.oup.com/restud/article/78/3/872/1569928 by Harvard University Library user on 26 June 2026
+
+
+===== PDF PAGE 28 =====
+“rdq034” — 2011/6/14 — 7:09 — page 899 — #28
+EECKHOUT & KIRCHER IDENTIFYING SORTING 899
+any strictly increasing entry cost schedule leads to an equilibrium can be formally proven, we
+omit the formal exposition for brevity.
+25
+5.5. Comparison with repeated static matching
+Consider the static wage determination model proposed by Abowd et al. (2004): in each match
+between a pair (x,y), the total output is divided according to a sharing rule βin which the
+worker obtainsβf(x,y). In this specification, the wage is monotonically increasing in y. When
+this is repeated, a high x worker who is matched with a lowy job may choose, at a cost, to take a
+new draw. This will lead to some sorting since those who are most mismatched are most willing
+to take a new draw. Observe here that deviations are unilateral: a worker who is matched with a
+high y does not choose to separate, but it is the highy firm that chooses to take a new draw. As a
+result, inefficient separations occur as the worker is not permitted to compensate the separating
+firm for continuing the match. The worker would be willing to accept a lower wage in order to
+continue the match. This lower wage would eventually lead to the non-monotonicity that we see
+in our setting.
+The important aspect is that wages are independent of outside options (assumed to be zero),
+which makes this model essentially static. Most labour market models do not have this feature.
+Rather, when deciding whether to stay together or to split up, the bargaining is usually about
+the surplus that the pair enjoys over and above the value that each partner can ensure himself
+by separating. When a firm has a high value from separating, then it first gets compensated
+for its high outside option and only the remaining value gets split. In such a formulation if a
+firm is nearly indifferent between searching for a more appropriate worker or staying with the
+current worker, then it is only willing to give very little additional wage to the worker (above and
+beyond his compensation for not searching further). In contrast, in the repeated static matching
+approach, such a firm would simply search for a new worker because the share it has to give
+to the current worker is too large (it separates even though staying matched would be socially
+efficient) because the wage does not reflect the continuation pay-offs.
+5.6. Directed search
+In the directed search model of Shimer (2005) with ex post screening, complementarities lead to
+sorting. The firms’ offer strategies are monotonic, in the sense that a higher worker type obtains
+higher wages from better firms. Interestingly, in that model, a non-monotonicity may appear
+on the worker side since a higher worker type may obtain a lower wage at a given firm (being
+compensated by a much higher probability of getting hired). Alternatively, if workers were to
+auction off their labour, then the equilibrium wages offered would be again non-linear in firm
+type.
+26
+25. The formal analysis does reveal some interesting points regarding differentiability. Note that a finite number of
+points where f is non-differentiable do not change our analysis in the main body. With entry, it is not difficult to show that
+if
+κ(
+y
+)
+and f are differentiable then the resulting type distribution will be continuous and differentiable in the frictionless
+case and continuous and almost everywhere differentiable in the case with search frictions. The non-differentiability may
+arise at the points where the matching sets reach the boundaries of the type space. When we re-normalizef to be able to
+work with a uniform type distribution, the normalized f retains monotonicity and continuity everywhere but may inherit
+points of non-differentiability. Since it remains almost everywhere differentiable, we can carry out our analysis as in the
+main body, only that the assignment function may have discontinuities in its slope at the points where normalized f is
+discontinuous.
+26. We are grateful to Robert Shimer for pointing this out to us. Eeckhout and Kircher (2010) show a related
+result of decreasing wages for better workers when directed search is introduced into the standard (Becker, 1973) model
+without ex post screening, but in this case, the result is restricted to the case of NAM.
+Downloaded from https://academic.oup.com/restud/article/78/3/872/1569928 by Harvard University Library user on 26 June 2026
+
+
+===== PDF PAGE 29 =====
+“rdq034” — 2011/6/14 — 7:09 — page 900 — #29
+900 REVIEW OF ECONOMIC STUDIES
+5.7. On-the-job search
+OJS is another likely candidate for identifying sorting using equilibrium mismatch. Bagger and
+Lentz (2008), Lise, Meghir and Robin (2008), and De Melo (2008) consider a sorting model
+with OJS (as in Postel-Vinay and Robin, 2002; Cahuc, Postel-Vinay and Robin, 2006). As long
+as a job is scarce, matched pairs face a trade-off between matching early and waiting for the
+appropriate types.
+27
+This arises because in nearly all existing models, a current match allows
+only the workers to search further but precludes the firms from further matches, and thus in-
+troduces an opportunity cost for inappropriate matches. Even if both sides can search such
+an opportunity cost remains present as long as arrival rates in a match are lower than for un-
+matched agents. In such cases, OJS will affect the exact nature of the equilibrium wages, but
+high-type firms will still only pay relatively low wages to low-type workers to compensate them
+for their lost continuation value without that worker. Nevertheless, the exact incorporation of OJS
+into our environment requires further research because it requires a different assessment of the
+opportunity costs of search that go beyond the analysis presented here.
+5.8. Use of additional data: the attribution problem
+Our set-up does not exploit any other data except for wages, matched partners, and possibly
+search duration. Existing data sets feature much richer data, both on observables of the work-
+ers and the firms. We note here the benefits and problems in using such data. First, for the
+workers, the additional data obviously provides an additional source to identify the type of
+the worker. Nevertheless, when the data on wages for each worker is rich enough this is not
+strictly necessary since the wages alone allow us in identifying the type of the worker. While in
+applications, the additional data through observables reduces noise through finite samples and
+measurement error, for identification in long panels, it is not strictly necessary.
+Second, observables about firm profit or output would indeed provide additional information
+that goes beyond those contained in wage data. If such data on a job by job level is available,
+it would allow us not only to identify the strength but also the sign of sorting. And while there
+are good data on firm profits, the problem is that there are no data on job profits. In multi-
+worker firms, we need to attribute the share of each worker’s contribution to the overall firm
+profits. Even in the simplest economy, we need to decide what the contribution of very different
+occupations (CEO, accountant, and secretary) is to the firm profit. Since this decomposition
+seems difficult across occupations
+28
+, we propose to focus on the economically important and
+manageable problem of identifying the strength of sorting.
+Being aware of the shortcomings of the wage data in fixed-effects estimates, some contribu-
+tions have used output data to assess the direction of sorting, as mentioned in the introduction.
+For example, Mendes, van den Berg, Lindeboom (2007) use productivity data instead of wage
+data. They choose average firm-specific productivity to attribute output from the firm to an indi-
+vidual worker. They find that average firm-specific productivity and worker skill exhibit strong
+positive sorting.
+27. In Bagger and Lentz (2008) jobs are not scarce since firms can open as many jobs as they want. The sorting
+effect in their model derives from differences in the intensity with which workers search for a new job.
+28. In a simple matching model of the firm, Eeckhout and Pinheiro (2008) show that only under very specific
+conditions, namely, homotheticity in the production technology, wage ratios of different skills within a firm will be the
+same as those across firms. In all other cases, the wage share of a given skill is different in different firms, and as a result
+simply attributing profits to jobs proportional to wages will be biased.
+Downloaded from https://academic.oup.com/restud/article/78/3/872/1569928 by Harvard University Library user on 26 June 2026
+
+
+===== PDF PAGE 30 =====
+“rdq034” — 2011/6/14 — 7:09 — page 901 — #30
+EECKHOUT & KIRCHER IDENTIFYING SORTING 901
+5.9. Measurement error and wage profiles
+Following most of the literature on identification, our insights are based on the assumption of
+large panels. In such a setting, measurement error does not affect indicators such as average
+wages. Nevertheless, it will inflate statistics such as the maximum and deflate statistics such as
+the minimum wage used
+w. Therefore, it might be more prudent to use more conservative statis-
+tics such as the 95% interval of wages for a given type of agent. The alternative identification
+procedure outlined in equation ( 30) can be applied with sufficiently many data observations if
+we use the average wage in a very small neighbourhood of(x,ˆy)and the average wage in a very
+small neighbourhood of (x
+′
+,ˆy
+′
+), rather than each actual wage (and to the extent that the errors
+have mean zero).
+29
+In their approach to estimation, Gautier and Teulings (2006) propose addi-
+tional ways of incorporating measurement error and finite samples that might also be applicable
+to our setting. Other complications that our simplified exposition does not take care of concerns
+wage increases on the job, e.g. because of human capital accumulation, because of backloaded
+incentives in wage–tenure contracts, or because of outside offers that bid up the wages. As long
+as wages increase deterministically, the costs of search can still be backed out by the difference
+between the highest present value of wages in a spell of employment and the lowest present
+value. Issues of stochastic evolvement of wages and of short panels for workers require more
+careful assessment that goes beyond the current setup.
+5.10. More general technologies
+Above, we have shown that the strength of sorting can be identified. We have explored this in a
+setting where higher types produce more for any given type on the other side, and where match-
+ing bands are monotone which gives some order on the firms. Yet the fact that we can achieve
+identification without knowledge of the sign of sorting provides a hint that the order of firms
+in terms of productivity is not crucial for the identification strategy. It suggests that our analysis
+extends to an even broader class of production functions that do not permit a clear order on firms.
+While we do not have a general theorem on the breath of possible production functions for which
+of our method delivers identification, we illustrate its applicability in a set-up without any clear
+order on the firms. Suppose output is maximized when “similar” agents match. In such a setting,
+there is no ranking of better jobs. Nevertheless, we can still identify how strong the comple-
+mentarity is between agents with a slight adaptation our approach. Think of workers and firms
+as being located on a circle with circumference 1. Two types x,y∈ [0,1], then have a distance
+d(x,y)=min
+k∈{−1,0,1}
+|x−y+k|, and the output they produce is a decreasing function of their
+distance given by f(x,y)=1−αd(x,y)
+2
+for some parameter α>0 (this production function
+is studied by Gautier, Teulings and van Vuuren (2010), who additionally analyse OJS). In this
+set-up, types 0 and 1 are neighbours and output of their match is high. Under the assumption of
+common constant search costsc, equation (27) implies that the difference between the maximum
+wage that a worker obtains and the minimum wage divided by his bargaining share recovers c.
+One way to then apply a version of equation ( 25) is to note that a worker who matches with a
+fraction z of the firms matches only with firms up to a distancez/2 away, and so
+y(x)=x−z/2.
+Given this distance of z/2 between the worker type and the lowest firm type that he matches
+with, equation ( 25) immediately allows us to recover the magnitude of the cross-partial. The
+main point of this argument is to show that the comparison of the set of firms an agent is willing
+29. As long as the distance between
+(
+x
+,ˆ
+y
+)
+and
+(
+x
+′
+,ˆ
+y
+′
+)
+is not completely negligible such an approach is indeed
+feasible using modern data sets because of the sheer amount of available data,e.g. in the Danish Integrated Database for
+labour market research that essentially covers the whole population of Denmark.
+Downloaded from https://academic.oup.com/restud/article/78/3/872/1569928 by Harvard University Library user on 26 June 2026
+
+
+===== PDF PAGE 31 =====
+“rdq034” — 2011/6/14 — 7:09 — page 902 — #31
+902 REVIEW OF ECONOMIC STUDIES
+to match with against the costs from search is informative about the importance of sorting even
+in environments with other non-monotone production technologies.
+6. CONCLUSION
+In this paper, we pursue two goals. First, we use the well-known model of sorting by Becker
+(1973) to gain insights into the wage setting process in a competitive environment, which serves
+as a natural benchmark. We extend that model in the smallest possible way to allow for equilib-
+rium mismatch while retaining the basic idea underlying the assortative matching model. This
+allows us to provide analytical expressions for the mismatched wages in the model, to charac-
+terize the property that equilibrium wages are non-monotonic in firm type, and to provide an
+explicit version of a fixed-effects method used in the empirical literature. We show that the latter
+is not well suited to identify the sign nor the strength of sorting. Identification of the sign of
+sorting is in general impossible because firms pay wages based on the productivity gain from
+employing a higher-type worker, not because they themselves are productive. The fixed-effects
+approach is not able to identify the strength of sorting either because even under positive sorting
+the wages are non-monotone in firm type. This non-monotonicity is at odds with the basic fixed-
+effects identifying assumption, and we show with simple examples that this precludes even a
+qualitative assessment of sorting because the firm fixed effect fails to correlate at all with the
+type of the firms.
+Second, we propose to abandon the attempt to identify from wage data the sign of sorting.
+The mere fact that wages are determined mainly by the need of different type firms for having
+a better worker (which is based on the cross-partial and not the first derivative) makes such
+identification difficult. Under submodularity, it is the low productivity firms that especially need
+good workers to increase their (in terms of levels) meager profits, while under supermodularity,
+it is the productive firms that need skilled workers most. In both cases, the firms that need
+the productive workers most have an incentive to pay high wages, which makes identification
+without profit (per job) data difficult. Yet, in economic terms, the sign of sorting may be less
+important than the gain that is achieved by sorting workers into the “right” job. We show that
+information about this gain can be identified from wage data. We propose a specific method for
+backing out this strength along the equilibrium path. The identification comes from determining
+some notion of the size of the set of firms with which a worker matches. If a worker is only
+willing to match with a small fraction of firms, for a given level of frictions (which can also
+be identified from the data), the complementarities must be large. Similarly, when a worker is
+willing to match with many firm types, the complementarities must be weak. This gives a well-
+defined notion of the dollar value of the gain from sorting in the market.
+APPENDIX
+Proof of Proposition 1
+Proof. From equation ( 5), we obtain the wage schedule. When generated by an underlying production process
+that is supermodular f
++
+this is
+w
+⋆,+
+(
+x
+)=
+∫
+x
+0
+f
++
+x
+(˜
+x
+,˜
+x
+)
+d
+˜
+x
++w
++
+0
+,
+and for a submodular process f
+−
+, it is
+w
+⋆,−
+(
+x
+)=
+∫
+x
+0
+f
+−
+x
+(˜
+x
+,
+1
+−˜
+x
+)
+d
+˜
+x
++w
+−
+0
+.
+Downloaded from https://academic.oup.com/restud/article/78/3/872/1569928 by Harvard University Library user on 26 June 2026
+
+
+===== PDF PAGE 32 =====
+“rdq034” — 2011/6/14 — 7:09 — page 903 — #32
+EECKHOUT & KIRCHER IDENTIFYING SORTING 903
+Observe that since
+w
+⋆,+
+(
+0
+)=w
++
+0
+and
+w
+⋆,−
+(
+0
+)=w
+−
+0
+, both wage schedules can be identical when the free bargaining
+parameter satisfies
+w
++
+0
+=w
+−
+0
+=w
+0
+. Then we obtain
+w
+⋆,+
+(
+x
+)=w
+⋆,−
+(
+x
+)
+for all x if f
++x
+(˜
+x
+,˜
+x
+)=
+f
+−x
+(˜
+x
+,
+1
+−˜
+x
+)
+. For any
+f
++
+(
+x
+,
+y
+)
+on [0
+,
+1]
+2
+, we can define f
+−
+(
+x
+,
+y
+)=
+f
++
+(
+x
+,
+1
+−
+y
+)
+on [0
+,
+1]
+2
+. The only restriction is that this function may not
+be increasing in y, so we may need to “augment” the function to ensure that f
+y
+is positive. If f
+x
+and f
+y
+are bounded,
+it is sufficient to add a term
+τ∙
+y, where
+τ >
+0 is large enough to ensure f
+y
+>
+0 everywhere. If f
+y
+is not bounded and
+negative, we need to add a function g
+(
+y
+)
+that increases faster than the decrease of f
++
+(
+x
+,
+1
+−
+y
+)
+in y.
+∥
+A
+.
+1
+.
+Fixed-effect decomposition in equation
+(
+14
+)
+Our residual is given by
+ε
+xy
+=w(
+x
+,
+y
+)−δ(
+x
+)−ψ(
+y
+)
+.
+For a given firm y
+,
+the requirement that the fixed effect is unbiased requires that the average residual across the
+workers it matches within the first period is zero. This means that
+∫
+A(y)
+ε
+xy
+d
+)Gamma1(
+x
+|
+y
+)=
+∫
+A(y)
+(
+w(
+x
+,
+y
+)−δ(
+x
+)−
+∫
+A(y)
+[
+w(˜
+x
+,
+y
+)−δ(˜
+x
+)
+]
+d
+)Gamma1(˜
+x
+|
+y
+)
+)
+d
+)Gamma1(
+x
+|
+y
+)
+=
+∫
+A(y)
+[
+w(
+x
+,
+y
+)−δ(
+x
+)
+]
+d
+)Gamma1(
+x
+|
+y
+)−
+∫
+A(y)
+[
+w(˜
+x
+,
+y
+)−δ(˜
+x
+)
+]
+d
+)Gamma1(˜
+x
+|
+y
+)=
+0, (A.1)
+where in the second line, the double integral disappears because the interior integral is constant with respect to the
+argument of integration of the outer integral and the
+∫
+A(y)
+d
+)Gamma1(
+x
+|
+y
+)=
+1 since
+)Gamma1(
+x
+|
+y
+)
+is a cumulative distribution
+function on A
+(
+y
+).
+Similarly, for a given worker x, the average residual is zero across the firms that he matches with in
+the first period since
+∫
+B(x)
+ε
+xy
+d
+ϒ(
+y
+|
+x
+)=
+∫
+B(x)
+(
+w(
+x
+,
+y
+)−
+∫
+B(x)
+[
+w(
+x
+,˜
+y
+)−ψ(˜
+y
+)
+]
+d
+ϒ(˜
+y
+|
+x
+)−ψ(
+y
+)
+)
+d
+ϒ(
+y
+|
+x
+)
+=
+∫
+B(x)
+[
+w(
+x
+,
+y
+)−ψ(
+y
+)
+]
+d
+ϒ(
+y
+|
+x
+)−
+∫
+B(x)
+[
+w(
+x
+,˜
+y
+)−ψ(˜
+y
+)
+]
+d
+ϒ(˜
+y
+|
+x
+)=
+0. (A.2)
+It is obvious that all transformations remain true if we use log-wages, as long as we define
+w
+av
+(
+x
+)
+as the average over
+the log-wages.
+Finally, observe that our analysis is not affected by the fact that we concentrate on first-period wages. Assume that
+we look at wages across all matches. Equation
+(
+14
+)
+remains identical, but we use more data (i.e. also the second-period
+matches) to obtain the fixed effects. To derive the fixed effects in this case, let
+a
+(
+y
+)=
+inf A
+(
+y
+),
+b
+(
+x
+)=
+inf B
+(
+x
+),ˉ
+a
+(
+y
+)=
+sup A
+(
+y
+)
+and
+ˉ
+b
+(
+x
+)=
+sup B
+(
+x
+)
+denote the boundaries of the acceptance sets for the firms and workers. Worker x and
+firm y matches with probability
+ϒ(ˉ
+b
+(
+x
+))−ϒ(
+b
+(
+x
+))
+and
+)Gamma1(ˉ
+a
+(
+y
+))−)Gamma1(
+a
+(
+y
+))
+in the first period, and with complementary
+probability, they match in the second period.
+In this case, the overall fixed effects are
+ˆδ(
+x
+)=
+[
+ϒ(ˉ
+b
+(
+x
+))−ϒ(
+b
+(
+x
+))
+]
+∫
+B(x)
+[
+w(
+x
+,
+y
+)−ψ(
+y
+)
+]d
+ϒ(
+y
+|
+x
+)
++
+[1
+−ϒ(ˉ
+b
+(
+x
+))+ϒ(
+b
+(
+x
+))
+][
+w(
+x
+,μ(
+x
+))−ψ(μ(
+x
+))
+], (A.3)
+ˆψ(
+y
+)=
+[
+)Gamma1(ˉ
+a
+(
+y
+))−)Gamma1(
+a
+(
+y
+))
+]
+∫
+A(y)
+[
+w(
+x
+,
+y
+)−δ(
+x
+)
+]d
+)Gamma1(
+x
+|
+y
+)
++
+[1
+−)Gamma1(ˉ
+a
+(
+y
+))+)Gamma1(
+a
+(
+y
+))
+][
+w(μ
+−1
+(
+y
+),
+y
+)−δ(μ
+−1
+(
+y
+))
+]. (A.4)
+Due to our symmetry assumptions on
+ϒ
+and
+)Gamma1
+, substituting equation (A.3) into equation (A.4) yields exactly equation
+(17) in the main text that characterizes the firm fixed effect. Therefore, the firm fixed effect is not changed. The intuitive
+reason is that the firm fixed effect is governed by theadditional wage beyond the workers average (and in second period
+matches this is exactly zero), and the same conclusions that we obtain for the first-period wages carry over to the entire
+model.
+A. 2
+.
+Derivation of equation
+(
+20
+)
+Observe that both
+w(
+y
++
+K
+,
+y
+)
+and
+w(
+y
+−
+K
+,
+y
+)
+are wages for workers that are exactly indifferent between matching now
+and not matching. This indifference implies
+w(
+y
++
+K
+,
+y
+)=
+h
+(
+y
++
+K
+)+
+α(y+K)
+2
+2
+−
+c and
+w(
+y
+−
+K
+,
+y
+)=
+h
+(
+y
+−
+K
+)+
+α(y−K)
+2
+2
+−
+c
+.
+Since the average wage that a worker gets when matching in the first stage is better than not matching,
+Downloaded from https://academic.oup.com/restud/article/78/3/872/1569928 by Harvard University Library user on 26 June 2026
+
+
+===== PDF PAGE 33 =====
+“rdq034” — 2011/6/14 — 7:09 — page 904 — #33
+904 REVIEW OF ECONOMIC STUDIES
+the difference between these wages and the average wage is negative. Using these expressions and the fact that we can
+write the average wage as
+w
+av
+(
+x
+)=
+∫
+x+K
+x−K
+w(
+x
+,
+y
+)
+d
+ϒ(
+y
+|
+x
+)=
+h
+(
+x
+)+
+α
+2 x
+2
+−
+α
+4
+∫
+K
+−K
+k
+2
+υ(
+x
++
+k
+|
+x
+)
+dk (A.5)
+yields
+)Psi1
+′
+2
+(
+y
+)=−
+[
+c
+−
+α
+4
+∫
+K
+−K
+k
+2
+υ(
+y
++
+K
++
+k
+|
+y
++
+K
+)
+dk
+]
+γ(
+y
++
+K
+|
+y
+)
++
+[
+c
+−
+α
+4
+∫
+K
+−K
+k
+2
+υ(
+y
+−
+K
++
+k
+|
+y
+−
+K
+)
+dk
+]
+γ(
+y
+−
+K
+|
+y
+)
+. (A.6)
+This effect depends on y only through the effect on the distribution. Therefore, again this effect is zero under a uniform
+distribution
+.
+For other distributions, the effect is ambiguous because it relies on the density at the endpoints as well as
+on the integral over the density. In the special case where the derivative of the conditional density
+∂υ(
+y
+|
+x
+)/∂
+y
+=
+r is
+constant the density is linear, and so are the conditional densities. In such a case, symmetry around zero of k
+2
+ensures
+that
+−
+1
+4
+∫
+K
+−K
+k
+2
+υ(
+Y
++
+k
+|
+Y
+)
+dk is independent of Y and the terms in square brackets are identical, which directly leads
+to the inequalities in equation (20).
+A. 3. Derivation of equation
+(
+23
+)
+First, consider the case of PAM. The loss is given by
+f
+(
+x
+,
+y
+)−
+∫
+x
+0
+f
+x
+(
+x
+′
+,
+x
+′
+)
+dx
+′
+−
+∫
+y
+0
+f
+y
+(
+y
+′
+,
+y
+′
+)
+dy
+′
+−
+f
+(
+0
+,
+0
+)
+=
+∫
+y
+0
+f
+y
+(
+x
+,
+y
+′
+)
+dy
+′
++
+f
+(
+x
+,
+0
+)−
+∫
+x
+0
+f
+x
+(
+x
+′
+,
+x
+′
+)
+dx
+′
+−
+∫
+y
+0
+f
+y
+(
+y
+′
+,
+y
+′
+)
+dy
+′
+−
+f
+(
+0
+,
+0
+)
+=
+∫
+y
+0
+∫
+x
+y
+′
+f
+xy
+(
+x
+′
+,
+y
+′
+)
+dx
+′
+dy
+′
++
+f
+(
+x
+,
+0
+)−
+∫
+x
+0
+f
+x
+(
+x
+′
+,
+x
+′
+)
+dx
+′
+−
+f
+(
+0
+,
+0
+)
+=
+∫
+y
+0
+∫
+x
+y
+′
+f
+xy
+(
+x
+′
+,
+y
+′
+)
+dx
+′
+dy
+′
+−
+∫
+x
+0
+∫
+x
+′
+0
+f
+xy
+(
+x
+′
+,
+y
+′
+)
+dy
+′
+dx
+′
+=
+∫
+y
+0
+∫
+x
+y
+′
+f
+xy
+(
+x
+′
+,
+y
+′
+)
+dx
+′
+dy
+′
+−
+∫
+x
+0
+∫
+x
+y
+′
+f
+xy
+(
+x
+′
+,
+y
+′
+)
+dx
+′
+dy
+′
+=−
+∫
+x
+y
+∫
+x
+y
+′
+f
+xy
+(
+x
+′
+,
+y
+′
+)
+dx
+′
+dy
+′
+. (A.7)
+Under PAM
+ˆ
+y
+=
+y and
+ˆ
+f
+(
+x
+,
+y
+)=
+f
+(
+x
+,
+y
+),
+and so equation (A.7) yields equation (23).
+Now consider the case of NAM. For this case, the following decomposition of the production function is useful:
+f
+(
+0
+,
+1
+)=
+∫
+1
+0
+f
+y
+(
+1
+−
+y
+′
+,
+y
+′
+)
+dy
+′
++
+f
+(
+0
+,
+0
+).
+It follows from the fact that the right-hand side is the sum of the matched pairs
+x
+=
+0 and y
+=
+1 in the frictionless assignment under NAM and equals exactly their joint output on the left-hand side
+(see equations (3), (5), and (6)). Then the loss from mismatch can be derived as follows, where we use the equality that
+we just derived in line 2, line 3 follows from
+ˆ
+f
+(
+x
+,
+1
+−
+y
+)=
+f
+(
+x
+,
+y
+)
+and
+ˆ
+y
+=
+1
+−
+y
+,
+and the last line follows from similar
+steps that led to equation (A.7):
+f
+(
+x
+,
+y
+)−
+∫
+x
+0
+f
+x
+(
+x
+′
+,
+1
+−
+x
+′
+)
+dx
+′
+−
+∫
+y
+0
+f
+y
+(
+1
+−
+y
+′
+,
+y
+′
+)
+dy
+′
+−
+f
+(
+0
+,
+0
+)
+=
+f
+(
+x
+,
+y
+)−
+∫
+x
+0
+f
+x
+(
+x
+′
+,
+1
+−
+x
+′
+)
+dx
+′
++
+∫
+1
+y
+f
+y
+(
+1
+−
+y
+′
+,
+y
+′
+)
+dy
+′
+−
+f
+(
+0
+,
+1
+)
+=ˆ
+f
+(
+x
+,ˆ
+y
+)−
+∫
+x
+0
+ˆ
+f
+x
+(
+x
+′
+,
+x
+′
+)
+dx
+′
+−
+∫
+1
+1−ˆy
+ˆ
+f
+y
+(
+1
+−
+y
+′
+,
+1
+−
+y
+′
+)
+dy
+′
+−ˆ
+f
+(
+0
+,
+0
+)
+=ˆ
+f
+(
+x
+,ˆ
+y
+)−
+∫
+x
+0
+ˆ
+f
+x
+(
+x
+′
+,
+x
+′
+)
+dx
+′
+−
+∫
+ˆy
+0
+ˆ
+f
+y
+(
+y
+′
+,
+y
+′
+)
+dy
+′
+−ˆ
+f
+(
+0
+,
+0
+)
+=−
+∫
+x
+ˆy
+∫
+x
+y
+′
+ˆ
+f
+xy
+(
+x
+′
+,
+y
+′
+)
+dx
+′
+dy
+′
+.
+Downloaded from https://academic.oup.com/restud/article/78/3/872/1569928 by Harvard University Library user on 26 June 2026
+
+
+===== PDF PAGE 34 =====
+“rdq034” — 2011/6/14 — 7:09 — page 905 — #34
+EECKHOUT & KIRCHER IDENTIFYING SORTING 905
+Acknowledgements. First draft: July, 2008. We thank Michèle Belot, Hector Chade, Melvyn Coles, Jason Faber-
+man, John Haltiwanger, Rasmus Lentz, Jeremy Lise, Rafael Lopes de Melo, Costas Meghir, Giuseppe Moscarini, Jean-
+Marc Robin, Robert Shimer, Ivan Werning, the Editor, and three referees for insightful comments. We also benefitted
+from the feedback of several seminar audiences. Eeckhout gratefully acknowledges support by the European Research
+Council, Grant 208068, and Kircher by the National Science Foundation, grant SES-0752076.
+REFERENCES
+ABOWD, J. M., KRAMARZ, F., LENGERMANN, P. and PEREZ-DUARTE, S. (2004), “Are Good Workers Em-
+ployed at Good Firms? A Test of a Simple Assortative Matching Model for France and the United States” (Mimeo,
+Cornell).
+ABOWD, J. M., KRAMARZ, F. and MARGOLIS, D. N. (1999), “High Wage Workers and High Wage Firms”,
+Econometrica,
+67
+, 251–333.
+ACEMOGLU, D. and ROBERT, S. (1999), “Efficient Unemployment Insurance”, Journal of Political Economy,
+107
+,
+893–928.
+ANDERSON, A. and SMITH, L. (2010), “Dynamic Matching and Evolving Reputations”,Review of Economic Studies,
+77
+, 3–29.
+ATAKAN, A. (2006), “Assortative Matching with Explicit Search Costs”,Econometrica,
+74
+, 667–680.
+BAGGER, J. and LENTZ, R. (2008), “An Empirical Model of Wage Dispersion with Sorting” (Mimeo, University of
+Wisconsin).
+BECKER, G. S. (1973), “A Theory of Marriage: Part I”, Journal of Political Economy,
+81
+, 813–846.
+BENDER, S. and VON W ACHTER, T. (2006), “In the Right Place at the Wrong Time: The Role of Firms and Luck in
+Young Workers’ Careers”,American Economic Review,
+96
+, 1679–1705.
+CABRALES, A., CALVÓ-ARMENGOL, A. and PA VONI, N. (2008), “Social Preferences, Skill Segregation, and Wage
+Dynamics”, Review of Economic Studies,
+75
+, 65–98.
+CAHUC, P., POSTEL-VINAY , F. and ROBIN, J.-M. (2006), “Wage Bargaining with On-the-Job Search: Theory and
+Evidence”, Econometrica,
+74
+, 323–364.
+CHADE, H. (2001), “Two-Sided Search and Perfect Segregation with Fixed Search Costs”, Mathematical Social
+Sciences,
+42
+, 31–51.
+COMBES, P.-P., DURANTON, G. and GOBILLON, L. (2008), “Spatial Wage Disparities: Sorting Matters!”, Journal
+of Urban Economics,
+63
+, 723–742.
+DE MELO, R. L. (2008) Sorting in the Labor Market: Theory and Measurement (Mimeo, Yale University).
+DUPUY , A. (2010), “Sorting on Skills and Preferences: Tinbergen Meets Sattinger” (Mimeo, Maastricht University).
+EECKHOUT, J. (2007), “Local Supermodularity and Unique Assortative Matching” (Mimeo, University of
+Pennsylvania).
+EECKHOUT, J. and KIRCHER, P. (2010), “Sorting and Decentralized Price Competition”,Econometrica,
+78
+, 539–574.
+EECKHOUT, J. and PINHEIRO, R. (2008), “Diverse Organizations and the Competition for Talent” (Mimeo, University
+of Pennsylvania).
+EKELAND, I., HECKMAN, J. J. and NESHEIM, L. (2002), “Identifying Hedonic Models”, American Economic
+Review,
+92
+, 304–309.
+EKELAND, I., HECKMAN, J. J. and NESHEIM, L. (2004), “Identification and Estimation of Hedonic Models”,Journal
+of Political Economy,
+112
+, S60–S109.
+GAUTIER, P. A. and TEULINGS, C. N. (2004), “The Right Man for the Job”, Review of Economic Studies ,
+71
+,
+553–580.
+GAUTIER, P. A. and TEULINGS, C. N. (2006), “How Large are Search Frictions”,Journal of the European Economic
+Association,
+4
+, 1193–1225.
+GAUTIER, P. A., TEULINGS, C. N. and V AN VUUREN, A. (2010), “On the Job Search, Mismatch and Efficiency”,
+Review of Economic Studies,
+77
+, 245–272.
+HALTIW ANGER, J. C., LANE, J. I. and SPLETZER J. R. (1999), “Productivity Differences Across Employers: The
+Roles of Employer Size, Age, and Human Capital”, American Economic Review,
+89
+, 94–98.
+KOOPMANS, T. C. and BECKMANN, M. (1957), “Assignment Problems and the Location of Economic Activities”,
+Econometrica,
+25
+, 53–76.
+LISE, J., MEGHIR, C. and ROBIN, J.-M. (2008), “Matching, Sorting and Wages ” (Mimeo, University College London).
+MENDES, R., V AN DEN BERG, G., LINDEBOOM, M. (2007), “An Empirical Assessment of Assortative Matching in
+the Labor Market” (Mimeo, Uppsala).
+POSTEL-VINAY , F. and ROBIN, J.-M. (2002), “Equilibrium Wage Dispersion with Heterogeneous Workers and Firms”,
+Econometrica,
+70
+, 1295–1350.
+POSTEL-VINAY , F. and ROBIN, J.-M. (2006), “Microeconometric Search-Matching Models and Matched Employer-
+Employee Data”, in Blundell, R., Newey, W. and Persson, T. (eds)Advances in Economics and Econometrics, Theory
+and Applications, Ninth World Congress, V ol. 2 (Cambridge: Cambridge University Press).
+SATTINGER, M. (1975), “Comparative Advantage and the Distributions of Earnings and Abilities”,Econometrica,
+43
+,
+455–468.
+SHAPLEY , L. S. and SHUBIK, M. (1971), “The Assignment Game I: The Core”,International Journal of Game Theory,
+1
+, 111–130.
+Downloaded from https://academic.oup.com/restud/article/78/3/872/1569928 by Harvard University Library user on 26 June 2026
+
+
+===== PDF PAGE 35 =====
+“rdq034” — 2011/6/14 — 7:09 — page 906 — #35
+906 REVIEW OF ECONOMIC STUDIES
+SHI, S. (2001), “Frictional Assignment. 1. Efficiency”, Journal of Economic Theory,
+98
+, 232–260.
+SHIMER, R. (2005), “The Assignment of Workers to Jobs in an Economy with Coordination Frictions”, Journal
+of Political Economy,
+113
+, 996–1025.
+SHIMER, R. and SMITH, L. (2000), “Assortative Matching and Search”, Econometrica,
+68
+, 343–369.
+V AN DEN BERG, G. J. and V AN VUUREN, A. (2002), “Using Firm Data to Assess the Performance of Equilibrium
+Search Models of the Labor Market”, Annales d’économie et de Statistique,
+67/68
+, 227–256.
+Downloaded from https://academic.oup.com/restud/article/78/3/872/1569928 by Harvard University Library user on 26 June 2026

@@ -1,0 +1,117 @@
+
+--- PAGE 1 ---
+Remaining Issues in the June 15 Draft
+June 15
+Issues still present
+Exposure sufficiency, conditional independence, and identification remain blurred
+(pp. 3–4, 11, 22, 64–67)
+The draft now states a strong potential-outcome sufficiency condition and adds uniqueness/minimality
+language. But it still sometimes compresses three different claims:
+•validity of residualized moments under a sufficient exposure map;
+•conditional independence under the design law,Y i ⊥W|G i;
+•point identification by the finite dictionary used empirically.
+Lemma C.2 characterizes conditional independence, not automatically the pointwise restriction
+Yi(w) = eYi(g(w)) for every assignment. The introduction also still leans too hard on “randomization
+alone.” Randomization supplies variation; the null is exposure sufficiency, and inference also uses
+identification, dependence, and regularity.
+One fix that AI gave was to state the chain explicitly: Hypothesis 2.5 implies conditional inde-
+pendence, which implies moment validity. Lemma C.2 gives equivalence between the full product-
+moment class and conditional independence under the design law. Finite dictionaries identify
+only under finite-dictionary uniqueness or minimality assumptions. Replace “randomization alone”
+language with a statement that randomization is the source of variation given the maintained
+exposure-sufficiency null.
+Hard-ring continuous Wald inference remains only conditionally justified (pp.
+17, 28–30, 49–51, 56–57, 82–85; Figure 1 on p. 29)
+Problem.The draft now has a shell-regularity ULLN for rings and acknowledges that sample
+ring criteria are step functions. But the Muralidharan application still reports continuous-radius
+Wald intervals from a 0.1 km grid. This requires more than a fine grid: it needs a differentiable
+population moment map, local stochastic equicontinuity, and the projected estimating equation.
+Figure 1 also shows irregular objective shapes, so the Wald intervals may look more precise than
+the theory warrants.
+Could solve by choosing one interpretation. If the exercise is continuous-radius inference, verify
+the shell smoothness, derivative, equicontinuity, and projected-equation conditions for the applica-
+tion. If it is finite-grid/model-selection inference, report support sets, smallest-nonrejected radii,
+or profile confidence sets rather than scalar Wald intervals.
+Minimal-sufficiency selection still equates zero weighted criterion with zero full
+moment (pp. 58, 62–63)
+Problem.Lemma B.20 defines the sufficient set byQ p(ϑ) = 0, whereQ p is based onµ(ϑ, ρ) ′Λµ(ϑ, ρ)
+and Λ is only positive semidefinite. The proof then saysQ p(ϑ) = 0 impliesµ(ϑ, ρ 0(ϑ)) = 0. That
+1
+
+--- PAGE 2 ---
+implication is false if Λ is singular. It only impliesµlies in the null space of Λ.
+Fix.Either assume Λ≻0 for the minimal-sufficiency selection result, defineV 0 using full
+moment validityµ(ϑ, ho) = 0, or consistently call the target weighted sufficiency, Λ1/2µ= 0, rather
+than full exposure sufficiency.
+Theorem D.2 still skips the root-Nabsorption step (pp. 80–81)
+Problem.The proof uses
+Φ(ζ) =A(ζ−ζ 0) +r(ζ),∥r(ζ)∥=o(∥ζ−ζ 0∥),
+and then treats √Nnr(bζn) aso p(1). Consistency alone gives only
+p
+Nnr(bζn) =o p{
+p
+Nn∥bζn −ζ 0∥}.
+The proof must first derive √Nn∥bζn −ζ 0∥=O p(1).
+Apply Lemma B.12 directly to the stacked map, or add the standard absorption argument:
+use nonsingularity ofAto lower-bound∥A( bζn −ζ 0)∥, absorb theo p{√Nn∥bζn −ζ 0∥}remainder,
+obtain root-Nconsistency, and only then discard √Nnr(bζn). I think we talking about it already
+but thought it was still worth flagging.
+Resolved or not relevant anymore
+VC uniform LLN and ring VC complexity.
+The old VC route for rings was removed. Rings now use shell regularity, and smooth kernels use
+Lipschitz primitives.
+Signed third-moment condition.
+Not counted as a remaining problem. The condition is imported from the cited affinity-set CLT;
+without checking that theorem, the objection is not independently valid.
+Off-true moments for Hilbert-space completion elements.
+Resolved. The draft now says off-θpaths and just-identified estimators are used only for span
+directions, whileGis extended toHby continuity.
+Nonzero-information condition for Theorem C.11.
+Resolved. Assumption C.8 now explicitly requires nonzero first-order information, equivalently
+∥η⋆∥Ω >0.
+Finite-nversus limiting derivatives.
+Resolved. Footnote 15 clarifies thatG M is the restriction of the limiting derivative functional and
+states the interchange condition if finite-nderivatives are used.
+Growing-sieve CLT not stated.
+Resolved as a formal proof issue. Assumption C.15(S3) now explicitly assumes the changing-
+direction CLT; the remaining issue is that the assumption is high-level.
+Random envelope bound in the old LLN proof.
+Resolved. The new proofs use bounded moment contributions and trace/covariance bounds.
+Conditional expectation as anL 2 projection.
+Resolved for Appendix C. Lemma C.5 invokes theL 2 projection property only in the square-
+integrable setting.
+2
+
+--- PAGE 3 ---
+Contradictory simulation parameterM= 6versusM= 60.
+Resolved. The simulation tables now consistently useM= 60 markets.
+Gravity-kernel inference under rejected specification.
+Substantially resolved. The appendix now interprets estimates as minimum-distance projections
+within a rejected one-parameter model.
+Simulation selector as smallest sufficient radius.
+Resolved. The simulation appendix now describesbr design as a criterion minimizer, not necessarily
+the smallest sufficient radius.
+Simulation criterion uses DGP-informed instruments.
+Resolved. The appendix now states that the design criterion includes local and ambient DGP
+channels.
+Egger support diagnostic versus raw J-test.
+Mostly resolved. The appendix distinguishes the support p-value from the raw overidentification J
+statistic, although figure labels should remain clear.
+Ambiguous 20 km support.
+Resolved as a notation issue. Appendix E.1 now says the candidate grid is 0.1–30 km and that 20
+km refers to instrument-band support.
+Gravity-kernel notation and same-mandal exclusion.
+Resolved. The formula now uses village centroids and excludes same-mandal neighbors.
+Post-estimation J degrees of freedom.
+Resolved. The appendix now uses the rank minus parameter-dimension convention.
+Small proof formalizations.
+The triangle-inequality step, fixed-qtrace inequality, and epsilon-net probability argument are not
+major remaining issues. The new LLN proofs already use direct trace and net arguments where
+needed.
+Variance identification objection in Remark 3.6.
+Not treated as a standalone remaining issue. The real unresolved part is the affinity/HAC verifi-
+cation listed above.
+Exposure-map domain notation.
+Mostly resolved. The draft now defines general assignments and immediately introduces unit-
+specificg(W;X i, θ) notation.
+3

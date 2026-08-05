@@ -1,0 +1,3611 @@
+
+
+===== PDF PAGE 1 =====
+
+∗
+High Wage Workers Work for High Wage Firms
+Katar´ına Boroviˇckov´a Robert Shimer
+New York University University of Chicago
+February 13, 2020
+Abstract
+We propose a new measure of the correlation between the types of matched workers
+and firms and show that this captures sorting in a variety of structural models. We
+also propose an estimator of the correlation and prove that the estimator is consistent
+when the number of workers and firms grows to infinity even if each worker only
+has a small number of jobs and each firm only employs a small number of workers.
+Model simulations also confirm that our estimator is accurate in small data sets. Using
+administrativedatafromAustria, wefindthatthecorrelationbetweenworkerandfirm
+types lies between 0.4 and 0.6. In contrast, the Abowd, Kramarz, and Margolis (1999)
+fixed effects estimator suggests a near-zero correlation in our data set. This reflects a
+combination of biases in the AKM correlation estimator and limitations of the AKM
+correlation as a measure of sorting.
+∗We are grateful for comments from John Abowd, Fernando Alvarez, St´ephane Bonhomme, Jaroslav
+Boroviˇcka,ThibautLamadon,RasmusLentz,IlseLindenlaub,ElenaManresa,MagneMogstad,DerekNeal,
+MartinRotemberg,andChristopherTaber,aswellasparticipantsinvariousseminars. Anyremainingerrors
+are our own. This material is based in part on work supported by the National Science Foundation under
+grant numbers SES-1559225 and SES-1559459.
+
+===== PDF PAGE 2 =====
+
+1 Introduction
+There is sorting everywhere in the economy. Wealthier, more educated, more attractive
+men on average marry wealthier, more educated, more attractive women (Becker, 1973).
+Higherincomehouseholdsresideindistinctneighborhoodsandsendtheirchildrentodifferent
+schools than low income households (Tiebout, 1956). Elite universities enroll the most
+qualified undergraduates (Solomon, 1975). The one place where it has been hard to find
+evidenceofsortingisinthelabormarket. Afairsummaryofanextensiveliteraturefollowing
+Abowd, Kramarz, and Margolis (1999) (hereafter AKM) is that the correlation between the
+fixed characteristics of workers and their employers is close to zero and possibly negative.1
+This is often interpreted as saying that there is no evidence that high wage workers work
+for high wage firms and is used to justify theoretical models in which there is no sorting
+between workers and firms (Postel-Vinay and Robin, 2002; Christensen, Lentz, Mortensen,
+Neumann, and Werwatz, 2005).
+This paper proposes a new measure of sorting and revisits this conclusion through the
+lens of that measure. Our measure of sorting is the correlation between a worker’s type and
+her employer’s type. We define a worker’s type to be the expected log wage she receives in
+an employment relationship conditional on taking the job. That is, if we could observe a
+worker for a long time, her type would be the average log wage she receives. Similarly, we
+define a firm’s type to be the expected log wage that it pays to an employee conditional on
+hiring the worker, or equivalently the average log wage paid in a long time series.2
+Beyond proposing this measure of sorting, our paper makes three main contributions.
+First, we develop simple structural models to use as laboratories for measuring sorting. In
+particular, we ask whether our measure of the correlation between types captures an empir-
+ically infeasible but intuitive notion of sorting in those models. We show that in a particular
+statisticalmodel, ourmeasureofthecorrelationbetweentypesisidenticaltoAKM’smeasure
+of correlation. We then develop a search model with both ex ante heterogeneity and idiosyn-
+cratic productivity shocks. We show that the two measures of correlation are quantitatively
+similar, although there are limited situations where one performs better than the other. Fi-
+1In addition to the original study on French data by AKM, see Abowd, Creecy, and Kramarz (2002) for
+Washington State, Iranzo, Schivardi, and Tosetti (2008) for Italy, Gruetter and Lalive (2009) for Austria,
+Card, Heining, and Kline (2013) for Germany, Bagger, Sørensen, and Vejlin (2013) and Bagger, Fontaine,
+Postel-Vinay, and Robin (2014) for Denmark, and Lopes de Melo, 2018 for Brazil, among others. Recent
+papers emphasize bias in the OLS estimates of the AKM model and find a larger correlation; see especially
+Kline, Saggio, and Sølvsten (2019) and Bonhomme, Lamadon, and Manresa (2019).
+2Our definition of firm type is close to Christensen, Lentz, Mortensen, Neumann, and Werwatz (2005),
+who define a firm’s type to be equal to the average wage (in levels rather than logs) it pays. It is worth
+noting that both AKM’s and our definition of firm type is consistent with high type firms being either high
+or low productivity firms, for the reasons discussed in Eeckhout and Kircher (2011).
+1
+
+===== PDF PAGE 3 =====
+
+nally, we develop a discrete choice model with an idiosyncratic amenity shock and find that
+our measure of the correlation between types captures an intuitive notion of sorting, while
+the AKM correlation delivers nonsense. We conclude that the correlation between types is a
+promising reduced-form measure of sorting in a variety of standard economic environments.
+Our second contribution is to develop an estimator of the correlation between types.
+Intuitively, our approach is to directly estimate the variance-covariance matrix of matched
+types using moment conditions that do not impose any functional form on the underlying
+type distributions. Our estimator is motivated by the properties of real-world data sets that
+have a large number of workers and firms but few independent observations for each worker
+and firm. Our key identifying assumption is that for each worker, we have two or more
+observations of the actual wage received and that these observations are independently and
+identically distributed conditional on the worker’s type, and symmetrically for firms. Our
+estimated correlation then pertains to the sample of workers and firms for which we have
+these two observations. We prove that our estimator is consistent in the limit as the number
+of workers and firms goes to infinity, even if we only observe a small number of independent
+observations for each worker and firm. We also use model-generated data to evaluate the
+behavior of the estimator in small data sets. We find that both the bias and variance of the
+estimator are generally small even with only 2,500 workers and 500 firms.
+Our third contribution is to estimate the correlation in real-world data. Our primary
+data set captures the universe of private sector workers in Austria from 1986 to 2018. We
+first measure the correlation between types using annual wage data and find it is about 0.67
+formenand0.62forwomen. However, werecognizethatannualwageobservationsmightnot
+be independent conditional on type, particularly for workers who do not switch employers.
+This means these estimates may be inconsistent. To construct conditionally independent
+observations, we rely on economic theory. First, we average all our wage data to the worker-
+firm match level. In simple search models without on-the-job search, such as Shimer and
+Smith (2000), wages in any two employment relationships are independent conditional on
+the worker’s type. This suggests that we can use match-level data on all workers who have
+at least two jobs and all firms that have at least two employees in our data set. Second, in
+a more realistic search model with on-the-job search, such as Burdett and Mortensen (1998)
+and Postel-Vinay and Robin (2002), the wages in any two jobs that are separated by an
+unemployment spell are independent conditional on the worker’s type. We define the time
+between registered unemployment spells as an employment spell and further trim the data
+to keep only the longest job during each employment spell for each worker. Our numerical
+results depend on which data set we use, and our preferred estimates use the last approach,
+with one observation per employment spell per worker. Using this data set, we estimate that
+2
+
+===== PDF PAGE 4 =====
+
+the correlation between worker and firm types is 0.47 for men and 0.43 for women.
+We view these as lower bounds on the true correlation because our approach ignores the
+fact that workers and firms change over time and firms are collections of heterogeneous jobs.
+We illustrate this by incorporate time-varying observable characteristics for both workers
+and firms. For example, we let firms have different types when matched with workers with
+different education levels. This raises the estimated correlation to 0.52 for men and 0.51 for
+women. We get similar results when we allow for variation in both workers’ and firms’ types
+depending on whether the job is blue or white collar, and when we allow for variation in
+workers’ types depending on the firm’s industry.
+Our approach is also amenable to estimation using short time series. In particular, we
+can estimate the correlation between worker and firm types using only a single year’s data,
+which further mitigates issues of time-varying unobserved heterogeneity. Using only data on
+workers who lose a job, become unemployed, and find a new job within a year, we find a
+steady increase in sorting among men since 1986 but a decrease in sorting among women,
+particularly during the eight years after 2001. At the end of our sample, the correlation
+between men’s types and their employer’s types was 0.55, while it was only 0.38 for women.
+The last section of our paper explores the difference between our results and estimates
+of the AKM correlation. We verify that OLS estimates of the AKM correlation are small
+in our data, 0.12 for men and 0.07 for women. There are two possible explanations for this
+difference. Either our correlation is much bigger than the true AKM correlation or the true
+AKMcorrelationismuchbiggerthantheOLSestimateofit. Ourstructuralmodelsestablish
+the first possibility and indicate that in these cases, our correlation is preferred. On the
+other hand, recent papers propose bias corrections and alternative estimators of the AKM
+correlation (e.g., Andrews, Gill, Schank, and Upward, 2008; Kline, Saggio, and Sølvsten,
+2019; Bonhomme, Lamadon, and Manresa, 2019).3 We obtain very different estimates of the
+AKM correlation depending on which estimator we use. In some cases, the bias-corrected
+AKM estimates are very similar to the OLS estimates, while in other cases they are much
+closer to our correlation. In our view, this uncertainty about the true AKM correlation
+further supports our measure of correlation and our estimator.
+The goal of this paper is to develop and estimate a measure of sorting that is sensible in
+a variety of structural models. An alternative approach would be to estimate a structural
+model of sorting, as in Lise, Meghir, and Robin (2016), Hagedorn, Law, and Manovskii
+(2017), Lopes de Melo (2018), or Bagger and Lentz (forthcoming). There are advantages to
+3JochmansandWeidner(2019)showthatthebiasdependsontheworker-firmnetworkstructureandoffer
+bounds on the bias as a function of the degree of connectivity of the network. Since Andrews, Gill, Schank,
+and Upward (2008) and Kline, Saggio, and Sølvsten (2019) offer exact formulas, we use their approach to
+the bias correction.
+3
+
+===== PDF PAGE 5 =====
+
+each approach. On the one hand, the estimates in those papers impose more structure on the
+data, which may drive the results. On the other hand, those papers are able to address issues
+that go beyond the scope of this paper, where we focus exclusively on measuring sorting.
+The remainder of the paper proceeds as follows. Section 2 defines our measure of sorting,
+the correlation between worker and firm types. In Section 3, we use several models as
+laboratoriestostudyhowourmeasureofsortingcomparestotheAKMmeasureofcorrelation
+as well as to an intuitive measure of sorting. We propose an estimator in Section 4 and
+implement it on an Austrian data set, which we describe in Section 5. Section 6 gives
+our main empirical results, showing that the correlation between worker and firm types lies
+between 0.4 and 0.6. Section 7 compares our results to estimates of the AKM correlation
+using OLS and other approaches. Section 8 concludes.
+2 Measuring Sorting in Theory
+2.1 The Economy
+We consider the cross-section of an economy with a fixed measure of workers employed by a
+fixed measure of firms. Workers and firms are distinguished by their characteristics, x X
+∈
+and y Y, respectively. Let F(x) denote the distribution of workers’ characteristics. Let
+∈
+Φ (y) denote the distribution of the employer’s characteristics conditional on the worker’s
+x
+characteristics. For now, we treat F and Φ as primitives; however, we think of these distri-
+x
+butions as being generated by a structural dynamic model such as Burdett and Mortensen
+(1998), Shimer and Smith (2000), or Postel-Vinay and Robin (2002). In such a model, dif-
+ferences in Φ across x might reflect the fact that different workers find or accept different
+jobs with different probabilities or that they have different patterns of job-to-job mobility.
+(cid:82)
+Define G(y) Φ (y)dF(x) to be the unconditional distribution of the characteristics
+≡ X x
+of jobs in the economy. This is distinct from the distribution of the characteristics of firms
+to the extent that firms with different characteristics employ different numbers of workers.
+We also define Ψ (x) to be the conditional distribution of the worker’s characteristics given
+y
+the firm’s characteristics. By Bayes rule, we have Φ (y)F(x) Ψ (x)G(y) for all x and y.
+x y
+≡
+Aworkerwithcharacteristicsxmatchedtoafirmwithcharacteristicsy earnsawagethat
+depends on both characteristics and on a shock. Let w(x,y,z) denote the zth quantile of the
+log wage distribution in an (x,y) match.4 In competitive environments, the wage depends
+only on x, but the presence of search frictions, compensating differentials, or measurement
+4This is the distribution of log wages in matches that actually occur. If x and y reject some wage draws
+or turnover is higher following some wage draws, that is reflected in the matching distributions Φ and Ψ,
+not in the log wage distribution.
+4
+
+===== PDF PAGE 6 =====
+
+error in x all imply that the wage may be correlated with y and other features (such as
+alternative job opportunities) captured by z.
+2.2 A New Measure of Sorting
+We are interested in measuring the correlation between matched workers and firms in an em-
+ployment relationship. To do this, we need a cardinal, unidimensional measure of workers’
+and firms’ types. Workers’ and firms’ characteristics x and y may be vector-valued and in
+any case do not have even an ordinal interpretation.5 We therefore propose measuring the
+correlation between the expected log wage received by a worker conditional on her charac-
+teristics and the expected log wage paid by her employer conditional on its characteristics.
+That is, we are interested in understanding whether high wage workers typically work in
+high wage firms.
+For now we assume that we know the distributions F, Φ, G, and Ψ, as well as the wage
+function w, and define our measure of sorting. In Section 3 we use structural models to show
+that our proposed measure captures the extent of sorting in model economies. Of course, in
+real world data sets we do not observe F, Φ, G, and Ψ or the wage function w, and so we
+explain in Section 4 how to estimate the correlation between types using the limited data
+that are available. Let
+(cid:90) (cid:90) 1
+λ(x) w(x,y,z)dzdΦ (y) (1)
+x
+≡
+Y 0
+(cid:90) (cid:90) 1
+and µ(y) w(x,y,z)dzdΨ (x) (2)
+y
+≡
+X 0
+denote the expected log wage received by a worker with characteristics x and the expected
+log wage paid by a firm with characteristics y, respectively. From now on, we identify a
+worker by her expected log wage and call λ(x) her type. Symmetrically, we identify a firm
+by the expected log wage it pays and call µ(y) its type.
+Our object of interest is the correlation between the type of a worker and the type of her
+job in the cross-section of matches at a point in time,
+c
+ρ , (3)
+≡ σ σ
+λ µ
+5Lindenlaub and Postel-Vinay (2017) study a model with multidimensional characteristics and examine
+theconditionsunderwhichthereispositivelyassortativematchingdimension-by-dimension. Itisimpossible
+to measure this stronger notion of sorting using wage data alone.
+5
+
+===== PDF PAGE 7 =====
+
+where
+(cid:90) (cid:90) (cid:90) 1 (cid:90) (cid:90)
+w¯ w(x,y,z)dzdΦ (y)dF(x) = λ(x)dF(x) = µ(y)dG(y) (4)
+x
+≡
+X Y 0 X Y
+is the mean log wage, also equal to both the mean worker type and the mean job type;
+(cid:115) (cid:115)
+(cid:90) (cid:90)
+σ (λ(x) w¯)2dF(x) and σ (µ(y) w¯)2dG(y) (5)
+λ µ
+≡ − ≡ −
+X Y
+are the cross-sectional standard deviations of worker types and job types; and
+(cid:90) (cid:90)
+c (λ(x) w¯)(µ(y) w¯)dΦ (y)dF(x) (6)
+x
+≡ − −
+X Y
+is the covariance between worker and job types in an employment relationship.6 We assume
+throughout that all of these first and second moments are finite.
+We highlight the special case where Φ (y) = G(y) for all x and y. This means that each
+x
+worker is equally likely to work in every job. In this case, we can rewrite the covariance as
+(cid:90) (cid:18)(cid:90) (cid:19)
+c (λ(x) w¯) µ(y)dG(y) w¯ dF(x).
+≡ − −
+X Y
+The term in the inner parenthesis is zero by the definition of w¯, hence the covariance is
+zero. Since the variance of worker and firm types is still generally positive, the correlation
+between types is zero. More generally, the sign of the correlation depends on whether high
+wage workers are particularly likely to work at high wage firms.
+2.3 The AKM Measure of Sorting
+We contrast our measure of sorting with a common alternative due to Abowd, Kramarz, and
+Margolis (1999) (hereafter AKM). The authors’ starting point is the assumption that the
+log wage in a match between worker i with characteristics x and firm j with characteristics
+i
+y is linear in the worker’s and firm’s fixed effects,
+j
+w(x ,y ,z) = α +ψ +η (7)
+i j i j
+6LopesdeMelo(2018)showsthatthecorrelationbetweenaworker’swageandthewageofhercoworkers
+(cid:82) (cid:82) (cid:82)
+is a useful moment in estimating his structural model. The corresponding covariance is (λ(x)
+Y X X −
+w¯)(λ(x(cid:48)) w¯)dΨ (x(cid:48))dΨ (x)dG(y).
+y y
+−
+6
+
+===== PDF PAGE 8 =====
+
+where α = α(x ) is the worker fixed effect, ψ = ψ(y ) is the firm fixed effect, and z ζ (η)
+i i j j i,j
+≡
+is an error term where the distribution ζ has mean zero for all (i,j) pairs.7 An important
+i,j
+goal in that research agenda is measuring the correlation between α and ψ among matched
+i j
+worker-firm pairs (i,j), which we denote ρ .
+AKM
+If the linear wage equation (7) is correctly specified and we had infinitely much data for
+each pair (x,y), we could recover α(x) and ψ(y) by integrating over the mean zero error
+term. This gives us a system of linear equations,
+(cid:90) 1
+w(x,y,z)dz = α(x)+ψ(y),
+0
+which determine α and ψ up to an additive constant. If equation (7) is misspecified, this
+equation cannot hold for all types. Still, we define the fixed effects as the solution to the
+following moment conditions,
+(cid:90) (cid:90) 1
+α(x ) = (w(x ,y,z) ψ(y)) dzdΦ (y) (8)
+i i
+−
+xi
+Y 0
+(cid:90) (cid:90) 1
+ψ(y ) = (w(x,y ,z) α(x)) dzdΨ (x), (9)
+j j
+−
+yj
+X 0
+which is equivalent to running OLS on data containing all matched pairs. As is well known,
+these moment conditions uniquely define α and ψ up to an additive constant if (and only
+if) there is no way to partition the workers and firms into two nonempty sets A and B such
+that workers and firms in set A (B) only match with firms and workers in set A (B).
+We then compute the AKM correlation in the matched pairs as
+c
+AKM
+ρ = (10)
+AKM
+σ σ
+α ψ
+where
+(cid:90) (cid:90)
+¯
+α¯ α(x)dF(x), ψ ψ(y)dG(y), (11)
+≡ ≡
+X Y
+(cid:115) (cid:115)
+(cid:90) (cid:90)
+σ (α(x) α¯)2dF(x), σ (ψ(y) ψ ¯ )2dG(y), (12)
+α ψ
+≡ − ≡ −
+X Y
+(cid:90) (cid:90)
+¯
+c (α(x) α¯)(ψ(y) ψ)dΦ (y)dF(x). (13)
+AKM x
+≡ − −
+X Y
+We do not focus here on how to estimate ρ ; there are well-known statistical problem
+AKM
+7Abowd, Kramarz, and Margolis (1999) also allow for time-varying observable worker and firm charac-
+teristics. We suppress those for expositional simplicity.
+7
+
+===== PDF PAGE 9 =====
+
+with the fixed effects estimator, often called “limited mobility bias.” Instead, we assume
+that we know the distributions F, Φ, G, and Ψ, as well as the wage function w, and are
+interested in how ρ behaves in this idealized environment. To explore this, we turn next
+AKM
+to some structural models.
+3 Models as Laboratories for Measuring Correlation
+This section develops simple economic envirornments to explore how the two proposed mea-
+sures of sorting, ρ and ρ , behave in structural models where we have a strong sense of
+AKM
+whetherthereissorting. WestartwithamodelinwhichtheAKMwageequationiscorrectly
+specified. We then turn to a search model based on Shimer and Smith (2000), extended to
+include match productivity shocks (Gouss´e, Jacquemet, and Robin, 2017) and finally look
+at a discrete choice model, as in Card, Cardoso, Heining, and Kline (2018).
+3.1 AKM is Correctly Specified
+We start with an important special case in which the AKM correlation and our correlation
+coincide. Assume the AKM wage equation (7) is correctly specified with α = x for all i and
+i i
+ψ = y for all j. Also assume that the joint density of (x,y) (and hence (α,ψ)) in matched
+j j
+worker-firm pairs has linear conditional expectations, that is, E (y) is linear in x and E (x)
+x y
+is linear in y.8 Let
+(cid:32) (cid:33)
+σ2 c
+x AKM
+c σ2
+AKM y
+be its variance-covariance matrix so ρ = cAKM. In this case, ρ and ρ have the same
+AKM σxσy AKM
+magnitude:
+Proposition 1 Assume that the joint distribution of α = x and ψ = y is such that the
+conditional expected values are linear, that is, E (y) is linear in x and E (x) is linear in
+x y
+y. Let ρ ( 1,1) denote the correlation between x and y. Then λ and µ are linear
+AKM
+∈ −
+transformations of x and y with standard deviations σ = σ + c /σ and σ = σ +
+λ x AKM x µ y
+| | |
+8If the joint distribution of x and y is elliptical, i.e. the associated density function ξ can be expressed as
+(cid:18) (x x¯)2 2ρ (x x¯)(y y¯) (y y¯)2(cid:19)
+ξ(x,y)=ξ˜ − AKM − − + − ,
+σ2 − σ σ σ2
+x x y y
+then conditional expectations are linear. The bivariate normal and bivariate t distributions are elliptical.
+8
+
+===== PDF PAGE 10 =====
+
+c /σ . Let ρ denote the correlation and c denote the covariance of λ and µ. Then
+AKM y
+|
+
+ρ = ρ and min σ2,σ2 > c
+   AKM { λ µ}
+min σ2,σ2 (cid:82) c ρ is undefined
+{ x y} − AKM ⇒
+
+
+ ρ = ρ and min σ2,σ2 < c.
+− AKM { λ µ}
+The proof in Appendix A.1 shows that with linear conditional expectations, equations (1)
+and (7) imply that λ(x ) is a linear transformation of x
+i i
+(cid:90) (cid:18) (cid:19)
+c
+AKM
+λ(x ) = (x +y)dΦ (y) = κ + 1+ x ,
+i i xi 0 σ2 i
+Y x
+for some constant κ . Symmetrically, equations (2) and (7) imply µ(y ) is a linear transfor-
+0 j
+mation of y ,
+j
+(cid:90) (cid:18) (cid:19)
+c
+AKM
+µ(y ) = (x+y )dΨ (x) = θ + 1+ y ,
+j j yj 0 σ2 j
+X y
+for some constant θ . The magnitude of the correlation coefficient between two random
+0
+variables is unaffected by a linear transformation, though it may change sign if one of the
+transformations is decreasing, i.e. either c < σ2 or c < σ2. The proof shows that
+AKM x AKM y
+these conditions are equivalent to c > σ2 and c > σ2, respectively.
+λ µ
+Since ρ = cAKM > 1, whenever we have σ = σ , it is the case that σ2 = σ2 >
+AKM σxσy − x y x y
+c . Proposition 1 then implies ρ = ρ . This illustrates how to construct an economy
+AKM AKM
+−
+where ρ takes any value in the interval ( 1,1).
+−
+We view this statistical model as an important benchmark case. Our approach defines
+a worker’s type λ to be equal to her expected log wage and a firm’s type µ to be equal to
+the expected log wage it pays. AKM define the units of types to be that which boosts the
+expected log wage by a unit holding fixed the partner’s type. While these two measures are
+distinct, Proposition1establishesconditionsunderthecorrelationbetweenthetwomeasures
+are equal. Any structural model with an equilibrium satisfying the above properties would
+feature the same magnitude of ρ and ρ .
+AKM
+A natural hypothesis is that by perturbing this example, either by changing the wage
+function or by changing the distributional assumption on matches, it is possible to construct
+examples where ρ ≷ ρ . It appears, however, that this is not the case. In the structural
+AKM
+models below, we always find that ρ > ρ . More interestingly, extensive numerical
+AKM
+simulations suggests that ρ ρ in any economy,9 although a proof of this conjecture
+AKM
+≥
+9The simulations assume there are m types of workers, x = 1,...,m, and n types of jobs, y = 1,...,n,
+and allow for an arbitrary joint distribution of matched workers and jobs, as well as an arbitrary average
+9
+
+===== PDF PAGE 11 =====
+
+eludes us. Once we recognize that the two correlation measures are different, the interesting
+question is whether either correlation captures an economically reasonable notion of sorting
+in realistic environments. In an effort to answer that question, we next use a variety of
+structural models as laboratories for evaluating the two measures of sorting.
+3.2 Two-Sided Search Model with Match-Specific Shocks
+We next examine a search model with two-sided heterogeneity (Shimer and Smith, 2000)
+and match-specific heterogeneity (Gouss´e, Jacquemet, and Robin, 2017). The match-specific
+productivity shocks ensure that any worker and firm have a positive probability of matching,
+but different matches use a different threshold for the idiosyncratic shock. It also implies
+that the wage is not pinned down by the worker and firm characteristics but depends on the
+idiosyncratic shock as well.
+The model is formulated in continuous time. There is measure 1 of risk-neutral workers
+and measure 1 of risk-neutral firms. Everyone discounts the future at rate r. Each worker
+˜
+has characteristic x, distributed in the population according F(x). Similarly, each firm
+has characteristic y, distributed according to G ˜ (y).10 Workers can be either unmatched or
+matched to one firm; likewise, firms can be either unmatched or matched to one worker, so
+a firm and a job are identical here.
+Search is random and only unmatched firms and workers can search. Let u(x) be the
+unemployment rate among workers with characteristic x and v(y) vacancy rate among firms
+with characteristic y. A worker meets a vacancy at the rate θ and the firm characteristic
+˜
+is randomly drawn from the distribution G. Since there are equal measures of workers and
+firms, this means that a firm meets a worker at the same rate θ and the worker characteristic
+˜
+is randomly drawn from the distribution F. If the worker or firm is matched, it is as if
+the meeting never happened. If both are unmatched, with probability u(x)v(y), the pair
+draws a match-specific productivity z 0 from a cumulative distribution ζ and then decide
+≥
+whether to match and produce flow zH(x,y). Match-specific productivity is independently
+and identically distributed across matches and is fixed for the duration of the match. They
+split the surplus according to Nash bargaining, with worker’s bargaining power γ (0,1).
+∈
+Assume H(x,y) is strictly positive for almost all x and y. Matches randomly end at rate δ,
+leaving the worker unemployed and the job vacant.
+Let U(x) and V(y) denote be the value of being an unemployed worker and a vacant firm,
+wage in an (x,y) match. We then use equations (1) and (2) to construct (λ(x),µ(y)) and equations (8)
+and (9) to construct (α(x),ψ(y)). We then compute ρ and ρ using equations (3) and (10) and compare
+AKM
+their magnitudes.
+10In Section 2.1, we use F and G to denote the distribution of characteristics of employed workers and
+filled jobs. We use tildes to distinguish the population distributions F˜ and G˜ from these.
+10
+
+===== PDF PAGE 12 =====
+
+respectively. Thesurplusofamatchbetweenxandy isS(x,y,z) = zH(x,y) rU(x) rV(y).
+− −
+The decision to match is described by a threshold rule: a match is formed if z z¯(x,y)
+≥
+where z¯(x,y) is such that S(x,y,z¯(x,y)) = 0. In Appendix A.2, we develop a system of
+equations that fully describes the equilibrium, while here we focus on the behavior of wages.
+Nash bargaining implies that
+w(x,y,z) = γ(zH(x,y) rU(x) rV(y))+rU(x),
+− −
+and hence the expectation of the log wage in an (x,y) match is
+(cid:90)
+1 (cid:0) (cid:0) (cid:1) (cid:1)
+w(x,y) = log γ zH(x,y) rU(x) rV(y) +rU(x) dζ(z).
+1 ζ(z¯(x,y)) − −
+− z ≥ z¯(x,y)
+If the distribution of match-specific productivity is exponential, we prove in Appendix A.2
+that the expected log wage in a match (x,y) is monotone in H(x,y) for given x. That is, if
+higher y matches are more productive, they also pay higher expected log wages conditional
+on matching. We obtain a similar result numerically when the match-specific productivity
+distribution is Pareto with a sufficiently high variance. In contrast, in Shimer and Smith
+(2000), a given x’s wage is maximized at some value of y, typically an interior point, even if
+H is strictly increasing. We find numerically that is also the case for a Pareto match-specific
+productivity distribution when the variance is small.
+Another difference from Shimer and Smith (2000) is that if match-specific productivity
+is unbounded above, almost all matches (x,y) are created with strictly positive probability.
+With enough complementarity in the production function, a worker with the lowest charac-
+teristic would never match with the highest characteristic firm in Shimer and Smith (2000).
+In this model, we observe such a match if the match-specific productivity is high enough.
+Still, high draws are rare and therefore we observe sorting based on characteristics.
+We solve the model with a discrete number of characteristics n distributed uniformly on
+X = Y = 1 0.5, 2 0.5,... n 0.5 . We use the CES production function
+− − −
+{ n n n }
+ξ−1 ξ−1 ξ
+H(x,y) = (ax ξ +(1 a)y ξ )ξ−1,
+−
+where ξ 0 is the elasticity of substitution and a [0,1] is the worker’s share in production.
+≥ ∈
+We assume thatthe distributionof match productivity shocks isPareto, with some minimum
+valuez andvarianceσ2.11 Ourbenchmarkusesthefollowingparametervalues: r = 1,δ = 10,
+z
+11We choose Pareto rather than the exponential distribution because it allows us to change the variance
+of the shocks. With the exponential distribution, doubling its parameter only doubles value functions but
+has no impact on the matching probabilities, unemployment rates and vacancy rates.
+11
+
+===== PDF PAGE 13 =====
+
+θ = 104, γ = 0.5, a = 0.5, ξ = 1, σ2 = 0.1, z = 1, and n = 500.
+z
+With given model parameters, the model tells us exactly how often each worker matches
+with each firm as well as the average log wage in those matches. We can thus compute λ(x)
+and µ(y) from equations (1) and (2), as well as α(x) and ψ(y) from equations (8) and (9).
+We then find ρ and ρ from equations (3) and (10). Since we know the data generating
+AKM
+process, we can and deliberately choose to ignore questions about estimation in this section.
+We are interested in exploring how our measures of sorting change as we vary four key
+model parameters: the meeting rate θ, the bargaining power γ, the variance of the match-
+specific shocks σ2, and the elasticity of substitution in the production function ξ. In each
+z
+experiment, we compare ρ and ρ with the correlation between x and y, ρ , an intuitive
+AKM x,y
+measure of the extent of sorting. Note that since x and y are not observable in real-world
+data, ρ is not something that is generally feasible to compute, but it is possible in the
+x,y
+model. Also note that the units of x and y are only defined through the assumption that
+characteristics have a discrete uniform distribution. Without that, we could do a nonlinear
+transformation of x and y and offset this through a change in the production function that
+would leave the real structure of the economy, and hence ρ and ρ unchanged, but change
+AKM
+ρ . This degree of freedom implies that the correlation between x and y is instructive but
+x,y
+not necessarily what we should be targeting.
+Figure 1 shows results from these experiments. In the top left panel, we vary the meeting
+rate θ. When θ is low, it is difficult for workers to meet vacancies and thus they tend
+to accept any offer that they receive, conditional on a favorable match-specific shock. As
+match acceptance thresholds are low for everyone, we see little sorting. As θ , workers
+→ ∞
+receive offers very quickly and become selective at which offer to accept. As a result, sorting
+increases. Thecorrelationρ (red)isincreasinginθ, andρ(blue)andρ (green)capture
+x,y AKM
+this pattern.12
+In the second experiment, we change worker’s bargaining power. As γ converges to 0 or
+1, workers (or firms) are paid only their outside option regardless of whom they match with,
+hence sorting weakens. The correlation between x and y is hump-shaped (top right panel in
+Figure 1) and again ρ and ρ properly capture this nonlinear pattern.
+AKM
+Inourthirdcomparativestaticexercise, wechangethevarianceofthematchproductivity
+shocks. As the variance increases, match-specific productivity, rather than worker and firm
+characteristics, plays a more important role and sorting becomes weaker. The bottom left
+12Interestingly, the correlation does not converge to 1 as θ . This is because of the match-specific
+→ ∞
+productivity shocks. With minimal search frictions, the economy resembles a discrete choice model (Sec-
+tion 3.3) where workers see multiple offers characterized by (y,z) and choose the one with the highest value.
+Inthislimit,workersmatchwithfirmswithheterogeneouscharacteristicsandhencethecorrelationbetween
+x,y is high but less than 1.
+12
+
+===== PDF PAGE 14 =====
+
+1
+0.8
+0.6
+0.4
+0.2
+0
+102 104 106 108
+θ
+noitalerroc
+Meeting Rate
+1
+0.8
+0.6
+0.4
+0.2
+0
+0 0.2 0.4 0.6 0.8 1
+γ
+noitalerroc
+Bargaining Power
+1
+0.8
+0.6
+0.4
+0.2
+0
+10 4 10 3 10 2 10 1 100
+− − − −
+σ2
+z
+noitalerroc
+Variance of Match Productivity
+1
+0.5
+0
+10 1 100 101
+−
+ξ
+ρ ρ ρ
+x,y AKM
+noitalerroc
+Elasticity of Substitution
+Figure 1: Comparative statics exercise in the two-sided search model extended to include
+match-specific productivity. The figures show the correlation between characteristics (ρ ,
+x,y
+red lines), types (ρ, blue lines), and AKM fixed effects (ρ , green lines) in the matched
+AKM
+pairs for different parameter values. In each experiment, we keep all but one parameter at
+their benchmark values, r = 1, δ = 10, θ = 104, γ = 0.5, a = 0.5, ξ = 1, σ2 = 0.1, z = 1,
+z
+n = 500, and indicate on the horizontal axis which parameter we are changing.
+13
+
+===== PDF PAGE 15 =====
+
+panel shows that ρ does not produce this pattern. Instead, when the variance is low,
+AKM
+an increase in the variance raises the AKM correlation. This appears to reflect the fact that
+when the variance is low, the expected log wage is non-monotonic in characteristics and
+hence misspecification of the AKM wage equation is quantitatively serious; see Eeckhout
+and Kircher (2011), Lise, Meghir, and Robin (2016), Lopes de Melo (2018), and Bagger and
+Lentz (forthcoming). Thus we find a shortcoming of ρ when nonlinearities in the wage
+AKM
+equation are important.
+Finally, we turn to the elasticity of substitution in the production function. The produc-
+tion function is Leontief for ξ = 0 and linear for ξ and so sorting is less important
+→ ∞
+as ξ increases, as shown in the bottom right panel of Figure 1. When ξ is small, there is
+positive sorting and all three measures perform well. But when ξ is sufficiently large, ρ
+remains positive even though ρ and ρ are negative. This is because high x workers
+x,y AKM
+tend to work for low y firms, but low y firms actually pay higher wages on average. Hence,
+high wage workers work for high wage firms, a pattern which our measure captures. From
+wages alone, we are not able to say that the high paying firms are actually those with the low
+productivity and hence in fact there is negative sorting (Eeckhout and Kircher, 2011). Nev-
+ertheless, Proposition 1 proposes a test to detect the “sign flip”: when min σ2,σ2 < c, then
+{ λ µ}
+ρ and ρ have the opposite sign in the case of linear conditional expectations. The blue
+AKM
+dotted line shows the correlation adjusted for the flip sign, meaning that we plot ρ when
+−
+this condition is satisfied.13 The sign flip test generally picks up the negative correlation
+These experiments illustrate that ρ does a good job of measuring sorting in the model
+economy, especially with the sign correction. Similarly, ρ performs well in situations
+AKM
+where expected log wages are close to linear in worker and firm fixed effects, and hence the
+AKM wage equation is well-specified. When the wage equation is seriously misspecified, as
+is the case when σ2 is small, ρ can be a misleading measure of the extent of sorting.
+z AKM
+Nevertheless, broadly speaking we are impressed by the similarity of ρ and ρ in Figure 1.
+AKM
+3.3 Discrete Choice Model
+We next examine a discrete choice model, a partial equilibrium version of Card, Cardoso,
+Heining, and Kline (2018). There is a fixed number of workers indexed by i and a fixed
+number of firms indexed by j. Each worker is characterized by x distributed according
+to F(x) and each firm is characterized by y distributed according to G ˜ (y).14 Each worker
+chooses which firm to work at in order to maximize his utility, the sum of the log wage
+13This is the only case where we detect a sign flip in the two-sided search model.
+14In equilibrium, different firms employ different numbers of workers and so the distribution of jobs G is
+distinct from the distribution of firms G˜.
+14
+
+===== PDF PAGE 16 =====
+
+w(x,y) and an idiosyncratic amenity value ε. The log wage depends deterministically on
+the worker’s and firm’s characteristics, while the amenity is independently and identically
+distributed across workers and firms.
+Worker i sees the amenity value he would get in each firm and chooses to work for
+the firm j that maximizes w(x ,y ) + ε . Each firm is willing to employ any worker who
+i j i,j
+wants the job. We assume that the wage function w is bounded from above for each x and
+that amenities are drawn from an exponential distribution with mean (and hence standard
+deviation) s. This ensures that the workers’ choice of y has a non-trivial limit when the
+j
+number of firms goes to infinity (Malmberg and Ho¨ssler, 2014, Theorem 18.4). In the limit,
+the probability that a worker with characteristic x chooses a firm with characteristic y is
+(cid:18) (cid:19)
+w(x,y)
+˜
+Φ (y) exp dG(y).
+x
+∼ s
+Thus workers are more likely to choose high wage jobs, but the wage becomes less important
+when the standard deviation of the amenity shock, s, increases.
+We again use this model as a laboratory to study performance of our correlation mea-
+sure. We assume that the log wage is given by a quadratic function of the worker and firm
+characteristics:
+(cid:112) (cid:112)
+w(x,y) = k x+k y ( k x k y)2
+x y xx yy
+− −
+with k and k positive. Then the log wage of a worker with characteristic x is maximized
+xx yy
+at firm a firm with characteristic
+(cid:112)
+k +2 k k x
+y xx yy
+y (x) = .
+∗
+2k
+yy
+However, workers with characteristic x will not always choose to work at firms with charac-
+teristic y (x) since their utility depends on the amenity value as well.
+∗
+When the characteristics x and y are distributed normally, then the joint distribution
+of matched (x,y) pairs is normal and we obtain closed form expressions for types λ(x) and
+µ(y), AKM fixed effects α(x) and ψ(y), and the correlations ρ, ρ , and ρ . We present
+AKM x,y
+the key formulae in Appendix A.3. Here we discuss some numerical results.
+For our benchmark, we parameterize the wage function with k = 1, k = 0 and k =
+x y xx
+k = 1/a2, which implies is w(x,y) = x (x y)2/a and y (x) = x for all x. We also
+yy ∗
+− −
+assume that worker characteristics are distributed N(m ,σ ) and firm characteristics are
+x x
+distributed N(m ,σ ) with m = m (the common mean is irrelevant) and σ = σ = 1.
+y y x y x y
+Finally, we set the standard deviation of the amenity distribution to s = 1 and set the wage
+cost of mismatch to a = 1 as well. We conduct several experiments by varying key model
+15
+
+===== PDF PAGE 17 =====
+
+parameters, s, a, m m , and σ , and measuring how sorting changes.15
+x y x
+−
+Again, with given model parameters, the model tells us the probability that each worker
+matches with each firm and so we can compute ρ . Then using the wage equation, we
+x,y
+find λ(x) and µ(y) from equations (1) and (2), as well as α(x) and ψ(y) from equations (8)
+and (9). We then compute ρ and ρ from equations (3) and (10). Again, we ignore
+AKM
+questions about estimation in this section.
+The top left panel of Figure 2 shows how the standard deviation of the amenity shock
+affects sorting. When the standard deviation is zero, the amenity does not play any role in
+workers’ decisions and each worker x chooses a firm with characteristic y (x). As a result,
+∗
+firms with characteristic y (x) employ only workers with characteristic x, and the correlation
+∗
+ρ is one. As the standard deviation increases, sorting weakens and ρ declines to zero
+x,y x,y
+(red line). Our correlation measure ρ exhibits the same pattern, monotonically declining
+from perfect sorting to zero as amenities become more important (blue line), albeit a bit
+faster than the decline in correlation ρ .
+x,y
+The AKM correlation ρ follows a very different pattern. In the limit as s converges
+AKM
+to zero, AKM attributes all the wage variation to the worker fixed effects, generating a
+zero correlation between worker and firm effects. More generally, we prove that the sign of
+lim ρ is the same as the sign of m m , even though there is always perfect sorting
+s 0 AKM x y
+→ −
+between x and y (and between λ and µ) in this limit. As the standard deviation increases,
+ρ becomes negative but remains close to zero. It then flips signs at s > 2. In short,
+AKM
+ρ does not capture the extent sorting in the underlying economy.
+AKM
+Interestingly, the “sign flip” test from Proposition 1 picks up the incorrect sign of ρ
+AKM
+when s < 2. In this region (and only in this region), we find that both σ2 > c > σ2
+λ µ
+and σ2 > c > σ2. If the assumptions of Proposition 1 were satisfied, this would be
+α − AKM ψ
+consistent with ρ = ρ . The assumptions are not satisfied, but the conclusion that the
+AKM
+−
+two correlations have different signs still holds. We stress that it is not the sign of ρ that is
+misleading in this example, but instead the sign of ρ .
+AKM
+The results are similar when we change the wage function by varying a. As a 0, the
+→
+penalty from not taking the right job goes to infinity and hence we get perfect sorting with
+workers of type x choosing y (x). Both ρ and ρ are equal to 1. As a increases, workers’
+∗ x,y
+wages are less sensitive to their employer and so sorting weakens and eventually disappears
+as a . Interestingly, the difference between ρ and ρ is negligible for all values of a.
+x,y
+→ ∞
+Once again, ρ fails to capture sorting, especially in the region where it is nearly
+AKM
+perfect. The correlation ρ is again negative for a < 2, at which point it jumps up to
+AKM
+15Otherchangesinthewagefunction,i.e.intheparametersk ,k ,k ,andk ,areisomorphictochanges
+x y xx yy
+in the distribution of workers’ and firms’ characteristics, and so we omit that from our analysis.
+16
+
+===== PDF PAGE 18 =====
+
+1
+0.5
+0
+0.5
+−
+1
+− 0 2 4 6 8 10
+s
+noitalerroc
+Standard Deviation of Amenity
+1
+0.5
+0
+0.5
+−
+1
+− 0 2 4 6 8 10
+a
+noitalerroc
+Wage Loss
+1
+0.5
+0
+0.5
+−
+1
+− 2 1 0 1 2
+− −
+m m x y
+−
+noitalerroc
+Differences in Means
+1
+0.5
+0
+0.5
+−
+1
+− 0 1 2 3 4 5
+σ y
+ρ ρ ρ
+x,y AKM
+noitalerroc
+Standard Deviation of Firm Types
+Figure 2: Comparative statics exercise in the discrete choice model. The figures show the
+correlation between characteristics (ρ , red lines), types (ρ, blue lines), and AKM fixed
+x,y
+effects (ρ , green lines) in the matched pairs for different parameter values. In each
+AKM
+experiment, we keep all but one parameter at their benchmark values, a = 1, s = 1, m = 0,
+x
+m = 0, σ = 1, and σ = 1, and depict on the horizontal axis which parameter we are
+y x y
+changing.
+17
+
+===== PDF PAGE 19 =====
+
+a positive number and then declines to zero. We can again prove that σ2 > c > σ2 and
+λ µ
+σ2 > c > σ2 if and only if a < 2, and so the “sign flip” test indicates that ρ and ρ
+α − AKM ψ AKM
+have opposite signs in this region. And again, it is the sign of ρ that is misleading.
+AKM
+In the next experiment, we vary the difference in means m m . The extent of sorting
+x y
+−
+as measured by ρ does not change. This is because increasing the mean of y relative to
+x,y
+x induces workers to choose higher y firms, but this change is the same for all x, leaving
+the correlation unaffected. The correlation ρ does depend on the difference in means but
+the variation is quantitatively negligible. On the other hand, ρ varies significantly with
+AKM
+m m and hence fails as a measure of sorting.
+x y
+−
+In the last experiment, we increase the variance of firm types while keeping the variance
+of worker types unchanged. In the extreme case of σ2 = 0, all firms have the same type
+y
+and so workers only pay attention to amenities; there is no sorting in the limit without firm
+variance. Asthevarianceincreases, workerspaymoreattentiontofirmcharacteristicsandso
+sorting increases. However, increasing the variance too much beyond the variance of worker
+types will not bring any additional improvement of sorting since few workers choose extreme
+firm types. We indeed see that ρ starts at zero when σ2 = 0, and then increases steeply
+x,y y
+until around σ2 = 1, after which it flattens. The correlation ρ follows the same pattern,
+y
+while ρ again fails to capture changes in sorting.
+AKM
+To summarize, in the discrete choice model, ρ properly captures sorting patterns and
+ρ does not. The most striking finding is that ρ is zero when there are almost
+AKM AKM
+no amenities (s 0) and is negative when firms are critical for wages (a 0), even
+→ →
+though sorting is almost perfect in each of these limits. Intuitively, nonmonotonicities in the
+structural wage equation mean that the linear AKM wage equation (7) is misspecified. Even
+thought it can potentially be a useful first order approximation, our calculations reveal that
+in this case ρ is a poor measure of sorting.
+AKM
+4 An Estimator of the Measure of Sorting
+Consider a data generating process, for example a structural model, which determines who
+matches with whom as well as the wage and duration of each match. If we observed many
+conditionally independent matches for each worker and firm, we could accurately measure λ
+and µ for everyone and hence directly measure ρ. Unfortunately, in practice we have very
+few observations for most workers and firms. This section proposes a strategy for estimating
+ρ in realistic data sets. We start by defining a statistical model which encompasses the
+structural models in Section 3. We then propose an estimator and prove it is consistent
+in the statistical model. Finally we examine small sample properties of the estimator by
+18
+
+===== PDF PAGE 20 =====
+
+looking at artificial data sets generated by our structural models.
+4.1 A Dynamic Statistical Model
+Ourstartingpointistoimagineadynamiceconomywhichembedsthesnapshotwedescribed
+inSection2.1. Tostart, wesupposethereisafinitesetofpossiblecharacteristicX ofworkers
+and Y of firms and one or more workers and firms with each characteristic. Let I denote
+x
+(cid:80)
+the number of workers with characteristic x and I I denote the total number of
+≡ x X x
+∈ (cid:80)
+workers. Similarly, let J denote the number of firms with characteristic y and J J
+y ≡ y Y y
+∈
+the total number of firms. To establish consistency of our estimator, we later replicate this
+economy so there are τI workers with characteristic x and τJ firms with characteristic y
+x y
+for some positive integer τ. We are interested in constructing an estimator of the variance-
+covariance matrix of matched pairs that is consistent in the limit as τ goes to infinity.
+A worker’s or firm’s characteristic determines the probability of matching with every
+other firm and worker, the wage in each match, how long each match lasts, and how long
+we observe the worker or firm in the data set. More precisely, a typical worker i with
+characteristic x has M M,...,M ¯ matches indexed by m = 1,...,M . Let ww denote
+i i ∈ { } i i,m
+the average log wage in i’s mth match, tw denote the duration of the match, and y denote
+i,m i,m
+thefirmcharacteristicforthatmatch. Weassumethattheworker’scharacteristicdetermines
+the distribution of M as well as the joint distribution of ww ,tw ,y Mi . When a worker
+i { i,m i,m i,m }m=1
+matches with a firm with characteristic y, there is some unspecified probability of matching
+with each such firm. For example, a worker may draw randomly with or without recall. We
+let j denote the identity of the employer. It will be convenient to define Tw
+(cid:80)Mi
+tw ,
+i,m i ≡ m=1 i,m
+the total time that we observe worker i employed, and denote its expected value conditional
+on the worker’s characteristic by T ¯w. We assume throughout that Tw has a finite upper
+xi i
+¯
+bound and M, the maximum number of matches a worker can have, is also finite.
+¯
+Symmetrically, a typical firm j with characteristic y has N N,...,N matches
+j j
+∈ { }
+indexed by n = 1,...,N . Let wf denote the average log wage in j’s nth match, tf
+j j,n j,n
+denote the duration of the match, and x denote the worker characteristic for that match.
+j,n
+Again, the firm’s characteristic determines the distribution of N and the joint distribution
+j
+of wf ,tf ,x Nj . Let i denote the identity of the worker in j’s nth match. Again, we
+{ j,n j,n j,n }n=1 j,n
+define Tf (cid:80)Nj tf , the total time that firm j employs workers, and denote its expected
+j ≡ n=1 j,n
+value conditional on the firm’s characteristic as T ¯f. We again assume Tf has a finite upper
+yj j
+¯
+bound and N is finite.
+Worker and firm observations are necessarily linked. Suppose firm j employs worker i
+in her mth match, i.e. j = j . We let n denote the firm’s corresponding match number.
+i,m i,m
+19
+
+===== PDF PAGE 21 =====
+
+Symmetrically, m is the match number for worker i corresponding for firm j’s nth match.
+j,n j,n
+This implies ww = wf , wf = ww , tw = tf , and tf = tw . With this
+i,m ji,m,ni,m j,n ij,n,mj,n i,m ji,m,ni,m j,n ij,n,mj,n
+notation, we can equivalently think about the observations from the perspective of either
+the worker or the firm.
+Building on this notation and using the definition of types in equations (1) and (2), the
+averagelogwagethatworkeriwithcharacteristicx earnsduringhislifetimeandtheaverage
+i
+log wage that firm j with characteristic y pays are
+j
+E (cid:80)Mi tw ww E (cid:80)Nj tf wf
+λ(x ) = xi m=1 i,m i,m and µ(y ) = yj n=1 j,n j,n . (14)
+i T ¯w j T ¯f
+xi yj
+E E
+Here the expectations operators and indicate probabilities taken with respect to the
+xi yj
+joint distribution of wages, durations, and numbers of matches conditional on characteristic
+x and y . Weighting by spell duration defines the types to be the expected earnings at a
+i j
+typical point in time.
+We can also compute the population mean of λ and µ, as in equation (4):
+(cid:80) I T ¯wλ(x) (cid:80) J T ¯fµ(y)
+w¯ ≡ (cid:80) x ∈ X x I x T ¯w = (cid:80) y ∈ Y y J y T ¯f . (15)
+x X x x y Y y y
+∈ ∈
+Worker types are weighted by the population frequency I and the amount of time they are
+x
+employed T
+¯w
+to capture the likelihood the worker is employed in any given cross-section.
+x
+Similarly firm types are weighted by the amount of time they employ a worker. It is straight-
+forward to prove the second equality in equation (15), that the average wage that the average
+worker receives is equal to the average wage that the average firm pays. The variances,
+corresponding to equation (5), are
+(cid:80) I T ¯w(λ(x) w¯)2 (cid:80) J T ¯f(µ(y) w¯)2
+σ λ 2 ≡ x ∈ X (cid:80) x x I T ¯w − and σ µ 2 ≡ y ∈ Y (cid:80) y y J T ¯f − . (16)
+x X x x y Y y y
+∈ ∈
+Again we weight observations by their likelihood in the cross-section.
+Next, following equation (6) we can compute the covariance between λ and µ in matched
+pairs:
+(cid:80) I E (cid:80)Mi tw (λ(x) w¯)(µ(y ) w¯)
+c
+≡
+x ∈ X x x m=1 (cid:80) i,m
+I T
+¯w − i,m −
+x X x x
+(cid:80) I E (cid:80)Mi tw ∈ λ(x)µ(y )
+= x ∈ X x x (cid:80) m=1 I i T , ¯ m w i,m − w¯2. (17)
+x X x x
+∈
+20
+
+===== PDF PAGE 22 =====
+
+Foracharacteristicxworker, wecomputetheexpectedvalueoftheweightedaverageproduct
+of the deviations of the worker’s type from the population mean and her employer’s type
+from the population mean. The weight attached to each match is the duration of the match,
+and hence the total weight attached to each characteristic x worker is T
+¯w.
+Equivalently, we
+x
+can look at this from the perspective of firms and write this as
+(cid:80) J E (cid:80)Nj tf λ(x )µ(y)
+c = y ∈ Y y y (cid:80) n=1 J j T , ¯ n f j,n − w¯2.
+y Y y y
+∈
+This shows that the weight attached to each characteristic y firm is T
+¯f.
+Finally, the corre-
+y
+lation ρ is defined as usual in equation (3).
+4.2 Auxiliary Assumptions and an Estimator
+This section proposes estimators of c, σ2, and σ2 that are consistent under some reasonable
+λ µ
+assumptions in the limit as τ . The key assumption is that we have at least two
+→ ∞
+independent observations for each worker and firm. Most obviously, we impose that the
+minimum number of observations for workers and firms are M 2 and N 2. Additionally,
+≥ ≥
+we impose four auxiliary assumptions which ensure that these observations are suitably
+independent:
+1. For worker i with characteristic x , ww = w¯w + εw and εw is independently and
+i i,m xi i,m i,m
+identically distributed across m = 1,...,M with mean zero and a finite standard
+i
+{ }
+deviation σw. Moreover, tw and εw are independent for all (m,m) 1,...,M 2.
+xi i,m i,m(cid:48) (cid:48) ∈ { i }
+2. For firm j with characteristic y , wf = w¯f + εf and εf is independently and
+j j,n yj j,n j,n
+identically distributed across n = 1,...,N with mean zero and a finite standard
+j
+{ }
+deviation σf . Moreover, tf and εf are independent for all (n,n) 1,...,N 2.
+yj j,n j,n(cid:48) (cid:48) ∈ { j }
+3. For any worker i with characteristic x and all m 1,...,M , w¯w and εw are
+i ∈ { i } xi i,m(cid:48)
+independent of εf for all m = m and all n = n . Moreover, for any firm j with
+ji,m,n(cid:48) (cid:48)
+(cid:54)
+(cid:48)
+(cid:54)
+i,m
+characteristic y and all n 1,...,N , w¯f is independent of εw for all m = m .
+j ∈ { j } yj ij,n,m(cid:48) (cid:48) (cid:54) j,n
+4. For all i = i, m, and m, εw and εw are independent, as are tw and tw . For all
+(cid:54) (cid:48) (cid:48) i,m i(cid:48),m(cid:48) i,m i(cid:48),m(cid:48)
+j = j , n, and n, εf and εf are independent, as are tf and tf .
+(cid:54) (cid:48) (cid:48) j,n j(cid:48),n(cid:48) j,n j(cid:48),n(cid:48)
+The two-sided matching model considered in Section 3.2 satisfies these assumptions. So does
+a repeated version of the discrete choice model discussed in Section 3.3, if the amenity shock
+is independently drawn in each period.
+21
+
+===== PDF PAGE 23 =====
+
+Auxiliary Assumption 1 consists of two pieces. First, worker i’s wage is independently
+and identically distributed across matches with a characteristic-specific mean w¯w and stan-
+xi
+dard deviation σw. Second, wages are independent of durations both in the same match and
+xi
+in other matches conditional on the worker’s characteristic. We recognize that this assump-
+tion is strong without other restrictions and so in our empirical analysis in Section 5.2, we
+construct different real-world data sets designed to ensure that this assumption is satisfied.
+For example, we focus only on wages in jobs that are separated by an unemployment spell.
+Auxiliary Assumption 2 imposes the analogous assumptions on firms.
+Auxiliary Assumption 3 imposes that if a worker and a firm are matched at some point in
+time, the error terms in their other matches are independent of each other. It also imposes
+that the error in the worker’s wage equation in one match is independent of the employer
+type in other matches and symmetrically that the error in the firm’s wage equation in one
+match is independent of the employee type in other matches. We stress that this assumption
+allows the error terms to be correlated with each other and with the partner’s mean wage
+within a match, and indeed this will typically be the case.16
+The first three auxiliary assumptions are useful for finding individual-level unbiased esti-
+mators of worker and firm types and the covariance between them. Auxiliary Assumption 4
+rules out the possibility of correlated shocks. This gives us a law of large numbers, ensuring
+that the average of these unbiased estimators is consistent as the economy grows large. In
+the data, we handle aggregate shocks by deflating wages by the economy-wide average wage,
+but other correlations, e.g. within region or industry, may matter in practice.
+Armed with these assumptions, we relate the worker and firm type to the means in the
+auxiliary wage equations:
+Proposition 2 A worker with characteristic x has type λ(x) = w¯w. A firm with character-
+x
+istic y has type µ(y) = w¯f.
+y
+We relegate the proof of this and all other propositions in this section to Appendix B.1.
+Next we construct consistent estimators of the variance-covariance matrix of λ and µ
+in matched pairs, i.e. of σ2, σ2, and c defined in equations (16) and (17). Start with the
+λ µ
+variance of worker types. Define
+(cid:80)Mi ww (cid:80)Mi (cid:80) ww ww
+λ ˆ i ≡ m= M 1 i,m and λ(cid:98)2 i ≡ m=1 M ( m M (cid:48) (cid:54) =m 1 i, ) m i,m(cid:48) , (18)
+i i i
+−
+16One situation where the third auxiliary assumption would be problematic is if a worker and firm are
+matched together multiple times, since in this case, the errors would naturally be correlated within all
+matches. In our model, we can avoid this possibility if M¯ min J and N¯ min I by assuming
+y∈Y y x∈X x
+≤ ≤
+that workers and firms sample partners without recall. In the data, we treat multiple spells with the same
+employer as a single match.
+22
+
+===== PDF PAGE 24 =====
+
+and use that to find an estimator of σ2:
+λ
+Proposition 3 In the limit as τ , a consistent estimator of the mean wage w¯ is
+→ ∞
+(cid:80)τI Twλ ˆ
+wˆ¯ i=1 i i ; (19)
+≡
+(cid:80)τI
+Tw
+i=1 i
+and a consistent estimator of the variance of worker types σ2 is
+λ
+(cid:80)τI
+Twλ(cid:98)2
+σ(cid:99)2 i=1 i i wˆ¯2. (20)
+λ ≡ (cid:80)τI Tw −
+i=1 i
+We show in the proof of Proposition 3 that λ ˆ and λ(cid:98)2 defined in equation (18) are unbiased
+i i
+estimators of λ(x ) and λ(x )2. The proof of consistency of wˆ¯ and σ(cid:99)2 is a standard law of
+i i λ
+large numbers argument.
+The logic for firms is identical. Define
+(cid:80)Nj wf (cid:80)Nj (cid:80) wf wf
+µˆ j ≡ n= N 1 j,n and µ(cid:98)2 j ≡ n=1 N ( n N (cid:48) (cid:54) =n 1 j, ) n j,n(cid:48) , (21)
+j j j
+−
+unbiased estimators of µ(y ) and µ(y )2. Note that
+j j
+(cid:80)τJ Tfµˆ
+wˆ¯ = j=1 j j ,
+(cid:80)τJ Tf
+j=1 j
+since this just averages wages from the firm’s instead of the worker’s perspective. Then
+Proposition 4 In the limit as τ , a consistent estimator of the variance of firm types
+→ ∞
+σ2 is
+µ
+(cid:80)τJ Tfµ(cid:98)2
+σ(cid:99)2 j=1 j j wˆ¯2. (22)
+µ ≡ (cid:80)τJ Tf −
+j=1 j
+We omit the proof, since it is isomorphic to the proof of Proposition 3.
+Finally, we turn to an estimator of the product of worker and firm types. Let
+(cid:80) ww (cid:80) wf
+cˆ i,m
+m(cid:48)
+(cid:54)
+=m i,m(cid:48) n(cid:48)
+(cid:54)
+=ni,m ji,m,n(cid:48)
+. (23)
+≡ M 1 N 1
+i
+−
+ji,m
+−
+EachoftheM 1otherwagesww isanunbiasedestimatorofλ(x ). EachoftheN other
+i
+−
+i,m(cid:48) i ji,m
+wages wf is an unbiased estimator of µ(y ). Moreover, the third auxiliary assumption
+ji,m,n(cid:48) ji,m
+implies the two estimators are independent and hence the product is an unbiased estimator
+of λ(x )µ(y ). We leverage this insight to get a consistent estimator of the covariance:
+i yi,m
+23
+
+===== PDF PAGE 25 =====
+
+Proposition 5 In the limit as τ , a consistent estimator of the covariance between
+→ ∞
+worker and firm types c is
+(cid:80)τI (cid:80)Mi
+tw cˆ
+cˆ i=1 m=1 i,m i,m wˆ¯2. (24)
+≡
+(cid:80)τI
+Tw −
+i=1 i
+Armed with consistent estimators of the covariance and two variances, it is straightforward
+to construct an estimator of the correlation as
+cˆ
+ρˆ . (25)
+(cid:113)
+≡
+σ(cid:99)2σ(cid:99)2
+λ µ
+This estimator is consistent as τ if σ and σ are both positive.
+λ µ
+→ ∞
+Werecognizethatsomeauxiliaryassumptionsarerestrictive,inparticulartheassumption
+that duration of a job tw is independent of the error in the wage equation for that job εw .
+i,m i,m
+This assumption is violated in many models of on-the-job search, where high wage jobs last
+longerthanlowwagejobs(BurdettandMortensen, 1998). Itmayalsobeviolatedinamodel
+where jobs differ in their layoff risk, in which case a high wage may serve as a compensating
+differential for an unstable job (Jarosch, 2015). In Appendix C, we propose an alternative
+estimator that is consistent under a different set of assumptions. In particular, we relax the
+assumption that tw and εw are independent and replace it with a new assumption, that
+i,m i,m
+the mean and variance of duration tw are independent of w¯w. We derive an alternative
+i,m xi
+estimator that is consistent under these assumptions. We also show in Appendix C that our
+results using Austrian data are insensitive to which estimator we use.
+Formulae (18)–(25) are readily implemented in a real-world data set by setting τ = 1.
+Note that in finite data sets, the estimator of σ2 in equation (20) can be negative. In
+λ
+this case, we say that the estimator σ(cid:99)2 is zero and the estimator of the correlation ρˆ has
+λ
+magnitude 1 and the same sign as the estimator of the covariance cˆ in equation (24). We
+make analogous definitions if the estimator of σ2 in equation (22) is negative.17 We use these
+µ
+formulae throughout the rest of the paper.
+4.3 Small Sample Properties of the Estimators
+We next examine small sample properties of our estimator ρˆ. We create different-sized finite
+artificial data sets from the two-sided search and discrete choice models introduced in Sec-
+tion 3. Importantly, in each data set we keep number of observations per worker deliberately
+small, 3.8 on average. For each choice of the number of workers I 2500,104,105 , we
+∈ { }
+17In practice, we only encounter these issues using simulated data, and only then when the true variance
+is very small.
+24
+
+===== PDF PAGE 26 =====
+
+set the number of jobs at J = I/5, which guarantees that the number of observations per
+firm is also small, as in real world data.18 We explain details of the sample construction in
+Appendix B.2.
+For each model and each choice of I, we create B = 500 artificial samples. The actual
+number of firms and workers in each sample may be smaller because we drop firms and
+workers with fewer than two observations. For each sample b 1,...,B , we first compute
+∈ { }
+the types λ and µ from the economy with infinitely many workers and firms (Sections 3.2
+and 3.3). We then use the match durations and matching network realized in sample b to
+recover the variance-covariance matrix (equations 16 and 17) and hence the true correlation
+ρ for that sample. Alternatively, we use log wages, match durations and the matching
+b
+network in sample b to find the variance-covariance matrix using formulae (20), (22), and
+(24), and hence recover the feasible estimate ρˆ . We are interested in how these two measures
+b
+of correlation compare.
+We parameterize the two-sided search model using the benchmark in Section 3.2. The
+realized correlation ρ varies across samples, reflecting randomness in the matching process.
+b
+It is smaller in economies with fewer workers and firms because the scarcity of matches
+creates randomness in who matches with whom (fifth column in Table 1). We observe that
+our estimator performs well even with I 2500 workers and J = 500 firms, orders of
+≤
+magnitude smaller sample than a typical real world data set. As the number of workers and
+firms increases, the error becomes smaller.
+The bottom panel of Table 1 summarizes the results for the discrete choice model. Again,
+we parameterize it with the benchmark values in Section 3.3. We treat this as a repeated
+static model and assume that all matches last one period before new amenity shocks are
+drawn independently. This means most workers switch jobs each period. As in the previous
+model, the correlation in each particular sample is different and typically bigger in a larger
+economy. We again observe that the error in the estimator is very small, even in the sample
+with I 2500 workers and J = 500 firms.
+≤
+Figures 4 and 5 in Appendix B.3 show that we get similar results with other parameter
+values. Even in samples that are orders of magnitude smaller than a typical real world data
+set, the errors in the correlation estimates are typically in the third decimal place, except
+when the variance of firm types is nearly equal to zero.
+18We use the distribution of observations per worker in the Austrian data in the sample for men corre-
+sponding to column (3) of Table 2.
+25
+
+===== PDF PAGE 27 =====
+
+sample means distribution of ρˆ ρ
+b b
+−
+workers firms matches matches ρ 5% mean 95%
+worker firm b
+Two-sided Search
+2,412 500 3.9 18.7 0.757 -0.007 -0.001 0.005
+9,660 2,000 3.9 18.8 0.771 -0.003 0.000 0.003
+96,618 20,000 3.9 18.8 0.775 -0.001 0.000 0.001
+Discrete Choice
+2,496 500 4.3 21.6 0.744 -0.008 -0.001 0.006
+9,996 2,000 4.4 21.8 0.748 -0.004 0.000 0.003
+99,997 20,000 4.4 21.9 0.749 -0.001 0.000 0.001
+Table 1: Monte Carlo simulations in the two-sided search model with match-specific produc-
+tivity shocks and discrete choice model. For each choice of I,J, we create B = 500 artificial
+data sets as described in the main text. The first five columns show several descriptive
+statistics computed as means across samples – number of workers I, number of firms J,
+number of matches per worker, number of matches per firm and true sample correlation ρ .
+b
+The last three columns show the mean, the 5th and 95th quartile of the error distribution,
+ρˆ ρ . We parameterize the two-sided search model using the benchmark in Section 3.2.
+b b
+−
+We parameterize the discrete choice model using the benchmark in Section 3.3.
+5 Data
+5.1 Data Description
+We measure the correlation between worker and firm types using two panel data sets from
+the Austrian social security registry (Zweimuller, Winter-Ebmer, Lalive, Kuhn, Wuellrich,
+Ruf, and Buchi, 2009), the Austrian Social Security Database (ASSD) and the Arbeitsmark-
+tdatenbank (AMDB, Labor Market Database). The ASSD covers the universe of workers in
+the private sector from 1972 to 2007, the AMDB from 1986 to 2018.19 For each worker, each
+data set contains information about every job they hold. More precisely, in every calendar
+year and for every worker-firm pair,20 we observe annual earnings and days worked during
+the year. In the AMDB, we see two sources of earnings, regular wage payments and bonus
+payments, which we combine together to compute annual earnings. Earnings are top-coded
+at the maximum social security contribution level, which rises over time.21
+19The two data sets cover the same set of workers but we are not allowed to merge them, and therefore
+we will treat them as two separate data sets.
+20A firm is identified by its employer identification number (EIN). Some firms may have multiple EINs.
+21Forexample,in2018,thecapformonthlywageearningsise5,130andthecapforannualbonuspayment
+is e10,260. The fraction of male worker-firm observations affected by top-coding fell from a peak of 15.2
+percentin1990to10.3percentin2018. Top-codingaffectsfarfewerfemaleworker-firmobservations,varying
+from 1.7 to 4.8 percent during our sample period. We discuss the importance of top-coding for our results
+in Appendix D.
+26
+
+===== PDF PAGE 28 =====
+
+Each data set has its advantages. The AMDB covers later years while the ASSD provides
+more demographic information on workers. In particular, both data sets have some limited
+information on workers and firms, including workers’ birth year and sex, and region and
+industryfor firms. Weobserveregistered unemploymentspellsinthe AMDBand, after1986,
+in the ASSD. In the ASSD, we additionally observe whether the position is blue or white
+collar, as well as the education of most workers who experience registered unemployment.
+Following Card, Heining, and Kline (2013), we focus on workers age 20–60. We look
+separately at men and women, but recognize that selection into employment may be a more
+serious issue for women. We drop marginal jobs (less than 10 hours per week) and data
+that include an apprenticeship. We note that the data sets do not have an indicator of part-
+time jobs. While this might not be a serious concern for men, part-time work is prevalent
+among women. Between 1994 and 2007, on average 4.7 percent of employed men and 34.0
+of employed women worked part-time.22 Thus, caution is required when interpreting the
+results for women.
+For each worker-firm-year, we first construct a measure of the log daily wage by taking
+the difference between log annual earnings, which is the sum of wages and bonus, and log
+days worked. We then regress this on a full set of dummies for the calendar year and age.
+The first set of dummies captures the effects of aggregate nominal wage growth, while the
+secondremovesastandardage-earningsprofile. Ouranalysisfocusesonthesewageresiduals.
+In most of our analysis we use AMDB data. We supplement this with ASSD data in order
+to examine impact of observable characteristics.
+5.2 Independence Assumptions
+AuxiliaryAssumption1statesthattheerrortermsinthewageequationεw areindependent
+i,m
+and identically distributed across matches m for a given worker i. Auxiliary Assumption 2 is
+an analogous condition on the firm side. We recognize that this might not be always satisfied
+in the data. We approach this in several ways, always motivated by economic theories such
+as Burdett and Mortensen (1998), Shimer and Smith (2000), and Postel-Vinay and Robin
+(2002). Thesetheoriestellusthatthisconditioniseasilysatisfiedforfirmsbutnotalwaysfor
+workers. In this section we explain how we select a sample of workers where the conditional
+independence assumption is likely to be satisfied.
+We start by selecting all workers for whom we have at least two wage observations during
+the 33 years of data. This includes workers who are employed in at least two years, as well
+as workers who work for two different employers in the same calendar year. We treat the
+22These statistics come from the Statistical office of Austria, https://www.statistik.at.
+27
+
+===== PDF PAGE 29 =====
+
+annual residual wage observations as independent and measure the correlation accordingly.
+We call this independence assumption I.
+The advantage to measuring the correlation using independence assumption I is that we
+minimize sample selection issues, since we only drop workers with a single employer in a
+single year. The disadvantage is that a worker’s wage at a single employer is likely to be
+serially correlated, a violation of the conditional independence assumption. We therefore
+take a weighted average of the residual wage at the level of the worker-firm match, weighting
+by days worked, and treat this match-level wage as a single observation.23 We then select
+all workers who are employed by at least two employers and measure the correlation. We
+call this independence assumption II: wages are independent across matches.
+We recognize that, due to job-to-job movements, residual wages might be correlated
+across employment relationships. To understand the problem, consider the job ladder model
+from Burdett and Mortensen (1998). There, an employed worker accepts a job offer from
+anotherfirmifandonlyifitpaysahigherwage. Thismeansthatthewageinjobsheldbefore
+andafterthejob-to-jobtransitionarecorrelated. Accordingtothismodel, anunemployment
+spell breaks this correlation and so wages in two employment relationships separated by an
+unemployment spell are independent. Guided by these insights, we select all workers with
+at least two employment spells separated by a spell of registered unemployment and take
+the match-level wage in the longest job during each employment spell. This is independence
+assumption III: wages are independent across employment spells.
+AccordingtoBurdettandMortensen(1998)andPostel-VinayandRobin(2002),thewage
+in any two jobs during different employment spells are conditionally independent; however,
+they are not necessarily identically distributed. For example, the first accepted wage out
+of unemployment comes from a lower distribution than subsequent wages. To address this
+concern, we select only workers with at least two uncensored employmenet spells (that is,
+workerswithUEUEUtransitions, whereErepresentsanemploymentspellandUaregistered
+unemployment spell). For these workers, we consider three different wage measures. First,
+during any employment spell that starts and ends with an unemployment spell, we measure
+the average wage in the longest job. Second, for any employment spell that starts out of
+unemployment, we measure the average wage in the first job out of unemployment. Third,
+for any employment spell that ends with unemployment, we measure the average wage in
+the last job before unemployment. In many models with on-the-job search, any such wage
+observations are independently and identically distributed. We call all of these independence
+assumption IV.
+23RecallsarecommonintheAustrianlabormarket(PichelmannandRiedel,1992). Wetreatallinstances
+where a worker is employed by a firm as a single observation.
+28
+
+===== PDF PAGE 30 =====
+
+We comment on how we handle multiple matches between the same worker and firm.
+This happens if a match between a worker and a firm lasts more than one year or if a
+worker is employed by the same firm at two different times of his career. We treat both
+these situations in the same way. Under independence assumption I, we treat each annual
+wage observation for a worker-firm pair as a different match and hence by construction,
+workers have multiple matches with the same employer. As noted, this is unlikely to be
+consistent with our auxiliary assumptions. Under independence assumptions II, III, and
+IV, we combine all wage observations of a single worker-firm match into one observation by
+constructing the average wage. If the wage observations are separated by an unemployment
+spell, we drop that unemployment spell from our analysis. Thus we are left with at most
+one match between a worker and firm.
+Our approach requires at least two observations for each worker and each firm. After
+making the inial selection of workers, as described above, we trim our data set by first
+dropping any firm that only employs a single worker in the data set. If this leaves any of the
+workerswithasinglewageobservation, wedropthemfromthedataaswell. Werepeat. This
+process necessarily stops in a finite number of steps, either with an empty data set or with
+a data set containing the largest set of workers with multiple employers and employers with
+multiple workers in that data set. In our case the resulting data set is always non-empty.
+There is a tradeoff when we impose stricter independence assumptions, i.e. go from as-
+sumption I to assumption IV. On the one hand, our auxiliary assumptions are more plausible
+whenweimposestricterassumptions. Ontheotherhand, thesamplebecomesmoreselected.
+The concern is that the distribution of worker characteristics F(x), the conditional distribu-
+tion of jobs given worker characteristics Φ (y), and the wage equation w(x,y,z) change as
+x
+we restrict the sample. Since our definition of the correlation ρ depends on these objects, one
+would expect the correlation to differ across samples, even if our auxiliary assumptions were
+satisfied in all these samples. We address these selection issues explicitly when we discuss
+our results, which we turn to next.
+6 Estimated Correlation between Types
+6.1 Main Results
+Table 2 shows the main results for men and women. We estimate the correlation and
+covariancebetweenmatchedworkerandfirmtypes, aswellasthevarianceoftypes. Different
+columns correspond to different independence assumptions.
+Column (1) of Table 2 uses independence assumption I to construct the correlation.
+29
+
+===== PDF PAGE 31 =====
+
+Estimated Correlation and Variances
+(1) (2) (3) (4) (5) (6)
+Men
+correlation of matched types ρˆ 0.669 0.555 0.473 0.488 0.463 0.469
+covariance of matched types cˆ 0.065 0.042 0.027 0.027 0.026 0.028
+variance of worker types σ(cid:99)2 0.107 0.075 0.051 0.051 0.051 0.054
+λ
+variance of job types σ(cid:99)2 0.090 0.075 0.062 0.059 0.063 0.066
+µ
+number of workers (thousands) 3,884 2,916 1,646 971 971 970
+number of firms (thousands) 705 532 343 272 273 276
+number of observations (thousands) 64,359 16,401 7,211 4,883 4,881 4,880
+share of observations top-coded 0.112 0.074 0.047 0.020 0.009 0.012
+Women
+correlation of matched types ρˆ 0.615 0.440 0.423 0.459 0.432 0.443
+covariance of matched types cˆ 0.090 0.042 0.031 0.033 0.030 0.033
+variance of worker types σ(cid:99)2 0.168 0.094 0.063 0.066 0.060 0.066
+λ
+variance of job types σ(cid:99)2 0.127 0.097 0.085 0.080 0.080 0.082
+µ
+number of workers (thousands) 3,340 2,532 1,494 798 798 797
+number of firms (thousands) 758 530 345 249 248 250
+number of observations (thousands) 52,128 12,451 5,582 3,294 3,294 3,291
+share of observations top-coded 0.035 0.031 0.021 0.009 0.004 0.005
+independence assumption I II III IV IV IV
+observations included all all longest longest first last
+Table 2: Estimates of correlations, covariances, and variances between matched workers’
+and firms’ types using AMDB 1986–2018. All columns use residual log wages, obtained by
+regressing log wages on year and age dummies. Columns (2)–(6) aggregate residual wages
+to the worker-firm match level by taking a weighted average of wages within the match
+across years. Before applying our method, we iteratively drop firms and workers with a
+single wage observation. Each column uses a different sample to estimate the correlation.
+Independence assumption I includes workers with at least two firm-year wage observations
+and treats each year as an independent observation. Independence assumption II includes
+workers with at least two distinct employers and treats each employer as an independent
+observation. Independence assumption III includes workers with at least two employment
+spells and treats the longest jobs during each employment spell as independent observations.
+Independence assumption IV includes workers with at least two uncensored employment
+spells and treats either the longest (4), first (5), or last (6) job during each employment spell
+as independent observations.
+30
+
+===== PDF PAGE 32 =====
+
+This treats any two firm-year observations for a given worker as independent. We see that
+the correlation ρˆ is high, above 0.6 for both men and women. It seems unlikely, however,
+that this data set satisfies our auxiliary assumptions. First, the error term is likely to be
+serially correlated within a worker-firm match, violating auxiliary assumptions 1 and 2.
+Second, the worker and firm errors are likely correlated within a match. If a match lasts
+for multiple periods, this correlation lasts across multiple observations, violating the third
+auxiliary assumption. We therefore do not find these numbers credible.
+Column (2) uses the more plausible independence assumption II to construct the correla-
+tion, aggregating wage observations to the level of the worker-firm match. Each component
+of the correlation drops, and so does the correlation. There are two potential explanations
+for this drop. On the one hand, we expect that independence assumption I is incorrect and
+so the resulting correlation in column (2) is biased. On the other hand, we lose some workers
+going from column (1) to column (2) and so the drop can reflect the changing sample. To
+evaluate importance of these two explanations, we take the firms and workers from column
+(2) and impose independence assumption I. That is, we treat any two firm-year observations
+for a given worker as independent. The estimated correlation is 0.644 for men and 0.585
+for women, only slightly smaller than the numbers in column (1). This suggests that the
+difference between columns (1) and (2) is driven primarily by a violation of our auxiliary
+assumptions in column (1), with a bias reduction in column (2).
+WenextturntoindependenceassumptionIII,whichtreatswageobservationsfromdiffer-
+ent employment spells as independent, as in standard theories of on-the-job search. Column
+(3) shows a drop in the estimated correlation both for men and women, even though the
+change for women is small. To evaluate the importance of selection and bias, we take the
+sample of workers and firms from (3) and impose independence assumption II. That is, we
+use all matches of these workers. The estimated correlation is 0.502 for men and 0.415 for
+women. In this case, selection plays a significant role for both men and women, although
+there is also some bias for men. Nevertheless, we view the estimates in column (3) as a
+reasonable baseline.
+Finally, we look at independence assumption IV, which recognizes that wage observations
+at different points during different employment spells are independent but not identically
+distributed. Columns (4), (5), and (6) look at the longest, first, and last job during multiple
+employment spells. These estimates are remarkably similar to the correlation in column (3),
+both for men and women.
+In summary, dropping the biased estimates in column (1), the estimated correlation
+between types ranges from 0.463 to 0.555 for men, and from 0.423 to 0.459 for women. The
+exact number depends on the independence assumption. As we move from the independence
+31
+
+===== PDF PAGE 33 =====
+
+assumption I to IV, the auxiliary assumptions are more likely to be satisfied. The downside
+is that each concept imposes additional restrictions on the sample. We choose to focus on
+the results in column (3) because we believe those are likely to satisfy the independence
+assumption while minimizing the sample selection issues in the last three columns.
+We note that in each column of Table 2, min σ(cid:99)2,σ(cid:99)2 > cˆ. Viewed through the lens
+{ λ µ}
+of Proposition 1, this suggests we are not in the case where we need to worry about our
+correlation giving the opposite sign as the AKM correlation.
+6.2 Top Coding
+In our baseline results in Table 2 column (3), top-coding affects 4.7 percent of men’s obser-
+vations and 2.1 percent of women.24 To assess the importance of top-coding, we propose
+making the top-coding more severe in each year.25 Figure 6 in Appendix D shows that for
+men, the estimated correlation is nearly independent of the share of top-coded observations.
+For women, the estimated correlation is a decreasing function of the share observations that
+are top-coded. Extrapolating to a lower share of top-coded observations suggests that in the
+absence of top-coding, the estimated correlation for women might be slightly higher.
+6.3 Confidence Intervals
+We construct confidence intervals using a bootstrap procedure. Our main approach to the
+bootstrap involves constructing artificial data sets that generate the moments reported in
+Table 2, including the variances of worker and firm types, the covariance of matched workers’
+and firms’ types, as well as the variance of log wages, the distribution of the number of
+matches per worker and firm, and the joint distribution across matches of the durations of
+workers’ jobs. The artificial data sets also target the number of workers and firms but do
+not hit this exactly. They do not target who matches with whom, i.e. the structure of the
+network of matches, or the wage paid in each match. Appendix E describes how we construct
+these artificial data sets.
+We construct B = 500 artificial data sets. For each data set b = 1,...,B, we know the
+data generating process and hence we know each worker’s and firm’s type λ and µ. We then
+24We consider the log wage for a worker-firm pair to be top-coded if at least one annual wage or bonus
+observationforthatworker-firmpairistop-coded,andreporttheshareofsuchworker-firmpairobservations.
+The share of top-coded observations increases to 6.7 percent for men and remains unchaged at 2.1 percent
+for women if we look at calculate share of the annual worker-firm observations which are top-coded.
+25The usual approach involves imputing values to the top-coded observations (see for example, Card,
+Heining, and Kline, 2013). Interpreting either approach requires an assumption that the behavior of top-
+codedobservationsissimilartothebehaviorofotherhighwages. Webelieveourapproachismoretransparent
+and easier to implement.
+32
+
+===== PDF PAGE 34 =====
+
+compare the actual correlation between types, ρ , with the correlation estimated using our
+b
+approach, ρˆ . We construct confidence intervals using the difference ρ ρˆ as described
+b b b
+−
+in Appendix F. We find that this difference is typically small and is centered around zero,
+as one would expect for a consistent and unbiased estimator. For example, in column (3)
+of Table 2, the estimated correlation for men is ρˆ = 0.4732 and the 95 percent confidence
+interval is [0.4719,0.4746]. For women, the estimated correlation is ρˆ = 0.4231 and the 95
+percent confidence interval is [0.4214,0.4249]. The results in the other columns are similar.
+A drawback of our artificial data sets is that the network structure in the artificial and
+real-world data differ in some important dimensions. For example, in the real-world data,
+about 3 percent of a typical worker’s coworkers at one employer are also coworkers at another
+one of her employers. In our artificial data, this happens about 0.1 percent of the time. We
+propose an alternative procedure to address this concern. We hold fixed the set of matches
+in real-world data and draw random types for each worker and firm. We then draw wages
+for each match in a manner that is consistent with the definition of types. Unfortunately,
+generatingtypesthatareconsistentwiththerealworldcorrelationstructurerequiresdrawing
+a correlated random vector of dimension I+J, which is computationally infeasible. Instead,
+we ask what we would measure if the correlation between types were zero. If the true value of
+ρ were zero, 95 percent of the time our approach using the matching network in column (3)
+would have generated estimates of ρˆbetween 0.0040 and 0.0034 for men between 0.0055
+− −
+and 0.0050 for women. It is vanishingly unlikely that the Austrian data could have been
+generated from an economy without sorting.
+6.4 Other Observable Characteristics
+We now examine how controlling for fixed observable characteristics of workers and firms
+affects the estimated correlation. We use ASSD data set in this section because it provides
+more observable characteristics than AMDB data. This data has registered unemployment
+spells over a shorter time period, from 1986 to 2007, and so we first replicate column (3) of
+Table 2 on this shorter sample. Column (1) in Table 3 shows that the correlation is slightly
+lower in this earlier sample.
+We now relax the assumption that a firm has the same type (expected wage) for all its
+employees. Effectively we break a firm into different types for employees with different skill
+levels and estimate the correlation between types on this adjusted data set. To start, treat
+a firm j as a cross between a firm identifier and a worker’s education level. We use five
+different education categories: no completed education, middle school, technical secondary
+school, academicsecondaryschool, andcollege. Westartwiththesamedatasetasincolumn
+33
+
+===== PDF PAGE 35 =====
+
+Impact of Observables
+(1) (2) (3) (4)
+men
+correlation of matched types ρˆ 0.439 0.521 0.525 0.580
+covariance of matched types cˆ 0.019 0.023 0.024 0.028
+variance of worker types σ(cid:99)2 0.039 0.039 0.041 0.049
+λ
+variance of job types σ(cid:99)2 0.049 0.052 0.052 0.047
+µ
+number of workers (thousands) 1,101 949 1,045 917
+number of firms (thousands) 234 337 247 181
+number of observations (thousands) 4,376 3,895 3,975 2,706
+share of observations top-coded 0.078 0.071 0.074 0.070
+women
+correlation of matched types ρˆ 0.418 0.505 0.523 0.527
+covariance of matched types cˆ 0.028 0.036 0.040 0.038
+variance of worker types σ(cid:99)2 0.061 0.061 0.066 0.072
+λ
+variance of job types σ(cid:99)2 0.075 0.083 0.088 0.072
+µ
+number of workers (thousands) 951 786 895 646
+number of firms (thousands) 238 315 241 163
+number of observations (thousands) 3,190 2,660 2,757 1,787
+share of observations top-coded 0.054 0.024 0.028 0.022
+independence assumption III III III III
+education no yes no no
+white/blue collar no no yes no
+industry no no no yes
+Table 3: Results controlling for education, job classification, and industry using ASSD 1986–
+2007. Allcolumnsuseresiduallogwages,aggregatedtotheworker-firmmatchlevelbytaking
+a weighted average of wages within the match across years. All columns use independence
+assumption III, treating the longest jobs during each employment spell as independent ob-
+servations. Column (1) shows results without controlling for any observables. In column (2),
+we treat each firm education category as a separate firm. In column (3), we treat each
+×
+worker job position and firm job position as different workers and firms. In column (4),
+× ×
+we treat each worker industry as different workers. We adjust the counts of workers and
+×
+firms accordingly.
+34
+
+===== PDF PAGE 36 =====
+
+(1) of Table 3, but lose about ten percent of workers because they are missing education
+data.26 We then drop firm education observations that only appear once in the data set.
+×
+This in turn forces us to drop some workers, etc. Finally, we measure the correlation between
+the remaining worker and firm education types. Table 3 column (2) shows that allowing
+×
+firm types to differ by educational category raises the correlation between matched types
+from 0.439 to 0.521 for men and from 0.418 to 0.505 for women. This is consistent with
+the view that firms are a collection of heterogeneous jobs and so ignoring that heterogeneity
+causes us to underestimate the true correlation.
+We proceed in a similar way with the type of position, treating a firm identifier as distinct
+for white and blue collar jobs. Even though the type of position is a permanent characteristic
+for the majority of workers, some do hold both blue and white collar jobs, and thus we treat
+a worker at different positions as a different worker type as well. This again substantially
+raises the estimated correlation to 0.525 for men and 0.523 for women, see Table 3 column
+(3). Again, we interpret this as evidence that firms are collections of heterogeneous jobs and
+sorting occurs both across firms and across job categories within firms.
+Finally, we investigate the role of industry. We use ten one-digit SIC industry categories.
+These are fixed at the firm level but workers switch industries, in which case we treat them
+as if they were different individuals. Even though we start from the same set of workers and
+firms, we lose observations when the worker does not hold two jobs in the same industry,
+about 38 percent of the observations for men and 37 percent for women. The correlation
+between the remaining matched workers and jobs is the highest yet, 0.580 for men and 0.527
+for women, reported in Table 3 column (4). In summary, the headline numbers in Table 2
+significantly understate the amount of sorting in the economy because they ignore the fact
+thatfirmsarecollectionsofheterogeneousjobsandworkers’typechangesovertime. Itseems
+plausible that if we could account for unobserved time-varying heterogeneity, the measured
+correlation would increase further.
+6.5 Time Series
+Our approach is amenable to time series analysis. To see this, we redo all of our analysis
+using only a single year’s data at a time. That is, we measure the average log wage for a
+worker-firm pair using only wage information from the considered year, even if the match
+exists in other years. We focus throughout on independence assumption III, selecting the
+26Missingeducationdataisnotrandom,evenconditionalonunemployment. Thosemen(women)without
+education data earn a residual log wage that is 0.19 (0.16) standard deviations higher than the average
+residual log wage of workers with recorded education. Furthermore, workers with missing education have
+fewer employment spells on average, 2.4 compared to 4.1 for men, and 2.3 compared to 3.4 for women.
+35
+
+===== PDF PAGE 37 =====
+
+0.60
+0.55
+0.50
+men
+0.40
+women
+0.35
+0.30
+1990 1995 2000 2005 2010 2015
+year
+ˆρ
+noitalerroc
+men women
+Figure 3: Year-by-year correlation between worker and firm types under independence as-
+sumption III, using AMDB 1986–2018. Thick solid lines are computed year-by-year and
+shaded areas are bootstrapped 95 percent confidence intervals. For each year, the sample
+considers all workers who switched employers after an unemployment spell within that year,
+and includes one job for each employment spell of these workers. The sample only includes
+the wage observations for that year, even if the match continued in other years. The thin
+horizontal lines are correlations computed in samples constructed by pooling all year-by-year
+samples together.
+last job before the unemployment spell and the first job after the unemployment spell.
+Using only those workers who switch employers after an unemployment spell within a
+year reduces our sample size from 1.6 million workers to an average of 62,000 workers per
+year for men, and from 1.5 million to 36,000 for women. This is still sufficiently large to
+estimate the annual correlation between worker and firm types. Figure 3 shows that the
+correlation between worker and firm types increased slightly for men, from an initial 0.427
+in 1986 to around 0.489 in 1997, where it stayed until 2007. We see another increase in
+the correlation in the last ten years, reaching 0.551 in year 2018. The figure also shows a
+general downward trend in the correlation for women. In both cases, the bootstrapped 95
+percent confidence intervals are small in every year. The stability of these estimates from
+year-to-year provides additional support for our methodology.
+The annual correlations average 0.493 for men and 0.425 for women, very similar to the
+correlations of 0.473 and 0.423 reported in column (3) of Table 2 using the full sample. This
+36
+
+===== PDF PAGE 38 =====
+
+reflects a combination of two different forces. First, the sample of workers is different, since
+for the time series analysis we use workers who have multiple employment spells within a
+year, while some workers may have multiple spells, but only in different years. To assess the
+importance of this, we pool the samples from the time series analysis and estimate a single
+correlation, 0.454 for men and 0.376 for women.27 Since these are smaller than the numbers
+reported in column (3) of Table 2, we conclude that sample selection reduces the measured
+correlation.
+Second, in the time series analysis, workers and firms are not linked across years and
+hence a worker in one year is treated independently of the same worker in a different year. If
+types change over time in ways that are not captured by age dummies in a wage regression,
+the correlation in the pooled sample will understate the correlation at any point in time since
+the time-average types λ and µ are noisy measures of the time-varying types λ and µ .
+i j i,t j,t
+In Appendix G, we establish this formally when conditional expectations are linear. This
+suggests yet another reason why the estimates in Table 2 understate the amount of sorting
+between workers and firms.
+One possible concern with our results in this section is that we focus on the last job in
+one employment spell and the first job in the next spell. Although the wages in these jobs
+may be independent, theory tells us that they are not drawn from the same distribution.
+Indeed, in our data there are level differences in wages within a spell: the mean log wage
+in the first job after unemployment is lower than the mean log wage in the second job,
+which is lower than in the third job, etc.. There are two reasons why we believe that this is
+not a major issue. First, the estimated correlation using only first jobs or only last jobs in
+each employment spell is very similar; see columns (5) and (6) in Table 2. Second, we have
+regressed log wages on the job’s order within a spell, in addition to age and year dummies,
+before constructing wage residuals. This additional control has little quantitative impact on
+the correlations in Figure 3.
+7 Comparison with the AKM Correlation
+The standard method of measuring whether high wage workers take high wage jobs is due to
+Abowd, Kramarz, and Margolis (1999). The authors propose running a linear regression of
+log wages against a worker fixed effect α and a firm fixed effect ψ, as in equation (7). This
+ˆ
+gives them estimates of each fixed effect, αˆ for all i and ψ for all j. They then compute the
+i j
+27In this pooled sample, we aggregate all worker-firm-year residual wages back to the worker-firm level by
+computing an average log wage over years. We then keep only the longest match in each employment spell.
+The sample contains 949,508 men and 688,427 women.
+37
+
+===== PDF PAGE 39 =====
+
+Comparison with AKM Correlation
+(1) (2) (3) (4) (5) (6)
+Men
+ρˆ 0.662 0.555 0.473 0.488 0.463 0.468
+ρˆ 0.086 0.202 0.122 0.053 0.018 0.029
+AKM
+number of workers (thousands) 3,862 2,915 1,646 971 971 970
+number of firms (thousands) 682 532 343 272 273 276
+number of observations (thousands) 64,193 16,400 7,211 4,883 4,881 4,880
+share of observations top-coded 0.112 0.074 0.047 0.020 0.009 0.012
+Women
+ρˆ 0.606 0.440 0.423 0.459 0.432 0.443
+ρˆ 0.026 0.093 0.067 0.061 0.047 0.057
+AKM
+number of workers (thousands) 3,305 2,532 1,494 798 798 797
+number of firms (thousands) 720 530 345 249 248 250
+number of observations (thousands) 51,813 12,450 5,582 3,294 3,294 3,291
+share of observations top-coded 0.035 0.031 0.021 0.009 0.004 0.005
+independence assumption I II III IV IV IV
+observations included all all longest longest first last
+Table 4: Comparison of our estimates of correlation and AKM fixed effects estimates using
+AMDB 1986–2018. Both ρ and ρ are estimated on the largest connected set. Otherwise
+AKM
+the data construction is identical to Table 2. See the notes to that table for details.
+ˆ
+correlation between αˆ and ψ in matched pairs. As we mentioned in the introduction, a fair
+i j
+summary of the extensive literature that follows that paper is that the estimated correlation
+is close to zero and sometimes negative.
+Table4verifiesthatthisistruewithourapproachtothedata. Weusethesameapproach
+as in Table 2, with one difference: the AKM correlation is only identified on the largest
+connected set of workers and firms and so we work with this set. Comparing Tables 2 and
+4, we see that very few workers and firms are not part of the largest connected set and so
+unsurprisinglythishaslittleeffectonourestimateρˆ. WethenestimatetheAKMcorrelation.
+The exact formulae for the duration-weighted estimator ρˆ are in Appendix H.1. Our
+AKM
+estimates lie between 0.018 and 0.202 for men and 0.026 and 0.093 for women. Across the six
+columns, thefixedeffectscorrelationisonaverage0.433belowourestimateofthecorrelation
+for men and 0.409 below our estimate of the correlation for women.
+Why is the estimated correlation between the AKM fixed effects so much smaller than
+the estimated correlation between our measure of types? There are two possible reasons.
+First, Section 3 shows that ρ is typically, possibly always, larger than ρ , and in struc-
+AKM
+tural models the differences may be substantial. We also argued that our correlation better
+38
+
+===== PDF PAGE 40 =====
+
+captures the extent of sorting in the real economy when these two measures are different.
+Second, a number of authors have noted that the estimator of the AKM correlation using
+an OLS regression, ρˆ , does not generally converge to ρ in a large data set (Postel-
+AKM AKM
+Vinay and Robin, 2006; Barth and Dale-Olsen, 2003; Abowd, Kramarz, Lengermann, and
+P´erez-Duarte, 2004). Instead, consistency requires that the number of independent obser-
+vations per worker and firm goes to infinity holding fixed the number of workers and firms.
+This is not a natural feature of real-world data sets. For example, even using 33 years of
+Austrian data, the median worker has two employers and the median firm has three em-
+ployees. The literature has called this incidental parameters problem “limited mobility bias”
+and proved that it leads to an underestimate of the AKM covariance and an overestimate of
+the standard deviation of worker and firm fixed effects. Together these imply ρ > ρˆ
+AKM AKM
+when the former is positive.
+The literature has offered some solutions to the limited mobility bias problem; see Ap-
+pendix H.2 for details. We find that the bias corrections proposed in Andrews, Gill, Schank,
+and Upward (2008) and Kline, Saggio, and Sølvsten (2019) give us estimates of ρ that
+AKM
+are much smaller than our estimate of ρ. For example, under independence assumption III,
+our estimate of the ρ is 0.46 for men and 0.39 for women, while the OLS estimate of ρ is
+AKM
+0.02 for men and 0.05 for women.28 The Andrews, Gill, Schank, and Upward (2008) bias
+− −
+correction turns the estimate of ρ positive but still small, 0.10 for both men and women.
+AKM
+The correction in Kline, Saggio, and Sølvsten (2019) increases this a bit more, to 0.11 for
+men and 0.10 for women. On the other hand, the approach in Bonhomme, Lamadon, and
+Manresa (2019) has a much bigger effect on the results, increasing the correlation to 0.30 for
+men and 0.29 for women, although this is still one-third smaller than our estimates of the
+correlation.
+Table 5 shows that the results are qualitatively similar in other samples, with our mea-
+sure of correlation always somewhat larger than the estimate of the AKM correlation from
+Bonhomme, Lamadon, and Manresa (2019), which in turn is bigger than the bias-corrected
+estimates in 2008 and Kline, Saggio, and Sølvsten (2019), which are again bigger than the
+OLS estimates of the AKM correlation. Our reading of the literature is that there is no
+agreement yet about which (if any) of these methods reliably estimates ρ in finite sam-
+AKM
+ples. For this reason, we do not know whether the difference between our estimates of ρ and
+existing estimates of ρ reflect conceptual differences between the two concepts or biases
+AKM
+in estimating ρ . In the former case, we argued in Section 3 that there are theoretical
+AKM
+28These are different than the numbers in Table 4 because the bias corrections impose some restrictions
+on how we look at the data. The two most important ones are that we use exactly two matches for each
+worker and that we cannot weight any of the estimates by duration. Again, see Appendix H.2 for details.
+39
+
+===== PDF PAGE 41 =====
+
+Comparison with Bias-Corrected Estimates of AKM Correlation
+(1) (2) (3) (4) (5) (6)
+Men
+ρˆ 0.679 0.582 0.460 0.436 0.426 0.433
+ρˆ , OLS -0.098 0.042 -0.020 -0.056 -0.080 -0.080
+AKM
+ρˆ , AGSU -0.043 0.152 0.098 0.069 0.061 0.074
+AKM
+ρˆ , KSS 0.048 0.165 0.106 0.082 0.073 0.088
+AKM
+ρˆ , BLM 0.259 0.350 0.300 0.309 0.267 0.291
+AKM
+number of workers (thousands) 3,459 2,800 1,577 908 907 906
+number of firms (thousands) 186 302 229 166 166 169
+number of observations (thousands) 6,918 5,601 3,154 1,816 1,815 1,811
+share of observations top-coded 0.0550 0.086 0.068 0.027 0.010 0.014
+Women
+ρˆ 0.595 0.378 0.386 0.434 0.426 0.438
+ρˆ , OLS -0.149 -0.053 -0.055 -0.048 -0.074 -0.070
+AKM
+ρˆ , AGSU -0.104 0.046 0.101 0.162 0.153 0.172
+AKM
+ρˆ , KSS -0.022 0.048 0.103 0.173 0.165 0.187
+AKM
+ρˆ , BLM 0.122 0.254 0.292 0.364 0.362 0.341
+AKM
+number of workers (thousands) 2,816 2,409 1,425 738 738 736
+number of firms (thousands) 172 311 241 158 157 159
+number of observations (thousands) 5,631 4,818 2,849 1,476 1,476 1,473
+share of observations top-coded 0.015 0.030 0.025 0.010 0.004 0.005
+independence assumption I II III IV IV IV
+observations included all all longest longest first last
+Table 5: Estimates of the correlation ρ and the AKM correlation using different methods,
+using AMDB 1986–2018. The initial data construction is identical to Table 2 but we further
+restrict the sample to the largest leave-one-out connected set where every worker has exactly
+two distinct employers, and every firm employs at least two workers. The estimates are not
+weighted by duration. ρˆ is our measure of sorting. ρˆ , OLS is the OLS estimate of the
+AKM
+AKM correlation. ρˆ , AGSU uses the Andrews, Gill, Schank, and Upward (2008) bias
+AKM
+correction. ρˆ , KSS uses the Kline, Saggio, and Sølvsten (2019) correction. ρˆ , BLM
+AKM AKM
+uses the mixture model in Bonhomme, Lamadon, and Manresa (2019).
+40
+
+===== PDF PAGE 42 =====
+
+reasons to prefer ρ to ρ . In the latter case, there are pragmatic reasons for estimating
+AKM
+ρ, since we know how to do it.
+8 Conclusion
+This paper proposes a new measure of sorting, the correlation between a worker’s average
+wage and her employer’s average wage. We find that this measure performs at least as well as
+the AKM correlation in a variety of structural models. We then propose an estimator of the
+correlation that is consistent in data sets with many workers and firms but few observations
+for each worker and firm. Using Austrian data, we find strong evidence for sorting between
+high wage workers and high wage firms. The correlation between a worker’s type and her
+employer’s type exceeds 0.4 and has been growing over time for men but shrinking for
+women. This contrasts with the previous literature, which has used the AKM approach and
+concluded that there is little sorting of high wage workers into high wage jobs. Whether this
+reflects theoretical limitations of the AKM measure of sorting or biases in estimating the
+AKM measure of sorting remains an open question.
+We have focused in this paper on measuring sorting between workers and firms, but our
+empirical approach may be useful in a variety of other settings. For example, our approach
+can measure sorting between firms and banks in the corporate loan market. It can measure
+sorting of innovators into teams, as well as sorting between innovators and innovating firms.
+Our approach can detect whether schools assign better students to better teachers. In short,
+our methodology applies to any setting where we know the identity of both parties in a
+match and can observe an outcome for the pair.
+Is our measured correlation large? This is a quantitative question that goes beyond the
+scope of this paper. Still, there are reasons to think that our approach understates the true
+extent of sorting. We have already mentioned three such reasons: we focus only on workers
+who experience unemployment, while those who are continuously employed appear to have
+a higher correlation; workers’ types change over time, arguably more dramatically during a
+spell of registered unemployment (Ljungqvist and Sargent, 1998); and firms are collections
+of heterogeneous jobs at a point in time and so there is not really a single firm type that
+is applicable to all workers. Even in a frictionless environment, one would not expect to
+see many firms that only hire high wage workers, since real-world production processes and
+hierarchies utilize a mix of skills (Garicano, 2000).
+Inclosing, wementiononemorereasonwhywemaybeunderstatingtheextentofsorting:
+our approach focuses only on vertical sorting as captured through wages. Horizontal sorting
+of similarly-paid workers with different skills is likely also important (Lindenlaub, 2017;
+41
+
+===== PDF PAGE 43 =====
+
+Lindenlaub and Postel-Vinay, 2017). Our estimated correlations therefore suggest that the
+labor market effectively gets the highest wage workers together at the highest wage firms.
+References
+Abowd, John M., Robert H. Creecy, and Francis Kramarz (2002). “Computing person and
+firm effects using linked longitudinal employer-employee data”. Center for Economic
+Studies, US Census Bureau.
+Abowd, John M., Francis Kramarz, Paul Lengermann, and S´ebastien P´erez-Duarte (2004).
+“Are Good Workers Employed by Good Firms? A Test of a Simple Assortative Matching
+Model for France and the United States”. Mimeo.
+Abowd, John M., Francis Kramarz, and David N. Margolis (1999). “High Wage Workers and
+High Wage Firms”. Econometrica 67.2, pp. 251–333.
+Andrews, Martyn J., Leonard Gill, Thorsten Schank, and Richard Upward (2008). “High
+Wage Workers and Low Wage Firms: Negative Assortative Matching or Limited Mobility
+Bias?” Journal of the Royal Statistical Society: Series A (Statistics in Society) 171.3,
+pp. 673–697.
+Bagger,Jesper,Fran¸coisFontaine,FabienPostel-Vinay,andJean-MarcRobin(2014).“Tenure,
+Experience, Human Capital, and Wages: A Tractable Equilibrium Search Model of Wage
+Dynamics”. American Economic Review 104.6, pp. 1551–1596.
+Bagger,JesperandRasmusLentz(forthcoming).“AnEquilibriumModelofWageDispersion
+and Sorting”. Review of Economic Studies.
+Bagger, Jesper, Kenneth L Sørensen, and Rune Vejlin (2013). “Wage Sorting Trends”. Eco-
+nomics Letters 118.1, pp. 63–67.
+Barth, Erling and Harald Dale-Olsen (2003). “Assortative Matching in the Labour Market?
+Stylised Facts about Workers and Plants”. Mimeo.
+Becker, Gary S. (1973). “A Theory of Marriage: Part I”. Journal of Political Economy 81.4,
+pp. 813–846.
+Bonhomme, St´ephane, Thibaut Lamadon, and Elena Manresa (2019). “A Distributional
+Framework for Matched Employer Employee Data”. Econometrica 87.3, pp. 699–738.
+Burdett, Kenneth and Dale Mortensen (1998). “Wage Differentials, Employer Size, and Un-
+employment”. International Economic Review 39.2, pp. 257–73.
+42
+
+===== PDF PAGE 44 =====
+
+Card, David, Ana Rute Cardoso, Joerg Heining, and Patrick Kline (2018). “Firms and Labor
+MarketInequality: Evidenceand Some Theory”. Journal of Labor Economics 36.S1, S13–
+S70.
+Card,David,Jo¨rgHeining,andPatrickKline(2013).“WorkplaceHeterogeneityandtheRise
+of West German Wage Inequality”. Quarterly Journal of Economics 128.3, pp. 967–1015.
+Christensen, Bent Jesper, Rasmus Lentz, Dale T. Mortensen, George R. Neumann, and
+Axel Werwatz (2005). “On-the-Job Search and the Wage Distribution”. Journal of Labor
+Economics 23.1, pp. 31–58.
+Eeckhout, Jan and Philipp Kircher (2011). “Identifying Sorting—In Theory”. Review of
+Economic Studies 78.3, pp. 872–906.
+Garicano, Luis (2000). “Hierarchies and the Organization of Knowledge in Production”.
+Journal of Political Economy 108.5, pp. 874–904.
+Gouss´e, Marion, Nicolas Jacquemet, and Jean-Marc Robin (2017). “Marriage, Labor Supply,
+and Home Production”. Econometrica 85.6, pp. 1873–1919.
+Gruetter,MaxandRafaelLalive(2009).“TheImportanceofFirmsinWageDetermination”.
+Labour Economics 16.2, pp. 149–160.
+Hagedorn, Marcus, Tzuo Hann Law, and Iourii Manovskii (2017). “Identifying Equilibrium
+Models of Labor Market Sorting”. Econometrica 85.1, pp. 29–65.
+Iranzo, Susana, Fabiano Schivardi, and Elisa Tosetti (2008). “Skill Dispersion and Firm
+Productivity: An Analysis with Employer-Employee Matched Data”. Journal of Labor
+Economics 26.2, pp. 247–285.
+Jarosch, Gregor (2015). “Searching for Job Security and the Consequences of Job Loss”.
+Mimeo.
+Jochmans, Koen and Martin Weidner (2019). “Fixed-Effect Regressions on Network Data”.
+Econometrica 87.5, pp. 1543–1560.
+Kline, Patrick, Raffaele Saggio, and Mikkel Sølvsten (2019). Leave-out Estimation of Vari-
+ance Components. NBER Working Paper No. 26244.
+Lindenlaub, Ilse (2017). “Sorting Multidimensional Types: Theory and Application”. Review
+of Economic Studies 84.2, pp. 718–789.
+Lindenlaub, Ilse and Fabien Postel-Vinay (2017). “Multidimensional Sorting Under Random
+Search”. mimeo.
+43
+
+===== PDF PAGE 45 =====
+
+Lise, Jeremy, Costas Meghir, and Jean-Marc Robin (2016). “Matching, Sorting and Wages”.
+Review of Economic Dynamics 19, pp. 63–87.
+Ljungqvist, Lars and Thomas J. Sargent (1998). “The European Unemployment Dilemma”.
+Journal of Political Economy 106.3, pp. 514–550.
+Lopes de Melo, Rafael (2018). “Firm Wage Differentials and Labor Market Sorting: Recon-
+ciling Theory and Evidence”. Journal of Political Economy 126.1, pp. 313–346.
+Malmberg, Hannes and Ola Ho¨ssler (2014). “Probabilistic Choice with an Infinite Set of
+Options: An Approach Based on Random Sup Measures”. Modern Problems in Insur-
+ance Mathematics. Ed. by Dmitrii Silvestrov and Anders Martin-Lo¨f. Springer. Chap. 18,
+pp. 291–312.
+Pichelmann,KarlandMonikaRiedel(1992).“NewJobsorRecalls?”Empirica 19.2,pp.259–
+274.
+Postel-Vinay, Fabien and Jean-Marc Robin (2002). “Equilibrium Wage Dispersion with
+Worker and Employer Heterogeneity”. Econometrica 70.6, pp. 2295–2350.
+— (2006). “Microeconometric Search-Matching Models and Matched Employer-Employee
+Data”. The Proceedings of the 9th World Congress of the Econometric Society, pp. 877–
+907.
+Shimer, Robert and Lones Smith (2000). “Assortative Matching and Search”. Econometrica
+68.2, pp. 343–369.
+Solomon, Lewis C. (1975). “The Definition of College Quality and Its Impact on Earnings”.
+Explorations in Economic Research, volume 2, number 4. NBER, pp. 537–587.
+Tiebout, Charles M. (1956). “A Pure Theory of Local Expenditures”. Journal of Political
+Economy 64.5, pp. 416–424.
+Zweimuller, Josef, Rudolf Winter-Ebmer, Rafael Lalive, Andreas Kuhn, Jean-Philipe Wuell-
+rich, Oliver Ruf, and Simon Buchi (2009). Austrian Social Security Database. Mimeo.
+44
+
+===== PDF PAGE 46 =====
+
+Appendix
+A Details of Structural Models
+A.1 A Statistical Model
+We provide the proof of Proposition 1 omitted from the main text.
+Proof of Proposition 1. First recall that one can obtain the best linear prediction of the
+expected value of y conditional on x by running a least square regression of y on x,
+c
+E (y) = y¯+ AKM (x x¯),
+x σ2 −
+x
+where x¯ and y¯ denote the expected values of x and y. Since by assumption the expectation
+of x conditional on y is linear in y, this relationship is exact. We can then use the definition
+of λ in equation (1) directly to write
+(cid:18) (cid:19)
+c c
+λ = E w(x ,y) = x + E (y) = y¯ AKM x¯+ 1+ AKM x , (26)
+i xi i i xi − σ2 σ2 i
+x x
+and so λ is an affine function of x . A symmetric argument establishes that E (x) =
+i i y
+x¯+ cAKM(y y¯) and
+σ y 2 − (cid:18) (cid:19)
+c c
+AKM AKM
+µ = x¯ y¯+ 1+ y . (27)
+j − σ2 σ2 j
+y y
+This verifies that µ is an affine function of y .
+j j
+Next, assume that min σ2,σ2 > c . Equations (26) and (27) imply λ is an in-
+{ x y} − AKM i
+creasing function of x and µ is an increasing function of y . Therefore the correlation
+i j j
+between λ and µ is the same as the correlation between x and y, ρ = ρ . Moreover,
+AKM
+equations (26) and (27) imply that the standard deviations of λ and y are σ = σ +ρ σ
+λ x AKM y
+and σ = σ + ρ σ , both positive by the assumption at the start of this paragraph.
+µ y AKM x
+Using this and ρ = ρ gives us σ2 c = σ2(1 ρσ /σ ) = σ σ (1 ρ2 ) > 0, and
+AKM λ − λ − µ λ x λ − AKM
+symmetrically σ2 c = σ σ (1 ρ2 ) > 0. Hence min σ2,σ2 > c.
+µ − y µ − AKM { λ µ}
+Alternatively, suppose that σ2 > c > σ2. Then λ is an increasing function of x
+x − AKM y i i
+and µ is a decreasing function of y . Therefore ρ = ρ . Equations (26) and (27) imply
+j j AKM
+−
+that the standard deviations of λ and µ are σ = σ +ρ σ and σ = (σ +ρ σ ).
+λ x AKM y µ y AKM x
+−
+Using this and ρ = ρ gives us σ2 c = σ2(1 ρσ /σ ) = σ σ (1 ρ2 ) > 0 and
+− AKM λ − λ − µ λ x λ − AKM
+σ2 c = σ σ (1 ρ2 ) < 0. Hence min σ2,σ2 < c. The case with σ2 > c > σ2 is
+µ− − y µ − AKM { λ µ} y − AKM x
+analogous. It cannot be the case that c > max σ2,σ2 . Thus whenever min σ2,σ2 <
+− AKM { x y} { x y}
+45
+
+===== PDF PAGE 47 =====
+
+c , min σ2,σ2 < c.
+− AKM { λ µ}
+Finally, if σ2 +c = 0, equations (26) and (27) imply σ = 0. If σ2 +c = 0, then
+x AKM λ y AKM
+σ = 0. In these cases, the correlation between λ and µ is undefined.
+µ
+A.2 Two-Sided Search Model with Match-Specific Shocks
+We formulate equations for the value functions U(x) and V(y) and steady state conditions
+for u(x) and v(y). It will be useful to define the conditional expected value ω and survivor
+function p as
+(cid:82)
+∞zdζ(z)
+ω(k) = k if ζ(k) < 1, ω(k) = k otherwise
+1 ζ(k)
+−
+p(k) = 1 ζ(k).
+−
+The value of being unemployed is then
+(cid:90) (cid:18)(cid:90) (cid:19)
+γ (cid:0) (cid:1) ˜
+rU(x) = θ zH(x,y) rU(x) rV(y) dζ(z) v(y)dG(y)
+r+δ − −
+Y z z¯(x,y)
+(cid:90) ≥
+θγ (cid:0) (cid:1) ˜
+= p(z¯(x,y)) ω(z¯(x,y))H(x,y) rU(x) rV(y) v(y)dG(y). (28)
+r+δ − −
+Y
+Similarly, the value of a vacant firm is
+(cid:90)
+θ(1 γ) (cid:0) (cid:1) ˜
+rV(y) = − p(z¯(x,y)) ω(z¯(x,y))H(x,y) rU(x) rV(y) u(x)dF(x). (29)
+r+δ − −
+X
+Finally, the steady state conditions for unemployment and vacancy rates are
+(cid:90)
+˜
+δ(1 u(x)) = θu(x) p(z¯(x,y))v(y)dG(y), (30)
+−
+Y
+(cid:90)
+˜
+δ(1 v(y)) = θv(y) p(z¯(x,y))u(x)dF(x). (31)
+−
+X
+Using this, we can find the conditional distribution of jobs for each worker:
+˜
+p(z¯(x,y))v(y)dG(y)
+Φ (y) = . (32)
+x (cid:82) ˜
+p(z¯(x,y ))v(y )dG(y )
+Y (cid:48) (cid:48) (cid:48)
+The log wage in an (x,y) match with productivity shock z is
+(cid:0) (cid:0) (cid:1) (cid:1)
+w(x,y,z) = log γ zH(x,y) rU(x) rV(y) +rU(x) , (33)
+− −
+46
+
+===== PDF PAGE 48 =====
+
+and hence its expectation is
+(cid:90)
+we(x,y) Ew(x,y,z) = w(x,y,z)dζ(z)/p(z¯(x,y)). (34)
+≡
+z z¯(x,y)
+≥
+This is enough information to compute ρ and ρ from the model.
+AKM
+Finally, note that if ζ has an exponential distribution, the expected log wage is
+(cid:90)
+we(x,y) = eγs r H U ( ( x x , ) y) ∞ 1 dt+log(rU(x)),
+rU(x)
+tet
+γsH(x,y)
+which is increasing in H(x,y). Thus if the production technology is monotonic in y, the
+expected log wage is also monotonic in y for fixed x.29
+A.3 Discrete Choice Model
+We have closed-form formulas for all objects of interest when the distributions of worker and
+firm characteristics are normal, x N(m ,σ2) and y N(m ,σ2). In the interest of space,
+∼ x x ∼ y y
+we show formulae for the standard normal case, m = m = 0 and σ = σ = 1.
+x y x y
+Theorem 18.4 in Malmberg and H¨ossler (2014) implies that the distribution of firm types
+y conditional on worker’s type x is
+(cid:16) (cid:17)
+exp w(x,y) dG ˜ (y)
+s
+Φ (y) = . (35)
+x (cid:82)
+∞ exp
+(cid:16) w(x,y(cid:48)) (cid:17)
+dG
+˜
+(y )
+s (cid:48)
+−∞
+Undertheassumptionthaty hasastandardnormaldistributionandw(x,y) = x (x y)2/a,
+− −
+we get that Φ (y) is also normal with mean 2x and variance as . The distribution of x
+x 2+as 2+as
+and the distribution of y conditional on x allow us to compute the joint distribution of x
+and y. Importantly, the correlation is 2 .
+√4+2as+a2s2
+Next, understanding the wage and the joint distribution of x and y, we can compute the
+types from equations (1) and (2):
+as2x2 s
+λ(x) = +x , (36)
+−(2+as)2 − 2+as
+a3s4y2 2(2+as)y s(2+as)
+µ(y) = + , (37)
+−(4+2as+a2s2)2 4+2as+a2s2 − 4+2as+a2s2
+29The same is true for the expected wage.
+47
+
+===== PDF PAGE 49 =====
+
+as well as the AKM fixed effects from equations (8) and (9):
+s(4+a2s2)x2
+α(x) = +x+α , (38)
+−(2+as)(8+2as+a2s2) 0
+s(2 as)y2 4s
+ψ(y) = − α . (39)
+−8+2as+a2s2 − 8+2as+a2s2 − 0
+Note that λ, µ, and α are all concave quadratic functions of the characteristic, while ψ is a
+concave quadratic if as < 2, a convex quadratic if as > 2, and a constant if as = 2.
+In the last step, we can use the covariance matrix of x and y as well as these functional
+forms to find the covariance matrix of λ and µ as well as α and ψ. The exact formulae are
+messy even in the standard normal case and so we omit them.
+B Properties of Estimator
+B.1 Consistency Proofs
+Proof of Proposition 2. Take worker i with characteristics x :
+i
+E (cid:80)Mi tw ww E (cid:80)Mi tw εw
+λ(x ) = xi m=1 i,m i,m = w¯w + x m=1 i,m i,m = w¯w.
+i T ¯w xi E Tw xi
+x xi i
+The first equation is the definition of λ as the expected daily log earnings, equation (14).
+The second uses the auxiliary assumption that ww = w¯w+εw . The third uses the auxiliary
+i,m xi i,m
+assumption that the expected value of tw εw is zero. The proof for firms is identical.
+i,m i,m
+Proof of Proposition 3. We start by proving that 1 (cid:80)τI Twλ ˆ is a consistent estimator
+τI i=1 i i
+of 1 (cid:80) I T ¯wλ(x), i.e. the product of worker type and time spent matched. We do this in
+I x X x x
+∈
+two steps. First, for any given worker i with characteristic x ,
+i
+Tw
+(cid:80)Mi
+ww
+(cid:80)Mi (cid:80)Mi
+tw εw
+Twλ ˆ = i m=1 i,m = Tww¯w + m=1 m(cid:48)=1 i,m(cid:48) i,m = Twλ(x )+υ
+i i M i xi M i i 1,i
+i i
+where υ 1 (cid:80)Mi (cid:80)Mi tw εw . The first equation uses the definition of λ ˆ from
+1,i ≡ Mi m=1 m(cid:48)=1 i,m(cid:48) i,m i
+equation (18). The second uses the auxiliary assumption that ww = w¯w + εw and also
+i,m xi i,m
+writes Tw =
+(cid:80)Mi
+tw . The third uses λ(x ) = w¯w (Proposition 2) and defines the error
+i m(cid:48)=1 i,m(cid:48) i xi
+term υ . Since tw and εw are independent for all m and m and ε has mean zero,
+1,i i,m i,m(cid:48) (cid:48) i,m(cid:48)
+υ also has mean zero for each i. It also has a finite characteristic-dependent variance, say
+1,i
+σ2 < , since σw is finite and durations are bounded.
+υ1,xi ∞ xi
+48
+
+===== PDF PAGE 50 =====
+
+Summing these up implies that the expected value of 1 (cid:80)τI Twλ ˆ is 1 (cid:80) I T ¯wλ(x).
+τI i=1 i i I x X x x
+∈
+Next, the fourth auxiliary assumption implies that the error terms υ are independent.
+1,i
+Thus the variance of 1 (cid:80)τI Twλ ˆ is 1 (cid:80) I σ2 . This converges to zero when τ goes
+τI i=1 i i τI2 x X x υ,x
+∈
+to infinity and so consistency follows from Chebyshev’s inequality, a law of large numbers.
+A similar argument implies that 1 (cid:80)τI Tw is a consistent estimator of 1 (cid:80) I T ¯w
+τI i=1 i I x X x x
+since Tw is an unbiased estimator of T ¯w with a finite variance and durations are inde ∈ pendent
+i x
+across workers conditional on type. Since the ratio of two consistent estimators is consistent,
+it follows that wˆ¯ = (cid:80)τ i= I 1 T i wλˆ i is a consistent estimator of w¯ = (cid:80) x∈X IxT¯ x wλ(x) .
+(cid:80)τ i= I 1 T i w (cid:80) x∈X IxT¯ x w
+Turn next to the second moment. As above, for worker i with characteristic x ,
+i
+Tw
+(cid:80)Mi (cid:80)
+ww ww
+Twλ(cid:98)2 = i m=1 m(cid:48) (cid:54) =m i,m i,m(cid:48)
+i i M (M 1)
+i i
+−
+2w¯w
+(cid:80)Mi (cid:80)Mi
+tw εw
+(cid:80)Mi (cid:80) (cid:80)Mi
+tw εw εw
+= Tw(w¯w)2 + xi m=1 m(cid:48)=1 i,m(cid:48) i,m + m=1 m(cid:48) (cid:54) =m m(cid:48)(cid:48)=1 i,m(cid:48)(cid:48) i,m i,m(cid:48)
+i xi M M (M 1)
+i i i
+−
+= Twλ(x )2 +υ
+i i 2,i
+where υ is the sum of the last two terms on the previous line. The logic is very similar to
+2,i
+the first moment. The first equation uses the definition of λ(cid:98)2 in equation (18), the second
+i
+uses the auxiliary assumption that ww = w¯w +εw and also writes Tw =
+(cid:80)Mi
+tw . The
+i,m xi i,m i m(cid:48)=1 i,m(cid:48)
+third uses λ(x ) = w¯w and defines another error term for each worker. For each worker, the
+i xi
+expected value of υ is zero because of the same assumptions as for the first moment, as well
+2,i
+as the assumption that εw and εw are independent for m = m. Moreover, the variance
+i,m i,m(cid:48) (cid:54) (cid:48)
+of the error term is characteristic dependent but finite, σ2 < , since σw is finite and
+υ2,xi ∞ xi
+durations are bounded.
+We can then sum up these objects, getting that the expected value of 1
+(cid:80)τI
+Twλ(cid:98)2 is
+τI i=1 i i
+1 (cid:80) I T ¯wλ(x)2. Consistency again follows from the fourth auxiliary assumption, since
+I x X x x
+∈
+thisensuresthattheerrortermsυ areindependentacrossworkers. Again, sincetheratioof
+2,i
+two consistent estimators is consistent, (cid:80)τ i= I 1 T i wλ(cid:99)2 i is a consistent estimator of (cid:80) x∈X IxT¯ x wλ(x)2 ,
+(cid:80)τ i= I 1 T i w (cid:80) x∈X IxT¯ x w
+the second moment of λ.
+Finally, the difference between a consistent estimator of the second moment and the
+square of a consistent estimator of the first moment is a consistent estimator of the variance
+σ2, defined in equation (16).
+λ
+Proof of Proposition 5. We start by expanding the definition (23) of cˆ using ww =
+i,m i,m(cid:48)
+49
+
+===== PDF PAGE 51 =====
+
+w¯w +εw and wf = w¯f +εf with j = j :
+xi i,m(cid:48) j,n(cid:48) yj j,n(cid:48) i,m
+(cid:80) εw (cid:80) εf (cid:80) εw (cid:80) εf
+cˆ i,m = w¯ x w i w¯ y f i,m +w¯ y f i,m m M (cid:48) (cid:54) =m 1 i,m(cid:48) +w¯ x w i n N (cid:48) (cid:54) =ni,m ji 1 ,m,n(cid:48) + m M (cid:48) (cid:54) =m 1 i,m(cid:48) n N (cid:48) (cid:54) =ni,m ji 1 ,m,n(cid:48) .
+i
+−
+ji,m
+−
+i
+−
+ji,m
+−
+Now compute the average of this across all matches:
+τ 1 I (cid:88) τI (cid:88) Mi tw i,m cˆ i,m = τ 1 I (cid:88) τI (cid:32) w¯ x w i (cid:88) Mi tw i,m w¯ y f i,m + (cid:88) Mi tw i,m w¯ y f i,m (cid:80) m M (cid:48) (cid:54) =m ε 1 w i,m(cid:48)
+i
+i=1 m=1 i=1 m=1 m=1 −
++ (cid:88)
+Mi
+tw w¯w
+(cid:80)
+n(cid:48) (cid:54) =ni,m
+εf
+ji,m,n(cid:48) + (cid:88)
+Mi
+tw
+(cid:80)
+m(cid:48) (cid:54) =m
+εw
+i,m(cid:48)
+(cid:80)
+n(cid:48) (cid:54) =ni,m
+εf
+ji,m,n(cid:48)
+(cid:33)
+i,m xi N 1 i,m M 1 N 1
+m=1
+ji,m
+− m=1
+i
+−
+ji,m
+−
+(cid:32) (cid:80)
+= 1 (cid:88) τI w¯w (cid:88) Mi tw w¯f + (cid:88) τI (cid:88) Mi εw m(cid:48) (cid:54) =m tw i,m(cid:48) w¯ y f i,m(cid:48)
+τI xi i,m yi,m i,m M 1
+i
+i=1 m=1 i=1 m=1 −
++ (cid:88)
+τJ
+(cid:88)
+Nj
+εf
+(cid:80)
+n(cid:48) (cid:54) =ni,m
+tf
+j,n(cid:48)
+w¯
+x
+w
+j,n(cid:48) + (cid:88)
+τI
+(cid:88)
+Mi
+tw
+(cid:80)
+m(cid:48) (cid:54) =m
+εw
+i,m(cid:48)
+(cid:80)
+n(cid:48) (cid:54) =ni,m
+εf
+j,n(cid:48)
+(cid:33)
+j,n N 1 i,m M 1 N 1
+j=1 n=1
+j
+− i=1 m=1
+i
+−
+ji,m
+−
+The first equation uses the definition above of cˆ , while the second regroups terms. In par-
+i,m
+ticular, inthesecondterm, weswitchtheorderofsummation, whileinthethirdtermwefirst
+view objects from the perspective of the firm and then switch the order of the summations.
+The first three auxiliary assumptions imply that the last three terms all have zero expected
+value and so the expected value of this expression is 1 (cid:80) I E (cid:80)Mi tw λ(x)µ(y ).
+I x X x x i=1 i,m i,m
+∈
+To compute the variance of the estimator, we leverage the fourth auxiliary assumption,
+which implies that when we square the last three terms, the only parts with a non-zero
+expected value are the direct squares within each term and within each worker or firm. That
+is, the variance of 1
+(cid:80)τI (cid:80)Mi
+tw cˆ is
+τI i=1 m=1 i,m i,m
+  
+τ 1 I2  (cid:88) I x E x  (cid:32) (cid:88) Mi εw i,m (cid:80) m(cid:48) (cid:54) = M m tw i,m 1 (cid:48) w¯ y f i,m(cid:48) (cid:33)2 + (cid:32) (cid:88) Mi tw i,m (cid:80) m M (cid:48) (cid:54) =m ε 1 w i,m(cid:48) (cid:80) N n(cid:48) (cid:54) =ni,m ε 1 f j,n(cid:48) (cid:33)2 
+x X m=1
+i
+− m=1
+i
+−
+ji,m
+−
+∈
+
+Nj (cid:80) tf w¯w
+2
++ (cid:88) J E  (cid:88) εf n(cid:48) (cid:54) =ni,m j,n(cid:48) x j,n(cid:48)  
+y y j,n N 1
+j
+y Y n=1 −
+∈
+This is inversely proportional to τ and so the variance of the estimator converges to zero
+when τ goes to infinity, i.e. the estimator is consistent.
+Tofinishtheproof,weusethefactthat 1 (cid:80)τI Tw isaconsistentestimatorof 1 (cid:80) I T ¯w
+τI i=1 i I x X x x
+(see the proof of Proposition 3) and take ratios to prove that
+(cid:80)τ
+i=
+I
+1
+(cid:80)M
+m=
+i
+1
+tw
+i,m
+cˆi,m
+is a c
+∈
+onsis-
+(cid:80)τI Tw
+i=1 i
+50
+
+===== PDF PAGE 52 =====
+
+tent estimator of (cid:80) x∈X Ix E x (cid:80)M m= i 1 tw i,m λ(x)µ(yi,m) . Finally, we have already shown in the proof of
+(cid:80)
+x∈X
+IxT¯
+x
+w
+Proposition 3 that (cid:80)τ i= I 1 T i wλˆ i is a consistent estimator of w¯, the common mean of λ and µ.
+(cid:80)τI Tw
+i=1 i
+The difference between a consistent estimator of (cid:80) x∈X Ix E x (cid:80)M m= i 1 tw i,m λ(x)µ(yi,m) and the square
+(cid:80)
+x∈X
+IxT¯
+x
+w
+of a consistent estimator of w¯ is a consistent estimator of the covariance.
+B.2 Construction of Artificial Data
+We generate artificial data sets from two structural models, the two-sided search model with
+match-specific shocks and the discrete choice model.
+In the search model, we proceed as follows. For given parameter values, we solve for the
+steady state of the economy with a continuum of workers and firms and compute the steady
+state decision rules, value functions, and unemployment and vacancy rates for each worker
+and firm characteristic x and y. This determines λ(x) and µ(y) for all x and y.30 To create
+the sample, we choose the number of workers and firms, I and J, and assign each worker
+and firm its characteristic x and y according to the distributions F ˜ (x) and G ˜ (y).31
+Westartthesearcheconomywithsomeworkersemployedandsomeunemployed, respect-
+ing their characteristic-specific unemployment rates u(x). For a worker i with type x we
+i
+construct an employment history, consisting of alternating spells of employment and unem-
+ployment. An unemployment spell is characterized only by its duration, which we determine
+(cid:0) (cid:82) ˜ (cid:1)
+by a draw from an exponential distribution with parameter 1/ θ p(z¯(x,y))v(y)dG(y) , the
+Y
+reciprocal of the job finding rate of worker i. An employment spell is characterized by four
+objects: the firm’s characteristic y, its identity j, the log wage w, and the match duration τ.
+We draw the firm’s characteristic y from the equilibrium distribution of matches conditional
+on the worker type Φ (y), equation (32). Next, we draw the firm’s identity at random from
+xi
+the set of firms with that characteristic y. We then draw the match-specific shock z from the
+distribution dζ(z) conditional on z z¯(x ,y), which guarantees that a worker with x and a
+i i
+≥
+firm with y indeed want to form a match. Finally, we construct the log wage w(x ,y,z) us-
+i
+ing equation (33). The duration of the match is determined by a draw from the exponential
+¯
+distribution with parameter 1/δ. We assume that we observe each worker for T periods and
+keep creating spells of employment and unemployment until the sum of all spell durations
+30We use λ and µ from an economy with a continuum of workers and firms. This is because we do not
+know how to solve a two-sided matching model with a finite number of workers and firms. In particular, the
+state variable in the finite econmy is the distribution of all matches and the finite economy does not have a
+steady state.
+31We choose I and J to be multiples of 500, which is the number of characteristics in our numerical
+solution of the model. We assign equal number of firms and workers to each characteristic. Thus, we do not
+have randomness at this stage.
+51
+
+===== PDF PAGE 53 =====
+
+¯ ¯
+reaches T. We choose T such that the median worker holds 4.9 jobs. If a worker has multiple
+jobs with the same firm, we keep one at random. We drop all workers and firms with only
+one observation.
+We proceed similarly in the discrete choice model. For given parameter values, we first
+compute λ(x) and µ(y) under the assumption that there is a continuum of workers and
+firms. That is, we use a generalization of equation (36) which relaxes the assumptions that
+m = m = 0 and σ = σ = 1. To create the sample, we choose the number of workers and
+x y x y
+˜
+firms, I and J, and draw characteristics for each from the distributions F(x) and G(y). For
+worker i with characteristic x , we draw the number of jobs M using the actual distribution
+i i
+of jobs per worker, corresponding to column (3) for men in Table 2. For each job, we assume
+that the matching probabilities solve a version of equation (35).32 In the last step, we assign
+each match the log wage w(x ,y ) and a duration of 1 period. Again, if a worker has multiple
+i j
+jobs with the same firm, we keep one at random. We drop all workers and firms with only
+one observation.
+B.3 Monte Carlo Confidence Intervals
+We construct B data samples for each model and set of parameters. For each sample
+b 1,...,B , we first use the types λ and µ and the match durations and matching
+∈ { }
+network realized in sample b to recover the variance-covariance matrix (equations 16 and 17)
+and hence the true correlation ρ for that sample. Alternatively, we use log wages, match
+b
+durations and the matching network in sample b to find the variance-covariance matrix using
+formulae (20), (22), and (24), and hence recover the feasible estimate ρˆ . Let e = ρˆ ρ
+b b b b
+−
+be the estimation error in sample b. We find values e and e¯ such that
+P(e e) = 0.025 and P(e > e¯) = 0.025.
+b b
+≤
+The 95 percent confidence interval for ρ is [ρ + e,ρ + e¯], where ρ is the correlation in an
+infinite sample. Note that the interval does not have to be centered.
+In addition to the numerical results in Table 1, here we show results with other parameter
+values. Throughout we assume there are I = 10,000 workers and J = 2,000 firms, although
+the number of workers and firms in the final sample is lower because we only keep workers
+and firms with at least two observations. This is a rather conservative choice of the sample
+size, orders of magnitude lower than a typical real-world data. Figure 4 shows the confidence
+32In contrast to the search model, we can solve the discrete choice model with a finite number of workers
+and firms. There is no analytical solution for the matching probabilities, but we can find them using Monte
+Carlo. In practice, this makes little quantitative difference for our results. For example, the correlation
+between the continuous version of λ and its finite counterpart typically exceeds 0.999.
+52
+
+===== PDF PAGE 54 =====
+
+intervals in the search model with match-specific productivity shocks. We see that intervals
+are very tight across the entire range of parameter values we consider. The only exception is
+the case when sorting between x and y characteristics in the model changes from positive to
+negative (ξ is close to 2.8). In this case, all firms pay similar wages and hence the variance
+of firm types is very small, σ2/(σ2 +σ2) 10 3. In some bootstrap samples, the estimate
+µ λ µ ≈ −
+of the variance of firm types and the covariance are both negative and hence we record a
+correlation of ρˆ = 1.
+b
+−
+Figure 5 shows the confidence intervals in the discrete choice model. The confidence
+intervals are again very tight in most cases. The exception is the bottom left panel when the
+difference in means m m exceeds 1.5. The reason is a combination of a smaller sample
+x y
+−
+size and selection of firms. Even though we start off simulations with I = 10,000 workers
+and J = 2,000 firms, the types of workers and firms are so different that many firms end
+up with zero or one worker, and many workers hold all their jobs at the same firm. To
+satisfy the sample restrictions for our estimator, we drop these firms and workers from the
+sample and as a result, we end up with a smaller sample. Moreover, firms which remain in
+the sample tend to be those with high value of y, hence they are selected and do not reflect
+properly the distribution of jobs.
+C Alternative Identifying Assumptions and Estimator
+One of our identifying assumptions states that, conditional on characteristics, the error in
+the wage equation and the duration of the match are independent. Several structural models
+of sorting would suggest that this assumption is violated since jobs which pay higher wages
+tend to last longer. We can relax this assumption but only if we impose an additional
+assumption that the average duration of the match t¯w is independent of worker’s type λ(x),
+x
+and symmetrically, average duration of a job t¯f is independent of firm’s type µ(y). This
+y
+means that higher-wage jobs can last longer but on average the expected duration of a
+job does not depend on worker’s type. We construct a consistent estimator under these
+assumptions and report results in Table 6. We note that the assumption that type and
+average duration are independent cannot be tested.
+We first introduce auxiliary assumptions and then propose an estimator. The assump-
+tions are similar to those in Section 4.2 but are modified to reflect the changes discussed
+above. It will be useful to introduce the following notation: let t¯w and t¯w,2 denote the first
+x x
+and second moment of match duration of a worker with characteristic x, and symmetrically,
+t¯f and t¯f,2 the first and second moment of match duration for a firm with characteristic y.
+y y
+1. For worker i with characteristic x , ww = w¯w + εw and εw is independently and
+(cid:48) i i,m xi i,m i,m
+53
+
+===== PDF PAGE 55 =====
+
+1
+0.8
+0.6
+0.4
+0.2
+0
+102 104 106 108
+θ
+noitalerroc
+Meeting Rate
+1
+0.8
+0.6
+0.4
+0.2
+0
+0 0.2 0.4 0.6 0.8 1
+γ
+noitalerroc
+Bargaining Power
+1
+0.8
+0.6
+0.4
+0.2
+0
+10 4 10 3 10 2 10 1 100
+− − − −
+σ2
+z
+noitalerroc
+Variance of Match Productivity
+1
+0.8
+0.6
+0.4
+0.2
+0
+0.2
+− 10 1 100 101
+−
+ξ
+ρ 95% CI
+noitalerroc
+Elasticity of Substitution
+Figure 4: Confidence intervals in the two-sided search model with match-specific shocks.
+We plot the correlation ρ (blue line) and the bootstrapped confidence intervals (dashed red
+lines). Ineachpanel, wekeepallbutoneparameterattheirbenchmarkvalues, r = 1, δ = 10,
+θ = 104, γ = 0.5, a = 0.5, ξ = 1, σ2 = 0.1, z = 1, n = 500, and depict on the horizontal axis
+z
+which parameter we are changing. For the given set of parameter values, we create B = 100
+artificial samples starting with I = 10,000 workers and J = 2,000 firms. We drop all workers
+and firms with only one observation. In each sample we compute the estimation error as the
+difference between the estimated correlation and the sample correlation, and use the 2.5%
+and 97.5% quartile of the error distribution to construct the 5%-confidence interval.
+54
+
+===== PDF PAGE 56 =====
+
+1
+0.8
+0.6
+0.4
+0.2
+0
+0 2 4 6 8 10
+s
+noitalerroc
+Standard Deviation of Amenity
+1
+0.8
+0.6
+0.4
+0.2
+0
+0 2 4 6 8 10
+a
+noitalerroc
+Wage Loss
+1
+0.8
+0.6
+0.4
+0.2
+0
+2 1 0 1 2
+− −
+m m x y
+−
+noitalerroc
+Differences in Means
+1
+0.8
+0.6
+0.4
+0.2
+0
+0 1 2 3 4 5
+σ y
+ρ 95% CI
+noitalerroc
+Standard Deviation of Firm Types
+Figure 5: Confidence intervals in the discrete choice model. We plot the correlation ρ in an
+infinite sample (blue line) and the bootstrapped confidence intervals. In each panel, we keep
+all but one parameter at their benchmark values, a = 1, s = 1, m = 0, m = 0, σ = 1, and
+x y x
+σ = 1, and depict on the horizontal axis which parameter we are changing. For the given set
+y
+of parameter values, we create B = 100 artificial samples starting with I = 10,000 workers
+and J = 2,000 firms. We drop all workers and firms with only one observation. In each
+sample we compute the estimation error as the difference between the estimated correlation
+and the sample correlation, and use the 2.5% and 97.5% quartile of the error distribution to
+construct the 5%-confidence interval.
+55
+
+===== PDF PAGE 57 =====
+
+identicallydistributedacrossm = 1,...,M withafinitestandarddeviationσw. Ad-
+{ i } xi
+ditionally, t¯w and t¯w,2 are finite and independent of w¯w. Moreover, tw is independent
+xi xi xi i,m
+of εw and tw for all m = m, but tw and εw can be correlated.
+i,m(cid:48) i,m(cid:48) (cid:54) (cid:48) i,m i,m
+2. For firm j with characteristic y , wf = w¯f + εf and εf is independently and
+(cid:48) j j,n yj j,n j,n
+identically distributed across n = 1,...,N with a finite standard deviation σf . Ad-
+{ j } yj
+ditionally, t¯f and t¯f,2 are finite and independent of w¯f . Moreover, tf is independent
+yj yj yj j,n
+of εf and tf for all n = n, but tf and εf can be correlated.
+j,n(cid:48) j,n(cid:48) (cid:54) (cid:48) j,n j,n
+3. For any worker i with characteristic x and all m 1,...,M , w¯w and εw are
+(cid:48) i ∈ { i } xi i,m(cid:48)
+independent of εf for all m = m and all n = n . Moreover, for any firm j with
+ji,m,n(cid:48) (cid:48)
+(cid:54)
+(cid:48)
+(cid:54)
+i,m
+characteristic y and all n 1,...,N , w¯f is independent of εw for all m = m .
+j ∈ { j } yj ij,n,m(cid:48) (cid:48) (cid:54) j,n
+4. For all i = i, m, and m, εw and εw are independent, as are tw and tw . For all
+(cid:48) (cid:54) (cid:48) (cid:48) i,m i(cid:48),m(cid:48) i,m i(cid:48),m(cid:48)
+j = j , n, and n, εf and εf are independent, as are tf and tf
+(cid:54) (cid:48) (cid:48) j,n j,n(cid:48) j,n j,n(cid:48)
+The first set of assumptions has been modified to relax the assumption that εw and
+i,m
+tw are independent, but we introduce a new assumption that first two moments of match
+i,m
+duration are independent of worker’s mean wage. The second set of assumptions introduces
+a symmetric change on the firm’s side. The third and fourth set of assumptions remain
+unchanged.
+Notethatwedonotassumethatεw andεf havemeanzero. Aconvenientnormalization
+i,m j,n
+is to impose that E (εw tw ) = E (εf tf ) = 0, leaving the mean of the error terms to
+xi i,m i,m yj j,n j,n
+pick up the correlation between duration and wages. With this normalization, a worker with
+characteristic x has type λ(x) = w¯w, and a firm with characteristic y has type µ(y) = w¯f.
+x y
+However, since errors in the wage equation εw and εf are not mean zero, λ ˆ , µˆ are no
+i,m j,n i j
+longer unbiased estimators of λ(x ) and µ(y ). We therefore proceed differently, and define
+i j
+the following estimators:
+1 (cid:88)
+Mi
+(cid:92) 1 (cid:88)
+Mi
+(cid:88)
+t¯(cid:100)wλ tw ww , t¯w,2λ2 (tw ww )(tw ww ),
+i i ≡ M i,m i,m i i ≡ M (M 1) i,m i,m i,m(cid:48) i,m(cid:48)
+i i i
+m=1 − m=1m(cid:48)=m
+(cid:54)
+1 (cid:88)
+Mi
+1 (cid:88)
+Mi
+(cid:88)
+t¯(cid:98)w tw , t¯(cid:100)w,2 tw tw , (40)
+i ≡ M i,m i ≡ M (M 1) i,m i,m(cid:48)
+i i i
+m=1 − m=1m(cid:48)=m
+(cid:54)
+56
+
+===== PDF PAGE 58 =====
+
+and similarly for firms,
+1 (cid:88)
+Nj
+(cid:91) 1 (cid:88)
+Nj
+(cid:88)
+t¯(cid:100)fµ tf wf , t¯f,2µ2 (tf wf )(tf wf ),
+j j ≡ N j,n j,n j j ≡ N (N 1) j,n j,n j,n(cid:48) j,n(cid:48)
+j j j
+n=1 − n=1n(cid:48)=n
+(cid:54)
+1 (cid:88)
+Nj
+1 (cid:88)
+Nj
+(cid:88)
+t¯(cid:98)f tf , t¯(cid:99)f,2 tf tf . (41)
+j ≡ N j,n j ≡ N (N 1) j,n j,n(cid:48)
+j j j
+n=1 − n=1n(cid:48)=n
+(cid:54)
+It is straightforward to show that under auxiliary assumptions 1 and 2, these are unbiased
+(cid:48) (cid:48)
+estimators of the corresponding moments:
+E t¯(cid:100)wλ = t¯ww¯w E t¯(cid:98)w = t¯w
+xi i i xi xi xi i xi
+E t¯ (cid:92) w,2λ2 = t¯w,2 (cid:0) w¯w (cid:1)2 E t¯(cid:100)w,2 = t¯w,2.
+xi i i xi xi xi i xi
+A symmetric argument holds on the firm side.
+We use cross-sectional averages of the above estimators to estimate the variance of worker
+types, weighted again by workers’ total employment duration Tw:
+i
+alt
+(cid:80)τI Twt¯
+(cid:92)
+w,2λ2
+(cid:32)
+(cid:80)τI Twt¯(cid:100)wλ
+(cid:33)2
+σ(cid:99)2 = i=1 i i i i=1 i i i . (42)
+λ (cid:80)τI Twt¯(cid:100)w,2 − (cid:80)τI Twt¯(cid:98)w
+i=1 i i i=1 i i
+The assumption that w¯w and t¯w are independent, as are t¯w,2 and
+(cid:0)
+w¯w
+(cid:1)2
+, is important here.
+xi xi xi xi
+alt
+If it is violated, then σ(cid:99)2 is inconsistent due to omitted covariance terms cov(t¯w,ww) and
+λ xi xi
+cov(t¯w,2,(ww)2). Symmetrically, an estimator of the variance of firm types is
+xi xi
+(cid:91)  2
+(cid:80)τJ Tft¯f,2µ2 (cid:80)τJ Tft¯(cid:100)fµ
+σ(cid:99)2 alt = j=1 j j j  j=1 j j j  . (43)
+µ (cid:80)τJ Tft¯(cid:99)f,2 − (cid:80)τJ Tft¯(cid:98)f
+j=1 j j j=1 j j
+Finally, an estimator of the product of the firm and worker type is
+(cid:80) tw ww (cid:80) tf wf
+t
+(cid:92)
+i,m c i,m
+m(cid:48)
+(cid:54)
+=m i,m(cid:48) i,m(cid:48) n(cid:48)
+(cid:54)
+=ni,m ji,m,n(cid:48) ji,m,n(cid:48)
+,
+≡ M 1 N 1
+i
+−
+ji,m,n(cid:48)
+−
+(cid:80) tw (cid:80) tf
+t(cid:100)i,m
+m(cid:48)
+(cid:54)
+=m i,m(cid:48) n(cid:48)
+(cid:54)
+=ni,m ji,m,n(cid:48)
+, (44)
+≡ M 1 N 1
+i
+−
+ji,m,n(cid:48)
+−
+57
+
+===== PDF PAGE 59 =====
+
+and its cross-sectional mean is the estimator of the covariance,
+ 
+(cid:98) calt ≡
+(cid:80)
+(cid:80)
+τ
+i=
+I
+τ i 1 = I
+(cid:80)
+1 (cid:80)
+M
+m=
+i
+M m 1 = i
+t
+1
+w
+i, t m w i,
+t
+m
+(cid:92)
+i, t(cid:100) m i,
+c
+m i,m −
+(cid:32) (cid:80)
+(cid:80)
+τ
+i=
+I
+τ i= 1 I 1
+T
+T i
+w
+i w
+t¯(cid:100)w
+i t¯(cid:98)w i
+λ
+i
+(cid:33)
+
+(cid:80)
+(cid:80)
+τ
+j=
+J
+τ j= J 1 1
+T
+T j
+f
+j
+t¯
+f
+(cid:100)f
+j t¯(cid:98)
+µ
+f j j . (45)
+alt alt
+It follows that, under assumptions 1–4, the estimators σ(cid:99)2 ,σ(cid:99)2 ,calt are consistent estima-
+(cid:48) (cid:48) λ µ (cid:98)
+tors of σ2,σ2,c as τ . Thus,
+λ µ → ∞
+calt
+ρalt = (cid:98) . (46)
+(cid:98) (cid:113)
+alt alt
+σ(cid:99)2 σ(cid:99)2
+λ µ
+is a consistent estimator of ρ. The proof is analogous to the proof in Appendix B.1 and so
+we omit it.
+Table 6 shows results using alternative estimators. To compute these, we use formulas
+(42), (43), (45) and (46) where we set τ = 1. We see that results are remarkably similarly to
+those reported in Table 2 for all six columns; the maximum absolute difference between the
+estimated correlations reported in these two tables is 0.066 for men and 0.053 for women.
+D Impact of Top-Coding on Estimated Correlation
+We study the impact of top-coding on our estimates by varying the share of top-coded wages
+in the data set. We start from the wage cap in the data and then gradually decrease it by as
+much as fifty percent. We then censor wages at the new wage cap. Reducing the wage cap
+by fifty percent raises the share of top-coded observations from 4.7 percent to 46.5 percent
+for men and from 2.1 to 21.5 percent for women.
+In Figure 6 we show the results, plotting the estimated correlation ρˆ for data sets with
+different top-coding on the vertical axis and the share of top-coded observations on the
+horizontal axis. For men, the estimated correlation varies very mildly, staying around 0.476
+even when almost half of observations are top-coded. Top-coding matters more for women.
+A tighter wage cap reduces the correlation from 0.423 to 0.385 when more 20 percent of
+women have a top coded observation.
+Our intuition is that the impact of top-coding on the estimated correlation depends on
+the correlation in the group affected by top-coding relative to the correlation among the
+rest. If the correlation is similar to the rest of the sample, then top-coding does not have
+a significant impact. However, if the correlation in the top-coded group is stronger, the
+correlation decreases after top-coding the data. It is useful to think about the components
+58
+
+===== PDF PAGE 60 =====
+
+Estimated Correlation and Variances Using Alternative Estimator
+(1) (2) (3) (4) (5) (6)
+Men
+correlation of matched types ρˆ 0.680 0.583 0.407 0.434 0.400 0.415
+covariance of matched types cˆ 0.063 0.037 0.019 0.021 0.023 0.025
+variance of worker types σ(cid:99)2 0.104 0.063 0.039 0.043 0.050 0.054
+λ
+variance of job types σ(cid:99)2 0.081 0.065 0.054 0.053 0.066 0.067
+µ
+number of workers (thousands) 3,884 2,916 1,646 971 971 970
+number of firms (thousands) 705 532 343 272 273 276
+number of observations (thousands) 64,359 16,401 7,211 4,883 4,881 4,880
+share of observations top-coded 0.112 0.074 0.047 0.020 0.009 0.012
+Women
+correlation of matched types ρˆ 0.630 0.493 0.411 0.471 0.397 0.421
+covariance of matched types cˆ 0.101 0.059 0.033 0.040 0.031 0.036
+variance of worker types σ(cid:99)2 0.190 0.131 0.070 0.077 0.067 0.077
+λ
+variance of job types σ(cid:99)2 0.136 0.111 0.091 0.092 0.091 0.094
+µ
+number of workers (thousands) 3,340 2,532 1,494 937 798 797
+number of firms (thousands) 758 530 345 303 248 250
+number of observations (thousands) 52,128 12,451 5,582 4,435 3,294 3,291
+share of observations top-coded 0.035 0.031 0.021 0.015 0.004 0.005
+independence assumption I II III IV IV IV
+observations included all all longest longest first last
+Table 6: Estimates of correlations, covariances, and variances between matched workers’ and
+firms’ types using AMDB 1986–2018, using alternative estimator. The data construction is
+identical to Table 2. See the notes to that table for details.
+59
+
+===== PDF PAGE 61 =====
+
+0.480
+0.478
+0.476
+0.474
+0.472
+0.470
+0.1 0.2 0.3 0.4 0.5
+share of top-coded observations
+ˆρ
+noitalerroc
+Men Women
+0.42
+0.40
+0.38
+0.05 0.10 0.15 0.20
+share of top-coded observations
+Figure 6: Impact of top-coding on the estimated correlation for men and women. Each dot
+corresponds to a sample where we decrease the top-code by 0,2,4,...50 percent every year
+and truncate all wages at this new top-code. The sample of workers and firms is chosen
+according to independence assumption III, so the numbers are comparable to column (3)
+of Table 2. We plot the results as a function of the share of top-coded observations in the
+sample. An observation is considered top-coded if at least one wage observation of the job
+is top-coded.
+of the correlation separately since top-coding affects the covariance as well as variances. As
+stricter top-coding makes wages more similar, the variance of the worker and firm types
+declines. The covariance can increase or decrease, as suggested earlier. We find that the
+covariance (not plotted) decreases with top coding from an initial 0.027 to 0.010 for men
+and from 0.031 to 0.018 for women when the top code is 50 percent of the top coded wage in
+Austria. Thissuggeststhatthecovarianceislargeramonghigh-wageworkers. Thedeclinein
+covarianceisalmostexactlyoffsetbythedeclineinthevariancesandtheresultingcorrelation
+for men is barely affected. For women, the decline in covariance is stronger and hence the
+correlation drops modestly.
+E Construction of Correlated Matching Networks
+This section explains how to construct a data set that approximates a number of desired
+targets: the correlation between matched worker and firm types ρ, the standard deviation
+of worker and firm types σ and σ , the standard deviation of log wages σ, the number of
+λ µ
+workers and firms I and J, the distribution of the number of matches per worker M and
+i
+per firm N , and the distribution of match durations.
+j
+60
+
+===== PDF PAGE 62 =====
+
+1. We set the number of workers equal to the targets I and J.
+2. For each worker i 1,...,I we draw M and tw ,...tw , the number firms a worker
+∈ { } i i,1 i,Mi
+works for and durations of each of his matches directly from the data. For each
+j 1,...,J , we draw the number of employees N . We use the distribution of N
+j j
+∈ { }
+(cid:80) (cid:80)
+from the data. The model imposes the restriction that M = N . We add
+i i j j
+(cid:80) (cid:80) (cid:80) (cid:80)
+workers (if M < N ) or firms (if M > N ) until we achieve balance. We
+i i j j i i j j
+˜ ˜
+end up with I I workers and J J firms.
+≥ ≥
+3. For each worker i, we choose a random λ from a normal distribution with mean 0 and
+i
+standard deviation σ .
+λ
+4. For each firm j, we choose a random µ from a normal distribution with mean 0 and
+j
+standard deviation σ . We order the firms so that µ < µ < < µ .
+µ 1 2 J
+···
+5. For each worker i, we choose M values χ distributed normally with mean λ ρσ /σ
+i i,m i µ λ
+and variance σ2(1 ρ2). We order these values across all i and m. The N lowest
+µ − 1
+values are assigned to firm 1. The next N values are assigned to firm 2, etc. This
+2
+gives us our matched pairs. We do not use the χ after this step.
+i,m
+6. If there are duplicate matches between i and j, we keep one at random. If this leaves
+us with any workers or firms with a single match, we iteratively drop those as well.
+7. We measure variances, covariance and hence the correlation ρ using the true types λ
+b
+and µ and the job durations tw according to formulae (16), (17), and (3).
+8. Weconstructalogwagethatisconsistentwithworkerandfirmtypesaswellasthetotal
+variance of wages. For worker i’s mth job, the log wage is ww = aλ +bµ +v ,
+i,m i ji,m i,m
+where v is an i.i.d. normal shock with mean 0 and standard deviation σ . The
+i,m v
+constants a and b satisfy
+σ ρσ σ ρσ
+λ µ µ λ
+a = − and b = − , (47)
+σ (1 ρ2) σ (1 ρ2)
+λ µ
+− −
+and the variance of the log wage shock satisfies
+σ2 +σ2 2ρσ σ
+σ2 = σ2 λ µ − λ µ , (48)
+v − 1 ρ2
+−
+where σ2 is the total variance of wages.
+9. We use wage and duration data to estimate ρˆ using our estimator (25).
+b
+61
+
+===== PDF PAGE 63 =====
+
+We claim that the data set constructed this way has the desired properties. That is, if we
+had an infinitely large data set, then the worker’s type is indeed λ, the firm’s type is µ, and
+the correlation between them is ρ.
+To prove this, first notice that because distribution of χ conditional on λ is normal,
+i,m i
+and the distribution of λ is normal, the unconditional distribution of χ is also normal.
+i,m
+The unconditional mean of χ is 0 by the law of iterated expectations. The expected
+i,m
+value of χ2 conditional on λ is the conditional variance plus the square of the mean,
+i,m i
+σ2(1 ρ2)+
+λ2
+i
+ρ2σ
+µ
+2
+. Thus the unconditional expectation of χ2 is
+µ − σ λ 2 i,m
+σ2(1 ρ2)+ρ2σ2 = σ2.
+µ − µ µ
+In short, the (unconditional) distribution of χ is normal with mean 0 and variance σ2.
+i,m µ
+Recall that distribution of µ is normal with mean 0 and variance σ2, and therefore (in an
+µ
+infinitely large data set) χ = µ , the type of the firm that employs i in her mth match.
+i,m ji,m
+We next show that the λ is indeed worker’s type, that is, the expected log wage of a
+worker with λ is λ :
+i i
+E (ww ) = E (aλ +bµ +v ) = aλ + E (bµ )
+λi i,m λi i ji,m i,m i λi ji,m
+λ ρσ σ ρσ σ ρσ λ ρσ
+i µ λ µ µ λ i µ
+= aλ +b = − λ + − = λ .
+i σ σ (1 ρ2) i σ (1 ρ2) σ i
+λ λ µ λ
+− −
+A similar proof establishes that µ is indeed a firm type. First prove that the distribution of
+λ conditional on µ is normal with mean µρσ /σ , and then the steps are symmetric to the
+λ µ
+steps in the argument that λ is worker’s type.
+Finally, we prove that the correlation in the matched pairs is indeed ρ. The expected
+valueofλµconditionalonλisλ2ρσ /σ , andthustheunconditionalexpectedvalueisρσ σ .
+µ λ µ λ
+This is the covariance between λ and µ. It then follows that the correlation is ρ. Thus our
+data set has all the desired properties.
+F Confidence Intervals
+Weuseabootstrapproceduretoconstructstandarderrors. Ineachiterationofthebootstrap
+b 1,...,B , we follow the procedure in Appendix E to construct artificial data sets that
+∈ { }
+match key moments of the real-world data: the estimated correlation between matched
+worker and firm types ρˆ, the estimated variance of worker and firm types σ(cid:99)2 and σ(cid:99)2, as well
+λ µ
+as the variance of log wages, the number of workers and firms, the distribution of the number
+of matches per worker M and per firm N , and the distribution of match durations. We take
+i j
+62
+
+===== PDF PAGE 64 =====
+
+these moments from our estimates, e.g. column (3) in Table 2, and we take the distributions
+of the number of matches per firm and per worker and the distribution of match duration
+from directly from the data.
+In each data set, we calculate ρ and ρˆ as in Appendix B.3. Again let e = ρˆ ρ be
+b b b b b
+−
+the estimation error in sample b. We find values e and e¯ such that
+P(e e) = 0.025 and P(e > e¯) = 0.025.
+b b
+≤
+The 95 percent confidence interval for ρ is [ρˆ+e,ρˆ+e¯], not necessarily centered around ρˆ.
+Our procedure for constructing artificial data sets assumes that wages are homoscedastic
+conditional on worker and firm types, but it is straightforward to relax this assumption.
+This does not affect our confidence intervals. We have also constructed artificial data sets
+where types are correlated with the number of observations. In particular, we assumed that
+the worker types λ are distributed normally with a mean and variance that depends on M ,
+i i
+and that the firm types µ are distributed normally with a mean and variance that depends
+j
+on N . We constructed conditional distributions directly from the data by looking at the
+j
+ˆ
+relationship between λ and M , and µˆ and N . Our estimated confidence interval for ρˆ is
+i i j j
+robust to this change.
+G Time-Varying Types
+Consider the following model of time-varying types. Time is discrete and denoted by t
+∈
+1,2,... . There are a continuum of workers i [0,1] and a continuum of firms j [0,1].
+{ } ∈ ∈
+For simplicity, each firm hires one worker in each period. A worker i has a permanent
+characteristic λ ¯ , distributed in the population with mean zero and variance σ¯2 > 0. A firm
+i λ
+j has a permanent characteristic µ¯ , again distributed with mean zero and variance σ¯2 > 0.
+j µ
+¯
+Types are changing over time but follow an ergodic distribution with mean λ for each
+i
+worker i. At time t, worker i has a type (expected wage) λ with cross-sectional mean zero
+i,t
+and cross-sectional variance σ2 > σ¯2, the cross-sectional variance of λ ¯ . Assume that the
+λ λ i
+covariance of λ and λ ¯ is σ¯2 and the conditional mean of λ is linear in λ ¯ and vice versa.
+i,t i λ i,t i
+¯ ¯ ¯
+This implies that the expected value of λ given λ is λ , so λ is a reasonable measure of
+i,t i i i
+the time-averaged type. Conversely, the expected value of λ ¯ given λ is (σ¯2/σ2)λ .
+i i,t λ λ i,t
+Symmetrically, at time t firm j has a type (expected wage) µ which has an ergodic
+j,t
+distribution with mean µ¯ . In the cross section, the mean of µ is zero and the variance is
+j j,t
+σ2 > σ¯2. The covariance of µ and µ¯ is σ¯2 and the expected value of µ given µ¯ is µ¯ (so
+µ µ j,t j µ j,t j j
+µ¯ is the time-averaged type), while the expected value of µ¯ given µ is (σ¯2/σ2)µ .
+j j j,t µ µ j,t
+63
+
+===== PDF PAGE 65 =====
+
+Next, we assume that at any time t, the correlation between matched types λ and µ
+i,t j,t
+is ρ. Moreover, the expected value of λ given µ is ρσλµ and the expected value of µ
+i,t j,t σµ j,t j,t
+given λ is ρσµλ , i.e. conditional expectations are again linear.
+i,t σλ i,t
+Finally, we assume that only the time-varying type determines who matches with whom.
+This implies two moment conditions. First, the distribution of µ conditional on λ and
+j,t i,t
+¯ ¯
+λ does not depend on λ . In particular, the difference between µ and its expected value
+i i j,t
+¯
+conditional on λ is orthogonal to λ :
+i,t i
+(cid:18)(cid:18) (cid:19) (cid:19)
+ρσ ρσ ρσ
+E µ µ λ λ ¯ = 0 E (µ λ ¯ ) = µE (λ λ ¯ ) = µ σ¯2. (49)
+j,t − σ i,t i ⇒ j,t i σ i,t i σ λ
+λ λ λ
+The last equation uses the fact that the covariance between λ and λ ¯ is σ¯2.
+i,t i λ
+Second, think of a set of workers with the same value of λ matched to a set of workers
+i,t
+with the same value of µ . These workers may differ in their permanent type, but we do
+j,t
+not allow sorting on that basis. Formally, we impose that the distribution of µ¯ conditional
+j
+¯ ¯
+on the time-varying type µ and the partner’s permanent type λ does not depend on λ . In
+j,t i i
+particular, the difference between µ¯ and its expected value conditional on µ is orthogonal
+j j,t
+¯
+to λ :
+i
+(cid:18)(cid:18) σ¯2 (cid:19) (cid:19) σ¯2 ρσ¯2σ¯2
+E µ¯ µ µ λ ¯ E (µ¯ λ ¯ ) = µE (µ λ ¯ ) = λ µ .
+j − σ2 j,t i ⇒ j i σ2 j,t i σ σ
+µ µ λ µ
+The last equation uses equation (49) to eliminate E (λ λ ¯ ).
+i,t i
+The correlation between the time-averaged types is the covariance E (µ¯ λ ¯ ) divided by the
+j i
+productofthestandarddeviations, ρσ¯λσ¯µ. Sincethestandarddeviationsofthetime-averaged
+σλσµ
+types are smaller than the standard deviations of the time-varying types, σ¯ σ¯ < σ σ , this
+λ µ λ µ
+is smaller than ρ, proving the result.
+H Methods for Estimation of AKM Correlation
+H.1 OLS Estimation of the AKM Correlation
+The OLS estimates of the AKM fixed effects solve the moment conditions
+(cid:80)Mi (ww ψ ˆ ) (cid:80)Nj (wf αˆ )
+αˆ = m=1 i,m − ji,m and ψ ˆ = n=1 j,n − ij,n .
+i j
+M N
+i j
+We approximate the solution to these using a zig-zag algorithm (Guimaraes and Portugal,
+2010) with a single normalization, say αˆ = 0. Next we compute duration-weighted average
+1
+64
+
+===== PDF PAGE 66 =====
+
+fixed effects,
+(cid:80) Twαˆ (cid:80) Tfψ ˆ
+αˆ¯ i i i and ψ ˆ¯ j j j .
+≡ (cid:80) Tw ≡ (cid:80) Tf
+i i j j
+We then use these to find duration-weighted variances and covariances:
+(cid:80) Tw(αˆ αˆ¯)2 (cid:80) Tf(ψ ˆ ψ ˆ¯ )2
+σˆ2 i i i − , σˆ2 j j j − ,
+α ≡ (cid:80) Tw ψ ≡ (cid:80) Tf
+i i j j
+(cid:80) (cid:80)Mi tw (αˆ αˆ¯)(ψ ˆ ψ ˆ¯ )
+and cˆ i m=1 i,m i − j − .
+AKM ≡ (cid:80) Tw
+i i
+(cid:113)
+Our OLS estimate of the duration-weighted AKM correlation is then ρˆ = cˆ / σˆ2σˆ2.
+AKM AKM α ψ
+H.2 Bias Correction Methods for the AKM Correlation
+σˆ2 andσˆ2 areknowntobebiasedupandcˆ isknowntobebiaseddown, creatingabiasin
+α ψ AKM
+the correlation. We apply bias correction methods proposed by Andrews, Gill, Schank, and
+Upward (2008) and Kline, Saggio, and Sølvsten (2019) and compute the AKM correlation
+followingBonhomme, Lamadon, andManresa(2019). WerefertotheseestimatorsasAGSU,
+KSS and BLM, respectively.
+Andrews, Gill, Schank, and Upward (2008) and Kline, Saggio, and Sølvsten (2019) both
+derive a bias correction for the variance of the worker and firm fixed effects and their covari-
+ance but under different assumptions. Andrews, Gill, Schank, and Upward (2008) assume
+that errors in the wage equation are homoskedastic, while Kline, Saggio, and Sølvsten (2019)
+allow for heteroscedasticity. Both methods then use the bias-corrected moments to compute
+the AKM correlation. We note that the correlation computed this way is not unbiased, but
+Andrews, Gill, Schank, and Upward (2008) use simulations to show that in practice this bias
+is negligible.
+Both Andrews, Gill, Schank, and Upward (2008) and Kline, Saggio, and Sølvsten (2019)
+offer exact formulae for the bias correction. However, these formulae require calculating the
+inverse of an (I+J) (I+J) matrix where I is the number of workers and J is the number of
+×
+firms. When I +J is in the order of millions, as in our data sets, the exact formulae are not
+tractable. Kline, Saggio, and Sølvsten (2019) show how to use the Johnson-Lindenstrauss
+approximation to compute bias corrections in large data sets. The same approximation can
+be applied to the AGSU methodology.
+Bonhomme, Lamadon, and Manresa (2019) propose a two-step procedure to estimating
+the correlation between the AKM fixed effects. In the first step, they use k-means clustering
+65
+
+===== PDF PAGE 67 =====
+
+to classify firms into a given number of classes (ten in our case) based on their wage distri-
+butions. We follow them in using ten firm classes. In the second step, they estimate their
+model using maximum likelihood. Given the firm classification and a specified number of
+worker types, five in our specification, they assume that the log wage paid by a given firm
+type to a given worker type is log normal with unknown mean and standard deviation. They
+then project this non-linear wage equation onto a linear function of worker and firm types
+to obtain the AKM correlation.
+In this section we estimate our correlation and the AKM correlation using different meth-
+ods. Different estimators put different restrictions on the sample and so we create a sample
+which satisfies all these restrictions at the same time. Methods proposed by Kline, Saggio,
+and Sølvsten (2019) and Bonhomme, Lamadon, and Manresa (2019) are designed for short
+panels. In their main applications, they have exactly two wage observations per worker.
+AKM is identified on a connected set of firms and workers. Kline, Saggio, and Sølvsten
+(2019) further require that this set remains connected after dropping any worker from the
+set, and call it the leave-one-out connected set. Finally, recall that our estimator requires
+that every worker and every firm in the sample has at least two observations.
+Our starting point is the sample we used for the AKM estimation in Section 7. In this
+sample, we keep only the first two observations for each worker to create a short panel, as in
+Kline, Saggio, and Sølvsten (2019) and Bonhomme, Lamadon, and Manresa (2019). We find
+the largest leave-one-out connected set and keep only workers and firms belonging to this
+set, as in Kline, Saggio, and Sølvsten (2019). There are two observations per worker and at
+least two observations per firm in the resulting sample, and hence it satisfies our restriction.
+Using this sample, we first calculate ρˆ using our approach and ρˆ using OLS. Since
+AKM
+AGSU, KSS, and BLM do not weigh spells by duration, we also do not weigh spells when we
+compute these two moments. That is, we set the duration of each match to 1, tw = tf = 1
+i,m j,n
+for each i = 1,...I, j = 1,...,J, m = 1,2, and n = 1,...,N . We compute the AGSU
+j
+and KSS bias corrected correlations using the code created by Kline, Saggio, and Sølvsten
+(2019) which is available on GitHub, version 2.15.33 We choose the Johnson-Lindenstrauss
+approximation method and set the precision parameter to ε = 0.005. We also use their code
+to find the largest leave-one-out connected set. We estimate BLM using the code provided
+by the authors on GitHub, version from March 15, 2019.34
+Table 5 in the body of the paper shows the results. Imposing additional restrictions
+on the sample reduces the number of workers by less than 7% and firms by less 43%, with
+the exception of column (1). This sample size reduction does not have an economically
+33 https://github.com/rsaggio87/LeaveOutTwoWay
+34 https://github.com/tlamadon/rblm
+66
+
+===== PDF PAGE 68 =====
+
+significant impact on our estimates ρˆ. The AKM correlation ρˆ decreases compared to
+AKM
+Table 4 and is now negative in each sample. The AGSU and KSS corrections are similar.
+The bias-corrected correlations are both bigger than the OLS estimates of ρˆ , but remain
+AKM
+close to zero. The BLM estimates of the AKM correlation yields a higher estimate of the
+AKM correlation, averaging 0.296 for men and 0.289 for women for the mixture model. Still,
+these are much smaller than the estimates of our correlation.
+Finally, we reconstruct the time series figure using these methods. For each year, we
+start from the sample we used in Section 6.5 but keep only the first two wage observations
+for each worker. We then find the largest leave-one-out connected set where each worker
+and firm has at least two observations. We then compute unweighed ρˆand the OLS, AGSU,
+KSS, and BLM estimates of ρˆ . Figure 7 depicts the results.
+AKM
+The level comparison is similar to that seen in Table 5: the OLS estimate of the AKM
+correlation is the lowest, followed by AGSU and KSS. The BLM estimate is closer to ρˆ, which
+is the highest. For both men and women, the time trend in the AGSU and KSS estimates
+of ρˆ are similar to the time-trend in ρˆ: increasing for men and decreasing for women.
+AKM
+The BLM estimates of the AKM correlation shows little time trend, especially for women,
+although its level is close to ρˆ.
+References
+Andrews, Martyn J., Leonard Gill, Thorsten Schank, and Richard Upward (2008). “High
+Wage Workers and Low Wage Firms: Negative Assortative Matching or Limited Mobility
+Bias?” Journal of the Royal Statistical Society: Series A (Statistics in Society) 171.3,
+pp. 673–697.
+Bonhomme, St´ephane, Thibaut Lamadon, and Elena Manresa (2019). “A Distributional
+Framework for Matched Employer Employee Data”. Econometrica 87.3, pp. 699–738.
+Guimaraes, Paulo and Pedro Portugal (2010). “A Simple Feasible Procedure to Fit Models
+with High-Dimensional Fixed Effects”. The Stata Journal 10.4, pp. 628–649.
+Kline, Patrick, Raffaele Saggio, and Mikkel Sølvsten (2019). Leave-out Estimation of Vari-
+ance Components. NBER Working Paper No. 26244.
+Malmberg, Hannes and Ola Ho¨ssler (2014). “Probabilistic Choice with an Infinite Set of
+Options: An Approach Based on Random Sup Measures”. Modern Problems in Insur-
+ance Mathematics. Ed. by Dmitrii Silvestrov and Anders Martin-Lo¨f. Springer. Chap. 18,
+pp. 291–312.
+67
+
+===== PDF PAGE 69 =====
+
+0.60
+0.40
+0.20
+0.00
+0.20
+−
+1985 1995 2005 2015
+year
+noitalerroc
+Men
+0.60
+0.40
+0.20
+0.00
+0.20
+−
+1985 1995 2005 2015
+year
+ρˆ ρˆ , OLS ρˆ , AGSU
+AKM AKM
+ρˆ , KSS ρˆ , BLM
+AKM AKM
+noitalerroc
+Women
+Figure7: Year-by-yearestimatesofthecorrelationρandtheAKMcorrelationusingdifferent
+methods, using AMDB 1986–2018 and the independence assumption III. The initial data
+construction is identical to that in Figure 3 but we further restrict the sample in each
+year to the largest leave-one-out connected set where every worker has exactly two distinct
+employers, and every firm employs at least two workers. The estimates are not weighted by
+duration.
+68

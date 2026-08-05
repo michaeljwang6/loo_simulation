@@ -1,0 +1,252 @@
+%-------------------------
+% Resume in LaTeX
+% Author: Michael Wang
+% Template base: https://github.com/sb2nov/resume (MIT)
+%------------------------
+
+\documentclass[letterpaper,10pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{enumitem}
+
+% If available, ensure PDF is machine readable/ATS parsable
+\makeatletter
+\IfFileExists{glyphtounicode.tex}{\input{glyphtounicode}}{}
+\makeatother
+\pdfgentounicode=1
+
+%---------- Page style ----------
+\pagestyle{empty}
+
+%---------- Margins ----------
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+%---------- Section formatting ----------
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+%---------- Custom commands ----------
+\newcommand{\directlink}[2]{%
+  \pdfstartlink attr{/Border [0 0 0]}%
+  user{/Subtype /Link /A << /S /URI /URI (#1) >>}%
+  #2\pdfendlink%
+}
+
+\newcommand{\resumeItem}[1]{\item\small{#1}}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small #3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubSubheading}[2]{
+  \item
+  \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+    \textit{\small #1} & \textit{\small #2} \\
+  \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+  \item
+  \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+    \small #1 & #2 \\
+  \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-3pt}}
+
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{
+  \begin{itemize}[leftmargin=0.15in,label={}]
+  \setlength\itemsep{3pt}
+}
+
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+
+\newcommand{\resumeItemListStart}{
+  \begin{itemize}
+  \setlength\itemsep{3pt}
+}
+
+\newcommand{\resumeItemListEnd}{
+  \end{itemize}\vspace{-5pt}
+}
+
+%-------------------------------------------
+%%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%---------- HEADING ----------
+\begin{center}
+  {\Huge \scshape Michael Wang} \\ \vspace{2pt}
+  \small
+  (612) 391-3518
+  \,|\, michaelwang@college.harvard.edu
+  \,|\, \directlink{https://www.linkedin.com/in/michael-wang-a03a74301/}{LinkedIn}
+\end{center}
+
+%-------------------------
+% EDUCATION
+%-------------------------
+\section{Education}
+\resumeSubHeadingListStart
+
+  \resumeSubheading
+    {Harvard University}{Cambridge, MA}
+    {A.B.\ Candidate in Mathematics \& Economics; Concurrent M.A.\ Candidate in Statistics}
+    {Aug 2024 -- Expected May 2028}
+
+  \resumeItemListStart
+    \resumeItem{GPA: 3.8/4.0. Coursework: MATH 55
+    (Abstract Algebra, Analysis, Topology), Measure Theory, Graduate Probability,
+    Stochastic Processes, Econometrics, Statistical Inference, Algebraic
+    Geometry, and Linear/Generalized Linear Models.}
+  \resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+%-------------------------
+% EXPERIENCE
+%-------------------------
+\section{Experience}
+\resumeSubHeadingListStart
+
+\resumeSubheading
+  {Opportunity Insights}{Cambridge, MA}
+  {Research Assistant to Raj Chetty and Yechan Park}{May 2026 -- Present}
+
+\resumeItemListStart
+
+  \resumeItem{\textbf{Spatial spillovers:} Derived and implemented
+  design-based GMM estimators, specification tests, and regularized exposure-map
+  selection; built Python/SLURM Monte Carlo pipelines for anti-poverty experiments
+  in India and Kenya. The resulting analysis rejected the original 2\,km Kenya
+  support, selected 4--6\,km supports, and revised the implied local transfer
+  multiplier from 2.5 to 1.43.}
+
+  \resumeItem{\textbf{OpenAI Exchange -- AI productivity gains:} Developing an
+  empirical-Bayes data-fusion framework that calibrates platform-scale model
+  scores using a randomized validation sample to map gains across $\sim$1,000
+  occupation-task cells; derived identification and near-oracle risk guarantees
+  and designed simulations to size the validation experiment.}
+
+  \resumeItem{\textbf{Leave-one-out estimation:} Developing and implementing a
+  general leave-one-out regression framework in Python and R for settings in
+  which observed regressors and heterogeneous parameters are indexed at
+  different levels; designed and ran simulation studies to evaluate the
+  estimator's finite-sample behavior.}
+
+\resumeItemListEnd
+
+  \resumeSubheading
+    {Harvard Business School}{Boston, MA}
+    {Research Assistant to Jeremy Stein and Laura Nicolae}{May 2025 -- Nov 2025}
+
+  \resumeItemListStart
+
+    \resumeItem{Constructed a panel of 10-K filings, earnings-call transcripts,
+    and financial statements for 17 large bank holding companies to identify
+    whether the supplementary leverage ratio or risk-based capital requirements
+    were binding.}
+
+    \resumeItem{Built a Python NLP pipeline combining sentiment analysis and
+    capital-constraint text classification to quantify managerial outlook and
+    link textual signals to subsequent changes in business-line asset
+    allocation.}
+
+    \resumeItem{Estimated difference-in-differences and portfolio-share models
+    linking regulatory constraints and textual signals to balance-sheet
+    behavior, finding a preliminary 20--30 bp aggregate ROA cost associated
+    with simultaneous leverage and risk-based capital constraints.}
+
+  \resumeItemListEnd
+
+  \resumeSubheading
+    {Charles River Economics Lab}{Cambridge, MA}
+    {Co-Director of Research}{Jan 2025 -- Present}
+
+  \resumeItemListStart
+
+    \resumeItem{Led development of an end-to-end labor-market analytics pipeline
+    linking CPS, ACS, JOLTS, SEC filings, earnings calls, and patent data across
+    300+ industries and 48 states.}
+
+    \resumeItem{Constructed six measures of generative-AI exposure and estimated
+    fixed-effects, difference-in-differences, and instrumental-variables models,
+    producing a monthly state-industry tracker of employment, wage, and vacancy
+    outcomes.}
+
+    \resumeItem{Led a separate county-level analysis of ACA premium increases
+    for The Century Foundation, producing published results used to support
+    congressional testimony.}
+
+  \resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+%-------------------------
+% LEADERSHIP & ACTIVITIES
+%-------------------------
+\section{Leadership \& Activities}
+\resumeSubHeadingListStart
+
+  \resumeSubheading
+    {Harvard Undergraduate Science Olympiad}{Cambridge, MA}
+    {Director of Finance}{Sep 2024 -- Present}
+
+  \resumeItemListStart
+    \resumeItem{Managed budgeting and logistics for an intercollegiate
+    competition with 700+ participants and secured corporate sponsorships,
+    including Jane Street.}
+  \resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+%-------------------------
+% TECHNICAL SKILLS
+%-------------------------
+\section{Technical Skills}
+\begin{itemize}[leftmargin=0.15in, label={}]
+  \small{
+    \item{
+      \textbf{Programming:} Python, R, SQL, Java \\
+      \textbf{Research Computing:} Linux, Bash, SLURM, Git, GCP, \LaTeX \\
+      \textbf{Languages:} English (Native), Mandarin
+      (Professional Working Proficiency)
+    }
+  }
+\end{itemize}
+
+%-------------------------
+% ADDITIONAL
+%-------------------------
+\section{Additional}
+\begin{itemize}[leftmargin=0.15in, label={}]
+  \small{
+    \item{
+      \textbf{Honors:} AIME Score: 10/15; USNCO National Top 150 \\
+      \textbf{Activities:} Harvard Undergraduate Quant Traders;
+      Harvard--Yale Trading Competition \\
+      \textbf{Interests:} Poker, Basketball, Tennis, Film, Dance
+    }
+  }
+\end{itemize}
+
+\end{document}

@@ -1,0 +1,507 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/0njtjf",
+    "id": "0njtjf",
+    "slide": 12,
+    "layoutId": "b4fc2449-9f47-4b68-93d2-0258226feee9",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "8b72b8a4-9a1b-4b61-bf0d-c72e554aafae",
+    "masterLayoutName": "Master",
+    "backgroundColor": "#FFFFFF",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "bg1": "#FFFFFF",
+      "bg2": "#000000",
+      "tx1": "#1F1F1F",
+      "tx2": "#FFFFFF",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "typefaces": [
+      "+mn-lt"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "b4fc2449-9f47-4b68-93d2-0258226feee9",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "8b72b8a4-9a1b-4b61-bf0d-c72e554aafae",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "8b72b8a4-9a1b-4b61-bf0d-c72e554aafae",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ihg3u9kj",
+      "id": "1",
+      "bbox": [
+        72,
+        38,
+        1080,
+        20
+      ],
+      "geometry": "rect",
+      "text": "STEP 11 | APPLY PROPOSITION 4",
+      "textPreview": "STEP 11 | APPLY PROPOSITION 4",
+      "resolvedFontSize": 12,
+      "resolvedTextStyle": {
+        "fontSize": 12,
+        "typeface": "+mn-lt",
+        "color": "#666666",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "STEP 11 | APPLY PROPOSITION 4"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "STEP 11 | APPLY PROPOSITION 4",
+          "resolvedTextStyle": {
+            "fontSize": 12,
+            "color": "#666666",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "STEP 11 | APPLY PROPOSITION 4",
+              "fontSize": 12,
+              "color": "#666666",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/5k7m5o3a",
+      "id": "2",
+      "bbox": [
+        72,
+        72,
+        1136,
+        70
+      ],
+      "geometry": "rect",
+      "text": "A target is identified only when every missing-cell perturbation leaves it unchanged",
+      "textPreview": "A target is identified only when every missing-cell perturbation leaves it unchanged",
+      "resolvedFontSize": 34,
+      "resolvedTextStyle": {
+        "fontSize": 34,
+        "typeface": "+mn-lt",
+        "color": "#000000",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "A target is identified only when every missing-cell perturbation leaves it"
+          },
+          {
+            "index": 2,
+            "text": "unchanged"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "A target is identified only when every missing-cell perturbation leaves it unchanged",
+          "resolvedTextStyle": {
+            "fontSize": 34,
+            "color": "#000000",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "A target is identified only when every missing-cell perturbation leaves it unchanged",
+              "fontSize": 34,
+              "color": "#000000",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "image",
+      "scope": "slide",
+      "aid": "im/p832tgbm",
+      "id": "3",
+      "bbox": [
+        82,
+        154,
+        1116,
+        132
+      ],
+      "alt": "Typeset equation: identification",
+      "contentType": "image/png",
+      "imageFit": "contain",
+      "asset": {
+        "assetId": "58b3b5cb-98fc-4bbd-b58f-a82d7de79dbb",
+        "contentType": "image/png",
+        "byteLength": 43236
+      }
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/vepkzul8",
+      "id": "4",
+      "bbox": [
+        86,
+        314,
+        1100,
+        261
+      ],
+      "geometry": "rect",
+      "text": "For a linear target, the target loading must annihilate every direction hidden by the graph. For a quadratic target, both the linear cross term and the perturbation's own quadratic contribution must vanish over the admissible model class.\n\nThe paper's central firm and assignment statistics generally fail this test on an unrestricted incomplete schedule. With unbounded missing wages, some identified sets are unbounded.",
+      "textPreview": "For a linear target, the target loading must annihilate every direction hidden by the graph. For a quadratic target, both the linear cros...",
+      "resolvedFontSize": 18.51,
+      "resolvedTextStyle": {
+        "fontSize": 18.51,
+        "typeface": "+mn-lt",
+        "color": "#000000",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 5,
+        "lines": [
+          {
+            "index": 1,
+            "text": "For a linear target, the target loading must annihilate every direction hidden by the graph. For a quadratic target, both the linear cross term and"
+          },
+          {
+            "index": 2,
+            "text": "the perturbation's own quadratic contribution must vanish over the admissible model class."
+          },
+          {
+            "index": 3,
+            "text": ""
+          },
+          {
+            "index": 4,
+            "text": "The paper's central firm and assignment statistics generally fail this test on an unrestricted incomplete schedule. With unbounded missing"
+          },
+          {
+            "index": 5,
+            "text": "wages, some identified sets are unbounded."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "For a linear target, the target loading must annihilate every direction hidden by the graph. For a quadratic target, both the linear cross term and the perturbation's own quadratic contribution must vanish over the admissible model class.",
+          "resolvedTextStyle": {
+            "fontSize": 18.51,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "For a linear target, the target loading must annihilate every direction hidden by the graph. For a quadratic target, both the linear cross term and the perturbation's own quadratic contribution must vanish over the admissible model class.",
+              "fontSize": 18.51,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "The paper's central firm and assignment statistics generally fail this test on an unrestricted incomplete schedule. With unbounded missing wages, some identified sets are unbounded.",
+          "resolvedTextStyle": {
+            "fontSize": 18.51,
+            "color": "#000000",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "The paper's central firm and assignment statistics generally fail this test on an unrestricted incomplete schedule. With unbounded missing wages, some identified sets are unbounded.",
+              "fontSize": 18.51,
+              "color": "#000000",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/udg3qpkn",
+      "id": "5",
+      "bbox": [
+        72,
+        602,
+        1136,
+        1
+      ],
+      "geometry": "rect",
+      "fillColor": "#BDBDBD",
+      "lineWidth": 0
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/hg72143y",
+      "id": "6",
+      "bbox": [
+        86,
+        615,
+        1090,
+        34
+      ],
+      "geometry": "rect",
+      "text": "The model must therefore restrict the missing interaction surface, while preserving unrestricted worker and firm main effects.",
+      "textPreview": "The model must therefore restrict the missing interaction surface, while preserving unrestricted worker and firm main effects.",
+      "resolvedFontSize": 16,
+      "resolvedTextStyle": {
+        "fontSize": 16,
+        "typeface": "+mn-lt",
+        "color": "#666666",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "The model must therefore restrict the missing interaction surface, while preserving unrestricted worker and firm main effects."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "The model must therefore restrict the missing interaction surface, while preserving unrestricted worker and firm main effects.",
+          "resolvedTextStyle": {
+            "fontSize": 16,
+            "color": "#666666",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "The model must therefore restrict the missing interaction surface, while preserving unrestricted worker and firm main effects.",
+              "fontSize": 16,
+              "color": "#666666",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 7,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/gfylsz2t",
+      "id": "7",
+      "bbox": [
+        72,
+        676,
+        1040,
+        18
+      ],
+      "geometry": "rect",
+      "text": "Source: LOO note, pp. 19-21; Proposition 4 and Corollary 1",
+      "textPreview": "Source: LOO note, pp. 19-21; Proposition 4 and Corollary 1",
+      "resolvedFontSize": 10.51,
+      "resolvedTextStyle": {
+        "fontSize": 10.51,
+        "typeface": "+mn-lt",
+        "color": "#666666",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Source: LOO note, pp. 19-21; Proposition 4 and Corollary 1"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Source: LOO note, pp. 19-21; Proposition 4 and Corollary 1",
+          "resolvedTextStyle": {
+            "fontSize": 10.51,
+            "color": "#666666",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Source: LOO note, pp. 19-21; Proposition 4 and Corollary 1",
+              "fontSize": 10.51,
+              "color": "#666666",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 8,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/fa94bylc",
+      "id": "8",
+      "bbox": [
+        1150,
+        676,
+        58,
+        18
+      ],
+      "geometry": "rect",
+      "text": "12",
+      "textPreview": "12",
+      "resolvedFontSize": 10.51,
+      "resolvedTextStyle": {
+        "fontSize": 10.51,
+        "typeface": "+mn-lt",
+        "color": "#666666",
+        "alignment": "right",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "12"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "12",
+          "resolvedTextStyle": {
+            "fontSize": 10.51,
+            "color": "#666666",
+            "alignment": "right"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "12",
+              "fontSize": 10.51,
+              "color": "#666666",
+              "alignment": "right"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    }
+  ],
+  "composeRuns": []
+}

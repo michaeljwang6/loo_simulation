@@ -1,0 +1,2276 @@
+
+
+===== PDF PAGE 1 =====
+
+Firm Wage Effects and Assignment Beyond Additivity
+Working draft
+July 2026
+Abstract
+Thematchedemployer–employeeliteraturecommonlysummarizesfirm-relatedwageinequality
+using the variance of firm effects and the covariance between worker and firm effects. Both
+quantities rely on additive separability: the wage difference between two employers is assumed
+to be the same for every worker. This paper develops wage-inequality accounting, identification,
+and inference when employer wage differences vary across workers. We define the average within-
+worker cross-firm wage variance Q , heterogeneity in pairwise firm wage contrasts H , and a
+F F
+fixed-wage-schedule assignment contribution Cw . Under additive AKM these objects reduce
+assign
+to the firm-effect variance, zero, and the worker–firm covariance. A canonical functional-ANOVA
+decomposition yields
+Q =Var(b )+ 1H
+F J 2 F
+anddecomposesthegeneralizedassignmenttermintocommon-componentassortativityandthree
+interaction-related channels. Before imposing a factor structure, we characterize identification
+of arbitrary linear and quadratic functionals from the observed worker–firm edges. Under
+an unrestricted wage schedule, a target is point identified if and only if it is invariant to
+every perturbation of unobserved cells; in a nondegenerate sparse graph, the headline cardinal
+functionals generally fail this condition and can have unbounded identified sets. Monotone
+seriation can identify rankings and tighten bounds, but generally does not identify the cardinal
+targets. We therefore represent worker-specific firm wage differences with a low-algebraic-rank
+interaction while leaving worker and firm main effects unrestricted. The paper’s econometric
+objective is target-specific graph identification and feasible bias-corrected inference for invariant
+linear and quadratic functionals under sparse mobility and bounded firm size. The analysis
+concerns a maintained pairwise systematic wage schedule. Causal wage effects require additional
+mobility and transportability assumptions; productive sorting and welfare require a structural
+model of output, search, acceptance, and wage determination.
+Contents
+1 Introduction 6
+2 Economic Setup and Estimand Discipline 9
+2.1 Observed data and the worker–firm graph . . . . . . . . . . . . . . . . . . . . . . . . 9
+2.2 Schedule, assignment, and functional . . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+2.3 Maintained, causal, production, and surplus objects . . . . . . . . . . . . . . . . . . 10
+2.4 Reference populations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+1
+
+===== PDF PAGE 2 =====
+
+2.5 Canonical additive–interaction decomposition . . . . . . . . . . . . . . . . . . . . . . 11
+2.6 Causal interpretation as an additional layer . . . . . . . . . . . . . . . . . . . . . . . 11
+3 Firm Wage Dispersion Beyond Additivity 12
+3.1 The additive benchmark and a motivating example . . . . . . . . . . . . . . . . . . . 12
+3.2 Average within-worker cross-firm wage variance . . . . . . . . . . . . . . . . . . . . . 12
+3.3 Heterogeneity in pairwise firm wage contrasts . . . . . . . . . . . . . . . . . . . . . . 13
+3.4 Common and worker-specific firm wage dispersion . . . . . . . . . . . . . . . . . . . 13
+3.5 Relation to total systematic wage dispersion . . . . . . . . . . . . . . . . . . . . . . . 14
+3.6 Realized interaction dispersion . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+4 Assignment Beyond Additivity 15
+4.1 Why the AKM covariance is incomplete . . . . . . . . . . . . . . . . . . . . . . . . . 15
+4.2 A generalized assignment contribution to wage variance . . . . . . . . . . . . . . . . 15
+4.3 Four assignment channels . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+4.4 Assignment into favorable worker-specific firm cells . . . . . . . . . . . . . . . . . . . 16
+4.5 Special cases . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17
+4.6 Selection on levels and gains . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17
+4.7 Support and restricted independence benchmarks . . . . . . . . . . . . . . . . . . . . 18
+5 Nonparametric Benchmark: What the Observed Graph Reveals 18
+5.1 Unrestricted pairwise wage schedules . . . . . . . . . . . . . . . . . . . . . . . . . . . 19
+5.2 A target-specific identification criterion . . . . . . . . . . . . . . . . . . . . . . . . . . 19
+5.3 Implications for the headline functionals . . . . . . . . . . . . . . . . . . . . . . . . . 20
+5.4 The monotone seriation benchmark . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+5.5 What additional structure must buy . . . . . . . . . . . . . . . . . . . . . . . . . . . 21
+6 A Low-Rank Model of Worker-Specific Firm Wage Differences 21
+6.1 Model and maintained conditional mean . . . . . . . . . . . . . . . . . . . . . . . . . 21
+6.2 Algebraic rank versus effective dimension . . . . . . . . . . . . . . . . . . . . . . . . 22
+6.3 Why the restriction falls only on the interaction . . . . . . . . . . . . . . . . . . . . . 22
+6.4 Baseline rank-one specification . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 22
+6.5 Technical staging: Tukey proving ground and free-factor target . . . . . . . . . . . . 23
+6.6 Nested and approximated wage representations . . . . . . . . . . . . . . . . . . . . . 23
+6.7 Normalizations and invariant targets . . . . . . . . . . . . . . . . . . . . . . . . . . . 23
+2
+
+===== PDF PAGE 3 =====
+
+6.8 Approximation and rank choice . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 24
+7 Identification on the Worker–Firm Graph 25
+7.1 An identification ladder . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 25
+7.2 Rectangles remove additive components . . . . . . . . . . . . . . . . . . . . . . . . . 25
+7.3 Anchor and propagation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 25
+7.4 Functional identification versus full completion . . . . . . . . . . . . . . . . . . . . . 26
+7.5 Identification of Q and H . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 26
+F F
+7.6 Identification of assignment quantities . . . . . . . . . . . . . . . . . . . . . . . . . . 27
+7.7 When point identification fails . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 27
+7.8 Graph identification is not causal identification . . . . . . . . . . . . . . . . . . . . . 27
+8 Estimation and Bias Correction 27
+8.1 Point estimation of the schedule. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 28
+8.2 Quadratic representations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 28
+8.3 Why plug-in estimators are biased . . . . . . . . . . . . . . . . . . . . . . . . . . . . 28
+8.4 Current leave-worker-out conjecture and eventual cavity logic . . . . . . . . . . . . . 29
+8.5 Assignment-functional correction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 30
+8.6 Computability . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 30
+8.7 Rank selection and regularization . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 30
+9 Asymptotic Theory and Inference 30
+9.1 Asymptotic framework . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 30
+9.2 Consistency of corrected functionals . . . . . . . . . . . . . . . . . . . . . . . . . . . 31
+9.3 Limit distribution and feasible uncertainty . . . . . . . . . . . . . . . . . . . . . . . . 31
+9.4 Joint inference for the headline vector . . . . . . . . . . . . . . . . . . . . . . . . . . 32
+9.5 Testing additive separability . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 32
+9.6 Testing interaction-related assignment . . . . . . . . . . . . . . . . . . . . . . . . . . 32
+10 Monte Carlo Design 33
+10.1 Data-generating processes . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 33
+10.2 Estimators and performance measures . . . . . . . . . . . . . . . . . . . . . . . . . . 33
+10.3 Graph stress tests . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 34
+10.4 Rank misspecification . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 34
+11 Empirical Application 34
+3
+
+===== PDF PAGE 4 =====
+
+11.1 Data and estimation population . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 34
+11.2 Network and target-support diagnostics . . . . . . . . . . . . . . . . . . . . . . . . . 34
+11.3 The additive benchmark . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 35
+11.4 Direct diagnostics of additive separability . . . . . . . . . . . . . . . . . . . . . . . . 35
+11.5 Main firm-dispersion estimates . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 35
+11.6 The generalized assignment contribution . . . . . . . . . . . . . . . . . . . . . . . . . 36
+11.7 Decomposing assignment . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 36
+11.8 Economic heterogeneity . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 36
+11.9 Robustness . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 36
+12 Interpretation: Wage Differences, Selection, and Sorting 37
+12.1 What the estimates establish . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 37
+12.2 Four meanings of sorting . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 37
+12.3 Relation to paired movers . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 37
+12.4 Selection and accepted matches . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 38
+12.5 Structural boundary and next paper . . . . . . . . . . . . . . . . . . . . . . . . . . . 38
+13 Conclusion 38
+A Proofs and Details for the Nonparametric Benchmark 39
+A.1 Proof of proposition 4 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 39
+A.2 Constructive proof of corollary 1 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 39
+A.3 Monotone completion and target bounds . . . . . . . . . . . . . . . . . . . . . . . . . 39
+B Canonical Identities and Finite-Population Algebra 40
+C Assignment Decompositions and Special Cases 40
+D Selection, Treatment Effects, and Roy Sorting 41
+E Low Rank: Algebraic Shape and Effective Dimension 41
+F Representation Map for Established Wage Models 42
+F.1 AKM and KSS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 42
+F.2 Tukey and Crippa . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 42
+F.3 Firm-specific slopes and grouped BLM . . . . . . . . . . . . . . . . . . . . . . . . . . 42
+F.4 GKLP . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 43
+4
+
+===== PDF PAGE 5 =====
+
+F.5 Eeckhout–Kircher . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 43
+F.6 Shimer–Smith . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 43
+F.7 Borovičková–Shimer . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 43
+G Stochasticity, Meetings, Acceptance, and Selection 43
+H Two Cycle Spaces and Graph Diagnostics 44
+I Event-Study and Paired-Mover Diagnostics 44
+J Quadratic Operators for the Target Functionals 45
+K Estimation Algorithm and Computation 46
+L Cavity Expansion and Proof Agenda 46
+L.1 Current conjecture: shared-factor Tukey . . . . . . . . . . . . . . . . . . . . . . . . . 46
+L.2 Bridge to the free-factor theorem . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 47
+L.3 Computability and kill criteria . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 47
+M Higher-Rank Extension 47
+N Empirical Tables and Figures to Produce 47
+Provisional Bibliography 48
+5
+
+===== PDF PAGE 6 =====
+
+1 Introduction
+The empirical literature on wage inequality has made two firm-side statistics nearly unavoidable. In
+the additive worker–firm model
+Y = X′ δ+α +ψ +ε , (1)
+it it i Jit it
+the variance of firm effects, Var(ψ ), measures dispersion in a worker-invariant firm wage component,
+J
+and the covariance Cov(α ,ψ ) measures the alignment of worker and firm components in the
+I J
+realized assignment. These terms are reported across countries, sectors, and time periods; they
+organize influential accounts of rising wage inequality and provide the benchmark against which
+richer worker–firm models are judged (Abowd, Kramarz, and Margolis, 1999; Card, Heining, and
+Kline, 2013; Kline, Saggio, and Sølvsten, 2020).
+The apparent simplicity of these quantities hides a strong economic restriction. Let m denote the
+ij
+systematic wage associated with worker i and firm j. Additive AKM imposes
+m −m = ψ −ψ for every worker i and pair (j,k). (2)
+ik ij k j
+Everyworkerthereforefacesthesamerankingoffirmsandthesamewagegapbetweenanytwofirms.
+A firm may pay more or less, but it does so by the same amount for everyone. The variance Var(ψ )
+J
+is economically complete only under this common-firm-ladder restriction. Likewise, Cov(α ,ψ )
+I J
+exhausts the assignment contribution only when there is no worker-specific firm component through
+which assignment can operate.
+There are many reasons to doubt that employer wage differences are common across workers.
+Comparative advantage gives sectors different prices for the same latent skill (Gibbons et al., 2005).
+Search and bargaining models place firm outside options inside the wage, producing wage schedules
+that can be nonmonotone in firm type for a fixed worker (Eeckhout and Kircher, 2011). Grouped
+worker–firm models allow the entire wage distribution to vary by worker and firm type (Bonhomme,
+Lamadon, and Manresa, 2019). Bilinear interaction models permit firm differences to scale with
+worker type (Crippa, 2025). Permanent match components can be quantitatively large even when
+conventional tests have low power (Sorkin and Warwar, 2026). Selective acceptance can either
+manufacture additive accepted-match wages at a special Pareto benchmark or restore nonadditivity
+away from that benchmark (Borovičková and Shimer, 2025). These mechanisms are economically
+different, but they share a reduced-form implication: a scalar firm premium need not summarize
+the wage consequences of working at a firm.
+Thispapergeneralizesbothcentralfirm-sideAKMobjectswithouttreatingaparticularfactorization
+as the economic estimand. Let P and P denote the worker and firm marginals of the observed
+I J
+assignment. The first quantity is
+Q = E [Var (m )], (3)
+F I J∼PJ IJ
+the average within-worker cross-firm wage variance. It asks how much systematic wages differ across
+firms for the same worker. The second is
+H = E [Var (m −m )], (4)
+F J,K∼PJ I IK IJ
+the heterogeneity across workers in the wage contrast between the same pair of firms. It measures
+the empirical importance of relaxing equation (2). The third is
+1
+n o
+Cw = Var (m )−Var (m ) , (5)
+assign 2 Pobs IJ PI⊗PJ IJ
+IJ
+6
+
+===== PDF PAGE 7 =====
+
+one half of the change in systematic wage variance generated by replacing independent assignment
+with the observed assignment while holding the wage schedule and its marginals fixed.
+These quantities preserve the familiar AKM benchmark exactly:
+(Q ,H ,Cw ) = (cid:0)Var(ψ ),0,Cov(α ,ψ )(cid:1) under additive AKM. (6)
+F F assign J I J
+The paper therefore does not ask readers to value an unrelated new statistic. It asks the same
+two questions that motivate the AKM firm variance and worker–firm covariance—how much firms
+contribute to wage dispersion and how assignment uses firm-related wage differences—without
+defining those questions by additive separability.
+The central conceptual result comes from decomposing the completed wage schedule relative to the
+product population P ⊗P :
+I J
+m = µ+a +b +h , (7)
+ij i j ij
+where a is the worker’s average wage position across firms, b is the firm’s average wage contribution
+i j
+across workers, and h is the worker-specific firm component, normalized to have zero row and
+ij
+columnmeansundertheproductpopulation. This decompositionisuniqueforadeclaredpopulation
+and is invariant to rotations or rescalings of any latent factors. It yields the exact identity
+1
+Q = Var(b )+ H . (8)
+F J 2 F
+Thus total cross-firm wage dispersion for a worker consists of a common firm ladder and worker-
+specific firm wage differences. The share
+H
+ρ = F ∈ [0,1] (9)
+H 2Q
+F
+measures the fraction of firm-related wage dispersion not summarized by a common firm component.
+Thesamedecompositionrevealswhyonecovarianceisincompletebeyondadditivity. Thegeneralized
+assignment term satisfies
+Cw = Cov (a ,b )+Cov (a ,h )+Cov (b ,h )
+assign obs I J obs I IJ obs J IJ
+1
++ {Var (h )−Var (h )}. (10)
+2 obs IJ PI⊗PJ IJ
+AKM retains only common-component assortativity, Cov (a ,b ). Nonadditivity adds alignment
+obs I J
+between worker position and worker-specific firm advantage, alignment between common firm
+position and worker-specific advantage, and differences in the concentration of interaction cells under
+observed and independent assignment. In this precise sense, AKM has one assignment channel;
+nonadditivity permits several.
+A secondary first-moment quantity is
+A = E [m ]−E [m ] = E [h ], (11)
+h Pobs IJ PI⊗PJ IJ Pobs IJ
+which asks whether realized matches occupy wage cells that are favorable after removing the
+worker and common firm components. We retain A as a secondary object because it has a larger
+h
+counterfactual-support burden and because its interpretation is easily overstated. A positive A is a
+h
+fixed-schedule wage comparison, not a welfare theorem.
+7
+
+===== PDF PAGE 8 =====
+
+The econometric difficulty is that none of these quantities is directly observed. Administrative
+data reveal wages on the edges of a sparse bipartite worker–firm graph. The target functionals
+generally put weight on counterfactual pairs. Moreover, worker effects, firm effects, and flexible
+interaction factors are incidental parameters: each is learned from a small number of observations,
+so plug-in quadratic functionals inherit a bias that need not vanish as the number of workers and
+firms grows. Additive leave-out methods exploit a fixed linear design (Kline, Saggio, and Sølvsten,
+2020). Grouped approaches obtain tractability by reducing heterogeneity to a finite number of types
+(Bonhomme, Lamadon, and Manresa, 2019). Scalar shared-factor models focus on the interaction
+coefficient rather than the high-dimensional wage functionals (Crippa, 2025). Paired-mover designs
+identify a particular match-variance quantity for a selected mover population (Sorkin and Warwar,
+2026). The missing layer is feasible inference for invariant functionals of a richer nonadditive wage
+schedule while preserving free worker and firm heterogeneity.
+Before imposing that representation, the paper asks what the graph reveals about the economic
+targets under an unrestricted pairwise wage schedule. Let R select the observed cells of the
+E
+vectorized schedule and let K = ker(R ) denote perturbations supported only on unobserved
+E E
+worker–firm pairs. A linear target ℓ′m is identified on the unrestricted class if and only if ℓ′z = 0
+for all z ∈ K ; a symmetric quadratic target m′Am is identified if and only if Az = 0 for every
+E
+such z. In a nondegenerate sparse graph, Q , H , Cw , and A generally fail these conditions
+F F assign h
+whenever their reference distributions put weight on an unobserved cell. Monotonicity, as in Crippa’s
+seriation benchmark, can identify ordinal worker and firm rankings and bound missing cells, but
+does not generally recover these cardinal wage-dispersion and assignment objects. This unrestricted
+benchmarkmakesprecisewhatadditionalstructuremustbuy: cardinalrecoveryofthecounterfactual
+wage contrasts weighted by the stated targets.
+We use the representation
+Y = X′ δ+α +ψ +u′Λv +ε , rank(Λ) = r, (12)
+ij ij i j i j ij
+on observed edges and maintain the same systematic formula on the target pair set. Low rank is
+imposed only on the interaction. The additive worker and firm components remain unrestricted, one
+parameter per node. Importantly, rank one does not make the problem low dimensional: with free
+u and v , the interaction contains O(I +J) incidental parameters. This is the price of declining
+i j
+to cluster. The low-rank model is a device for regularizing and completing the wage schedule; the
+estimands remain Q , H , and Cw .
+F F assign
+The paper makes three contributions. First, it develops a parameterization- invariant inequality
+accounting beyond additive worker–firm effects. The objects in equations (3) to (5) generalize the
+firm variance, the common-effect restriction, and the worker–firm covariance, and the identities in
+equations (8) and (10) reveal the economic channels suppressed by AKM. Second, it makes the
+need for completion structure target specific. For an unrestricted schedule it gives necessary and
+sufficient conditions for identification of any linear or quadratic functional, shows why the headline
+cardinal targets are generally not identified on sparse graphs, and places monotone seriation between
+unrestricted ignorance and cardinal low-rank completion. Within the low-rank class, connectedness
+identifies additive contrasts, interaction contrasts require observed rectangles or richer overlap,
+and assignment functionals require support for the counterfactual pairs weighted by the chosen
+independence benchmark. Third, it develops a computable bias correction and inference procedure
+for invariant linear and quadratic wage-schedule functionals under sparse mobility, proportional
+growth, and bounded firm size. The minimum viable technical result is a free-factor rank-one
+theorem; higher rank is an extension rather than a condition for the core paper.
+8
+
+===== PDF PAGE 9 =====
+
+The interpretation is deliberately bounded. The baseline object is a maintained systematic wage
+schedule. Under additional exclusion, stability, and transportability restrictions, the same schedule
+may receive a causal potential-wage interpretation. Moving from wages to productive sorting
+or welfare requires a model of output, amenities, search, meetings, acceptance, bargaining, and
+equilibrium feasibility. The paper measures the wage consequences of worker–firm assignment; it
+does not infer the surplus consequences from wages alone.
+The remainder of the paper proceeds as follows. Section 2 separates the wage schedule, assignment,
+and causal or structural interpretations. Section 3 develops Q , H , and their exact decomposition.
+F F
+Section 4 generalizes the AKM covariance and distinguishes several assignment channels. Section 5
+establishes the unrestricted and monotone benchmarks, including target-specific impossibility results.
+Section 6 then introduces the low-rank representation and states what cardinal completion it is
+intended to purchase. Section 7 studies target-specific graph support within that class. Sections 8
+and 9 describe estimation, bias correction, and the theorem agenda. Sections 10 and 11 lay out the
+Monte Carlo and empirical implementation. The appendices contain the structural representation
+map, selection taxonomy, graph details, diagnostic algebra, and full derivations that would distract
+from the main sequence of claims.
+2 Economic Setup and Estimand Discipline
+2.1 Observed data and the worker–firm graph
+Workers are indexed by i ∈ I = {1,...,I}, firms by j ∈ J = {1,...,J}, and time by t. Let J
+it
+denote worker i’s employer at time t. After removing observed covariates, the outcome equation is
+Y = X′ δ+m +ε . (13)
+it it iJit it
+The observed worker–firm graph is
+G = (I,J,E),
+where (i,j) ∈ E if worker i is observed at firm j at least once. When there are multiple observations
+on an edge, n denotes the number of worker-period observations and Y ¯ the edge mean after
+ij ij
+residualizing covariates and any time effects.
+The observed edge set E need not equal the target pair set T. For example, a worker observed
+at firms A and B contributes direct information about m and m , but Q under the full firm
+iA iB F
+marginal also assigns weight to firms at which the worker is never observed. The word “completion”
+refers to the step from the observed edge means {m : (i,j) ∈ E} to the entries or contrasts
+ij
+required on T. Completion is not supplied by connectedness alone. It comes from a maintained
+functional restriction, a grouping assumption, a low-rank restriction plus graph support, a causal
+transportability assumption, or a structural model.
+2.2 Schedule, assignment, and functional
+Three objects must be kept separate:
+pairwise wage schedule m assignment P functional Φ(m;P) .
+IJ
+9
+
+===== PDF PAGE 10 =====
+
+The schedule m maps a worker–firm pair into a systematic wage. The assignment P determines
+IJ
+how frequently pairs appear. The functional Φ selects a feature—a mean, variance, quantile, or
+other distributional quantity—of m when (I,J) ∼ P .
+IJ IJ
+This separation rules out a common ambiguity. Changing m while holding P fixed is a change in
+wage determination. Changing P while holding m fixed is an assignment counterfactual. A policy
+that changes meetings, acceptance, wage bargaining, and assignment generally changes both objects.
+The fixed-schedule quantity in equation (5) changes only P and should not be described as a full
+equilibrium policy effect.
+2.3 Maintained, causal, production, and surplus objects
+The notation m is intentionally neutral. Four layers are useful:
+ij
+mE = E[Y | i,J = j,G], (i,j) ∈ E, (14)
+ij it it
+mw = maintained systematic pairwise wage schedule, (i,j) ∈ T, (15)
+ij
+µw = E[Y (j)], (i,j) ∈ T, (16)
+ij i
+S = total match surplus. (17)
+ij
+Equality of mE and mw on observed edges requires the conditional-mean restriction of the statistical
+model. Recovery of mw on unobserved target pairs requires completion assumptions. Interpreting
+mw as µw requires exclusion and selection or transportability restrictions. Recovering S from wages
+requires a model of production, wage setting, amenities, search, and contracting. The graph and
+inferential results in the first paper concern mw unless a stronger interpretation is stated explicitly.
+Interpretive hierarchy
+observed conditional wages ̸≡ maintained wage schedule ̸≡ causal potential wages,
+̸≡ production or surplus ̸≡ welfare.
+Each move to the right requires additional assumptions. More flexible statistics do not by
+themselves supply those assumptions.
+2.4 Reference populations
+Let P = (p )I be a declared worker distribution and let ν = (q )J be a reference distribution
+I i i=1 j j=1
+over firms. The generic product population is
+P× = P ⊗ν. (18)
+I
+The baseline sets ν = P , the firm marginal of the observed assignment. This choice has two
+J
+advantages. First, the independent-assignment comparison preserves the observed worker and firm
+marginals. Second, the nonadditive objects reduce exactly to the standard AKM quantities under
+additivity.
+Other choices answer different questions. Equal weighting across firms asks about the typical legal
+firm rather than the typical job. Employment weighting asks about the firm distribution faced by
+10
+
+===== PDF PAGE 11 =====
+
+a random worker. A policy-relevant ν may restrict attention to firms in a market, occupation, or
+feasible opportunity set. Changing ν changes the estimand rather than merely the precision of its
+estimator. Accordingly, every reported Q and H must name the worker and firm populations it
+F F
+averages over.
+2.5 Canonical additive–interaction decomposition
+Relative to P ⊗ν, define
+I
+µ = E [m ], (19)
+PI⊗ν IJ
+a = E [m ]−µ, (20)
+i J∼ν iJ
+b = E [m ]−µ, (21)
+j I∼PI Ij
+h = m −µ−a −b . (22)
+ij ij i j
+Then
+E [a ] = 0, E [b ] = 0, E [h ] = 0 ∀i, E [h ] = 0 ∀j. (23)
+PI I ν J ν iJ PI Ij
+This is the weighted two-way functional-ANOVA projection. It is unique for the completed schedule
+and declared populations. The components have direct interpretations:
+• a is worker i’s average wage position across the reference firm distribution;
+i
+• b is firm j’s average wage contribution across the reference worker population;
+j
+• h is the pair-specific deviation from those two averages.
+ij
+The decomposition is canonical even when the statistical representation is not. Latent factors
+can rotate, rescale, or shift with compensating changes in main effects; the completed m and its
+projections (µ,a,b,h) do not.
+Proposition 1 (Uniqueness and orthogonality). For any square-integrable pairwise schedule m and
+product measure P ⊗ν, equations (19) to (22) is the unique decomposition m = µ+a +b +h
+I ij i j ij
+satisfying equation (23). Moreover, µ, a, b, and h are mutually orthogonal in L2(P ⊗ν) after
+I
+treating µ as the constant component.
+Proof. Existence follows by substitution. The row and column restrictions follow by iterated
+expectations. Foruniqueness,supposeaseconddecompositionobeysthesamerestrictions. Averaging
+over both dimensions identifies the constant; averaging over firms identifies each worker component;
+averagingoverworkersidentifieseachfirmcomponent; theresidualisthendetermined. Orthogonality
+follows because any product of a component depending on one index with h has zero expectation
+after conditioning on that index.
+2.6 Causal interpretation as an additional layer
+Treating firms as a multi-valued treatment clarifies what is and is not implied by the wage-schedule
+analysis. Each worker has a vector of potential wages {Y (j) : j ∈ J}. General selection means
+i
+J ̸⊥⊥ {Y (j) : j ∈ J}. (24)
+i i
+11
+
+===== PDF PAGE 12 =====
+
+Selection on gains means that assignment depends on contrasts such as Y (k)−Y (j). Edge-specific
+i i
+mover designs can identify effects for workers who traverse a given edge under exclusion, parallel-
+trends, and stability conditions. Aggregating those effects into a common-population schedule
+requires additional transportability because different edges select different workers.
+The main economic identities in this paper remain valid for a maintained schedule without a causal
+interpretation. Whencausalassumptionsarecredible, m −m canbereadasaworker-specificfirm
+ik ij
+wage effect and H as heterogeneity in those effects. The algebra does not change; the interpretation
+F
+does.
+3 Firm Wage Dispersion Beyond Additivity
+3.1 The additive benchmark and a motivating example
+Under AKM, the firm-side object is
+Var (ψ ).
+J∼ν J
+Thisisboththevarianceofacommonfirmwagecomponentand,becausetheworkereffectisconstant
+across firms, the variance across firms in the wage of any fixed worker. These two interpretations
+separate once firm effects are heterogeneous.
+Example 1 (Three workers and three firms). Consider the systematic log-wage matrix
+Tech Quant Restaurant
+Worker 1 2.0 2.3 2.1
+M = .
+Worker 2 1.6 2.2 1.2
+Worker 3 1.4 2.0 1.0
+For Worker 1, the restaurant wage is close to the technology wage; for Workers 2 and 3 it is far
+below. The cross-firm variance for each row contributes to Q . The dispersion across workers in
+F
+the Quant–Restaurant difference contributes to H . A single firm premium cannot summarize both
+F
+facts. The example also shows why H concerns differences, not wage levels: a worker can have
+F
+high wages everywhere without generating heterogeneous firm effects if all pairwise firm gaps are
+common.
+3.2 Average within-worker cross-firm wage variance
+For a generic firm reference distribution ν, define
+Q (ν) = E [Var (m )]. (25)
+F I∼PI J∼ν IJ
+The square root
+q
+σ (ν) = Q (ν) (26)
+F F
+is in log-wage units and has a direct interpretation: it is the root-mean-square cross-firm dispersion
+in systematic wages for the same worker. Under additive AKM,
+Q (ν) = Var (ψ ). (27)
+F J∼ν J
+12
+
+===== PDF PAGE 13 =====
+
+Thus Q is not a new concept placed next to the firm-effect variance. It is the firm-effect variance’s
+F
+population-level continuation after removing the homogeneous-effect restriction.
+An equivalent pairwise-difference representation is useful empirically:
+1
+h i
+Q (ν) = E (m −m )2 , (28)
+F 2 I,J,K IJ IK
+where J and K are independent draws from ν. This representation makes clear that Q can be
+F
+understood through the distribution of wage contrasts between two firms for the same worker.
+3.3 Heterogeneity in pairwise firm wage contrasts
+For a fixed pair (j,k), let
+τ (j,k) = m −m (29)
+i ik ij
+denote worker i’s systematic wage contrast between firms k and j. Define
+H (ν) = E [Var (τ (J,K))]. (30)
+F J,K∼ν I∼PI I
+Under additive AKM, τ (j,k) = ψ −ψ for every worker, so
+i k j
+H (ν) = 0. (31)
+F
+The quantity H therefore measures the average magnitude of the exact restriction imposed in
+F
+equation (2). It is not simply a test of whether an arbitrary interaction coefficient differs from zero.
+It measures the economically relevant variation in pairwise firm wage contrasts across the declared
+worker population.
+√ √
+The square root H also has a useful but slightly different scale from Q . For a pair of firms
+F F
+drawn from ν, it is the root-mean-square cross-worker standard deviation of the wage contrast.
+Because the variance is computed within each firm pair before averaging, it is insensitive to the
+common level of that pair’s wage difference.
+3.4 Common and worker-specific firm wage dispersion
+The canonical decomposition in equations (19) to (22) implies the key identity.
+Proposition 2 (Firm-dispersion decomposition). For any square-integrable schedule and product
+reference population,
+Q (ν) = Var (b )+Q×(ν), (32)
+F ν J h
+H (ν) = 2Q×(ν), (33)
+F h
+where
+Q×(ν) = E [h2 ]. (34)
+h PI⊗ν IJ
+Consequently,
+1
+Q (ν) = Var (b )+ H (ν). (35)
+F ν J 2 F
+13
+
+===== PDF PAGE 14 =====
+
+Proof. Forfixedi, row-centeringgivesm −E [m ] = b +h . Averagingthevarianceoverworkers
+iJ ν iJ J iJ
+and using E [h ] = 0 eliminates the cross term, which yields equation (32). For fixed j,k, the firm
+I Ij
+main-effect difference is constant across workers, so Var (m −m ) = Var (h −h ). Averaging
+I Ik Ij I Ik Ij
+over independent J,K and using E [h ] = 0 gives H = 2E[h2 ]. Combining the expressions proves
+J iJ F IJ
+equation (35).
+The identity partitions firm-related wage dispersion into two conceptually different objects. The
+first, Var(b ), is dispersion in the common firm wage component after averaging over workers. The
+J
+second, H /2, is dispersion created by worker-specific firm differences. The decomposition is exact
+F
+and does not require the low-rank model.
+Define the worker-specific share
+H (ν)
+ρ (ν) = F (36)
+H 2Q (ν)
+F
+when Q (ν) > 0. Then 0 ≤ ρ ≤ 1 and
+F H
+Var (b )
+1−ρ (ν) = ν J . (37)
+H Q (ν)
+F
+The statistic ρ answers a particularly transparent question: what share of the cross-firm wage
+H
+dispersion faced by workers cannot be summarized by a common firm ladder? A value near zero
+supports additive wage accounting even if the model is formally nonadditive; a value near one says
+that a common firm premium captures little of the firm-related wage dispersion.
+3.5 Relation to total systematic wage dispersion
+Under the product population, the law of total variance gives
+Var (m ) = Var (E[m | I])+E [Var(m | I)]. (38)
+PI⊗ν IJ PI IJ PI IJ
+The first term is Var(a ) and the second is Q . Combining with equation (35) yields
+I F
+1
+Var (m ) = Var(a )+Var(b )+ H (ν). (39)
+PI⊗ν IJ I J 2 F
+This is the direct nonadditive analogue of a within–between decomposition. It also explains why
+both Q and H are second-moment objects. Q is an expected conditional variance; H /2 is the
+F F F F
+interaction component inside that conditional variance.
+The product-population qualification is essential. Under the observed joint assignment, the compo-
+nents need not be orthogonal and additional covariance and interaction-concentration terms appear.
+Those are the subject of section 4.
+3.6 Realized interaction dispersion
+A commonly reported nonadditivity measure is the interaction dispersion among realized matches,
+Qobs = Var (h ) or E [h2 ]. (40)
+h Pobs IJ Pobs IJ
+IJ
+14
+
+===== PDF PAGE 15 =====
+
+This is useful as a descriptive diagnostic because it places weight only on realized cells. It is
+not, however, a substitute for Q or H . Realized interaction dispersion can be positive under
+F F
+independent assignment; it need not measure heterogeneity in a common-population causal firm
+effect; and it does not reveal whether workers sort into favorable interaction cells. Its magnitude also
+changes with the observed assignment, while Q× is defined relative to a declared product population.
+h
+The recommended empirical ordering is therefore
+AKM components −→ Q , H , ρ
+F F H
+−→ realized interaction diagnostics
+−→ assignment quantities when support permits.
+4 Assignment Beyond Additivity
+4.1 Why the AKM covariance is incomplete
+Under additive AKM, the observed and independent assignments share the same worker and firm
+marginals. Hence
+Var (α +ψ )−Var (α +ψ )
+Pobs I J PI⊗PJ I J
+= 2Cov (α ,ψ ). (41)
+Pobs I J
+This identity gives the covariance a clear accounting interpretation: it is one half of the contribution
+of observed assignment to systematic wage variance, relative to independent assignment with the
+same marginals.
+When h ̸= 0, the observed assignment can differ from independence in ways that are invisible
+ij
+to Cov(a ,b ). High-a workers may be matched to firms that are especially favorable for them
+I J
+even if those firms have modest common components. High-b firms may employ workers for whom
+the interaction is unusually positive. The observed assignment may also concentrate on extreme
+interaction cells, changing wage variance even when the relevant covariances are zero. A single
+covariance is therefore no longer exhaustive.
+4.2 A generalized assignment contribution to wage variance
+Define
+1
+h i
+Cw = Var (m )−Var (m ) . (42)
+assign 2 Pobs IJ PI⊗PJ IJ
+IJ
+The factor 1/2 is chosen so that Cw equals the familiar AKM covariance under additivity. We call
+assign
+it an assignment contribution rather than a sorting covariance because it need not be a covariance,
+it can be negative, and it need not correspond to assortative matching of economically ordered
+worker and firm types.
+The counterfactual holds the wage schedule fixed and breaks only the dependence between worker
+and firm identities. It is therefore a descriptive answer to: How much larger or smaller is systematic
+wage variance under the observed assignment than under an independent assignment with the same
+marginals? It is not the answer to: What would happen if a policy reassigned workers and firms in
+equilibrium? The latter question requires a model of feasible meetings, acceptance, wages, profits,
+and equilibrium responses.
+15
+
+===== PDF PAGE 16 =====
+
+4.3 Four assignment channels
+Proposition 3 (Assignment decomposition). Let the canonical decomposition be defined relative to
+P ⊗P . Then
+I J
+Cw = Cov (a ,b )+Cov (a ,h )+Cov (b ,h )
+assign obs I J obs I IJ obs J IJ
+1
++ [Var (h )−Var (h )]. (43)
+2 obs IJ PI⊗PJ IJ
+Proof. Under both assignments, the marginal distributions of a and b are the same. Under the
+I J
+product assignment, a , b , and h are mutually orthogonal. Under the observed assignment,
+I J IJ
+expand the variance of a +b +h and retain the covariance terms. Subtract the product variance
+I J IJ
+and divide by two.
+The terms in equation (43) isolate four channels:
+1. Common-component assortativity: Cov (a ,b ). Thisisthedirectcanonicalcontinuation
+obs I J
+of the AKM worker–firm covariance.
+2. Worker-position/interaction alignment: Cov (a ,h ). High-average-wage workers may
+obs I IJ
+occupy especially favorable or unfavorable worker-specific firm cells.
+3. Firm-position/interaction alignment: Cov (b ,h ). High-common-wage firms may
+obs J IJ
+employ workers for whom the firm is unusually favorable.
+4. Interaction concentration: 1{Var (h)−Var (h)}. The observed assignment may place
+2 obs prod
+more or less mass on extreme interaction cells than independent assignment.
+Under additive AKM, h = 0 and only the first channel remains. The decomposition therefore
+explains exactly what the familiar covariance omits.
+Araw-momentformissometimesmoretransparent. LetA = E [h ]. SinceE [a ] = E [b ] =
+h obs IJ obs I obs J
+0,
+Cw = E [a b ]+E [a h ]+E [b h ]
+assign obs I J obs I IJ obs J IJ
+1
+n o
++ E [h2 ]−E [h2 ]−A2 . (44)
+2 obs IJ prod IJ h
+The −A2 term reminds us that assignment can raise the mean systematic wage while reducing or
+h
+only weakly increasing variance.
+4.4 Assignment into favorable worker-specific firm cells
+The fixed-schedule mean difference is
+∆w = E [m ]−E [m ]. (45)
+mean Pobs IJ PI⊗PJ IJ
+Because the assignments share the same marginals,
+A ≡ ∆w = E [h ]. (46)
+h mean Pobs IJ
+16
+
+===== PDF PAGE 17 =====
+
+A positive A means that observed pairs occupy cells with systematically higher wages than would
+h
+independent assignment under the maintained wage schedule. Under additive AKM, h = 0 and
+A = 0 mechanically. Thus A captures a first-moment channel that does not exist in the additive
+h h
+model.
+The quantity is secondary for three reasons. First, it typically requires a completed interaction
+schedule on a broad product support. Second, its sign can reflect wage bargaining or compensating
+differentials rather than productive fit. Third, a fixed-schedule mean gain is not an equilibrium
+surplus gain: one side’s wage can rise because the other side receives less, and amenities or
+employment probabilities are omitted.
+4.5 Special cases
+Additive AKM. If h = 0, then
+Q = Var(b ), H = 0, A = 0, Cw = Cov(a ,b ).
+F J F h assign I J
+With the conventional normalization, (a,b) = (α,ψ).
+Centered Tukey interaction. Suppose
+m = α +ψ +βα ψ , E[α ] = E[ψ ] = 0. (47)
+ij i j i j I J
+Then h = βα ψ under the product population and
+ij i j
+A = βCov (α ,ψ ). (48)
+h obs I J
+The mean wage consequence of assignment depends on both wage-schedule complementarity β and
+assortative assignment. Neither object alone is the “value of sorting.” This special case connects the
+additive covariance, interaction models, and fixed-schedule reassignment exercises in one equation.
+Free-factor rank one. If h = λu˜ v˜ with product-centered factors, then
+ij i j
+Q× = λ2Var(u˜ )Var(v˜ ), (49)
+h I J
+H = 2λ2Var(u˜ )Var(v˜ ), (50)
+F I J
+A = λE [u˜ v˜ ]. (51)
+h obs I J
+Thus H measures the strength of heterogeneous wage contrasts, while A measures whether
+F h
+assignment aligns the worker and firm interaction factors. The former can be large when the latter
+is zero, and vice versa.
+4.6 Selection on levels and gains
+The distinction between wage heterogeneity and assignment mirrors a familiar causal-inference
+distinction. In a binary treatment problem, selection on levels means treatment status depends on
+Y(0) or Y(1); selection on gains means it depends on Y(1)−Y(0). With firms as a multi-valued
+treatment, a worker can select firms based on a general vector of potential wages or on pairwise
+gains Y (k)−Y (j).
+i i
+17
+
+===== PDF PAGE 18 =====
+
+The quantity H > 0 establishes that pairwise firm wage gains vary across workers under the
+F
+maintained schedule. It does not establish that workers or firms select on those gains. The
+interaction-related terms in equation (43), and especially A , describe how realized assignment
+h
+uses worker-specific wage cells. They are reduced-form assignment objects, not structural choice
+coefficients.
+This distinction is central for interpreting Sorkin and Warwar’s framework. Their exogenous-
+mobility condition permits permanent match effects but requires them to average out conditional
+on mobility histories; workers can still sort arbitrarily on worker and common firm components.
+Their endogenous-search model permits acceptance decisions to depend on both firm and match
+components. In the language of this paper, their evidence supports H -type heterogeneity, while
+F
+the difference between exogenous and endogenous mobility concerns whether assignment uses the
+interaction component. The mapping is conceptual rather than exact because their estimator targets
+a particular within-firm match-effect variance for paired movers rather than the product-population
+functional defined here.
+4.7 Support and restricted independence benchmarks
+The formal benchmark P ⊗P pairs every worker with every firm that has positive marginal weight.
+I J
+This can be economically implausible and statistically unsupported. A worker in one occupation and
+labor market may never face a firm in an unrelated market. The credible implementation should
+therefore define a comparison set g(i,j)—for example year, geography, occupation, sector, or an
+empirically supported opportunity cluster—and use a restricted product benchmark
+P0 = X ω P ⊗P . (52)
+IJ g I|g J|g
+g
+All assignment definitions continue to apply after replacing P ⊗P by P0. The benchmark is
+I J
+part of the estimand. The paper should report how much of the result comes from within-market
+assignment and how much would require extrapolation across unsupported markets.
+Wage assignment versus productive sorting
+Cw and A describe the distribution of a wage schedule under alternative assignments.
+assign h
+Productive sorting evaluates a production or surplus schedule S ; welfare additionally requires
+ij
+feasible equilibrium counterfactuals. A positive wage assignment effect can coexist with a
+negative profit effect, compensating amenities, or no increase in total output. The paper should
+use “assignment contribution to wages” unless the additional structural objects are explicitly
+identified.
+5 Nonparametric Benchmark: What the Observed Graph Reveals
+The economic targets in the preceding sections are defined directly from the pairwise wage schedule
+and the assignment. This section asks whether those targets can be learned before imposing a factor
+model. The answer separates two distinct identification failures. Crippa’s seriation result shows that
+latent worker and firm indices are only ordinal under an unrestricted monotone interaction function.
+Our targets, however, are functionals of the cardinal wage schedule itself and are invariant to
+monotone reparameterizations that leave that schedule unchanged. Their more immediate obstacle
+18
+
+===== PDF PAGE 19 =====
+
+is that a sparse graph does not reveal the cardinal values of the unobserved wage cells receiving
+target weight.
+5.1 Unrestricted pairwise wage schedules
+Let N = IJ, let m ∈ RN stack the full I ×J systematic wage schedule, and let R be the |E|×N
+E
+selection matrix that extracts the observed cells:
+m = R m. (53)
+E E
+Inthenoiselessidentificationexperiment,m isknown. Theunrestrictedmodelplacesnorelationship
+E
+between m and the missing cells. Its observational-equivalence directions are
+E
+K = ker(R ) = {z ∈ RN : R z = 0}, (54)
+E E E
+so m and m+z generate the same observed schedule for every z ∈ K .
+E
+Definition 1 (Target identification). For a model class M, a functional T : M → R is point
+identified from the observed graph if
+R m = R m, m,m ∈ M =⇒ T(m) = T(m).
+E Ee e e
+This definition deliberately asks only whether the stated economic target is identified. It does not
+require point identification of a latent parameterization that the target does not use.
+5.2 A target-specific identification criterion
+The headline quantities are linear or quadratic functions of the completed schedule. The following
+proposition provides a complete unrestricted benchmark.
+Proposition 4 (Unrestricted target identification). Let M = RN.
+U
+(i) A linear functional T (m) = ℓ′m is point identified on M if and only if
+ℓ U
+ℓ′z = 0 ∀z ∈ K , (55)
+E
+or equivalently ℓ ∈ row(R ).
+E
+(ii) For a symmetric matrix A, a quadratic functional T (m) = m′Am is point identified on M if
+A U
+and only if
+Az = 0 ∀z ∈ K , (56)
+E
+or equivalently K ⊆ ker(A).
+E
+The result follows from
+T (m+z)−T (m) = 2m′Az+z′Az. (57)
+A A
+Thus a quadratic target is identified on the unrestricted class exactly when it is insensitive to every
+missing-cell perturbation. This is stronger and more relevant for the present paper than asking
+whether all latent worker and firm indices are identified.
+19
+
+===== PDF PAGE 20 =====
+
+5.3 Implications for the headline functionals
+Let all worker and firm weights be strictly positive and suppose the target population contains
+at least two workers and two firms. If a cell (i,j) receives positive product weight but is not
+observed, changing only m leaves m unchanged. That perturbation changes the within-worker
+ij E
+varianceenteringQ ,thedouble-centeredinteractionnormenteringH ,andtheproduct-assignment
+F F
+moments entering Cw and A .
+assign h
+Corollary 1 (Generic nonidentification on an incomplete graph). Under the nondegeneracy con-
+ditions above, if supp(P ⊗P ) ⊈ E, then the unrestricted model does not point identify Q , H ,
+I J F F
+Cw , or A . With no bound on missing wages, the identified sets for Q and H are unbounded
+assign h F F
+above, the identified set for Cw is unbounded below, and the identified set for A is unbounded in
+assign h
+both directions.
+The corollary does not say that every useful wage object is unidentified. Observed-edge means and
+variances, directly supported mover contrasts, and functionals whose operators place zero weight on
+missing-cell directions can be identified. It says that the paper’s cardinal cross-firm and assignment
+questions require information about cells outside the observed edge set.
+The assignment quantity makes the failure especially transparent:
+ 
+1  
+Cw = Var (m )− Var (m ) . (58)
+assign 2 Pobs IJ PI⊗PJ IJ
+| {z } | {z } 
+observedsupport counterfactualsupport
+The first term can be known in the noiseless experiment from realized cells. The second ordinarily
+depends on many worker–firm pairs that never occur.
+5.4 The monotone seriation benchmark
+Crippa’s seriation model imposes
+m = f (α ,ψ ), f increasing in both arguments, (59)
+ij m i j m
+while leaving complementarity otherwise unrestricted. The latent indices are identified only up to
+strictlyincreasingtransformations. Hencetheircardinaldifferences,variances,andcovariancearenot
+identified, whereas their rankings can be identified under Crippa’s strong within-side diameter-two
+condition (Crippa, 2025). This result explains why cardinal AKM component statistics cannot be
+carried mechanically into a fully nonparametric latent-type model.
+ItdoesnotbyitselfestablishnonidentificationofQ , H , orCw : amonotonereparameterization
+F F assign
+of (α,ψ) can leave every m unchanged. The target-specific issue is instead whether monotonicity
+ij
+pins down the missing values of m.
+Suppose the row and column orders are known. Any monotone completion obeys the cellwise
+envelope
+L = max{m : (i′,j′) ∈ E, i′ ⪯ i, j′ ⪯ j}, (60)
+ij i′j′
+U = min{m : (i′,j′) ∈ E, i′ ⪰ i, j′ ⪰ j}, (61)
+ij i′j′
+20
+
+===== PDF PAGE 21 =====
+
+with external outcome bounds used when one of the comparison sets is empty. Unless these
+envelopes and the joint isotonic restrictions uniquely determine all target-weighted cells, the cardinal
+functionals remain set identified. Define
+M (m ) = {m : R m = m , m is bivariate isotonic in the identified orders}. (62)
+ser E E E
+The target-specific identified interval is
+" #
+Iser(m ) = inf T(m), sup T(m) . (63)
+T E
+m∈Mser(mE) m∈Mser(mE)
+This converts Crippa’s ordinal benchmark into the question required here: how much does mono-
+tonicity alone reveal about the specific cardinal functional we want to report?
+5.5 What additional structure must buy
+The unrestricted and seriation benchmarks create a disciplined hierarchy:
+unrestricted schedule =⇒ observed cells and directly supported functionals only,
+monotone seriation =⇒ rank information and potentially informative bounds,
+low-rank interaction =⇒ cardinal propagation across cells, subject to graph overlap.
+Low rank is therefore not introduced because the latent scales in the seriation model lack a
+normalization. It is introduced to restrict the missing-cell directions K so that the completed
+E
+schedule contrasts weighted by Q , H , and the assignment targets can become point identified
+F F
+and estimable. The next section specifies that restriction; section 7 then asks whether the observed
+rectangle structure is rich enough for each particular target.
+6 A Low-Rank Model of Worker-Specific Firm Wage Differences
+6.1 Model and maintained conditional mean
+The preceding section shows that neither an unrestricted schedule nor monotonicity alone generally
+identifies the cardinal cross-firm and assignment functionals on a sparse graph. The low-rank
+restriction is therefore evaluated by a concrete criterion: whether it removes enough missing-cell
+directions to identify the wage contrasts receiving target weight without grouping away worker and
+firm heterogeneity.
+On observed edges, consider
+Y = X′ δ+α +ψ +u′Λv +ε , rank(Λ) = r, (64)
+ij ij i j i j ij
+with
+E[ε | G,X,α,ψ,u,v] = 0. (65)
+ij
+The same systematic formula is imposed on the target pair set T when the schedule is completed
+beyond the observed graph. The interaction matrix Mh = (u′Λv ) has algebraic rank at most r.
+i j ij
+The worker and firm factor coordinates (u ,v ) are kept distinct from the additive components
+i j
+(α ,ψ ). In the Tukey model they coincide by restriction; in comparative-advantage and grouped-
+i j
+type models they represent different worker and firm attributes. The canonical components (a,b,h)
+are computed from the completed schedule, not identified with the primitive parameters by notation
+alone.
+21
+
+===== PDF PAGE 22 =====
+
+6.2 Algebraic rank versus effective dimension
+The term “low rank” is ambiguous in this literature. Algebraic rank concerns the shape of the I×J
+interaction matrix. Effective dimension concerns the number of free parameters used to describe it.
+A free-factor rank-one matrix
+Mh = uv′
+has algebraic rank one but I +J −1 free factor parameters after scale normalization. It is therefore
+high dimensional and subject to an incidental-parameter problem when worker and firm degrees
+remain bounded.
+Grouped type models restrict both concepts. If workers have K types and firms have L classes, a
+block-constant interaction has at most KL cell means and rank at most min(K,L)−1 after double
+centering. When K and L are fixed, there is no node-level incidental-parameter problem in the
+interaction. The free-factor model deliberately declines that effective-dimension restriction. The
+need for bias correction is therefore the cost of preserving continuous, node-level heterogeneity
+rather than an accidental complication.
+6.3 Why the restriction falls only on the interaction
+The model leaves α and ψ unrestricted, one parameter per worker and firm. This placement
+i j
+matters. A model that clustered the entire wage schedule would force firms in the same class to
+share a common average wage component. Here low rank regularizes only departures from additivity.
+Setting Λ = 0 returns the unrestricted additive AKM model; allowing Λ ̸= 0 asks whether a low-rank
+collection of worker-specific firm components materially changes the firm-dispersion and assignment
+quantities.
+This makes the statistical model nested in the direction relevant to the substantive question. It does
+not presuppose that additive AKM is wrong, nor does it eliminate the main-effect heterogeneity
+that motivates matched employer–employee data.
+6.4 Baseline rank-one specification
+The minimum viable technical paper focuses on
+m = α +ψ +u v . (66)
+ij i j i j
+The normalization can set weighted means of u and v to zero, weighted variances to one, and absorb
+the interaction scale into one side or a scalar λ. A convenient canonical factor normalization is
+E [u ] = 0, E [v ] = 0, E [u2] = 1, λ ≥ 0, (67)
+PI I PJ J PI I
+with interaction λu v . The sign of v is then fixed by a convention such as positive correlation with
+i j
+a chosen preliminary firm score. These normalizations identify coordinates; m, Q , H , and the
+F F
+assignment quantities are invariant to the choice.
+Rank one is economically nontrivial. It includes a one-dimensional comparative-advantage margin,
+firm-specific slopes on a scalar worker type, and the leading Eeckhout–Kircher search example. It is
+also technically demanding because both factor vectors are incidental parameters. General rank r
+adds multiple dimensions of comparative advantage but should not be allowed to make the first
+theorem hostage to the full matrix-completion problem.
+22
+
+===== PDF PAGE 23 =====
+
+6.5 Technical staging: Tukey proving ground and free-factor target
+The economic model in equation (66) is more general than the specification currently used to develop
+the cavity argument. The present proving ground is the centered shared-factor Tukey schedule
+m = µ+α +ψ +β α ψ , E[α ] = E[ψ ] = 0, (68)
+ij i j 0 i j I J
+with β initially treated as known. Its special identity
+0
+1+β (m −µ) = (1+β α )(1+β ψ ) (69)
+0 ij 0 i 0 j
+turns estimation into a masked rank-one problem and makes it a useful laboratory for a bounded-
+degree cavity calculation. Under equation (68),
+H = 2β2Var(α )Var(ψ ), Q = Var(ψ )+β2Var(α )Var(ψ ). (70)
+F 0 I J F J 0 I J
+Thus a successful correction for the worker- and firm-side variances would already deliver Q and
+F
+H in this important special case.
+F
+The intended rank-one theorem concerns the free-factor interaction h = u v . After canonical
+ij i j
+centering, the economically invariant interaction magnitude is
+1
+Q× = Var(u )Var(v ) = H , (71)
+h I J 2 F
+not either factor variance separately. Moving from equation (68) to equation (66) therefore requires
+a joint correction for two separately estimated factor sides, in addition to the unrestricted additive
+components. Assignment inference is a later stage because Cw combines several cross-moments
+assign
+rather than a single worker–firm covariance.
+6.6 Nested and approximated wage representations
+The table supports the relevance of the low-rank schedule without implying that the full models
+are nested. The class reproduces a static conditional-mean or wage representation. It does
+not reproduce each paper’s latent classification, mobility process, shock distribution, likelihood,
+production primitives, or welfare counterfactuals. The detailed representation map is in section F.
+6.7 Normalizations and invariant targets
+For rank one,
+u v = (cu )(v /c)
+i j i j
+for any nonzero c. At general rank, invertible transformations can be moved between worker factors,
+firm factors, and Λ. Additive components can also absorb row or column means of the interaction.
+Reporting the variance of raw u or v is therefore normalization dependent.
+i j
+The economic targets avoid this problem. They are functionals of the completed schedule or its
+canonical projection. The paper may report normalized factor scores for diagnostics, but all headline
+claims should be stated in terms of m, a, b, h, Q , H , ρ , and Cw .
+F F H assign
+23
+
+===== PDF PAGE 24 =====
+
+Table 1: Static wage representations in the low-rank class
+Model Systematic wage Status
+representation
+AKM α +ψ Exact, r = 0.
+i j
+Tukey / Crippa α +ψ +βα ψ Exact shared-factor rank one.
+i j i j
+Firm-specific slope a +b α Exact free-factor rank one.
+j j i
+Grouped type µ Exact after two-way ANOVA; centered
+k(i),ℓ(j)
+means interaction rank ≤ min(K,L)−1.
+GKLP static slice Z +c +b η + 1b2σ2 Exact rank-one interaction b η ; the
+i j j i 2 j j i
+variance term enters the firm main
+effect.
+Eeckhout–Kircher ax2− ay2+ ax y Exact rank one in the interaction.
+4 i 4 j 2 i j
+leading search
+example
+Shimer–Smith flow additive terms plus 1f(x ,y ) Exact if the double-centered production
+2 i j
+payoff surface is low rank; otherwise an
+approximation.
+Borovičková– additive at the Pareto Exact at the benchmark and exact or
+Shimer benchmark; off-Pareto approximate low rank away from it
+interaction depending on the mean-residual-life
+term.
+6.8 Approximation and rank choice
+Low rank is a maintained approximation to systematic wage heterogeneity. The empirical analysis
+should therefore report three types of evidence:
+1. Predictive fit: held-out edge prediction and the incremental fit relative to additive AKM;
+2. Economic stability: stability of Q , H , and Cw across plausible ranks;
+F F assign
+3. Graph feasibility: whether the additional factors are identified by observed rectangles and
+overlap rather than by a small number of high-leverage configurations.
+Conditional inference at a fixed rank is the baseline. Fully accounting for data-dependent rank
+selection is valuable but should remain an extension if it prevents completion of the rank-one result.
+24
+
+===== PDF PAGE 25 =====
+
+7 Identification on the Worker–Firm Graph
+7.1 An identification ladder
+Different objects require different graph support. The following ladder keeps those requirements
+separate:
+additive worker and firm contrasts ⇓
+interaction contrasts on observed rectangles ⇓
+factor or schedule propagation to target pairs ⇓
+identification of target functionals ⇓
+causal interpretation under mobility assumptions.
+Connectedness of the bipartite graph identifies additive effects up to a normalization. Leave-one-
+out connectedness is needed for familiar additive variance-component procedures. Nonadditive
+identificationrequiresoverlapthatcomparesatleasttwoworkersatatleasttwofirms. Counterfactual
+functionals require that such local comparisons propagate to the cells receiving positive target
+weight.
+7.2 Rectangles remove additive components
+Consider workers i,i′ and firms j,k for which all four edges are observed. The double difference
+D = m −m −m +m (72)
+ii′;jk ij ik i′j i′k
+eliminates the additive components. Under rank one,
+D = (u −u )(v −v ). (73)
+ii′;jk i i′ j k
+Rectangles therefore reveal products of worker- and firm-factor differences. They are the nonadditive
+analogue of closed-cycle restrictions: differencing around a closed configuration eliminates levels
+and leaves the interaction.
+The observation is simple but important. A graph can be connected and yet contain no informative
+rectangle. Such a graph identifies additive contrasts but not a free-factor interaction. Conversely,
+a graph may contain many rectangles in a dense subpopulation while assignment targets place
+weight on firms outside that subpopulation. Identification must therefore be stated for the target
+population rather than the raw connected set.
+7.3 Anchor and propagation
+A sufficient rank-one identification argument has three steps. First, find an anchor rectangle with
+nonzero double difference. Fix the location and scale of the factor differences on that anchor. Second,
+add a new worker whenever that worker is observed at two already anchored firms with distinct
+firm factors; the two equations identify the worker loading and additive effect. Third, add a new
+firm whenever that firm is observed for two already anchored workers with distinct worker factors.
+Repeating the process propagates the schedule.
+25
+
+===== PDF PAGE 26 =====
+
+Theorem agenda A: rank-one schedule identification
+Formulate an observable anchor-and-propagation condition on the worker–firm mask and
+generic nondegeneracy conditions on factor differences. Prove that, conditional on the rank-one
+model, the systematic schedule on the reached subgraph is identified up to the usual location
+and scale gauge, and hence that all invariant functionals supported on that subgraph are point
+identified. Characterize failures through explicit counterexamples and quantify how far the
+sufficient condition is from necessity.
+The theorem should distinguish identification of the completed schedule from identification of
+a particular coordinate system. A gauge change that leaves m unchanged does not threaten
+identification of Q , H , or assignment functionals.
+F F
+7.4 Functional identification versus full completion
+Full recovery of every target cell is sufficient but may be stronger than necessary. Each estimand
+weights particular contrasts. Q is an average of within-worker cross-firm squared differences. H
+F F
+is an average of cross-worker dispersion in the same firm-pair contrasts. If the target weights place
+mass only on a supported collection of firm pairs, those functionals may be identified even when
+remote cells of the full matrix are not.
+Let m stack the target schedule entries and write a quadratic target as
+T
+T (m) = m′ Am . (74)
+A T T
+The target is identified if every direction in the model’s observational equivalence class lies in the
+null space of A. This formulation separates the schedule-completion problem from the functional-
+identification problem and suggests sharper, target-specific graph theorems.
+Theorem agenda B: target-specific identification
+For each headline operator A , A , and A , characterize the minimal reached subgraph or
+QF HF C
+contrast space required for identification. Show that the assignment operator generally has
+a larger support burden than the firm-dispersion operators. Provide an empirical diagnostic
+reporting the share of each target’s weight that is point identified without extrapolation.
+7.5 Identification of Q and H
+F F
+The pairwise representations make the support burden transparent:
+1
+Q = X p X q q (m −m )2, (75)
+F 2 i j k ij ik
+i j,k
+( )2
+H = X q q X p τ (j,k)− X p τ (j,k) . (76)
+F j k i i i′ i′
+j,k i i′
+Apair(j,k)contributesonlyiftheschedulecontrastisidentifiedovertheworkerpopulationreceiving
+positiveweight. Thiscanmotivateasupportedfirm-pairdistributionν andatransparentestimand
+sup
+that conditions on graph support rather than silently extrapolating.
+26
+
+===== PDF PAGE 27 =====
+
+7.6 Identification of assignment quantities
+Theindependent-assignmentbenchmarkmayassignweighttomanycellsnotneededfortheobserved
+variance. The assignment target therefore creates two additional burdens. First, it requires the
+level of the completed schedule on the counterfactual support, not merely local differences, although
+common normalizations cancel in variance comparisons. Second, it requires specifying which
+cross-market pairs are feasible enough to deserve positive weight.
+The preferred empirical sequence is:
+1. report Q and H on the maximally supported target population;
+F F
+2. define restricted independence benchmarks within economically coherent opportunity sets;
+3. report Cw only for benchmarks whose target weight is well supported;
+assign
+4. treat A as secondary and accompany it with support sensitivity.
+h
+7.7 When point identification fails
+Section 5 characterizes the unrestricted and monotone identified sets before the factor restriction
+is imposed. Within the low-rank class, failure of the required rectangle or propagation conditions
+should likewise produce an explicit fallback rather than an implicit assumption. The options are:
+• redefine the estimand on a supported pair population;
+• report bounds under norm, sign, monotonicity, or singular-value restrictions;
+• report sensitivity to alternative completions;
+• separate identified and extrapolated contributions to the final number.
+A useful empirical table would partition each estimate as
+Tb = Tbdirect/support +Tbmodel−propagated +Tbextrapolated ,
+where the last term is omitted from the preferred specification unless its assumptions are defended.
+7.8 Graph identification is not causal identification
+Observed rectangles can identify a maintained rank-one schedule on a fixed graph without explaining
+why those edges appear. A causal interpretation must also address selection into firms and the
+possibility that different mover edges identify effects for different populations. An edge-specific
+mover contrast can be causal for movers on that edge while failing to aggregate to a global firm
+ranking. The graph algebra and causal assumptions are logically separate and should be presented
+in separate propositions.
+8 Estimation and Bias Correction
+The econometric discussion separates the current proving ground from the long-run operator-level
+objective. At present, the concrete conjecture is a leave-worker-out correction for Var(α ) in the
+I
+27
+
+===== PDF PAGE 28 =====
+
+shared-factor Tukey model with known β . The eventual target is a feasible correction for invariant
+0
+functionals T (m) in the free-factor rank-one model. The formulas below describe that eventual
+A
+architecture, while section L records the narrower conjecture and the steps still required to bridge
+the two.
+8.1 Point estimation of the schedule
+For a fixed rank, estimate equation (64) by weighted least squares on observed edges:
+min X n (cid:16) Y ¯ −X′ δ−α −ψ −u′Λv (cid:17)2 , (77)
+ij ij ij i j i j
+δ,α,ψ,U,V,Λ
+(i,j)∈E
+subject to normalization. Conditional on the firm factors, the problem is linear in the worker-side
+parameters; conditional on the worker factors, it is linear in the firm-side parameters. Alternating
+weighted least squares is therefore a natural baseline algorithm.
+A robust implementation should combine several initializations: additive AKM residuals followed by
+a weighted low-rank approximation, spectral or graph- regularized factor initialization, and multiple
+random starts. Convergence of the objective is not enough; the algorithm should also verify stability
+of the invariant functionals across starts.
+8.2 Quadratic representations
+Stack the target schedule in a vector m. The principal dispersion quantities can be written as
+quadratic forms:
+Q = m′A m, H = m′A m, Cw = m′A m, (78)
+F QF F HF assign C
+for known symmetric operators determined by the reference and assignment weights. The secondary
+mean object is linear:
+A = d′ m. (79)
+h A
+Explicit finite-sample operators appear in section J. This generic form is the bridge to high-
+dimensional bias correction: once the schedule estimation error is characterized, the same argument
+can cover a class of operators rather than one statistic at a time.
+8.3 Why plug-in estimators are biased
+The naive estimator
+Tb
+A
+plug = m
+b
+′Am
+b
+(80)
+obeys
+Tb
+A
+plug −T
+A
+= 2m′A(m
+b
+−m)+(m
+b
+−m)′A(m
+b
+−m). (81)
+In a low-dimensional problem the second term is often smaller order. Here each worker, firm, and
+factor loading is estimated from a limited number of edges. The aggregate quadratic noise term
+can remain first order even when the target averages over many nodes. This is the nonadditive
+counterpart of limited- mobility bias in additive variance components.
+28
+
+===== PDF PAGE 29 =====
+
+The interaction creates additional dependence. The regressor for a worker loading depends on
+estimated firm loadings and vice versa. Deleting an observation changes both sides of the design, so
+the exact rank-one update used in linear leave-out calculations is unavailable. A valid correction
+must approximate how the nonlinear estimator changes when an edge, worker, or firm is removed
+and must do so without re-estimating the model thousands or millions of times.
+8.4 Current leave-worker-out conjecture and eventual cavity logic
+The current technical note deletes a worker, rather than a generic edge. Let θb (−i) denote the
+estimator obtained after removing worker i and all incident edges. The worker is then reconstructed
+using the leave-worker-out firm-side estimates. This construction is designed to break the leading
+dependence between worker i’s noise and the fitted quantity used to estimate its contribution to
+Var(α ). The unresolved step is to show that the feedback from deleting i through neighboring
+I
+firms and the rest of the sparse graph admits a stable, computable cavity closure.
+More generally, let θb (−e) denote an estimator excluding an edge, worker, firm, or other deletion unit
+appropriate to the target. The operator-level program seeks an approximation of the form
+θe (−e) = θb−Hb −1s
+be
++structured higher-order correction, (82)
+where Hb is a sparse or block-structured Hessian and s
+be
+is the score contribution removed by the
+deletion. The approximation must account for normalization and the near-null gauge directions of
+the factorization.
+The purpose of leave-out is not merely predictive cross-validation. It breaks the dependence between
+an observation’s noise and the fitted quantity used to estimate its contribution to the target. A
+generic correction has the form
+Tb
+A
+bc = Tb
+A
+plug −BbA , (83)
+where BbA estimates the aggregate quadratic noise term in equation (81). The operator A determines
+which leverage and cross-leverage quantities enter the correction.
+Current conjecture: one-sided Tukey variance correction
+Conditional on identification, known β , an isolated normalized least-squares solution, and
+0
+suitablebounded-degreegraphandmomentconditions,constructacomputableleave-worker-out
+correction satisfying
+V d ar(α I )bc−Var(α I ) = o p (1).
+The conjecture requires a valid cavity closure for deletion feedback, control of the factor gauge,
+and a remainder that vanishes after aggregation. The symmetric firm-side result would combine
+with equation (70) to deliver Q and H in the Tukey special case.
+F F
+Long-run theorem target: invariant free-factor functionals
+Extend the cavity argument to the free-factor rank-one schedule and construct a computable
+correction BbA for a class of invariant quadratic operators containing A
+QF
+and A
+HF
+. The
+primary interaction target is the scale-invariant product in equation (71). Extend the operator
+class to A only after the rank-one dispersion result and under the stronger target-support
+C
+and leverage conditions required by assignment.
+29
+
+===== PDF PAGE 30 =====
+
+8.5 Assignment-functional correction
+This is a later technical stage, conditional on a successful free-factor rank-one correction for Q and
+F
+H . Correcting only Cov(α ,ψ ) would not be sufficient beyond additivity because the assignment
+F I J
+object also contains interaction-related cross-moments.
+The assignment operator differs from A and A in two ways. It combines observed and
+QF HF
+counterfactual weights, and it can put substantial mass on completed cells far from directly
+observed edges. The correction therefore must propagate uncertainty from estimated factors into
+counterfactual schedule entries. A useful decomposition is
+Cb
+a
+w
+ssign
+= Cbab +Cbah +Cbbh +Cbhh , (84)
+with a separate bias and support diagnostic for each channel. Even if the total is estimated precisely,
+the decomposition can reveal that a result is driven by one poorly supported interaction channel.
+8.6 Computability
+A practically relevant method cannot require one full nonlinear refit per worker, firm, or edge.
+The target is near-linear or mildly superlinear complexity in the number of observed edges per
+outer iteration. The implementation should use sparse normal equations, node-level Hessian blocks,
+iterative linear solvers, and low-rank matrix identities. Approximate diagonal and selected off-
+diagonal entries of the inverse Hessian can be obtained through Hutchinson-type trace estimators or
+graph-local message passing if exact sparse factorization is infeasible.
+The computation section should report wall-clock time, memory use, convergence, and sensitivity to
+solver tolerance. These are part of the contribution in a setting where an asymptotically valid but
+computationally prohibitive correction has little empirical value.
+8.7 Rank selection and regularization
+The baseline theory conditions on a fixed rank. Empirically, rank may be chosen using held-out edge
+prediction, information criteria adjusted for effective degrees of freedom, or stability of the headline
+functionals. Regularization can stabilize weakly connected factors, but it changes the estimand
+unless its bias is removed or made asymptotically negligible. The preferred presentation reports
+fixed-rank results for r = 0,1,2,... and treats the selected-rank estimate as a summary rather than
+hiding the sensitivity.
+9 Asymptotic Theory and Inference
+9.1 Asymptotic framework
+The assumptions below describe the desired free-factor theorem. The current Tukey proving ground
+is narrower: it treats β as known, uses a leave-worker-out construction, and has not yet established
+0
+the cavity closure, consistency, or limiting distribution. Results should therefore be stated in stages
+rather than attributed to one omnibus theorem.
+30
+
+===== PDF PAGE 31 =====
+
+The relevant asymptotic sequence lets workers, firms, and observations grow jointly:
+I,J,|E| → ∞, J/I → κ ∈ (0,∞). (85)
+Firm size and worker mobility can remain bounded or have bounded moments. No individual
+worker, firm, or factor loading need be consistently estimated. Consistency is sought for averages
+and quadratic functionals after removing the aggregate estimation noise.
+The assumptions should be stated in four blocks:
+1. Graph regularity: connected or reached target subgraphs, controlled leverage/effective
+resistance, and no small set of edges carrying a nonvanishing share of target weight;
+2. Signal strength: nondegenerate factor variation on informative rectangles and separation from
+unidentified gauge directions;
+3. Errors: conditional mean zero, bounded moments, and a dependence structure allowing
+worker-level clustering or an explicitly modeled edge noise;
+4. Target regularity: operator norms and concentration of the weights used by A.
+9.2 Consistency of corrected functionals
+Long-run theorem target D: functional consistency
+For any operator A in the admissible free-factor class, show
+Tb
+A
+bc−T
+A
+− p → 0.
+The first operator class should include Q and H on the supported population. Add Cw
+F F assign
+only under stronger completion and leverage conditions. The theorem should explicitly allow
+inconsistent individual effects and bounded firm size.
+The intellectual point is the distinction between parameter and functional consistency. The model
+contains many weakly estimated local parameters, but the paper reports weighted averages of their
+implications. Once the leading local noise is removed, averaging over many nodes and edges can
+recover the aggregate functional.
+9.3 Limit distribution and feasible uncertainty
+The ideal result is
+Tb
+A
+bc−T
+A ⇒ N(0,1). (86)
+s
+b
+e(Tb
+A
+bc)
+Sparse graphs can produce nonstandard limits when a few high-leverage configurations dominate.
+The theorem should therefore state conditions for Gaussianity and provide a feasible alternative—
+for example a multiplier bootstrap over influence contributions or a graph-aware quadratic-form
+approximation—when those conditions fail.
+31
+
+===== PDF PAGE 32 =====
+
+Long-run theorem target E: limit theory
+After functional consistency is established, derive an asymptotic linear or quadratic representa-
+tion of Tb
+A
+bc−T
+A
+. Establish a central limit theorem under vanishing maximal influence and a
+feasible non-Gaussian approximation under weaker leverage conditions. Uniform validity for
+the full headline vector is a later step than the one-sided Tukey variance conjecture.
+9.4 Joint inference for the headline vector
+Let
+ 
+Q
+F
+θ =  H . (87)
+ F 
+Cw
+assign
+Joint inference is valuable because the economic conclusions concern both the level and composition
+of firm wage dispersion. The share ρ = H /(2Q ) follows from the delta method away from
+H F F
+Q = 0, or from a ratio-robust confidence set when the denominator is weak. The decomposition
+F
+identity also provides an internal specification check:
+1
+QbF −V d ar(b J )− 2 HbF
+should be numerically negligible after applying consistent definitions and bias corrections.
+9.5 Testing additive separability
+Additive separability implies
+H : H = 0. (88)
+0 F
+Because H ≥ 0, the null is on the boundary. A symmetric Wald interval is not automatically valid.
+F
+The paper should derive a one-sided test or a projection-based procedure with correct boundary
+behavior. This test differs from testing a scalar interaction coefficient. It asks whether heterogeneous
+pairwise firm wage contrasts have nonzero population magnitude, regardless of the factor coordinates
+used to represent them.
+9.6 Testing interaction-related assignment
+The null that assignment operates only through common components is
+Hassign−int : Cw = Cov (a ,b ). (89)
+0 assign obs I J
+Equivalently, the sum of the three interaction-related channels in equation (43) is zero. This null
+can hold even when H > 0: firm wage contrasts may be heterogeneous but unused by assignment.
+F
+Conversely, interaction-related assignment can be important even if the total Cw is modest
+assign
+because channels offset. Joint channel-level inference is therefore more informative than a single
+total test.
+32
+
+===== PDF PAGE 33 =====
+
+10 Monte Carlo Design
+The simulation program should be staged with the theory. The first block should stress-test the
+shared-factor Tukey cavity conjecture under known and estimated β . A second block should
+0
+evaluate the intended free-factor rank-one method with many workers and firms, sparse mobility,
+and bounded firm size. Dense random-matrix designs are useful diagnostics but are not the primary
+validation environment.
+10.1 Data-generating processes
+The proving-ground design is the centered Tukey model in equation (68), first with known β and
+0
+then with β estimated from cycle moments. Its primary performance targets are the worker- and
+0
+firm-side variance corrections and the induced Q ,H estimates in equation (70).
+F F
+The free-factor design is
+Y = α +ψ +λu v +ε , (90)
+ij i j i j ij
+(α ,u ) ∼ F , (ψ ,v ) ∼ F . (91)
+i i I j j J
+Assignment is generated under three regimes:
+1. independent edges conditional on node degrees;
+2. sorting on common components (α,ψ) only;
+3. sorting on both common components and interaction gains.
+The graph is calibrated to empirical degree and firm-size distributions. The simulation varies
+interaction strength, factor correlation, error heteroskedasticity, worker-level serial dependence, and
+the concentration of informative rectangles.
+10.2 Estimators and performance measures
+Compare:
+1. naive plug-in estimation;
+2. the additive KSS benchmark, intentionally misspecified when λ ̸= 0;
+3. the current Tukey leave-worker-out correction and its symmetric firm-side analogue;
+4. the intended bias-corrected free-factor rank-one estimator;
+5. an oracle estimator using the true schedule or true factors;
+6. grouped approximations where computationally feasible.
+Report bias, root mean squared error, confidence-interval coverage, interval length, and compu-
+tational time for Q , H , ρ , and Cw . Separate model-approximation error from incidental-
+F F H assign
+parameter bias by including an oracle rank-one fit on the same graph.
+33
+
+===== PDF PAGE 34 =====
+
+10.3 Graph stress tests
+The most informative stress tests remove rectangles, create articulation points, or concentrate target
+weight on high-leverage firms. The simulations should verify that empirical graph diagnostics predict
+estimator failure. A method that performs poorly precisely when its stated support conditions fail
+is more credible than one that appears robust only because the simulation never approaches the
+boundary.
+10.4 Rank misspecification
+Generate data with rank two or a slowly decaying singular spectrum and fit rank zero, one, and two
+models. The key outcome is not only predictive fit but bias in the economic functionals. A rank-one
+approximationmayestimateQ reasonablywhileunderstatingH ifmultipleinteractiondimensions
+F F
+offset in prediction but not in contrast variance. The paper should show which functionals are
+robust to approximation and which are not.
+11 Empirical Application
+11.1 Data and estimation population
+The empirical section should begin by defining the wage concept, time period, worker and firm units,
+covariates,andconnectedpopulation. Thetargetisnotimplicitly“thelabormarket.” Itistheworker
+and firm population reached by the graph and supported by the model. The sample construction
+should report how many workers, firms, observations, movers, and informative rectangles are lost at
+each restriction.
+The baseline wage should be log hourly or daily earnings residualized for transparent time-varying
+covariates. Multipleobservationswithinaworker–firmmatchcanbeaggregatedforpointestimation
+while retaining sufficient information to estimate noise and within-match persistence. Worker-level
+clustering should be the default unless the data support a richer dependence model.
+11.2 Network and target-support diagnostics
+Before reporting wage functionals, document:
+• worker and firm degree distributions;
+• connected and leave-one-out connected set sizes;
+• counts and concentration of informative rectangles;
+• edge and node leverage or effective-resistance measures;
+• the fraction of Q , H , and assignment target weight supported by direct or propagated
+F F
+contrasts;
+• sensitivity to trimming weakly supported firms or markets.
+34
+
+===== PDF PAGE 35 =====
+
+Kline-style cycles on the projected firm mobility graph and interaction rectangles on the bipartite
+graph should be diagnosed separately. A sample can support additive mover contrasts while
+containing little information about worker-specific firm differences.
+11.3 The additive benchmark
+Report bias-corrected additive estimates first:
+Var(α
+bI
+), Var(ψbJ ), Cov(α
+bI
+,ψbJ ), (92)
+along with the systematic variance and model fit. This gives readers a familiar scale and fixes the
+benchmark the nonadditive quantities generalize. The paper should avoid presenting a rejection
+of AKM as the primary result; the important question is the economic magnitude of what AKM
+misses.
+11.4 Direct diagnostics of additive separability
+Three diagnostics answer different questions:
+1. mover event studies assess whether wage changes align with estimated firm changes under the
+relevant mobility assumptions;
+2. Kline-style cycle residuals assess the intransitive component of edge contrasts;
+3. paired-mover regressions ask whether the wage gap between two workers is preserved when both
+move between the same firms.
+The paired-mover coefficient near one is an implication of additive separability; a lower coefficient
+indicates persistent match heterogeneity under its measurement assumptions. It is an external
+benchmark for the direction and scale of H , not an estimator of the same population functional.
+F
+11.5 Main firm-dispersion estimates
+The first headline table should report
+QbF , HbF , ρ bH , V d ar(b J ), (93)
+with joint uncertainty. Translate the estimates into log-wage standard deviations:
+q q
+QbF and HbF .
+The main substantive statement should be in the form:
+For a fixed worker, the root-mean-square dispersion in systematic wages across the
+reference firm distribution is [X] log points. [Y] percent of that firm-related dispersion
+reflects worker-specific firm wage differences rather than a common firm component.
+The placeholders must be filled only after the estimator and support population are finalized.
+35
+
+===== PDF PAGE 36 =====
+
+11.6 The generalized assignment contribution
+Report
+Cb a w ssign alongside C d ov obs (a I ,b J ) and the additive AKM covariance. (94)
+The comparison answers whether the conventional covariance understates, overstates, or approxi-
+mately captures the contribution of observed assignment to systematic wage variance once worker-
+specific firm components are admitted. Because the assignment estimate can depend heavily
+on completion, report restricted within-market benchmarks before any economy-wide product
+benchmark.
+11.7 Decomposing assignment
+A second table should report the four channels in equation (43). This table is potentially more
+informative than the total. For example, common-component assortativity and favorable interaction
+alignment may both be positive while interaction concentration is negative. Offsetting channels
+explain why the total assignment contribution can appear small despite economically meaningful
+selection on worker-specific firm wage cells.
+The first-moment objectAbh belongs in this table or an appendix. It should not join the opening-page
+headline unless it is precisely estimated and robust to the assignment benchmark.
+11.8 Economic heterogeneity
+Estimate the decomposition by pre-specified worker and firm dimensions such as education, occupa-
+tion, age group, sector, firm size, or local labor market. The questions are:
+• Is Q large because some groups face wider employer wage dispersion?
+F
+• Is H concentrated where comparative advantage is economically plausible?
+F
+• Do assignment channels differ between high- and low-mobility markets?
+Subgroup functionals should preserve the reference-population logic. Changing the composition
+of firms and workers can mechanically change the estimand, so within-group and reweighted
+comparisons should be distinguished.
+11.9 Robustness
+The principal robustness exercises vary:
+• the firm reference distribution ν;
+• restricted independence benchmarks;
+• graph trimming and leverage thresholds;
+• interaction rank;
+• wage residualization and time window;
+• treatment of small firms and short worker histories;
+36
+
+===== PDF PAGE 37 =====
+
+• direct-support versus model-propagated target weight.
+The paper should treat support sensitivity as more central than cosmetic changes to standard errors.
+A precise estimate of an unsupported counterfactual is not a credible result.
+12 Interpretation: Wage Differences, Selection, and Sorting
+12.1 What the estimates establish
+The estimates establish the magnitude and heterogeneity of employer-related systematic wage
+differences under a maintained schedule. They can reveal that a common firm premium is a good or
+poor summary of those differences, and they can measure how the observed assignment changes
+the wage distribution relative to a declared benchmark. They do not identify why the schedule has
+that shape. Comparative advantage, bargaining, monopsony, rent sharing, amenities, and selective
+acceptance can all generate similar wage patterns.
+12.2 Four meanings of sorting
+The word “sorting” should be reserved for a stated object. Four distinct quantities recur in the
+literature:
+1. Assortative assignment of types: Cov(X ,Y ) or a rank-correlation analogue;
+I J
+2. Complementarity of a schedule: a positive cross-difference or ∂2m(x,y)/(∂x∂y);
+3. Fixed-schedule distributional assignment: Φ(m;Pobs)−Φ(m;P0);
+4. Productive or welfare sorting: assignment evaluated using a production or surplus schedule
+and feasible equilibrium counterfactuals.
+These objects can move independently. Strong assortative matching can coexist with additive
+accepted-match wages; nonadditive wages can coexist with no selection on match components; and
+a positive wage assignment effect need not be a welfare gain.
+12.3 Relation to paired movers
+Sorkin and Warwar’s paired-mover design exploits a sharp implication of additivity. If two workers
+both move from firm A to firm B, their wage gap should be stable because the common firm
+component cancels at both firms. A forecast coefficient below one indicates that worker rankings or
+gaps change across employers. Under exogenous mobility, they translate that attenuation into a
+match-effect variance for the paired-mover population.
+The present paper asks a broader but related question. H averages the cross-worker variance of
+F
+every supported pairwise firm contrast over a declared worker and firm population. It therefore
+providesapopulationfunctionalofthecompletedwagescheduleratherthanadesign-specificvariance
+among paired movers. The paired-mover result is valuable validation: the low-rank estimator should
+reproduce the qualitative and, after population adjustment, quantitative magnitude of the direct
+design in the subset where both are informative.
+37
+
+===== PDF PAGE 38 =====
+
+12.4 Selection and accepted matches
+Observedwagesareconditionedonmatchesthatformandsurvive. Inselectiveacceptancemodels,the
+conditionalwageschedulecandiffersharplyfromthemeeting-levelproductionschedule. Borovičková
+and Shimer provide the most striking example: under Pareto match shocks, threshold selection
+produces an additive accepted-match wage equation even when production is complementary and
+matching is strongly sorted. Eeckhout and Kircher provide a different mechanism in which outside
+options make wages nonmonotone in firm type. These models demonstrate that wage nonadditivity
+is informative about the wage schedule but does not have a unique structural interpretation.
+12.5 Structural boundary and next paper
+To study productive sorting, replace m with total surplus S and specify how wages, profits,
+ij ij
+amenities, meetings, and acceptance reveal it. A static surplus comparison is
+E [S ]−E [S ],
+Pobs IJ P0 IJ
+while an efficiency gap compares observed assignment with the optimal feasible coupling. Search
+frictions make even that comparison incomplete because the set of feasible assignments depends on
+meetings, unemployment, vacancies, and policy responses. Those are natural extensions, but they
+are not automatic interpretations of the wage quantities estimated here.
+13 Conclusion
+The additive worker–firm model compresses employer-related wage inequality into a common firm
+component and one worker–firm covariance. That compression is useful when firm wage differences
+are common across workers, but it is not the economic question itself. This paper defines the
+underlying questions without imposing the answer. Q measures how much wages differ across firms
+F
+for the same worker. H measures how differently workers value the same pair of firms in wage
+F
+terms. Cw measures how the observed assignment changes systematic wage variance relative to
+assign
+an independence benchmark.
+The identity
+1
+Q = Var(b )+ H
+F J 2 F
+separates a common firm ladder from worker-specific firm wage differences. The assignment
+decompositionshowsthatthefamiliarAKMcovarianceisonechannelamongseveralonceinteractions
+are present. These identities make the nonadditive project a generalization of established wage-
+inequality accounting, not a search for an arbitrary interaction variance.
+Thestatisticalcontributionisequallyspecific. Freelow-rankfactorsregularizetheinteractionwithout
+clustering away node-level heterogeneity, which leaves a high-dimensional incidental-parameter
+problem on a sparse graph. The paper must therefore solve identification, bias correction, inference,
+and computation jointly for the target functionals. The minimum viable result is a rank-one theorem
+and empirical application. Higher rank is the natural next econometric margin; production, surplus,
+and welfare belong to the subsequent structural project.
+38
+
+===== PDF PAGE 39 =====
+
+A Proofs and Details for the Nonparametric Benchmark
+A.1 Proof of proposition 4
+For the linear target, observational equivalence gives T (m+z)−T (m) = ℓ′z. Hence invariance
+ℓ ℓ
+for every z ∈ K is necessary and sufficient. By the fundamental theorem of linear algebra,
+E
+K⊥ = row(R ), yielding the equivalent row-space condition.
+E E
+For the quadratic target, sufficiency follows immediately from Az = 0:
+T (m+z)−T (m) = 2m′Az+z′Az = 0.
+A A
+For necessity, suppose the quadratic target is invariant for every m ∈ RN and z ∈ K . Then
+E
+2m′Az+z′Az = 0 ∀m.
+Fixing z and varying m implies Az = 0. Therefore K ⊆ ker(A).
+E
+A.2 Constructive proof of corollary 1
+Fix an unobserved cell (i ,j ) with product weight w = p q > 0, and let e denote its coordinate
+0 0 0 i0 j0 0
+vector. The path m(c) = m+ce is observationally equivalent for every c ∈ R.
+0
+For Q , only worker i ’s cross-firm variance changes. Its coefficient on c2 is
+F 0
+p q (1−q ) > 0,
+i0 j0 j0
+so Q (m(c)) → ∞ as |c| → ∞.
+F
+For H = 2∥L MR ∥2 , the perturbation produces
+F p q p,q
+L (ce e′ )R = c(e −p 1)(e −q 1)′,
+p i0 j0 q i0 i0 j0 j0
+whose weighted squared norm has a strictly positive c2 coefficient when I,J ≥ 2 and the weights
+are nondegenerate. Hence the identified set for H is unbounded above.
+F
+The observed variance in Cw does not change because the cell is unobserved. Under the
+assign
+product distribution, the variance of the random cell value has leading term w (1 − w )c2, so
+0 0
+Cw (m(c)) → −∞. Finally,
+assign
+A (m(c))−A (m) = −w c,
+h h 0
+which ranges over all real numbers.
+A.3 Monotone completion and target bounds
+When row and column rankings are known, the feasible completion set is a closed convex polyhedron
+after external bounds on wages are imposed. Linear targets, including A , can then be bounded by
+h
+linearprogramming. Thequadratictargetsaregenerallynonconvexaswritten, althoughQ andH
+F F
+are convex quadratic functions of m and their lower bounds can be computed by convex quadratic
+programming. Upper bounds for convex quadratic targets over a polytope occur at extreme points
+and may require mixed-integer, enumeration, or specialized isotonic methods. The paper need not
+solve this computational problem in full unless the resulting bounds are empirically informative; the
+benchmark’s main role is to document how much cardinal information monotonicity alone supplies
+before low rank is imposed.
+39
+
+===== PDF PAGE 40 =====
+
+B Canonical Identities and Finite-Population Algebra
+Let M be the I ×J matrix with entries m , let p = (p ,...,p )′ and q = (q ,...,q )′, and define
+ij 1 I 1 J
+weighted centering matrices
+L = I −1 p′, R = I −1 q′. (95)
+p I I q J J
+The canonical interaction matrix is
+H = L MR . (96)
+p q
+The worker and firm components are
+a = Mq−µ1 , b = M′p−µ1 , µ = p′Mq.
+I J
+Weighted Frobenius norm notation is
+∥A∥2 = X p q A2 .
+p,q i j ij
+i,j
+Then
+Q× = ∥H∥2 , (97)
+h p,q
+Q = b′diag(q)b+∥H∥2 , (98)
+F p,q
+H = 2∥H∥2 . (99)
+F p,q
+These formulas show that double centering a rank-r interaction weakly lowers rank and that the
+canonical quantities are invariant to any alternative additive–interaction parameterization of the
+same M.
+The pairwise-difference identity follows from Var (x ) = 1 P q q (x −x )2. Applying it row by
+q J 2 j,k j k j k
+row yields equation (28). Applying it to the random variables h across workers and then averaging
+Ij
+over firm pairs yields equation (33).
+C Assignment Decompositions and Special Cases
+Let W = (w ) be the observed joint assignment weights and let pq′ be the product weights. Both
+ij
+share marginals p and q. The mean assignment effect is
+A = (cid:10) W −pq′,M (cid:11) = ⟨W,H⟩, (100)
+h
+where the inner product sums over cells. The equality follows because W −pq′ has zero row and
+column sums, so it annihilates constants and additive row or column components.
+For variance, write m¯ = ⟨W,M⟩ and m¯ = ⟨pq′,M⟩ = µ. Then
+W 0
+D E D E
+2Cw = W,(M −m¯ 11′)◦2 − pq′,(M −µ11′)◦2 , (101)
+assign W
+where ◦2 denotes elementwise squaring. Expanding M = µ+a1′+1b′+H yields equation (43).
+The raw-moment form equation (44) is useful for computation because it can be assembled from
+weighted cell sums without separately forming covariance matrices.
+40
+
+===== PDF PAGE 41 =====
+
+Signs. Neither A nor Cw is restricted to be positive. Workers may be assigned to wage-
+h assign
+disadvantageous cells because of amenities, geographic constraints, learning, or search frictions.
+Observed assignment can compress systematic wage variance by matching high-a workers to low-b
+firms or by avoiding extreme interaction cells.
+Interaction independent of assignment. If H has the same conditional first two moments
+IJ
+under observed and product assignment and is uncorrelated with a and b under observed assign-
+I J
+ment, then the interaction-related channels vanish even though H can be positive. This is the
+F
+clean case of heterogeneous firm effects without sorting on them.
+Assignment only on interactions. If a and b are independently assigned but W favors
+I J
+positive h , then A > 0 while Cov(a,b) = 0. The variance contribution can be positive or negative
+ij h
+depending on whether favorable cells are also more dispersed than the product benchmark.
+D Selection, Treatment Effects, and Roy Sorting
+In a binary treatment model, write potential outcomes Y(0) and Y(1) and treatment D. Random
+assignment requires D ⊥⊥ (Y(0),Y(1)). Selection on baseline levels allows D to depend on Y(0);
+selection on gains allows it to depend on Y(1)−Y(0). A Roy model makes the gain, net of costs, a
+central determinant of choice.
+With firms as treatments, worker i has a vector Y (j). General selection is dependence between
+i
+J and the vector. Selection on pairwise firm gains means the choice among j and k depends on
+i
+Y (k)−Y (j). The canonical wage interaction h is related to these gains because
+i i ij
+Y (k)−Y (j) = (b −b )+(h −h )
+i i k j ik ij
+under a causal interpretation. H measures the variance of the second term across workers.
+F
+Assignment-related interaction channels measure whether the realized joint distribution uses those
+heterogeneous gains.
+Edge-specific mover effects and global schedules require different assumptions. For movers from j to
+k, one may target
+∆ATT = E[Y (k)−Y (j) | J = j,J = k].
+jk i i i1 i2
+Different edges condition on different mover populations, so the effects need not be transitive. A
+common-population schedule requires transporting those contrasts across edges. This is why graph
+connectedness and causal transportability are separate layers.
+E Low Rank: Algebraic Shape and Effective Dimension
+The distinction explains why nesting statements and inference statements should not be conflated.
+A firm-specific slope model a +b α is algebraically rank one regardless of how freely b varies. It
+j j i j
+is nevertheless a high-dimensional estimation problem. Grouping reduces effective dimension; free
+factors do not.
+41
+
+===== PDF PAGE 42 =====
+
+Table 2: Rank, parameter count, and incidental parameters
+Specification Algebraic rank Free interaction Incidental-
+parameters parameter
+implication
+Additive AKM 0 0 Main effects remain
+incidental.
+Shared-factor Tukey 1 scalar β beyond main Interaction coefficient
+effects low dimensional, but
+main effects
+incidental.
+Free-factor rank one 1 O(I +J) Worker and firm
+factor loadings are
+incidental.
+Free-factor rank r r O(rI +rJ +r2) Multiple incidental
+factor coordinates per
+node.
+Grouped K ×L types ≤ min(K,L)−1 O(KL) for fixed K,L Interaction dimension
+fixed after
+classification.
+F Representation Map for Established Wage Models
+F.1 AKM and KSS
+AKM is the r = 0 special case. KSS is the inferential benchmark for quadratic functionals in that
+linear model, not a distinct wage representation. The present project seeks to preserve the leave-out
+logic after the design becomes endogenous to estimated interaction factors.
+F.2 Tukey and Crippa
+The Tukey schedule
+m = α +ψ +βα ψ
+ij i j i j
+isashared-factorrank-oneinteraction. Crippa’sgraphidentificationusescyclerestrictionstailoredto
+the fact that the same latent coordinates enter both additively and multiplicatively. The free-factor
+model relaxes that shared-coordinate restriction but pays a higher graph and incidental-parameter
+cost.
+F.3 Firm-specific slopes and grouped BLM
+The schedule a +b α is exactly rank one after placing a in the firm main effect and using u = α ,
+j j i j i i
+v = b . Grouped BLM mean cells are represented by worker and firm type indicators and a
+j j
+double-centered type-cell matrix. The full BLM model is richer than its conditional mean: it
+includes wage distributions, classification, and mobility structure that are not nested by the present
+static mean schedule.
+42
+
+===== PDF PAGE 43 =====
+
+F.4 GKLP
+Under perfect information, the log wage contains
+1
+Z +c +b η + b2σ2.
+i j j i 2 j ε
+The first term is a worker main effect, the sector intercept and log-normal variance correction
+enter the firm main effect, and b η is rank one. Under learning, the posterior mean and predictive
+j i
+variance are time varying; a single cross-section can be represented at rank at most two, while the
+pooled panel lies at the dynamic boundary of the static model.
+F.5 Eeckhout–Kircher
+In the leading two-stage search example with equal bargaining and f(x,y) = axy+h(x)+g(y), the
+wage can be written
+a a a
+w(x,y) = x2− y2+ xy+h(x).
+4 4 2
+The interaction is exactly rank one. The fixed worker’s wage is hump shaped in firm type because a
+high-type firm has a valuable outside option. The example shows why a scalar AKM firm effect can
+fail even when the wage schedule has a very simple low-rank interaction.
+F.6 Shimer–Smith
+The flow payoff to one side can be written as additive continuation-value terms plus one half of the
+production surface. Thus the double-centered nonadditive part of the wage inherits the rank or
+approximate rank of production. This is a representation result; recovering production from wages
+still requires the full search and bargaining model.
+F.7 Borovičková–Shimer
+Meetingsdrawmatchqualityz andformifz exceedsatype-specificthreshold. UnderaParetoshock,
+the conditional overshoot ratio is scale invariant, and accepted-match mean wages become additive
+even when production is complementary. Away from Pareto, the mean residual life introduces
+a worker–firm interaction. This model is especially useful for interpretation: additive wages can
+reflect a selection-induced cancellation, while rejection of additivity can reflect a deviation from
+that cancellation rather than a unique production mechanism.
+G Stochasticity, Meetings, Acceptance, and Selection
+The taxonomy demonstrates why a rejection of wage additivity has no single structural meaning. It
+can reveal comparative advantage, outside-option wage setting, an off-Pareto selection distribution,
+or a richer production interaction. Conversely, failure to reject additivity need not imply the absence
+of productive complementarity.
+43
+
+===== PDF PAGE 44 =====
+
+Table 3: Where randomness and selection enter
+Model Randomness Selection event Implication for
+observed wages
+Shimer–Smith Random meetings; Accept if deterministic Wage nonadditivity
+output deterministic surplus is positive inherits production and
+in types outside-option structure.
+Borovičková– Random meetings Accept if the shock Pareto selection can
+Shimer and match-specific exceeds a type-specific make accepted-match
+productivity shock threshold wages additive; off-Pareto
+restores interaction.
+Eeckhout–Kircher Random first-stage Accept now or wait for Wages can be
+pairing; deterministic frictionless assignment nonmonotone in firm
+outside options type because outside
+options enter bargaining.
+GKLP Productivity shocks Worker and firms Sector-specific skill prices
+and learning; sector select sectors as beliefs create a low-rank
+choice and returns differ comparative-advantage
+interaction.
+H Two Cycle Spaces and Graph Diagnostics
+Kline-style mover cycles live on a projected firm graph whose edges are average mover contrasts.
+Additivefirmeffectsimplythatthesumofdirectededgeeffectsaroundeverycycleiszero. Interaction
+rectangles live on the original bipartite worker–firm graph and compare two workers at two firms.
+The two graph structures are related but not identical.
+A sample can have many movers connecting firms and therefore rich projected cycles, yet few pairs
+of workers observed at the same pair of firms. It then supports additive firm-effect diagnostics but
+weakly identifies free interactions. Conversely, repeated worker pairs at a dense subset of firms can
+identify local interactions while leaving the global firm graph fragile. Empirical diagnostics should
+therefore report both cycle spaces.
+The shared-factor Tukey model also has a special polynomial cycle structure because the interaction
+parameter enters the factorization itself. That cycle-length difficulty should not be mechanically
+transferred to the free-factor rank-one model, where rectangle equations are bilinear in free factor
+differences and propagation after gauge fixing can be linear. The necessity theorem remains a
+matrix-completion problem on the observed rectangle mask.
+I Event-Study and Paired-Mover Diagnostics
+Suppose wages contain a common firm component and a permanent match component:
+y = α +ψ +µ +ε .
+it i Jit iJit eit
+44
+
+===== PDF PAGE 45 =====
+
+For movers, a regression of wage changes on changes in estimated firm components has a population
+slope of the schematic form
+Cov(∆µ,∆ψ)
+β = 1+ , (102)
+ES Var(∆ψ)
+under suitable measurement and residualization conditions. A slope near one therefore tests the
+alignment of match changes with firm changes among movers; it does not imply µ = 0. A
+ij
+time-invariant match component can sit in levels and pass the event-study diagnostic.
+For paired movers i,i′ who both move from A to B, define the worker wage gaps
+G = y −y , G = y −y .
+A iA i′A B iB i′B
+Underadditivityandnomeasurementerror, G = G = α −α . Withmatcheffectsandexogenous
+A B i i′
+mobility, a forecast coefficient is attenuated because the origin gap contains origin-specific match
+dispersion that does not perfectly predict the destination gap. In the simple benchmark,
+Var(α)
+plimβbpaired =
+Var(α)+
+e
+Var(µ)
+.
+e e
+This is a direct diagnostic of additive separability for the paired-mover population and complements,
+rather than duplicates, the global H target.
+F
+J Quadratic Operators for the Target Functionals
+For each worker i, let R = I −1 q′ and write the row vector m′. Then
+q J J i
+Q = X p m′R′ diag(q)R m .
+F i i q q i
+i
+Stacking m = vec(M) gives a block-diagonal operator
+(cid:16) (cid:17)
+A = diag(p)⊗ R′ diag(q)R . (103)
+QF q q
+For H , let L = I − 1 p′ and note that the canonical interaction is H = L MR . Since
+F p I I p q
+H = 2∥H∥2 ,
+F p,q
+(cid:16) (cid:17) (cid:16) (cid:17)
+A = 2 R diag(q)R′ ⊗ L′ diag(p)L , (104)
+HF q q p p
+up to the vectorization convention.
+For any assignment weights w = vec(W), define the weighted variance operator
+V(W) = diag(w)−ww′.
+Then
+1
+A = (cid:2) V(W)−V(pq′)(cid:3) , (105)
+C 2
+and Cw = m′A m. The mean assignment operator is d = w−vec(pq′), so A = d′ m.
+assign C A h A
+These expressions identify the gradients needed for influence calculations:
+∇ T = 2Am, ∇ A = d .
+m A m h A
+They also make target support explicit through the nonzero pattern of each operator.
+45
+
+===== PDF PAGE 46 =====
+
+K Estimation Algorithm and Computation
+Algorithm 1 Alternating estimation and functional computation
+1: Residualize observed wages on X and time effects.
+Estimate additive AKM and form edge residuals.
+2:
+3: Initialize U,V from a weighted low-rank approximation or multiple random starts.
+4: repeat
+5:
+Update (δ,α,ψ,U) conditional on (V,Λ) using sparse weighted least squares.
+6:
+Update (ψ,V) conditional on (δ,α,U,Λ).
+Update Λ and impose location, scale, and rotation normalizations.
+7:
+Evaluate the objective and invariant functionals.
+8:
+9: until objective and functionals satisfy stopping tolerances
+Compute local Hessian blocks, residuals, and leverage approximations.
+10:
+Construct target-specific cavity corrections and standard errors.
+11:
+Repeat across initializations and ranks; retain diagnostics for all solutions.
+12:
+Multiple observations per edge can be represented by sufficient statistics (n ,Y ¯ ,σ2) for point
+ij ij bij
+estimation, while the variance procedure must preserve worker-level dependence. Sparse iterative
+solvers should exploit the bipartite block structure rather than forming a dense Hessian.
+L Cavity Expansion and Proof Agenda
+L.1 Current conjecture: shared-factor Tukey
+The current technical work starts from equation (68) with β treated as known and uses the affine
+0
+rank-one identity in equation (69). The immediate target is V = Var(α ) under a weighted
+α I
+normalization. Deleting worker i removes all adjacent edges, changes neighboring firm estimates,
+and propagates through the rest of the graph. The leave-worker-out estimator reconstructs α using
+i
+firm-side estimates computed without worker i.
+Writing α = α +δ , the plug-in expansion is
+bi i i
+Vbα −V
+α
+= 2X π
+i
+α
+i
+δ
+i
++X π
+i
+δ
+i
+2,
+i i
+with additional terms induced by normalization. The proof must show that the leave-worker-out
+construction removes or estimates the aggregate leading noise without requiring a full refit for every
+worker.
+The unresolved steps are:
+1. establish localization and an isolated solution on the gauge-orthogonal tangent space;
+2. characterize the deletion feedback through a stable cavity or recursive-distributional equation;
+3. control high-leverage and leverage-one configurations on bounded-degree graphs;
+4. prove consistency of the resulting correction for V ;
+α
+5. derive the symmetric result for V and propagate uncertainty in an estimated β .
+ψ 0
+46
+
+===== PDF PAGE 47 =====
+
+A success on the first five steps would deliver Q and H in the Tukey special case through
+F F
+equation (70).
+L.2 Bridge to the free-factor theorem
+Forthetargetmodelm = α +ψ +u v ,theTukeyaffinereductionisunavailable. Thecavitysystem
+ij i j i j
+must jointly track additive effects and two separate factor sides. Because factor scale is arbitrary,
+the economically relevant interaction target is the invariant product Q× = Var(u )Var(v ) = H /2,
+h I J F
+not either factor variance alone. The free-factor extension therefore requires a joint correction and
+covariance accounting for the two estimated sides.
+Only after this dispersion result is established should the method be extended to Cw , whose
+assign
+decomposition contains several interaction cross-moments and counterfactual-cell weights. A
+correction for the additive covariance Cov(α ,ψ ) alone does not solve that problem.
+I J
+L.3 Computability and kill criteria
+The correction must avoid one full nonlinear refit per deletion and should be expressible through
+sparse local blocks, graph solves, or a finite computable message system. The proposed route should
+be reconsidered if the cavity recursion does not close in a computable collection of quantities, if the
+leading bias depends irreducibly on the global graph, if bounded-degree risk fails to concentrate
+after defensible trimming, or if the Tukey argument cannot be extended to the invariant free-factor
+product.
+M Higher-Rank Extension
+At rank r,
+m = α +ψ +u′Λv , u ,v ∈ Rr.
+ij i j i j i j
+The interaction permits several dimensions of comparative advantage. The gauge group is larger,
+graph support must identify r-dimensional factor spaces, and weak factors can make the effective
+rank locally unstable. A higher-rank extension should state anchor sets of at least r+1 independent
+workersandfirms,propagationconditionsbasedonfull-rankoverlap,andfactor-strengthassumptions.
+The economic functionals remain unchanged, which is precisely why the rank-one paper is valuable
+even before the general theorem is complete.
+N Empirical Tables and Figures to Produce
+The final paper should contain, at minimum:
+1. a sample-flow and target-population table;
+2. worker/firm degree and rectangle-support figures;
+3. an additive AKM benchmark table;
+4. paired-mover and cycle diagnostics;
+47
+
+===== PDF PAGE 48 =====
+
+5. a headline table for Q , H , ρ , and Var(b);
+F F H
+6. an assignment table comparing the AKM covariance with Cw ;
+assign
+7. a four-channel assignment decomposition;
+8. sensitivity to reference populations, rank, and graph trimming;
+9. a support-accounting table separating direct, propagated, and extrapolated target weight.
+A compelling main figure would represent
+1
+Q = Var(b)+ H
+F 2 F
+as a stacked decomposition across samples or time periods, with the assignment channels shown in
+a separate signed bar chart.
+Provisional Bibliography
+References
+Abowd, John M., Francis Kramarz, and David N. Margolis. “High Wage Workers and High Wage
+Firms.” Econometrica, 1999.
+Bonhomme, Stéphane, Thibaut Lamadon, and Elena Manresa. “A Distributional Framework for
+Matched Employer–Employee Data.” Econometrica, 2019.
+Borovičková, Katarína, and Robert Shimer. Working paper on worker–firm sorting, selective hiring,
+and additive wages, 2025. Bibliographic details to be verified before circulation.
+Card, David, Jörg Heining, and Patrick Kline. “Workplace Heterogeneity and the Rise of West
+German Wage Inequality.” Quarterly Journal of Economics, 2013.
+Crippa, Andrea.Workingpaperonidentificationintwo-sidedinteractionmodels, 2025.Bibliographic
+details to be verified before circulation.
+Eeckhout, Jan, and Philipp Kircher. “Identifying Sorting—In Theory.” Review of Economic Studies,
+2011.
+Gibbons, Robert, Lawrence F. Katz, Thomas Lemieux, and Daniel Parent. “Comparative Advantage,
+Learning, and Sectoral Wage Determination.” Journal of Labor Economics, 2005.
+Kline, Patrick. Review or lecture material on firm effects, mover effects, and cycle restrictions, 2024.
+Bibliographic details to be verified before circulation.
+Kline, Patrick, Raffaele Saggio, and Mikkel Sølvsten. “Leave-Out Estimation of Variance Compo-
+nents.” Econometrica, 2020.
+Shimer, Robert, and Lones Smith. “Assortative Matching and Search.” Econometrica, 2000.
+Sorkin, Isaac, and Lucas Warwar. “Paired Movers.” Working paper, March 2026.
+48

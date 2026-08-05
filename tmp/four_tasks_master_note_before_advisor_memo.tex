@@ -1,0 +1,4401 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{array,longtable}
+\usepackage[hidelinks]{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+\renewcommand{\arraystretch}{1.18}
+
+\title{Advisor Questions on Assignment, Sorting, and Nested Wage Models}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Task 1: Is \(C^w_{\mathrm{assign}}\) identified when the product benchmark uses missing cells?}
+
+\subsection{1.1 Answer and sources}
+
+This section uses two source documents:
+
+\begin{itemize}
+\item \textbf{LOO-v2:} \emph{Firm Wage Effects and Assignment Beyond Additivity},
+  especially pp.\ 9--11, 15--20, 27, and 39--41.
+\item \textbf{BS20:} Borovi\v{c}kov\'a and Shimer (2020),
+  \emph{High Wage Workers Work for High Wage Firms}, especially pp.\ 5--7 and
+  18--24.
+\end{itemize}
+
+The short answer has four parts.
+
+\begin{enumerate}
+\item The marginal distributions \(P_I\) and \(P_J\), and therefore their
+  product \(P_I\otimes P_J\), can be learned from observed assignment
+  frequencies.  The product \emph{measure} is not the unidentified object.
+  \textit{Source: LOO-v2, p.\ 10, equation (18), and p.\ 15, equation (42).}
+\item The variance
+  \(\operatorname{Var}_{P_I\otimes P_J}(m_{IJ})\) generally is not identified
+  on an incomplete worker--firm graph because it evaluates the maintained wage
+  schedule \(m_{ij}\) at product-supported pairs that never occur.
+  \textit{Source: LOO-v2, pp.\ 19--20, Proposition 4, Corollary 1, and
+  equation (58).}
+\item Consequently, \(C^w_{\mathrm{assign}}\) is not point identified on the
+  unrestricted incomplete schedule.  This conclusion is conditional on the
+  estimand, target population, support, and model class.  It is not a claim
+  that identification is impossible after imposing valid completion
+  restrictions.  \textit{Source: LOO-v2, pp.\ 19--20 and p.\ 27.}
+\item The BS20 observed-match estimator does not identify the original
+  \(C^w_{\mathrm{assign}}(m)\).  It identifies a different estimand: the
+  covariance, and hence the correlation, between a worker's observed-match
+  expected wage and a firm's observed-match expected wage.  It can therefore
+  supply (i) an alternative observed-support sorting statistic or (ii) an
+  estimator of the original target only after an additional bridge restriction
+  connects the full pairwise schedule \(m_{ij}\) to the BS types.
+  \textit{Source for the BS estimand: BS20, pp.\ 5--7, equations (1)--(6).
+  Source for the estimator: BS20, pp.\ 21--24, Auxiliary Assumptions 1--4 and
+  equations (18)--(25).  The non-equivalence and bridge statements are derived
+  below.}
+\end{enumerate}
+
+\subsection{1.2 Notation}
+
+See Appendix A.1 for the canonical notation used in Task 1.
+
+\subsection{1.3 What is observed and what the product benchmark requires}
+
+Write the observed assignment weights and their marginals as
+\[
+w_{ij}=P^{\mathrm{obs}}_{IJ}(I=i,J=j),\qquad
+p_i=\sum_jw_{ij},\qquad q_j=\sum_iw_{ij}.
+\]
+Therefore the independent-assignment cell weights
+\[
+P^\times(I=i,J=j)=p_iq_j
+\]
+are determined by the observed joint assignment distribution.
+\textit{Source: LOO-v2, p.\ 10, equation (18), and p.\ 40.}
+
+For any probability matrix \(R=(r_{ij})\), the variance of the fixed schedule is
+\[
+\operatorname{Var}_{R}(m_{IJ})
+=\sum_{i,j}r_{ij}m_{ij}^{2}
+-\left(\sum_{i,j}r_{ij}m_{ij}\right)^2.
+\]
+\textit{Derived directly from the definition of variance.}
+
+The target is
+\[
+C^w_{\mathrm{assign}}(m)
+=\frac12\left\{
+\operatorname{Var}_{P^{\mathrm{obs}}_{IJ}}(m_{IJ})
+-\operatorname{Var}_{P^\times}(m_{IJ})
+\right\}.
+\tag{T1.1}
+\]
+\textit{Source: LOO-v2, p.\ 15, equation (42).}
+
+If \(w_{ij}>0\), then \((i,j)\in\mathcal E\), so the observed variance in
+(T1.1) uses observed-edge schedule values.  By contrast, \(p_iq_j\) can be
+positive even when \(w_{ij}=0\).  The product variance then uses \(m_{ij}\) in
+a missing cell.  Thus the problem is not that the product weights are unknown.
+The problem is that the product weights multiply unknown wage levels and
+squares.  \textit{Derived from (T1.1); the same distinction is stated in
+LOO-v2, p.\ 20, equation (58).}
+
+In actual wage data, even \(m_{ij}\) on an observed edge is a conditional mean
+rather than a single raw wage.  The identification argument below gives the
+observed-edge conditional means to the researcher and still finds
+nonidentification.  Sampling noise in estimating those means is therefore a
+second problem, not the source of the missing-cell failure.
+\textit{Source for the noiseless identification experiment: LOO-v2, p.\ 19.}
+
+\subsection{1.4 Formal missing-cell result}
+
+\textbf{Proposition 1 (nonidentification of the original assignment target).}
+Suppose \((i_0,j_0)\notin\mathcal E\) but
+\(\omega_0=p_{i_0}q_{j_0}>0\).  On the unrestricted class of complete wage
+schedules, \(C^w_{\mathrm{assign}}(m)\) is not point identified from
+\((W,m_{\mathcal E})\).
+
+\textit{Proof.}
+For any scalar \(\delta\), define
+\[
+m^\delta=m+\delta e_{i_0j_0}.
+\]
+Because the changed cell is unobserved,
+\[
+R_{\mathcal E}m^\delta=R_{\mathcal E}m
+\quad\text{and}\quad
+\operatorname{Var}_{P^{\mathrm{obs}}_{IJ}}(m^\delta_{IJ})
+=\operatorname{Var}_{P^{\mathrm{obs}}_{IJ}}(m_{IJ}).
+\tag{T1.2}
+\]
+Let \(\bar m_\times=\mathbb E_{P^\times}[m_{IJ}]\) and
+\(\mu_0=m_{i_0j_0}\).  Direct expansion gives
+\[
+\begin{aligned}
+&\operatorname{Var}_{P^\times}(m^\delta_{IJ})
+-\operatorname{Var}_{P^\times}(m_{IJ})\\
+&\qquad
+=2\omega_0\delta(\mu_0-\bar m_\times)
++\omega_0(1-\omega_0)\delta^2.
+\end{aligned}
+\tag{T1.3}
+\]
+Combining (T1.1)--(T1.3),
+\[
+\begin{aligned}
+C^w_{\mathrm{assign}}(m^\delta)
+-C^w_{\mathrm{assign}}(m)
+=-\omega_0\delta(\mu_0-\bar m_\times)
+-\frac12\omega_0(1-\omega_0)\delta^2.
+\end{aligned}
+\tag{T1.4}
+\]
+When \(0<\omega_0<1\), the right side is not constant in \(\delta\) and tends
+to \(-\infty\) as \(|\delta|\to\infty\).  Hence observationally equivalent
+schedules imply different values of the target.  This proves failure of point
+identification and shows why, without a bound on missing wages, the identified
+set is unbounded below. \(\square\)
+
+\textit{Derivation: equations (T1.2)--(T1.4) expand the single-cell
+perturbation used in LOO-v2, p.\ 39, Appendix A.2.  The general
+kernel-invariance criterion is LOO-v2, p.\ 19, Proposition 4.  The
+nonidentification and unboundedness conclusion is LOO-v2, p.\ 20,
+Corollary 1.}
+
+The qualification ``on the unrestricted class'' is essential.  The target
+becomes identified if every product-supported cell is observed, or if a
+defended model uniquely determines all target-relevant missing-cell contrasts.
+Low rank, additivity, grouped types, parametric response surfaces, monotonicity
+plus sufficiently sharp bounds, or a restricted opportunity-set benchmark are
+possible restrictions, but each changes the model or the estimand.
+\textit{Source: LOO-v2, pp.\ 20--27, especially Sections 5.4, 6, and 7.6.
+The list is a synthesis of those sections.}
+
+\subsection{1.5 The cell problem survives the BS minimum-match requirement}
+
+Consider three workers and three firms with observed edges
+\[
+\mathcal E
+=\{(1,1),(1,2),(2,2),(2,3),(3,3),(3,1)\}.
+\tag{T1.5}
+\]
+Give each edge probability \(1/6\).  Every worker has two observed firms and
+every firm has two observed workers, while the worker and firm marginals are
+both uniform.  Hence every one of the nine cells has product weight \(1/9\),
+including the three missing cells \((1,3),(2,1),(3,2)\).
+\textit{Derived from (T1.5).}
+
+Now take any nonconstant observed-edge wages and compare two complete schedules
+that agree on all six observed edges but differ at \((1,3)\).  Every observed
+wage and every observed-match input to the BS estimator is identical under the
+two schedules.  Nevertheless, equation (T1.4), with
+\(\omega_0=1/9\), shows that the two schedules generally imply different
+values of \(C^w_{\mathrm{assign}}\).  Thus having at least two matches for
+every worker and firm is enough for the BS repeated-measurement construction
+under its auxiliary independence assumptions, but it is not enough to recover
+an unrestricted missing pairwise wage cell.
+\textit{The graph calculation is derived.  Source for the BS requirement
+\(M_i,N_j\geq2\): BS20, p.\ 21.}
+
+\subsection{1.6 What BS20 identifies from observed matches}
+
+BS20 define
+\[
+\lambda(x)
+=\int_{\mathcal Y}\int_0^1w(x,y,z)\,dz\,d\Phi_x(y),
+\qquad
+\mu(y)
+=\int_{\mathcal X}\int_0^1w(x,y,z)\,dz\,d\Psi_y(x).
+\tag{T1.6}
+\]
+The first integral averages a worker's wage over the firms and shocks that the
+worker encounters under the observed matching process.  The second averages a
+firm's wage over its observed worker distribution and shocks.  Their sorting
+estimand is
+\[
+c_{\mathrm{BS}}
+=\operatorname{Cov}_{P^{\mathrm{obs}}_{IJ}}
+\bigl(\lambda(I),\mu(J)\bigr),
+\qquad
+\rho_{\mathrm{BS}}
+=\frac{c_{\mathrm{BS}}}{\sigma_\lambda\sigma_\mu}.
+\tag{T1.7}
+\]
+\textit{Source: BS20, pp.\ 5--7, equations (1)--(6).}
+
+The types in (T1.6) are expectations, not directly observed characteristics.
+BS20 estimate their second moments without requiring many observations for
+each unit.  For a worker with \(M_i\) matches,
+\[
+\widehat\lambda_i
+=\frac1{M_i}\sum_{m=1}^{M_i}w^w_{i,m},
+\qquad
+\widehat{\lambda_i^2}
+=\frac{1}{M_i(M_i-1)}
+\sum_{m=1}^{M_i}\sum_{m'\ne m}
+w^w_{i,m}w^w_{i,m'}.
+\tag{T1.8}
+\]
+Distinct-match cross-products remove the conditional match-error variance that
+would contaminate a squared single-match wage.  The firm-side estimators are
+the same construction with \(N_j\) and \(w^f_{j,n}\).
+\textit{Source: BS20, pp.\ 22--23, equations (18) and (21), and
+Propositions 3--4.  The contamination statement follows by expanding the
+auxiliary mean-zero wage equations on p.\ 21.}
+
+For a focal observed match \(m\) of worker \(i\) with firm \(j\), BS20 use
+\[
+\widehat c_{i,m}
+=
+\left(\frac{\sum_{m'\ne m}w^w_{i,m'}}{M_i-1}\right)
+\left(\frac{\sum_{n'\ne n(i,m)}w^f_{j,n'}}{N_j-1}\right).
+\tag{T1.9}
+\]
+Under their Auxiliary Assumption 3, the two other-match averages are
+independent conditional on the relevant characteristics, so
+\[
+\mathbb E[\widehat c_{i,m}\mid x_i,y_j]
+=\lambda(x_i)\mu(y_j).
+\tag{T1.10}
+\]
+Duration-weighting (T1.9) over focal observed matches and subtracting
+\(\widehat{\bar w}^{\,2}\) gives \(\widehat c_{\mathrm{BS}}\); combining this
+with the two estimated type variances gives
+\(\widehat\rho_{\mathrm{BS}}\).
+\textit{Source: BS20, pp.\ 23--24, equations (23)--(25) and Proposition 5.}
+
+This is ``observed-data only'' in a precise but limited sense.  The estimator
+uses wages, durations, identities, and repeated observed partners.  It does
+not query \(w(x,y,z)\) for a worker--firm pair that never forms.  Its
+identification nevertheless uses substantive restrictions: at least two
+matches per worker and firm; conditional i.i.d.\ mean-zero match errors;
+restrictions relating duration and wage errors; cross-side independence of
+other-match errors; and a law of large numbers across units.  BS20 explicitly
+describe some of these assumptions as strong and design alternative samples
+and an alternative estimator around them.
+\textit{Source: BS20, pp.\ 21--24, Auxiliary Assumptions 1--4 and the
+discussion following them.}
+
+\subsection{1.7 Why the BS estimator does not recover the original product variance}
+
+The project's product-weighted worker component is
+\[
+a_i
+=\sum_jq_jm_{ij}-\mu.
+\tag{T1.11}
+\]
+It averages worker \(i\)'s wage across the \emph{same} reference distribution
+\(q\) for every worker.  A discrete version of the BS worker type is
+\[
+\lambda_i
+=\sum_jP^{\mathrm{obs}}(J=j\mid I=i)m_{ij},
+\tag{T1.12}
+\]
+after integrating any within-match shock.  It averages across the worker's
+\emph{own observed conditional partner distribution}.  The weights in
+(T1.11) and (T1.12) are generally different.  The firm-side distinction is
+symmetric.
+\textit{Source for (T1.11): LOO-v2, p.\ 11, equations (19)--(22).
+Source for (T1.12): the discrete form of BS20, p.\ 5, equation (1).}
+
+Moreover, the product variance requires
+\[
+\sum_{i,j}p_iq_jm_{ij}^2
+\quad\text{and}\quad
+\left(\sum_{i,j}p_iq_jm_{ij}\right)^2.
+\tag{T1.13}
+\]
+Neither the worker conditional means \(\lambda_i\), the firm conditional means
+\(\mu_j\), nor their observed-match covariance determines the pairwise
+squares in (T1.13).  The six-edge construction in Section 1.5 proves this:
+all BS observed-match inputs can be held fixed while a product-supported
+missing cell, and therefore (T1.13), changes.
+\textit{Equation (T1.13) is derived from the definition of variance; the
+non-equivalence follows from Sections 1.4--1.5.}
+
+There is also an estimand mismatch even when wages are additive.  BS20 show
+that under a correctly specified AKM wage equation and linear conditional
+expectations, the \emph{correlation} between BS types can equal the AKM
+correlation because the BS types are linear transformations of the AKM
+effects.  This does not state that the covariances are equal, and it does not
+recover a nonadditive product variance.
+\textit{Source: BS20, pp.\ 8--10, Proposition 1 and its discussion.}
+
+\subsection{1.8 The exact sense in which BS can help}
+
+Define the additive BS type-score schedule
+\[
+s_{ij}=\lambda_i+\mu_j-\bar w.
+\tag{T1.14}
+\]
+Because the observed and product assignments have the same marginal
+distributions of \(\lambda_I\) and \(\mu_J\),
+\[
+\begin{aligned}
+C^w_{\mathrm{assign}}(s)
+&=\frac12\left\{
+\operatorname{Var}_{P^{\mathrm{obs}}_{IJ}}(\lambda_I+\mu_J)
+-\operatorname{Var}_{P^\times}(\lambda_I+\mu_J)
+\right\}\\
+&=\operatorname{Cov}_{P^{\mathrm{obs}}_{IJ}}
+(\lambda_I,\mu_J)
+=c_{\mathrm{BS}}.
+\end{aligned}
+\tag{T1.15}
+\]
+\textit{Derived by expanding both variances.  The marginal variances cancel,
+and independence under \(P^\times\) makes the product covariance zero.}
+
+Equation (T1.15) explains exactly how BS avoid the missing-cell problem.  Once
+\(\lambda_i\) and \(\mu_j\) are identified from repeated observed matches, the
+constructed value \(s_{ij}\) is available for every recombination of worker
+and firm types.  No unrestricted pair-specific missing value is needed.
+However, this replaces the original schedule \(m_{ij}\) by the additive score
+\(s_{ij}\).  It resolves the support problem by changing the target's wage
+object, not by nonparametrically recovering the missing cells of \(m\).
+\textit{Derived from (T1.14)--(T1.15) and the BS estimator in
+Section 1.6.}
+
+Therefore BS can contribute in three defensible ways.
+
+\begin{enumerate}
+\item \textbf{Alternative estimand.} Report
+  \((c_{\mathrm{BS}},\rho_{\mathrm{BS}})\) as observed-match vertical sorting
+  in wage types.  This statistic answers a coherent question without claiming
+  to equal \(C^w_{\mathrm{assign}}(m)\).
+  \textit{Source for the interpretation: BS20, pp.\ 5--7.}
+\item \textbf{Exact benchmark for a constructed additive schedule.} Interpret
+  \(c_{\mathrm{BS}}\) through (T1.15).  It is exactly the assignment
+  contribution for \(s_{ij}\), so it is a useful observed-data benchmark
+  beside the completion-dependent estimate for \(m_{ij}\).
+  \textit{Derived in (T1.15).}
+\item \textbf{Bridge model.} If an independently justified calibration shows
+  that the maintained schedule coincides, up to a constant, with the
+  constructed score \(s_{ij}\), then
+  \(C^w_{\mathrm{assign}}(m)=c_{\mathrm{BS}}\).  This is a strong fixed-point
+  restriction because the BS types are themselves conditional expectations
+  generated by the observed matching process.  More flexible bridges can
+  make \(m_{ij}\) a known or estimable low-dimensional function of BS types,
+  but that bridge is an additional completion restriction and must be tested
+  on observed cells.  BS20 alone does not impose it.
+  \textit{The equality is derived from variance invariance to constants and
+  (T1.15).  The warning follows from the nonidentification proof.}
+\end{enumerate}
+
+The original nonadditive target has four channels:
+\[
+\begin{aligned}
+C^w_{\mathrm{assign}}(m)
+={}&\operatorname{Cov}_{\mathrm{obs}}(a_I,b_J)
++\operatorname{Cov}_{\mathrm{obs}}(a_I,h_{IJ})
++\operatorname{Cov}_{\mathrm{obs}}(b_J,h_{IJ})\\
+&+\frac12\left\{
+\operatorname{Var}_{\mathrm{obs}}(h_{IJ})
+-\operatorname{Var}_{P^\times}(h_{IJ})
+\right\}.
+\end{aligned}
+\tag{T1.16}
+\]
+A single BS type covariance does not recover the two interaction-alignment
+covariances or the change in interaction dispersion.  Hence substituting
+\(c_{\mathrm{BS}}\) for the original \(C^w_{\mathrm{assign}}(m)\) would remove
+the very nonadditive assignment channels that motivate the project.
+\textit{Source: LOO-v2, p.\ 16, Proposition 3 and equation (43).}
+
+\section{Task 2: What is the BS object, what is estimated, and how did the later paper change the project?}
+
+\subsection{2.1 Answer and version convention}
+
+There are two distinct Borovi\v{c}kov\'a--Shimer papers.
+
+\begin{itemize}
+\item \textbf{BS20:} \emph{High Wage Workers Work for High Wage Firms},
+  February 13, 2020.  This is a reduced-form measurement paper with structural
+  models used as validation laboratories.
+\item \textbf{BS24:} \emph{Assortative Matching and Wages: The Role of
+  Selection}, circulated as a Richmond Fed and NBER working paper in November
+  2024.  The local project file is a later revision dated October 23, 2025.
+  The authors' research page lists the paper as revise-and-resubmit at the
+  \emph{Quarterly Journal of Economics}; it should therefore not be described
+  as a published QJE article in this note.
+\end{itemize}
+
+\textit{Sources: BS20 title page; Richmond Fed Working Paper 24-14 and NBER
+Working Paper 33184, November 2024; BS24 local revision title page; Katar\'ina
+Borovi\v{c}kov\'a's research page.  The official 2024 working paper is
+\url{https://www.richmondfed.org/-/media/RichmondFedOrg/publications/research/working_papers/2024/wp24-14.pdf}.}
+
+The central answer is:
+
+\begin{enumerate}
+\item In BS20, the \textbf{object of interest and estimand} is
+  \[
+  \rho_{\mathrm{BS}}
+  =
+  \operatorname{Corr}_{P^{\mathrm{obs}}_{IJ}}
+  \bigl(\lambda(I),\mu(J)\bigr),
+  \]
+  the correlation between the expected log-wage type of a worker and the
+  expected log-wage type of the worker's observed employer.
+  \textit{Source: BS20, pp.\ 1, 5--7, equations (1)--(6).}
+\item The \textbf{estimator} is
+  \[
+  \widehat\rho_{\mathrm{BS}}
+  =
+  \frac{\widehat c_{\mathrm{BS}}}
+  {\sqrt{\widehat\sigma_\lambda^2\widehat\sigma_\mu^2}},
+  \]
+  where the covariance and variances are estimated with distinct-match
+  cross-products.  The estimator is a random function of the sample; it is not
+  the economic object.
+  \textit{Source: BS20, pp.\ 22--24, equations (18)--(25).}
+\item The main object in BS24 is not a replacement estimator for
+  \(\rho_{\mathrm{BS}}\).  The paper promotes the two-sided search model used
+  as one laboratory in BS20 into the main economic model.  Its central object
+  is the \textbf{selection mechanism} that maps potential meetings into
+  observed matches and thereby jointly shapes wages and sorting.
+  \textit{Source: BS20, pp.\ 10--15, Section 3.2; BS24, pp.\ 4--17,
+  Sections 2--4.  The statement that one model is promoted from laboratory to
+  main model is a derived cross-paper comparison.}
+\item For policy, BS24 distinguishes the expected surplus of a random
+  \emph{meeting} from the average surplus of an accepted \emph{match}.  The
+  October 2025 revision expresses the worker-value versions as the intent to
+  treat, \(\operatorname{ITT}_x(y)\), and average treatment on the treated,
+  \(\operatorname{ATT}_x(y)\), and explicitly identifies the ITT as the
+  parameter of interest.  Observed wage components are linked more closely to
+  the ATT, not the ITT.
+  \textit{Source: BS24, pp.\ 31--34, Section 8; BS24/25 revision,
+  pp.\ 9--14, equations (17)--(28).}
+\end{enumerate}
+
+Thus the later paper is an intellectual continuation of the 2020 search-model
+laboratory, but it is not a continuation of the 2020 estimator.  BS20 asks,
+``How much observed-match sorting is there?''  BS24 asks, ``What structural
+selection process can generate observed wage and sorting patterns, and what
+policy object do observed wage effects recover?''  \textit{Derived synthesis
+from the cited objectives and results.}
+
+\subsection{2.2 Notation}
+
+See Appendix A.2 for the additional notation introduced in Task 2.
+
+\subsection{2.3 BS20: the economic object, estimand, estimator, and estimate}
+
+BS20 begin with a cross-section of observed matches.  They define
+\[
+\lambda(x)
+=
+\mathbb E[Y\mid \text{worker characteristic}=x,\text{ match observed}],
+\tag{T2.1}
+\]
+\[
+\mu(y)
+=
+\mathbb E[Y\mid \text{firm characteristic}=y,\text{ match observed}],
+\tag{T2.2}
+\]
+where the paper writes the expectations as integrals over the conditional
+partner and match-shock distributions.  \textit{Source: BS20, p.\ 5,
+equations (1)--(2); equations (T2.1)--(T2.2) are conditional-expectation
+restatements.}
+
+The population target is
+\[
+\rho_{\mathrm{BS}}
+=
+\frac{
+\mathbb E_{P^{\mathrm{obs}}_{IJ}}
+[(\lambda(I)-\bar w)(\mu(J)-\bar w)]
+}{
+\sqrt{
+\mathbb E[(\lambda(I)-\bar w)^2]\,
+\mathbb E[(\mu(J)-\bar w)^2]
+}
+}.
+\tag{T2.3}
+\]
+\textit{Source: BS20, pp.\ 5--7, equations (3)--(6).}
+
+The hierarchy is therefore:
+
+\begin{longtable}{p{0.24\textwidth}p{0.31\textwidth}p{0.35\textwidth}}
+\textbf{Layer} & \textbf{Object} & \textbf{Role in BS20} \\
+\hline
+Economic concept & Sorting of high expected-wage workers into high
+expected-wage firms & Question the paper wants to measure. \\
+Estimand/object of interest & \(\rho_{\mathrm{BS}}\) & Fixed population
+functional defined before seeing a particular sample. \\
+Component estimands & \(\bar w,\sigma_\lambda^2,\sigma_\mu^2,c_{\mathrm{BS}}\)
+& Moments needed to construct \(\rho_{\mathrm{BS}}\). \\
+Estimator & \(\widehat\rho_{\mathrm{BS}}\), constructed from
+\(\widehat{\bar w}\), \(\widehat\sigma_\lambda^2\),
+\(\widehat\sigma_\mu^2\), and \(\widehat c_{\mathrm{BS}}\) & Random statistic
+computed from the observed sample. \\
+Estimate & A realized number such as the paper's preferred Austrian estimates
+near \(0.47\) for men and \(0.43\) for women & Empirical realization of the
+estimator, not the estimand itself. \\
+Structural models & AKM, two-sided search, and discrete choice laboratories &
+Used to test whether \(\rho_{\mathrm{BS}}\) moves with an economically intuitive
+notion of sorting; not imposed in the estimator. \\
+\end{longtable}
+
+\textit{Sources: BS20, pp.\ 1--4 for the contributions and empirical
+estimates; pp.\ 5--17 for the estimand and model laboratories; pp.\ 18--24 for
+the estimator.}
+
+Two nearby objects are not the main empirical target.  First,
+\(\rho_{\mathrm{AKM}}\) is a comparator based on additive worker and firm
+effects.  Second, the correlation between primitive productivity
+characteristics \(x\) and \(y\) is available inside a structural laboratory
+but is generally infeasible and sensitive to monotone changes in the units of
+those characteristics.  BS20 choose wage types precisely to obtain a cardinal,
+one-dimensional, wage-data-based sorting measure.
+\textit{Source: BS20, pp.\ 5, 8--15, especially the discussion on p.\ 12.}
+
+\subsection{2.4 The key insight in the BS20 consistency result}
+
+The central statistical problem is an incidental-measurement problem.  The
+number of workers and firms is large, but each worker and firm may have only a
+small number of observed matches.  Therefore the individual sample averages
+\(\widehat\lambda_i\) and \(\widehat\mu_j\) need not converge to their latent
+types.  Naively squaring those noisy averages would add sampling-error
+variance.  \textit{Source: BS20, pp.\ 18--24 and pp.\ 48--51.}
+
+For two distinct worker matches \(m\ne m'\), the auxiliary equation and
+conditional independence give
+\[
+w^w_{i,m}=\lambda_i+\varepsilon^w_{i,m},
+\qquad
+\mathbb E[
+w^w_{i,m}w^w_{i,m'}\mid\lambda_i]
+=\lambda_i^2.
+\tag{T2.4}
+\]
+Thus
+\[
+\widehat{\lambda_i^2}
+=
+\frac{1}{M_i(M_i-1)}
+\sum_m\sum_{m'\ne m}
+w^w_{i,m}w^w_{i,m'}
+\tag{T2.5}
+\]
+is unbiased for \(\lambda_i^2\), even when \(M_i\) remains small.  The same
+construction gives an unbiased score for \(\mu_j^2\).
+\textit{Source: BS20, p.\ 22, equation (18), and pp.\ 49--50, proof of
+Proposition 3.  Equation (T2.4) is the direct expansion of their auxiliary
+wage equation.}
+
+For a focal observed worker--firm match, BS20 multiply the worker's average
+wage in other matches by the firm's average wage in other matches.  Auxiliary
+Assumption 3 makes those two leave-focal-match-out errors independent, so the
+product is unbiased for \(\lambda_i\mu_j\).  This yields an unbiased match-level
+score for the covariance numerator.
+\textit{Source: BS20, p.\ 23, equation (23), and pp.\ 50--51, proof of
+Proposition 5.}
+
+The consistency argument then has four linear steps:
+
+\begin{enumerate}
+\item Construct noisy but unbiased scores for the first moments, second
+  moments, and cross-moment of latent types using distinct matches.
+\item Weight those scores by employment durations so the sample moments target
+  the same cross-sectional population moments used in the estimand.
+\item Replicate the economy: as \(\tau\to\infty\), the number of workers and
+  firms grows while match counts and durations remain bounded.  Auxiliary
+  Assumption 4 supplies the cross-unit independence needed for a law of large
+  numbers.  The variance of each aggregate score is proportional to
+  \(1/\tau\) and therefore vanishes.
+\item Use consistency of ratios, differences, squares, and the continuous
+  mapping in the correlation formula to obtain
+  \(\widehat\rho_{\mathrm{BS}}\overset{p}{\to}\rho_{\mathrm{BS}}\), provided
+  both type variances are positive.
+\end{enumerate}
+
+\textit{Source: BS20, pp.\ 48--52, proofs of Propositions 3 and 5; the four
+steps are a linear reconstruction of those proofs.}
+
+The key insight is therefore:
+\[
+\boxed{
+\text{consistent aggregate latent moments do not require consistent
+individual latent types.}
+}
+\tag{T2.6}
+\]
+The distinct-match products remove the finite-observation bias at the score
+level; the large number of units removes the remaining score noise at the
+aggregate level.  \textit{Derived synthesis of BS20 Propositions 3--5 and
+Appendix B.1.}
+
+This leave-out operation should not be confused with KSS leave-one-out
+correction.  BS20 leave out the focal match to create conditional independence
+between repeated measurements of latent types.  KSS leave-out methods remove
+own-observation bias in quadratic functions of estimated fixed effects on a
+mobility graph.  The algebraic idea of cross-fitting is related, but the
+nuisance problem and estimand are different.
+\textit{Derived comparison from BS20, pp.\ 22--24, and the KSS description in
+BS20, pp.\ 38--39.}
+
+\subsection{2.5 BS24: the structural mechanism and its hierarchy of objects}
+
+BS24 take a worker type \(x\), a firm type \(y\), and a match shock \(z\).
+The pair accepts a match exactly when
+\[
+z\geq\bar z_{x,y},
+\qquad
+\bar z_{x,y}
+=
+\frac{\bar w_x+\bar\pi_y}{f_{x,y}}.
+\tag{T2.7}
+\]
+Accepted matches obey the structural wage equation
+\[
+W_{x,y}(z)
+=
+\bar w_x
++\gamma\bigl(zf_{x,y}-\bar w_x-\bar\pi_y\bigr).
+\tag{T2.8}
+\]
+Their steady-state mass satisfies
+\[
+\delta\bar\phi_{x,y}
+=
+\rho_{\mathrm{meet}}u_xv_y
+\bigl[1-G(\bar z_{x,y})\bigr].
+\tag{T2.9}
+\]
+\textit{Source: BS24, pp.\ 6--8, equations (6), (9), and (13).  The meeting
+rate has been renamed \(\rho_{\mathrm{meet}}\) only to avoid collision with
+\(\rho_{\mathrm{BS}}\).}
+
+Equations (T2.7)--(T2.9) are the core of the later paper.  The threshold
+selects which potential meetings appear in administrative wage data; the wage
+equation maps accepted productivity into pay; and the steady-state equation
+maps pair-specific acceptance probabilities into the observed match
+distribution.  One selection rule therefore generates both the accepted-wage
+surface and assortative matching.
+\textit{Source: BS24, pp.\ 5--17; the three-equation summary is also stated in
+the October 2025 revision, p.\ 5.}
+
+Under a Pareto match shock, the October 2025 revision obtains the exact
+accepted-wage representation
+\[
+\omega_{i,j}
+=
+\alpha_{x_i}^*
++\psi_{y_j}^*
++\varepsilon_{i,j},
+\qquad
+\mathbb E[\varepsilon_{i,j}\mid x_i,y_j]=0.
+\tag{T2.10}
+\]
+The worker and firm components are functions of reservation wages and profits,
+while the residual comes from the selected match shock.  Importantly, the
+production surface \(f_{x,y}\) cancels from the accepted-wage distribution
+after conditioning on the threshold in the Pareto case.  Hence complementary
+production can coexist with additive accepted wages.
+\textit{Source: BS24/25 revision, pp.\ 11--13, Proposition 2 and
+equations (21)--(23).}
+
+For sorting, BS24 do not make a Pearson correlation the primitive target.
+They derive conditions under which the full match matrix
+\((\bar\phi_{x,y})\) has the monotone likelihood ratio order.  With strictly
+increasing and weakly log-supermodular production, high-productivity workers
+are relatively more likely to match with high-productivity firms.  Because
+wage types are increasing in productivity under the same conditions, this
+also implies positive matching between high-wage workers and high-wage firms.
+\textit{Source: BS24, pp.\ 15--17, Propositions 4--5; BS24/25 revision,
+pp.\ 19--20, Proposition 4.}
+
+The later paper's object hierarchy is:
+
+\begin{longtable}{p{0.27\textwidth}p{0.29\textwidth}p{0.34\textwidth}}
+\textbf{Layer} & \textbf{Object} & \textbf{Status} \\
+\hline
+Structural primitives & \(f_{x,y},G,\gamma,r,\delta,\rho_{\mathrm{meet}}\) &
+Assumed or calibrated ingredients of the model. \\
+Selection mechanism & \(\bar z_{x,y}\) and \(p_{x,y}\) & Determines which
+meetings become observed matches. \\
+Observed wage interface & \(\alpha_x^*,\psi_y^*,\varepsilon_{i,j}\) or
+average accepted-match wages & Equilibrium outcome visible in administrative
+wage data. \\
+Sorting implication & MLR ordering of \(\bar\phi_{x,y}\) & Structural theorem;
+stronger than merely requiring a positive scalar correlation. \\
+Selected policy object & Match surplus \(\bar V^s_{x,y}\), or worker-value
+\(\operatorname{ATT}_x(y)\) in the revision & Conditions on acceptance and is
+therefore closer to observed accepted wages. \\
+Ultimate policy object & Meeting surplus \(\bar V^{s,m}_{x,y}\), or
+worker-value \(\operatorname{ITT}_x(y)\) in the revision & Values a meeting
+before knowing whether it becomes a match; this is the policy-relevant object. \\
+Empirical estimators studied & Two-way fixed-effects OLS, BLM grouping, and
+KSS variance-component corrections & Existing estimators whose structural
+meaning and selection bias are analyzed; they are not a new estimator of the
+meeting surplus or ITT. \\
+\end{longtable}
+
+\textit{Sources: BS24, Sections 2--8; BS24/25 revision, Sections 2--6.  The
+layer labels are derived organization.}
+
+\subsection{2.6 ATT, ITT, and what the wage estimator estimates}
+
+The October 2025 revision makes the policy distinction especially explicit:
+\[
+\operatorname{ITT}_x(y)
+=
+\gamma\int_0^\infty V^s_{x,y}(z)g(z)\,dz,
+\tag{T2.11}
+\]
+\[
+\operatorname{ATT}_x(y)
+=
+\frac{
+\gamma\int_{\bar z_{x,y}}^\infty
+V^s_{x,y}(z)g(z)\,dz
+}{
+1-G(\bar z_{x,y})
+}.
+\tag{T2.12}
+\]
+Because surplus is zero when the meeting is rejected,
+\[
+\operatorname{ITT}_x(y)
+=
+p_{x,y}\operatorname{ATT}_x(y).
+\tag{T2.13}
+\]
+\textit{Source: BS24/25 revision, pp.\ 9--11, equations (17)--(20).
+Equation (T2.13) uses \(p_{x,y}=1-G(\bar z_{x,y})\).}
+
+The ATT is selected: it asks how valuable the meeting was among pairs whose
+shock was high enough to form a match.  The ITT values every induced meeting,
+including rejected meetings whose realized gain is zero.  A policy that changes
+meeting opportunities generally targets the ITT.  Administrative wage data
+only contain accepted matches, so the acceptance probability \(p_{x,y}\) is
+the missing link.
+\textit{Source: BS24, pp.\ 31--34; BS24/25 revision, pp.\ 9--14.}
+
+With exogenous separations and the exact additive wage equation, conventional
+two-way fixed-effects estimates can recover differences in the firm wage
+component under the paper's regularity and support conditions.  Those
+differences map to differential ATT after discounting for \(r+\delta\).  They
+do not recover differential ITT because the wage regression does not reveal
+the pair-specific acceptance probability.
+\textit{Source: BS24/25 revision, pp.\ 13--18, equations (24)--(31).}
+
+The 2025 revision adds an important further warning.  When separations are
+endogenous, movers are selected from a nonrepresentative part of the
+within-match shock distribution.  Since firm effects are learned from movers,
+even the firm-component difference and differential ATT are attenuated:
+\[
+\mathbb E[\widehat\psi_{j_1}-\widehat\psi_{j_2}]
+=
+B\bigl(\psi^*_{y_{j_1}}-\psi^*_{y_{j_2}}\bigr),
+\qquad B<1.
+\tag{T2.14}
+\]
+BLM grouping and KSS leave-out corrections address classification or
+incidental-parameter bias, not this mobility-selection bias.
+\textit{Source: BS24/25 revision, pp.\ 25--29, Proposition 7 and the
+discussion following it.}
+
+Therefore the later paper does not present one estimator whose estimand is the
+paper's ultimate policy object.  It instead diagnoses a chain:
+\[
+\boxed{
+\text{fixed-effects estimator}
+\longrightarrow
+\text{accepted-wage component}
+\longrightarrow
+\text{ATT under conditions}
+\not\!\longrightarrow
+\text{ITT without acceptance/meeting structure}.
+}
+\tag{T2.15}
+\]
+\textit{Derived synthesis of BS24/25 Sections 2--5.}
+
+\subsection{2.7 Continuation, tradeoffs, and recommendation}
+
+BS24 develops the search-and-bargaining laboratory already used in BS20
+Section 3.2 into the central structural model.  The continuation is:
+\[
+\boxed{
+\text{BS20 defines and estimates a portable sorting functional}
+\ \longrightarrow\
+\text{BS24 explains one structural mechanism that can generate it.}}
+\tag{T2.16}
+\]
+BS24 does not replace the BS20 estimand or estimator.
+
+\begin{longtable}{p{0.19\textwidth}p{0.34\textwidth}p{0.38\textwidth}}
+\textbf{Dimension} & \textbf{BS20} & \textbf{BS24/25} \\
+\hline
+Main object & Observed-match wage-type covariance/correlation. &
+Production, meetings, acceptance, bargaining, match stocks, and worker
+value. \\
+Generality & Multidimensional characteristics collapse to wage types; several
+structural models serve as laboratories. & Ordered types and restrictions
+such as Pareto shocks, monotonicity, and log-supermodularity deliver sharper
+structural results. \\
+Empirics & Direct repeated-match estimator with an explicit consistency
+theorem. & Model calibration and diagnostics; no assumption-light replacement
+for the BS20 estimator. \\
+Policy & Descriptive sorting among realized matches. & Separates accepted-
+match effects (ATT) from meeting effects (ITT), which requires meeting and
+acceptance structure. \\
+Main warning & Does not identify the complete missing-cell wage schedule. &
+Additive accepted wages need not imply additive production, and standard
+mobility diagnostics need not eliminate selection bias. \\
+\end{longtable}
+
+For this project, BS20 should be the core semistructural measurement
+reference: it supplies the alternative observed-support functional and its
+estimator.  BS24 should be the structural interpretation and sensitivity
+reference: it explains selection, production, ATT versus ITT, and why an
+additive observed wage equation can be economically misleading.  The project
+should impose the BS24 random-search/Pareto structure only if it intends to
+make structural production or policy claims.  This recommendation does not
+alter Task 1: BS20 changes the wage object and therefore does not identify
+\(C^w_{\mathrm{assign}}(m)\).
+
+\textit{Sources: BS20, Sections 3--4; BS24, Sections 2--8; BS24/25 revision,
+Sections 2--6.  The comparison and recommendation are derived.}
+
+\section{Task 3: The exact connection between BS and the project}
+
+\subsection{3.1 Answer and roadmap}
+
+This section compares three objects in one direction:
+\[
+\boxed{
+\begin{array}{c}
+\text{BS24/25 structural primitives and equilibrium}\\
+\Downarrow\\
+\text{accepted matches and accepted wages}\\
+\Downarrow\\
+\text{project wage-schedule and assignment interface}\\
+\Downarrow\\
+\text{project functionals and the BS20 sorting functional}.
+\end{array}}
+\tag{T3.1}
+\]
+The arrows are maps, not claims that the objects are identical.  Following
+them in this order prevents four common mistakes: equating production with
+wages, equating meetings with accepted matches, equating the accepted-match
+mean with a realized wage, and equating a population functional with its
+estimator.
+
+\textit{Source: BS20, Sections 2--4; BS24/25 revision, Sections 2--4;
+LOO-v2, Sections 2--6.  The ordered map and the four warnings are derived.}
+
+The conclusions are:
+
+\begin{enumerate}
+\item \textbf{BS20 is functionally contained in the project interface.}
+  Whenever the project supplies an accepted-match conditional mean schedule
+  \(m\) and an observed assignment law \(P^{\mathrm{obs}}_{IJ}\), it also
+  supplies the BS20 population types and
+  \(\rho_{\mathrm{BS}}\).  This is a functional-inclusion claim, not a claim
+  that the project's static wage equation contains BS20's full repeated-match
+  data-generating process.
+\item \textbf{The later BS model is a structural generator of the project
+  interface.}  Its search equilibrium generates both an accepted-match
+  assignment distribution and an accepted-wage distribution.  Taking a
+  conditional mean of the latter gives the project's maintained wage
+  schedule.
+\item \textbf{The exact Pareto additivity result is in wage levels.}
+  Under the Pareto assumptions, the mean accepted wage in levels is additive,
+  so its project interaction is exactly zero.  The original project studies
+  log wages.  The mean accepted log-wage surface is generally nonadditive
+  and, in BS, strictly submodular under the stated ordering conditions.
+\item \textbf{The project can represent the finite BS mean log-wage surface
+  exactly if its interaction rank is allowed to be large enough.}  A fixed
+  low-rank specification is an additional empirical restriction; BS
+  submodularity by itself does not imply low rank.
+\item \textbf{Neither full model nests the other.}  The project does not
+  contain BS's search, bargaining, acceptance, steady-state, and dynamic
+  observation laws.  Conversely, the Pareto BS model does not generate every
+  low-rank wage schedule admitted by the project.
+\item \textbf{The closest BS analogue to the project's semistructural
+  approach is BS20, not the entire later paper.}  BS20 defines a portable
+  population functional and uses structural models as laboratories.  The
+  later paper provides a valuable structural interpretation and stress test,
+  but its conclusions about production, ATT, and ITT require the full search
+  model.
+\end{enumerate}
+
+\textit{Sources: BS20, pp.\ 5--24; BS24/25 revision, pp.\ 5--18,
+especially equations (6), (9), (13), and Propositions 2--3; LOO-v2,
+pp.\ 9--21 and 37--44.  All nesting classifications are derived below.}
+
+\subsection{3.2 Notation}
+
+See Appendix A.3 for the additional notation introduced in Task 3.
+
+\subsection{3.3 The common empirical interface}
+
+The project begins after a match has been observed.  Its basic outcome is the
+conditional mean
+\[
+m_{ij}
+=
+\mathbb E[
+  Y\mid I=i,J=j,\text{accepted match observed}
+],
+\tag{T3.2}
+\]
+and its second basic object is the probability
+\[
+w_{ij}
+=
+\Pr(I=i,J=j\mid\text{accepted match observed}).
+\tag{T3.3}
+\]
+Equation (T3.2) is a wage-schedule object; equation (T3.3) is an assignment
+object.  Neither equation says why a pair forms.
+
+\textit{Source: LOO-v2, pp.\ 9--10 and 37--38.  The explicit
+accepted-match conditioning aligns the LOO object with BS and is derived.}
+
+This pair of objects,
+\[
+\mathcal S_{\mathrm{interface}}
+\equiv
+\bigl(m,P^{\mathrm{obs}}_{IJ}\bigr),
+\tag{T3.4}
+\]
+is the exact interface shared by the project and the two BS papers:
+
+\begin{itemize}
+\item BS20 takes an observed matched economy and projects it to worker and firm
+  expected-wage types.
+\item BS24/25 starts before matching and structurally generates the
+  distribution in (T3.4).
+\item The project takes (T3.4), decomposes \(m\), completes it under a
+  maintained model when support is missing, and evaluates declared
+  functionals.
+\end{itemize}
+
+\textit{Source: BS20, Sections 2 and 4; BS24/25 revision, Sections 2--4;
+LOO-v2, Sections 2--8.  Naming (T3.4) the common interface is derived.}
+
+The interface is deliberately narrower than a full data-generating process.
+It does not, by itself, specify rejected meetings, unemployment, vacancies,
+profits, durations, repeat-match dependence, or counterfactual equilibrium
+responses.  Those omissions are why functional inclusion at this interface
+must not be called full structural nesting.
+\textit{Derived from the objects present in BS24/25 equations (1)--(16) and
+absent from LOO-v2 equation (14).}
+
+\subsection{3.4 Step 1: the project decomposes the interface}
+
+Fix the product reference distribution
+\[
+P^\times=P_I\otimes P_J,
+\qquad
+P^\times(I=i,J=j)=p_iq_j.
+\tag{T3.5}
+\]
+The project defines
+\[
+\mu=\sum_i\sum_jp_iq_jm_{ij},
+\tag{T3.6}
+\]
+\[
+a_i=\sum_jq_jm_{ij}-\mu,
+\tag{T3.7}
+\]
+\[
+b_j=\sum_ip_im_{ij}-\mu,
+\tag{T3.8}
+\]
+and
+\[
+h_{ij}=m_{ij}-\mu-a_i-b_j.
+\tag{T3.9}
+\]
+Substitution of (T3.6)--(T3.8) into (T3.9) gives the equivalent double-centering
+formula
+\[
+h_{ij}
+=
+m_{ij}
+-\sum_kq_km_{ik}
+-\sum_\ell p_\ell m_{\ell j}
++\sum_\ell\sum_kp_\ell q_km_{\ell k}.
+\tag{T3.10}
+\]
+Thus
+\[
+m_{ij}=\mu+a_i+b_j+h_{ij}.
+\tag{T3.11}
+\]
+
+\textit{Source: LOO-v2, p.\ 11, equations (19)--(23).  Equations
+(T3.6)--(T3.10) write every substitution explicitly.}
+
+The centering identities follow directly.  For a fixed worker \(i\),
+\[
+\sum_jq_jh_{ij}
+=
+\sum_jq_jm_{ij}
+-\sum_jq_jm_{ij}
+-\sum_jq_j\sum_\ell p_\ell m_{\ell j}
++\sum_\ell\sum_kp_\ell q_km_{\ell k}
+=0.
+\tag{T3.12}
+\]
+The last two terms cancel because
+\[
+\sum_jq_j\sum_\ell p_\ell m_{\ell j}
+=
+\sum_\ell\sum_jp_\ell q_jm_{\ell j}.
+\]
+The analogous column calculation gives
+\[
+\sum_ip_ih_{ij}=0.
+\tag{T3.13}
+\]
+Also,
+\[
+\sum_ip_ia_i=0,
+\qquad
+\sum_jq_jb_j=0.
+\tag{T3.14}
+\]
+These identities make \((\mu,a,b,h)\) unique for the declared product weights.
+
+\textit{Source: LOO-v2, p.\ 11.  The displayed cancellations are derived
+from the definitions.}
+
+In the no-pair-covariate formulation, or after applying the same covariate
+residualization used to define the target schedule, the maintained low-rank
+model restricts the last term:
+\[
+h_{ij}
+=
+\mathbf u_i'\Lambda\mathbf v_j,
+\qquad
+\operatorname{rank}(\Lambda)=r_0.
+\tag{T3.15}
+\]
+Here \(r_0\) is the maintained interaction rank; it is not the BS discount
+rate \(r\).  The completed \(m\), rather than the primitive factors by
+themselves, is then used to form \(Q_F,H_F,A_h\), and
+\(C^w_{\mathrm{assign}}\).
+If pair-varying covariates remain in \(m_{ij}\), their double-centered
+contribution must also be included when computing the canonical \(h_{ij}\);
+the primitive factor term and canonical interaction are not identical by
+notation alone.
+\textit{Source: LOO-v2, pp.\ 21--23, especially the qualification following
+equation (65), and pp.\ 12--17.}
+
+\subsection{3.5 Step 2: BS20 is a functional of that interface}
+
+Assume \(p_i>0\) and \(q_j>0\).  Conditional probabilities in the observed
+matched economy are
+\[
+\Pr(J=j\mid I=i)
+=
+\frac{w_{ij}}{p_i},
+\qquad
+\Pr(I=i\mid J=j)
+=
+\frac{w_{ij}}{q_j}.
+\tag{T3.16}
+\]
+Therefore the BS20 individual wage types implied by the interface are
+\[
+\lambda_i^{\mathrm{BS}}
+=
+\sum_j\frac{w_{ij}}{p_i}m_{ij},
+\tag{T3.17}
+\]
+\[
+\mu_j^{\mathrm{BS}}
+=
+\sum_i\frac{w_{ij}}{q_j}m_{ij}.
+\tag{T3.18}
+\]
+These are discrete versions of BS20's integrals defining
+\(\lambda(x)\) and \(\mu(y)\).
+\textit{Source: BS20, p.\ 5, equations (1)--(2); discrete formulas are
+derived by conditional expectation.}
+
+Let the common observed mean be
+\[
+\bar w
+=
+\sum_i\sum_jw_{ij}m_{ij}.
+\tag{T3.19}
+\]
+By iterated expectations,
+\[
+\sum_ip_i\lambda_i^{\mathrm{BS}}
+=
+\sum_i\sum_jw_{ij}m_{ij}
+=
+\bar w
+\tag{T3.20}
+\]
+and, symmetrically,
+\[
+\sum_jq_j\mu_j^{\mathrm{BS}}=\bar w.
+\tag{T3.21}
+\]
+The BS covariance and variances are consequently
+\[
+c_{\mathrm{BS}}
+=
+\sum_i\sum_jw_{ij}
+\bigl(\lambda_i^{\mathrm{BS}}-\bar w\bigr)
+\bigl(\mu_j^{\mathrm{BS}}-\bar w\bigr),
+\tag{T3.22}
+\]
+\[
+\sigma_\lambda^2
+=
+\sum_ip_i\bigl(\lambda_i^{\mathrm{BS}}-\bar w\bigr)^2,
+\qquad
+\sigma_\mu^2
+=
+\sum_jq_j\bigl(\mu_j^{\mathrm{BS}}-\bar w\bigr)^2,
+\tag{T3.23}
+\]
+and
+\[
+T_{\mathrm{BS}}(m,P^{\mathrm{obs}}_{IJ})
+=
+\rho_{\mathrm{BS}}
+=
+\frac{c_{\mathrm{BS}}}{\sigma_\lambda\sigma_\mu},
+\tag{T3.24}
+\]
+when both variances are positive.
+
+\textit{Source: BS20, pp.\ 5--7, equations (3)--(6).  Equations
+(T3.19)--(T3.24) are the finite-interface form.}
+
+This proves the functional-inclusion statement: once
+\((m,P^{\mathrm{obs}}_{IJ})\) is specified, every population quantity on the
+right side of (T3.24) is specified.  No additive or low-rank restriction is
+needed to \emph{define} the BS functional.
+\textit{Derived from (T3.16)--(T3.24).}
+
+\subsubsection{Why BS types are not the project main effects}
+
+Substitute (T3.11) into (T3.17):
+\begin{align}
+\lambda_i^{\mathrm{BS}}
+&=
+\sum_j\frac{w_{ij}}{p_i}
+\bigl(\mu+a_i+b_j+h_{ij}\bigr) \notag\\
+&=
+\mu+a_i
++\sum_j\frac{w_{ij}}{p_i}b_j
++\sum_j\frac{w_{ij}}{p_i}h_{ij} \notag\\
+&=
+\mu+a_i
++\mathbb E_{\mathrm{obs}}[b_J+h_{iJ}\mid I=i].
+\tag{T3.25}
+\end{align}
+The second line uses
+\(\sum_jw_{ij}/p_i=1\).  Similarly,
+\[
+\mu_j^{\mathrm{BS}}
+=
+\mu+b_j
++\mathbb E_{\mathrm{obs}}[a_I+h_{Ij}\mid J=j].
+\tag{T3.26}
+\]
+
+\textit{Derived by substituting the LOO-v2 canonical decomposition into the
+BS20 definitions.}
+
+Equations (T3.25)--(T3.26) show exactly what the project main effects omit from
+the BS types.  A BS worker type includes the composition of firms employing
+that worker and the worker's selected interaction cells.  A BS firm type
+includes the composition of its workers and its selected interaction cells.
+The project components \(a_i,b_j\), by contrast, average every row and column
+using the common product weights \(q_j,p_i\).
+\textit{Derived from (T3.7)--(T3.8) and (T3.25)--(T3.26).}
+
+Under independent assignment, \(w_{ij}=p_iq_j\).  Then
+\[
+\sum_j\frac{w_{ij}}{p_i}b_j=\sum_jq_jb_j=0,
+\qquad
+\sum_j\frac{w_{ij}}{p_i}h_{ij}=\sum_jq_jh_{ij}=0.
+\]
+Hence
+\[
+\lambda_i^{\mathrm{BS}}=\mu+a_i.
+\tag{T3.27}
+\]
+The symmetric calculation gives
+\[
+\mu_j^{\mathrm{BS}}=\mu+b_j.
+\tag{T3.28}
+\]
+Thus independence is a transparent special case in which BS wage types and
+the project main effects coincide up to their common mean.  Wage additivity
+alone does not give (T3.27)--(T3.28) under dependent assignment, because the
+conditional counterpart-composition terms can still vary.
+\textit{Derived from the centering identities and BS20's observed-assignment
+definition.}
+
+\subsubsection{Why functional inclusion is not estimator inclusion}
+
+BS20's estimator additionally needs repeated wages from distinct matches and
+the auxiliary independence conditions used to make distinct-observation
+cross-products unbiased.  The static interface (T3.4) contains neither a
+panel observation law nor those independence conditions.  Therefore the
+project contains the BS20 \emph{population estimand} as a functional, but it
+does not automatically contain the BS20 estimator's sampling model or
+consistency theorem.
+\textit{Source: BS20, pp.\ 18--24, Auxiliary Assumptions 1--4 and
+Propositions 2--5; derived scope distinction.}
+
+\subsection{3.6 Step 3: the later BS model generates the interface}
+
+For a meeting of worker type \(x\) and firm type \(y\), acceptance requires
+nonnegative net surplus:
+\[
+zf_{x,y}\geq\bar w_x+\bar\pi_y
+\quad\Longleftrightarrow\quad
+z\geq
+\frac{\bar w_x+\bar\pi_y}{f_{x,y}}
+\equiv\bar z_{x,y}.
+\tag{T3.31}
+\]
+Hence
+\[
+p_{x,y}=1-G(\bar z_{x,y}).
+\tag{T3.32}
+\]
+Conditional on acceptance, Nash bargaining gives
+\[
+W_{x,y}(z)
+=
+\bar w_x+\gamma
+\bigl(zf_{x,y}-\bar w_x-\bar\pi_y\bigr).
+\tag{T3.33}
+\]
+
+With common meeting and separation rates, the steady-state match stock is
+\[
+\bar\phi_{x,y}
+=
+\frac{\rho_{\mathrm{meet}}}{\delta}u_xv_yp_{x,y},
+\tag{T3.35}
+\]
+so the observed type-pair law and its marginals are
+\[
+\Pi^{\mathrm{obs}}_{x,y}
+=
+\frac{\bar\phi_{x,y}}{\sum_{x',y'}\bar\phi_{x',y'}},
+\tag{T3.36}
+\]
+\[
+\pi_x=\sum_y\Pi^{\mathrm{obs}}_{x,y},
+\qquad
+\kappa_y=\sum_x\Pi^{\mathrm{obs}}_{x,y}.
+\tag{T3.36a}
+\]
+The accepted cell's mean log wage is
+\[
+\ell_{x,y}
+=
+\frac{\displaystyle\int_{\bar z_{x,y}}^\infty
+\log W_{x,y}(z)g(z)\,dz}
+{1-G(\bar z_{x,y})}.
+\tag{T3.38}
+\]
+Under within-type exchangeability, lift this type-cell mean to individuals:
+\[
+m^{\log}_{ij}=\ell_{x_i,y_j}.
+\tag{T3.39}
+\]
+Thus the construction is
+\[
+(f,G,\text{populations})
+\longrightarrow
+(\bar w,\bar\pi,u,v)
+\longrightarrow
+(\bar z,p)
+\longrightarrow
+(\Pi^{\mathrm{obs}},\ell)
+\longrightarrow
+(m^{\log},P^{\mathrm{obs}}_{IJ}).
+\tag{T3.40}
+\]
+The first arrow solves the BS equilibrium; every later arrow is defined
+above.  A within-type allocation rule maps type masses to individual
+worker--firm probabilities.
+
+Finally, the later model's implied BS20 wage types are
+\[
+\lambda^{\mathrm{BS}}(x)
+=
+\sum_y\frac{\Pi^{\mathrm{obs}}_{x,y}}{\pi_x}\ell_{x,y},
+\qquad \pi_x>0,
+\tag{T3.40a}
+\]
+\[
+\mu^{\mathrm{BS}}(y)
+=
+\sum_x\frac{\Pi^{\mathrm{obs}}_{x,y}}{\kappa_y}\ell_{x,y},
+\qquad \kappa_y>0.
+\tag{T3.40b}
+\]
+Substituting these types and \(\Pi^{\mathrm{obs}}\) into
+(T3.22)--(T3.24) gives the BS20 correlation implied by the structural
+equilibrium.
+
+\textit{Sources: BS24/25 revision, pp.\ 5--9 and 17--18; BS20, p.\ 5.
+The map into the project interface is derived.}
+
+\subsection{3.7 Step 4: the Pareto level-wage result maps exactly into an additive project schedule}
+
+Assume
+\[
+G(z)=1-\left(\frac{z}{z_0}\right)^{-\theta},
+\qquad
+\theta>1,
+\tag{T3.41}
+\]
+and that every type-pair threshold is interior as in BS Proposition 2.  BS
+show that the accepted wage in levels satisfies
+\[
+\omega_{i,j}
+=
+\alpha^*_{x_i}+\psi^*_{y_j}+\varepsilon_{i,j},
+\tag{T3.42}
+\]
+with
+\[
+\mathbb E[
+\varepsilon_{i,j}\mid x_i,y_j,\text{accepted match}
+]=0.
+\tag{T3.43}
+\]
+The components are
+\[
+\alpha_x^*
+=
+\left(1+\frac{\gamma}{\theta-1}\right)\bar w_x,
+\qquad
+\psi_y^*
+=
+\frac{\gamma}{\theta-1}\bar\pi_y.
+\tag{T3.44}
+\]
+
+\textit{Source: BS24/25 revision, pp.\ 11--13, Proposition 2,
+equations (21)--(23).}
+
+Taking the conditional expectation of (T3.42) and applying (T3.43) yields
+\[
+m^L_{ij}
+\equiv
+\mathbb E[
+\omega_{i,j}\mid i,j,\text{accepted match}
+]
+=
+\alpha^*_{x_i}+\psi^*_{y_j}.
+\tag{T3.45}
+\]
+This expectation step is the exact bridge from the realized BS wage to a
+project-style conditional mean schedule in levels.
+\textit{Derived directly from BS Proposition 2.}
+
+Define
+\[
+A_i\equiv\alpha^*_{x_i},
+\qquad
+B_j\equiv\psi^*_{y_j},
+\tag{T3.46}
+\]
+\[
+\bar A\equiv\sum_ip_iA_i,
+\qquad
+\bar B\equiv\sum_jq_jB_j.
+\tag{T3.47}
+\]
+The product grand mean of (T3.45) is
+\begin{align}
+\mu^L
+&=
+\sum_i\sum_jp_iq_j(A_i+B_j) \notag\\
+&=
+\left(\sum_ip_iA_i\right)\left(\sum_jq_j\right)
++\left(\sum_jq_jB_j\right)\left(\sum_ip_i\right) \notag\\
+&=
+\bar A+\bar B.
+\tag{T3.48}
+\end{align}
+The product row component is
+\begin{align}
+a_i^L
+&=
+\sum_jq_j(A_i+B_j)-\mu^L \notag\\
+&=
+A_i+\bar B-(\bar A+\bar B) \notag\\
+&=
+A_i-\bar A.
+\tag{T3.49}
+\end{align}
+The product column component is
+\[
+b_j^L=B_j-\bar B.
+\tag{T3.50}
+\]
+Finally,
+\begin{align}
+h_{ij}^L
+&=
+m_{ij}^L-\mu^L-a_i^L-b_j^L \notag\\
+&=
+A_i+B_j-(\bar A+\bar B)
+-(A_i-\bar A)-(B_j-\bar B) \notag\\
+&=0.
+\tag{T3.51}
+\end{align}
+This proves exact rank-zero interaction for the accepted conditional mean in
+\emph{wage levels}.
+\textit{Derived by applying the LOO canonical definitions to BS Proposition
+2.}
+
+The corresponding level-wage project functionals simplify to
+\[
+Q_F^L=\operatorname{Var}_{P_J}(B_J),
+\qquad
+H_F^L=0,
+\qquad
+A_h^L=0,
+\tag{T3.52}
+\]
+and
+\[
+C_{\mathrm{assign}}^{w,L}
+=
+\operatorname{Cov}_{P^{\mathrm{obs}}_{IJ}}
+(A_I-\bar A,B_J-\bar B).
+\tag{T3.53}
+\]
+Equation (T3.53) follows because the project assignment decomposition has
+only its common-component covariance when \(h^L=0\).
+\textit{Source for the additive special case: LOO-v2, p.\ 17,
+Section 4.5; substitution from (T3.49)--(T3.51) is derived.}
+
+This algebra does \emph{not} say production is additive.  The production
+surface \(f_{x,y}\) remains inside the acceptance threshold in (T3.31), hence
+inside \(p_{x,y}\) and the observed match mass in (T3.35).  Pareto
+scale-invariance removes \(f_{x,y}\) from the conditional accepted level-wage
+distribution after selection; it does not remove \(f_{x,y}\) from assignment.
+Therefore complementary production, strongly assortative assignment, and an
+additive accepted level-wage mean can coexist.
+\textit{Source: BS24/25 revision, pp.\ 11--14 and 18--22, Propositions 2 and
+4; LOO-v2, pp.\ 37--38 and 42--44.}
+
+\subsection{3.8 Step 5: the original log-wage project requires a different bridge}
+
+LOO-v2 defines \(Y\) as log wage.  Applying a logarithm to (T3.42) does not
+preserve additivity:
+\[
+\log\omega_{i,j}
+=
+\log\bigl(
+\alpha^*_{x_i}+\psi^*_{y_j}+\varepsilon_{i,j}
+\bigr),
+\tag{T3.54}
+\]
+and in general
+\[
+\mathbb E[\log\omega_{i,j}\mid x_i,y_j,\text{accepted}]
+\neq
+\log\bigl(\alpha^*_{x_i}+\psi^*_{y_j}\bigr).
+\tag{T3.55}
+\]
+The inequality reflects both the nonlinear logarithm and the
+heteroskedastic residual.  Consequently, (T3.51) cannot be transferred from
+levels to logs.
+\textit{Source: BS24/25 revision, pp.\ 17--18, Section 3.4; the expectation
+inequality is the standard nonlinear-transformation implication.}
+
+BS instead define the type-cell mean log wage \(\ell_{x,y}\) in (T3.38).
+Under their Pareto and monotonicity assumptions, it is increasing in both
+types and strictly submodular:
+\[
+\ell_{x_1,y_2}+\ell_{x_2,y_1}
+>
+\ell_{x_1,y_1}+\ell_{x_2,y_2}
+\quad
+\text{when }x_1<x_2,\ y_1<y_2.
+\tag{T3.56}
+\]
+Equivalently, the high-firm-type log-wage gain is smaller for the high worker
+type:
+\[
+\ell_{x_2,y_2}-\ell_{x_2,y_1}
+<
+\ell_{x_1,y_2}-\ell_{x_1,y_1}.
+\tag{T3.57}
+\]
+\textit{Source: BS24/25 revision, pp.\ 17--18, Proposition 3.}
+
+To map this surface into the project without a gap, align the type marginals
+in (T3.36a) with the individual marginals:
+\[
+\pi_x=\sum_{i:x_i=x}p_i,
+\qquad
+\kappa_y=\sum_{j:y_j=y}q_j.
+\tag{T3.58}
+\]
+Each equality is the consistency condition between
+the type-level assignment law and its individual-level lift.
+Then define
+\[
+\ell_{x\cdot}=\sum_y\kappa_y\ell_{x,y},
+\qquad
+\ell_{\cdot y}=\sum_x\pi_x\ell_{x,y},
+\tag{T3.59}
+\]
+\[
+\ell_{\cdot\cdot}
+=
+\sum_x\sum_y\pi_x\kappa_y\ell_{x,y}.
+\tag{T3.60}
+\]
+The double-centered interaction is
+\[
+M^\ell_{x,y}
+=
+\ell_{x,y}-\ell_{x\cdot}-\ell_{\cdot y}
++\ell_{\cdot\cdot}.
+\tag{T3.61}
+\]
+
+\textit{Derived by applying LOO-v2 equations (19)--(23) at the BS type-cell
+level.}
+
+Now lift the type decomposition to individuals:
+\[
+\mu=\ell_{\cdot\cdot},
+\tag{T3.62}
+\]
+\[
+a_i=\ell_{x_i\cdot}-\ell_{\cdot\cdot},
+\qquad
+b_j=\ell_{\cdot y_j}-\ell_{\cdot\cdot},
+\tag{T3.63}
+\]
+\[
+h_{ij}=M^\ell_{x_i,y_j}.
+\tag{T3.64}
+\]
+Adding (T3.62)--(T3.64) gives
+\begin{align}
+\mu+a_i+b_j+h_{ij}
+&=
+\ell_{\cdot\cdot}
++\ell_{x_i\cdot}-\ell_{\cdot\cdot}
++\ell_{\cdot y_j}-\ell_{\cdot\cdot} \notag\\
+&\quad
++\ell_{x_i,y_j}-\ell_{x_i\cdot}
+-\ell_{\cdot y_j}+\ell_{\cdot\cdot} \notag\\
+&=
+\ell_{x_i,y_j}
+=m^{\log}_{ij}.
+\tag{T3.65}
+\end{align}
+Every row-mean, column-mean, and grand-mean term cancels explicitly.  Thus the
+project decomposition exactly reconstructs the BS accepted mean log-wage
+surface.
+\textit{Derived from (T3.59)--(T3.64).}
+
+\subsubsection{The exact rank statement}
+
+By construction,
+\[
+\sum_y\kappa_yM^\ell_{x,y}=0
+\quad\text{for every }x,
+\qquad
+\sum_x\pi_xM^\ell_{x,y}=0
+\quad\text{for every }y.
+\tag{T3.66}
+\]
+If all type weights are positive, the nonzero vectors \(\kappa\) and \(\pi\)
+are right and left null vectors.  Therefore
+\[
+K_\ell
+\equiv
+\operatorname{rank}(M^\ell)
+\leq
+\min\{X-1,Y-1\}.
+\tag{T3.67}
+\]
+\textit{Derived from weighted double centering and the rank-nullity theorem.}
+
+Take a thin singular-value decomposition
+\[
+M^\ell=L_\ell\Sigma_\ell R_\ell',
+\tag{T3.68}
+\]
+where \(L_\ell\) has \(K_\ell\) columns, \(\Sigma_\ell\) is a
+\(K_\ell\times K_\ell\) positive diagonal matrix, and \(R_\ell\) has
+\(K_\ell\) columns.  Define individual factors
+\[
+\mathbf u_i^\ell
+=
+\bigl(L_\ell\Sigma_\ell^{1/2}\bigr)_{x_i,\cdot},
+\qquad
+\mathbf v_j^\ell
+=
+\bigl(R_\ell\Sigma_\ell^{1/2}\bigr)_{y_j,\cdot}.
+\tag{T3.69}
+\]
+Then
+\begin{align}
+(\mathbf u_i^\ell)'\mathbf v_j^\ell
+&=
+\bigl(L_\ell\Sigma_\ell^{1/2}\bigr)_{x_i,\cdot}
+\bigl(R_\ell\Sigma_\ell^{1/2}\bigr)'_{\cdot,y_j} \notag\\
+&=
+\bigl(L_\ell\Sigma_\ell R_\ell'\bigr)_{x_i,y_j} \notag\\
+&=
+M^\ell_{x_i,y_j}
+=h_{ij}.
+\tag{T3.70}
+\end{align}
+Thus the project model represents the finite BS mean log-wage surface exactly
+with interaction rank \(K_\ell\), using \(\Lambda=I_{K_\ell}\).
+\textit{Derived from the SVD.}
+
+If the project fixes \(r_0<K_\ell\), it does not exactly contain that BS
+surface.  It imposes an approximation or restriction by retaining only
+\(r_0\) singular directions.  Conversely, submodularity in (T3.56) restricts
+cross-difference signs but does not force \(K_\ell\) to be one or any other
+small number.  Shape and rank are distinct restrictions.
+\textit{Derived from (T3.56)--(T3.70).}
+
+\subsection{3.9 Step 6: what each project's functional means inside the BS model}
+
+Once BS has generated \((m^{\log},P^{\mathrm{obs}}_{IJ})\), the project can
+calculate
+\[
+Q_F
+=
+\mathbb E_{I\sim P_I}
+\left[
+\operatorname{Var}_{J\sim P_J}(m^{\log}_{IJ})
+\right],
+\tag{T3.71}
+\]
+\[
+H_F
+=
+\mathbb E_{J,K\stackrel{\mathrm{iid}}{\sim}P_J}
+\left[
+\operatorname{Var}_{I\sim P_I}
+\bigl(m^{\log}_{IK}-m^{\log}_{IJ}\bigr)
+\right],
+\tag{T3.72}
+\]
+\[
+A_h
+=
+\mathbb E_{P^{\mathrm{obs}}_{IJ}}[h_{IJ}],
+\tag{T3.73}
+\]
+and
+\[
+C^w_{\mathrm{assign}}
+=
+\frac12\left\{
+\operatorname{Var}_{P^{\mathrm{obs}}_{IJ}}(m^{\log}_{IJ})
+-
+\operatorname{Var}_{P_I\otimes P_J}(m^{\log}_{IJ})
+\right\}.
+\tag{T3.74}
+\]
+\textit{Source: LOO-v2, pp.\ 12--17, equations (25), (30), (42), and
+(46).}
+
+Their meanings remain at the accepted-wage interface:
+
+\begin{enumerate}
+\item \(Q_F\) asks how much the accepted mean log wage for the same worker
+  varies across firms in the declared product reference population.
+\item \(H_F\) asks how much workers differ in their accepted mean log-wage
+  contrasts between the same two firms.
+\item \(A_h\) asks whether observed matches concentrate in positive
+  accepted-wage interaction cells.
+\item \(C^w_{\mathrm{assign}}\) asks how observed dependence between worker
+  and firm identities changes accepted systematic log-wage variance while
+  holding the completed wage schedule fixed.
+\end{enumerate}
+
+\textit{Source: LOO-v2, pp.\ 12--17.  Inserting ``accepted'' states the BS
+conditioning explicitly and is derived.}
+
+None of these quantities is automatically BS production, total surplus, ATT,
+or ITT.  In particular, (T3.74) holds the wage schedule fixed and replaces the
+observed assignment with an independent coupling.  A BS policy counterfactual
+changes meeting values, acceptance probabilities, unemployment, vacancies,
+match masses, and possibly reservation values.  It therefore need not hold
+either \(m\) or the marginals fixed.
+\textit{Source: LOO-v2, pp.\ 15, 38; BS24/25 revision, pp.\ 8--14.
+The contrast is derived from the two counterfactual definitions.}
+
+The structural model nevertheless explains how a project statistic may arise.
+For example, nonadditive \(f_{x,y}\) changes \(\bar z_{x,y}\), which changes
+\(p_{x,y}\), which changes \(\bar\phi_{x,y}\), which changes
+\(P^{\mathrm{obs}}_{IJ}\), which changes both
+\(C^w_{\mathrm{assign}}\) and \(\rho_{\mathrm{BS}}\).  This is a mechanism for
+the reduced-form statistics, not an identity equating them to productivity or
+welfare.
+\textit{Derived from equations (T3.31)--(T3.40), (T3.24), and (T3.74).}
+
+\subsection{3.10 Step 7: exact model-level inclusion statements}
+
+The word ``nest'' must specify both the object space and the direction of
+inclusion.  The following statements are exact.
+
+\begin{longtable}{p{0.28\textwidth}p{0.24\textwidth}p{0.38\textwidth}}
+\textbf{Claim} & \textbf{Verdict} & \textbf{Reason} \\
+\hline
+The project contains the BS20 population sorting estimand. &
+Yes, as a functional. &
+Equations (T3.16)--(T3.24) construct
+\(\rho_{\mathrm{BS}}\) from
+\((m,P^{\mathrm{obs}}_{IJ})\). \\
+The project contains the BS20 estimator and consistency theorem. &
+No, not by the wage layer alone. &
+The estimator also needs repeated distinct matches, duration and observation
+rules, and BS20's auxiliary independence conditions. \\
+The project contains the later BS accepted mean level-wage surface under
+Pareto selection. &
+Yes, after changing the declared outcome from log wages to wage levels. &
+Equations (T3.45)--(T3.51) show exact additive, rank-zero representation. \\
+The original log-wage project contains the later BS accepted mean log-wage
+surface. &
+Yes if \(r_0\geq K_\ell\); otherwise only under an additional low-rank
+restriction or approximation. &
+Equations (T3.61)--(T3.70) give the exact finite-rank representation. \\
+The project contains the full later BS structural model. &
+No. &
+The static wage layer omits meetings, rejected draws, value functions,
+bargaining, unemployment, vacancies, steady state, and policy equilibrium. \\
+The later BS Pareto model contains every project low-rank wage surface. &
+No. &
+Its level conditional mean is additive and its log surface obeys additional
+search, bargaining, Pareto, and shape restrictions. \\
+The later BS model supplies a structural interpretation for every project
+interaction. &
+No. &
+Project interactions can also arise from comparative advantage, outside
+options, bargaining, amenities, or departures from Pareto selection. \\
+\end{longtable}
+
+\textit{Sources: BS20, Sections 2--4; BS24/25 revision, Sections 2--4;
+LOO-v2, Sections 2--6 and Appendix F.  The verdicts are derived from the
+explicit maps above.}
+
+The safest single sentence is:
+\[
+\boxed{
+\begin{array}{c}
+\text{The project contains BS20's sorting estimand as an interface
+functional and contains}\\
+\text{the later BS finite accepted-mean wage layer at sufficient rank, but it
+does not contain}\\
+\text{either paper's complete dynamic, sampling, or structural model.}
+\end{array}}
+\tag{T3.75}
+\]
+
+\subsection{3.11 Step 8: BS's closest semistructural section versus ours}
+
+Neither BS paper labels a formal section ``the semistructural section.''  Two
+parts are nevertheless close enough to require comparison.
+
+\subsubsection{BS20: models as laboratories}
+
+BS20 first defines \(\rho_{\mathrm{BS}}\) from expected observed-match wages.
+Section 3 then evaluates that same measure in several model laboratories:
+correctly specified AKM, two-sided search with match-specific shocks, and a
+discrete-choice model.  The models discipline the interpretation of an
+already defined statistic; the statistic is not redefined for each model.
+Section 4 then supplies a repeated-measurement estimator under auxiliary
+statistical assumptions.
+\textit{Source: BS20, pp.\ 5--18, Sections 2--3, and pp.\ 18--24,
+Section 4.}
+
+This is semistructural in the relevant sense:
+\[
+\text{portable economic functional}
+\quad+\quad
+\text{multiple structural laboratories}
+\quad+\quad
+\text{separate statistical measurement model}.
+\tag{T3.76}
+\]
+The project follows the same broad discipline but retains a richer interface:
+instead of reducing the matched economy immediately to one scalar correlation,
+it keeps the pairwise wage schedule and assignment law long enough to measure
+\(Q_F,H_F,A_h,C^w_{\mathrm{assign}}\), and
+\(\rho_{\mathrm{BS}}\).
+\textit{Derived comparison of BS20 Sections 2--4 with LOO-v2 Sections
+3--4 and 12.}
+
+\subsubsection{BS24/25: structural model projected onto empirical wage decompositions}
+
+The later paper derives accepted-wage restrictions from a single search,
+selection, and bargaining model and then studies what conventional two-way
+fixed-effects, BLM, KSS, and mover designs recover inside that model.  This is
+an empirical projection of a structural model, not an assumption-light
+definition of a portable wage functional.  Its strength is that it can
+distinguish accepted-match effects from meeting-level policy effects and can
+explain selection bias.
+\textit{Source: BS24/25 revision, Sections 2--6, especially pp.\ 11--18 and
+26--31.}
+
+The project's direction is the reverse:
+\[
+\text{observed accepted wages}
+\ \longrightarrow\
+\text{maintained mean schedule}
+\ \longrightarrow\
+\text{support-aware functionals}
+\ \longrightarrow\
+\text{optional structural interpretations}.
+\tag{T3.77}
+\]
+It does not select one production, search, bargaining, or assignment mechanism
+as the baseline truth.  Its strength is portability across structural
+mechanisms; its cost is that wage data alone cannot identify production,
+surplus, ATT, ITT, or equilibrium welfare.
+\textit{Source: LOO-v2, pp.\ 37--38 and 42--44; derived comparison.}
+
+\subsubsection{Side-by-side comparison}
+
+\begin{longtable}{p{0.18\textwidth}p{0.25\textwidth}p{0.25\textwidth}p{0.23\textwidth}}
+\textbf{Dimension} & \textbf{BS20} & \textbf{BS24/25} &
+\textbf{Project} \\
+\hline
+Starting object &
+Observed matched wages. &
+Production, search, outside values, bargaining, and shocks. &
+Accepted conditional mean wage schedule, observed graph, and assignment. \\
+Primary target &
+\(\rho_{\mathrm{BS}}\). &
+Selection mechanism; ATT/ITT and structural interpretation. &
+\(Q_F,H_F,A_h,C^w_{\mathrm{assign}}\), with
+\(\rho_{\mathrm{BS}}\) available as an added functional. \\
+Role of a wage model &
+Not required to define the target. &
+Derived from the structural equilibrium. &
+Maintained low-rank conditional-mean completion. \\
+Role of assignment &
+Observed joint law used inside the types and their correlation. &
+Endogenous equilibrium outcome of meetings and acceptance. &
+Observed law compared with declared fixed-schedule benchmarks. \\
+Missing cells &
+Avoided for the scalar type functional by observed-match averaging. &
+Filled at the type level by structural exchangeability and equilibrium
+restrictions when every type pair has positive acceptance probability. &
+Handled explicitly through target support, graph conditions, and low-rank
+completion. \\
+Causal content &
+Limited without a structural laboratory. &
+Can discuss production, meeting surplus, ATT, ITT, and equilibrium. &
+Measures wage-schedule objects; structural labels require a separate bridge. \\
+Estimator logic &
+Distinct-match cross-products estimate aggregate latent moments. &
+Studies conventional estimators inside a selected structural DGP. &
+Leave-out estimation for target functionals after estimating a low-rank
+schedule. \\
+\end{longtable}
+
+\textit{Sources: BS20, Sections 2--4; BS24/25 revision, Sections 2--6;
+LOO-v2, Sections 3--12.  Table entries synthesize the cited sections.}
+
+\subsection{3.12 Step 9: missing cells look different at the three layers}
+
+The individual worker--firm graph can be sparse even when every BS type pair
+has positive match probability.  The distinction is:
+\[
+\text{type-cell support}
+\neq
+\text{individual-pair support}.
+\tag{T3.78}
+\]
+If \(p_{x,y}>0\) for all types, the structural model predicts a positive mass
+for every type cell through (T3.35), provided \(u_xv_y>0\).  But a finite
+administrative panel can still leave most individual pairs \((i,j)\)
+unobserved.
+\textit{Derived from BS equation (13) and the difference between type and
+individual indices.}
+
+BS fills the gap by imposing that individuals of the same structural type
+share \(f_{x,y}\), thresholds, accepted-wage distributions, and match rates.
+The project instead preserves individual heterogeneity in
+\((a_i,b_j,\mathbf u_i,\mathbf v_j)\) and uses low rank plus graph overlap to
+propagate information.  These are different completion assumptions.
+\textit{Source: BS24/25 revision, Sections 2--4; LOO-v2, Sections 5--7;
+derived comparison.}
+
+Therefore BS does not make the Task 1 product/missing-cell issue disappear
+without cost.  It replaces individual missing cells with type-level
+exchangeability and a full structural equilibrium.  That can be useful as a
+sensitivity model, but it changes the maintained model class and can change
+the estimand.
+\textit{Derived from Task 1 and the type-versus-individual map above.}
+
+\subsection{3.13 Recommended division of labor in the project}
+
+The three components should be used in the following order.
+
+\begin{enumerate}
+\item \textbf{Headline semistructural layer.}  Estimate the project's declared
+  accepted-log-wage functionals with explicit support and rank diagnostics.
+\item \textbf{Portable sorting benchmark.}  Compute the BS20
+  \(T_{\mathrm{BS}}(m,P^{\mathrm{obs}}_{IJ})\) from the fitted interface and
+  compare it with the direct BS20 estimator when the repeated-match
+  assumptions are credible.
+\item \textbf{Structural sensitivity layer.}  Use BS24/25 to ask whether the
+  observed combination of assignment, accepted level-wage additivity, and
+  accepted log-wage submodularity can be rationalized by Pareto selection.
+\item \textbf{Interpretation boundary.}  Report production, ATT, ITT, or
+  equilibrium welfare only after estimating or calibrating the additional BS
+  primitives and defending random meetings, the shock distribution,
+  bargaining, and equilibrium restrictions.
+\end{enumerate}
+
+\textit{Derived recommendation from the established inclusion and
+interpretation results.}
+
+The resulting conceptual ordering is
+\[
+\boxed{
+\begin{array}{c}
+\text{BS20 scalar observed-match measurement}\\
+\subset\\
+\text{project accepted-wage schedule and functional interface}\\
+\subset\\
+\text{BS24/25-style structural interpretation}
+\end{array}}
+\tag{T3.79}
+\]
+only in the sense of \emph{amount of maintained economic structure}.  It is
+not literal set inclusion of full statistical models: BS20 has a repeated
+sampling model absent from the static project, and the project admits wage
+surfaces excluded by the Pareto BS model.
+\textit{Derived scope statement.}
+
+\section{Task 4: Does BS extend to Kline and the other nested models?}
+
+\subsection{4.1 Answer and common audit}
+
+For every model, this section answers the same four questions in the same
+order:
+
+\begin{enumerate}
+\item \textbf{Population measure.}  Does the model generate the accepted or
+  observed wage and assignment objects needed to define the BS20 wage-type
+  correlation?
+\item \textbf{Observed-data estimator.}  Do the model's assumptions imply the
+  repeated-match conditions needed for the BS20 estimator, or are additional
+  statistical assumptions required?
+\item \textbf{Selection logic.}  Does the model contain a potential
+  meeting/access event and an acceptance rule, so that the later BS
+  meeting-versus-accepted-match logic and its ITT/ATT distinction are
+  meaningful?
+\item \textbf{Project nesting.}  Which layer of the model is contained in the
+  project's low-rank wage interface, which layer is not, and what assumptions
+  or model changes would close the gap?
+\end{enumerate}
+
+These are the four bullets used throughout Task 4.  They must remain separate.
+A model can supply the BS population correlation without satisfying the BS
+estimator assumptions; it can satisfy a low-rank wage equation without
+containing a meeting/acceptance process; and it can generate observed wages
+without being fully nested by the project's static interface.
+\textit{Derived organizational rule from Tasks 1--3.}
+
+The overall answer is:
+
+\begin{enumerate}
+\item The \textbf{BS20 population measure extends very broadly}.  Any model
+  that generates a joint distribution of observed matches and square-integrable
+  observed wages generates expected-wage worker and firm types and hence a
+  model-implied \(\rho_{\mathrm{BS}}\).
+\item The \textbf{BS20 estimator does not extend automatically}.  AKM, Kline,
+  Tukey/Crippa, BLM, GKLP, Shimer--Smith, and Eeckhout--Kircher do not, merely
+  by specifying their economic wage or mobility equations, imply all of
+  BS20's repeated-measurement and cross-match independence assumptions.
+\item The \textbf{later BS selection logic extends literally only to models
+  with a meeting/access and acceptance margin}.  It applies directly to
+  Shimer--Smith and Eeckhout--Kircher, although their acceptance is
+  deterministic conditional on types.  It applies only by analogy to Kline,
+  BLM, and GKLP unless those models are augmented with an offer/meeting and
+  acceptance law.
+\item The \textbf{project nests wage-equation layers, not every full model}.
+  It exactly contains AKM, Tukey, BLM's static finite type-cell mean layer,
+  GKLP perfect-information comparative advantage, and the leading
+  Eeckhout--Kircher example.  It contains Shimer--Smith only when the relevant
+  production interaction is low rank.  It does not contain Kline's complete
+  unrestricted edge model without a separate transition layer.
+\end{enumerate}
+
+\textit{Sources: BS20, Sections 2--4; Kline, pp.\ 15--35; BLM,
+pp.\ 702--706; GKLP, pp.\ 6--16; Shimer--Smith, pp.\ 346--349;
+Eeckhout--Kircher, pp.\ 882--889; Crippa, Sections 2--3; LOO-v2,
+pp.\ 21, 42--44.  Each conclusion is proved or qualified below.}
+
+\subsection{4.2 Notation}
+
+See Appendix A.4 for the additional notation introduced in Task 4.
+
+\subsection{4.3 A general extension theorem}
+
+Suppose a model \(\mathfrak M\) generates an observed match
+\((I,J)\sim P^{\mathfrak M}_{IJ}\) and an observed wage \(Y\) with a finite
+second moment.  Define
+\[
+m^{\mathfrak M}_{ij}
+=
+\mathbb E_{\mathfrak M}[Y\mid I=i,J=j,\text{observed match}],
+\tag{T4.1}
+\]
+\[
+p_i^{\mathfrak M}=\sum_jP^{\mathfrak M}_{IJ}(i,j),
+\qquad
+q_j^{\mathfrak M}=\sum_iP^{\mathfrak M}_{IJ}(i,j).
+\tag{T4.2}
+\]
+For positive marginals, define
+\[
+\lambda_i^{\mathfrak M}
+=
+\sum_j
+\frac{P^{\mathfrak M}_{IJ}(i,j)}
+{p_i^{\mathfrak M}}
+m^{\mathfrak M}_{ij},
+\tag{T4.3}
+\]
+\[
+\nu_j^{\mathfrak M}
+=
+\sum_i
+\frac{P^{\mathfrak M}_{IJ}(i,j)}
+{q_j^{\mathfrak M}}
+m^{\mathfrak M}_{ij}.
+\tag{T4.4}
+\]
+The model-implied BS correlation is
+\[
+\rho_{\mathrm{BS}}^{\mathfrak M}
+=
+\operatorname{Corr}_{P^{\mathfrak M}_{IJ}}
+\left(
+\lambda_I^{\mathfrak M},
+\nu_J^{\mathfrak M}
+\right),
+\tag{T4.5}
+\]
+provided both type variances are positive.
+\textit{Source: BS20, pp.\ 5--7, equations (1)--(6); equations
+(T4.1)--(T4.5) are the finite-model restatement.}
+
+\paragraph{Population-extension proposition.}
+Equations (T4.1)--(T4.5) prove that the BS20 population measure extends to
+every model satisfying the stated moment and nondegeneracy conditions.  The
+proof needs neither wage additivity, low rank, random matching, nor a
+meeting/acceptance model.  It only needs the model's observed matched-wage
+distribution.
+\textit{Derived directly from the definitions.}
+
+This proposition is deliberately about the population functional.  The BS20
+observed-data estimator additionally requires repeated wages from distinct
+matches, conditional stability of worker and firm wage types, suitable
+independence of distinct-match errors and durations, cross-side leave-out
+independence, and weak enough cross-unit dependence for a law of large
+numbers.  These conditions are not consequences of (T4.1)--(T4.5).
+\textit{Source: BS20, pp.\ 18--24, Auxiliary Assumptions 1--4 and
+Propositions 2--5.}
+
+\paragraph{General selection identity.}
+Now suppose the model also generates a potential meeting distribution
+\(P^{\mathrm{meet}}_{IJ}\), acceptance indicator \(\mathsf M\), and worker
+gain \(G_{ij}\), with \(G_{ij}=0\) when the meeting is rejected.  Let
+\[
+s_{ij}
+=
+\Pr(\mathsf M=1\mid i,j,\text{meeting}),
+\tag{T4.6}
+\]
+\[
+\operatorname{ITT}_{ij}
+=
+\mathbb E[G_{ij}\mid i,j,\text{meeting}],
+\tag{T4.7}
+\]
+\[
+\operatorname{ATT}_{ij}
+=
+\mathbb E[G_{ij}\mid i,j,\text{meeting},\mathsf M=1].
+\tag{T4.8}
+\]
+The law of total expectation gives
+\begin{align}
+\operatorname{ITT}_{ij}
+&=
+s_{ij}
+\mathbb E[G_{ij}\mid i,j,\mathsf M=1]
++(1-s_{ij})
+\mathbb E[G_{ij}\mid i,j,\mathsf M=0] \notag\\
+&=
+s_{ij}\operatorname{ATT}_{ij},
+\tag{T4.9}
+\end{align}
+because the second conditional mean is zero.  In a one-shot match sample, or
+when accepted matches have a common duration/separation rate, the observed
+assignment law is proportional to
+\[
+P^{\mathfrak M}_{IJ}(i,j)
+\propto
+P^{\mathrm{meet}}_{IJ}(i,j)s_{ij}.
+\tag{T4.10}
+\]
+More generally, a cross-sectional stock sample also weights matches by their
+expected duration, survival, or observation frequency:
+\[
+P^{\mathfrak M}_{IJ}(i,j)
+\propto
+P^{\mathrm{meet}}_{IJ}(i,j)s_{ij}d_{ij}^{\mathrm{obs}}.
+\tag{T4.10a}
+\]
+\textit{Source: BS24/25 revision, pp.\ 9--14; equations (T4.6)--(T4.10)
+are the generic law-of-total-expectation version of its ITT/ATT and selection
+identities.  Equation (T4.10a) is the derived stock-sampling correction; in
+BS's baseline common-separation model its common duration factor cancels.}
+
+Models without \(P^{\mathrm{meet}}_{IJ}\) and \(\mathsf M\) cannot use
+(T4.9) literally.  Calling observed workers or movers ``treated'' does not
+create a meeting-level ITT; the intervention and the rejection outcome must
+first be defined.
+\textit{Derived scope condition.}
+
+\subsection{4.4 Kline first: the model we are especially interested in}
+
+\subsubsection{4.4.1 Refresher: Kline's edge model}
+
+For two-period movers, Kline defines the covariate-adjusted wage change vector
+\[
+R
+=
+Y_2-Y_1-(X_2-X_1)'\beta.
+\tag{T4.11}
+\]
+Let \(E_{\mathrm{edge}}\) indicate the directed origin-destination edge
+traversed by each mover.  Kline's unrestricted edge model is
+\[
+R=E_{\mathrm{edge}}\Delta+u^K,
+\qquad
+\mathbb E[u^K\mid E_{\mathrm{edge}}]=0.
+\tag{T4.12}
+\]
+It gives every observed directed transition \(j\to k\) its own mean
+\(\Delta_{jk}\).
+\textit{Source: Kline, pp.\ 18--19.}
+
+Let \(B_{\mathrm{inc}}\) be the firm-by-edge incidence matrix: an edge column
+has \(-1\) at its origin and \(+1\) at its destination.  AKM restricts
+\[
+\Delta=B_{\mathrm{inc}}'\psi^A.
+\tag{T4.13}
+\]
+For every cycle vector \(c_{\mathrm{cyc}}\) satisfying
+\(B_{\mathrm{inc}}c_{\mathrm{cyc}}=0\),
+\[
+c_{\mathrm{cyc}}'\Delta
+=
+c_{\mathrm{cyc}}'B_{\mathrm{inc}}'\psi^A
+=
+(B_{\mathrm{inc}}c_{\mathrm{cyc}})'\psi^A
+=0.
+\tag{T4.14}
+\]
+Kline shows that, in a connected graph, these zero-cycle restrictions exhaust
+the restrictions that AKM places on edge effects.  He writes
+\[
+\Delta
+=
+B_{\mathrm{inc}}'\dot\psi
++C_{\mathrm{cyc}}\dot\eta,
+\tag{T4.15}
+\]
+where AKM sets \(\dot\eta=0\).
+\textit{Source: Kline, pp.\ 18--20.}
+
+\subsubsection{4.4.2 How the current project maps into Kline}
+
+Suppress covariates and write the project's primitive low-rank wage surface as
+\[
+m_{ij}
+=
+\alpha_i+\psi_j+\mathbf u_i'\Lambda\mathbf v_j.
+\tag{T4.16}
+\]
+For worker \(i\), the wage contrast between destination \(k\) and origin \(j\)
+is
+\[
+m_{ik}-m_{ij}
+=
+\psi_k-\psi_j
++\mathbf u_i'\Lambda(\mathbf v_k-\mathbf v_j).
+\tag{T4.17}
+\]
+Average (T4.17) over the workers observed moving on edge \(j\to k\).  With
+\[
+\bar{\mathbf u}_{jk}
+\equiv
+\mathbb E[
+\mathbf u_i\mid D_{i1}=j,D_{i2}=k
+],
+\tag{T4.18}
+\]
+the project implies
+\[
+\Delta_{jk}^{LR}
+=
+\psi_k-\psi_j
++\bar{\mathbf u}_{jk}'\Lambda
+(\mathbf v_k-\mathbf v_j).
+\tag{T4.19}
+\]
+\textit{Derived from the project wage surface; source for the edge
+conditional-mean object: Kline, p.\ 19.}
+
+Around a directed cycle \(\mathcal C\),
+\begin{align}
+\sum_{(j,k)\in\mathcal C}\Delta_{jk}^{LR}
+&=
+\underbrace{
+\sum_{(j,k)\in\mathcal C}(\psi_k-\psi_j)
+}_{=0}
+\notag\\
+&\quad+
+\sum_{(j,k)\in\mathcal C}
+\bar{\mathbf u}_{jk}'\Lambda
+(\mathbf v_k-\mathbf v_j) \notag\\
+&=
+\sum_{(j,k)\in\mathcal C}
+\bar{\mathbf u}_{jk}'\Lambda
+(\mathbf v_k-\mathbf v_j).
+\tag{T4.20}
+\end{align}
+Thus the project can generate Kline cycle effects, but only through shared
+worker factors, firm factors, and edge-specific mover compositions.
+\textit{Derived from (T4.19).}
+
+\subsubsection{4.4.3 Why unrestricted Kline is not currently nested}
+
+There are two independent failures.
+
+\paragraph{Object-space failure.}
+The project maps an individual-firm pair to a wage level,
+\[
+(i,j)\longmapsto m_{ij},
+\]
+whereas Kline's unrestricted model maps a directed firm transition to the
+selected movers' mean change,
+\[
+(j,k)\longmapsto\Delta_{jk}.
+\]
+An edge table alone does not specify stayer wages, cross-sectional wage levels,
+or individual counterfactual wage cells.  It therefore does not determine the
+project wage surface or the BS wage types.
+\textit{Source for the two objects: LOO-v2, pp.\ 9--10; Kline, p.\ 19;
+non-equivalence is derived.}
+
+\paragraph{Shared-factor failure.}
+Conditional on the mover-composition moments, (T4.19) has at most
+\[
+J+Jd_v+d_ud_v
+\tag{T4.21}
+\]
+raw shared parameters before normalizations.  Kline's unrestricted edge table
+has \(|\mathcal E_F|\) free entries.  When the edge count is large relative to
+the fixed factor dimensions, a generic \(\Delta\) cannot satisfy (T4.19).
+Increasing the factors until every edge can be fit removes the intended
+low-rank restriction.
+\textit{Derived dimension comparison; source for one parameter per edge:
+Kline, p.\ 19.}
+
+This parameter count is conditional on the mover-composition vectors
+\(\{\bar u_{jk}\}_{(j,k)\in\mathcal E_F}\).  If every \(\bar u_{jk}\) is instead
+treated as a free edge-specific parameter, those vectors contribute
+\(|\mathcal E_F|d_u\) further degrees of freedom and can absorb much of the
+unrestricted edge table.  That maneuver does not establish that Kline's edge
+model is nested in the project's wage layer: it relocates the unrestricted
+variation to an otherwise unmodeled edge-selection or mover-composition layer.
+A disciplined factor model must therefore derive \(\bar u_{jk}\) from the
+assignment and selection mechanism, or impose cross-edge restrictions on it.
+\textit{Derived qualification to the dimension count.}
+
+\subsubsection{4.4.4 Two rigorous routes to close the Kline gap}
+
+\paragraph{Route A: add assumptions and restrict Kline.}
+Kline's Assumption 4 imposes no selection on treatment effects:
+\[
+Y_{i2}(k)-Y_{i2}(j)
+\ \perp\
+(D_{i1},D_{i2})
+\qquad
+\text{for every }j\neq k.
+\tag{T4.22}
+\]
+Together with Kline's exclusion, parallel-trends, stationarity, and
+connectedness conditions, this gives
+\[
+\Delta_{jk}
+=
+\mathbb E[Y_{i2}(k)-Y_{i2}(j)]
+=
+\psi_k^{\mathrm{ATE}}-\psi_j^{\mathrm{ATE}}.
+\tag{T4.23}
+\]
+The edge table is then a gradient of population wage levels, all cycle sums
+are zero, and the rank-zero project/AKM layer nests it.
+\textit{Source: Kline, pp.\ 29--34, Assumptions 1--4 and Proposition 2.}
+
+A weaker restriction is to posit the factor-rationalizable edge equation
+(T4.19) directly.  This permits cycle effects but asserts that they arise from
+worker-factor composition and firm-factor differences.  It nests a structured
+subclass of Kline, not Kline's unrestricted edge model.
+\textit{Derived restriction; Kline, pp.\ 34--35, explicitly suggests
+interactive factor models as a way to rationalize uncoarsened edge effects.}
+
+\paragraph{Route B: change the project and keep Kline unrestricted.}
+Add a transition layer:
+\[
+\Delta_{jk}
+=
+\psi_k-\psi_j
++\bar{\mathbf u}_{jk}'\Lambda(\mathbf v_k-\mathbf v_j)
++\tau_{jk},
+\tag{T4.24}
+\]
+\[
+R_i
+=
+\Delta_{D_{i1},D_{i2}}+\xi_i.
+\tag{T4.25}
+\]
+For any desired Kline edge table \(\Delta^K\), choose
+\[
+\tau_{jk}
+=
+\Delta^K_{jk}
+-\psi_k+\psi_j
+-\bar{\mathbf u}_{jk}'\Lambda(\mathbf v_k-\mathbf v_j).
+\tag{T4.26}
+\]
+Then (T4.24) reproduces \(\Delta^K\) exactly.  In particular, setting
+\(\psi=0\) and \(\Lambda=0\) gives \(\tau_{jk}=\Delta^K_{jk}\).
+\textit{Derived constructive nesting proof.}
+
+The unrestricted \(\tau_{jk}\) must be called a \emph{transition wedge}, not
+a time-invariant firm wage level.  If its sum around a cycle is nonzero, no
+collection of firm levels can generate it.  Economically it may represent
+origin dependence, switching costs, contracts, tenure/history, or selected
+mover gains.  Giving it one of those structural interpretations requires an
+appropriate dynamic potential-outcome or mobility model.
+\textit{Derived from Kline's cycle characterization, pp.\ 18--20.}
+
+The recommended supermodel is therefore
+\[
+\boxed{
+\begin{array}{ll}
+\text{Level layer:}
+&
+m_{ij}=\alpha_i+\psi_j+\mathbf u_i'\Lambda\mathbf v_j,\\[0.3em]
+\text{Transition layer:}
+&
+\Delta_{jk}
+=
+\psi_k-\psi_j
++\bar{\mathbf u}_{jk}'\Lambda(\mathbf v_k-\mathbf v_j)
++\tau_{jk}.
+\end{array}}
+\tag{T4.27}
+\]
+Low rank remains a restriction on the wage-level interaction; complete Kline
+nesting is obtained by leaving the transition residual unrestricted.
+\textit{Derived recommendation.}
+
+\subsection{4.5 AKM and KSS}
+
+The AKM conditional mean is
+\[
+m^A_{ij}=\alpha_i^A+\psi_j^A.
+\tag{T4.28}
+\]
+It is the rank-zero case of the project: set \(\Lambda=0\).
+\textit{Source: Kline, p.\ 15; LOO-v2, p.\ 42.}
+
+The implied BS worker type is
+\begin{align}
+\lambda_i^A
+&=
+\mathbb E[m^A_{iJ}\mid I=i] \notag\\
+&=
+\alpha_i^A+\mathbb E[\psi_J^A\mid I=i],
+\tag{T4.29}
+\end{align}
+and the implied firm type is
+\[
+\nu_j^A
+=
+\psi_j^A+\mathbb E[\alpha_I^A\mid J=j].
+\tag{T4.30}
+\]
+Thus BS wage types are not generally the primitive AKM fixed effects.  They
+also contain the observed composition of counterpart effects.  BS20 shows
+that its correlation and the AKM correlation coincide in magnitude under the
+additional linear-conditional-expectation conditions in its Proposition 1;
+additivity alone is insufficient.
+\textit{Source: BS20, pp.\ 8--10, Proposition 1; equations
+(T4.29)--(T4.30) are derived.}
+
+The four conclusions are:
+
+\textit{Sources: Kline, Sections 2 and 4.2; Kline--Saggio--S{\o}lvsten as
+summarized in LOO-v2, p.\ 42; BS20, Sections 2 and 4.  The distinctions are
+derived.}
+
+\subsection{4.6 Tukey/Crippa and the seriation boundary}
+
+Crippa's Tukey mean surface is
+\[
+m^T_{ij}
+=
+\alpha_i^T+\psi_j^T+\beta_0\alpha_i^T\psi_j^T.
+\tag{T4.31}
+\]
+After product centering, its interaction is an outer product and therefore
+has rank at most one.  The project nests it exactly with one interaction
+factor.
+\textit{Source: Crippa, Section 2.2; LOO-v2, p.\ 42.}
+
+Define the observed counterpart means
+\[
+\bar\psi_i^{\,T}
+\equiv
+\mathbb E[\psi_J^T\mid I=i],
+\qquad
+\bar\alpha_j^{\,T}
+\equiv
+\mathbb E[\alpha_I^T\mid J=j].
+\tag{T4.32}
+\]
+Taking conditional expectations of (T4.31) gives the exact BS types
+\[
+\lambda_i^T
+=
+\alpha_i^T
++\left(1+\beta_0\alpha_i^T\right)
+\bar\psi_i^{\,T},
+\tag{T4.33}
+\]
+\[
+\nu_j^T
+=
+\psi_j^T
++\left(1+\beta_0\psi_j^T\right)
+\bar\alpha_j^{\,T}.
+\tag{T4.34}
+\]
+The BS sorting statistic is the observed-match correlation of (T4.33) and
+(T4.34).  It is not generally
+\(\operatorname{Corr}(\alpha_I^T,\psi_J^T)\), because counterpart composition
+and the interaction both enter the wage types.
+\textit{Derived from the Tukey equation and BS20's definitions.}
+
+The four conclusions are:
+
+\textit{Source: Crippa, Sections 2--4; BS20, Section 4; nesting and estimator
+comparison are derived.}
+
+Crippa's seriation model instead writes
+\[
+m^S_{ij}=f_m(\alpha_i^S,\psi_j^S),
+\tag{T4.35}
+\]
+where \(f_m\) is increasing in both arguments.  It identifies latent
+productivity rankings, under its strong graph condition, only up to strictly
+increasing reparameterizations; cardinal latent differences are not
+identified.
+\textit{Source: Crippa, Sections 2.3.2 and 3.4, Proposition 1 and
+Theorem 4.}
+
+This creates an important split.  The BS observed-wage correlation can still
+be estimated directly from repeated observed wages without assigning a
+cardinal scale to \(\alpha_i^S\) or \(\psi_j^S\).  But seriation alone does not
+identify a completed cardinal wage surface or the project's missing-cell
+functionals.  A finite seriation surface is representable by the project at
+its full double-centered rank; a fixed small rank is an additional
+restriction, not a consequence of monotonicity.
+\textit{Derived from BS20's observed-wage definition, Crippa's ordinal
+identification result, and the SVD argument in Task 3.}
+
+\subsection{4.7 BLM}
+
+\subsubsection{4.7.1 Static type-class wage layer}
+
+Let \(k\in\{1,\ldots,K_B\}\) index BLM worker types and
+\(\ell\in\{1,\ldots,L_B\}\) index firm classes.  Let
+\[
+\zeta_{k\ell}
+=
+\mathbb E[
+Y\mid\text{worker type }k,\text{ firm class }\ell
+]
+\tag{T4.36}
+\]
+be the static conditional mean, and let
+\(\Pi^B_{k\ell}\) be the observed match probability of that cell.  Its
+marginals are
+\[
+\pi_k^B=\sum_\ell\Pi^B_{k\ell},
+\qquad
+\kappa_\ell^B=\sum_k\Pi^B_{k\ell}.
+\tag{T4.37}
+\]
+\textit{Source for BLM worker types, firm classes, and conditional earnings
+distributions: BLM, pp.\ 702--704; the finite probability notation is
+derived.}
+
+The BLM-implied BS wage types are
+\[
+\lambda_k^B
+=
+\sum_\ell
+\frac{\Pi^B_{k\ell}}{\pi_k^B}
+\zeta_{k\ell},
+\qquad
+\pi_k^B>0,
+\tag{T4.38}
+\]
+\[
+\nu_\ell^B
+=
+\sum_k
+\frac{\Pi^B_{k\ell}}{\kappa_\ell^B}
+\zeta_{k\ell},
+\qquad
+\kappa_\ell^B>0.
+\tag{T4.39}
+\]
+Define
+\[
+\bar\zeta^B
+=
+\sum_k\sum_\ell\Pi^B_{k\ell}\zeta_{k\ell}.
+\tag{T4.40}
+\]
+Then
+\[
+\sigma_{\lambda,B}^2
+=
+\sum_k\pi_k^B(\lambda_k^B-\bar\zeta^B)^2,
+\qquad
+\sigma_{\nu,B}^2
+=
+\sum_\ell\kappa_\ell^B(\nu_\ell^B-\bar\zeta^B)^2,
+\tag{T4.41}
+\]
+and
+\[
+\rho_{\mathrm{BS}}^B
+=
+\frac{
+\displaystyle
+\sum_k\sum_\ell
+\Pi^B_{k\ell}
+(\lambda_k^B-\bar\zeta^B)
+(\nu_\ell^B-\bar\zeta^B)
+}{
+\sigma_{\lambda,B}\sigma_{\nu,B}
+}.
+\tag{T4.42}
+\]
+Equations (T4.38)--(T4.42) are an exact plug-in map from a fitted BLM
+type-class matched distribution to the BS20 population correlation.
+\textit{Derived from BS20, pp.\ 5--7, and BLM's static type-class objects.}
+
+If the desired BS object is defined at individual firm identity rather than
+firm class, (T4.39) is sufficient only when firms in a class share the same
+relevant conditional wage distribution, or when the target is explicitly
+class-level sorting.  Otherwise, within-class firm heterogeneity must be
+restored before calculating the firm-identity BS statistic.
+\textit{Derived scope condition from BLM's class construction,
+pp.\ 702--704.}
+
+\subsubsection{4.7.2 Exact wage-layer nesting}
+
+Using the product weights \(\pi_k^B\kappa_\ell^B\), define the row, column, and
+grand means
+\[
+\zeta_{k\cdot}
+=
+\sum_\ell\kappa_\ell^B\zeta_{k\ell},
+\qquad
+\zeta_{\cdot\ell}
+=
+\sum_k\pi_k^B\zeta_{k\ell},
+\tag{T4.43}
+\]
+\[
+\zeta_{\cdot\cdot}
+=
+\sum_k\sum_\ell
+\pi_k^B\kappa_\ell^B\zeta_{k\ell}.
+\tag{T4.44}
+\]
+The double-centered interaction is
+\[
+M^B_{k\ell}
+=
+\zeta_{k\ell}
+-\zeta_{k\cdot}
+-\zeta_{\cdot\ell}
++\zeta_{\cdot\cdot}.
+\tag{T4.45}
+\]
+It satisfies
+\[
+\sum_\ell\kappa_\ell^BM^B_{k\ell}=0,
+\qquad
+\sum_k\pi_k^BM^B_{k\ell}=0.
+\tag{T4.46}
+\]
+With positive weights, these give nonzero left and right null vectors, hence
+\[
+\operatorname{rank}(M^B)
+\leq
+\min\{K_B-1,L_B-1\}.
+\tag{T4.47}
+\]
+Lifting type and class rows to individual workers and firms reproduces the
+static BLM mean surface in the project at that rank.
+\textit{Derived weighted double-centering proof; source for the BLM static
+surface: BLM, pp.\ 702--704.}
+
+For BLM's displayed simple regression
+\[
+\zeta_{k\ell}=a_\ell+b_\ell\alpha_k^B,
+\tag{T4.48}
+\]
+double centering yields
+\[
+M^B_{k\ell}
+=
+(\alpha_k^B-\bar\alpha^B)
+(b_\ell-\bar b),
+\tag{T4.49}
+\]
+which is an outer product and has rank at most one.
+\textit{Source for the regression: BLM, p.\ 704; equation (T4.49) is the
+derived weighted-centering result proved in the BLM handoff.}
+
+\textit{Sources: BLM, pp.\ 699--706; BS20, Section 4; the four classifications
+are derived.}
+
+\subsection{4.8 Gibbons--Katz--Lemieux--Parent (GKLP)}
+
+\subsubsection{4.8.1 Perfect-information comparative advantage}
+
+GKLP write output as
+\[
+y_{ijt}
+=
+\exp(X_{it}'\beta_j+\psi_{ijt}),
+\qquad
+\psi_{ijt}
+=
+Z_i+b_j^G(\eta_i+\varepsilon_{ijt}^G)+c_j^G.
+\tag{T4.50}
+\]
+\textit{Source: GKLP, pp.\ 6--7, equations (1)--(2).}
+
+Under perfect information and competitive wage setting, their log wage is
+\[
+m_{ijt}^{G,PI}
+=
+X_{it}'\beta_j
++Z_i
++b_j^G\eta_i
++c_j^G
++\frac12(b_j^G)^2\sigma_\varepsilon^2.
+\tag{T4.51}
+\]
+\textit{Source: GKLP, p.\ 12, equation (9).}
+
+If the sector-specific observed-skill term \(X_{it}'\beta_j\) is included in
+the project's covariate component, the remaining wage surface has the exact
+rank-one representation
+\[
+\alpha_i=Z_i,
+\qquad
+\psi_j=c_j^G+\frac12(b_j^G)^2\sigma_\varepsilon^2,
+\tag{T4.52}
+\]
+\[
+\mathbf u_i=(\eta_i),
+\qquad
+\mathbf v_j=(b_j^G),
+\qquad
+\Lambda=(1).
+\tag{T4.53}
+\]
+Substitution of (T4.52)--(T4.53) into the project equation reproduces every
+term in (T4.51) after the covariate component.
+\textit{Derived exact embedding of GKLP equation (9); LOO-v2, p.\ 43 states
+the same rank-one classification.}
+
+\subsubsection{4.8.2 Learning}
+
+With learning, the log wage becomes
+\[
+m_{ijt}^{G,L}
+=
+X_{it}'\beta_j
++Z_i
++b_j^Gm_{i,t-1}^G
++c_j^G
++\frac12(b_j^G)^2\sigma_t^2.
+\tag{T4.54}
+\]
+\textit{Source: GKLP, p.\ 13, equation (10).}
+
+For a fixed time or experience slice in which \(\sigma_t^2\) is common across
+workers, the last term is firm-specific and
+\(b_j^Gm_{i,t-1}^G\) is rank one.  If the relevant posterior-variance state is
+worker-time-specific, the slice is represented with two factors:
+\[
+\mathbf u_{it}
+=
+\begin{pmatrix}
+m_{i,t-1}^G\\
+\sigma_{it}^2
+\end{pmatrix},
+\qquad
+\mathbf v_j
+=
+\begin{pmatrix}
+b_j^G\\
+\frac12(b_j^G)^2
+\end{pmatrix},
+\qquad
+\Lambda=I_2.
+\tag{T4.55}
+\]
+\textit{Derived slice embedding of GKLP equation (10).}
+
+The pooled learning panel is not a static worker-firm surface with a
+time-invariant \(\mathbf u_i\).  The posterior mean changes as output histories
+arrive, and sector choice depends on the current belief.  Full nesting
+therefore requires time-indexed factors and the Bayesian state-transition and
+sector-choice laws, not merely a larger static rank.
+\textit{Source: GKLP, pp.\ 8, 13--16; derived boundary statement.}
+
+\textit{Sources: GKLP, pp.\ 6--16; Kline, pp.\ 32--35, notes that
+comparative-advantage models generally violate no selection on treatment
+effects; BS20, Section 4.  The BS extension classifications are derived.}
+
+\subsection{4.9 Shimer--Smith}
+
+\subsubsection{4.9.1 Wage/payoff map}
+
+Shimer--Smith is a symmetric-agent search model.  When types \(x\) and \(y\)
+match, they produce deterministic flow output \(f^{SS}(x,y)\).  Let
+\(W^{SS}(x)\) be the unmatched asset value and
+\(w^{SS}(x)=rW^{SS}(x)\) its flow value.  Their matched Bellman and Nash
+surplus-splitting equations imply the wage-like flow payoff
+\[
+\pi^{SS}(x\mid y)
+=
+\frac12f^{SS}(x,y)
++\frac12w^{SS}(x)
+-\frac12w^{SS}(y).
+\tag{T4.56}
+\]
+\textit{Source: Shimer--Smith, pp.\ 348--349, equations (3)--(5);
+(T4.56) is the derived rearrangement documented in the search handoff.}
+
+After additive terms are removed, the interaction in
+\(\pi^{SS}(x\mid y)\) is one half of the double-centered production surface.
+Consequently,
+\[
+\operatorname{rank}
+\bigl(
+\text{payoff interaction}
+\bigr)
+=
+\operatorname{rank}
+\bigl(
+\text{double-centered }f^{SS}
+\bigr).
+\tag{T4.57}
+\]
+The project nests the payoff layer exactly if that rank does not exceed the
+maintained project rank.  Shimer--Smith supermodularity conditions discipline
+matching patterns but do not imply low rank.
+\textit{Source: Shimer--Smith, pp.\ 344--363; equation (T4.57) is derived
+from (T4.56).}
+
+\textit{Sources: Shimer--Smith, pp.\ 346--363; BS20, Section 4; BS24/25,
+Sections 2--3; derived comparison.}
+
+\subsection{4.10 Eeckhout--Kircher}
+
+\subsubsection{4.10.1 Selection and the leading rank-one wage example}
+
+Eeckhout--Kircher study a two-stage environment.  Workers and firms are
+initially paired; they accept the first-stage match when its surplus exceeds
+the value of waiting and paying search cost \(c_{\mathrm{search}}\).  Rejected
+agents proceed to the second-stage frictionless allocation.  Their first-stage
+acceptance sets are \(\mathcal A_y^{EK}\) and
+\(\mathcal B_x^{EK}\).
+\textit{Source: Eeckhout--Kircher, pp.\ 882--883, equations (11)--(13).}
+
+For the leading production example
+\[
+f^{EK}(x,y)
+=
+a_{\mathrm{EK}}xy
++h_{\mathrm{EK}}(x)
++g_{\mathrm{EK}}(y),
+\tag{T4.59}
+\]
+equal bargaining gives the accepted first-stage wage
+\[
+w^{EK}(x,y)
+=
+\frac{a_{\mathrm{EK}}}{4}x^2
+-\frac{a_{\mathrm{EK}}}{4}y^2
++\frac{a_{\mathrm{EK}}}{2}xy
++h_{\mathrm{EK}}(x).
+\tag{T4.60}
+\]
+\textit{Source: Eeckhout--Kircher, pp.\ 882--884; LOO-v2, p.\ 43,
+Appendix F.5.}
+
+Let \(\bar x\) and \(\bar y\) be the product-reference means of the two types.
+Double centering removes the \(x\)-only and \(y\)-only terms and changes the
+bilinear term into
+\[
+h^{EK}(x,y)
+=
+\frac{a_{\mathrm{EK}}}{2}
+(x-\bar x)(y-\bar y).
+\tag{T4.61}
+\]
+This is an outer product and therefore rank one.  The project exactly nests
+this wage layer.
+\textit{Derived from (T4.60).}
+
+\textit{Sources: Eeckhout--Kircher, pp.\ 872--889, especially Propositions
+3--4 and the repeated-observation discussion on pp.\ 888--889; BS20,
+Section 4; derived nesting comparison.}
+
+\subsection{4.11 Model-by-model decision table}
+
+\begin{longtable}{p{0.16\textwidth}p{0.17\textwidth}p{0.19\textwidth}p{0.20\textwidth}p{0.19\textwidth}}
+\textbf{Model} & \textbf{BS population measure} &
+\textbf{BS estimator} & \textbf{Literal BS selection logic} &
+\textbf{Project inclusion} \\
+\hline
+Kline unrestricted edges &
+Not from \(\Delta\) alone; yes after adding wage levels and assignment. &
+Needs BS repeated-match assumptions. &
+Mover ATT/ATE analogue; literal ITT needs job access/meeting. &
+Add \(\tau_{jk}\) for complete edge nesting, or restrict selection/edge
+structure. \\
+AKM/KSS &
+Yes; types include counterpart composition. &
+KSS inference does not replace BS assumptions. &
+No meeting or acceptance block. &
+Exact rank zero; KSS is inference, not a new surface. \\
+Tukey/Crippa &
+Yes, by (T4.33)--(T4.34). &
+Graph identification does not imply BS independence. &
+No meeting or acceptance block. &
+Exact rank one for Tukey; seriation needs rank check. \\
+BLM &
+Yes, by the plug-in formula (T4.42). &
+Use BLM plug-in or separately impose BS assumptions. &
+Mobility selection, but no meeting-versus-acceptance decomposition. &
+Exact static type-cell mean layer; not full distributions/dynamics. \\
+GKLP &
+Yes for a declared time/sector target. &
+Learning breaks fixed-type repeated measurement unless sliced or modeled. &
+Roy sector choice, not random meeting acceptance. &
+Perfect information rank one; learning rank one/two per slice; full panel
+dynamic. \\
+Shimer--Smith &
+Yes for oriented side-specific payoffs. &
+Needs a panel sampling and independence layer. &
+Yes; deterministic acceptance by type pair. &
+Only when double-centered production is low rank; full search is outside. \\
+Eeckhout--Kircher &
+Yes, but not a sign test for productive sorting. &
+Long panels help; BS independence still must be imposed. &
+Yes; deterministic first-stage acceptance bands. &
+Leading wage example exact rank one; full two-stage search is outside. \\
+\end{longtable}
+
+\textit{Sources: model sections above.  Every table entry is a compressed
+restatement of the cited model derivation.}
+
+\subsection{4.12 The clean project extension}
+
+The comparison suggests a four-block architecture:
+\[
+\boxed{
+\begin{array}{ll}
+\text{Wage block \(W\):}
+&
+m_{ij}=\mu+a_i+b_j+\mathbf u_i'\Lambda\mathbf v_j,\\[0.3em]
+\text{Assignment block \(G\):}
+&
+P^{\mathrm{obs}}_{IJ}(i,j)
+\propto
+P^{\mathrm{meet}}_{IJ}(i,j)s_{ij}d_{ij}^{\mathrm{obs}},\\[0.3em]
+\text{Edge block \(E\):}
+&
+\Delta_{jk}
+=
+\psi_k-\psi_j
++\bar{\mathbf u}_{jk}'\Lambda(\mathbf v_k-\mathbf v_j)
++\tau_{jk},\\[0.3em]
+\text{Sampling block \(S\):}
+&
+\text{repeated-match observation and independence conditions.}
+\end{array}}
+\tag{T4.62}
+\]
+
+Each block has one job:
+
+\begin{enumerate}
+\item \(W\) contains the static wage-equation cores of AKM, Tukey, BLM, GKLP,
+  and restricted search-model wage surfaces.
+\item \(G\) adds the meeting/acceptance distinction needed for BS-style ITT,
+  assignment counterfactuals, and literal selection mechanisms.
+\item \(E\) retains Kline's directed mover interface and allows unrestricted
+  transition residuals without pretending they are wage levels.
+\item \(S\) states the statistical assumptions under which the BS20
+  observed-data estimator, project leave-out estimators, or alternative
+  procedures are consistent.
+\end{enumerate}
+
+\textit{Derived synthesis from the model audit.}
+
+The blocks should not be activated indiscriminately.  The core
+semistructural paper can estimate \(W\), calculate the BS20 population
+functional, and use \(E\) as a diagnostic.  The assignment block \(G\) is
+needed only for claims about meetings, acceptance, ITT, production, or policy.
+An unrestricted \(\tau\) is needed only if complete Kline edge inclusion is a
+stated goal rather than a factor-rationalizable approximation.
+\textit{Derived recommendation.}
+
+\subsection{4.13 What BS does and does not buy across models}
+
+The BS measure is valuable across all of these models for one common reason:
+it supplies the same observed-match sorting functional after each model has
+generated wages and assignment.  It can therefore be used as a
+model-comparison moment:
+\[
+\rho_{\mathrm{BS}}^{\mathrm{data}}
+\quad\text{versus}\quad
+\rho_{\mathrm{BS}}^{\mathfrak M}
+\tag{T4.63}
+\]
+for AKM, Tukey, BLM, GKLP, or a search model.
+\textit{Derived application of the general extension theorem.}
+
+It does not perform three stronger tasks:
+
+\begin{enumerate}
+\item It does not identify the project's missing wage cells or
+  \(C^w_{\mathrm{assign}}(m)\); it changes the target to an observed-support
+  wage-type correlation.
+\item It does not identify production or productive sorting.  The same wage-
+  type statistic can arise from comparative advantage, outside options,
+  bargaining, selection, or different production orders.
+\item It does not make its estimator valid under every nested model.  The
+  repeated-match observation and independence conditions must be checked
+  against each model's dynamics, selection, common shocks, and unit of
+  observation.
+\end{enumerate}
+
+\textit{Source for item 1: Task 1.  Sources for item 2:
+Eeckhout--Kircher, pp.\ 872--889; BS24/25, Sections 2--4.  Source for item 3:
+BS20, Section 4.}
+
+\section{Task 5: Exogenous mobility versus additive separability}
+
+\subsection{5.1 Answer}
+
+There is no substantive contradiction once the assumptions are separated into
+atomic pieces.  ``Additive separability'' can mean either:
+
+\begin{enumerate}
+\item the \emph{pure wage-function restriction} that permanent worker--firm
+  interactions are zero; or
+\item that restriction \emph{plus} an exogeneity condition on the remaining
+  transitory error.
+\end{enumerate}
+
+Volpe uses the first meaning and therefore presents additive separability and
+exogenous mobility as two separate pillars.  Sorkin--Warwar use the second,
+composite meaning.  Their ``additive separability'' assumption contains the
+same transitory-error exogeneity condition as their ``exogenous mobility''
+assumption and replaces mean-zero match effects by zero match effects.
+Consequently, Sorkin--Warwar additive separability is strictly stronger than
+their exogenous mobility.  Kline's review makes both viewpoints visible:
+his statistical AKM model combines an additive expected-wage map with strict
+exogeneity, while his potential-outcome analysis separates causal
+identification of mover effects, heterogeneity, and selection on gains.
+
+\textit{Sources: Sorkin--Warwar, ``Paired movers,'' March 2026 draft,
+pp.\ 6--7; Sorkin Lecture 10, PDF pp.\ 97--105, especially slide 49/79;
+Volpe, ``Firms and Earnings Inequality,'' PDF p.\ 21, slide 4/35; Kline,
+pp.\ 14--16 and 29--34.  The reconciliation is derived below.}
+
+\subsection{5.2 Notation}
+
+See Appendix A.5 for the additional notation introduced in Task 5.
+
+\subsection{5.3 The common wage decomposition}
+
+Write the potential adjusted log wage of worker \(i\) at firm \(j\) as
+\[
+Y_{it}(j)
+=
+\alpha_i+\psi_j+X_{it}'\beta
++\omega_{ij}
++\widetilde\varepsilon_{it}(j).
+\tag{T5.1}
+\]
+Consistency connects potential and observed wages:
+\[
+Y_{it}=Y_{it}(D_{it}).
+\tag{T5.2}
+\]
+If the researcher estimates an additive AKM equation that omits
+\(\omega_{ij}\), its observed residual is
+\[
+\varepsilon^A_{it}
+=
+\omega_{iD_{it}}
++\widetilde\varepsilon_{it}(D_{it}).
+\tag{T5.3}
+\]
+
+Sorkin--Warwar define the permanent match component as the mean of the raw
+worker--firm residual over all potential draws, not merely the periods in
+which the pair is observed.  Equation (T5.1) is their equation (2), with
+\(\omega_{ij}\) replacing their \(\mu_{ij}\) and with the potential firm
+argument made explicit.
+\textit{Source: Sorkin--Warwar, p.\ 6; notation translation is derived.}
+
+The permanent conditional-mean gain from moving \(j\) to \(k\) is
+\[
+\begin{aligned}
+g_i(j,k)
+&\equiv
+\left(\alpha_i+\psi_k+\omega_{ik}\right)
+-\left(\alpha_i+\psi_j+\omega_{ij}\right)\\
+&=
+\psi_k-\psi_j+\omega_{ik}-\omega_{ij}.
+\end{aligned}
+\tag{T5.4}
+\]
+Thus:
+
+\begin{enumerate}
+\item If \(\omega_{ij}=0\) for all \(i,j\), then
+  \(g_i(j,k)=\psi_k-\psi_j\) for every worker.  The permanent
+  conditional-mean firm effect is constant across workers.
+\item If \(\omega_{ij}\) can vary, firm effects can be heterogeneous even
+  when match effects average to zero in every mobility cell.
+\end{enumerate}
+
+\textit{Derived directly from (T5.1).  ``Constant'' here concerns the
+permanent conditional-mean firm contrast; it does not assert that every
+realized transitory potential-wage draw is identical.}
+
+\subsection{5.4 The two atomic dimensions}
+
+\subsubsection{5.4.1 Pure additive separability is an outcome restriction}
+
+Define
+\[
+\mathsf A_0:
+\qquad
+\omega_{ij}=0
+\quad\text{for every }(i,j).
+\tag{T5.5}
+\]
+This is a restriction on the wage surface.  It rules out a permanent
+worker--firm interaction.  By itself it says nothing about whether workers
+move in response to \(\widetilde\varepsilon_{it}(j)\).
+
+\textit{Source: Sorkin--Warwar, equation (6), p.\ 7; Volpe, PDF p.\ 21.
+The separation from mobility is derived.}
+
+\subsubsection{5.4.2 Exogenous mobility is a selection restriction}
+
+The pairwise conditioning convention used by Sorkin--Warwar and Kline can be
+written
+\[
+\mathsf E_\varepsilon:
+\qquad
+\mathbb E[
+\widetilde\varepsilon_{it}(j)
+\mid
+D_{is}=d,\ X_{is}=x
+]
+=0
+\tag{T5.6}
+\]
+for all admissible \(j,d,s,t,x\), and
+\[
+\mathsf E_\omega:
+\qquad
+\mathbb E[
+\omega_{ij}
+\mid
+D_{is}=d,\ X_{is}=x
+]
+=0.
+\tag{T5.7}
+\]
+These are selection restrictions: within every conditioning cell, mobility
+does not select the mean transitory shock or the mean permanent match
+component.  They do not require either component to be zero for every
+worker--firm pair.
+
+Sorkin--Warwar state (T5.6)--(T5.7) with their realized-error notation and
+for every \((s,t)\).  A conventional panel strict-exogeneity condition may
+instead condition jointly on the full history \(\mathcal H_i\):
+\[
+\mathbb E[
+\widetilde\varepsilon_{it}(D_{it})
+\mid
+\mathcal H_i
+]
+=0.
+\tag{T5.8}
+\]
+Equation (T5.8) is generally stronger than a list of pairwise conditional
+mean restrictions unless further conditions make the two conditioning
+schemes equivalent.
+
+\textit{Source for pairwise conditions: Sorkin--Warwar equations (3)--(4),
+p.\ 6; Kline, pp.\ 14--15.  The distinction between pairwise and full-history
+conditioning is derived.}
+
+\subsubsection{5.4.3 Why the two atomic restrictions are not nested}
+
+Neither \(\mathsf A_0\) nor \(\mathsf E_\varepsilon\) implies the other.
+Two counterexamples prove both directions.
+
+\paragraph{Exogenous mobility without additive separability.}
+Let there be two firms, let
+\[
+\omega_{i0}=\xi_i,
+\qquad
+\omega_{i1}=-\xi_i,
+\qquad
+\mathbb E[\xi_i]=0,
+\tag{T5.9}
+\]
+set \(\widetilde\varepsilon_{it}(j)=0\), and assign workers randomly,
+independently of \(\xi_i\).  Then
+\[
+\mathbb E[\omega_{ij}\mid D_{is}=d]=0
+\tag{T5.10}
+\]
+and mobility is exogenous to match quality, but
+\(\omega_{ij}\neq0\) with positive probability.  Moreover,
+\[
+g_i(0,1)=\psi_1-\psi_0-2\xi_i,
+\tag{T5.11}
+\]
+so the firm effect is heterogeneous.  Exogenous mobility holds and pure
+additive separability fails.
+
+\paragraph{Additive separability without exogenous mobility.}
+Set \(\omega_{ij}=0\) for every pair, let \(e_{it}\sim N(0,1)\), and suppose
+the current firm indicator satisfies
+\[
+D_{it}=\mathbf 1\{e_{it}>0\},
+\qquad
+\widetilde\varepsilon_{it}(j)=e_{it}.
+\tag{T5.12}
+\]
+The wage surface is additively separable, but
+\[
+\mathbb E[e_{it}\mid D_{it}=1]
+=
+\mathbb E[e_{it}\mid e_{it}>0]
+=
+\sqrt{\frac{2}{\pi}}
+\neq0.
+\tag{T5.13}
+\]
+Mobility is endogenous to the wage fluctuation.  Pure additive separability
+holds and exogenous mobility fails.
+
+\textit{Both counterexamples are derived.  They formalize the two violations
+listed on Volpe's slide: match interactions versus moves driven by wage
+shocks.}
+
+\subsection{5.5 Sorkin--Warwar: why their assumptions are nested}
+
+Using the atomic assumptions above, Sorkin--Warwar's definitions are
+\[
+\mathsf{EM}_{SW}
+\equiv
+\mathsf E_\varepsilon\cap\mathsf E_\omega,
+\tag{T5.14}
+\]
+and
+\[
+\mathsf{AS}_{SW}
+\equiv
+\mathsf E_\varepsilon\cap\mathsf A_0.
+\tag{T5.15}
+\]
+But \(\mathsf A_0\) mechanically implies \(\mathsf E_\omega\), because the
+conditional expectation of an identically zero variable is zero.  Therefore
+\[
+\boxed{
+\mathsf{AS}_{SW}
+\subset
+\mathsf{EM}_{SW}.
+}
+\tag{T5.16}
+\]
+The inclusion is strict: (T5.9)--(T5.11) satisfy
+\(\mathsf{EM}_{SW}\) but violate \(\mathsf{AS}_{SW}\).
+
+This proves the Sorkin statement:
+
+\begin{enumerate}
+\item Under \(\mathsf{EM}_{SW}\), match effects may be nonzero and individual
+  firm gains may be heterogeneous, but those effects average to zero within
+  the mobility conditioning cells.
+\item Under \(\mathsf{AS}_{SW}\), permanent match effects are zero
+  pointwise, so permanent firm contrasts are constant across workers.
+\end{enumerate}
+
+Neither assumption requires random matching of worker and firm fixed
+effects.  Workers may sort on \(\alpha_i\) and on the vector of average firm
+effects \(\{\psi_j\}_{j=1}^J\); the restriction concerns selection on the
+remaining match and transitory components.
+
+\textit{Source: Sorkin--Warwar, pp.\ 6--7; Sorkin Lecture 10, PDF
+pp.\ 97--105.  Set representation and strictness proof are derived.}
+
+\subsection{5.6 Volpe: why the two restrictions are separate pillars}
+
+Translating Volpe's \(\log W_{it}\) into the common outcome notation, his AKM
+equation is
+\[
+Y_{it}
+=
+\alpha_i+\psi_{D_{it}}+X_{it}'\beta+\varepsilon^A_{it}
+\tag{T5.17}
+\]
+and places two restrictions beneath it:
+
+\begin{enumerate}
+\item exogenous mobility: moves are independent of unobserved wage
+  fluctuations; and
+\item additive separability: worker--firm interactions are absent.
+\end{enumerate}
+
+In the atomic notation, the intended distinction is
+\[
+\mathsf{EM}_{V}\approx\mathsf E_\varepsilon,
+\qquad
+\mathsf{AS}_{V}\equiv\mathsf A_0.
+\tag{T5.18}
+\]
+These are separate and non-nested by (T5.9)--(T5.13).  The AKM causal
+interpretation requires both:
+\[
+\mathsf{AKM}_{V}
+\equiv
+\mathsf{EM}_{V}\cap\mathsf{AS}_{V}.
+\tag{T5.19}
+\]
+
+There is consequently no disagreement with Sorkin--Warwar:
+\[
+\underbrace{\mathsf{AS}_{V}}_{\text{pure functional form}}
+\neq
+\underbrace{\mathsf{AS}_{SW}}_{\text{functional form plus error exogeneity}}.
+\tag{T5.20}
+\]
+Indeed, after aligning conditioning sets,
+\(\mathsf{AKM}_{V}\) and \(\mathsf{AS}_{SW}\) contain the same two atomic
+ingredients.  The different diagram follows from attaching the name
+``additive separability'' to different bundles.
+
+Volpe's slide states a full-history form of strict exogeneity,
+\[
+\mathbb E[
+\varepsilon^A_{it}
+\mid
+\alpha_i,\{\psi_{D_{is}},X_{is}\}_{s=1}^T
+]
+=0.
+\tag{T5.21}
+\]
+Once \(\mathsf A_0\) is imposed, (T5.3) reduces to
+\(\varepsilon^A_{it}=\widetilde\varepsilon_{it}(D_{it})\), so (T5.21) is the
+mobility restriction on the remaining error.  Without \(\mathsf A_0\),
+(T5.21) is merely a zero-conditional-mean restriction on the composite
+\(\omega_{iD_{it}}+\widetilde\varepsilon_{it}(D_{it})\); it does not
+separately prove that either component is zero.
+
+\paragraph{Volpe's mover-change implication.}
+For worker \(i\) moving from \(j\) to \(k\), (T5.1) gives
+\[
+\Delta Y_i
+=
+\psi_k-\psi_j+\Delta X_i'\beta
++\omega_{ik}-\omega_{ij}
++\Delta\widetilde\varepsilon_i.
+\tag{T5.21a}
+\]
+Take two workers \(i\) and \(i'\) making the same transition and having the
+same \(\Delta X\).  Under transitory-error exogeneity,
+\[
+\begin{aligned}
+&\mathbb E[
+\Delta Y_i-\Delta Y_{i'}
+\mid
+i,i'\text{ make }j\to k,\ \Delta X_i=\Delta X_{i'}]\\
+&\qquad =
+\mathbb E[
+(\omega_{ik}-\omega_{ij})
+-(\omega_{i'k}-\omega_{i'j})
+\mid
+i,i'\text{ make }j\to k,\ \Delta X_i=\Delta X_{i'}].
+\end{aligned}
+\tag{T5.21b}
+\]
+Pure additive separability makes the right-hand side zero.  Mobility
+exogeneity is separately needed to remove the conditional mean of the
+transitory changes.  This is the algebra behind the conditional
+mover-change equality displayed on Volpe's slide.
+
+\textit{Source: Volpe, PDF p.\ 21, slide 4/35.  The decomposition and
+comparison to Sorkin--Warwar are derived.}
+
+\subsection{5.7 Kline: the multiple layers}
+
+\subsubsection{5.7.1 Layer 1: the statistical AKM model}
+
+Kline begins with
+\[
+Y_{it}
+=
+\alpha_i+\psi_{D_{it}}+X_{it}'\beta+\varepsilon^A_{it}
+\tag{T5.22}
+\]
+and the pairwise strict-exogeneity condition
+\[
+\mathsf{SE}_{K}:
+\qquad
+\mathbb E[
+\varepsilon^A_{it}
+\mid
+D_{is}=j,\ X_{is}=x
+]
+=0
+\quad
+\text{for all }(s,t,j,x).
+\tag{T5.23}
+\]
+Kline explicitly says that this condition embeds both:
+
+\begin{enumerate}
+\item mobility not driven by time-varying wage fluctuations; and
+\item an additively separable mapping from worker and firm heterogeneity to
+  expected log wages.
+\end{enumerate}
+
+This is the same bundling issue.  Equation (T5.22) supplies the additive
+conditional-mean map, while (T5.23) prevents the remaining disturbance from
+being selected by mobility.  If a permanent interaction is silently folded
+into \(\varepsilon^A_{it}\), zero conditional mean of the \emph{sum} in
+(T5.3) does not algebraically imply pointwise
+\(\omega_{ij}=0\); the additive interpretation is a maintained restriction
+on the wage map.
+
+\textit{Source: Kline, pp.\ 14--16.  The last decomposition is derived.}
+
+\subsubsection{5.7.2 Layer 2: causal edge effects without additive
+separability}
+
+Kline then drops the global AKM restriction and studies two-period potential
+wages.  His first three causal assumptions are:
+
+\begin{enumerate}
+\item \textbf{Exclusion:}
+  \(Y_{it}(d_1,d_2)=Y_{it}(d_t)\).
+\item \textbf{Parallel trends:}
+  \[
+  \mathbb E[
+  Y_{i2}(j)-Y_{i1}(j)
+  \mid
+  D_{i1}=j,D_{i2}=k
+  ]
+  =0.
+  \tag{T5.24}
+  \]
+\item \textbf{Stationarity of the selected movers' mean gain:}
+  \[
+  \begin{aligned}
+  &\mathbb E[
+  Y_{i1}(k)-Y_{i1}(j)
+  \mid D_{i1}=j,D_{i2}=k]\\
+  &\qquad =
+  \mathbb E[
+  Y_{i2}(k)-Y_{i2}(j)
+  \mid D_{i1}=j,D_{i2}=k]
+  \equiv\Delta_{jk}.
+  \end{aligned}
+  \tag{T5.25}
+  \]
+\end{enumerate}
+
+Under these assumptions,
+\[
+\mathbb E[
+Y_{i2}-Y_{i1}
+\mid
+D_{i1}=j,D_{i2}=k
+]
+=
+\Delta_{jk}.
+\tag{T5.26}
+\]
+The edge effect is therefore an average treatment effect for workers who
+actually move on edge \(j\to k\).  Treatment effects may be heterogeneous,
+the wage surface may be non-additive, and different edges may concern
+different selected worker populations.  Consequently, the edge effects need
+not obey AKM cycle restrictions or define a global firm ranking.
+
+\textit{Source: Kline, pp.\ 29--32, Assumptions 1--3 and Proposition 1.}
+
+\subsubsection{5.7.3 Layer 3: no selection on treatment gains}
+
+Kline next assumes
+\[
+\mathsf{NSG}_{K}:
+\qquad
+G_{i2}(j,k)
+\equiv
+Y_{i2}(k)-Y_{i2}(j)
+\ \perp\
+(D_{i1},D_{i2})
+\quad
+\text{for every }j\neq k.
+\tag{T5.27}
+\]
+Then
+\[
+\Delta_{jk}
+=
+\mathbb E[G_{i2}(j,k)]
+=
+\psi_k^{\mathrm{ATE}}-\psi_j^{\mathrm{ATE}},
+\tag{T5.28}
+\]
+so all edges refer to the same population and inherit transitivity.
+
+Crucially, (T5.27) is not a constant-effects assumption.  For example,
+\[
+G_{i2}(j,k)
+=
+\psi_k^{\mathrm{ATE}}-\psi_j^{\mathrm{ATE}}+\xi_i(j,k),
+\qquad
+\xi_i(j,k)\perp(D_{i1},D_{i2}),
+\tag{T5.29}
+\]
+allows nondegenerate treatment-effect heterogeneity while satisfying
+\(\mathsf{NSG}_{K}\).
+
+\textit{Source: Kline, pp.\ 32--34, Assumption 4 and Proposition 2;
+equation (T5.29) is a derived example.}
+
+\subsubsection{5.7.4 Kline's no-selection assumption is not identical to
+Sorkin--Warwar exogenous mobility}
+
+The restrictions act on different objects:
+
+\begin{enumerate}
+\item Sorkin--Warwar impose conditional \emph{mean} restrictions separately
+  on permanent match levels and transitory errors.
+\item Kline's Assumption 4 imposes full statistical independence between a
+  pairwise treatment \emph{gain} and the two-period assignment.
+\end{enumerate}
+
+Therefore there is no unconditional nesting:
+
+\begin{enumerate}
+\item Mean independence does not imply full independence.  Mobility cells
+  can have the same mean gain but different gain variances, satisfying the
+  relevant mean restriction while violating (T5.27).
+\item Independence of gains does not imply exogeneity of levels or
+  transitory trends.  Mobility can select on a component common to
+  \(Y_{i2}(j)\) and \(Y_{i2}(k)\) that cancels from their difference.
+\end{enumerate}
+
+With additional assumptions---joint distributional independence of all
+potential match components, exclusion, and the relevant time restrictions---
+a strengthened Sorkin-style mobility condition can imply Kline's
+no-selection-on-gains condition.  That implication does not follow from the
+published mean restrictions alone.
+
+\textit{Derived comparison of Sorkin--Warwar equations (3)--(4) with Kline
+Assumption 4.}
+
+\subsection{5.8 Relation to ordinary OLS exogeneity}
+
+\subsubsection{5.8.1 What \(\mathbb E[u\mid Z]=0\) says statistically}
+
+Consider
+\[
+Y=Z'\theta+u.
+\tag{T5.30}
+\]
+The conditional-mean restriction
+\[
+\mathbb E[u\mid Z]=0
+\tag{T5.31}
+\]
+is equivalent to
+\[
+\mathbb E[Y\mid Z]=Z'\theta.
+\tag{T5.32}
+\]
+Thus it simultaneously says that the conditional mean is correctly
+specified by the chosen regressors and that no remaining conditional-mean
+component is correlated with them.
+
+The weaker OLS normal equation
+\[
+\mathbb E[Zu]=0
+\tag{T5.33}
+\]
+is sufficient to characterize a population linear projection under the
+usual rank condition, but it does not imply (T5.31).  Moreover, neither
+(T5.31) nor (T5.33), by itself, gives \(\theta\) a causal interpretation.
+A causal interpretation also requires a treatment definition, consistency,
+and a design or selection assumption connecting observed and potential
+outcomes.
+
+\textit{Standard regression algebra; statements are derived.}
+
+\subsubsection{5.8.2 Heterogeneous effects can satisfy OLS exogeneity}
+
+For a binary treatment,
+\[
+Y_i
+=
+Y_i(0)+D_i\tau_i,
+\qquad
+\tau_i=Y_i(1)-Y_i(0).
+\tag{T5.34}
+\]
+Suppose the potential outcomes are mean independent of assignment:
+\[
+\mathbb E[Y_i(d)\mid D_i]
+=
+\mathbb E[Y_i(d)]
+\quad
+\text{for }d\in\{0,1\}.
+\tag{T5.35}
+\]
+Then
+\[
+\begin{aligned}
+\mathbb E[Y_i\mid D_i=1]
+-\mathbb E[Y_i\mid D_i=0]
+&=
+\mathbb E[Y_i(1)]-\mathbb E[Y_i(0)]\\
+&=
+\operatorname{ATE},
+\end{aligned}
+\tag{T5.36}
+\]
+even when \(\tau_i\) varies across workers.
+
+Set
+\[
+\theta_0=\mathbb E[Y_i(0)],
+\qquad
+\theta_1=\operatorname{ATE},
+\tag{T5.37}
+\]
+and define
+\[
+u_i
+=
+Y_i(0)-\theta_0
++D_i(\tau_i-\theta_1).
+\tag{T5.38}
+\]
+Under (T5.35),
+\[
+\mathbb E[u_i\mid D_i]=0.
+\tag{T5.39}
+\]
+Hence a correctly specified conditional-mean regression can identify an
+average causal effect without constant individual treatment effects.  This
+is the ordinary-OLS analogue of Sorkin--Warwar exogenous mobility.
+
+This binary-treatment regression is saturated: its conditional mean has
+only two treatment cells.  With continuous treatments, multiple treatments,
+or additional covariates, a linear OLS coefficient may instead be a
+particular weighted average of heterogeneous effects, and
+\(\mathbb E[u\mid Z]=0\) additionally imposes the stated linear conditional-
+mean form.
+
+\textit{Derived potential-outcome calculation.}
+
+\subsubsection{5.8.3 Constant effects do not eliminate selection bias}
+
+Conversely, suppose
+\[
+\tau_i=\tau
+\quad\text{for every }i,
+\tag{T5.40}
+\]
+but assignment selects on the untreated potential outcome:
+\[
+\mathbb E[Y_i(0)\mid D_i=1]
+\neq
+\mathbb E[Y_i(0)\mid D_i=0].
+\tag{T5.41}
+\]
+Then
+\[
+\begin{aligned}
+&\mathbb E[Y_i\mid D_i=1]
+-\mathbb E[Y_i\mid D_i=0]\\
+&\qquad =
+\tau
++\mathbb E[Y_i(0)\mid D_i=1]
+-\mathbb E[Y_i(0)\mid D_i=0],
+\end{aligned}
+\tag{T5.42}
+\]
+which is not generally \(\tau\).  Constant effects are an outcome
+restriction; exogeneity is a selection restriction.  One cannot substitute
+for the other.
+
+\textit{Derived potential-outcome calculation.}
+
+\subsubsection{5.8.4 The exact AKM--OLS dictionary}
+
+In an AKM regression, \(Z\) contains worker indicators, firm indicators, and
+observed covariates.  The omitted-interaction decomposition is
+\[
+u_{it}
+=
+\omega_{iD_{it}}
++\widetilde\varepsilon_{it}(D_{it}).
+\tag{T5.43}
+\]
+The correspondence is:
+
+\begin{longtable}{p{0.29\textwidth}p{0.31\textwidth}p{0.31\textwidth}}
+\textbf{Ordinary causal regression} &
+\textbf{AKM analogue} &
+\textbf{What it does not imply} \\
+\hline
+Correct conditional-mean functional form &
+Additive worker plus firm expected-wage map &
+Exogenous mobility \\
+Mean independence of potential outcomes or gains &
+Mobility does not select unobserved wage components or firm gains &
+Constant worker-specific firm effects \\
+Constant individual treatment effect &
+No permanent worker--firm interaction &
+Mobility exogeneity \\
+\(\mathbb E[u\mid Z]=0\) for the maintained equation &
+Strict exogeneity of the correctly defined AKM residual &
+A decomposition showing separately why the residual has mean zero \\
+\end{longtable}
+
+The last row is important.  If \(u\) is defined as a composite residual,
+\(\mathbb E[u\mid Z]=0\) can result from averaging or cancellation.  It does
+not logically establish that the structural interaction is zero and the
+transitory shock is separately exogenous.  Those are additional
+interpretive restrictions.
+
+\textit{Derived dictionary from (T5.1)--(T5.43).}
+
+\subsection{5.9 Implications for the semistructural project}
+
+The project's low-rank wage equation deliberately permits
+worker--firm interactions:
+\[
+Y_{it}(j)
+=
+\alpha_i+\psi_j
++\mathbf u_i'\Lambda\mathbf v_j
++X_{it}'\beta
++\widetilde\varepsilon_{it}(j).
+\tag{T5.44}
+\]
+Therefore the project generally rejects pure AKM additive separability
+\(\mathsf A_0\).  This does \emph{not} force mobility to be endogenous.
+The assignment process can still satisfy a mean-independence or
+no-selection-on-gains condition.
+
+The assumptions should be recorded in separate blocks:
+
+\begin{enumerate}
+\item \textbf{Wage-surface block:} state whether
+  \(\mathbf u_i'\Lambda\mathbf v_j\) is zero, low rank, or unrestricted.
+\item \textbf{Mobility block:} state whether assignment is mean independent
+  of transitory shocks, permanent interaction terms, potential wage levels,
+  or pairwise gains.  These are different restrictions.
+\item \textbf{Time block:} state exclusion, parallel trends, and stationarity
+  when mover changes are given a causal interpretation.
+\item \textbf{Target block:} distinguish a selected-mover edge effect,
+  an unconditional average firm effect, a constant individual firm effect,
+  and a descriptive observed-match wage statistic.
+\end{enumerate}
+
+This separation yields four consequences:
+
+\begin{enumerate}
+\item The BS20 observed-wage sorting functional does not require additive
+  separability or a causal mobility assumption merely to exist as a
+  descriptive observed-match object.  Its estimator still requires the
+  BS20 sampling conditions.
+\item A Kline edge effect can have a causal selected-mover interpretation
+  under exclusion, parallel trends, and stationarity even when the project
+  interaction is nonzero.
+\item Turning edge effects into a common cardinal firm ranking requires an
+  additional restriction such as no selection on treatment gains; low rank
+  alone does not provide that restriction.
+\item Imposing a zero interaction term does not make the firm effect causal
+  unless the mobility/error condition is also imposed.
+\end{enumerate}
+
+\textit{Items 1--4 are derived from Tasks 1--4, Sorkin--Warwar pp.\ 6--7,
+Volpe PDF p.\ 21, and Kline pp.\ 29--34.}
+
+\clearpage
+\appendix
+\section{Canonical notation dictionary}
+
+The tables below are the single notation reference for the note.  Moving them
+here shortens the advisor-facing argument without changing any symbol or
+definition.
+
+\subsection{Task 1 notation}
+
+\begin{longtable}{p{0.19\textwidth}p{0.53\textwidth}p{0.21\textwidth}}
+\textbf{Symbol} & \textbf{Meaning} & \textbf{Source or status} \\
+\hline
+\(\mathcal I,\mathcal J\) & Sets of workers and firms. & LOO-v2, p.\ 9. \\
+\(I,J\) & Numbers of workers and firms; also random worker and firm identities
+when written inside expectations.  Context distinguishes the uses. &
+LOO-v2, pp.\ 9--10. \\
+\(i,j\) & Particular worker and firm indices.  The pair
+\((i_0,j_0)\) denotes a selected missing cell. & LOO-v2, p.\ 9; the subscript
+zero is derived notation. \\
+\(\mathcal E\) & Observed bipartite edge set:
+\((i,j)\in\mathcal E\) when the pair occurs in the data. & LOO-v2, p.\ 9. \\
+\(\mathcal T\) & Declared target set on which the maintained schedule is
+defined; often \(\operatorname{supp}(P_I\otimes P_J)\). & LOO-v2, pp.\ 9--10. \\
+\(Y\) & Observed log wage. & LOO-v2, p.\ 9; BS20, pp.\ 5, 18--20. \\
+\(m_{ij}\) & Maintained systematic wage for pair \((i,j)\), including target
+pairs that may be unobserved. & LOO-v2, pp.\ 9--10, equations (14)--(15). \\
+\(m_{\mathcal E}\) & Vector of maintained wage cells on observed edges. &
+LOO-v2, p.\ 19, equation (53). \\
+\(P^{\mathrm{obs}}_{IJ}\) & Observed joint worker--firm assignment
+distribution. & LOO-v2, pp.\ 9, 15. \\
+\(W=(w_{ij})\) & Matrix representation of \(P^{\mathrm{obs}}_{IJ}\), with
+\(w_{ij}=P^{\mathrm{obs}}_{IJ}(I=i,J=j)\). & LOO-v2, p.\ 40. \\
+\(P_I,P_J\) & Worker and firm marginals of \(P^{\mathrm{obs}}_{IJ}\). &
+LOO-v2, pp.\ 10, 15. \\
+\(p_i,q_j\) & Marginal probabilities
+\(p_i=\sum_jw_{ij}\) and \(q_j=\sum_iw_{ij}\). & Derived from the definition
+of marginals; LOO-v2, pp.\ 10, 40. \\
+\(p,q\) & Vectors collecting \(p_i\) and \(q_j\). & Derived notation. \\
+\(P^\times\) & Independent-assignment benchmark
+\(P^\times=P_I\otimes P_J\), whose cell probability is \(p_iq_j\). &
+LOO-v2, p.\ 10, equation (18). \\
+\(P,R,r_{ij}\) & A generic probability distribution \(P\), or its probability
+matrix \(R=(r_{ij})\), used when stating formulas that apply to either the
+observed or product assignment. & Derived notation. \\
+\(\operatorname{supp}(P)\) & Cells receiving positive probability under a
+distribution \(P\). & Standard notation used in LOO-v2, p.\ 20. \\
+\(\mathbb E_P,\operatorname{Var}_P,\operatorname{Cov}_P\) & Expectation,
+variance, and covariance under distribution \(P\). & Standard operators. \\
+\(\bar m_\times\) & Product-population mean
+\(\mathbb E_{P^\times}[m_{IJ}]\). & Derived notation. \\
+\(C^w_{\mathrm{assign}}(m)\) & One half of the difference between the observed
+and product-assignment variances of the same fixed wage schedule. &
+LOO-v2, p.\ 15, equation (42). \\
+\(R_{\mathcal E}\) & Selection matrix that extracts observed cells from the
+vectorized full schedule. & LOO-v2, p.\ 19, equation (53). \\
+\(\mathcal K_{\mathcal E}\) & Missing-cell perturbation space
+\(\ker(R_{\mathcal E})\). & LOO-v2, p.\ 19, equation (54). \\
+\(e_{i_0j_0}\) & Coordinate vector equal to one at cell \((i_0,j_0)\) and zero
+elsewhere. & Derived notation; LOO-v2 uses the same construction on p.\ 39. \\
+\(\delta\) & Arbitrary scalar change to one missing cell. & Derived notation. \\
+\(m^\delta\) & Observationally equivalent schedule
+\(m+\delta e_{i_0j_0}\). & Derived notation. \\
+\(\omega_0\) & Product probability \(p_{i_0}q_{j_0}\) on the selected missing
+cell. & Derived notation. \\
+\(\mu_0\) & Baseline value \(m_{i_0j_0}\) in the selected missing cell. &
+Derived notation. \\
+\(a_i,b_j,h_{ij}\) & Product-weighted worker component, firm component, and
+double-centered interaction in
+\(m_{ij}=\mu+a_i+b_j+h_{ij}\). & LOO-v2, p.\ 11, equations (19)--(23). \\
+\(\mu\) & Grand product-weighted mean in the canonical decomposition. &
+LOO-v2, p.\ 11, equation (19). \\
+\(\mathcal X,\mathcal Y\) & BS20 worker- and firm-characteristic spaces. &
+BS20, pp.\ 4--6. \\
+\(x,y,z\) & BS20 worker characteristics, firm characteristics, and
+match-specific wage determinant; \(x_i\) and \(y_j\) are the characteristics
+of worker \(i\) and firm \(j\). & BS20, pp.\ 4--6. \\
+\(w(x,y,z)\) & BS20 log-wage function. & BS20, pp.\ 4--6. \\
+\(F,G\) & Cross-sectional distributions of worker and firm characteristics. &
+BS20, pp.\ 4--7. \\
+\(\Phi_x,\Psi_y\) & Conditional distributions of the firm matched to worker
+characteristic \(x\), and of the worker matched to firm characteristic \(y\).
+& BS20, pp.\ 4--6. \\
+\(\lambda(x),\mu(y)\) & BS20 worker and firm types: expected log wage received
+conditional on \(x\), and expected log wage paid conditional on \(y\). &
+BS20, p.\ 5, equations (1)--(2). \\
+\(\lambda_i,\mu_j\) & Shorthand for \(\lambda(x_i)\) and \(\mu(y_j)\). &
+Derived notation. \\
+\(\bar w\) & Common cross-sectional mean log wage. & BS20, p.\ 6,
+equation (4). \\
+\(\sigma_\lambda,\sigma_\mu\) & Cross-sectional standard deviations of BS20
+worker and firm types; their squares are the corresponding variances. &
+BS20, p.\ 6, equation (5); p.\ 20, equation (16). \\
+\(c_{\mathrm{BS}}\) & Covariance between \(\lambda(X)\) and \(\mu(Y)\) among
+observed matches. & BS20, p.\ 6, equation (6); pp.\ 20--21, equation (17). \\
+\(\rho_{\mathrm{BS}}\) & BS20 correlation
+\(c_{\mathrm{BS}}/(\sigma_\lambda\sigma_\mu)\). & BS20, p.\ 5,
+equation (3). \\
+\(M_i,N_j\) & Numbers of observed matches for worker \(i\) and firm \(j\). &
+BS20, pp.\ 19, 21. \\
+\(m,m',n,n'\) & BS20 focal and other-match indices from the worker and firm
+perspectives.  These are indices, not the wage schedule \(m_{ij}\). &
+BS20, pp.\ 19--20. \\
+\(n(i,m)\) & Firm-side index of the same match that worker \(i\) labels as
+match \(m\). & BS20, pp.\ 19--20. \\
+\(w^w_{i,m},w^f_{j,n}\) & Average log wage in a match, indexed from the worker
+and firm perspectives. & BS20, p.\ 19. \\
+\(t^w_{i,m},t^f_{j,n}\) & Durations of those matches. & BS20, p.\ 19. \\
+\(T_i^w,T_j^f\) & Total observed employment time of worker \(i\), and total
+observed employment supplied by firm \(j\). & BS20, p.\ 19. \\
+\(\varepsilon^w_{i,m},\varepsilon^f_{j,n}\) & Worker-side and firm-side
+match-wage errors in the BS20 auxiliary equations. & BS20, p.\ 21,
+Auxiliary Assumptions 1--4. \\
+\(\widehat\lambda_i,\widehat{\lambda_i^2}\) & BS20 estimators of a worker's
+type and squared type. & BS20, p.\ 22, equation (18). \\
+\(\widehat\mu_j,\widehat{\mu_j^2}\) & BS20 estimators of a firm's type and
+squared type. & BS20, p.\ 23, equation (21). \\
+\(\widehat c_{i,m}\) & Leave-focal-match-out product estimating the type
+product for the worker and firm in focal match \((i,m)\). & BS20, p.\ 23,
+equation (23). \\
+\(\widehat{\bar w},\widehat c_{\mathrm{BS}},\widehat\rho_{\mathrm{BS}}\) &
+BS20 estimators of the mean wage, type covariance, and type correlation. &
+BS20, pp.\ 23--24, equations (19), (24), and (25). \\
+\(\tau\) & BS20 replication index: the numbers of each worker and firm
+characteristic are multiplied by \(\tau\), and consistency is studied as
+\(\tau\to\infty\). & BS20, p.\ 18. \\
+\(s_{ij}\) & Constructed additive BS type-score schedule
+\(\lambda_i+\mu_j-\bar w\). & Derived below. \\
+\end{longtable}
+\subsection{Task 2 notation}
+
+The chart retains all Task 1 notation.  The meeting rate is written
+\(\rho_{\mathrm{meet}}\) here to prevent confusion with the BS20 sorting
+correlation \(\rho_{\mathrm{BS}}\).  BS24 writes the meeting-rate parameter as
+\(\rho\).
+
+\begin{longtable}{p{0.20\textwidth}p{0.52\textwidth}p{0.21\textwidth}}
+\textbf{Symbol} & \textbf{Meaning} & \textbf{Source or status} \\
+\hline
+\(x,y\) & Ordered worker and firm characteristics/types in BS24.  In BS20
+these may be vector-valued characteristics before they are mapped into wage
+types. & BS20, pp.\ 4--6; BS24, pp.\ 4--5. \\
+\(\lambda(x),\mu(y)\) & BS20 expected log-wage worker and firm types.  These
+remain the canonical symbols for the BS20 estimand. & BS20, p.\ 5,
+equations (1)--(2). \\
+\(\bar w\) & BS20 common mean log wage.  This scalar is distinct from the
+BS24 type-specific reservation wage \(\bar w_x\). & BS20, p.\ 6,
+equation (4). \\
+\(\sigma_\lambda^2,\sigma_\mu^2\) & Variances of BS20 worker and firm wage
+types. & BS20, pp.\ 6, 20, equations (5) and (16). \\
+\(c_{\mathrm{BS}}\) & Covariance of BS20 wage types in observed matches. &
+BS20, pp.\ 6, 20--21, equations (6) and (17). \\
+\(\rho_{\mathrm{BS}}\) & BS20 sorting estimand
+\(c_{\mathrm{BS}}/(\sigma_\lambda\sigma_\mu)\). & BS20, p.\ 5,
+equation (3). \\
+\(\rho_{\mathrm{AKM}}\) & Correlation between AKM worker and firm effects in
+observed matches, used by BS20 as a comparator. & BS20, pp.\ 7--9. \\
+\(\widehat{\bar w}\) & BS20 estimator of the common mean wage. & BS20,
+p.\ 23, equation (19). \\
+\(\widehat\sigma_\lambda^2,\widehat\sigma_\mu^2\) & BS20 estimators of the
+two type variances. & BS20, pp.\ 23--24, equations (20) and (22). \\
+\(\widehat c_{\mathrm{BS}},\widehat\rho_{\mathrm{BS}}\) & BS20 covariance and
+correlation estimators. & BS20, p.\ 24, equations (24)--(25). \\
+\(M_i,N_j\) & Numbers of distinct observed matches for worker \(i\) and firm
+\(j\). & BS20, pp.\ 19--22. \\
+\(m,m',n,n'\) & Focal and other-match indices in BS20.  They are not the
+project wage schedule \(m_{ij}\). & BS20, pp.\ 19--23. \\
+\(\tau\) & BS20 replication index governing the number of workers and firms;
+the number of observations per unit may remain bounded as
+\(\tau\to\infty\). & BS20, p.\ 18. \\
+\(f_{x,y}\) & BS24 deterministic production scale for worker type \(x\) and
+firm type \(y\). & BS24, pp.\ 5--7. \\
+\(z,G,g\) & Match-specific productivity, its cumulative distribution, and
+its density. & BS24, pp.\ 5--6. \\
+\(z_0,\theta\) & Pareto scale and shape parameters.  The exact finite-mean
+results use \(\theta>1\). & BS24, pp.\ 10--12. \\
+\(r,\delta,\gamma\) & Discount rate, exogenous separation rate, and worker
+Nash-bargaining share. & BS24, pp.\ 4--6. \\
+\(\rho_{\mathrm{meet}}\) & Canonical symbol for the BS24 meeting-rate
+parameter, written \(\rho\) in that paper. & BS24, p.\ 5. \\
+\(u_x,v_y\) & Steady-state measures of unemployed type-\(x\) workers and
+vacant type-\(y\) jobs. & BS24, pp.\ 5, 8--9. \\
+\(\bar w_x,\bar\pi_y\) & Reservation wage of a type-\(x\) worker and
+reservation profit of a type-\(y\) firm. & BS24, pp.\ 6--8. \\
+\(\bar z_{x,y}\) & Match-acceptance productivity threshold
+\((\bar w_x+\bar\pi_y)/f_{x,y}\). & BS24, p.\ 7, equation (6). \\
+\(p_{x,y}\) & Canonical shorthand for the match-acceptance probability
+\(1-G(\bar z_{x,y})\). & Derived from BS24 equation (6). \\
+\(V^s_{x,y}(z)\) & Total surplus created by an \((x,y,z)\) match. & BS24,
+pp.\ 6--7, equation (5). \\
+\(W_{x,y}(z)\) & Equilibrium wage paid in an accepted
+\((x,y,z)\) match. & BS24, pp.\ 7--8, equation (9). \\
+\(\bar\phi_{x,y}\) & Steady-state measure of accepted matches between types
+\(x\) and \(y\). & BS24, p.\ 8, equation (13). \\
+\(\omega_{i,j}\) & Observed wage of worker \(i\) at firm \(j\) in the BS24/25
+analytic wage equation. & BS24/25 revision, pp.\ 10--12. \\
+\(\alpha_x^*,\psi_y^*\) & BS24/25 type-level worker and firm components of
+accepted-match wages. & BS24/25 revision, pp.\ 11--13,
+equations (21)--(22). \\
+\(\varepsilon_{i,j}\) & Conditional mean-zero accepted-match wage residual in
+the Pareto model. & BS24/25 revision, pp.\ 11--13,
+equations (21)--(23). \\
+\(\bar V^s_{x,y}\) & BS24 average surplus conditional on an \((x,y)\) meeting
+becoming a match. & BS24, pp.\ 31--32, equation (33). \\
+\(\bar V^{s,m}_{x,y}\) & BS24 expected surplus from a random \((x,y)\)
+meeting before match quality is known.  The superscript \(m\) is the paper's
+notation for ``meeting,'' not the project wage schedule. & BS24, pp.\ 31--32,
+equation (32). \\
+\(\operatorname{ATT}_x(y)\) & Worker-value gain from an \((x,y)\) meeting
+conditional on acceptance in the 2025 revision. & BS24/25 revision,
+pp.\ 9--11, equation (19). \\
+\(\operatorname{ITT}_x(y)\) & Worker-value gain from creating a random
+\((x,y)\) meeting before knowing whether it will be accepted. & BS24/25
+revision, pp.\ 9--11, equations (17)--(18). \\
+\(\alpha_i,\psi_j\) & Individual worker and firm fixed effects in the
+conventional two-way fixed-effects regression.  These are estimators'
+parameters, distinct from the type-level structural components
+\(\alpha_x^*,\psi_y^*\). & BS24/25 revision, pp.\ 15--17,
+equation (30). \\
+\(\widehat\alpha_i,\widehat\psi_j\) & OLS estimates of the individual
+two-way fixed effects. & BS24/25 revision, pp.\ 16--18. \\
+\(B\) & Multiplicative attenuation factor for estimated firm-component
+differences under endogenous separations in the 2025 revision. & BS24/25
+revision, pp.\ 26--28, Proposition 7. \\
+\end{longtable}
+\subsection{Task 3 notation}
+
+This chart inherits all notation from Tasks 1 and 2 without changing it.  It
+lists every new symbol used in Task 3 and repeats the old symbols needed to
+read the map without looking backward.  In particular,
+\(\rho_{\mathrm{meet}}\) remains the meeting rate and
+\(\rho_{\mathrm{BS}}\) remains the sorting correlation.
+
+\begin{longtable}{p{0.20\textwidth}p{0.52\textwidth}p{0.21\textwidth}}
+\textbf{Symbol} & \textbf{Meaning} & \textbf{Source or status} \\
+\hline
+\(\mathcal I,\mathcal J;i,j\) & Project worker and firm sets; individual
+worker and firm indices. & LOO-v2, p.\ 9. \\
+\(I,J\) & Random worker and firm identities when used inside probabilities,
+expectations, and variances. & LOO-v2, pp.\ 9--10. \\
+\(k,\ell;x',y'\) & Dummy worker and firm indices, and dummy BS worker- and
+firm-type indices, used only inside sums. & Derived indexing notation. \\
+\(x_i,y_j\) & BS structural types of worker \(i\) and firm \(j\). &
+BS24/25 revision, pp.\ 4--5. \\
+\(x_1,x_2,y_1,y_2\) & Two ordered worker types and two ordered firm types used
+to state the BS log-wage submodularity inequality. & BS24/25 revision,
+pp.\ 17--18. \\
+\(\mathcal X,\mathcal Y;X,Y\) & Finite worker- and firm-type sets; their
+numbers of elements. & BS24/25 revision, pp.\ 4--5. \\
+\(P^{\mathrm{obs}}_{IJ},W,w_{ij}\) & Observed individual assignment law, its
+matrix, and cell probabilities. & LOO-v2, pp.\ 9, 40. \\
+\(P_I,P_J\) & Worker and firm marginals of the observed individual assignment
+law. & LOO-v2, pp.\ 10, 15. \\
+\(p_i,q_j\) & Individual worker and firm marginals of
+\(P^{\mathrm{obs}}_{IJ}\). & LOO-v2, pp.\ 10, 40. \\
+\(P^\times\) & Project product benchmark
+\(P_I\otimes P_J\), with cell mass \(p_iq_j\). & LOO-v2, p.\ 10. \\
+\(Y,m_{ij}\) & Project log-wage outcome and maintained conditional mean log
+wage for pair
+\((i,j)\), including target pairs when a completion is imposed. & LOO-v2,
+pp.\ 9--10. \\
+\(\mu,a_i,b_j,h_{ij}\) & Product-weighted grand mean, worker component, firm
+component, and double-centered interaction in
+\(m_{ij}=\mu+a_i+b_j+h_{ij}\). & LOO-v2, p.\ 11. \\
+\(\mathbf u_i,\mathbf v_j,\Lambda\) & Project worker and firm interaction
+factor vectors and coefficient matrix in
+\(h_{ij}=\mathbf u_i'\Lambda\mathbf v_j\).  Boldface prevents confusion with
+BS unemployment and vacancy measures. & LOO-v2, pp.\ 21--23; boldface is a
+notational clarification. \\
+\(r_0\) & Maintained project interaction rank in Task 3.  It is distinct from
+the BS discount rate \(r\). & Derived clarification of LOO-v2's \(r\). \\
+\(Q_F,H_F,A_h,C^w_{\mathrm{assign}}\) & Project average within-worker
+cross-firm dispersion, heterogeneity in firm contrasts, mean favorable-cell
+assignment, and fixed-schedule variance assignment contribution. & LOO-v2,
+pp.\ 12--17. \\
+\(\lambda_i^{\mathrm{BS}},\mu_j^{\mathrm{BS}}\) & BS20 expected log-wage type
+of individual worker \(i\) and firm \(j\).  Superscripts distinguish the firm
+type from the project's scalar \(\mu\). & BS20, p.\ 5; superscripts are
+derived clarification. \\
+\(c_{\mathrm{BS}},\rho_{\mathrm{BS}}\) & BS20 covariance and correlation
+between worker and firm wage types in observed matches. & BS20, pp.\ 5--7. \\
+\(\bar w,\sigma_\lambda,\sigma_\mu\) & BS20 common observed mean log wage and
+standard deviations of its worker and firm wage types.  The scalar
+\(\bar w\) is distinct from the later paper's reservation wage
+\(\bar w_x\). & BS20, pp.\ 5--7. \\
+\(T_{\mathrm{BS}}(m,P^{\mathrm{obs}}_{IJ})\) & Derived name for the mapping
+from a wage schedule and assignment law to \(\rho_{\mathrm{BS}}\). & Derived
+notation. \\
+\(\mathcal S_{\mathrm{interface}}\) & Ordered pair
+\((m,P^{\mathrm{obs}}_{IJ})\), used as a name for the common empirical
+interface. & Derived notation. \\
+\(f_{x,y}\) & BS deterministic type-pair production scale. & BS24/25
+revision, pp.\ 5--7. \\
+\(z,G,g,z_0,\theta\) & Match-specific productivity draw, its CDF and density,
+and the Pareto scale and shape parameters. & BS24/25 revision, pp.\ 5,
+11--12. \\
+\(t\) & A possible realized match-quality value used as the upper argument
+of the truncated CDF. & Derived dummy value. \\
+\(r,\delta,\gamma\) & Discount rate, exogenous separation rate, and worker
+Nash-bargaining share.  In Task 3, \(\delta\) always has this BS meaning; the
+Task 1 missing-cell perturbation called \(\delta\) was local to that proof. &
+BS24/25 revision, pp.\ 4--6; collision clarification is derived. \\
+\(\rho_{\mathrm{meet}}\) & BS meeting-rate parameter, denoted \(\rho\) in
+the paper. & BS24/25 revision, p.\ 5; canonical renaming from Task 2. \\
+\(u_x,v_y\) & Steady-state measures of unemployed type-\(x\) workers and
+vacant type-\(y\) jobs. & BS24/25 revision, pp.\ 5, 8. \\
+\(\bar w_x,\bar\pi_y\) & Type-\(x\) reservation wage and type-\(y\)
+reservation profit. & BS24/25 revision, pp.\ 6--8. \\
+\(\bar z_{x,y},p_{x,y}\) & Acceptance threshold and acceptance probability,
+\(\bar z_{x,y}=(\bar w_x+\bar\pi_y)/f_{x,y}\) and
+\(p_{x,y}=1-G(\bar z_{x,y})\). & BS24/25 revision, pp.\ 6--8; the \(p\)
+shorthand is canonical from Task 2. \\
+\(V^s_{x,y}(z),W_{x,y}(z)\) & Total match surplus and equilibrium accepted
+wage for a realized \(z\). & BS24/25 revision, pp.\ 6--8. \\
+\(\bar\phi_{x,y},\bar\Phi\) & Steady-state mass of accepted \((x,y)\)
+matches and total accepted-match mass
+\(\bar\Phi=\sum_{x,y}\bar\phi_{x,y}\). & First symbol: BS24/25 revision,
+p.\ 8; total is derived. \\
+\(\Pi^{\mathrm{obs}}_{x,y}\) & Observed joint type distribution among
+accepted matches, \(\bar\phi_{x,y}/\bar\Phi\). & Derived from BS steady-state
+match masses. \\
+\(\pi_x,\kappa_y\) & Worker- and firm-type marginals of
+\(\Pi^{\mathrm{obs}}_{x,y}\).  These are not the reservation profit
+\(\bar\pi_y\). & Derived notation. \\
+\(\omega_{i,j},\varepsilon_{i,j}\) & Realized accepted wage in levels and
+its Pareto-model conditional mean-zero residual. & BS24/25 revision,
+pp.\ 11--13. \\
+\(\alpha_x^*,\psi_y^*\) & BS Pareto worker- and firm-type components of the
+accepted wage in levels. & BS24/25 revision, pp.\ 11--13. \\
+\(m^{L}_{ij}\) & Conditional mean accepted wage in levels for individual
+pair \((i,j)\). & Derived from BS Proposition 2. \\
+\(A_i,B_j,\bar A,\bar B\) & Individual lifts of the BS worker and firm
+level-wage components and their product-weighted marginal means. & Derived
+notation for the level-wage bridge. \\
+\(\mu^L,a_i^L,b_j^L,h_{ij}^L\) & Canonical project decomposition applied to
+the conditional mean accepted wage in levels. & Derived notation. \\
+\(Q_F^L,H_F^L,A_h^L,C_{\mathrm{assign}}^{w,L}\) & Project functionals applied
+to the level-wage schedule rather than the original log-wage schedule. &
+Derived notation. \\
+\(\ell_{x,y},m^{\log}_{ij}\) & Conditional mean accepted log wage in a type
+cell and its individual-pair lift,
+\(m^{\log}_{ij}=\ell_{x_i,y_j}\). & First object: BS24/25 revision,
+pp.\ 17--18; individual lift is derived. \\
+\(\ell_{x\cdot},\ell_{\cdot y},\ell_{\cdot\cdot}\) & Product-weighted
+worker-type row mean, firm-type column mean, and grand mean of
+\(\ell_{x,y}\), using \(\kappa_y\) and \(\pi_x\). & Derived canonical
+centering. \\
+\(M^\ell\) & Double-centered type-cell mean log-wage matrix with element
+\(M^\ell_{x,y}=\ell_{x,y}-\ell_{x\cdot}-\ell_{\cdot y}
++\ell_{\cdot\cdot}\). & Derived from LOO-v2 canonical decomposition. \\
+\(K_\ell,L_\ell,\Sigma_\ell,R_\ell\) & Rank and thin singular-value
+decomposition of \(M^\ell\):
+\(K_\ell=\operatorname{rank}(M^\ell)\) and
+\(M^\ell=L_\ell\Sigma_\ell R_\ell'\). & Standard linear algebra; derived
+application. \\
+\(\mathbf u_i^\ell,\mathbf v_j^\ell\) & Individual project factors obtained
+by lifting rows of \(L_\ell\Sigma_\ell^{1/2}\) and
+\(R_\ell\Sigma_\ell^{1/2}\) from types to individuals. & Derived. \\
+\(I_{K_\ell}\) & \(K_\ell\)-dimensional identity matrix used as the
+interaction coefficient after the SVD factorization. & Standard notation. \\
+\(K\) & An independent draw from the firm marginal \(P_J\) when \(J\) and
+\(K\) index a pair of firms in \(H_F\). & LOO-v2, p.\ 13. \\
+\end{longtable}
+\subsection{Task 4 notation}
+
+Tasks 1--3 notation remains unchanged.  The chart defines every new symbol
+used in Task 4.  Superscripts identify model-specific objects and prevent
+collisions with the project's canonical \((\mu,a_i,b_j,h_{ij})\).
+
+\begin{longtable}{p{0.20\textwidth}p{0.52\textwidth}p{0.21\textwidth}}
+\textbf{Symbol} & \textbf{Meaning} & \textbf{Source or status} \\
+\hline
+\(\mathfrak M\) & A generic candidate economic or statistical model. &
+Derived notation. \\
+\(m^{\mathfrak M}_{ij},P^{\mathfrak M}_{IJ}\) & Conditional mean observed
+wage schedule and joint observed-match assignment law generated by
+\(\mathfrak M\). & Derived generic interface. \\
+\(p_i^{\mathfrak M},q_j^{\mathfrak M}\) & Worker and firm marginals of
+\(P^{\mathfrak M}_{IJ}\). & Derived. \\
+\(\lambda_i^{\mathfrak M},\nu_j^{\mathfrak M}\) & BS expected-wage worker and
+firm types implied by \(\mathfrak M\).  The symbol \(\nu\) replaces the BS
+symbol \(\mu\) locally to avoid collision with the project grand mean. &
+Derived translation of BS20, p.\ 5. \\
+\(\rho_{\mathrm{BS}}^{\mathfrak M}\) & BS20 population correlation implied
+by model \(\mathfrak M\). & Derived model-specific notation. \\
+\(\rho_{\mathrm{BS}}^{\mathrm{data}}\) & BS20 population correlation in the
+empirical matched-wage distribution, used as a model-validation target. &
+Derived label. \\
+\(\mathsf M\) & Indicator that a potential meeting/access event becomes an
+observed match.  It is unrelated to the interaction matrices called \(M\) in
+earlier sections. & Derived selection notation. \\
+\(P^{\mathrm{meet}}_{IJ},s_{ij}\) & Distribution of potential meetings and
+conditional acceptance probability
+\(s_{ij}=\Pr(\mathsf M=1\mid I=i,J=j,\text{meeting})\). & Derived generic
+selection notation. \\
+\(d_{ij}^{\mathrm{obs}}\) & Expected duration, survival, or observation
+weight of an accepted \((i,j)\) match.  It is common in a one-shot sample or
+when all match-separation rates are equal. & Derived stock-sampling
+correction. \\
+\(G_{ij},\operatorname{ITT}_{ij},\operatorname{ATT}_{ij}\) & Worker gain from
+a potential meeting, its mean before acceptance is known, and its conditional
+mean given acceptance. & Derived generalization of BS24/25,
+pp.\ 9--14. \\
+\(D_{it},Y_{it}(j)\) & Firm or sector occupied by worker \(i\) at time \(t\),
+and the potential log wage at firm/sector \(j\). & Kline, pp.\ 29--34;
+GKLP, pp.\ 12--14. \\
+\(X_t,\beta\) & Kline time-varying covariates and their coefficient in the
+two-period adjusted wage change. & Kline, pp.\ 15, 18--19. \\
+\(R_i,R\) & Covariate-adjusted wage change for mover \(i\), and its vector. &
+Kline, pp.\ 18--19. \\
+\(\mathcal E_F,|\mathcal E_F|\) & Directed firm-mobility edge set and its
+number of edges.  This is distinct from the worker--firm observation graph
+\(\mathcal E\) in Task 1. & Kline, pp.\ 16--19; subscript is derived. \\
+\(E_{\mathrm{edge}}\) & Mover-by-edge indicator matrix, denoted \(E\) by
+Kline. & Kline, p.\ 19; subscript is a clarification. \\
+\(B_{\mathrm{inc}}\) & Firm-by-edge incidence matrix, denoted \(B\) by
+Kline. & Kline, pp.\ 17--19; subscript is a clarification. \\
+\(\Delta,\Delta_{jk}\) & Vector of unrestricted Kline edge effects and the
+effect on the directed transition \(j\to k\). & Kline, p.\ 19. \\
+\(u^{K}_i,u^K\) & Kline edge-regression residual and its vector.  The
+superscript distinguishes it from project interaction factors. & Kline,
+p.\ 19; superscript is derived. \\
+\(c_{\mathrm{cyc}},\mathcal C,C_{\mathrm{cyc}},\dot\psi,\dot\eta\) & A cycle
+vector, a directed cycle, matrix of fundamental cycle directions, projected
+firm coefficients, and cycle coefficients in Kline's edge decomposition. &
+Kline, pp.\ 18--20; subscripts clarify notation. \\
+\(\Delta^{LR}_{jk},\Delta^K_{jk}\) & Edge effect implied by the project
+low-rank level surface and an arbitrary target Kline edge effect. & Derived. \\
+\(\bar{\mathbf u}_{jk}\) & Mean project worker interaction factor among
+workers observed moving from \(j\) to \(k\). & Derived. \\
+\(d_u,d_v\) & Dimensions of project worker and firm interaction factors. &
+Derived project notation. \\
+\(\tau_{jk},\xi_i\) & Unrestricted transition wedge and mover-level residual
+in the proposed level-plus-edge supermodel. & Derived extension. \\
+\(\alpha_i,\psi_j\) & Primitive additive project worker and firm effects in
+the low-rank wage equation used in Task 4.  The canonical product-weighted
+components remain \(a_i,b_j\); they need not equal these primitives when
+pair-varying covariates remain. & LOO-v2, pp.\ 21--23. \\
+\(\psi_j^{\mathrm{ATE}}\) & Population mean potential-wage level of firm
+\(j\), relative to a reference firm, under Kline's no-selection-on-treatment-
+effects restriction. & Derived notation from Kline, pp.\ 32--34. \\
+\(\alpha_i^A,\psi_j^A,\varepsilon_{it}^A\) & AKM worker effect, firm effect,
+and residual. & Kline, p.\ 15; superscripts are clarifications. \\
+\(m^A_{ij},\lambda_i^A,\nu_j^A\) & AKM conditional mean wage and the BS
+worker and firm wage types it implies. & Derived. \\
+\(\alpha_i^T,\psi_j^T,\beta_0\) & Tukey worker coordinate, firm coordinate,
+and scalar interaction parameter. & Crippa, Section 2.2. \\
+\(m^T_{ij},\lambda_i^T,\nu_j^T\) & Tukey conditional mean wage and the BS
+worker and firm wage types it implies. & Derived. \\
+\(\bar\psi_i^{\,T},\bar\alpha_j^{\,T}\) & Observed-assignment conditional
+means of the Tukey firm and worker coordinates for worker \(i\) and firm
+\(j\). & Derived. \\
+\(f_m,\alpha_i^S,\psi_j^S\) & Crippa seriation interaction function and its
+scalar worker and firm coordinates. & Crippa, Section 2.3.2. \\
+\(m^S_{ij}\) & Conditional mean outcome in the Crippa seriation model. &
+Crippa, Section 2.3.2. \\
+\(\zeta_{k\ell}\) & BLM static conditional mean wage for worker type \(k\)
+and firm class \(\ell\). & Derived relabeling of BLM, pp.\ 702--704. \\
+\(\Pi^B_{k\ell},\pi_k^B,\kappa_\ell^B\) & BLM observed type-class match
+distribution and its worker-type and firm-class marginals. & Derived. \\
+\(\lambda_k^B,\nu_\ell^B,\rho_{\mathrm{BS}}^B\) & BLM type-level BS worker
+type, firm type, and sorting correlation. & Derived from BS20 and the BLM
+interface. \\
+\(\bar\zeta^B,\sigma_{\lambda,B},\sigma_{\nu,B}\) & BLM matched mean wage and
+standard deviations of the two BLM-implied BS wage types. & Derived. \\
+\(M^B,K_B,L_B\) & Double-centered BLM type-class interaction matrix and
+numbers of worker types and firm classes. & Derived from BLM,
+pp.\ 702--704. \\
+\(\zeta_{k\cdot},\zeta_{\cdot\ell},\zeta_{\cdot\cdot}\) & Product-weighted
+BLM type-row, class-column, and grand means. & Derived. \\
+\(\alpha_k^B,a_\ell,b_\ell,\bar\alpha^B,\bar b\) & Worker-type value,
+firm-class intercept and slope in BLM's simple regression, and the
+corresponding weighted worker-type and slope means. & BLM, p.\ 704; weighted
+means are derived. \\
+\(X_{it},w_{ijt}\) & GKLP observed worker covariates and wage offered to
+worker \(i\) by sector \(j\) at time \(t\). & GKLP, pp.\ 6--14. \\
+\(y_{ijt},\psi_{ijt}\) & GKLP output and its log unobserved-productivity
+component. & GKLP, pp.\ 6--7. \\
+\(Z_i,\eta_i,\varepsilon_{ijt}^G\) & GKLP general ability, sector-specific
+ability, and productivity shock. & GKLP, pp.\ 6--7. \\
+\(\beta_j,b_j^G,c_j^G,\sigma_\varepsilon^2\) & GKLP sector-specific observed-
+skill coefficient, return to unobserved skill, intercept, and productivity-
+shock variance. & GKLP, pp.\ 6--13; superscripts clarify collisions. \\
+\(m_{i,t-1}^G,\sigma_t^2,\sigma_{it}^2\) & GKLP posterior mean of
+sector-specific skill before period \(t\), its common time-slice variance
+term, and the state-augmented worker-time version used in the derived
+embedding. & GKLP, pp.\ 8--14; superscripts clarify the project \(m_{ij}\). \\
+\(\mathbf u_{it},I_2\) & Time-varying project worker factor used for the
+GKLP learning slice and the two-dimensional identity matrix. & Derived. \\
+\(\mathcal O_{it}\) & A proposed random sector/job offer or access set used
+to augment GKLP with a literal meeting/access margin. & Derived extension. \\
+\(m_{ijt}^{G,PI},m_{ijt}^{G,L}\) & GKLP perfect-information and learning
+conditional mean log-wage surfaces. & Derived labels for GKLP equations
+(9)--(10), pp.\ 12--13. \\
+\(x,y,f^{SS}(x,y)\) & Shimer--Smith agent types and deterministic type-pair
+flow output. & Shimer--Smith, pp.\ 346--349. \\
+\(W^{SS}(x),w^{SS}(x)\) & Shimer--Smith unmatched asset value and its flow
+value \(w^{SS}(x)=rW^{SS}(x)\). & Shimer--Smith, pp.\ 348--349. \\
+\(S^{SS}(x\mid y),\pi^{SS}(x\mid y)\) & Shimer--Smith personal match surplus
+and matched flow payoff to type \(x\). & Shimer--Smith, pp.\ 348--349. \\
+\(\mathcal M^{SS}(x),a^{SS}_{xy}\) & Shimer--Smith mutually acceptable type
+set and deterministic acceptance indicator. & Shimer--Smith,
+pp.\ 347--349. \\
+\(\Phi^{SS}_{xy}\) & Stationary observed joint distribution of
+Shimer--Smith matched types, after normalization. & Derived from their
+steady-state match stocks. \\
+\(f^{EK}(x,y),w^{EK}(x,y),c_{\mathrm{search}}\) & Eeckhout--Kircher
+production, accepted wage, and search cost. & Eeckhout--Kircher,
+pp.\ 882--884; search subscript is a clarification. \\
+\(\mathcal A_y^{EK},\mathcal B_x^{EK}\) & Eeckhout--Kircher worker and firm
+acceptance sets, relabeled to avoid collision with Kline's incidence matrix. &
+Eeckhout--Kircher, p.\ 882. \\
+\(a_{\mathrm{EK}},h_{\mathrm{EK}},g_{\mathrm{EK}}\) & Coefficient and
+worker- and firm-additive functions in the leading production example
+\(f^{EK}(x,y)=a_{\mathrm{EK}}xy+h_{\mathrm{EK}}(x)+g_{\mathrm{EK}}(y)\). &
+Eeckhout--Kircher, pp.\ 883--885; subscripts clarify notation. \\
+\(\bar x,\bar y,h^{EK}(x,y)\) & Product-reference type means and the
+double-centered Eeckhout--Kircher wage interaction. & Derived. \\
+\end{longtable}
+\subsection{Task 5 notation}
+
+Tasks 1--4 notation remains in force.  In particular, \(D_{it}\) is worker
+\(i\)'s firm at time \(t\), \(Y_{it}(j)\) is the potential log wage at firm
+\(j\), and \((\alpha_i,\psi_j,X_{it},\beta)\) are the worker effect, firm
+effect, observed covariates, and covariate coefficients.  The following chart
+defines every new symbol.
+
+\begin{longtable}{p{0.20\textwidth}p{0.52\textwidth}p{0.21\textwidth}}
+\textbf{Symbol} & \textbf{Meaning} & \textbf{Source or status} \\
+\hline
+\(\omega_{ij}\) & Permanent statistical worker--firm match effect.  This
+relabels Sorkin--Warwar's \(\mu_{ij}\) to avoid collision with the project
+grand mean \(\mu\). & Sorkin--Warwar, p.\ 6; symbol changed. \\
+\(\widetilde\varepsilon_{it}(j)\) & Transitory potential-wage remainder at
+firm \(j\), after removing the permanent match component. & Sorkin--Warwar,
+pp.\ 6--7; potential-outcome index is added. \\
+\(\varepsilon^A_{it}\) & Observed residual from an additive AKM equation:
+\(\varepsilon^A_{it}=\omega_{iD_{it}}+
+\widetilde\varepsilon_{it}(D_{it})\). & Derived decomposition. \\
+\(\mathcal H_{is},\mathcal H_i\) & The period-\(s\) assignment/covariate cell
+\((D_{is},X_{is})\), and the entire assignment/covariate history
+\(\{(D_{is},X_{is})\}_{s=1}^T\). & Derived shorthand. \\
+\(\mathsf A_0\) & Pure additive separability:
+\(\omega_{ij}=0\) for every potential worker--firm pair. & Derived label for
+Sorkin--Warwar equation (6) and Volpe's second pillar. \\
+\(\mathsf E_\varepsilon\) & Mean exogeneity of the transitory potential-wage
+remainder with respect to mobility/covariates. & Derived atomic assumption. \\
+\(\mathsf E_\omega\) & Mean exogeneity of permanent match effects with
+respect to mobility/covariates. & Derived atomic assumption. \\
+\(\mathsf{EM}_{SW},\mathsf{AS}_{SW}\) & Sorkin--Warwar exogenous mobility and
+their composite additive-separability assumption. & Derived labels. \\
+\(\mathsf{EM}_{V},\mathsf{AS}_{V}\) & Volpe's mobility pillar and pure
+additive-separability pillar. & Derived labels. \\
+\(\mathsf{AKM}_{V}\) & Intersection of Volpe's two pillars: mobility
+exogeneity and pure additive separability. & Derived label. \\
+\(\mathsf{SE}_{K}\) & Kline's strict-exogeneity condition for the statistical
+AKM equation. & Kline, pp.\ 14--15. \\
+\(g_i(j,k)\) & Worker \(i\)'s permanent conditional-mean wage gain from firm
+\(j\) to firm \(k\). & Derived. \\
+\(G_{i2}(j,k)\) & Kline's period-2 realized potential-wage gain
+\(Y_{i2}(k)-Y_{i2}(j)\). & Derived shorthand for Kline, p.\ 32. \\
+\(\mathsf{NSG}_{K}\) & Kline's no-selection-on-treatment-effects assumption:
+\(G_{i2}(j,k)\perp(D_{i1},D_{i2})\). & Kline, p.\ 32; label derived. \\
+\(Z,\theta,u\) & Generic OLS regressor vector, coefficient vector, and
+regression residual in \(Y=Z'\theta+u\). & Standard notation. \\
+\(D,Y(0),Y(1),\tau_i\) & Binary treatment, two potential outcomes, and
+individual treatment effect \(\tau_i=Y_i(1)-Y_i(0)\). & Standard causal
+notation. \\
+\(d,d_1,d_2\) & Generic firm choices; \(d_t\) is the firm relevant in period
+\(t\) in Kline's exclusion restriction. & Kline, pp.\ 29--30. \\
+\(\operatorname{ATE}\) & Average treatment effect
+\(\mathbb E[\tau_i]\). & Standard notation. \\
+\(\theta_0,\theta_1\) & Intercept and binary-treatment slope in the OLS
+representation of the average potential-outcome contrast. & Derived. \\
+\(\Delta A_i\) & First difference \(A_{i2}-A_{i1}\) for any panel variable
+\(A\); \(i'\) denotes a second worker. & Standard shorthand. \\
+\(\xi_i,e_{it}\) & Mean-zero match heterogeneity and a transitory shock used
+in the counterexamples. & Derived. \\
+\end{longtable}
+\end{document}

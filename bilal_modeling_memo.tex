@@ -1,0 +1,405 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,booktabs,array}
+\usepackage[hidelinks]{hyperref}
+
+\title{Bilal Search Slides and the Low-Rank Modeling Section}
+\author{}
+\date{\today}
+
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\1}{\mathbf{1}}
+
+\begin{document}
+\maketitle
+
+\section*{Source Convention}
+
+Page citations to Bilal refer to the PDF pages in
+\texttt{bilal\_2024\_slides\_search-and-matching\_Lecture2.pdf}. Page citations
+to Bonhomme--Lamadon--Manresa refer to the printed Econometrica pages in BLM
+(2019). Page citations to the project note refer to PDF pages in
+\texttt{loo\_full\_note\_v1.pdf}. When I reuse results from the prior project
+notes, I cite the prior result PDF \texttt{7\_15\_Meeting (1).pdf} and the
+source \TeX{} file \texttt{shimer\_smith\_writeup.tex}. Displays or claims not
+directly sourced are labeled as derived synthesis, derived ANOVA steps, or
+derived nesting interpretations.
+
+\section{Notation}
+
+\begin{center}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.24\linewidth}
+                >{\raggedright\arraybackslash}p{0.68\linewidth}}
+\toprule
+Symbol & Meaning \\
+\midrule
+$u_t,v_t$ & Bilal unemployment and vacancy stocks at time $t$. Source: Bilal, pp. 9--10. \\
+$M_t,M(u,v)$ & Bilal aggregate matching function and number of matches. Source: Bilal, p. 9. \\
+$m,\alpha$ & Bilal Cobb--Douglas matching-function scale and unemployment elasticity in $M(u,v)=mu^\alpha v^{1-\alpha}$. Source: Bilal, p. 9. \\
+$\theta_t$ & Bilal labor-market tightness, $v_t/u_t$. Source: Bilal, p. 10. \\
+$f_t,q_t$ & Bilal job-finding and vacancy-filling probabilities. Source: Bilal, p. 10. \\
+$s$ & Bilal exogenous job-termination probability. Source: Bilal, p. 10. \\
+$U_t,E_t,V_t,J_t$ & Bilal values of unemployment, employment, a vacant job/firm, and a filled job/firm. Source: Bilal, p. 14. \\
+$b,c,z_t,w_t,\beta$ & Bilal unemployment flow payoff, vacancy cost, productivity, wage, and discount factor. Source: Bilal, pp. 9, 14. \\
+$S_t,\gamma,r$ & Bilal joint surplus, worker bargaining power, and steady-state interest-rate notation $r=\beta^{-1}-1$. Source: Bilal, pp. 15, 19, 23. \\
+$Y_{ij},X_{ij}'\delta,\varepsilon_{ij}$ & Project wage/log-wage observation, observed covariate component, and residual in the low-rank interface. Source: project note, p. 8. \\
+$i,j,I,J$ & Worker and firm indices and counts in the project interface. Source: project note, p. 8. \\
+$\alpha_i,\psi_j,u_i,v_j,\Lambda,\operatorname{rank}(\Lambda)=r$ & Project additive worker and firm components, worker and firm interaction factors, interaction matrix, and interaction rank. Source: project note, p. 8. The symbol $r$ is therefore context-dependent: an interest rate in Bilal's steady-state slide and an interaction rank in the project interface. \\
+$\delta,\varepsilon_{ij}$ & Project covariate coefficient vector in $X_{ij}'\delta$ and residual in $(\star)$. Source: project note, p. 8. \\
+$k,\ell,K,L$ & Worker type and firm class indices and counts in the saturated type-cell construction. Source: project note, p. 8. \\
+$\mu_{k\ell},\mu_{\cdot\cdot},\mu_{k\cdot},\mu_{\cdot\ell}$ & Saturated type-cell mean and its grand, row, and column means. Derived from the ANOVA decomposition in project note Proposition 1, p. 8. \\
+$\bar\alpha_k,\bar\psi_\ell,M_{k\ell}$ & Additive type components and double-centered interaction matrix in the ANOVA decomposition. Derived from project note Proposition 1, p. 8. This $M$ is unrelated to Bilal's matching function $M(u,v)$. \\
+$e_k,e_\ell,\1_K,\1_L$ & Standard basis vectors and all-ones vectors used in the type-indicator nesting and rank proof. Derived notation for project note Proposition 1, p. 8. \\
+$k_{it},\ell(j),\alpha_i,a_t(k),b_t(k),X_{it}'c_t,\varepsilon_{it}$ & BLM firm class, project firm-class map, worker type, class intercept, class slope, covariate component, and residual in the simple static regression example. Source for BLM objects: BLM, pp. 702--704; project notation $\ell(j)$ is derived for the type-cell embedding. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Bilal Lecture 2: What Matters for This Project}
+
+Bilal's Lecture 2 is a compact DMP search-and-matching benchmark. It is not a
+two-sided worker-type/firm-type model like Shimer--Smith or
+Borovi\v{c}kov\'a--Shimer, but it gives the reusable search logic: matching
+technology, value functions, joint surplus, Nash bargaining, free entry, and
+the unemployment stock-flow law.
+
+\subsection{Matching Technology and Tightness}
+
+The lecture defines vacancies $v_t$ and unemployment $u_t$, with matches formed
+by a matching function
+\[
+M_t=M(u_t,v_t).
+\]
+The slide specializes to Cobb--Douglas,
+\[
+M(u,v)=m u^\alpha v^{1-\alpha},
+\]
+while noting that the qualitative results extend to any constant-returns
+matching function. Source: Bilal, p. 9.
+
+Labor-market tightness is
+\[
+\theta_t=\frac{v_t}{u_t}.
+\]
+The job-finding probability for an unemployed worker is
+\[
+f_t=\frac{M_t}{u_t}=f(\theta_t)=m\theta_t^{1-\alpha},
+\]
+and the vacancy-filling probability is
+\[
+q_t=\frac{M_t}{v_t}=q(\theta_t)=m\theta_t^{-\alpha}
+=\frac{f(\theta_t)}{\theta_t}.
+\]
+Source: Bilal, p. 10. The key conceptual point for our work is that random
+matching can be summarized either at the individual meeting-rate level, as in
+SS and BS, or at the aggregate matching-function/tightness level, as in DMP.
+
+\subsection{Value Functions}
+
+The lecture's four Bellman equations are
+\[
+U_t=b+\beta \E_t\left[f_t E_{t+1}+(1-f_t)U_{t+1}\right],
+\]
+\[
+E_t=w_t+\beta \E_t\left[sU_{t+1}+(1-s)E_{t+1}\right],
+\]
+\[
+V_t=-c+\beta \E_t\left[q_tJ_{t+1}+(1-q_t)V_{t+1}\right],
+\]
+\[
+J_t=z_t-w_t+\beta \E_t\left[sV_{t+1}+(1-s)J_{t+1}\right].
+\]
+Source: Bilal, p. 14. This is the slide-deck analogue of the Bellman logic used
+in the SS and BS memo: current payoff plus expected continuation values, with
+transitions generated by search and separation.
+
+\subsection{Surplus and the Wage}
+
+The worker surplus is $E_t-U_t$, the firm surplus is $J_t-V_t$, and free entry
+sets $V_t=0$. The joint match surplus is
+\[
+S_t=E_t+J_t-U_t,
+\]
+and the lecture derives
+\[
+S_t
+=
+z_t-b-\beta f_t\E_t[E_{t+1}-U_{t+1}]
++\beta(1-s)\E_t[S_{t+1}].
+\]
+Source: Bilal, p. 15; the negative sign on the foregone-search term is also
+confirmed by the later joint-surplus equation on Bilal, p. 21,
+$S_t=z_t-b+\beta(1-s-\gamma f_t)\E_t[S_{t+1}]$. The useful point is the same
+one that makes SS and BS clean: with transferable utility and linear payoffs,
+joint surplus is independent of the wage. The wage only splits the surplus.
+
+Bilal then imposes generalized Nash bargaining:
+\[
+w_t=\arg\max_w (E_t(w)-U_t)^\gamma J_t(w)^{1-\gamma},
+\]
+so
+\[
+E_t(w_t)-U_t=\gamma S_t,
+\qquad
+J_t(w_t)=(1-\gamma)S_t.
+\]
+Source: Bilal, p. 19. The equilibrium wage can be written as
+\[
+w_t=(1-\gamma)b+\gamma(z_t+\theta_t c),
+\]
+after using free entry. Source: Bilal, p. 20. For our project, this is a
+warning and a guide: search frictions determine outside options and surplus,
+but the wage equation depends on the bargaining/transfer rule. That is why the
+SS-to-BS mapping had to track outside values and surplus shares carefully.
+
+\subsection{Equilibrium Conditions}
+
+Given surplus sharing, the joint-surplus Bellman becomes
+\[
+S_t=z_t-b+\beta(1-s-\gamma f_t)\E_t[S_{t+1}],
+\]
+free entry determines tightness,
+\[
+c=\beta q_t(1-\gamma)\E_t[S_{t+1}],
+\]
+and unemployment follows
+\[
+u_{t+1}-u_t=s(1-u_t)-f_tu_t.
+\]
+Source: Bilal, p. 21. In steady state, these reduce to the job-creation condition
+\[
+\frac{r+s+\gamma f(\theta)}{(1-\gamma)q(\theta)}
+=
+\frac{z-b}{c},
+\qquad r=\beta^{-1}-1,
+\]
+and the Beveridge-curve stock-flow identity
+\[
+u=\frac{s}{s+f(\theta)}.
+\]
+Source: Bilal, p. 23.
+
+\subsection{Connection to SS and BS}
+
+Derived synthesis: Bilal's slides should be used as the generic search-model scaffold, not as a
+direct nesting target. SS and BS add type-pair heterogeneity to this search
+logic. SS makes match output deterministic conditional on types, $f(x,y)$. BS
+adds a match-specific draw $z$ and therefore a type-pair selection threshold.
+The shared structure is:
+\[
+\text{Bellman equations}
+\quad\Rightarrow\quad
+\text{joint surplus independent of wage}
+\quad\Rightarrow\quad
+\text{Nash split}
+\quad\Rightarrow\quad
+\text{acceptance/job-creation condition}.
+\]
+
+\section{Modeling Section: The Low-Rank Interface}
+
+The project note's modeling object is
+\[
+Y_{ij}
+=
+X_{ij}'\delta+\alpha_i+\psi_j+u_i^\top\Lambda v_j+\varepsilon_{ij},
+\qquad
+\operatorname{rank}(\Lambda)=r\ll \min\{I,J\}.
+\tag{$\star$}
+\]
+Source: project note, p. 8; prior result PDF, pp. 18--21;
+\texttt{shimer\_smith\_writeup.tex}, Sec. 6. The point of the modeling section is
+not to claim that every structural model is literally inside $(\star)$. The point
+is to identify which static wage-equation cores land in this interface after
+normalization.
+
+\subsection{The Double-Demeaned $K\times L$ Construction}
+
+Let worker types be $k\in\{1,\ldots,K\}$ and firm classes be
+$\ell\in\{1,\ldots,L\}$. Let
+\[
+\mu=(\mu_{k\ell})\in\mathbb R^{K\times L}
+\]
+be the saturated static type-pair mean wage surface:
+\[
+\mu_{k\ell}
+=
+\E[Y\mid \text{worker type }k,\text{ firm class }\ell].
+\]
+This is the object shown in the Saturday screenshot
+\texttt{C:\textbackslash Users\textbackslash A8327\textbackslash Downloads\textbackslash image (3).png}
+and in the project note's Proposition 1. Source: project note, p. 8.
+
+Derived ANOVA step: define the grand mean, row means, and column means by
+\[
+\mu_{\cdot\cdot}
+=
+\frac{1}{KL}\sum_{k=1}^K\sum_{\ell=1}^L\mu_{k\ell},
+\qquad
+\mu_{k\cdot}
+=
+\frac{1}{L}\sum_{\ell=1}^L\mu_{k\ell},
+\qquad
+\mu_{\cdot\ell}
+=
+\frac{1}{K}\sum_{k=1}^K\mu_{k\ell}.
+\]
+Set
+\[
+\bar\alpha_k=\mu_{k\cdot}-\mu_{\cdot\cdot},
+\qquad
+\bar\psi_\ell=\mu_{\cdot\ell},
+\]
+and define the double-centered interaction matrix
+\[
+M_{k\ell}
+=
+\mu_{k\ell}-\mu_{k\cdot}-\mu_{\cdot\ell}+\mu_{\cdot\cdot}.
+\]
+Then
+\[
+\mu_{k\ell}
+=
+\bar\alpha_k+\bar\psi_\ell+M_{k\ell}.
+\]
+This is a derived ANOVA decomposition. The interaction matrix is double-centered:
+\[
+\sum_{\ell=1}^L M_{k\ell}=0\quad\text{for every }k,
+\qquad
+\sum_{k=1}^K M_{k\ell}=0\quad\text{for every }\ell.
+\]
+It is unique once the mean convention above is fixed.
+
+Derived embedding in $(\star)$: assign worker $i$ to type $k(i)$ and firm $j$ to class $\ell(j)$. Let
+$e_k\in\mathbb R^K$ and $e_\ell\in\mathbb R^L$ be standard basis vectors. Set
+\[
+\alpha_i=\bar\alpha_{k(i)},
+\qquad
+\psi_j=\bar\psi_{\ell(j)},
+\qquad
+u_i=e_{k(i)},
+\qquad
+v_j=e_{\ell(j)},
+\qquad
+\Lambda=M.
+\]
+Then
+\[
+u_i^\top\Lambda v_j
+=
+e_{k(i)}^\top M e_{\ell(j)}
+=
+M_{k(i)\ell(j)},
+\]
+and therefore
+\[
+\alpha_i+\psi_j+u_i^\top\Lambda v_j
+=
+\mu_{k(i)\ell(j)}.
+\]
+So the saturated $K\times L$ type-pair mean surface is exactly a special case of
+$(\star)$.
+
+\subsection{Rank Bound}
+
+Derived rank bound: because $M$ is double-centered, its columns lie in the $K-1$ dimensional
+subspace orthogonal to $\1_K$, and its rows lie in the $L-1$ dimensional
+subspace orthogonal to $\1_L$. Hence
+\[
+\operatorname{rank}(M)
+\leq
+\min\{K-1,L-1\}
+=
+\min\{K,L\}-1.
+\]
+This is the rank bound in the screenshot and in the project note. Source:
+project note, p. 8. The important interpretation is that the additive row and
+column components remove one dimension from each side. The interaction matrix
+does not live in all of $\mathbb R^{K\times L}$; it lives between centered type
+spaces.
+
+\section{In What Sense We Nest BLM}
+
+BLM's static model uses firm classes and worker heterogeneity. Firms are grouped
+into classes $k(j)$, and workers have latent types $\alpha_i$, which may be
+discrete or continuous. BLM are interested in earnings distributions for workers
+of a given type in a given firm class, as well as type proportions and sorting.
+Source: BLM, pp. 702--704. A simple static BLM regression example is
+\[
+Y_{it}=a_t(k_{it})+b_t(k_{it})\alpha_i+X_{it}'c_t+\varepsilon_{it}.
+\]
+Source: BLM, p. 704.
+
+Derived nesting interpretation: the honest nesting claim has three layers.
+
+\paragraph{1. Exact for static type-cell mean surfaces.}
+If BLM worker heterogeneity is discretized into $K$ worker types and firm
+heterogeneity into $L$ firm classes, then the static conditional mean surface
+\[
+\mu_{k\ell}
+=
+\E[Y\mid k(i)=k,\ell(j)=\ell]
+\]
+is exactly nested by $(\star)$ through the double-demeaned construction above.
+This is the clean reading of the screenshot's BLM row.
+
+\paragraph{2. Exact for BLM's simple interactive mean example.}
+The displayed BLM regression
+\[
+a_t(k)+b_t(k)\alpha_i
+\]
+is a firm-class intercept plus a firm-class slope on worker type. For a fixed
+date $t$, it is nested by
+\[
+\psi_j=a_t(\ell(j)),
+\qquad
+u_i=\alpha_i,
+\qquad
+v_j=b_t(\ell(j)),
+\qquad
+\Lambda=1,
+\]
+with observed covariates absorbed into $X_{ij}'\delta$. This is rank one if
+$\alpha_i$ is scalar. If the empirical object is instead a fully saturated
+discrete type-class mean matrix, the exact representation is the $M$ construction
+above, with rank at most $\min\{K,L\}-1$.
+
+\paragraph{3. Not exact for the full BLM framework.}
+The full BLM contribution is larger than a static mean equation. It includes
+latent firm-class estimation, distributional worker heterogeneity, mixture
+identification, mobility assumptions, and a dynamic model where earnings can
+affect mobility and post-move earnings can depend on previous earnings and
+previous firm class. Source: BLM, pp. 701--706. Those layers are not themselves
+nested by $(\star)$, because $(\star)$ is a static wage-interface equation, not a
+full distributional panel estimator or dynamic mobility model.
+
+So the phrase ``we nest BLM'' is correct only if it is expanded as:
+\[
+\text{we nest BLM's static wage-equation/type-cell mean layer.}
+\]
+It should not be written as:
+\[
+\text{we nest the full BLM empirical framework.}
+\]
+This matches the prior result PDF's warning that the factor interface nests
+static wage-equation cores, while BLM's grouping, mixture estimation, and dynamic
+extensions remain separate implementation and interpretation layers. Source:
+prior result PDF, pp. 18--21; \texttt{shimer\_smith\_writeup.tex}, Sec. 6.5.
+
+\section{Clean Wording for the Modeling Section}
+
+The safest paragraph is:
+
+\begin{quote}
+The low-rank interface nests the static wage-equation cores of several models.
+For BLM, the exact statement is about the static type-cell mean surface. If
+worker types are $k=1,\ldots,K$ and firm classes are $\ell=1,\ldots,L$, any
+saturated mean matrix $\mu_{k\ell}$ decomposes uniquely into additive row and
+column terms plus a double-centered interaction matrix $M$. Taking worker and
+firm factors to be type indicators and $\Lambda=M$ reproduces the mean surface
+exactly, with $\operatorname{rank}(M)\leq\min\{K,L\}-1$. This nests BLM's static
+mean layer, but not BLM's full distributional estimator, class-estimation step,
+or dynamic panel model.
+\end{quote}
+
+\end{document}

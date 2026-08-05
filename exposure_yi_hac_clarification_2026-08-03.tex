@@ -1,0 +1,464 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+
+\newcommand{\E}{\mathbb E}
+\newcommand{\indep}{\mathrel{\perp\!\!\!\perp}}
+\newcommand{\op}{\mathrm{op}}
+\newcommand{\obs}{\mathrm{obs}}
+
+\title{The Graph-HAC Centering Defect and a Feasible Correction}
+\author{Exposure-Mapping Project: Current Clarification}
+\date{August 3, 2026}
+
+\begin{document}
+\maketitle
+
+\section*{Purpose}
+
+This note isolates and repairs the graph-HAC defect on page 21 of
+\texttt{park exposure 0730.pdf}. The central problem is not Theorem 2.6: that
+theorem and its Appendix A proof are sound. The problem is the later move from
+the true parameter \(\theta_0\), where the observed unit score is mean zero, to
+a preliminary estimator \(\widehat\theta_n\), where the unit-level score mean
+is generally unknown. The proof audit needed to establish this distinction is
+relegated to Appendix A.
+
+All expectations are design expectations under \(W\sim D_n\), conditional on
+the fixed potential-outcome schedule and baseline covariates. Page references
+are to the printed pages of the July 30 draft.
+
+\section{Minimal setup}
+
+Park's Section 2 uses \(i=1,\ldots,n\), the random assignment vector
+\(W=(W_1,\ldots,W_n)^\top\), its support \(\mathcal W\), and a fixed assignment
+\(w\in\mathcal W\). The three outcome objects that must not be conflated are
+\[
+ \underbrace{Y_i(w)}_{\text{fixed potential outcome}},\qquad
+ \underbrace{\mathsf{Y}_i:=Y_i(W)}_{\text{random realized selector}},\qquad
+ \underbrace{Y_i^{\obs}:=Y_i(w^{\obs})}_{\text{observed value}}.
+\]
+Park writes the middle object simply as \(Y_i=Y_i(W)\). The symbols
+\(\mathsf{Y}_i\), \(Y_i^{\obs}\), and \(w^{\obs}\) are introduced only in this
+note to make the timeline visible.
+
+Park states the orthogonal moment for a generic outcome transformation
+\(\phi\). Because the leading case at issue uses the outcome itself, this note
+specializes once and for all to
+\[
+ \phi(y)=y.
+\]
+Thus no transformation notation is needed below. This specialization requires
+\(\E[\mathsf{Y}_i^2]<\infty\) and gives the same outcome-level score used in the
+HAC discussion.
+
+For a candidate \(\theta\), retain Park's design residual notation
+\begin{equation}
+ R_{i,\theta}\psi(W)
+ :=\psi(W)-\E[\psi(W)\mid g_i(W;\theta)],
+ \qquad
+ g_i(W;\theta):=g(W;X_i,\theta).
+ \label{eq:residual}
+\end{equation}
+In Section 3 Park switches to the triangular array
+\(\mathcal U_n=\{1,\ldots,N_n\}\). After the identity specialization, the
+relevant scalar unit score is
+\begin{equation}
+ \Psi_i(\theta):=\mathsf{Y}_iR_{i,\theta}\psi(W).
+ \label{eq:score}
+\end{equation}
+The vector case simply stacks the chosen design functions. Park's theoretical
+centering is
+\begin{equation}
+ Z_{i,n}(\theta)
+ :=\Psi_i(\theta)-\E[\Psi_i(\theta)].
+ \label{eq:centered-score}
+\end{equation}
+
+\section{The HAC defect}
+
+\subsection{What is computable from the design}
+
+For every fixed candidate \(\theta\), the projection
+\[
+ \E[\psi(W)\mid g_i(W;\theta)]
+\]
+depends only on the known assignment law, the chosen design function, and the
+candidate exposure. Consequently, the residual in \eqref{eq:residual} can be
+computed exactly or approximated with placebo assignments. Given the realized
+outcome, the uncentered score \(\Psi_i(\theta)\) can therefore be computed for
+every candidate \(\theta\).
+
+This does \emph{not} make the separate score mean
+\(\E[\Psi_i(\theta)]\) design-computable. For a discrete design,
+\begin{align}
+ \E[\Psi_i(\theta)]
+ &=\E[\mathsf{Y}_iR_{i,\theta}\psi(W)] \\
+ &=\sum_{w\in\mathcal W}
+   D_n(w)Y_i(w)R_{i,\theta}\psi(w).
+ \label{eq:score-mean}
+\end{align}
+The residual factor is known, but the sum also contains \(Y_i(w)\) at every
+assignment in the support. Only \(Y_i(w^{\obs})\) is observed. Equation
+\eqref{eq:score-mean} is therefore generally not identified from the known
+design and one realized experiment.
+
+\subsection{Why centering is feasible at \(\theta_0\)}
+
+Under Hypothesis 2.5,
+\[
+ \mathsf{Y}_i=Y_i(W)
+ =\widetilde Y_i\{g_i(W;\theta_0)\}
+ \quad\text{almost surely}.
+\]
+Hence \(\mathsf{Y}_i\) is measurable with respect to the true exposure. By
+\eqref{eq:residual},
+\[
+ \E[R_{i,\theta_0}\psi(W)\mid g_i(W;\theta_0)]=0.
+\]
+The conditional pull-out property then gives
+\begin{align}
+ \E[\Psi_i(\theta_0)]
+ &=\E[\mathsf{Y}_iR_{i,\theta_0}\psi(W)] \\
+ &=\E\!\left[
+   \mathsf{Y}_i
+   \E[R_{i,\theta_0}\psi(W)\mid g_i(W;\theta_0)]
+ \right] \\
+ &=0.
+ \label{eq:truth-zero}
+\end{align}
+Thus, unit by unit,
+\begin{equation}
+ Z_{i,n}(\theta_0)=\Psi_i(\theta_0).
+ \label{eq:truth-equality}
+\end{equation}
+This is the valid part of Remark 3.8: at the truth, the feasible uncentered
+observed score is already the theoretically centered score.
+
+\subsection{Why the same argument fails at \(\widehat\theta_n\)}
+
+For a generic \(\theta\), the residual remains conditionally mean zero given
+\(g_i(W;\theta)\). But \(\mathsf{Y}_i\) need not be measurable with respect to
+that candidate exposure. The invalid calculation would be
+\[
+ \E[\mathsf{Y}_iR_{i,\theta}\psi(W)\mid g_i(W;\theta)]
+ \stackrel{\mathrm{not\ valid}}{=}
+ \mathsf{Y}_i
+ \E[R_{i,\theta}\psi(W)\mid g_i(W;\theta)].
+\]
+Equivalently,
+\begin{equation}
+ \E[\Psi_i(\theta)]
+ =\E\!\left[
+   \operatorname{Cov}\{\mathsf{Y}_i,\psi(W)\mid g_i(W;\theta)\}
+ \right],
+ \label{eq:off-truth-covariance}
+\end{equation}
+which need not vanish away from \(\theta_0\).
+
+Consistency of \(\widehat\theta_n\) does not make
+\(\E[\Psi_i(\widehat\theta_n)]\) exactly zero, nor does it reveal the missing
+potential outcomes in \eqref{eq:score-mean}. It may make the effect of using
+\(\widehat\theta_n\) asymptotically negligible, but that is a separate
+stochastic-equicontinuity claim that must be assumed or proved.
+
+\subsection{The exact problem in Assumption 3.9}
+
+Park defines \(Z_{i,n}(\theta)\) by \eqref{eq:centered-score}. Assumption 3.9
+then describes graph-HAC estimators constructed from the centered variables
+and states that, at a preliminary \(\widehat\theta_n\), the design centering is
+computed from the known design rather than estimated (source, p.~21). Four
+facts must be separated:
+\begin{enumerate}[leftmargin=2em]
+ \item The \(Y_i\) in the score correctly denotes the random outcome
+ \(Y_i(W)\).
+ \item The unit score is mean zero at \(\theta_0\), so
+ \(Z_{i,n}(\theta_0)=\Psi_i(\theta_0)\).
+ \item The projection inside \(R_{i,\theta}\) is design-computable for every
+ \(\theta\).
+ \item The additional centering \(\E[\Psi_i(\widehat\theta_n)]\) is generally
+ neither zero nor design-computable from one realized outcome.
+\end{enumerate}
+The fourth statement is the defect. The source itself uses the same
+missing-potential-outcome logic on pages 24 and 80 when explaining why the
+Stage-2 unit means cannot be identified at unrealized exposures.
+
+\subsection{Centered and feasible HAC objects are not identical off truth}
+
+The following temporary notation makes the gap explicit. It is introduced in
+this note and is not Park's notation. Define
+\[
+ m_i(\theta):=\E[\Psi_i(\theta)].
+\]
+For illustration, represent a normalized graph-HAC construction as
+\begin{equation}
+ \mathcal H_n(v)
+ :=\frac{1}{N_n}
+   \sum_{i\in\mathcal U_n}\sum_{j\in A_i}
+   k_{ij,n}v_iv_j^\top,
+ \label{eq:hac-operator}
+\end{equation}
+where \(k_{ij,n}\) are known graph or taper weights. Park leaves the particular
+HAC construction high level; \(\mathcal H_n\) and \(k_{ij,n}\) are used here
+only to display the centering problem.
+
+Call
+\[
+ \widehat\Omega_n^c(\theta)
+ :=\mathcal H_n\bigl(\{Z_{i,n}(\theta)\}_{i\in\mathcal U_n}\bigr),
+ \qquad
+ \widehat\Omega_n^u(\theta)
+ :=\mathcal H_n\bigl(\{\Psi_i(\theta)\}_{i\in\mathcal U_n}\bigr).
+\]
+The superscripts \(c\) and \(u\), meaning centered and uncentered, are new in
+this note. The first object matches the theoretical centered construction but
+is infeasible away from the truth. The second uses observed scores and is
+feasible. Since \(\Psi_i=Z_{i,n}+m_i\), their exact difference is
+\begin{align}
+ &\widehat\Omega_n^u(\theta)-\widehat\Omega_n^c(\theta) \\
+ &\quad=\frac{1}{N_n}
+   \sum_{i\in\mathcal U_n}\sum_{j\in A_i}k_{ij,n}
+   \left\{
+     Z_{i,n}(\theta)m_j(\theta)^\top
+     +m_i(\theta)Z_{j,n}(\theta)^\top
+     +m_i(\theta)m_j(\theta)^\top
+   \right\}.
+ \label{eq:centered-uncentered-gap}
+\end{align}
+At \(\theta_0\), every \(m_i(\theta_0)=0\), so the difference is exactly zero.
+At \(\widehat\theta_n\), it is not exactly zero and its terms cannot generally
+be constructed because the \(m_i(\widehat\theta_n)\) are unknown. A valid
+repair therefore cannot claim to compute the centered plug-in object. It must
+use the feasible uncentered object and control its plug-in error directly.
+
+\subsection{Why holding the observed outcome fixed does not repair centering}
+
+After observing \(w^{\obs}\), holding \(Y_i^{\obs}=Y_i(w^{\obs})\) fixed while
+drawing a fresh \(W'\sim D_n\) gives
+\begin{align}
+ \E_{W'}[Y_i^{\obs}R_{i,\theta}\psi(W')]
+ &=Y_i^{\obs}\E_{W'}[R_{i,\theta}\psi(W')] \\
+ &=0.
+ \label{eq:hybrid-zero}
+\end{align}
+This equation is correct but answers a different question. The repeated-design
+score is
+\[
+ Y_i(W')R_{i,\theta}\psi(W'),
+\]
+not \(Y_i(w^{\obs})R_{i,\theta}\psi(W')\). In the former, the selected potential
+outcome changes with \(W'\); in the latter, it is artificially held fixed.
+Writing the observed number as an unindexed \(Y_i\) cannot turn one experiment
+into the other.
+
+A one-unit example makes the distinction immediate. Let
+\(W_i\sim\operatorname{Bernoulli}(1/2)\), \(Y_i(0)=0\), \(Y_i(1)=1\), and
+\(r(W_i)=W_i-1/2\). Each fixed potential outcome satisfies
+\[
+ \E[Y_i(0)r(W_i)]=\E[Y_i(1)r(W_i)]=0,
+\]
+but the random selector \(\mathsf{Y}_i=Y_i(W_i)=W_i\) satisfies
+\[
+ \E[\mathsf{Y}_ir(W_i)]=\frac14.
+\]
+
+\section{Feasible correction}
+
+\subsection{Corrected high-level HAC conditions}
+
+Use the graph-HAC estimator formed from the feasible uncentered scores,
+\(\widehat\Omega_n^u(\widehat\theta_n)\). Replace the plug-in claim in
+Assumption 3.9 by two distinct requirements:
+\begin{align}
+ \left\|
+   \widehat\Omega_n^u(\theta_0)
+   -\frac{\Omega_n(\theta_0)}{N_n}
+ \right\|_{\op}
+ &=o_p(1),
+ \tag{C-HAC1}\label{eq:hac-truth}\\
+ \left\|
+   \widehat\Omega_n^u(\widehat\theta_n)
+   -\widehat\Omega_n^u(\theta_0)
+ \right\|_{\op}
+ &=o_p(1).
+ \tag{C-HAC2}\label{eq:hac-plugin}
+\end{align}
+Condition C-HAC1 is ordinary truth-point HAC consistency. It is coherent
+because \(\Psi_i(\theta_0)=Z_{i,n}(\theta_0)\). Condition C-HAC2 is the missing
+plug-in stability requirement. Neither condition asks the researcher to
+compute \(\E[\Psi_i(\widehat\theta_n)]\).
+
+Retain Park's population covariance stabilization condition
+\begin{equation}
+ \left\|
+   \frac{\Omega_n(\theta_0)}{N_n}-\Omega
+ \right\|_{\op}=o(1).
+ \tag{C-HAC3}\label{eq:hac-population}
+\end{equation}
+
+\subsection{Why these conditions fix the variance argument}
+
+By the triangle inequality,
+\begin{align}
+ &\left\|
+   \widehat\Omega_n^u(\widehat\theta_n)-\Omega
+  \right\|_{\op} \\
+ &\quad\le
+ \left\|
+   \widehat\Omega_n^u(\widehat\theta_n)
+   -\widehat\Omega_n^u(\theta_0)
+ \right\|_{\op} \\
+ &\qquad+
+ \left\|
+   \widehat\Omega_n^u(\theta_0)
+   -\frac{\Omega_n(\theta_0)}{N_n}
+ \right\|_{\op}
+ +\left\|
+   \frac{\Omega_n(\theta_0)}{N_n}-\Omega
+ \right\|_{\op} \\
+ &=o_p(1).
+ \label{eq:hac-triangle}
+\end{align}
+Thus the feasible plug-in estimator consistently estimates the asymptotic
+covariance. If \(\Omega\) is positive definite, its inverse is also consistent
+by continuity of matrix inversion. This supplies the covariance step required
+for the two-step GMM weight and the overidentification statistic without ever
+constructing the infeasible \(Z_{i,n}(\widehat\theta_n)\).
+
+\subsection{What must establish plug-in stability}
+
+Condition C-HAC2 is substantive; consistency of \(\widehat\theta_n\) alone is
+not a proof. Let
+\[
+ \Delta_{i,n}:=\Psi_i(\widehat\theta_n)-\Psi_i(\theta_0).
+\]
+For the illustrative construction \eqref{eq:hac-operator}, the plug-in
+difference is exactly
+\begin{align}
+ &\widehat\Omega_n^u(\widehat\theta_n)
+   -\widehat\Omega_n^u(\theta_0) \\
+ &\quad=\frac{1}{N_n}
+   \sum_{i\in\mathcal U_n}\sum_{j\in A_i}k_{ij,n}
+   \left\{
+     \Psi_i(\theta_0)\Delta_{j,n}^\top
+     +\Delta_{i,n}\Psi_j(\theta_0)^\top
+     +\Delta_{i,n}\Delta_{j,n}^\top
+   \right\}.
+ \label{eq:plugin-expansion}
+\end{align}
+Consequently, a primitive proof must control the weighted aggregate on the
+right-hand side.
+
+For a smooth exposure map, one route is a local Lipschitz bound for the score,
+\[
+ \|\Psi_i(\theta)-\Psi_i(\theta_0)\|
+ \le L_{i,n}\|\theta-\theta_0\|,
+\]
+together with moment and graph-weight conditions that keep the normalized
+weighted averages of \(L_{i,n}\) and \(\|\Psi_i(\theta_0)\|\) bounded. The
+required rate is the rate that makes all three terms in
+\eqref{eq:plugin-expansion} \(o_p(1)\); it must account for growth of the
+affinity sets and cannot be replaced by bare consistency.
+
+For the nonsmooth ring map, a Lipschitz argument is unavailable. Here
+\(\Delta_{i,n}\) changes only for units whose distance thresholds lie between
+\(\theta_0\) and \(\widehat\theta_n\). A sufficient route is a
+degree-weighted boundary-mass condition: the normalized HAC weight attached to
+pairs affected by that shrinking interval must be \(o_p(1)\). This is the HAC
+analogue of the no-mass-in-shrinking-distance-bands condition used for the
+ULLN, but it must be verified for the pairwise graph-HAC aggregate.
+
+\subsection{Suggested replacement for the page 21 claim}
+
+A concise replacement for the end of Remark 3.8 and Assumption 3.9 is:
+\begin{quote}
+At the true exposure parameter, Corollary 2.7 implies that the uncentered unit
+score is mean zero, so it coincides with the centered score. Let
+\(\widehat\Omega_n^u(\theta)\) be a graph-HAC estimator constructed from the
+observed uncentered scores \(\{\Psi_i(\theta)\}_{i\le N_n}\) and the affinity
+sets \(\{A_i\}_{i\le N_n}\). Assume C-HAC1 and C-HAC2. Together with
+\(\Omega_n(\theta_0)/N_n\to\Omega\), these conditions imply
+\(\widehat\Omega_n^u(\widehat\theta_n)\to_p\Omega\).
+\end{quote}
+The sentence claiming that plug-in score centering is computed from the known
+design should be deleted. Only the conditional projection inside
+\(R_{i,\theta}\) has that property for arbitrary \(\theta\).
+
+\section*{Conclusion}
+
+The HAC defect is localized and repairable. Theorem 2.6 correctly makes the
+score mean zero at \(\theta_0\), but it does not make the score mean known at
+\(\widehat\theta_n\). The feasible correction is to form graph-HAC from the
+uncentered observed scores, establish HAC consistency at the truth, and add a
+separate plug-in stability condition. The triangle argument
+\eqref{eq:hac-triangle} then restores covariance consistency.
+
+\appendix
+
+\section{Supporting proof audit}
+
+\subsection{Theorem 2.6}
+
+This appendix records the proof only to verify the outcome object used in the
+HAC argument. Assumption 2.4 fixes the schedule
+\(\{Y_i(\cdot),X_i\}_{i=1}^n\) relative to the design. Hypothesis 2.5 states
+that there are \(\theta_0\) and fixed measurable maps \(\widetilde Y_i\) such
+that, for every fixed \(w\in\mathcal W\),
+\[
+ Y_i(w)=\widetilde Y_i\{g(w;X_i,\theta_0)\}.
+\]
+Using Park's Appendix A shorthand
+\(G_i(\theta_0):=g(W;X_i,\theta_0)\), substitute the random assignment into
+this fixed-assignment identity:
+\begin{equation}
+ \mathsf{Y}_i=Y_i(W)
+ =\widetilde Y_i\{G_i(\theta_0)\}
+ \quad\text{almost surely}.
+ \label{eq:appendix-measurability}
+\end{equation}
+Because \(\widetilde Y_i\) is fixed under the design, \(\mathsf{Y}_i\) is
+measurable with respect to \(\sigma\{G_i(\theta_0)\}\). For bounded measurable
+test functions \(f\) and \(h\), the conditional pull-out property gives
+\begin{align}
+ &\E[f(\mathsf{Y}_i)h(W)\mid G_i(\theta_0)] \\
+ &\quad=f\{\widetilde Y_i(G_i(\theta_0))\}
+       \E[h(W)\mid G_i(\theta_0)] \\
+ &\quad=\E[f(\mathsf{Y}_i)\mid G_i(\theta_0)]
+       \E[h(W)\mid G_i(\theta_0)].
+\end{align}
+This factorization is exactly
+\[
+ \mathsf{Y}_i\indep W\mid G_i(\theta_0).
+\]
+The conditional-independence equation therefore comes from the exposure-map
+restriction and measurability, with Assumption 2.4 fixing the response maps
+under the design. Random assignment alone would not imply it.
+
+\subsection{Corollary 2.7 under the identity specialization}
+
+By definition,
+\[
+ \E[R_{i,\theta_0}\psi(W)\mid G_i(\theta_0)]=0.
+\]
+Equation \eqref{eq:appendix-measurability} makes \(\mathsf{Y}_i\) measurable
+with respect to the conditioning variable. Under square integrability,
+\begin{align}
+ \E[\mathsf{Y}_iR_{i,\theta_0}\psi(W)]
+ &=\E\!\left[
+   \E[\mathsf{Y}_iR_{i,\theta_0}\psi(W)\mid G_i(\theta_0)]
+ \right] \\
+ &=\E\!\left[
+   \mathsf{Y}_i
+   \E[R_{i,\theta_0}\psi(W)\mid G_i(\theta_0)]
+ \right] \\
+ &=0.
+\end{align}
+This is the equality used in \eqref{eq:truth-zero}. In Park's notation it is
+\(\E[Y_iR_{i,\theta_0}\psi(W)]=0\), with the unindexed \(Y_i\) denoting the
+random selector \(Y_i(W)\), not a fixed \(Y_i(w)\).
+
+\end{document}

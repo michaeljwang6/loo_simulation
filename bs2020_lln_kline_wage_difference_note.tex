@@ -1,0 +1,814 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{array,longtable}
+\usepackage[hidelinks]{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+\renewcommand{\arraystretch}{1.18}
+
+\title{Two Clarifications: The BS20 Large-Economy LLN and Kline's
+Wage-Difference Object}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{Answers in one paragraph}
+
+In Borovi\v{c}kov\'a--Shimer (2020, henceforth BS20), \(I_x\) is the
+baseline number of workers with characteristic \(x\), and \(\tau\) is a
+theoretical replication index: the \(\tau\)-economy has \(\tau I_x\)
+workers of characteristic \(x\) and \(\tau J_y\) firms of characteristic
+\(y\).  The law of large numbers operates across the growing numbers of
+workers and firms, not across an increasing number of matches for each
+individual.  In Kline, the primitive wage-difference object
+\(Y_{i2}(k)-Y_{i2}(j)\) is closest to Sorkin--Warwar's worker-specific firm
+treatment effect; Volpe instead presents the two pillars through a wage-level
+equation.  Kline's no-selection-on-treatment-effects restriction is
+conceptually closer to exogenous mobility than to additive separability:
+individual gains may remain heterogeneous.  Even when the average edge
+effect can be written as a difference between average firm wage levels, that
+does not imply, and is not equivalent to, additive separability of
+individual potential wages.
+
+\section{BS20: what goes to infinity in the LLN?}
+
+\subsection{Notation}
+
+\begin{longtable}{p{0.20\textwidth}p{0.53\textwidth}p{0.20\textwidth}}
+\textbf{Symbol} & \textbf{Meaning} & \textbf{Source or status} \\
+\hline
+\(\mathcal X,\mathcal Y\) & Finite sets of possible worker and firm
+characteristics. & BS20, p.\ 18; calligraphic set notation is a
+clarification. \\
+\(x,y\) & A worker characteristic and a firm characteristic. & BS20,
+p.\ 18. \\
+\(I_x,J_y\) & Baseline numbers of workers with characteristic \(x\) and
+firms with characteristic \(y\). & BS20, p.\ 18. \\
+\(I,J\) & Baseline total numbers of workers and firms:
+\(I=\sum_{x\in\mathcal X}I_x\) and
+\(J=\sum_{y\in\mathcal Y}J_y\).  These are counts, not random identities. &
+BS20, p.\ 18. \\
+\(\tau\) & Positive-integer replication index.  The \(\tau\)-economy has
+\(\tau I_x\) workers of characteristic \(x\) and \(\tau J_y\) firms of
+characteristic \(y\). & BS20, p.\ 18. \\
+\(i,j\) & Individual worker and firm indices. & BS20, pp.\ 18--19. \\
+\(x_i\) & Characteristic of worker \(i\). & BS20, pp.\ 18--21. \\
+\(M_i,N_j\) & Numbers of distinct matches observed for worker \(i\) and firm
+\(j\). & BS20, pp.\ 18--22. \\
+\(m,m'\) & Two distinct match indices for worker \(i\). & BS20,
+pp.\ 19--22. \\
+\(w^w_{i,m}\) & Worker-side average log wage in worker \(i\)'s match \(m\). &
+BS20, p.\ 19. \\
+\(\lambda(x_i)\) & Expected-wage type of a worker with characteristic
+\(x_i\). & BS20, pp.\ 5, 20--22. \\
+\(\varepsilon^w_{i,m}\) & Worker-side match-wage error in the auxiliary
+equation \(w^w_{i,m}=\lambda(x_i)+\varepsilon^w_{i,m}\). & BS20,
+pp.\ 21--22. \\
+\(S_i\) & Cross-match product score for \(\lambda(x_i)^2\), defined in
+(B.5). & Derived shorthand for BS20 equation (18), p.\ 22. \\
+\(\eta_i\) & Score error \(S_i-\lambda(x_i)^2\). & Derived notation. \\
+\(A_\tau\) & Cross-worker average of \(\eta_i\) in the \(\tau\)-economy. &
+Derived notation. \\
+\(C\) & A finite uniform upper bound on
+\(\operatorname{Var}(\eta_i)\). & Maintained regularity condition used in
+the derived LLN proof. \\
+\(\delta\) & Arbitrary positive tolerance in Chebyshev's inequality. &
+Standard proof notation. \\
+\(T_i^w,\overline T_x^w\) & Total employment time observed for worker \(i\),
+and its characteristic-\(x\) expectation
+\(\overline T_x^w=\mathbb E[T_i^w\mid x_i=x]\). & BS20, pp.\ 19--20;
+conditional-mean notation is derived. \\
+\(\widehat Q_{\lambda,\tau},Q_\lambda\) & Duration-weighted estimator and
+population target for the second moment of worker wage types, defined in
+(B.11)--(B.12). & Derived labels for BS20 equation (20), p.\ 23. \\
+\(\mu(y)\) & Expected-wage type of a firm with characteristic \(y\). &
+BS20, pp.\ 5, 20--23. \\
+\(\widehat\rho_{\mathrm{BS}},\rho_{\mathrm{BS}}\) & BS20 sorting-correlation
+estimator and population estimand. & BS20, pp.\ 5--6, 24. \\
+\end{longtable}
+
+\subsection{Real-world interpretation of the LLN variables}
+
+The following table translates the statistical notation into the objects one
+would recognize in matched worker--firm data.  The translations explain the
+asymptotic experiment; they do not claim that every characteristic is
+directly observed by the econometrician.
+
+\begin{longtable}{p{0.16\textwidth}p{0.37\textwidth}p{0.37\textwidth}}
+\textbf{Symbol} & \textbf{Actual-economy interpretation} &
+\textbf{What it is not} \\
+\hline
+\(x\) & A complete worker characteristic in the statistical model: the
+worker's wage-relevant, matching-relevant, and duration-relevant state.
+Depending on the application, it may summarize observed attributes, latent
+skill, or both. & It need not be a single observed label such as education,
+and BS20's estimator does not require the econometrician to assign every
+worker to an observed \(x\)-cell. \\
+\(y\) & The analogous complete firm characteristic governing the firm's
+matching, wage, employment-duration, and observation distributions. & It
+need not be an observed industry or firm-size category. \\
+\(I_x\) & Number of distinct worker identities with characteristic \(x\) in
+the baseline theoretical economy.  For example, if the baseline contains
+2,000 workers with state \(x\), then \(I_x=2{,}000\). & It is not worker
+\(i\)'s number of jobs, wage observations, or years in the panel. \\
+\(J_y\) & Number of distinct firm identities with characteristic \(y\) in
+the baseline theoretical economy. & It is not the number of workers employed
+by one firm. \\
+\(I,J\) & Total numbers of distinct workers and firms in the baseline
+economy.  In administrative data, these correspond to counts of worker IDs
+and firm IDs in the analysis population. & They are not numbers of
+worker--firm matches or person-year observations. \\
+\(\tau\) & A theoretical market-size multiplier.  Moving from \(\tau=1\)
+to \(\tau=5\) multiplies every worker-characteristic and firm-characteristic
+population count by five while preserving their shares and
+characteristic-specific data-generating processes. & It is not observed in
+the data, not calendar time, not five copies of each realized wage, and not
+five times as many observations on the same worker. \\
+\(\tau I_x,\tau J_y\) & Numbers of new worker and firm identities of each
+characteristic in the enlarged economy.  These identities receive new match,
+wage, and duration realizations from the same characteristic-specific
+distributions. & They are not literal duplicates with identical employment
+histories. \\
+\(i,j\) & A particular worker ID and firm ID. & They are identities, not
+characteristic categories.  Many different workers \(i\) may share the same
+\(x_i=x\). \\
+\(M_i\) & Number of distinct worker--firm matches in worker \(i\)'s observed
+history; empirically, this is approximately the number of distinct employers
+after repeated spells with the same employer are combined as required by the
+design. & It need not grow with \(\tau\).  A worker can have only two
+qualifying matches in every economy in the sequence. \\
+\(N_j\) & Number of distinct workers matched with firm \(j\) in its observed
+history. & It need not grow with \(\tau\); it is not the total number of
+firms. \\
+\(w^w_{i,m}\) & Average log wage paid in worker \(i\)'s \(m\)-th qualifying
+worker--firm match. & It is not worker \(i\)'s latent type and is not
+necessarily an annual wage observation. \\
+\(\lambda(x_i)\) & Expected log wage received by workers with characteristic
+\(x_i\), using the worker-side, duration-weighted match distribution.  It is
+the population worker wage type. & It is not consistently estimated for
+each individual merely because that individual has two jobs. \\
+\(\varepsilon^w_{i,m}\) & Difference between the realized match-average log
+wage and the worker characteristic's expected-wage component in the
+auxiliary equation. & It is not assumed to disappear for a given worker as
+the economy grows. \\
+\(S_i\) & A cross-product of worker \(i\)'s distinct-match wages designed so
+that its conditional expectation equals \(\lambda(x_i)^2\).  It is one
+noisy worker-level contribution to the aggregate second moment. & It is not
+a consistent estimate of \(\lambda(x_i)^2\) when \(M_i\) remains fixed. \\
+\(\eta_i\) & The worker-level measurement error in that moment score:
+\(S_i-\lambda(x_i)^2\). & It is not a new wage shock or economic match
+component; it is estimation noise induced by having few matches. \\
+\(A_\tau\) & Average of the score errors \(\eta_i\) across the
+\(\tau I\) workers.  This is the noise that the cross-sectional LLN removes.
+& It is not the average error across increasingly many jobs of one worker. \\
+\(T_i^w\) & Total time worker \(i\) is observed employed, used to make the
+sample aggregation reproduce the duration weighting in the population
+estimand. & It is not the replication index and need not be common across
+workers. \\
+\(\overline T_x^w\) & Average total observed employment time for workers
+with characteristic \(x\) in the statistical population. & It is a
+population conditional mean, not an additional observation for each worker.
+\\
+\(\widehat Q_{\lambda,\tau}\) & Duration-weighted sample second moment
+formed by averaging the noisy \(S_i\)'s across all workers in the
+\(\tau\)-economy. & It is not an individual worker-type estimator. \\
+\(Q_\lambda\) & Corresponding population second moment of worker wage types.
+Together with the mean, it yields the worker-type variance. & It is not a
+finite-sample realization. \\
+\(\mu(y)\) & Firm-side expected-wage type: the expected log wage paid by a
+firm of characteristic \(y\). & It is not the wage in one worker--firm match.
+\\
+\(C,\delta\) & A finite variance bound and an arbitrary probability-tolerance
+threshold used in the Chebyshev proof. & They are mathematical proof devices,
+not features of a labor market. \\
+\(\rho_{\mathrm{BS}},\widehat\rho_{\mathrm{BS}}\) & Population correlation
+between matched worker and firm expected-wage types, and the statistic
+computed from the data to estimate it. & The first is not observed; the
+second is not the latent type of any worker or firm. \\
+\end{longtable}
+
+For a concrete illustration, suppose the baseline theoretical economy has
+\(I=10{,}000\) workers and \(J=1{,}000\) firms, including
+\(I_x=2{,}000\) workers of characteristic \(x\).  The economy with
+\(\tau=5\) has \(50{,}000\) workers, \(5{,}000\) firms, and
+\(10{,}000\) workers of characteristic \(x\).  The additional workers are
+new identities with new employment histories drawn from the same
+characteristic-\(x\) distribution.  A worker may still have only
+\(M_i=2\) qualifying matches.  What becomes large is the number of distinct
+worker-level scores \(S_i\), not the amount of information used to construct
+each score.
+
+In an actual administrative dataset, the researcher observes only one
+economy and implements the formulas at \(\tau=1\).  Consistency interprets a
+large observed economy as one member of the hypothetical sequence
+\(\tau=1,2,\ldots\).  BS20's Auxiliary Assumption 4 supplies the
+cross-unit independence needed for independently centered score noise to
+average out; aggregate, regional, industry, or other common shocks can
+invalidate that approximation if they leave substantial dependence across
+units.
+
+\textit{Source: BS20, pp.\ 18--24, especially the dynamic statistical model,
+Auxiliary Assumptions 1--4, and equations (18)--(25).  The numerical example
+and the empirical-language translations are derived.}
+
+\subsection{The replicated economy}
+
+BS20 begins with fixed baseline characteristic counts
+\[
+I=\sum_{x\in\mathcal X}I_x,
+\qquad
+J=\sum_{y\in\mathcal Y}J_y.
+\tag{B.1}
+\]
+It then defines a sequence of economies indexed by a positive integer
+\(\tau\).  In the \(\tau\)-economy the characteristic-specific counts are
+\[
+\tau I_x\quad\text{workers of characteristic }x,
+\qquad
+\tau J_y\quad\text{firms of characteristic }y.
+\tag{B.2}
+\]
+Consequently, the total numbers of workers and firms are
+\[
+\text{total workers}=\tau I,
+\qquad
+\text{total firms}=\tau J.
+\tag{B.3}
+\]
+The characteristic composition is unchanged because
+\[
+\frac{\tau I_x}{\tau I}
+=
+\frac{I_x}{I},
+\qquad
+\frac{\tau J_y}{\tau J}
+=
+\frac{J_y}{J}.
+\tag{B.4}
+\]
+Thus \(\tau\to\infty\) means that the numbers of worker and firm identities
+of every characteristic grow proportionally.  It is not calendar time, the
+number of periods, or the number of observations on one fixed individual.
+In particular, \(I_x\) is a baseline cross-sectional characteristic-cell
+count; it is neither worker \(i\)'s number of observations nor worker
+\(i\)'s number of matches.
+
+\textit{Source: BS20, p.\ 18.  Equations (B.1)--(B.4) spell out the
+paper's replication statement.}
+
+\subsection{Why a fixed number of matches per worker is enough}
+
+BS20 permits \(M_i\) to remain small as \(\tau\to\infty\).  Consider the
+worker-side auxiliary equation
+\[
+w^w_{i,m}
+=
+\lambda(x_i)+\varepsilon^w_{i,m},
+\qquad
+\mathbb E[\varepsilon^w_{i,m}\mid x_i]=0.
+\tag{B.5}
+\]
+For two distinct matches \(m\neq m'\), the conditional independence
+assumption gives
+\[
+\begin{aligned}
+&\mathbb E[
+w^w_{i,m}w^w_{i,m'}\mid x_i]\\
+&\quad=
+\mathbb E[
+(\lambda(x_i)+\varepsilon^w_{i,m})
+(\lambda(x_i)+\varepsilon^w_{i,m'})
+\mid x_i]\\
+&\quad=
+\lambda(x_i)^2
++\lambda(x_i)
+\mathbb E[
+\varepsilon^w_{i,m}+\varepsilon^w_{i,m'}\mid x_i]
++\mathbb E[
+\varepsilon^w_{i,m}\varepsilon^w_{i,m'}\mid x_i]\\
+&\quad=
+\lambda(x_i)^2.
+\end{aligned}
+\tag{B.6}
+\]
+The two linear error terms vanish by conditional mean zero.  Conditional
+independence makes the last expectation equal the product of the two
+conditional error means, which is also zero.
+
+Average the ordered distinct-match products:
+\[
+S_i
+=
+\frac{1}{M_i(M_i-1)}
+\sum_{m=1}^{M_i}
+\sum_{\substack{m'=1\\m'\neq m}}^{M_i}
+w^w_{i,m}w^w_{i,m'}.
+\tag{B.7}
+\]
+Equation (B.6) implies
+\[
+\mathbb E[S_i\mid x_i]=\lambda(x_i)^2.
+\tag{B.8}
+\]
+This is an unbiasedness statement, not an individual consistency statement.
+If \(M_i=2\) in every replicated economy, \(S_i\) remains noisy for that
+worker.  BS20 does not need \(S_i\overset p\longrightarrow\lambda(x_i)^2\)
+for each \(i\).
+
+\textit{Source: BS20, pp.\ 21--23, Auxiliary Assumption 1 and equation
+(18).  The expansion in (B.6) is derived.}
+
+\subsection{The LLN, line by line}
+
+Define
+\[
+\eta_i=S_i-\lambda(x_i)^2,
+\qquad
+A_\tau=\frac{1}{\tau I}\sum_{i=1}^{\tau I}\eta_i.
+\tag{B.9}
+\]
+By (B.8), \(\mathbb E[\eta_i\mid x_i]=0\).  Suppose, as in the role played
+by BS20's cross-unit independence and finite-moment conditions, that the
+\(\eta_i\)'s are independent across workers and
+\(\operatorname{Var}(\eta_i)\leq C<\infty\).  Then
+\[
+\begin{aligned}
+\operatorname{Var}(A_\tau)
+&=
+\operatorname{Var}\left(
+\frac{1}{\tau I}\sum_{i=1}^{\tau I}\eta_i
+\right)\\
+&=
+\frac{1}{(\tau I)^2}
+\sum_{i=1}^{\tau I}\operatorname{Var}(\eta_i)\\
+&\leq
+\frac{\tau I\,C}{(\tau I)^2}\\
+&=
+\frac{C}{\tau I}
+\longrightarrow 0.
+\end{aligned}
+\tag{B.10}
+\]
+The second equality uses cross-worker independence.  The inequality uses
+the uniform variance bound.  Chebyshev's inequality now gives, for every
+\(\delta>0\),
+\[
+\Pr(|A_\tau|>\delta)
+\leq
+\frac{C}{\tau I\delta^2}
+\longrightarrow0.
+\tag{B.11}
+\]
+Therefore \(A_\tau\overset p\longrightarrow0\).  Because the replicated
+economy contains exactly \(\tau I_x\) workers of characteristic \(x\),
+\[
+\begin{aligned}
+\frac{1}{\tau I}\sum_{i=1}^{\tau I}S_i
+&=
+\frac{1}{\tau I}\sum_{i=1}^{\tau I}\lambda(x_i)^2+A_\tau\\
+&=
+\sum_{x\in\mathcal X}\frac{\tau I_x}{\tau I}\lambda(x)^2+A_\tau\\
+&\overset p\longrightarrow
+\sum_{x\in\mathcal X}\frac{I_x}{I}\lambda(x)^2.
+\end{aligned}
+\tag{B.12}
+\]
+The individual score noise does not disappear within a worker; it disappears
+after averaging across the growing number \(\tau I\) of workers.
+
+BS20's implemented second-moment estimator is duration weighted.  In the
+present notation it has the form
+\[
+\widehat Q_{\lambda,\tau}
+=
+\frac{
+\sum_{i=1}^{\tau I}T_i^wS_i
+}{
+\sum_{i=1}^{\tau I}T_i^w
+},
+\tag{B.13}
+\]
+with population target
+\[
+Q_\lambda
+=
+\frac{
+\sum_{x\in\mathcal X}
+I_x\overline T_x^w\lambda(x)^2
+}{
+\sum_{x\in\mathcal X}
+I_x\overline T_x^w
+}.
+\tag{B.14}
+\]
+Under BS20's duration-error restrictions, cross-unit independence, and
+finite-moment conditions, apply the same argument separately to the
+normalized numerator and denominator of (B.13).  Both converge to their
+counterparts in (B.14); the denominator has a positive limit, so the ratio
+converges to \(Q_\lambda\).  The firm second moment follows by the same
+argument across \(\tau J\) firms.  The covariance estimator uses
+leave-focal-match-out worker and firm wage averages; BS20 first proves that
+their product is unbiased for the matched type product and then shows that
+the variance of its aggregate average is proportional to \(1/\tau\).
+
+The final logic is therefore
+\[
+\begin{array}{c}
+\text{two conditionally independent matches per unit}\\
+\Downarrow\\
+\text{unbiased unit-level scores for the required latent moments}\\
+\Downarrow\\
+\text{averaging across }\tau I\text{ workers and }\tau J\text{ firms}\\
+\Downarrow\\
+\text{aggregate moment consistency as }\tau\to\infty\\
+\Downarrow\\
+\widehat\rho_{\mathrm{BS}}\overset p\longrightarrow\rho_{\mathrm{BS}}.
+\end{array}
+\tag{B.15}
+\]
+The correlation step also requires positive worker- and firm-type variances.
+In the empirical formulas BS20 sets \(\tau=1\); the sequence
+\(\tau\to\infty\) is the theoretical device used to establish consistency.
+
+\textit{Source: BS20, pp.\ 22--24, Propositions 3--5; Appendix B.1,
+pp.\ 48--50.  Equations (B.9)--(B.14) isolate the paper's LLN argument in
+elementary form.}
+
+\section{Kline's wage difference versus Sorkin and Volpe}
+
+\subsection{Notation}
+
+\begin{longtable}{p{0.20\textwidth}p{0.53\textwidth}p{0.20\textwidth}}
+\textbf{Symbol} & \textbf{Meaning} & \textbf{Source or status} \\
+\hline
+\(i,j,k,t,s,T\) & Worker, origin firm, destination firm, outcome period,
+generic conditioning period, and total number of periods. & Standard
+indices used by Kline, Sorkin--Warwar, and Volpe. \\
+\(D_{it}\) & Firm employing worker \(i\) in period \(t\). & Kline,
+pp.\ 29--33. \\
+\(\mathbf D_i\) & Two-period mobility path
+\((D_{i1},D_{i2})\). & Derived shorthand. \\
+\(Y_{it}(j)\) & Worker \(i\)'s potential log wage in period \(t\) at firm
+\(j\). & Kline, pp.\ 29--33. \\
+\(Y_{it}\) & Observed log wage
+\(Y_{it}=Y_{it}(D_{it})\). & Standard consistency relation; Kline,
+pp.\ 29--30. \\
+\(X_{it},\beta\) & Worker-time covariates and their coefficient. &
+Sorkin--Warwar, p.\ 5; Volpe, slide 4/35. \\
+\(\alpha_i,\psi_j\) & Additive worker and firm wage components. &
+Sorkin--Warwar, pp.\ 5--7; Volpe, slide 4/35; Kline, p.\ 15. \\
+\(\varpi_{ij}\) & Permanent statistical worker--firm match component.  This
+relabels Sorkin--Warwar's \(\mu_{ij}\) to avoid collision with other uses of
+\(\mu\). & Sorkin--Warwar, p.\ 6; symbol relabeled. \\
+\(\widetilde\varepsilon_{it}(j)\) & Transitory potential-wage remainder at
+firm \(j\). & Sorkin--Warwar, pp.\ 6--7; potential-firm index made
+explicit. \\
+\(\varepsilon^A_{it}\) & Composite residual in the observed additive AKM
+equation. & Derived from Sorkin--Warwar equation (2), p.\ 6. \\
+\(d,\mathbf x\) & Generic realized firm and covariate values used in
+mobility-conditioning cells. & Derived notation. \\
+\(\mathsf E_{\widetilde\varepsilon}\) & Conditional-mean exogeneity of the
+transitory potential-wage remainder, defined in (K.3). & Derived label for
+Sorkin--Warwar equation (3), p.\ 6. \\
+\(\mathsf E_{\varpi}\) & Conditional-mean exogeneity of the permanent match
+component, defined in (K.4). & Derived label for Sorkin--Warwar equation
+(4), p.\ 6. \\
+\(\mathsf A_0\) & Pure additive-separability restriction
+\(\varpi_{ij}=0\) for every potential worker--firm pair. & Derived label for
+Sorkin--Warwar equation (6), p.\ 7, and Volpe's second pillar. \\
+\(\mathsf{EM}_{SW},\mathsf{AS}_{SW}\) & Sorkin--Warwar's exogenous-mobility
+and additive-separability assumptions. & Derived labels. \\
+\(\mathsf{EM}_{V},\mathsf{AS}_{V}\) & Volpe's exogenous-mobility and pure
+additive-separability pillars. & Derived labels. \\
+\(G_{i2}(j,k)\) & Worker \(i\)'s period-2 potential-wage gain from replacing
+firm \(j\) with firm \(k\). & Derived shorthand for Kline, pp.\ 30--33. \\
+\(\mathsf{NSG}_{K}\) & Kline's no-selection-on-treatment-effects
+restriction, defined in (K.9). & Kline, p.\ 32; label derived. \\
+\(\Delta_{jk}\) & Average causal wage effect for workers selected onto the
+directed edge \(j\to k\). & Kline, pp.\ 30--31. \\
+\(\psi_j^{\mathrm{ATE}}\) & Population mean potential-wage level at firm
+\(j\), relative to reference firm \(0\). & Derived relabeling of Kline,
+p.\ 33. \\
+\(\xi_i\) & Nondegenerate, mean-zero permanent match heterogeneity in the
+two-firm counterexample. & Derived notation. \\
+\end{longtable}
+
+\subsection{One wage surface that separates the restrictions}
+
+Use the potential-wage decomposition
+\[
+Y_{it}(j)
+=
+\alpha_i+\psi_j+X_{it}'\beta
++\varpi_{ij}
++\widetilde\varepsilon_{it}(j).
+\tag{K.1}
+\]
+The observed wage is \(Y_{it}=Y_{it}(D_{it})\).  If an additive AKM equation
+omits \(\varpi_{ij}\), its observed residual is
+\[
+\varepsilon^A_{it}
+=
+\varpi_{iD_{it}}
++\widetilde\varepsilon_{it}(D_{it}).
+\tag{K.2}
+\]
+Equation (K.1) is a common bookkeeping device: it separates a permanent
+worker--firm interaction from a transitory remainder.  It does not assume
+that either component is exogenous.
+
+\textit{Source: Sorkin--Warwar, pp.\ 5--7, equations (1)--(2).
+The potential-wage notation and the relabeling
+\(\mu_{ij}\mapsto\varpi_{ij}\) are derived clarifications.}
+
+\subsection{Sorkin and Volpe use different packaging}
+
+In the notation of (K.1), define the two componentwise mean-exogeneity
+conditions, for every admissible \(i,j,d,s,t,\mathbf x\),
+\[
+\mathsf E_{\widetilde\varepsilon}:
+\quad
+\mathbb E[
+\widetilde\varepsilon_{it}(j)
+\mid D_{is}=d,X_{is}=\mathbf x]
+=0,
+\tag{K.3}
+\]
+\[
+\mathsf E_{\varpi}:
+\quad
+\mathbb E[
+\varpi_{ij}
+\mid D_{is}=d,X_{is}=\mathbf x]
+=0,
+\tag{K.4}
+\]
+and define pure additive separability as
+\[
+\mathsf A_0:
+\quad
+\varpi_{ij}=0
+\quad\text{for every }(i,j).
+\tag{K.5}
+\]
+
+Sorkin--Warwar package the assumptions as
+\[
+\mathsf{EM}_{SW}
+=
+\mathsf E_{\widetilde\varepsilon}
+\cap
+\mathsf E_{\varpi},
+\qquad
+\mathsf{AS}_{SW}
+=
+\mathsf E_{\widetilde\varepsilon}
+\cap
+\mathsf A_0.
+\tag{K.6}
+\]
+Because \(\mathsf A_0\) implies \(\mathsf E_{\varpi}\),
+\[
+\mathsf{AS}_{SW}\subseteq\mathsf{EM}_{SW}.
+\tag{K.7}
+\]
+This is why Sorkin can describe additive separability as the stronger
+constant-effects case and exogenous mobility as the weaker average-effects
+case.  Sorkin's Lecture 10 summarizes the distinction as ``exogenous
+mobility: average effects'' versus ``additive separability: constant
+effects.''
+
+Volpe presents two separate pillars:
+\[
+\mathsf{EM}_{V}:
+\quad
+\mathbb E\left[
+\varepsilon^A_{it}
+\mid
+\alpha_i,\{\psi_{D_{is}},X_{is}\}_{s=1}^{T}
+\right]=0
+\quad\text{for every }t,
+\qquad
+\mathsf{AS}_{V}:
+\quad
+\varpi_{ij}=0
+\quad\text{for every }(i,j).
+\tag{K.8}
+\]
+As pure restrictions, a selection restriction and an outcome-surface
+restriction are not nested.  The apparent disagreement is therefore about
+packaging: Sorkin's named additive-separability assumption includes the
+transitory exogeneity condition, while Volpe uses ``additive separability''
+for the outcome restriction alone.  An AKM causal interpretation uses both
+of Volpe's pillars.
+
+\textit{Sources: Sorkin--Warwar, pp.\ 6--7, Assumptions 1--2; Sorkin
+Lecture 10, slide 46/79; Volpe, slide 4/35.  The set notation in
+(K.6)--(K.8) is derived.}
+
+\subsection{Which framework uses the wage object closest to Kline's?}
+
+Kline's period-2 treatment-effect object is
+\[
+G_{i2}(j,k)
+=
+Y_{i2}(k)-Y_{i2}(j).
+\tag{K.9}
+\]
+It asks how worker \(i\)'s wage would change if firm \(j\) were replaced by
+firm \(k\).  Subtracting (K.1) at the two firms gives
+\[
+\begin{aligned}
+G_{i2}(j,k)
+&=
+\psi_k-\psi_j\\
+&\quad+
+\varpi_{ik}-\varpi_{ij}\\
+&\quad+
+\widetilde\varepsilon_{i2}(k)
+-\widetilde\varepsilon_{i2}(j).
+\end{aligned}
+\tag{K.10}
+\]
+The common worker component \(\alpha_i\) and the worker-time covariate term
+\(X_{i2}'\beta\) cancel exactly.
+
+The wage object in (K.9) is closest to Sorkin--Warwar's formulation.
+Sorkin--Warwar explicitly interpret a firm's effect as a worker-specific
+treatment effect: exogenous mobility permits heterogeneous effects, whereas
+additive separability makes the permanent treatment effect constant across
+workers.  Volpe's displayed primitive is instead the wage level
+\(Y_{it}\), with exogenous mobility and additive separability stated as
+separate restrictions on its residual and functional form.  A wage
+difference is an implication of Volpe's level equation, not the organizing
+primitive.
+
+Under pure additive separability, \(\varpi_{ij}=0\), so the permanent
+conditional-mean part of (K.10) is the common firm contrast
+\(\psi_k-\psi_j\).  Kline instead assumes
+\[
+\mathsf{NSG}_{K}:
+\quad
+G_{i2}(j,k)\perp\mathbf D_i
+\quad\text{for every }j\neq k.
+\tag{K.11}
+\]
+Condition (K.11) does not set
+\(\varpi_{ik}-\varpi_{ij}\) to zero.  It permits heterogeneous gains but
+rules out selection into the mobility path on those gains.  Consequently,
+the wage object is closest to Sorkin's treatment-effect object, and Kline's
+restriction on that object is conceptually closer to exogenous mobility
+than to additive separability.
+
+The restrictions are not literally equivalent.  Kline imposes full
+independence on a difference, while Sorkin--Warwar impose conditional-mean
+restrictions on wage-level components.  A worker component common to both
+potential wages can be correlated with mobility and still cancel from
+\(G_{i2}(j,k)\).  Conversely, conditional mean zero of the level components
+does not generally imply full distributional independence of the gain.
+
+\textit{Sources: Kline, pp.\ 32--33, Assumption 4 and Proposition 2;
+Sorkin--Warwar, pp.\ 6--7.  Equations (K.9)--(K.10) and the comparison are
+derived.}
+
+\subsection{Why an additive average edge effect is not additive separability}
+
+Under Kline's exclusion, parallel-trends, and stationarity assumptions, the
+mean observed wage change on edge \(j\to k\) identifies the average
+treatment effect for workers selected onto that edge:
+\[
+\Delta_{jk}
+=
+\mathbb E[
+G_{i2}(j,k)
+\mid D_{i1}=j,D_{i2}=k].
+\tag{K.12}
+\]
+This causal edge result does not require additive separability.
+
+If Kline's no-selection condition (K.11) is added, then
+\[
+\begin{aligned}
+\Delta_{jk}
+&=
+\mathbb E[
+G_{i2}(j,k)
+\mid D_{i1}=j,D_{i2}=k]\\
+&=
+\mathbb E[G_{i2}(j,k)]\\
+&=
+\mathbb E[Y_{i2}(k)]
+-\mathbb E[Y_{i2}(j)].
+\end{aligned}
+\tag{K.13}
+\]
+The first equality is the definition of the edge ATT.  The second uses
+no selection on the gain.  The third uses linearity of expectation.
+Define, relative to reference firm \(0\),
+\[
+\psi_j^{\mathrm{ATE}}
+=
+\mathbb E[Y_{i2}(j)]
+-\mathbb E[Y_{i2}(0)].
+\tag{K.14}
+\]
+Subtracting the two definitions in (K.14) gives
+\[
+\Delta_{jk}
+=
+\psi_k^{\mathrm{ATE}}
+-\psi_j^{\mathrm{ATE}}.
+\tag{K.15}
+\]
+Thus the average edge effects are transitive and admit a firm-difference
+representation.
+
+Equation (K.15) is an additive representation of population averages.  It
+does not say that an individual's potential wage has the form
+\(\alpha_i+\psi_j\), and it does not say that the individual gain equals
+\(\psi_k^{\mathrm{ATE}}-\psi_j^{\mathrm{ATE}}\).  Therefore (K.15) is not
+additive separability and is not equivalent to it.
+
+\textit{Source: Kline, pp.\ 30--33, Propositions 1--2.  The line-by-line
+expansion in (K.13)--(K.15) is derived.}
+
+\subsection{A two-firm proof by counterexample}
+
+Consider two firms, \(0\) and \(1\), set covariates and transitory errors to
+zero, and let
+\[
+\varpi_{i0}=\xi_i,
+\qquad
+\varpi_{i1}=-\xi_i,
+\qquad
+\mathbb E[\xi_i]=0,
+\tag{K.16}
+\]
+where \(\xi_i\) is nondegenerate and independent of the mobility path
+\(\mathbf D_i\).  Potential wages are
+\[
+Y_{i2}(0)=\alpha_i+\psi_0+\xi_i,
+\qquad
+Y_{i2}(1)=\alpha_i+\psi_1-\xi_i.
+\tag{K.17}
+\]
+Subtracting the two equations yields the individual gain
+\[
+G_{i2}(0,1)
+=
+\psi_1-\psi_0-2\xi_i.
+\tag{K.18}
+\]
+Because \(\xi_i\) is nondegenerate, the gain varies across workers.
+Moreover, \(\varpi_{i0}\) and \(\varpi_{i1}\) are not identically zero, so
+pure additive separability \(\mathsf A_0\) fails.
+
+Because \(\xi_i\perp\mathbf D_i\), equation (K.18) implies
+\[
+G_{i2}(0,1)\perp\mathbf D_i,
+\tag{K.19}
+\]
+so Kline's no-selection condition holds.  Finally,
+\[
+\begin{aligned}
+\Delta_{01}
+&=
+\mathbb E[G_{i2}(0,1)]\\
+&=
+\psi_1-\psi_0-2\mathbb E[\xi_i]\\
+&=
+\psi_1-\psi_0.
+\end{aligned}
+\tag{K.20}
+\]
+The average edge effect is an additive firm difference, while every
+individual gain still contains the heterogeneous interaction
+\(-2\xi_i\).  This proves by construction that an additive representation
+of average edge effects does not imply individual-level additive
+separability.
+
+\textit{Equations (K.16)--(K.20) are a derived counterexample.}
+
+\section*{References and page convention}
+
+\begin{enumerate}
+\item Borovi\v{c}kov\'a, Katar\'ina, and Robert Shimer.
+\emph{High Wage Workers Work for High Wage Firms}, February 13, 2020.
+Page references use the paper's printed page numbers.
+\item Kline, Patrick M.  \emph{Firm Wage Effects}.  NBER Working Paper
+33084, October 2024, revised February 2025.  Page references use the
+paper's printed page numbers.
+\item Sorkin, Isaac, and Lucas Warwar.  \emph{Paired Movers}, March 2026.
+Page references use the paper's printed page numbers.
+\item Sorkin, Isaac.  \emph{Labor Economics, Lecture 10}.  The cited slide
+is numbered 46/79 in the lecture.
+\item Volpe, Oscar.  \emph{Labor Omnibus Lectures, November 3 and 5}.
+The cited slide is numbered 4/35 in the lecture.
+\end{enumerate}
+
+\end{document}

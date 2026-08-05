@@ -1,0 +1,3975 @@
+
+--- PAGE 1 ---
+A Design-Based Approach to Testing and Inference in
+(Quasi-)Experiments with Spillovers ∗
+Yechan Park†
+July 27, 2026
+Abstract
+Economic policies rarely affect only their direct targets. To study these spillovers, researchers
+summarize who else was treated with a simple exposure measure, such as the share of treated
+neighbors within a radius. But for many settings, economic theory provides little guidance on
+choosing the functional form (e.g., ring) of that measure or its parameters (e.g., radius). We
+show that the data can inform both choices. Correctly specified exposure measures imply orthog-
+onality conditions that can be used for both estimation and testing. We establish consistency
+and asymptotic normality of the resulting estimator under spatial and network dependence in
+a design-based framework, with all randomness arising from treatment assignment. We then
+characterize the efficient moment conditions. Applied to two large-scale anti-poverty programs,
+the framework supports some prior radius estimates but rejects others. In the latter case, the
+revised radius yields substantively different policy-effect estimates.
+Keywords:spillovers; exposure mappings; design-based inference; specification testing; spatial
+and network dependence; general equilibrium effects
+∗I thank Isaiah Andrews, Jesse Shapiro, Elie Tamer, and Davide Viviano for guidance and generous support. I
+also thank Raj Chetty for early feedback and encouragement. I am grateful to the authors of Egger et al. (2022) and
+Muralidharan et al. (2023), especially Ted Miguel and Paul Niehaus, for providing additional data and guidance for
+replication. I also benefited from helpful comments by Aristotelis Epanomeritakis, Tilman Graff, Gabriel Kreindler,
+Andreas Petrou-Zeniou, Yuya Sasaki, Neil Shephard, Rahul Singh, and Shengbin Wei, as well as from discussions with
+participants at the Harvard Econometrics Workshop and NEEPC 2026. I acknowledge support from the Harvard
+Griffin Fund in Economics. All remaining errors are mine.
+†Department of Economics, Harvard University. Littauer Center, 1805 Cambridge St, Cambridge, MA 02138.
+Email:yechanpark@fas.harvard.edu
+1
+
+--- PAGE 2 ---
+1 Introduction
+Economic policies can generate effects far beyond their direct targets. Because economic agents
+are embedded in spatial, market, and social networks, shocks may propagate through prices, local
+labor markets, commuting and shopping patterns, and social interactions. Classical analyses of
+social multipliers in economics emphasize that such spillovers can amplify or attenuate policy
+impacts in important ways (e.g., Manski, 1993; Glaeser et al., 2003). More recently, a growing
+body of experimental and quasi-experimental work in development and spatial economics has made
+spillovers the primary object of interest, including studies of large-scale cash transfers, public works,
+and transport infrastructure (e.g. Miguel and Kremer, 2004; Donaldson and Hornbeck, 2016; Egger
+et al., 2022; Muralidharan et al., 2023; Franklin et al., 2024; Walker et al., 2024).
+Despite this interest, spillovers pose econometric challenges. Unlike the standard no-interference
+setting (where each unit’s outcome depends only on its own treatment), spillovers mean that unit
+i’s outcome can depend on many, or even all units’ treatments. Whereas under the standard
+assumption each unit has only a small number of potential outcomes (e.g., two in the binary-
+treatment case), with spillovers the number of potential outcomes can be very large (e.g., 2 n in the
+binary case), since each of the possible assignments can in principle produce a different outcome
+for that unit.
+Applied work typically makes the problem tractable by replacing the full assignment vectorW
+with a low-dimensional exposure mappingg(W;X i, θ) (Manski, 2013; Aronow and Samii, 2017) 1.
+The vectorWcollects all units’ treatment statuses,X i contains baseline covariates such as networks
+or commuting flows, andθparameterizes features of the mapping, such as a distance radius or
+elasticity parameter. Examples include ring or neighborhood averages (Miguel and Kremer, 2004;
+Egger et al., 2022) and smooth spatial-decay kernels such as gravity or market-access measures
+(Redding and Venables, 2004; Donaldson and Hornbeck, 2016; Franklin et al., 2024).
+This approach raises two key challenges. The first is the choice of the map structureg(W;X i, θ).
+Often economic theory does not provide an exact functional form for this map beyond broad
+guidance, such as the idea that spillovers should decay with distance (in space, in a network, or
+along trade and commuting links). Reflecting such ambiguity, even in closely related empirical
+settings, different researchers make very different choices among these constructions. For example,
+in large-scale anti-poverty programs in low-income countries, researchers studying settings with
+very similar institutional features choose different exposure map functional forms (e.g. Egger et al.,
+2022; Franklin et al., 2024; Walker et al., 2024). 2 Even within a single paper, researchers often
+1An alternative is to restrict interference to small, known groups (partial interference; e.g., households or dorm
+rooms), the special case in which the exposure map reads only own-group assignments. We focus on the general case
+because our applications feature market- and space-mediated spillovers that may cross such groupings.
+2Egger et al. (2022) study large cash transfers in rural Kenya and proxy local spillovers by per-capita transfers
+within distance bands around each market (“distance buffers”). Franklin et al. (2024) evaluate an urban public-works
+program in Addis Ababa and, to capture spillovers across neighborhoods, combine a spatial-equilibrium model with
+2
+
+--- PAGE 3 ---
+report multiple exposure constructions and informally compare them (Donaldson and Hornbeck,
+2016; Muralidharan et al., 2023). 3
+Second, even given a particular functional form for the exposure mapping, empirical researchers
+must still selectθand account for the uncertainty this choice introduces into downstream policy
+estimates. For example, Egger et al. (2022) note that they “had no a priori knowledge of the
+relevant distances over which general equilibrium effects might operate. . . ”. In practice, applied
+papers often report results for several plausible values ofθ, or select a preferred specification using
+model-selection criteria or informal diagnostics (e.g. Currie et al., 2015; Donaldson and Hornbeck,
+2016; Egger et al., 2022). Yet standard errors and confidence intervals typically condition on this
+choice, treatingθas fixed rather than as a source of estimation uncertainty. 4
+To address these challenges in choosing and calibrating exposure mappings, this paper develops a
+design-based framework for testing and estimating exposure mappings in settings with spillovers. A
+key difficulty in such settings is that correctly specifying the outcome model is especially challenging
+given the complex dependence induced by spillovers. We adopt a design-based approach that
+sidesteps this by treating potential outcomes as fixed for the experimental sample and letting
+all randomness come from the known assignment mechanism; this randomization serves as the
+key assumption needed to test and conduct inference on the exposure mapping. Starting from
+a proposed exposure mapg(W;X i, θ), we develop tools to (i) test whether the implications of
+this map are consistent with observed outcomes under the known assignment mechanism and (ii)
+estimate the tuning parametersθ. To quantify uncertainty, we develop a design-based law of large
+numbers and central limit theorem for GMM estimators under spatial and network dependence,
+characterize an efficiency bound and optimal moments within the class of design-based estimators,
+and propagate the resulting exposure-map uncertainty into downstream policy estimands.
+commuting data so that exposure is mediated by the commuting network rather than by geographic distance alone.
+In related Kenyan data, Walker et al. (2024) construct gravity-style “shopping network” exposure indices that weight
+village-level activity by baseline shopping flows from villages to markets, and compare the performance of these
+network-based measures to buffer-style measures of spatial exposure in explaining cross-market inflation (Walker
+et al., 2024, Figure A.17).
+3For instance, Muralidharan et al. (2023) take as their main specification a ring-based exposure measure, given
+by the treated share of units within a 20 km radius of each location, but also show in their Appendix B that similar
+results obtain when exposure is measured using a market-access-style kernel. Likewise, Donaldson and Hornbeck
+(2016) summarize the impact of the nineteenth-century U.S. railroad network through a market-access index, but
+Appendix Table 3 reports estimates under a range of alternative exposure maps: they redefine market access using
+different measures of “market size” (population versus county wealth) and restrict the set of trading partners (for
+example, only counties beyond certain distance thresholds, only urban counties, only major cities, or only New York
+City).
+4In Egger et al. (2022), local price changes are regressed on exposure measures defined over multiple distance
+buffers, with the outer radius chosen by a Schwarz/Bayesian information criterion; the selected 0–2 km band is then
+used as the main exposure definition in the reduced-form analysis (Egger et al., 2022, Section 4.2). Currie et al.
+(2015) estimate effects within several distance bands around polluting manufacturing plants and report alternative
+distances, but focus on a preferred near/far comparison, 0–1 versus 1–2 miles, guided by atmospheric dispersion
+evidence (Currie et al., 2015, pp. 278, 299–312). Donaldson and Hornbeck (2016) recompute market access under
+alternative trade elasticities as robustness checks (Donaldson and Hornbeck, 2016, pp. 843–844, Appendix Table 3).
+In each case, variation acrossθis treated as specification analysis rather than propagated into sampling uncertainty.
+3
+
+--- PAGE 4 ---
+Formally, we work with a known randomized (or quasi-randomized) assignment designD n and
+a proposed exposure mapg(W;X i, θ). A key observation is that a correctly specified exposure
+mapping implies anexposure sufficiencyproperty: there exists a true parameterθ 0 such that
+potential outcomes depend on the full treatment assignment vector only through the exposure
+mappingg(W;X i, θ0), so that conditional ong(W;X i, θ0) the remaining details ofWcarry no
+additional outcome-relevant information. This property implies a large set of orthogonality con-
+ditions between outcomes and functions ofW, which we construct via what we calldesign-side
+residuals. Given any integrable outcome transformationϕand design functionψ, we orthogonal-
+izeψ(W) with respect to the exposure mapping by subtracting its conditional expectation given
+g(W;X i, θ) (in the spirit of Borusyak and Hull, 2023), and for each unitidefine the design-side
+residualR i,θψ(W) :=ψ(W)−E
+
+ψ(W)|g(W;X i, θ)
+
+,where the conditional expectation is taken
+with respect toD n, and thus can be computed by repeatedly sampling from the known design. Un-
+der exposure sufficiency and (quasi-)random assignment, we show that at the true parameter these
+design-side residuals are orthogonal to any function of uniti’s outcome:E
+
+ϕ(Yi)R i,θ0ψ(W)
+
+= 0
+for everyϕandψ. Varying (ϕ, ψ) generates a family of moment conditions that form the basis
+for GMM estimation; when the system is overidentified, the associatedJ-test assesses whether the
+proposed exposure mapping is consistent with the design. In this way, a single design-side resid-
+ualization strategy supports both of our key objectives: evaluating the fit of a proposed exposure
+map and learning about the tuning parameterθ 0 from the data.
+For inference, we establish consistency and asymptotic normality of the design-based GMM
+estimator under spatial and network dependence. We work in the affinity-set dependence frame-
+work of Chandrasekhar et al. (2023), which nests classical structures such as mixing random fields,
+m-dependence, and dependency graphs as special cases. Existing results in this framework are
+pointwise; to our knowledge we are the first to establish uniform consistency and asymptotic nor-
+mality in it, and we give primitive conditions that cover both smooth exposure maps (gravity and
+market-access kernels) and non-smooth ones (the ring radius). We also characterize efficiency within
+this moment class: there is an asymptotic-variance lower bound for any moment the framework
+constructs, and a feasible sieve attains it.
+Finally, we carry the resulting uncertainty aboutg(W;X i, θ) into downstream policy estimands
+(e.g., average effects under counterfactual assignment rules) so that inference reflects both the
+experimental variation and uncertainty about the exposure specification itself.
+We illustrate the framework in two applications to large-scale anti-poverty programs in devel-
+opment economics: the large-scale public-works reform in rural India analyzed by Muralidharan
+et al. (2023), and the GiveDirectly cash-transfer experiment in rural Kenya studied by Egger et al.
+(2022) together with the follow-up structural analysis of Walker et al. (2024). Both study large
+interventions in low-income economies, are explicitly motivated by general-equilibrium spillovers,
+involve spatially linked local markets, and rely primarily on ring-based exposure mappings.
+4
+
+--- PAGE 5 ---
+The two applications yield contrasting conclusions. In the Muralidharan et al. (2023) ap-
+plication, the design-based overidentification tests do not reject their ring specification, and the
+estimated radii broadly support the original 20 km labor-market scale for the main income out-
+comes. In the Egger et al. (2022) application, by contrast, the ring specification is rejected for
+several core outcomes, and our support diagnostics reject the original 2 km radius for all outcomes,
+with the smallest non-rejected supports often being 4–6 km or larger. This pattern is consistent
+with the follow-up analysis of Walker et al. (2024), which argues that very local rings can miss
+market-level ambient spillovers that are common to households within local markets. Consistent
+with this narrative, we obtain a local fiscal transfer multiplier of 1.58, which is smaller than Egger
+et al. (2022)’s original 2.5, and much closer to the model-predicted multiplier of 1.54 by Walker
+et al. (2024).
+Together, these applications illustrate the value of treating exposure mappings as objects of
+design-based inference rather than fixed researcher choices: the framework can support an econom-
+ically motivated map, detect and guide revisions when it does not, and propagate the resulting
+uncertainty into policy-relevant estimates.
+1.1 Related literature
+Design-based uncertainty.We adopt a finite-population, design-based perspective in which
+{Yi(·), Xi}n
+i=1 are fixed and randomness arises only from the assignment mechanism. This tradition
+traces to Neyman (1923) and motivates modern distinctions between design-based and superpop-
+ulation uncertainty in regression and experimental analyses (Abadie et al., 2020). Beyond fully
+randomized designs, Rambachan and Roth (2025) develop a design-based theory of uncertainty for
+canonical quasi-experimental estimators when treatment propensities can vary across units, and Li
+and Ding (2017) provide finite-population central limit theorems yielding √n-Gaussian approxima-
+tions under randomization-based dependence. Our contribution operates within this design-based
+framework but targets moment conditions implied by exposure-sufficiency restrictions for parame-
+terized exposure mappings, under the cross-unit dependence induced by interference.
+Interference and exposure mappings.Foundational potential-outcomes treatments of inter-
+ference include Sobel (2006) and Hudgens and Halloran (2008). Building on this tradition, Aronow
+and Samii (2017) formalizeexposure mappingsand develop randomization-based estimators for
+causal effects under general (but specified) interference structures, while S¨ avje et al. (2021) clarify
+large-sample behavior of conventional estimators under unknown interference and show that stan-
+dard variance formulas can fail. Leung (2022) allows treatments assigned to increasingly distant
+units to have smaller but nonzero effects under approximate neighborhood interference. Recent
+work also studies what can and cannot be learned about interference structure from the design
+itself: Gao et al. (2026) show that no specification test can have uniform power against any richer
+5
+
+--- PAGE 6 ---
+exposure-mapping alternative to an exposure-mapping model 5, while Zhong (2025) develops finite-
+sample randomization tests for the existence and extent of interference (for example, whether
+spillovers vanish beyond a given distance) under minimal assumptions on the network. Comple-
+mentary work emphasizes robustness to unknown spillover mechanisms within broad classes and
+studies estimators (and sometimes designs) with minimax or neighborhood-adaptive guarantees;
+see Belloni et al. (2022) and Faridani and Niehaus (2024). Our approach is complementary to
+these robust and testing-based methods: rather than remaining fully agnostic about structure or
+testing a partially sharp no-spillover null, we take the parametric exposure maps used in applied
+work (e.g., ring, gravity, market-access) as maintained and use the known design to (i) estimate the
+tuning parameterθ 0 and (ii) test the associated exposure-sufficiency restrictions via overidentifying,
+design-implied orthogonality conditions.6
+Testing models with trusted shocks.A line of work going back to Lucas (1980) views struc-
+tural models as objects to be disciplined by their responses to shocks with well-understood sources
+and exogeneity properties. In quantitative trade, Ad˜ ao et al. (2023) propose IV-based goodness-of-
+fit statistics that compare a model’s predicted response to quasi-experimental tariff shocks with the
+observed response. We bring this “trusted shocks” logic to spillovers and exposure mappings: the
+parametric exposure familyg(W;X i, θ) plays the role of the structured model, a structural restric-
+tion on how treatments propagate even in otherwise reduced-form designs, the (quasi-)experimental
+assignmentW∼ D n (orW∼G n(· |X)) provides the trusted shock, and the design-implied orthog-
+onality conditions deliver both specification tests for the maintained exposure class and design-based
+estimators of the exposure parameterθ 0.
+Orthogonalization and recentering.Our design-side residualization builds on a long tradition
+of orthogonalization in semiparametric and GMM settings, including the partially linear model of
+Robinson (1988) and the construction of “orthogonal instruments” in IO (Ackerberg and Crawford,
+2009; Ackerberg et al., 2011; Andrews et al., 2025). Closest in spirit is the recentering approach
+of Borusyak and Hull (2023) and Borusyak et al. (2025), who study settings where a known shock
+design generates a constructed regressor (a formula instrument) and recenter it by subtracting its
+conditional mean given covariates to obtain orthogonal moments for a downstream causal or struc-
+tural parameter. Extensions to optimality are provided by Borusyak and Hull (2026). Whereas
+that work uses recentering to identify and estimate a downstream parameter given a fixed formula
+5See Remark 3.7 for detailed discussion.
+6A further complementary literature asks how exposure-based estimands should be interpreted when the re-
+searcher’s chosen exposure mapping is misspecified. S¨ avje (2024) separates the use of an exposure mapping to define
+an estimand from the assumption that the mapping captures the complete causal structure, and establishes con-
+ditions under which exposure effects remain estimable under misspecification. Park and Yang (2026) instead take
+the marginal policy effect as primitive and show that a researcher-chosen exposure mapping induces a pseudo-true
+outcome model and a corresponding decomposition into direct and spillover components.
+6
+
+--- PAGE 7 ---
+or exposure, we apply the same orthogonalization logic upstream to discipline and test the exposure
+map itself: we treatg(W;X i, θ) as the object of interest and use the known (quasi-)experimental
+design to identify, estimate, and testθ 0. Relatedly, Ritzwoller (2025) develops reweighting proce-
+dures for proximity-exposure regressions using residualized proximity measures to isolate variation
+orthogonal to alternative mediating channels.
+The rest of the paper is organized as follows. Sections 2–4 develop the framework: identifica-
+tion via design-based orthogonality (Section 2), a large-sample theory under spatial and network
+dependence (Section 3), and the efficient choice of moments (Section 4). Section 5 propagates the
+estimated map into downstream estimands, and Section 6 presents the two applications.
+2 Setup and Moment Conditions
+2.1 Design, outcomes, and exposure maps
+We observe unitsi= 1, . . . , n(regions, households, or network nodes) and a treatment assignment
+vectorW= (W 1, . . . , Wn)⊤ drawn from a known experimental (or quasi-experimental) designD n
+(e.g., complete, Bernoulli, stratified, cluster-randomized, shock-based, etc.).
+The assignment takes values in a known supportW. Binary treatment,W={0,1} n, is the
+leading case, but nothing in what follows requires it: the individual assignmentW i may be multi-
+valued or continuous, as with the per-village transfer amounts in our second application. For each
+assignmentw∈ W, unitihas a potential outcomeY i(w), a function of theentireassignment vector
+wrather than uniti’s own assignmentw i alone; this is what allows uniti’s outcome to depend on
+other units’ treatments. The realized outcome isY i =Y i(W).
+LetX i denote observed unit-level information, taking values in a setX, that may be relevant
+for how assignment affects uniti, such as location, network links, strata, or baseline covariates. An
+exposure mapis a function
+g:W × X ×Θ→R k,
+with parameterθ∈Θ⊂R p andk≪n, intended to summarize the aspects of the assignment that
+are relevant forY i through
+g(W;X i, θ).
+When there is no risk of confusion, we use the shorthand notation
+gi(W;θ) :=g(W;X i, θ),
+and writeg i(w;θ) for the exposure induced by a nonrandom assignmentw∈ W.
+Throughout, we adopt a finite-population, design-based perspective: the potential-outcome
+schedule{Y i(·)}n
+i=1 and covariates{X i}n
+i=1 for the experimental (or quasi-experimental) sample are
+7
+
+--- PAGE 8 ---
+treated as fixed (or, equivalently, conditioned upon), and all randomness comes fromW∼ D n.
+We writeEandPfor expectation and probability with respect toD n, conditioning implicitly
+on this fixed schedule of potential outcomes and covariates. This perspective, as in Neyman (1923);
+Abadie et al. (2020); Li and Ding (2017), anchors inference to the specific network, market, or
+spatial environment actually exposed to the policy, rather than positing a hypothetical superpop-
+ulation experiment in which entire economies, including their equilibrium prices, networks, and
+cross-unit dependence, are repeatedly resampled and subjected to new assignmentsW. Such an
+experiment is least credible exactly when spillovers are system-wide, since it would then require
+strong assumptions about how the joint distribution of{Y i(w)}i,w and the broader equilibrium
+environment vary coherently across draws. The design-based framework is correspondingly most
+appealing here: taking the realized economy as fixed and the known randomization or shock design
+as the sole source of uncertainty, it delivers a transparent basis for inference without additional
+assumptions on the population-generating process.
+2.2 Examples of exposure maps
+As a concrete illustration, we document three families of exposure maps that recur in applied work.
+Letd(i, j) denote a fixed, nonstochastic distance between unitsiandj, where distance may be
+geographic, travel-time, or network distance.
+Example 2.1(Ring exposure).A ring exposure map imposes a hard spatial cutoff: only treated
+units within distanceθof uniticontribute to exposure. Define the row-normalized weights
+aij(θ) := 1{d(i, j)≤θ}1{j̸=i}Pn
+k=1 1{d(i, k)≤θ}1{k̸=i} , a ii(θ) := 0, 7 (2.1)
+and let
+gring(W;X i, θ) :=
+nX
+j=1
+aij(θ)Wj.
+Thusg ring(W;X i, θ) is the average treatment status among units lying within radiusθofi. This
+is the logic behind the distance-buffer specifications in Egger et al. (2022). It is also the main
+exposure design in Muralidharan et al. (2023), where the baseline specification uses the treated
+share of locations within a fixed 20 km radius.
+Example 2.2(Smooth spatial decay).Smooth spatial-decay maps replace the hard cutoff in a ring
+design with weights that decline continuously with distance. LetL j >0 denote a pre-treatment
+measure of the economic size or attractiveness of locationj, such as population, employment, or
+7We use the conventiona ij(θ) := 0 for alljwhen no other unit lies within distanceθofi(empty denominator).
+8
+
+--- PAGE 9 ---
+market size. Define
+aij(θ) := K(d(i, j), Lj;θ)1{j̸=i}Pn
+k=1 K(d(i, k), Lk;θ)1{k̸=i} , a ii(θ) := 0,(2.2)
+and
+gssd(W;X i, θ) :=
+nX
+j=1
+aij(θ)Wj.(2.3)
+This formulation nests several familiar kernels. One example is a gravity-style exponential
+kernel,
+Kgrav(d, L;θ) :=Lexp(−θd),
+under which exposure decays smoothly with distance at rateθ, used in Franklin et al. (2024);
+Walker et al. (2024). Another important example is a market-access kernel with power decay,
+Kma(d, L;θ) :=L(1 +αd) −θ,
+which is closely related to market-access measures in Redding and Venables (2004) and Donaldson
+and Hornbeck (2016). This is the alternative exposure class considered in Appendix B of Muralid-
+haran et al. (2023), where the authors use the form (1 +αd) −θ withα= 1/100 and fixθ= 8 based
+on Donaldson and Hornbeck (2016).
+Example 2.3(Network exposure).When spillovers propagate through a known baseline network,
+distance may be measured in graph steps rather than kilometers. The ring exposure in Example 2.1
+also covers network spillovers as a special case if distance is interpreted as graph distance rather
+than geographic distance. LetG= (V, E) be a fixed graph on nodesV={1, . . . , n}, and let
+distG(i, j) denote shortest-path distance onG. Forθ∈ {1,2, . . .}, define the neighborhood
+N≤θ(i) :={j̸=i: dist G(i, j)≤θ}.
+A natural scalar exposure map is then
+gnet(W;X i, θ) := 1
+|N≤θ(i)|
+X
+j∈N≤θ(i)
+Wj,(2.4)
+with the conventiong net(W;X i, θ) = 0 if|N ≤θ(i)|= 0.
+In social-network applications, researchers often further decompose this into the share of treated
+friends, the share of treated friends of friends, and so on up to distanceθ. 8 Whenθ= 1, (2.4)
+reduces to the familiar share of treated friends. This type of restriction is common in empirical
+8In the network-interference literature this is often described as aK-hop restriction. We write the truncation
+parameter asθhere to keep notation consistent across the three exposure families.
+9
+
+--- PAGE 10 ---
+Table 1: Illustration of canonical exposure maps
+Illustration Informal description
+Ring i Exposure is the average treatment status among units lying
+within distanceθof uniti. This is the main specification
+of Muralidharan et al. (2023) and the distance-buffer logic
+used in Egger et al. (2022).
+Smooth spatial decay
+i
+All locations can affecti, but their influence declines
+smoothly with distance. Gravity-style exponential kernels
+and market-access kernels of the form (1 +αd) −θ are lead-
+ing examples; the latter is the alternative exposure class
+considered in Appendix B of Muralidharan et al. (2023).
+Network Exposure is averaged over nodes within graph distanceθofi.
+In social-network applications this often corresponds to the
+share of treated friends, or more generally treated friends,
+friends of friends, and so on, up to distanceθ.
+work on peer effects and network spillovers; see, for example, Cai et al. (2015) and Bramoull´ e et al.
+(2009).
+Across these examples, the role ofθis always the same: it indexes how far spillovers reach or
+how quickly they decay. Table 1 illustrates the three families.
+2.3 Exposure sufficiency
+We now state the two primitive conditions that generate the design-based moment restrictions.
+The first condition is the usual finite-population randomization condition: the potential-outcome
+schedule is fixed, and all randomness comes from the known assignment law.
+Assumption 2.4(Randomized assignment).The assignmentWis drawn from a known lawD n
+that does not depend on the potential outcomes. Formally, for every collection of potential outcomes
+{Yi(·)}n
+i=1,
+W
+ {Yi(·), Xi}n
+i=1 ∼ D n.
+The second condition is the exposure-map hypothesis. It states that, at the correct valueθ 0,
+the candidate exposure map contains all information in the assignment vector that is relevant for
+uniti’s outcome.
+10
+
+--- PAGE 11 ---
+Hypothesis 2.5(Exposure map).The exposure mappingg(W;X i, θ)iswell specifiedif there exist
+θ0 ∈Θand measurable functions eYi :R k →Rsuch that, for every assignmentw,
+Yi(w) = eYi
+ 
+g(w;X i, θ0)
+
+, i= 1, . . . , n.
+Thus Hypothesis 2.5 makes the exposureg(W;X i, θ0) a summary of the assignment for uniti:
+the map iswell specifiedwhen the exposure captures everything inWrelevant toY i. The goal is
+to test this restriction and learnθ 0 using the known designD n.
+Our main result is that, combined with the known design, well specification has an observable
+consequence. Because the assignment law is known and does not depend on the potential outcomes,
+conditioning on the exposure removes all dependence betweenY i and the residual variation inW.
+We call this consequence exposure sufficiency. It is what makes the map testable: the design leaves
+assignment variation that a well-specified exposure must render irrelevant toY i, and any leftover
+dependence is evidence against the map.
+Theorem 2.6(Exposure sufficiency).Suppose Assumption 2.4 and Hypothesis 2.5 hold. Then, for
+every uniti,
+Yi ⊥ ⊥W
+ g(W;X i, θ0)
+under the design distribution.
+To see what the theorem requires, and why it can be tested, consider the ring map of Exam-
+ple 2.1, whereg(W;X i, θ) is the treated share of units within radiusθof uniti. Applied researchers
+already probe this choice informally: one draws rings of half a mile, a mile, two miles, and looks
+for the radius at which estimated spillovers level off. The design-based restriction makes that in-
+tuition precise. Well specification at radiusθ 0 says uniti’s outcome depends on the assignment
+only through the within-θ 0 treated share: two assignments with the same share produce the same
+outcome fori, no matter which of those neighbors are treated and regardless of the treatment of any
+unit beyondθ 0. This is a substantive economic restriction, and it can fail in two ways: a treated
+unit just outside the radius still affectsi, or the identity rather than the count of treated neighbors
+matters. The known randomization turns each failure into something observable. If the ring is
+correct, then under the design the treatments of units outside radiusθ 0 are uncorrelated withY i
+once we condition on the within-ring share; leftover correlation is evidence that spillovers reach
+pastθ 0. This is exactly the equal-to-zero condition that the moments of the following subsection
+formalize, both to test a candidate radius and to selectθ 0.
+2.4 Orthogonal moments
+The ring discussion tested one exposure map with one natural statistic, the treatments of units
+outside the radius. The conditional independence in Theorem 2.6 says much more:anyfunction
+11
+
+--- PAGE 12 ---
+of the assignment, once purged of what the candidate exposure explains, must be unrelated toany
+function of the outcome. We encode this with a residual that strips from a design function the part
+predictable from the exposure. To construct the moments, letψ:W × X →Rbe any integrable
+design function, possibly depending on the unit’s covariatesX i.9 For each unitiand candidate
+parameterθ, define the design residual
+Ri,θψ(W) :=ψ(W;X i)−E[ψ(W;X i)|g(W;X i, θ)],(2.5)
+where the conditional expectation is taken under the known designD n. This residual removes from
+ψ(W) the component explained by the candidate exposureg(W;X i, θ).
+Corollary 2.7(Orthogonal moments).Under the conditions of Theorem 2.6, for any outcome
+transformationϕ:R→Rand design functionψwithE[ϕ(Y i)2]<∞andE[ψ(W) 2]<∞,
+E[ϕ(Yi)R i,θ0ψ(W)] = 0.(2.6)
+Equivalently,
+E[ϕ(Yi){ψ(W)−E[ψ(W)|g(W;X i, θ0)]}] = 0.
+Two features of the corollary matter for what follows. First, it is agnostic about the map:
+nothing in (2.6) is special to the ring, so the same construction disciplines gravity, market-access,
+or network exposures, with onlyg(W;X i, θ) changing. Second, the equalities hold atθ 0 forevery
+admissible (ϕ, ψ), which is what lets a single strategy serve two ends: matching them identifies
+and estimatesθ 0, while a candidate map that violates them is detectable through the resulting
+overidentification.
+For estimation, fix a finite dictionary of moment-generating pairs
+{(ϕm, ψm) :m= 1, . . . , M},
+where eachϕ m :R→Ris an outcome transformation and eachψ m :W × X →Ris a design
+function. Define thei-specific moment contribution
+ηm,i,n(θ) :=ϕ m(Yi)R i,θψm(W),(2.7)
+9The design residualR i,θ below evaluates the design function at the unit’s covariatesX i, so the unit-centering
+enters through the same indexithatR i,θ already carries. This covers the leading applied case, in whichψaggregates
+the assignment in a neighborhood ofX i (for example, population-weighted treatment averages over distance bands
+around uniti). To avoid clutter we continue to writeψ(W), andψ m(W) for dictionary elements, each understood
+to be evaluated at the relevant unit’s covariates insideR i,θ.
+12
+
+--- PAGE 13 ---
+and the corresponding sample moment
+ηm,n(θ) := 1
+n
+nX
+i=1
+ηm,i,n(θ).
+Stacking theMmoments gives
+ηn(θ) :=
+ 
+η1,n(θ), . . . , ηM,n(θ)
+⊤.
+A design-based GMM estimator is then
+ˆθn ∈arg min
+θ∈Θ
+Qn(θ), Q n(θ) :=η n(θ)⊤Λnηn(θ),(2.8)
+where Λn is a positive semidefinite weight matrix.
+Remark2.8 (Practical implementation).The conditional expectations
+E[ψm(W)|g(W;X i, θ)]
+are design-side objects: because the assignment lawD n is known (Assumption 2.4), each is a
+functional of the design alone and involves neither the potential outcomes nor any outcome model,
+so it can be computed without additional assumptions. When enumeration of the support ofD n
+is feasible, the projection is evaluated directly. Otherwise, one draws assignmentsW (b) ∼ D n,
+b= 1, . . . , B, and approximatesE[ψ m(W)|g(W;X i, θ) =s] by regressingψ m(W (b)) on a flexible
+function of the simulated exposureg(W (b);X i, θ): for a discrete exposure, by averagingψ m within
+its realized values; for a continuous exposure, by a low-order polynomial or kernel smoother ins,
+withBand the smoother chosen so that the residual approximation error is first-order negligible.
+In the applications we use a quadratic in the exposure index across a few hundred placebo draws,
+fit by cross-validated ridge regression in the Egger et al. (2022) application.
+When the conditional distributionW|g(W;X i, θ) is degenerate, so that the exposure value
+pins downψ m(W), the design residualR i,θψm(W) is identically zero and uniticontributes nothing
+to the moment. This reflects a lack of residual assignment variation left after conditioning, not a
+failure of the construction, and it is why we work with the conditional-moment projection, which
+pools information across draws and neighboring exposure values, rather than with exact cell-by-cell
+conditioning. The design-based identification condition in Section 3 makes the amount of such
+residual variation that the moments require explicit.△
+Remark2.9 (Overidentification and testing exposure maps).WhenM >dim(θ), the system is
+overidentified. The associated design-basedJ-statistic can therefore be used to test the maintained
+exposure specification or to compare alternative exposure maps. Section 3 derives the large-sample
+behavior of ˆθn, and Section 4 studies the efficient choice of moments.△
+13
+
+--- PAGE 14 ---
+Remark2.10 (Multi-unit restrictions).Hypothesis 2.5 also implies orthogonality restrictions for
+any finite set of units. For any finiteS⊂ {1, . . . , n}, let
+YS := (Yi)i∈S, g S(W;θ) :=
+ 
+g(W;X i, θ)
+
+i∈S.
+If the exposure map is well specified, then
+YS ⊥ ⊥W
+ gS(W;θ 0),
+and hence, for any square-integrableϕ S andψ,
+E[ϕS(YS){ψ(W)−E[ψ(W)|g S(W;θ 0)]}] = 0.
+These restrictions could generate moments based on pairs or larger groups of units, such as
+moments involving (Y i, Yj) and the joint exposure vector (g(W;X i, θ0), g(W;X j, θ0)). We do not
+pursue the full multi-unit moment system here: it greatly expands the class of possible moments,
+and it is less clear how to choose among them. Instead, the paper focuses on the unit-level moments,
+which nest the moments used in applied work and already deliver tractable estimators, specification
+tests, and efficiency analysis. Developing practical procedures that exploit the broader cross-unit
+restrictions is left for future work.△
+Remark2.11 (Quasi-experimental shock designs and relation to recentering).Many applications
+of exposure mappings are based onquasi-experimentalvariation rather than literal randomized
+assignment. In such settings, the researcher observes a realized shock vectorW(e.g., line openings
+in a transport network, sectoral demand shocks, or other environmental shocks), treats the baseline
+covariatesX= (X 1, . . . , Xn) as fixed, and specifies ashock designD shock
+n that captures the as-
+good-as-random component ofW. Provided this design is known and satisfies the same structural
+property as Assumption 2.4,
+W
+ {Yi(·)}n
+i=1 ∼ Dshock
+n for all potential-outcome schedules,
+all of the constructions above go through after replacingD n byD shock
+n . In practice,D shock
+n is imple-
+mented via permutations, placebo networks, or other simulation schemes, and the re-randomization
+step used to approximateE[ψ m(W)|g(W;X i, θ)] is carried out by simulatingWfrom this shock
+design.
+This design-side residualization is analogous in spirit to the recentering approach of Borusyak
+and Hull (2023): both start from a known shock or assignment distribution and construct trans-
+formed instruments or moments that are orthogonal, by design, to certain components of the
+assignment. However, the goals and maintained structures are different. Borusyak and Hull (2023)
+14
+
+--- PAGE 15 ---
+assume a particular linear homogeneous treatment-effect model and a given formula instrument,
+and their objective is to identify and estimate the resulting coefficientβ. 10 By contrast, in the
+present framework the exposure mapping itself is the primary object of interest: we use the ran-
+domized or quasi-random shock design to learn aboutθ 0 ing(W;X i, θ0) and to test whether a
+proposed exposure class is consistent with the design-implied orthogonality conditions. That said,
+we provide a general procedure to conduct formal inference on policy functionals in a downstream
+stage, discussed in Section 5.△
+3 Design-Based Consistency and Asymptotic Normality
+Section 2 derived design-based moment restrictions implied by exposure sufficiency. We now study
+the large-sample behavior of GMM estimators and tests constructed from those moments. Our goal
+is to establish design-based consistency and asymptotic normality of the GMM estimator, and to
+develop the associated overidentification tests of the exposure-map specification. See Remark 3.4
+for discussion of exact randomization tests.
+To separate the asymptotic argument from any particular choice of moments, we work with a
+generic finite-dimensional moment contribution
+Ψi(θ)∈R q.
+In the exposure-mapping application, this vector is obtained by stacking finitely many residualized
+design moments,
+Ψi(θ) =
+ 
+η1,i,n(θ), . . . , ηq,i,n(θ)
+⊤, η m,i,n(θ) =ϕ m(Yi)Ri,θψm(W).
+The generic notation lets us state the LLN, consistency, CLT, and asymptotic-normality results
+once, in terms of the dependence structure induced by the assignment design. These results are then
+used directly for exposure-map estimation here and for the optimal-moment analysis in Section 4.
+3.1 Finite-population setup and GMM criterion
+Following the design-based literature (e.g., Freedman, 2008; Aronow and Samii, 2017), we work
+with a triangular array of experiments{(U n,D n)}n≥1, where both the population sizeN n :=|U n|
+and the assignment designD n are allowed to change withn.
+For eachn, letU n ={1, . . . , N n}denote the finite experimental population. For each unit
+i∈ U n and parameterθ∈Θ⊂R p, let Ψ i(θ)∈R q be aq-dimensional moment vector, with
+true parameter valueθ 0. The array{Ψ i(θ)}i∈Un is generated by the known assignment designD n,
+10The recentering logic is not intrinsically tied to a linear model: recently, Borusyak et al. (2025) apply it to
+nonlinear (nested and mixed logit) demand estimation.
+15
+
+--- PAGE 16 ---
+while the potential outcomes and baseline attributes are treated as fixed. The design fixes the
+distribution of these moments in any given population; the large-sample results below require, in
+addition, regularity conditions on the dependence the design induces across units, which we impose
+through the affinity-set structure introduced next.
+The sample moment is the normalized finite-population average
+¯Ψn(θ) := 1
+Nn
+NnX
+i=1
+Ψi(θ), µ n(θ) := 1
+Nn
+NnX
+i=1
+E[Ψi(θ)].
+Let Λn be a symmetric positive semidefiniteq×qweight matrix with Λ n
+p
+→Λ⪰0, and define the
+quadratic GMM criterion
+Qn(θ) := ¯Ψn(θ)⊤Λn ¯Ψn(θ), ˆθn ∈arg min
+θ∈Θ
+Qn(θ).
+In the limit, write
+µ(θ) := lim
+n→∞
+µn(θ),
+Q(θ) :=µ(θ) ⊤Λµ(θ),
+(3.1)
+whenever the limit exists. In particular, we assume that the limit is centered at the true parameter,
+µ(θ0) = 0.11
+3.2 Affinity sets and consistency
+To accommodate design-induced spatial or network dependence, for eachi∈ U n we fix anaffinity
+setA i ⊆ U n withi∈A i collecting units whose assignments may have non-negligible covariance
+with that of uniti. We write|A i|for its cardinality and allow arbitrary dependence withinA i.
+In the spatial examples,A i can be read as a growing geographic or travel-time ball around unit
+i; in the market-access and gravity examples, it collects locations whose assignment shocks receive
+non-negligible kernel weight fori; and in the network examples, it corresponds to a local graph
+neighborhood whose radius may grow slowly withN n. OutsideA i we do not impose conditional
+independence; instead, we only assume that the aggregate covariance contribution from{j /∈A i}
+is asymptotically negligible relative to the contribution from withinA i.
+Define centered variables
+Zi,n(θ) := Ψi(θ)−E[Ψ i(θ)], ¯Zn(θ) := 1
+Nn
+NnX
+i=1
+Zi,n(θ) = ¯Ψn(θ)−µ n(θ),
+11This centering follows directly from the design-based orthogonality result in Corollary 2.7.
+16
+
+--- PAGE 17 ---
+and thewithin-affinity covariance matrix 12
+Ωn(θ) :=
+NnX
+i=1
+X
+j∈Ai
+Cov
+ 
+Zi,n(θ), Z j,n(θ)
+
+∈R q×q.
+We first state the high-level ULLN and identification requirements. The following subsection
+then explains how the ULLN is verified under primitive conditions in the two leading cases.
+Assumption 3.1(Design-based ULLN and identification).
+AS–LLN1Deterministic stabilization.There exists a deterministicµ: Θ→R q such that
+sup
+θ∈Θ
+∥µn(θ)−µ(θ)∥ →0.
+AS–LLN2Uniform LLN for the design-based moments.The sample moments converge uni-
+formly in probability to their limits:
+sup
+θ∈Θ
+ ¯Ψn(θ)−µ n(θ)
+ p
+→0.
+AS–LLN3Parameter space and identification of the population criterion.The parameter
+spaceΘ⊂R p is compact andθ 0 ∈Θ. The limit mapµ: Θ→R q fromAS–LLN1is
+continuous onΘ. GivenAS–LLN1, defineQ(θ) =µ(θ) ⊤Λµ(θ)onΘ, and assume
+Q(θ) = 0⇐ ⇒θ=θ 0.
+AS–LLN4Weight convergence.Λ n
+p
+→Λ⪰0.
+Assumption 3.1 is stated at a high level in terms of the population mapµ(θ) and the sample
+map ¯Ψn(θ). The next result shows that these high-level conditions are sufficient for consistency. 13
+Remark3.2 (Interpretable necessary conditions for identification).We impose identification at
+the criterion level in AS–LLN3. Two necessary conditions specific to the moments (2.7) are worth
+mentioning. First, the exposure map must coarsen the assignment: ifw7→g(W;X i, θ) is injective at
+someθ, then conditioning ong(W;X i, θ) is equivalent to conditioning onW, soR i,θψ≡0 for every
+ψby (2.5) and the moments are uninformative about thatθ; identification therefore requires strictly
+positive residual variation,E[(R i,θψ(W)) 2]>0 for some admissibleψ. This is the degeneracy of a
+12We take the affinity relation to be symmetric (j∈A i ⇔i∈A j), so that Ω n(θ) is symmetric; this holds in all our
+examples (metric or travel-time balls, symmetric kernels, undirected graph neighborhoods), and any directed relation
+may be replaced by its symmetrization{j:j∈A i ori∈A j}.
+13Genuinely discrete exposure parameters (for example, an integer hop-count) are handled by a separate finite-grid
+selection argument in Appendix B.2.
+17
+
+--- PAGE 18 ---
+continuous exposure parameter paired with a finely resolved assignment, such as a smooth market-
+access decay in (near-)continuous distances; coarsening the assignment, as the ring map already
+does, removes it. Second, the outcomes must respond to the assignment: under the sharp null of no
+effect on any unit eachϕ(Y i) is design-nonrandom, soE[ϕ(Y i)Ri,θψ(W)] =ϕ(Y i)E[R i,θψ(W)] = 0
+foreveryθby the law of iterated expectations, andθ 0 is not separated.△
+Theorem 3.3(Design-based GMM consistency).Suppose Assumption 3.1 holds. Then
+sup
+θ∈Θ
+Qn(θ)−Q(θ)
+ p
+→0,
+and any sequence of approximate minimizers, meaning any ˆθn ∈ΘwithQ n(ˆθn)≤inf θ∈Θ Qn(θ) +
+op(1), satisfies ˆθn
+p
+→θ 0.14
+3.3 Primitive conditions for the uniform law of large numbers
+Consistency was established above under the high-level uniform law of large numbers assumed in
+AS–LLN2,
+sup
+θ∈Θ
+ ¯Ψn(θ)−µ n(θ)
+ p
+→0.
+This subsection gives primitive conditions under which that uniform law holds. The smooth case
+follows from a standard argument; the ring needs care, because its sample path is a step function
+of the radiusθand the smooth-GMM argument does not apply. We verify it for the two exposure
+maps used in the applications, continuing Examples 2.2 and 2.1; Appendix B.2 states the primitive
+conditions more formally and gives the proofs.
+Example 2.2 (smooth spatial decay), continued.When the weightsa ij(θ) vary smoothly with
+θ, as in the gravity and market-access kernels, the moment vector is Lipschitz inθand a standard
+covering argument applies. The condition that is not automatic concerns the design projection
+mi,m,θ(s) :=E[ψ m(W)|g i(W;θ) =s], which must itself vary regularly in both arguments,
+mi,m,θ(s)−m i,m,θ′(s′)
+ ≤M i,n
+ 
+∥θ−θ ′∥+∥s−s ′∥
+
+, 1
+Nn
+NnX
+i=1
+EM i,n =O(1).
+Smoothness of the exposure map does not by itself deliver this, so we impose the displayed regularity
+condition directly as a primitive assumption in Appendix B.2.
+Example 2.1 (ring exposure), continued.Raising the radiusθchanges exposure only through
+the units whose distance toicrossesθ, so the sample pathθ7→ ¯Ψn(θ) moves in steps and is not
+14Exact minimizers are the special case in which the infimum is attained and theo p(1) slack is zero. Attainment
+holds in both applications, by continuity ofQ n on the compact Θ for the smooth maps and because the ring criterion
+takes finitely many values, but it does not follow from Assumption 3.1, which restricts the limit criterion rather than
+Qn; see Remark B.3.
+18
+
+--- PAGE 19 ---
+differentiable; in place of a smoothness argument, the uniform law rests on a condition on the
+distances. That condition is the spatial counterpart of the bounded-density requirement familiar
+from regression-discontinuity and threshold-regression designs, with pairwise distanced ij playing
+the role of the running variable and the radiusθthat of the cutoff: as a band of radii shrinks, the
+weighted mass of distances inside it must vanish. Formally, for an intervalI⊂R + of length|I|,
+lim
+δ↓0
+lim sup
+n→∞
+sup
+|I|≤δ
+1
+Nn
+NnX
+i=1
+X
+j̸=i
+aij 1{d(i, j)∈I}= 0,
+witha ij the exposure weights of Example 2.1. Moving the radius then shifts only a vanishing share
+of the moment, so the empirical criterion converges uniformly and its population limit is continuous
+inθeven though every sample path jumps.
+Remark3.4 (Relation to exact randomization tests).A common inferential approach in experiments
+with spillovers is the finite-sample exact randomization test. These tests are cleanest for asharp
+null: one that pins down each unit’s potential outcome under every assignment, so realized outcomes
+can be recomputed for any counterfactual assignment and the statistic has a known permutation
+distribution. Exposure sufficiency is not sharp: it restricts how outcomes depend on the assignment
+through the exposure map but leaves the potential outcomes otherwise unspecified. For such non-
+sharp nulls, exact tests remain available by choosing focal units and conditioning on the assignment
+cell within which the focal units’ outcomes are invariant; see, for example, Athey et al. (2018).
+Our target, however, is not a single fixed null but estimation of the continuous tuning parameter
+θ, together with inference on the downstream regression coefficients through the GMM criterion
+Q(θ). Exact randomization inference is already awkward for the coefficient-based analyses in the
+applied work cited above, and more so for estimatingθor evaluatingQ. We therefore take the
+asymptotic conditional-moment route developed in this section, which draws on the implications
+of exposure sufficiency directly.△
+3.4 Asymptotic normality
+We now strengthen the LLN conditions above to obtain a CLT and a GMM asymptotic normality
+result. We retain the finite-population, design-based setup and notation introduced above, and
+assume Assumption 3.1 holds so that ˆθn
+p
+→θ 0 by Theorem 3.3.
+Asymptotic normality rests on two further ingredients, both imposed at the population level.
+We state them formally as Assumption B.12 in Appendix B.3 and describe their roles here. The first
+delivers apointwisecentral limit theorem for the moment vector at the truth. Because the design-
+based moments are dependent across units through the affinity sets of Section 3.2, we invoke the
+affinity-set central limit theorem of Chandrasekhar et al. (2023): under bounded fourth moments,
+decay of the within-affinity covariances, and a stabilizing aggregate covariance Ω n/Nn →Ω with Ω
+19
+
+--- PAGE 20 ---
+positive definite, the centered moments satisfy √Nn ¯Ψn(θ0)⇒ N(0,Ω).
+The second ingredient carries this pointwise statement to asymptotic normality of the GMM
+estimator ˆθn. It has two parts:mean differentiabilityof the population moment mapµ(θ) at
+θ0, with full-rank JacobianG, andstochastic equicontinuityof the centered empirical process
+Gn(θ) = √Nn
+  ¯Ψn(θ)−µ(θ)
+
+nearθ 0. Both are restrictions on the population map and on the
+empirical process, not on the individual sample paths Ψ i(θ). This is what lets the argument,
+a Z-estimator application of van der Vaart and Wellner (1996, Theorem 3.3.1) to the projected
+mapθ7→G ⊤Λn ¯Ψn(θ), cover the non-differentiable ring path alongside the smooth gravity and
+market-access kernels; the affinity-set conditions enter only through the pointwise CLT and the
+equicontinuity ofG n.
+Theorem 3.5(Design-based GMM asymptotic normality).Under Assumption 3.1 and Assump-
+tion B.12, p
+Nn (ˆθn −θ 0)⇒ N
+
+0,(G ⊤ΛG) −1G⊤Λ Ω ΛG(G ⊤ΛG) −1
+
+,
+whereG=G(θ 0)andΩis the design-based asymptotic covariance in Assumption B.12AN–AFF3.
+With the optimal weightΛ = Ω −1, the asymptotic variance simplifies to(G ⊤Ω−1G)−1. Moreover,
+ifΛ n
+p
+→Ω −1, then the efficient-weight case is obtained.
+Corollary 3.6(Design-based overidentification test).Suppose Assumption 3.1 and Assumption B.12
+hold withq > p, and letΛ n
+p
+→Ω −1 as in Theorem 3.5. Under the maintained exposure specification
+(Hypothesis 2.5),
+Nn Qn(ˆθn)⇒χ 2
+q−p.
+The statisticN nQn(ˆθn) therefore provides a formal test of the maintained exposure map, as
+anticipated in Remark 2.9: rejection is evidence that residualized assignment variation left over
+after conditioning ong(W;X i, θ) remains predictive of outcomes through the chosen moments.
+Different finite moment collections yield differentJ-statistics; Section 4 studies how to choose
+moments efficiently.
+Remark3.7 (Scope of the specification test).Contemporaneously, Gao et al. (2026) prove that spec-
+ification testing of exposure-mapping models is impossible against any richer exposure-mapping
+alternative: every testing procedure, design included, has worst-case Type I and Type II errors
+summing to one, at every sample size. The alternative is simply too large in that it places no struc-
+ture across units and so admits adversarial outcome schedules that are maximally separated from
+the null yet generate the same observed-data distribution under every assignment. The implication
+is that informative tests exist only against alternatives restricted beyond what exposure mappings
+alone impose, as in their consistent test against a linear-in-means model.
+Our test naturally embodies the restriction their result requires, in the form applied work
+already adopts. We maintain a parametric exposure class{g(·;θ) :θ∈Θ}and a finite set of
+20
+
+--- PAGE 21 ---
+residualized design moments; the null states that someθ 0 ∈Θ satisfiesµ(θ 0) = 0. TheJ-test then
+has power against alternatives that keep the moment criterion bounded away from zero uniformly
+over Θ, under the convergence conditions of Assumption 3.1 maintained along the alternative
+sequence. Rejection therefore signals that assignment variation left over after conditioning on the
+proposed exposure map remains predictive of outcomes. Non-rejection means the maintained class
+is consistent with the design through these moments, and nothing more: it does not certify exposure
+sufficiency against the unrestricted alternative, a guarantee no procedure can provide.△
+Remark3.8 (Nonconservative design-based variance).The variance in Theorem 3.5 is design-based
+but not a Neyman-style conservative bound. Neyman-type bounds arise because the exact variance
+of a treatment-effect estimator involves co-moments of the same unit’s potential outcomes across
+assignments, which are never jointly observed (Neyman, 1923; Abadie et al., 2020). No such term
+arises here: by Corollary 2.7, the score
+ϕ(Yi){ψ(W)−E[ψ(W)|g(W;X i, θ0)]}
+is mean zero unit by unit, whatever the outcome functions eYi may be, so the centered score is
+observed for the realized assignment and Ω is identified as a second-moment functional of observed
+scores under the known design. Given the graph-HAC condition of Assumption 3.9, the sandwich
+therefore estimates the exact large-sample variance for the maintained exposure model.△
+It remains to estimate the asymptotic design covariance matrix Ω. In our setting Ω captures
+spatial and network dependence through the affinity sets, so a natural object is a spatial/graph
+HAC estimator built from{Z i,n}i≤Nn. Rather than spell out primitive conditions for a particular
+estimator, we impose a high-level consistency requirement in the spirit of spatial and network HAC
+methods, and refer to the existing literature for sufficient conditions. For spatial dependence, see
+Conley (1999); Kim and Sun (2011). For general network dependence andψ-dependent processes
+on graphs, Kojevnikov et al. (2021); Sasaki (2025) provide LLN, CLT, and consistency results for
+a closely related network HAC estimator. We formalize our requirement as follows.
+Assumption 3.9(Graph-HAC estimation of the asymptotic covariance).LetΩbe the design-
+based asymptotic covariance in Assumption B.12AN–AFF3. There exists a sequence of graph-HAC
+(Conley-type) estimators ˆΩn constructed from{Z i,n}i≤Nn and the affinity sets{A i}i≤Nn such that
+ˆΩn is consistent in operator norm for the normalized asymptotic covariance:
+ˆΩn −Ω n/Nn
+
+op
+p
+→0.
+Evaluated at a preliminary consistent estimator ˆθn (Algorithm 4.2), the resulting plug-in error is
+op(1): the design centering is computed from the known design rather than estimated, and ˆθn
+p
+→θ 0
+under Assumption 3.1 (Theorem 3.3).
+21
+
+--- PAGE 22 ---
+4 Efficient Moments
+Sections 2–3 introduced a class of design-based moments parameterized by an outcome transfor-
+mationϕand a design functionψ,
+ηϕ,ψ,n(θ) := 1
+Nn
+X
+i∈Un
+ϕ(Yi)R i,θψ(W).
+Two facts delimit what optimality within this class means. First, the class is exhaustive at the unit
+level: Appendix C.1 shows that the collection of these moments over all bounded measurable (ϕ, ψ)
+is equivalent to the exposure sufficiencyY i ⊥ ⊥W|g(W;X i, θ0). Second, a correctly-specified expo-
+sure map also implies cross-unit restrictions, involving pairs or larger sets of units (Remark 2.10),
+which lie outside this class and are not exploited. The bound below is therefore an efficiency bound
+within the unit-level moment class, the class containing the moments used in applied work and in
+our applications, not a semiparametric bound over all implications of an exposure map hypothesis.
+Theorem 4.1(Efficiency bound and sieve attainment; informal).Under the regularity conditions
+of Appendix C:
+(i)There is a finiteV ⋆ >0such that every GMM estimator ofθ 0 built from finitely many
+moments in the unit-level class has design-based asymptotic variance at leastV ⋆ (Theo-
+rem C.11).
+(ii)The bound is feasibly attained: for a dictionary{(ϕ m, ψm) :m≥1}whose span is dense
+in the class, two-step GMM on the firstM n moments attainsV ⋆ asymptotically, provided
+Mn → ∞withM 2
+nbn/Nn →0, whereb n := maxi |Ai|is the maximal affinity-set size (Theo-
+rem C.17).
+For empirical work the implication is that fixing a finite dictionary and running two-step GMM
+with an estimated covariance matrix is both standard and, as the dictionary grows, asymptotically
+efficient within the class.
+Algorithm 4.2(Two-step GMM).Given a dictionary{(ϕ m, ψm) :m= 1, . . . , M}, stackη (M)
+n (θ) := 
+η1,n(θ), . . . , ηM,n(θ)
+⊤,η m,n(θ) := 1
+Nn
+P
+i∈Un ϕm(Yi)Ri,θψm(W).
+(a) Compute ˆθ(1)
+n ∈arg min θ∈Θ η(M)
+n (θ)⊤η(M)
+n (θ).
+(b) Estimate the covariance of √Nn η(M)
+n (θ0) by a graph-HAC estimator ˆΩM,n (Assumption 3.9)
+evaluated at ˆθ(1)
+n .
+(c) Compute ˆθ(2)
+n ∈arg min θ∈Θ η(M)
+n (θ)⊤ ˆΩ−1
+M,nη(M)
+n (θ); then
+p
+Nn(ˆθ(2)
+n −θ 0)⇒ N
+ 
+0,(G (M)⊤Ω(M)−1 G(M))−1
+22
+
+--- PAGE 23 ---
+as in Theorem 3.5, whereG (M) and Ω(M) are the limiting Jacobian and covariance of the
+stacked moments (Appendix C.4).
+5 Stage 2: Outcome regression given the exposure map
+Stage 1 learns the exposure mapg(W;X i, ˆθn). In most applications, the object of ultimate interest
+is a downstream exposure–response or policy parameter, such as the coefficient from an outcome
+regression on the learned exposure index. This section states the main implication for such second-
+step inference.
+The main case is a regular exposure-map parameterθ∈Θ⊂R p estimated in Stage 1. Since ˆθn
+is an input into the downstream exposure–response equation, the sampling uncertainty in ˆθn must
+be propagated into second-step inference.
+For concreteness, consider the linear exposure–response projection. Define
+Zi(θ) :=
+ 
+1
+g(W;X i, θ)
+!
+.
+The target (α 0, β0) is the design-based projection coefficient satisfying
+lim
+n→∞
+1
+Nn
+X
+i∈Un
+E
+h
+Zi(θ0){Yi −α 0 −β ⊤
+0 g(W;X i, θ0)}
+i
+= 0.(5.1)
+A correctly specified linear conditional mean is sufficient for (5.1), but the projection interpretation
+does not require it.
+Collect the regular parameters as
+ζ= (θ ⊤, α, β⊤)⊤.
+The two-step estimator is characterized by stacking the projected Stage 1 GMM equation with the
+Stage 2 exposure–response equation:
+G⊤
+1 Λ1,n ¯Ψ1,n(ˆθn) =o p(N −1/2
+n ), ¯Ψ2,n(ˆθn,ˆαn, ˆβn) =o p(N −1/2
+n ).
+Under a joint affinity-set CLT, mean differentiability of the stacked population map, and stochastic
+equicontinuity, Appendix D shows that
+p
+Nn(ˆζn −ζ 0)⇒ N(0, V ζ),
+whereV ζ is the corresponding design-based sandwich covariance matrix. Inference for the exposure–
+response coefficientβ 0 uses the (β, β) block ofV ζ. More general low-dimensional Stage 2 moments,
+23
+
+--- PAGE 24 ---
+including nonlinear regressions or policy-functional estimating equations, are handled by the same
+stacked-system argument.
+Remark5.1 (Design-based interpretation of the Stage-2 standard errors).The Stage-2 projection
+moments, unlike the Stage-1 moments (Remark 3.8), are mean zero only in aggregate: (5.1) fixes the
+average moment at zero but leaves the unit-level means nonzero, and those means are not identified
+from the realized assignment (each involveseYi at unrealized exposures). The feasible sandwich must
+therefore center at the sample mean, so it need not reproduce the exact design variance of ˆβ. When
+the affinity sets are singletons or block-diagonal the discrepancy is positive semidefinite and the
+reported standard errors are conservative, with no assumption of correct specification; it vanishes
+when the linear exposure–response holds unit by unit; and it is of ambiguous sign under general
+overlapping dependence absent a local-alignment condition. Appendix D.3 makes this precise and
+states the condition. △
+6 Applications
+This section applies the framework to two large-scale anti-poverty programs in development eco-
+nomics that explicitly study general-equilibrium (GE) effects: (i) the Smartcards reform of India’s
+National Rural Employment Guarantee Scheme analyzed by Muralidharan et al. (2023); and (ii)
+the GiveDirectly cash-transfer experiment in rural Kenya studied by Egger et al. (2022), together
+with the follow-up structural analysis of Walker et al. (2024).
+The two settings are chosen to be similar ex ante, but we find that they yield contrasting
+conclusions. Both applications follow the same two-stage structure: Stage 1 estimates the exposure
+map from the design-based moments and tests it against the randomization; Stage 2 re-estimates the
+authors’ original outcome equations with the estimated map in place of their fixed one, propagating
+the Stage-1 uncertainty.
+6.1 Revisiting Muralidharan et al. (2023)
+We begin with the general-equilibrium effects of India’s National Rural Employment Guarantee
+Scheme (NREGS) studied by Muralidharan et al. (2023). The program guarantees up to 100 days
+of public employment per year to rural households. Muralidharan et al. (2023) exploit a large
+randomized rollout of biometric “Smartcards” that improved the implementation of NREGS at the
+mandal level, and combine direct effects on treated mandals with spillovers to nearby untreated
+areas.15
+15Administrative units nest as district⊃mandal⊃Gram Panchayat (GP): a mandal is a sub-district (average
+population roughly 62,500 in the study sample), and a GP is a village-cluster government comprising one or more
+census villages. Treatment was randomized at the mandal level, outcomes are measured at the GP (or household)
+level, and spatial exposure is computed from geocoded 2001 Census village locations (Muralidharan et al., 2023).
+Our Stage 1 below implements the exposure measure at the census-village level; see Appendix E.1.
+24
+
+--- PAGE 25 ---
+Ring-based exposure measure.In their main specification (their equation (1)), Muralidharan
+et al. (2023) estimate regressions of the form
+Ypmd =α+β 0Tm +β 1NR20
+pmd +X ′
+pmdγ+ε pmd,(6.1)
+whereY pmd is an outcome such as NREGS earnings, wage-labor income, or total income for Gram
+Panchayat (GP)pin mandalmand districtd,T m is the Smartcard treatment indicator for mandal
+m, andX pmd are controls. The key spillover variable NR 20
+pmd is the share of GPs in other mandals
+within 20 km ofpthat were assigned to treatment; it is a ring-based neighborhood-treatment
+measure constructed at the GP level using geographic distance, an instance of the ring exposure
+map of Example 2.1 with radiusθ= 20 km.
+The headline finding of Muralidharan et al. (2023) is that 86% of beneficiary income gains
+came from non-program earnings: from higher private-sector wages and employment rather than
+from NREGS payments themselves, with statistically significant spatial spillovers of wages and
+employment onto nearby areas. The authors fix the radius defining NR 20
+pmd a priori at 20 km,
+motivated by commuting distances and the geographic scale of local labor markets, rather than
+estimate it or test it against the design.
+Stage 1: letting the data choose the radius.We apply the Stage 1 design-based GMM pro-
+cedure of Sections 2 and 3, taking the ring radius as the tuning parameterθ. The exposure measure
+follows Muralidharan et al. (2023)’s construction: for each GP we compute the population-weighted
+fraction of non-same-mandal treated census villages within radiusθ, using the same 6,662-village
+geometry as the original paper. The design functions are population-weighted annulus averages of
+the mandal treatment indicator in distance bands around GPi, built from the same village-level
+distance structure as the exposure. Because physical interaction distances vary continuously in
+space, we treat the radius as a continuous parameter and search over a fine 0.1 km grid. We re-
+port Wald confidence intervals justified by the asymptotic normality result and the design-based
+overidentification (J) test of Section 3. Full technical details (the two-step criterion, Wald interval
+construction, and overidentification test) are in Appendix E.1.
+Table 2 reports the Stage-1 estimates: the selected radii are 23.7 km for total income, 14.1 km
+for NREGS earnings, and 25.8 km for wage-labor income. For each outcome the table also gives
+the Wald standard error and 95% confidence interval for ˆθ, and the overidentification statisticJ( ˆθ)
+with itsp-value. TheJstatistics are small and none is significant at conventional levels (p= 0.42,
+0.54, and 0.40), so at the selected radii the design-based moments give no evidence against the ring
+specification.
+NREGS earnings and wage-labor income decompose total income into a more local and a
+broader-reaching component (rows two and three of Table 2), and they separate in the direction
+the authors’ own mechanism predicts: NREGS earnings, the direct public-employment margin,
+25
+
+--- PAGE 26 ---
+localize to 14.1 km, whereas wage-labor income, which operates through private labor markets,
+reaches farther, to 25.8 km. 16 The total-income radius, 23.7 km, falls between them.
+Figure 1 plots the Stage-1 criterion against the candidate radius for each outcome, with the
+dashed vertical line marking the selected radius ˆθ; the criterion is small where the ring’s implied
+design-based moments are close to zero. In all three panels the criterion is high at short radii, falls to
+a clear interior minimum at the selected radius, and rises beyond it, so the design identifies a finite
+interaction radius for every outcome. The total-income criterion also has local minima near the
+two component radii, consistent with total income aggregating a more local and a broader-reaching
+margin.
+Table 2: Stage-1 radius estimates for Muralidharan et al. (2023) outcomes.
+OutcomeY ˆθ(km) Wald SE (km) 95% Wald CIJ( ˆθ) (p-value)
+Total income 23.7 1.22 [21.30, 26.10] 6.01 (0.422)
+NREGS earnings 14.1 0.64 [12.84, 15.36] 5.05 (0.538)
+Wage-labor income 25.8 1.05 [23.75, 27.85] 6.26 (0.395)
+Notes: Population-weighted village-level exposure and instruments (3 km bands, 0.1 km radius grid). Wald SE and
+CI treat the radius as a continuous parameter; see Appendix E.1 for details. TheJ-statistic is the overidentification
+test, with 6 degrees of freedom;p-values in parentheses.
+Taken together, the exhibits broadly support the exposure choice that Muralidharan et al.
+(2023) make on institutional grounds: the ring specification is not rejected for any outcome, and
+the estimated radius for total income, the headline outcome, is 23.7 km, close to the 20 km they
+adopt a priori (first row of Table 2). The 20 km choice also lies inside the range spanned by the
+two component radii, 14.1 to 25.8 km.
+Stage 2: the income-source decomposition.Re-estimating Muralidharan et al. (2023)’s out-
+come equations at the outcome-specific radii leaves their conclusions essentially intact (Table 3).
+Total income (9344.2) and wage-labor income (7627.9) are approximately unchanged from the 20
+km specification; only NREGS earnings move materially, falling from 1294.6 to 758.7. Muralidha-
+ran et al. (2023) attribute 14% of the income gain to program earnings and 86% to non-program
+earnings; the corresponding share computed from the 20 km column of Table 3 is 13.5%. At the
+design-based radii the program share falls to 8.1% (758.7 of 9344), so non-program earnings ac-
+16Muralidharan et al. (2023) emphasize that jobcard holders “could only do NREGS work in their own villages,”
+so the public-employment margin should track local program access; the 14.1 km estimate has a tight 95% confidence
+interval of [12.8, 15.4] km. In their mechanism for wage-labor income, better NREGS implementation raises reser-
+vation wages and propagates through markets they describe as “spatially integrated beyond individual GPs or even
+mandals.”
+26
+
+--- PAGE 27 ---
+Figure 1: Stage-1 objective functions for total income (top), NREGS earnings (bottom left), and
+wage-labor income (bottom right). Dashed line: selected radius ˆθ. Population-weighted village-
+level exposure and instruments (3 km bands), strict placebo design.
+27
+
+--- PAGE 28 ---
+count for roughly 91.9% of the gain (bottom panel of Table 3). 17 Their central finding, that the
+income gains come predominantly from non-program (general-equilibrium) earnings rather than
+direct program payments, is thus robust to estimating the radius.
+The design-based standard errors are close to their fixed-radius counterparts despite additionally
+propagating the sampling uncertainty in ˆθ, so treating the radius as estimated rather than known
+does not materially inflate the uncertainty around the decomposition.
+Table 3: Treatment effects and implied income-source decomposition for Muralidharan et al. (2023)
+outcomes: original 20 km specification vs. design-consistent radii.
+Outcome 20 km spec. (MNS) Design-based ( ˆθ) ˆθ(km) ∆ vs. 20 km
+Total income 9579.5 (4538.7) 9344.2 (4969.1) 23.7−235.3
+NREGS earnings 1294.6 (1061.0) 758.7 (624.6) 14.1−535.9
+Wage-labor income 7607.2 (2720.7) 7627.9 (2996.3) 25.8 +20.7
+Implied income-source decomposition (share of total-income gain)
+Program (NREGS earnings) 13.5% 8.1% –−5.4 pp
+Non-program 86.5% 91.9% – +5.4 pp
+Notes:Entries are adjusted treatment effects with standard errors in parentheses. The “20 km spec.” column is
+Muralidharan et al. (2023)’s original fixed-radius specification; the “Design-based” column re-estimates the same
+Equation (6.1)-style regression (treatment, neighborhood exposure, district fixed effects, strata controls; baseline
+total income included only for total income) at the outcome-specific radius ˆθselected in Stage 1. Standard errors
+are clustered at the mandal level; the design-based standard error additionally propagates the Stage-1 Wald
+variance of ˆθvia the delta method. The bottom panel reports the implied income-source decomposition: within
+each column, the program share divides the NREGS-earnings effect by the total-income effect
+(1294.6/9579.5 = 13.5% at 20 km; 758.7/9344.2 = 8.1% at the design-based radii), and the non-program share is its
+complement. Muralidharan et al. (2023)’s published accounting reports a program share of 14%. Because the
+design-based column estimates each source at its own radius, see the text footnote for an alternative accounting.
+6.2 Revisiting Egger et al. (2022)
+Egger et al. (2022) study the GiveDirectly cash-transfer experiment in rural Kenya, in which treat-
+ment was randomized both across villages and, through a second-tier saturation design, across
+sublocations. The two-tier design generates experimental variation in indirect exposure to trans-
+fers at the village and local-market level. 18
+Egger et al. (2022)’s main specification relates household outcomes to the amount transferred
+to the household’s own village and to the amount transferred to other villages within 2 km. The 2
+km outer radius, the distance beyond which transfers are assumed to have no effect, is selected by
+a Bayesian information criterion over concentric 2 km distance bands.
+17Estimating sources at different radii need not yield shares that sum to one. As an alternative accounting exercise,
+restricting to the two sources with outcome-specific radii (NREGS and wage labor) gives a program share of 9.0%,
+of the same small magnitude as the 8.1% in the text.
+18See Egger et al. (2022) for details on the experimental design and data collection.
+28
+
+--- PAGE 29 ---
+The headline finding of Egger et al. (2022) is a local transfer multiplier of roughly 2.5 (their
+Table V), together with large positive spillovers onto non-recipient households. The spillover com-
+ponent of that accounting is estimated from the 0–2 km exposure.
+Stage 1: estimating the weights and selecting the support.We apply the Stage 1 design-
+based GMM procedure of Sections 2 and 3, taking as the tuning parameter the annulus weights of
+a linear spillover index. Let
+Av(W) =
+ 
+T ¬v
+v,0−2(W), T ¬v
+v,2−4(W), . . . , T ¬v
+v,18−20(W)
+′
+denote neighboring-village transfer amounts in the ten annuli up to 20 km. The first of these,
+T ¬v
+v,0−2(W), is Egger et al. (2022)’s own 0–2 km spillover variable. For a candidatesupportR m = 2m,
+the radius beyond which transfers are assumed to have no causal effect on a household, Stage 1
+forms the linear spillover exposure index
+g(m)
+v (W;θ m) =
+mX
+j=1
+θm,jT ¬v
+v,2(j−1)−2j (W),1 ′θm = 1,
+and estimatesθ m from the design-based exposure-sufficiency moments. The weights are normalized
+to sum to one (1 ′θm = 1 in the display), and the Stage 2 coefficient on the index absorbs the scale
+of the spillover effect.19 In this notation, the exposure map used in Stage 1 is
+
+T own
+v (W), g (m)
+v (W;θ m)
+
+.
+The supportR m itself is also selected by the design. Exposure sufficiency makes the support
+a testable restriction: if the annuli beyondR m carry no outcome-relevant assignment variation,
+zeroing their coefficients leaves the design-based moments satisfied, which is the restriction the
+overidentification test of Section 3 (Corollary 3.6) evaluates. We test the unrestricted 20 km index
+against the restricted index that zeroes all annuli beyondR m, implemented as a likelihood-ratio
+statistic at each candidate support, and select the smallest non-rejected support. 20 The lower
+19The scale ofθ m is immaterial for exposure sufficiency: replacingθ m bycθ m, withc̸= 0, only rescales the
+downstream coefficient on the index.
+20As a check on post-selection and spatial-dependence concerns, the diamonds in Figure 2 report a sublocation-level
+sample-splitting exercise. We split at the level ofsublocations(the higher administrative tier at which the saturation
+design randomizes treatment intensity, each containing many villages and a local market) rather than at the village or
+household level: because cash-transfer spillovers operate through the local market (Walker et al., 2024), dependence
+is contained within a sublocation and is approximately negligible across them, so assigning whole sublocations to the
+selection and estimation subsamples makes the two approximately independent while leaving the within-sublocation
+spillovers the exposure map captures intact. We aggregate across repeated splits following the median procedure of
+Chernozhukov et al. (2025): we report the median point estimate across splits and form the band from the median
+lower and median upper confidence limits, yielding an approximately 90% interval. The split estimates are noisier
+but point the same way: 2 km is too local and the selected supports are modestly larger.
+29
+
+--- PAGE 30 ---
+panels of Figure 2 report thep-value of this test at each candidate support for each outcome.
+Figure 2 traces Egger et al. (2022)’s recipient and non-recipient effects, re-estimated at each
+candidate support from their 2 km to the fully flexible 20 km: the recipient point estimates are
+stable across the entire path, while the non-recipient effects attenuate and lose precision until,
+by 20 km, they are generally no longer distinguishable from zero. The two endpoints anchor the
+comparison. AtR= 2 km the normalized index collapses to their single 0–2 km ring (θ 1,1 = 1),
+so the leftmost point replicates the original Egger et al. (2022) specification; atR= 20 km the
+index imposes no support restriction across the ten annuli; each interior point imposes, ex ante,
+that transfers beyondRkm do not affect the household. The contrast between the two paths is
+what one would expect: recipients respond mainly to the direct, own-village transfer, which does
+not depend on the support, whereas non-recipients respond only through spillovers, which do. The
+confidence intervals do not shrink monotonically as the support widens; Appendix E.2, part D,
+takes up this feature separately.
+The design-based support test rejects the original 2 km support for all three outcomes: in every
+lower panel of Figure 2, thep-value lies below 0.05 at 2 km and crosses above it by 4 km for
+assets and income and by 6 km for household expenditure. The smallest non-rejected support is 6
+km for household expenditure and 4 km for assets and household income; across the broader set of
+outcomes in Appendix E.2 the selected supports are 4–6 km, occasionally larger. The 2 km exposure
+is thus statistically inconsistent with the design. At the selected supports, the overidentification (J)
+test of the estimated linear-index specification (last column of Table 4) rejects for expenditure and
+assets (p= 0.006 and 0.001) and does not reject for income (p= 0.129); the rejection is consistent
+with a spillover component that no annular index spans at any support, a point we return to below.
+In this application, the two criteria disagree: the Bayesian information criterion selects the 2 km
+support, while the design-based test rejects 2 km for every outcome and selects supports of 4–6 km.
+The two pursue the same parsimony goal over the same candidate bands but score it differently:
+the BIC scores in-sample predictive fit,21 whereas the design-based test scores consistency with the
+randomization, the identifying assumption the downstream estimates rely on.
+Stage 2: spillover effects and the transfer multiplier.We next estimate Egger et al. (2022)’s
+original IV specification, given by
+Yiv =α+β own,mT own
+v (W) +γ mg(m)
+v (W;bθm) +X ′
+ivδ+ε iv,
+21Egger et al. (2022) choose the radiusrby minimizing BIC(r) =Nlog ˆσ 2
+r +k(r) logN, where ˆσ 2
+r is the residual
+variance from regressingY i on the radius-rring exposures and controls,k(r) is the number of parameters, andNis
+the number of villages: the radius is scored by how much the rings reduce residual variance, traded off against the
+penalty.
+30
+
+--- PAGE 31 ---
+600
+400
+200
+0
+200
+400
+600
+800
+Effect
+Household expenditure, annualized
+Selected support ˆR
+Recipient total, split-sample median
+Non-recipient pooled, split-sample median
+Recipient total effect (full sample)
+Non-recipient pooled effect (full sample)
+2.5 5.0 7.5 10.0 12.5 15.0 17.5 20.0
+Support radius R (km)
+0.0
+0.5
+1.0p-value
+α = 0.05
+Likelihood-ratio test p-value
+200
+100
+0
+100
+200
+300
+Effect
+Assets (non-land, non-house), net borrowing
+Selected support ˆR
+Recipient total, split-sample median
+Non-recipient pooled, split-sample median
+Recipient total effect (full sample)
+Non-recipient pooled effect (full sample)
+2.5 5.0 7.5 10.0 12.5 15.0 17.5 20.0
+Support radius R (km)
+0.0
+0.5
+1.0p-value
+α = 0.05
+Likelihood-ratio test p-value
+200
+100
+0
+100
+200
+300
+400
+Effect
+Household income, annualized
+Selected support ˆR
+Recipient total, split-sample median
+Non-recipient pooled, split-sample median
+Recipient total effect (full sample)
+Non-recipient pooled effect (full sample)
+2.5 5.0 7.5 10.0 12.5 15.0 17.5 20.0
+Support radius R (km)
+0.0
+0.5
+1.0p-value
+α = 0.05
+Likelihood-ratio test p-value
+Figure 2: Recipient and non-recipient effects across candidate supports, Egger et al. (2022) appli-
+cation
+Notes:The figure plots recipient total effects and non-recipient pooled spillover effects across candidate supports
+R= 2, . . . ,20 km. The shaded band marks the selected support. The lower panel reports the likelihood-ratio test
+p-value path, and the dashed horizontal line marksα= 0.05. Diamonds report sublocation-level split-sample
+medians with their median intervals (dotted whiskers). The appendix reports additional outcome diagnostics.
+31
+
+--- PAGE 32 ---
+replacing their 0–2 km spillover measure with the estimated indexg (m)
+v (W;bθm) at the selected
+support, and keeping the same controls and instrumenting logic as the original. 22
+Table 4 compares Egger et al. (2022)’s original estimates with the design-based estimates at
+the selected supports. The exposure measure is the only difference between the two columns. The
+change matters only for the non-recipient effects. The recipient total effects survive the change
+of exposure map: all three point estimates move by less than half of Egger et al. (2022)’s own
+standard error. Every pooled spillover, by contrast, attenuates by about one to one and a half of
+Egger et al. (2022)’s standard errors. Expenditure falls from 334.7 to 220.3 and remains significant;
+income falls from 225.0 to 81.4 and is no longer distinguishable from zero at the 5% level; assets,
+not significant in the original specification, falls from 133.1 to 41.9. 23 Relative to the Muralidharan
+et al. (2023) application, then, the exposure-map choice does matter here, and it matters for the
+spillovers rather than for the direct effects.
+Table 4: Core IV components: Egger et al. vs. design-based estimates
+Egger IV Design-based IV ∆β,∆SEJp-val
+Household expenditure, annualized
+Recipients 338.6 (100.6) 317.7 (68.4)−21.0,−32.3 0.006
+Non-recipients 334.7 (131.1) 220.3 (89.4)−114.4,−41.7 0.006
+Assets (non-land, non-house), net borrowing
+Recipients 183.4 (55.2) 177.3 (31.2)−6.1,−23.9 0.001
+Non-recipients 133.1 (101.3) 41.9 (45.9)−91.2,−55.5 0.001
+Household income, annualized
+Recipients 135.7 (82.1) 97.3 (37.0)−38.4,−45.1 0.129
+Non-recipients 225.0 (100.1) 81.4 (42.7)−143.6,−57.3 0.129
+Notes:Entries are IV point estimates with standard errors in parentheses. Egger IV values re-estimate the original
+2 km Table 1 specification on our replication sample (cluster standard errors); they closely match the published
+Table I values. Design-based IV values use each outcome’s selected design-based support ( ˆR= 6.0 km for household
+expenditure, 4.0 km for assets and income); the design-side conditional expectations entering the index are
+estimated by cross-validated ridge regression on a quadratic polynomial in the exposure index, using 200 placebo
+draws of the assignment. Recipient entries report total effects; non-recipient entries report pooled spillover effects,
+both with joint delta-method standard errors.Jp-val is the design-GMM overidentification p-value for the selected
+support; the support-selection rule is the likelihood-ratio test.
+Table 5 carries the design-based inference through to the headline multiplier calculation of Egger
+et al. (2022)’s Table V. Using the design-selected exposure maps implies a mean local transfer
+multiplier of about 1.58, well below the original headline value near 2.5 and close to Walker et al.
+(2024)’s model-based benchmark of 1.54. The expenditure and income components are about
+1.63 and 1.52. With only 84 sublocation clusters these multipliers are imprecisely estimated, with
+standard errors comparable to Egger et al. (2022)’s own; the mean multiplier carries a standard
+22Standard errors account for the generated weights bθm by the delta method.
+23The “Egger IV” column re-estimates the original 2 km specification on our replication sample; the estimates
+closely match the published Table 1 values (see the table notes).
+32
+
+--- PAGE 33 ---
+error of 1.10, so although its point estimate lies well below 2.5, it is not statistically distinguishable
+from one.24 The Walker et al. (2024) benchmark is on the same real (deflated) basis as Egger et al.
+(2022)’s Table V.
+Table 5: Local transfer multiplier: design-based estimates and benchmarks
+Design-based Egger et al. (2022) Walker et al. (2024)
+Table V model
+Expenditure 1.63 (1.49) 2.58 (1.44) –
+Income 1.52 (0.98) 2.47 (1.71) –
+Mean 1.58 (1.10) 2.52 (1.39) 1.54
+Notes:Entries are multiplier point estimates with standard errors in parentheses, all on a real basis: transfers and
+outcomes are deflated to January 2015 USD, matching Egger et al. (2022)’s Table V. Our design-based estimates
+recompute that deflated accounting after replacing each ring exposure with the design-selected index; their standard
+errors are delta-method values that propagate the Stage-1 uncertainty in the index weights and the Table V
+coefficient uncertainty (Appendix E.2, part E). The Egger et al. (2022) column reproduces their Table V estimates,
+whose standard errors come from a wild clustered bootstrap. The Walker et al. (2024) figure is a model-implied real
+multiplier from a calibrated general-equilibrium model, with no sampling standard error and reported only in
+aggregate (their nominal counterpart is 1.83).
+The economics of the setting supports spillovers that reach beyond 2 km. Walker et al. (2024)
+argue that local general-equilibrium responses to the transfers include a market-level “slack” com-
+ponent: part of the response is common to all households trading in the same local market, rather
+than declining smoothly with distance from the transferred villages. Such a component is consistent
+with both Stage-1 findings. It gives beyond-2 km transfers real effects on a household’s outcomes,
+which is why the support test extends the support past 2 km; and it is not spanned by an annular
+index at any support, which is why theJtest still rejects at the selected supports.
+The second application thus illustrates the revision use of the framework: when the design rejects
+the original exposure map, both the map and the headline policy estimate change materially.
+7 Conclusion
+Estimates of spillover effects depend on an exposure map that turns the realized assignment into an
+index of each unit’s exposure. Both the functional form of that map (e.g., a ring) and its parameter
+(e.g., the radius) are usually fixed before estimation, with little guidance for either choice. This
+paper shows that the same randomization that identifies treatment effects can guide both choices.
+Specifically, a correctly specified exposure map implies orthogonality conditions that can be used
+for both estimation and testing: design-based GMM can estimate the mapping parameter, and the
+same conditions, when overidentified, can test the map itself.
+24Standard errors are delta-method values that propagate both the Stage-1 uncertainty in the index weights and
+the Table V coefficient uncertainty; Appendix E.2, part E details the reparameterization and the inference.
+33
+
+--- PAGE 34 ---
+We establish consistency and asymptotic normality of the resulting estimator for the maps used
+in applied work, with all randomness arising from the assignment, and we characterize the efficient
+moments. Finally, we carry the resulting uncertainty aboutg(W;X i, θ) into downstream policy
+estimands (e.g., average effects under alternative assignment rules), so that inference reflects both
+the experimental variation and the uncertainty about the exposure specification itself.
+We apply the method to two large-scale anti-poverty experiments. For the NREGS reform
+studied by Muralidharan et al. (2023), the 20 km radius chosen on institutional grounds is not
+rejected by the design, and the program’s headline decomposition is robust: even at the data-chosen
+radius, the income gains come predominantly from non-program earnings. For the cash-transfer
+experiment of Egger et al. (2022), the 2 km support is rejected for every core outcome, and replacing
+it with the smallest support the design does not reject lowers the estimated local transfer multiplier
+(mean) from about 2.5 to 1.58, close to the value implied by the independent structural model of
+Walker et al. (2024).
+References
+Abadie, A., Athey, S., Imbens, G. W., and Wooldridge, J. M. (2020). Sampling-based versus
+design-based uncertainty in regression analysis.Econometrica, 88(1):265–296.
+Ackerberg, D. and Crawford, G. S. (2009). Estimating price elasticities in differentiated product
+demand models with endogenous characteristics. Working paper.
+Ackerberg, D., Crawford, G. S., and Hahn, J. (2011). Orthogonal instruments: Estimating price
+elasticities in the presence of endogenous product characteristics. Presentation at CREST, Paris.
+Ad˜ ao, R., Costinot, A., and Donaldson, D. (2023). Putting quantitative models to the test: An
+application to Trump’s trade war. NBER Working Paper 31321, National Bureau of Economic
+Research.
+Andrews, I., Barahona, N., Gentzkow, M., Rambachan, A., and Shapiro, J. M. (2025). Structural
+estimation under misspecification: Theory and implications for practice.The Quarterly Journal
+of Economics, page qjaf018.
+Aronow, P. M. and Samii, C. (2017). Estimating average causal effects under general interference,
+with application to a social network experiment.The Annals of Applied Statistics, 11(4):1912–
+1947.
+Athey, S., Eckles, D., and Imbens, G. W. (2018). Exact p-values for network interference.Journal
+of the American Statistical Association, 113(521):230–240.
+34
+
+--- PAGE 35 ---
+Belloni, A., Fang, F., and Volfovsky, A. (2022). Neighborhood adaptive estimators for causal
+inference under network interference.arXiv preprint arXiv:2212.03683.
+Borusyak, K., Bravo, M. C., and Hull, P. (2025). Estimating demand with recentered instruments.
+arXiv preprint arXiv:2504.04056.
+Borusyak, K. and Hull, P. (2023). Nonrandom exposure to exogenous shocks.Econometrica,
+91(6):2155–2185.
+Borusyak, K. and Hull, P. (2026). Optimal formula instruments.Econometrica. Forthcoming.
+Bramoull´ e, Y., Djebbari, H., and Fortin, B. (2009). Identification of peer effects through social
+networks.Journal of Econometrics, 150(1):41–55.
+Cai, J., Janvry, A. D., and Sadoulet, E. (2015). Social networks and the decision to insure.American
+Economic Journal: Applied Economics, 7(2):81–108.
+Chandrasekhar, A. G., Jackson, M. O., McCormick, T. H., and Thiyageswaran, V. (2023). General
+covariance-based conditions for central limit theorems with dependent triangular arrays.arXiv
+preprint arXiv:2308.12506.
+Chernozhukov, V., Demirer, M., Duflo, E., and Fern´ andez-Val, I. (2025). Fisher–Schultz lecture:
+Generic machine learning inference on heterogeneous treatment effects in randomized experi-
+ments, with an application to immunization in India.Econometrica, 93(4):1121–1164.
+Conley, T. G. (1999). Gmm estimation with cross sectional dependence.Journal of Econometrics,
+92(1):1–45.
+Currie, J., Davis, L., Greenstone, M., and Walker, R. (2015). Environmental health risks and
+housing values: Evidence from 1,600 toxic plant openings and closings.American Economic
+Review, 105(2):678–709.
+Donaldson, D. and Hornbeck, R. (2016). Railroads and american economic growth: A “market
+access” approach.The Quarterly Journal of Economics, 131(2):799–858.
+Egger, D., Haushofer, J., Miguel, E., Niehaus, P., and Walker, M. (2022). General equilibrium
+effects of cash transfers: experimental evidence from kenya.Econometrica, 90(6):2603–2643.
+Faridani, S. and Niehaus, P. (2024). Linear estimation of global average treatment effects. Technical
+report, National Bureau of Economic Research.
+Franklin, S., Imbert, C., Abebe, G., and Mejia-Mantilla, C. (2024). Urban public works in spatial
+equilibrium: Experimental evidence from ethiopia.American Economic Review, 114(5):1382–
+1414.
+35
+
+--- PAGE 36 ---
+Freedman, D. A. (2008). On regression adjustments to experimental data.Advances in Applied
+Mathematics, 40(2):180–193.
+Gao, C., Harshaw, C., S¨ avje, F., and Wang, Y. (2026). On the impossibility of specification testing
+of interference models based on exposure mappings. Version v1, May 12, 2026.
+Glaeser, E. L., Sacerdote, B. I., and Scheinkman, J. A. (2003). The social multiplier.Journal of
+the European Economic Association, 1(2-3):345–353.
+Hudgens, M. G. and Halloran, M. E. (2008). Toward causal inference with interference.Journal of
+the American Statistical Association, 103(482):832–842.
+Kim, M.-j. and Sun, Y.-J. (2011). Spatial heteroskedasticity and autocorrelation consistent esti-
+mation.Econometric Theory, 27(5):879–921.
+Kojevnikov, D., Marmer, V., and Song, K. (2021). Limit theorems for network dependent random
+variables.Journal of Econometrics, 225(2):141–163.
+Leung, M. P. (2022). Causal inference under approximate neighborhood interference.Econometrica,
+90(1):267–293.
+Li, X. and Ding, P. (2017). General forms of finite population central limit theorems with applica-
+tions to causal inference.Journal of the American Statistical Association, 112(520):1759–1769.
+Lucas, Robert E., J. (1980). Methods and problems in business cycle theory.Journal of Money,
+Credit and Banking, 12(4):696–715.
+Manski, C. (1993). Identification of endogenous social effects: The reflection problem.Review of
+Economic Studies, 60(3):531–542.
+Manski, C. F. (2013). Identification of treatment response with social interactions.The Economet-
+rics Journal, 16(1):S1–S23.
+Miguel, E. and Kremer, M. (2004). Worms: identifying impacts on education and health in the
+presence of treatment externalities.Econometrica, 72(1):159–217.
+Muralidharan, K., Niehaus, P., and Sukhtankar, S. (2023). General equilibrium effects of (improv-
+ing) public employment programs: Experimental evidence from India.Econometrica, 91(4):1261–
+1295.
+Neyman, J. (1923). On the application of probability theory to agricultural experiments. essay on
+principles.Ann. Agricultural Sciences, pages 1–51.
+36
+
+--- PAGE 37 ---
+Park, Y. and Yang, X. (2026). Decomposition of spillover effects under misspecification: Pseudo-
+true estimands and a local-global extension.
+Rambachan, A. and Roth, J. (2025). Design-based uncertainty for quasi-experiments.Journal of
+the American Statistical Association. Forthcoming; published online August 27, 2025.
+Redding, S. and Venables, A. J. (2004). Economic geography and international inequality.Journal
+of International Economics, 62(1):53–82.
+Ritzwoller, D. M. (2025). Regression adjustments for disentangling spillover effects. Job market
+paper, Stanford Graduate School of Business.
+Robinson, P. M. (1988). Root-n-consistent semiparametric regression.Econometrica: journal of
+the Econometric Society, pages 931–954.
+Sasaki, Y. (2025). Gmm and m estimation under network dependence.arXiv preprint
+arXiv:2503.00290.
+S¨ avje, F. (2024). Causal inference with misspecified exposure mappings: Separating definitions and
+assumptions.Biometrika, 111(1):1–15.
+S¨ avje, F., Aronow, P. M., and Hudgens, M. G. (2021). Average treatment effects in the presence
+of unknown interference.The Annals of Statistics, 49(2):673–701.
+Sobel, M. E. (2006). What do randomized studies of housing mobility demonstrate? causal inference
+in the face of interference.Journal of the American Statistical Association, 101(476):1398–1407.
+van der Vaart, A. W. and Wellner, J. A. (1996). Weak convergence. InWeak convergence and
+empirical processes, pages 16–28. Springer.
+Walker, M. W., Shah, N., Miguel, E., Egger, D., Soliman, F. S., and Graff, T. (2024). Slack and
+economic development. Technical report, National Bureau of Economic Research.
+Zhong, L. (2025). Unconditional randomization tests for interference. Version v3, July 15, 2025.
+37
+
+--- PAGE 38 ---
+A Proofs for Section 2
+Proof of Theorem 2.6 and Corollary 2.7.Fix a uniti, and write
+Gi(θ0) :=g(W;X i, θ0).
+By Hypothesis 2.5, there existsθ 0 ∈Θ and a measurable map eYi :R k →Rsuch that, for every
+assignmentw∈ W,
+Yi(w) = eYi
+ 
+g(w;X i, θ0)
+
+.
+Under the designD n, the realized outcome isY i =Y i(W). Hence
+Yi = eYi
+ 
+g(W;X i, θ0)
+
+= eYi
+ 
+Gi(θ0)
+
+a.s.
+By Assumption 2.4, the potential-outcome schedule is fixed underDn, so each mapeYi is nonrandom.
+ThusY i is measurable with respect toσ(G i(θ0)).
+We first verify the conditional independence statement. Letf:R→Randh:W →Rbe
+bounded measurable functions. SinceY i = eYi(Gi(θ0)) almost surely,
+f(Y i) =f
+
+eYi(Gi(θ0))
+
+isσ(G i(θ0))-measurable. Therefore,
+E
+
+f(Y i)h(W)
+ Gi(θ0)
+
+=f
+
+eYi(Gi(θ0))
+
+E
+
+h(W)
+ Gi(θ0)
+
+=E
+
+f(Y i)
+ Gi(θ0)
+
+E
+
+h(W)
+ Gi(θ0)
+
+.
+This verifies
+Yi ⊥ ⊥W
+ g(W;X i, θ0)
+under the design distribution.
+We next verify the orthogonality condition. Letϕ:R→Rbe a square-integrable outcome
+transformation,E[ϕ(Y i)2]<∞, and letψ:W × X →Rbe a square-integrable design function,
+E[ψ(W) 2]<∞. By definition,
+Ri,θ0ψ(W) =ψ(W)−E[ψ(W)|G i(θ0)].
+Hence
+E[Ri,θ0ψ(W)|G i(θ0)] = 0 a.s.
+Moreover, sinceY i isσ(G i(θ0))-measurable,ϕ(Y i) is alsoσ(G i(θ0))-measurable. Because conditional
+expectation is anL 2 contraction,ψ(W)∈L 2 impliesR i,θ0ψ(W) =ψ(W)−E[ψ(W)|G i(θ0)]∈
+38
+
+--- PAGE 39 ---
+L2; together withϕ(Y i)∈L 2, the Cauchy–Schwarz inequality givesE
+
+|ϕ(Yi)R i,θ0ψ(W)|
+
+≤
+∥ϕ(Yi)∥L2 ∥Ri,θ0ψ(W)∥ L2 <∞, so the product is integrable and the law of iterated expectations
+applies below. The law of iterated expectations gives
+E[ϕ(Yi)Ri,θ0ψ(W)] =E
+
+E
+
+ϕ(Yi)Ri,θ0ψ(W)
+ Gi(θ0)
+
+=E
+
+ϕ(Yi)E
+
+Ri,θ0ψ(W)
+ Gi(θ0)
+
+= 0.
+Equivalently,
+E[ϕ(Yi){ψ(W)−E[ψ(W)|g(W;X i, θ0)]}] = 0,
+which is the desired unit-level design-based orthogonality condition.
+Sincei,ϕ, andψwere arbitrary, the result holds for every unit and every admissible outcome
+transformation and design function. This completes the proof.
+B Additional Results and Proofs for Section 3
+Throughout this appendix we work under the notation and conditions of Section 3. In particular,
+for eachnandi∈ U n we define, forθ∈Θ,
+Zi,n(θ) := Ψi(θ)−E[Ψ i(θ)], ¯Zn(θ) := 1
+Nn
+NnX
+i=1
+Zi,n(θ),
+and
+µn(θ) := 1
+Nn
+NnX
+i=1
+E[Ψi(θ)], µ(θ) := lim
+n→∞
+µn(θ),
+whenever the limit exists. The GMM criterion and its limit are
+Qn(θ) := ¯Ψn(θ)⊤Λn ¯Ψn(θ), Q(θ) :=µ(θ) ⊤Λµ(θ),
+with Λ n
+p
+→Λ⪰0. Assumption 3.1 in the main text encodes the high-level uniform LLN, identifi-
+cation, and weight convergence conditions needed for consistency.
+The main text focuses on the regular continuous exposure-map case. This appendix gives the
+formal supporting material for the baseline regular continuous case and then records the finite-grid
+variants used in applications.
+39
+
+--- PAGE 40 ---
+B.1 Consistency of the baseline regular case
+Uniform convergence of the criterion.The key step is to show that the high-level uniform
+LLN for the moments implies uniform convergence of the quadratic criterionQ n(θ) toQ(θ).
+Lemma B.1(Uniform convergence of the quadratic criterion).Suppose Assumption 3.1 holds.
+Then
+sup
+θ∈Θ
+Qn(θ)−Q(θ)
+ p
+→0.
+Proof.Define, for eachnandθ∈Θ,
+∆n(θ) := ¯Ψn(θ)−µ n(θ) = ¯Zn(θ).
+Then
+¯Ψn(θ) =µ n(θ) + ∆n(θ).
+Substituting intoQ n(θ) yields
+Qn(θ) = ¯Ψn(θ)⊤Λn ¯Ψn(θ)
+=
+ 
+µn(θ) + ∆n(θ)
+⊤Λn
+ 
+µn(θ) + ∆n(θ)
+
+= ∆n(θ)⊤Λn∆n(θ) + 2µ n(θ)⊤Λn∆n(θ) +µ n(θ)⊤Λnµn(θ).
+SubtractingQ(θ) =µ(θ) ⊤Λµ(θ) and adding and subtractingµ n(θ)⊤Λµn(θ) gives
+Qn(θ)−Q(θ) = ∆ n(θ)⊤Λn∆n(θ)| {z }
+T1,n(θ)
++ 2µn(θ)⊤Λn∆n(θ)| {z }
+T2,n(θ)
++µ n(θ)⊤(Λn −Λ)µ n(θ)| {z }
+T3,n(θ)
++
+
+µn(θ)⊤Λµn(θ)−µ(θ) ⊤Λµ(θ)
+	
+| {z }
+T4,n(θ)
+.(B.1)
+We bound each termT k,n(θ) uniformly inθ∈Θ.
+First term.For eachθ, ∆n(θ)⊤Λn∆n(θ)
+ ≤ ∥Λ n∥op ∥∆n(θ)∥2,
+hence
+sup
+θ∈Θ
+∆n(θ)⊤Λn∆n(θ)
+ ≤ ∥Λ n∥op
+
+sup
+θ∈Θ
+∥∆n(θ)∥
+2
+.
+By Assumption 3.1 (AS–LLN2),
+sup
+θ∈Θ
+∥∆n(θ)∥= sup
+θ∈Θ
+ ¯Ψn(θ)−µ n(θ)
+ p
+→0,
+40
+
+--- PAGE 41 ---
+and by Assumption 3.1 (AS–LLN4), Λ n
+p
+→Λ implies∥Λ n∥op =O p(1). Therefore
+sup
+θ∈Θ
+T1,n(θ)
+ =o p(1).
+Second term.Similarly,
+µn(θ)⊤Λn∆n(θ)
+ ≤ ∥µ n(θ)∥ ∥Λn∥op ∥∆n(θ)∥,
+so
+sup
+θ∈Θ
+T2,n(θ)
+ ≤2
+
+sup
+θ∈Θ
+∥µn(θ)∥
+
+∥Λn∥op
+
+sup
+θ∈Θ
+∥∆n(θ)∥
+
+.
+By Assumption 3.1 (AS–LLN1),µ n(θ)→µ(θ) uniformly on Θ. Continuity ofµand compactness
+of Θ imply
+sup
+θ∈Θ
+∥µ(θ)∥<∞,sup
+θ∈Θ
+∥µn(θ)∥=O(1).
+Combining with Assumption 3.1 (AS–LLN2) and (AS–LLN4), we obtain
+sup
+θ∈Θ
+T2,n(θ)
+ =o p(1).
+Third term.For eachθ,
+µn(θ)⊤(Λn −Λ)µ n(θ)
+ ≤ ∥µ n(θ)∥2 ∥Λn −Λ∥ op,
+hence
+sup
+θ∈Θ
+T3,n(θ)
+ ≤
+
+sup
+θ∈Θ
+∥µn(θ)∥
+2
+∥Λn −Λ∥ op.
+By Assumption 3.1 (AS–LLN4),∥Λ n −Λ∥ op
+p
+→0, and as above sup θ∈Θ ∥µn(θ)∥=O(1). Thus
+sup
+θ∈Θ
+T3,n(θ)
+ =o p(1).
+Fourth term.For eachθ,
+µn(θ)⊤Λµn(θ)−µ(θ) ⊤Λµ(θ)
+=
+ 
+µn(θ)−µ(θ)
+⊤Λµn(θ) +µ(θ) ⊤Λ
+ 
+µn(θ)−µ(θ)
+
+,
+so
+µn(θ)⊤Λµn(θ)−µ(θ) ⊤Λµ(θ)
+
+41
+
+--- PAGE 42 ---
+≤ ∥µ n(θ)−µ(θ)∥ ∥Λ∥ op ∥µn(θ)∥+∥µ(θ)∥ ∥Λ∥ op ∥µn(θ)−µ(θ)∥.
+Taking suprema overθ∈Θ and using Assumption 3.1 (AS–LLN1), together with boundedness of
+supθ ∥µn(θ)∥and sup θ ∥µ(θ)∥, we obtain
+sup
+θ∈Θ
+T4,n(θ)
+ = sup
+θ∈Θ
+µn(θ)⊤Λµn(θ)−µ(θ) ⊤Λµ(θ)
+ →0.
+Combining the four bounds with (B.1), we conclude that
+sup
+θ∈Θ
+Qn(θ)−Q(θ)
+ ≤
+4X
+k=1
+sup
+θ∈Θ
+|Tk,n(θ)|=o p(1).
+This establishes the desired uniform convergence.
+Argmin consistency and proof of Theorem 3.3.We now use Lemma B.1 and the identifi-
+cation part of Assumption 3.1 to show that any minimizer ofQ n(θ) is consistent.
+Lemma B.2(Argmin consistency).Suppose Assumption 3.1 holds and Lemma B.1 is in force.
+Let{ ˆθn}be any sequence inΘsatisfying
+Qn(ˆθn)≤inf
+θ∈Θ
+Qn(θ) +ε n, ε n ≥0, ε n
+p
+→0.(B.2)
+Then ˆθn
+p
+→θ 0. In particular the conclusion holds for any exact minimizer ˆθn ∈arg min θ∈Θ Qn(θ)
+whenever the infimum is attained, this being the caseε n ≡0.
+Proof.By Assumption 3.1 (AS–LLN3), Θ is compact andµ(θ) is continuous inθon Θ. Since Λ⪰0
+is fixed,Q(θ) =µ(θ) ⊤Λµ(θ) is continuous on Θ. Assumption 3.1 (AS–LLN3) further implies that
+Qis uniquely minimized atθ 0.
+Fixη >0 and define
+Sη :={θ∈Θ :∥θ−θ 0∥ ≥η}.
+Compactness of Θ impliesS η is compact. By continuity and uniqueness of the minimizer,
+δη := inf
+θ∈Sη
+
+Q(θ)−Q(θ 0)
+	
+>0.
+By Lemma B.1,
+sup
+θ∈Θ
+Qn(θ)−Q(θ)
+ p
+→0.
+Hence, forε=δ η/4,
+P
+
+sup
+θ∈Θ
+Qn(θ)−Q(θ)
+ > δη
+4
+
+→0.
+42
+
+--- PAGE 43 ---
+Sinceε n
+p
+→0 as well, for all largenthe event
+An,η :=
+
+sup
+θ∈Θ
+Qn(θ)−Q(θ)
+ ≤ δη
+4
+
+∩
+
+εn ≤ δη
+4
+
+occurs with probability at least 1−o(1). OnA n,η we have, for everyθ∈S η,
+Qn(θ)≥Q(θ)− δη
+4 ≥Q(θ 0) +δ η − δη
+4 =Q(θ 0) + 3δη
+4 .
+At the same time,θ 0 ∈Θ gives inf θ∈Θ Qn(θ)≤Q n(θ0), so by (B.2), again onA n,η,
+Qn(ˆθn)≤Q n(θ0) +ε n ≤Q(θ 0) + δη
+4 + δη
+4 =Q(θ 0) + δη
+2 < Q(θ 0) + 3δη
+4 .
+The two displays are incompatible with ˆθn ∈S η, so onA n,η no approximate minimizer satisfying
+(B.2) can lie inS η. In particular,
+P
+ ˆθn ∈S η
+
+≤P(A c
+n,η)→0.
+Sinceη >0 is arbitrary, this implies ˆθn
+p
+→θ 0.
+RemarkB.3 (Attainment of the infimum).Lemma B.2 is stated for approximate minimizers because
+Assumption 3.1 constrains the limit criterionQ, imposing continuity and a unique minimizer, but
+places no lower semicontinuity or attainment requirement on the sample criterionQ n. Nothing in
+the assumption therefore guarantees that arg minθ∈Θ Qn(θ) is nonempty, and a statement quantified
+over exact minimizers would be vacuous whenever it is empty. The approximate form removes the
+issue at no cost, sinceε n
+p
+→0 sequences always exist by definition of the infimum, and it covers the
+exact case withε n ≡0.
+Both applications attain the infimum, for different reasons. For the smooth exposure maps of
+Example 2.2,θ7→ ¯Ψn(θ) is continuous on the compact set Θ, hence so isQ n, and the infimum is
+attained. For the ring map of Example 2.1, the sample pathθ7→ ¯Ψn(θ) is a step function that
+changes only whenθcrosses one of the finitely many inter-unit distances, soQ n takes finitely many
+values on Θ and its minimum is attained on each of the finitely many level sets. The same holds a
+fortiori for the finite radius grids used in the empirical implementations, where Θ itself is finite.△
+Proof of Theorem 3.3.Under Assumption 3.1 (AS–LLN1)–(AS–LLN4), Lemma B.1 gives
+sup
+θ∈Θ
+Qn(θ)−Q(θ)
+ p
+→0.
+Assumption 3.1 (AS–LLN3) ensures thatQis continuous on Θ and uniquely minimized atθ 0.
+Applying Lemma B.2 then yields ˆθn
+p
+→θ 0 for any sequence satisfying (B.2), that is, for any
+43
+
+--- PAGE 44 ---
+sequence of approximate minimizers withQ n(ˆθn)≤inf θ∈Θ Qn(θ) +o p(1), and in particular for
+any sequence of exact minimizers when the infimum is attained (Remark B.3). This proves the
+consistency result stated in Theorem 3.3.
+B.2 Primitive LLN via affinity sets
+This subsection verifies Assumption 3.1 (AS–LLN2) from primitive design-based conditions. The
+only substantive residual remains the Section 2 design residual
+Ri,θψ(W) =ψ(W)−E[ψ(W)|g i(W;θ)].
+For the proofs below, use the standard centered-moment notation
+Zi,n(θ) := Ψi(θ)−EΨ i(θ), ¯Zn(θ) := 1
+Nn
+NnX
+i=1
+Zi,n(θ).
+Thus the desired ULLN is simply
+sup
+θ
+∥ ¯Zn(θ)∥
+p
+→0.
+All expectations and covariances in this subsection are with respect to the known designD n,
+conditional on the realized finite population.
+B.2.1 Smooth exposure maps
+The smooth case covers gravity and market-access exposure maps. We state projection regularity
+directly because smoothness ofg i(W;θ) alone does not imply smoothness ofE[ψ(W)|g i(W;θ)] as
+θvaries.
+Assumption B.4(Smooth-kernel ULLN primitives).LetΘ⊂R p be compact and let the moment
+dictionary{(ϕ m, ψm) :m= 1, . . . , q}be fixed. Write
+Ψi,m(θ) :=ϕ m(Yi){ψm(W)−m i,m,θ(gi(W;θ))}, m i,m,θ(s) :=E[ψ m(W)|g i(W;θ) =s].
+Assume the following conditions.
+(S1)Bounded dictionary.There are constantsC ϕ, Cψ <∞such that|ϕ m(Yi)| ≤C ϕ and
+|ψm(W)| ≤C ψ for alli, m, n.
+(S2)Smooth exposure and regular projection.There exist nonnegative envelopesG i,n(W)
+andM i,m,n such that, for allθ, θ ′ ∈Θ,
+∥gi(W;θ)−g i(W;θ ′)∥ ≤G i,n(W)∥θ−θ ′∥,
+44
+
+--- PAGE 45 ---
+and for all support pointss, s ′,
+|mi,m,θ(s)−m i,m,θ′(s′)| ≤M i,m,n{∥θ−θ ′∥+∥s−s ′∥}.
+The envelopes satisfy
+sup
+n
+1
+Nn
+NnX
+i=1
+max
+1≤m≤q
+Mi,m,n{1 +EG i,n(W)}<∞.
+(S3)Affinity covariance bound.There exist affinity setsA i =A i,n, withi∈A i, such that
+bn := maxi |Ai|=o(N n). Moreover, with
+ρn := sup
+θ∈Θ
+1
+N 2n
+NnX
+i=1
+X
+j /∈Ai
+ Cov{Zi,n(θ), Zj,n(θ)}
+
+op,
+we haveρ n →0.
+Lemma B.5(Smooth-kernel ULLN).Under Assumption B.4,
+sup
+θ∈Θ
+
+1
+Nn
+NnX
+i=1
+{Ψi(θ)−EΨ i(θ)}
+
+p
+→0.
+Proof.First, Assumption B.4 (S1) implies sup i,n,θ E∥Ψi(θ)∥2 <∞because|m i,m,θ(s)| ≤C ψ. Hence,
+for anyi, j, θ,  Cov{Zi,n(θ), Zj,n(θ)}
+
+op ≤C
+for a finite constantC. Therefore
+sup
+θ∈Θ
+E∥ ¯Zn(θ)∥2 ≤C
+ bn
+Nn
++ρ n
+
+=o(1).(B.1 ′)
+Indeed,
+E∥ ¯Zn(θ)∥2 = tr{Var(¯Zn(θ))} ≤q∥Var( ¯Zn(θ))∥op,
+and
+∥Var( ¯Zn(θ))∥op ≤ 1
+N 2n
+NnX
+i=1
+NnX
+j=1
+ Cov{Zi,n(θ), Zj,n(θ)}
+
+op.
+The within-affinity part has at mostN nbn terms and each term is bounded by the uniform second-
+moment bound; the outside-affinity part is exactly controlled byρ n. This gives (B.1 ′).
+Second, Assumption B.4 (S2) implies that the moment vector is Lipschitz inθ. For eachm,
+|mi,m,θ(gi(W;θ))−m i,m,θ′(gi(W;θ ′))|
+45
+
+--- PAGE 46 ---
+≤M i,m,n{1 +G i,n(W)}∥θ−θ ′∥,
+so
+∥Ψi(θ)−Ψ i(θ′)∥ ≤L i,n∥θ−θ ′∥, L i,n := √qCϕ max
+m
+Mi,m,n{1 +G i,n(W)}.
+By the envelope condition,
+1
+Nn
+X
+i
+ELi,n =O(1), 1
+Nn
+X
+i
+Li,n =O p(1).(B.2 ′)
+Now let Θ ε be a finiteε-net of the compact set Θ. For fixedε, (B.1 ′), Chebyshev’s inequality,
+and a union bound imply
+max
+θr∈Θε
+∥ ¯Zn(θr)∥
+p
+→0.
+For arbitraryθ∈Θ, letπ ε(θ) be a nearest net point. By (B.2 ′),
+∥ ¯Zn(θ)− ¯Zn(πε(θ))∥ ≤ε
+(
+1
+Nn
+X
+i
+Li,n + 1
+Nn
+X
+i
+ELi,n
+)
+=εO p(1).
+Combining the net-point bound with the oscillation bound and then sendingε↓0 proves the
+result.
+For bounded assignments|W j| ≤1 (in particular binary treatment, as in our applications),
+the exposure-derivative bounds below hold as displayed. For normalized gravity weightsa ij(θ)∝
+Aj exp(−θdij), the exposure derivative satisfies
+
+∂
+∂θ
+X
+j̸=i
+aij(θ)Wj
+
+≤2
+X
+j̸=i
+aij(θ)dij.
+For market-access weightsa ij(θ)∝A j(1 +αd ij)−θ,
+
+∂
+∂θ
+X
+j̸=i
+aij(θ)Wj
+
+≤2
+X
+j̸=i
+aij(θ) log(1 +αd ij).
+Thus the exposure-smoothness part of Assumption B.4 (S2) follows from bounded weighted first
+moments of distance or log-distance, while the regularity of the design projection is the separate
+primitive condition stated above.
+46
+
+--- PAGE 47 ---
+B.2.2 Ring exposures
+The smooth proof above does not apply to a ring exposure because the sample pathθ7→Ψ i(θ)
+can be stepwise. Nevertheless, a continuum ULLN can be proved under a direct shell-regularity
+condition. The condition says that small changes in the cutoff affect only a vanishing average mass
+of pair distances and that the design projection changes only through this shell.
+For this subsection the parameterθ∈Θ = [θ , θ] is the ring radius, and set
+Zi,n(θ) := Ψi(θ)−EΨ i(θ), ¯Zn(θ) := 1
+Nn
+NnX
+i=1
+Zi,n(θ).
+Assumption B.6(Ring ULLN primitives).The following conditions hold.
+(HR1)Bounded moment contributions.There is a finite constantCsuch that
+sup
+n
+sup
+i≤Nn
+sup
+θ∈Θ
+∥Ψi(θ)∥ ≤Calmost surely.
+(HR2)Pointwise affinity variance control.There exist affinity setsA i =A i,n withi∈A i
+andb n := maxi |Ai|=o(N n)such that
+ρring
+n := sup
+θ∈Θ
+1
+N 2n
+NnX
+i=1
+X
+j /∈Ai
+ Cov{Zi,n(θ), Zj,n(θ)}
+
+op →0.
+(HR3)Uniform shell oscillation.For every intervalI⊂Θ, there are deterministic envelopes
+Hi,n(I)≥0such that, wheneverθ, θ ′ ∈I,
+∥Ψi(θ)−Ψ i(θ′)∥ ≤H i,n(I)almost surely.
+Define
+ωn(δ) := sup
+I⊂Θ:|I|≤δ
+1
+Nn
+NnX
+i=1
+Hi,n(I).
+Then
+lim
+δ↓0
+lim sup
+n→∞
+ωn(δ) = 0.
+Lemma B.7(Ring ULLN).Under Assumption B.6,
+sup
+θ∈Θ
+ ¯Ψn(θ)−µ n(θ)
+ = sup
+θ∈Θ
+∥ ¯Zn(θ)∥
+p
+→0.
+47
+
+--- PAGE 48 ---
+Proof.First fixθ∈Θ. The same trace and covariance decomposition used in Lemma B.5 gives
+E∥ ¯Zn(θ)∥2 ≤C
+ bn
+Nn
++ρ ring
+n
+
+,
+where the constant can change from line to line. This bound holds uniformly inθby Assump-
+tion B.6.
+Fixδ >0 and cover Θ by intervalsI 1, . . . , IMδ of length at mostδ, withM δ ≤C/δ. Choose one
+grid pointr ℓ ∈I ℓ for each interval. For fixedδ, Chebyshev’s inequality and a union bound imply
+Pr
+
+max
+ℓ≤Mδ
+∥ ¯Zn(rℓ)∥> η
+
+≤ CMδ
+η2
+ bn
+Nn
++ρ ring
+n
+
+→0.
+For anyθ∈I ℓ,
+∥ ¯Zn(θ)− ¯Zn(rℓ)∥ ≤ 1
+Nn
+NnX
+i=1
+∥Ψi(θ)−Ψ i(rℓ)∥+ 1
+Nn
+NnX
+i=1
+E∥Ψi(θ)−Ψ i(rℓ)∥
+≤2ω n(δ).
+Therefore
+sup
+θ∈Θ
+∥ ¯Zn(θ)∥ ≤max
+ℓ≤Mδ
+∥ ¯Zn(rℓ)∥+ 2ω n(δ).
+Takingn→ ∞for fixedδand then sendingδ↓0 proves the result.
+Lemma B.8(Shell regularity implies continuity of the mean map).Suppose Assumption B.6(HR3)
+holds and Assumption 3.1AS–LLN1holds for the continuous ring classΘ = [θ , θ]. Then the limit
+mean mapθ7→µ(θ)is uniformly continuous onΘ. Hence the continuity part of Assumption 3.1AS–
+LLN3follows from the shell primitive rather than being imposed separately.
+Proof.Forθ, θ ′ ∈Iwith|I| ≤δ, Assumption B.6 (HR3) gives
+∥µn(θ)−µ n(θ′)∥ ≤ 1
+Nn
+NnX
+i=1
+E∥Ψi(θ)−Ψ i(θ′)∥ ≤ω n(δ).
+Therefore, using the uniform convergence in Assumption 3.1 AS–LLN1,
+sup
+|θ−θ′|≤δ
+∥µ(θ)−µ(θ ′)∥ ≤2 sup
+θ∈Θ
+∥µn(θ)−µ(θ)∥+ω n(δ).
+Taking first lim supn→∞ and thenδ↓0 yields uniform continuity ofµ.
+A useful primitive sufficient condition for the envelope condition (HR3) of Assumption B.6
+48
+
+--- PAGE 49 ---
+comes from weighted shell mass. Suppose
+gi(W;θ) =
+X
+j̸=i
+aij,nWj1{d ij ≤θ},sup
+i,n
+X
+j̸=i
+|aij,n|<∞,
+and define the weighted shell mass
+Si,n(I) :=
+X
+j̸=i
+|aij,n|1{d ij ∈I}.
+If the design projection satisfies the shell bound
+E[ψm(W)|g i(W;θ)]−E[ψ m(W)|g i(W;θ ′)]
+ ≤LS i,n(I) wheneverθ, θ ′ ∈I,
+andϕ m(Yi) is uniformly bounded, then one may takeH i,n(I) =CS i,n(I). The shell condition
+becomes
+lim
+δ↓0
+lim sup
+n→∞
+sup
+I⊂Θ:|I|≤δ
+1
+Nn
+NnX
+i=1
+X
+j̸=i
+|aij,n|1{d ij ∈I}= 0.
+This is anatomless-shell(no-mass-point) condition for continuous cutoffs: no single radius may
+carry a non-negligible share of the weighted pairwise mass. It is the spatial analogue of the familiar
+requirement, in threshold and regression-discontinuity models, that the running variable have no
+mass point at the cutoff, and the modulusω n(δ) above is the asymptotic-equicontinuity device that
+turns it into a uniform law of large numbers. Equivalently, for the weighted shell measures
+νn(I) := 1
+Nn
+NnX
+i=1
+X
+j̸=i
+|aij,n|1{d ij ∈I},
+which record, on the radius axis, how much exposure weight sits at each distance (a weighted ana-
+logue of the pair-distance distribution, or Ripley’sKfunction in spatial statistics), small intervals
+must have uniformly small mass. A sufficient way to obtain this is thatν n converge uniformly over
+intervals in the relevant cutoff region to a limiting measure with no atoms and locally bounded
+interval mass. The condition can fail in regular lattice designs when many pairs lie exactly at the
+candidate cutoff radius; in that case the continuous-cutoff target may be ill posed at that radius.
+This observation is separate from finite VC dimension: VC controls the number of threshold sets,
+while the shell condition controls the size of the jumps under the design.
+B.2.3 Finite-grid andK-hop maps
+For genuinely discrete maps, the main primitive result is finite-grid selection. This is the natu-
+ral formulation for network cutoffsK∈ {1, . . . , K max,n}and for any exposure problem that the
+49
+
+--- PAGE 50 ---
+researcher intentionally defines as a finite list of candidate specifications.
+Assumption B.9(Finite-grid ULLN primitives for non-smooth maps).LetΘ n be a finite candidate
+set with cardinalityK n =|Θ n|. Assume
+sup
+n
+sup
+i≤Nn
+sup
+θ∈Θn
+E∥Ψi(θ)∥2 <∞.
+There exist affinity setsA i =A i,n withi∈A i andb n := maxi |Ai|such that, with
+ρfg
+n := sup
+θ∈Θn
+1
+N 2n
+NnX
+i=1
+X
+j /∈Ai
+ Cov{Zi,n(θ), Zj,n(θ)}
+
+op,
+we have
+Kn
+ bn
+Nn
++ρ fg
+n
+
+→0.
+Lemma B.10(Finite-grid ULLN).Under Assumption B.9,
+sup
+θ∈Θn
+
+1
+Nn
+NnX
+i=1
+{Ψi(θ)−EΨ i(θ)}
+
+p
+→0.
+Proof.For each fixedθ∈Θ n, the same trace and covariance decomposition as in the smooth proof
+gives
+E∥ ¯Zn(θ)∥2 ≤C
+ bn
+Nn
++ρ fg
+n
+
+.
+Therefore, by Chebyshev’s inequality and a union bound,
+P
+
+sup
+θ∈Θn
+∥ ¯Zn(θ)∥> η
+
+≤ CKn
+η2
+ bn
+Nn
++ρ fg
+n
+
+→0.
+Lemma B.11(Finite-grid argmin consistency).LetΘ n be finite and define
+Qn(θ) := ¯Ψn(θ)⊤Λn ¯Ψn(θ), Q 0
+n(θ) :=µ n(θ)⊤Λµn(θ).
+Suppose the finite-grid ULLN in Lemma B.10 holds,Λ n
+p
+→Λ, andsup θ∈Θn ∥µn(θ)∥=O(1). Sup-
+pose also that there is a unique grid targetθ 0,n ∈Θ n and a constantc >0such that
+min
+θ∈Θn:θ̸=θ 0,n
+{Q0
+n(θ)−Q 0
+n(θ0,n)} ≥c
+50
+
+--- PAGE 51 ---
+for all sufficiently largen. Then any finite-grid minimizer
+ˆθn ∈arg min
+θ∈Θn
+Qn(θ)
+satisfies
+Pr(ˆθn =θ 0,n)→1.
+Proof.The finite-grid ULLN implies
+sup
+θ∈Θn
+∥ ¯Ψn(θ)−µ n(θ)∥
+p
+→0.
+Together with Λn
+p
+→Λ and sup θ∈Θn ∥µn(θ)∥=O(1), this gives
+sup
+θ∈Θn
+|Qn(θ)−Q 0
+n(θ)|
+p
+→0.
+With probability tending to one, this supremum is smaller thanc/3. On that event, for every
+θ̸=θ 0,n,
+Qn(θ)−Q n(θ0,n)≥ {Q 0
+n(θ)−Q 0
+n(θ0,n)} −2c/3≥c/3>0.
+Thus the unique minimizer ofQ n over Θn isθ 0,n with probability tending to one.
+B.3 Asymptotic normality of the baseline regular case
+This subsection proves the regular asymptotic-normality result used in Section 3. The dependent
+triangular-array central limit theorem is needed only at the true exposure parameter, and the local
+behavior of the criterion is handled by the Z-estimator theorem of van der Vaart and Wellner (1996,
+Theorem 3.3.1). For ring exposures the sample moments need not be differentiable: the requirement
+is the projected estimating equation in Assumption B.12 AN–AFF5, a condition on the estimator
+rather than on the sample paths. When the radius is selected on a numerical grid, the grid mesh
+enters the same first-order-negligibility requirement.
+We use the notation of Section 3. Define
+¯Ψn(θ) := 1
+Nn
+NnX
+i=1
+Ψi(θ), µ n(θ) := 1
+Nn
+NnX
+i=1
+E[Ψi(θ)],
+and, at the true parameter,
+Zi,n := Ψi(θ0)−E[Ψ i(θ0)], ¯Zn := 1
+Nn
+NnX
+i=1
+Zi,n.
+51
+
+--- PAGE 52 ---
+The within-affinity covariance matrix is
+Ωn :=
+NnX
+i=1
+X
+j∈Ai
+Cov{Zi,n, Zj,n}.
+Assumption B.12 AN–AFF3 states that Ω n/Nn →Ω, where Ω is finite and positive definite.
+The asymptotic-normality conditions summarized in Section 3 are the following.
+Assumption B.12(Design-based AN conditions).In addition to Assumption 3.1, suppose:
+AN–AFF1Interiority.θ 0 is an interior point ofΘ.
+AN–AFF2Mean differentiability and full rank.There exists a neighborhoodN(θ 0)and a con-
+tinuous mapG:N(θ 0)→R q×p such that
+µ(θ) =µ(θ 0) +G(θ 0)(θ−θ 0) +r(θ),∥r(θ)∥ ≤C∥θ−θ 0∥2 forθ∈ N(θ 0),
+for some finiteC, andG ⊤ΛGis nonsingular atθ 0, whereG:=G(θ 0).
+AN–AFF3Affinity-set CLT and covariance stabilization.The array{Z i,n}has uniformly
+bounded fourth moments. LetZ i,n,ℓ denote theℓth component ofZ i,n forℓ= 1, . . . , q. For
+each scalar index(i, ℓ), define a scalar affinity set
+An(i, ℓ)⊆ U n × {1, . . . , q}byA n(i, ℓ) :=
+
+(j, ℓ′) :j∈A i, ℓ ′ = 1, . . . , q
+	
+,
+and define the “outside-affinity” scalar sum
+Z−i,ℓ :=
+X
+(j,ℓ′)/∈An(i,ℓ)
+Zj,n,ℓ′.
+The scalar array{Z i,n,ℓ}then satisfies the three affinity-set covariance conditions of Chan-
+drasekhar et al. (2023):
+NnX
+i=1
+qX
+ℓ=1
+X
+(j,ℓ′),(k,ℓ′′)∈An(i,ℓ)
+E
+
+|Zi,n,ℓ|Z j,n,ℓ′Zk,n,ℓ′′
+
+=o
+ 
+∥Ωn∥3/2
+F
+
+,(A1)
+NnX
+i=1
+qX
+ℓ=1
+NnX
+j=1
+qX
+ℓ′=1
+X
+(k,ℓ′′)∈An(i,ℓ)
+X
+(l,˜ℓ)∈An(j,ℓ′)
+Cov
+ 
+Zi,n,ℓZk,n,ℓ′′, Z j,n,ℓ′Zl,n,˜ℓ
+
+=o
+ 
+∥Ωn∥2
+F
+
+,
+(A2)
+NnX
+i=1
+qX
+ℓ=1
+E
+hE
+
+Zi,n,ℓ Z−i,ℓ
+ Z−i,ℓ
+
+i
+=o
+ 
+∥Ωn∥F
+
+.(A3)
+52
+
+--- PAGE 53 ---
+Moreover, the within-affinity covariance has uniformly bounded row sums,
+sup
+n
+max
+1≤i≤Nn
+max
+1≤ℓ≤q
+X
+(j,ℓ′)∈An(i,ℓ)
+ Cov(Zi,n,ℓ, Zj,n,ℓ′)
+ <∞,
+and the aggregate covariance stabilizes:
+Ωn
+Nn
+→Ω,Ωfinite and positive definite.
+Under these conditions, p
+Nn ¯Zn ⇒ N(0,Ω).
+In addition, the finite-population centering at the true parameter is negligible at the √Nn
+scale: p
+Nn
+µn(θ0)−µ(θ 0)
+ →0.
+Consequently, p
+Nn
+  ¯Ψn(θ0)−µ(θ 0)
+
+⇒ N(0,Ω).
+In the exposure-mapping application, this condition holds exactly because the residualized
+design-based orthogonality moments satisfyµ n(θ0) =µ(θ 0) = 0for everyn.
+AN–AFF4Empirical process equicontinuity.Writing
+Gn(θ) :=
+p
+Nn
+  ¯Ψn(θ)−µ(θ)
+
+,
+the process{G n(θ) :θ∈ N(θ 0)}is stochastically equicontinuous atθ 0: for any sequence
+hn ↓0,
+sup
+∥θ−θ0∥≤hn
+Gn(θ)−G n(θ0)
+ p
+→0.
+AN–AFF5Projected estimating equation.The estimator satisfies the projected GMM estimating
+equation up too p(N −1/2
+n ):
+G⊤Λn ¯Ψn(ˆθn)
+ =o p(N −1/2
+n ).
+B.3.1 Pointwise affinity-set CLT
+Lemma B.13(Affinity-set CLT for the moment vector).Under Assumptions 3.1 and B.12AN–
+AFF3,
+Ω−1/2
+n
+NnX
+i=1
+Zi,n ⇒ N(0, I q).
+53
+
+--- PAGE 54 ---
+Consequently, p
+Nn{ ¯Ψn(θ0)−µ n(θ0)} ⇒ N(0,Ω).
+Since Assumption B.12AN–AFF3also contains the fixed-limit centering condition,
+p
+Nn{ ¯Ψn(θ0)−µ(θ 0)} ⇒ N(0,Ω).
+Proof.The first display is the multivariate affinity-set CLT of Chandrasekhar et al. (2023). As-
+sumption B.12 AN–AFF3 verifies their three covariance conditions (their Assumptions 1–3) for the
+stackedscalar array{Z i,n,ℓ}with the dimension-inclusive affinity setsA n(i, ℓ) defined there, in-
+cluding the cross-component terms; their multivariate Theorem 1 then yields Ω −1/2
+n
+PNn
+i=1 Zi,n ⇒
+N(0, I q) directly. Since
+NnX
+i=1
+Zi,n =N n{ ¯Ψn(θ0)−µ n(θ0)},
+we can write
+p
+Nn{ ¯Ψn(θ0)−µ n(θ0)}=
+ Ωn
+Nn
+1/2
+Ω−1/2
+n
+NnX
+i=1
+Zi,n
+
+.
+The first factor converges to Ω1/2 and the second factor converges toN(0, I q), so Slutsky’s theorem
+gives the statedN(0,Ω) limit. The last display follows from the additional condition √Nn∥µn(θ0)−
+µ(θ0)∥ →0.
+B.3.2 The Z-estimator theorem used below
+Lemma B.14(Finite-dimensional specialization of van der Vaart and Wellner (1996), Theo-
+rem 3.3.1).LetΘ⊂R p, letM n : Θ→R p be random maps, and letM: Θ→R p be deterministic.
+Suppose that ˆθn
+p
+→θ 0,M(θ 0) = 0, and
+∥Mn(ˆθn)∥=o p(N −1/2
+n ).
+Suppose further thatMis differentiable atθ 0 with nonsingular derivativeA, that
+p
+Nn{Mn(θ0)−M(θ 0)} ⇒Z
+for a tight random vectorZ, and that for every sequenceθ n
+p
+→θ 0,
+p
+Nn
+
+{Mn(θn)−M(θ n)} − {Mn(θ0)−M(θ 0)}
+
+=o p
+ 
+1 +
+p
+Nn∥θn −θ 0∥
+
+.(Z)
+Then p
+Nn(ˆθn −θ 0) =−A −1p
+Nn{Mn(θ0)−M(θ 0)}+o p(1),
+54
+
+--- PAGE 55 ---
+and hence p
+Nn(ˆθn −θ 0)⇒ −A −1Z.
+Proof.This is the finite-dimensional version of van der Vaart and Wellner (1996, Theorem 3.3.1)
+with rate √Nn. In their notation,M n andMcorrespond to the random and limiting maps Ψ n and
+Ψ, condition (Z) is their local stochastic expansion condition, the approximate-zero condition is
+Mn(ˆθn) =o p(N −1/2
+n ), and the nonsingular matrixAis the continuously invertible derivative of the
+limiting map. Since the parameter is finite-dimensional, continuous invertibility of the derivative
+is equivalent to nonsingularity ofA.
+B.3.3 Proof of Theorem 3.5
+Proof of Theorem 3.5.By Theorem 3.3, Assumption 3.1 implies ˆθn
+p
+→θ 0. We apply Lemma B.14
+to the projected GMM maps
+Mn(θ) :=G ⊤Λn ¯Ψn(θ), M(θ) :=G ⊤Λµ(θ),
+whereG=G(θ 0).
+First,M(θ 0) = 0 becauseµ(θ 0) = 0. By Assumption B.12 AN–AFF2,
+µ(θ) =µ(θ 0) +G(θ−θ 0) +r(θ),∥r(θ)∥ ≤C∥θ−θ 0∥2,
+soMis differentiable atθ 0 with derivative
+A:=G ⊤ΛG.
+The matrixAis nonsingular by Assumption B.12 AN–AFF2.
+Second, Lemma B.13 and Λ n
+p
+→Λ imply
+p
+Nn{Mn(θ0)−M(θ 0)}=G ⊤Λn
+p
+Nn{ ¯Ψn(θ0)−µ(θ 0)} ⇒G ⊤ΛZ,
+whereZ∼ N(0,Ω).
+Third, we verify the stochastic expansion condition (Z). Letθ n
+p
+→θ 0. The random-sequence
+version of Assumption B.12 AN–AFF4 follows from its deterministic shrinking-ball formulation:
+choose a deterministic sequenceh n ↓0 such that Pr(∥θ n −θ 0∥> h n)→0 and apply the supremum
+bound on the event{∥θ n −θ 0∥ ≤h n}. Therefore
+p
+Nn
+
+{ ¯Ψn(θn)−µ(θ n)} − { ¯Ψn(θ0)−µ(θ 0)}
+
+=o p(1).
+55
+
+--- PAGE 56 ---
+Multiplying byG ⊤Λn preserves theo p(1) order. The difference between Λ n and Λ contributes
+G⊤(Λn −Λ)
+p
+Nn{µ(θn)−µ(θ 0)}=o p(1)O
+ p
+Nn∥θn −θ 0∥
+
+,
+where theO(∥θ n −θ 0∥) bound follows from local mean differentiability. Hence the total remainder
+is
+op
+ 
+1 +
+p
+Nn∥θn −θ 0∥
+
+,
+which is exactly condition (Z).
+Fourth, Assumption B.12 AN–AFF5 gives
+∥Mn(ˆθn)∥=∥G ⊤Λn ¯Ψn(ˆθn)∥=o p(N −1/2
+n ).
+This is a projected estimating-equation condition. It is not a differentiability condition and is
+therefore compatible with ring exposures whose sample moments are step functions of the cutoff.
+In smooth cases it can be verified by an ordinary sample first-order condition and a Jacobian law of
+large numbers. In non-smooth continuous-cutoff cases it is maintained directly as part of the regular
+Z/GMM condition. If the continuous cutoff is computed by grid search, the grid approximation
+must be first-order negligible, for example a grid mesh ∆ n =o(N −1/2
+n ), so that the computed
+estimator satisfies the projected estimating equation of Assumption B.12 AN–AFF5.
+All conditions of Lemma B.14 are now verified. Therefore
+p
+Nn(ˆθn −θ 0) =−(G ⊤ΛG)−1G⊤Λ
+p
+Nn{ ¯Ψn(θ0)−µ(θ 0)}+o p(1).
+Combining this expansion with Lemma B.13 gives
+p
+Nn(ˆθn −θ 0)⇒ N
+
+0,(G ⊤ΛG)−1G⊤ΛΩΛG(G⊤ΛG)−1
+
+.
+If Λ = Ω −1, the variance reduces to (G ⊤Ω−1G)−1. If Λ n = ˆΩ−1
+n and ˆΩn
+p
+→Ω, the efficient-weight
+case follows by Slutsky’s theorem.
+RemarkB.15 (Continuous and finite-grid rings).A ring exposure can be regular even though
+the sample pathθ7→ ¯Ψn(θ) is stepwise. The regularity needed for Wald inference is exactly
+the regular Z/GMM condition in Assumption B.12: differentiability of the mean mapθ7→µ(θ)
+atθ 0, a pointwise affinity-set CLT, local stochastic equicontinuity, and the projected estimating
+equation. The continuum ULLN in Lemma B.7 provides one primitive shell-regularity route for
+the corresponding uniform convergence. Thus the theorem does not require differentiability of
+the sample moments, but it does require the shell and empirical-process regularity stated in the
+assumptions.
+56
+
+--- PAGE 57 ---
+A genuinely finite-grid radius or finiteK-hop parameter is different. Under a fixed population
+separation gap, the selected discrete parameter is consistently selected and has a degenerate first-
+order limit. Wald inference for the discrete cutoff is therefore not the target. If a fine grid is used
+only as a numerical implementation of an underlying continuous-cutoff estimator, the continuous
+Wald limit applies provided the grid mesh ∆n satisfies ∆n =o(N −1/2
+n ) and the projected estimating-
+equation remainder remainso p(N −1/2
+n ).△
+B.4 Finite-grid exposure-map variants
+This subsection collects the finite-grid exception to the baseline regular continuous theory. It treats
+a finite discrete exposure-map component with an optional continuous component.
+Corollary B.16(Finite discrete exposure-map components).Suppose the Stage 1 exposure-map
+parameter can be written asθ= (ϑ, ρ), whereϑtakes values in a finite setVand, conditional on
+ϑ,ρlies in a compact setB(ϑ)⊂R pρ. For eachϑ∈ V, define the profile population criterion
+Qp(ϑ) := inf
+ρ∈B(ϑ)
+Q(ϑ, ρ), Q(ϑ, ρ) :=µ(ϑ, ρ) ⊤Λµ(ϑ, ρ).
+Assume thatQ p has a unique minimizerϑ 0 with a strict gap:
+Qp(ϑ)−Q p(ϑ0)≥c >0for allϑ̸=ϑ 0,
+and let
+ρ0 ∈arg min
+ρ∈B(ϑ0)
+Q(ϑ0, ρ).
+For eachϑ, let
+ˆρn(ϑ)∈arg min
+ρ∈B(ϑ)
+Qn(ϑ, ρ),
+and define the profiled finite-grid estimator
+ˆϑn ∈arg min
+ϑ∈V
+Qn
+ 
+ϑ,ˆρn(ϑ)
+
+,ˆρ n := ˆρn(ˆϑn).
+Assume that the uniform LLN and deterministic-stabilization conditions hold uniformly over{(ϑ, ρ) :
+ϑ∈ V, ρ∈ B(ϑ)}. Hence the finite-population profile criteria
+Q0,p
+n (ϑ) := inf
+ρ∈B(ϑ)
+µn(ϑ, ρ)⊤Λµn(ϑ, ρ)
+satisfysup ϑ∈V |Q0,p
+n (ϑ)−Q p(ϑ)| →0, so the fixed limit-profile gap transfers to the finite-population
+profile for all sufficiently largen. Assume also that the asymptotic-normality conditions of Theo-
+57
+
+--- PAGE 58 ---
+rem 3.5 hold for the continuous componentρconditional onϑ=ϑ 0. Then
+Pr(ˆϑn =ϑ 0)→1.
+Consequently, p
+Nn (ˆρn −ρ 0) =
+p
+Nn
+ 
+ˆρn(ϑ0)−ρ 0
+
++o p(1),
+so the continuous Stage 1 exposure-map parameter has the same first-order asymptotic distribution
+as the oracle estimator that fixes the correct discrete componentϑ 0.
+RemarkB.17 (What the finite-grid results do and do not say).Corollary B.16 is a Stage 1 result
+about exposure-map parameters. The continuous componentρmay depend on the selected dis-
+crete component ˆϑn in finite samples. The conclusion is not that this dependence is absent, but
+that under a fixed strict profile gap the selected class equals the population class with probability
+approaching one. Hence the selected estimator equals the oracle fixed-class estimator with prob-
+ability approaching one, which removes the discrete selection step from the first-order asymptotic
+variance.
+This fixed-gap condition rules out local ties among discrete classes. If two candidate exposure
+maps have population criteria that are equal, or differ only at theN −1/2
+n scale, the selected criterion
+can have a nonstandard post-selection distribution, analogous to the maximum of two noisy sample
+means. Such local-tie cases are not covered by the finite-grid corollary.△
+RemarkB.18 (Discrete rings and network radii).Corollary B.16 applies when a finite-grid compo-
+nent of the exposure map is point-identified by a strict profile gap. Examples include non-nested
+finite grids of scalar ring radii orK-hop network radii when the profile population criterion has a
+unique minimizer.
+The ring case covered by Assumption B.12 is a regular continuous-parameter problem. In
+the scalar ring case,g(W;X i, R) is an average over units within radiusR, and increasingRdoes
+not usually refine the smaller-radius exposure in the sense of sigma-fields; the regular continuous-
+parameter theory applies provided the population moment map is mean differentiable.△
+RemarkB.19 (Stage 1 versus Stage 2).The notationθ= (ϑ, ρ) in this section refers only to the
+Stage 1 exposure-map parameter. Downstream causal or exposure–response parameters, such as
+regression coefficients or average treatment effects, are introduced in Section 5. If the Stage 1
+discrete component is selected consistently, it contributes no first-order term to Stage 2 inference.
+Any regular continuous Stage 1 componentρ, however, must be propagated into Stage 2 by the
+stacked estimating-equation or delta-method argument described in Section 5 and Appendix D.△
+58
+
+--- PAGE 59 ---
+B.4.1 Proof of Corollary B.16
+Letθ= (ϑ, ρ) withϑ∈ Vfinite andρ∈ B(ϑ) compact. Define
+Qp(ϑ) := inf
+ρ∈B(ϑ)
+Q(ϑ, ρ), Q p
+n(ϑ) := inf
+ρ∈B(ϑ)
+Qn(ϑ, ρ).
+The sample estimator in Corollary B.16 is equivalently
+ˆϑn ∈arg min
+ϑ∈V
+Qp
+n(ϑ),ˆρ n = ˆρn(ˆϑn).
+Lemma B.20(Selection consistency for finite profiled criteria).SupposeVis finite and
+sup
+ϑ∈V
+sup
+ρ∈B(ϑ)
+|Qn(ϑ, ρ)−Q(ϑ, ρ)|
+p
+→0.
+IfQ p has a unique minimizerϑ 0 and satisfies the strict profile gap
+Qp(ϑ)−Q p(ϑ0)≥c >0for allϑ̸=ϑ 0,
+thenPr( ˆϑn =ϑ 0)→1.
+Proof.The uniform convergence ofQ n implies uniform convergence of the profile criteria:
+sup
+ϑ∈V
+|Qp
+n(ϑ)−Q p(ϑ)|
+p
+→0,
+because taking infima overρis one-Lipschitz with respect to the sup norm. For anyϑ̸=ϑ 0,
+Qp
+n(ϑ)−Q p
+n(ϑ0) ={Q p(ϑ)−Q p(ϑ0)}+o p(1)≥c+o p(1),
+uniformly over the finite setV \ {ϑ 0}. Hence, with probability approaching one, everyϑ̸=ϑ 0 has
+a larger profile sample criterion thanϑ 0, so Pr( ˆϑn =ϑ 0)→1.
+Proof of Corollary B.16.Selection consistency follows from Lemma B.20. On the event{ ˆϑn =ϑ 0},
+ˆρn = ˆρn(ϑ0).
+Therefore, for anyε >0,
+Pr
+
+p
+Nn(ˆρn −ρ 0)−
+p
+Nn{ˆρn(ϑ0)−ρ 0}
+ > ε
+
+≤Pr( ˆϑn ̸=ϑ 0)→0.
+59
+
+--- PAGE 60 ---
+Thus p
+Nn(ˆρn −ρ 0) =
+p
+Nn{ˆρn(ϑ0)−ρ 0}+o p(1).
+The conditional asymptotic-normality assumption then gives the oracle first-order distribution.
+C Details and Proofs for Section 4
+This appendix formalizes the optimal-moment construction used in Section 4; Theorems C.11
+and C.17 below together constitute the formal statement of Theorem 4.1. The main object is
+the class of product residualized moments
+ϕ(Yi){ψ(W)−E[ψ(W)|g(W;X i, θ)]}.
+The appendix proceeds in five steps. First, Appendix C.1 shows that, for each fixed unit, the van-
+ishing of all such product residualized moments is equivalent to the unit-level exposure-sufficiency
+condition. Second, Appendix C.2 constructs the averaged moment space used by the GMM esti-
+mator. Third, Appendix C.3 derives the oracle moment through the Riesz representation theorem
+and the Cauchy–Schwarz inequality. Fourth, Appendix C.4 shows how finite dictionaries and sieve
+GMM approximate the oracle moment. Finally, Appendix C.5 extends the argument to vector-
+valued exposure parameters.
+We write
+Gi,θ :=g(W;X i, θ), G i :=G i,θ0.
+The design-side residual operator is
+Ri,θψ(W) :=ψ(W)−E[ψ(W)|G i,θ].
+C.1 Moment characterization of unit-level exposure sufficiency
+The first result is a population characterization of the unit-level conditional-independence restric-
+tion. It is a statement about the joint law of (Y i, W, Gi) under the designD n for a fixed (i, n). It
+does not require independence across units.
+Assumption C.1(Measurability).For each fixed experimentnand uniti, the random variables
+Yi,W, andG i =g(W;X i, θ0)take values in standard Borel spaces. The mapsw7→Y i(w)and
+w7→g(w;X i, θ0)are measurable. Conditional expectations are understood as regular conditional
+expectations under the designD n.
+Lemma C.2(Product-moment characterization).Fix an experimentnand a uniti. Under As-
+sumption C.1, the following two statements are equivalent:
+60
+
+--- PAGE 61 ---
+1.
+Yi ⊥ ⊥W|G i.
+2. For every bounded measurableϕand every bounded measurableψ,
+E[ϕ(Y i){ψ(W)−E[ψ(W)|G i]}] = 0.
+Proof.First suppose that
+Yi ⊥ ⊥W|G i.
+Then, for every bounded measurableψ,
+E[ψ(W)|Y i, Gi] =E[ψ(W)|G i].
+Hence, for every bounded measurableϕ,
+E[ϕ(Y i){ψ(W)−E[ψ(W)|G i]}]
+=E[ϕ(Y i){E[ψ(W)|Y i, Gi]−E[ψ(W)|G i]}] = 0.
+Conversely, suppose that
+E[ϕ(Y i){ψ(W)−E[ψ(W)|G i]}] = 0
+for every bounded measurable pair (ϕ, ψ). Fix a bounded measurableψand define
+Uψ(W) :=ψ(W)−E[ψ(W)|G i].
+We will show that
+E[Uψ(W)|Y i, Gi] = 0.
+Letaandbbe bounded measurable functions. SinceG i is a measurable function ofW, the product
+eψ(W) :=b(G i)ψ(W)
+is a bounded measurable function ofW. Applying the assumed moment condition withϕ(Y i) =
+a(Yi) and design function eψ(W), we obtain
+0 =E[a(Y i){b(G i)ψ(W)−E[b(G i)ψ(W)|G i]}].
+But
+E[b(Gi)ψ(W)|G i] =b(G i)E[ψ(W)|G i],
+61
+
+--- PAGE 62 ---
+and therefore
+0 =E[a(Y i)b(Gi){ψ(W)−E[ψ(W)|G i]}] =E[a(Y i)b(Gi)Uψ(W)].
+The preceding identity holds for every product functiona(Y i)b(Gi). Since products of functions of
+Yi and functions ofG i generate the bounded measurable functions of the pair (Y i, Gi), the same
+identity extends, by a standard monotone-class argument, to every bounded measurable function
+h(Yi, Gi):
+E[h(Yi, Gi)Uψ(W)] = 0.
+Hence
+E[Uψ(W)|Y i, Gi] = 0.
+Equivalently,
+E[ψ(W)|Y i, Gi] =E[ψ(W)|G i]
+for every bounded measurableψ. This is precisely
+Yi ⊥ ⊥W|G i.
+RemarkC.3 (Finite support is only a special case).Lemma C.2 does not requireWto have finite
+support. IfWhas finite supportW n, then every bounded measurable design function can be
+written as
+ψ(W) =
+X
+w∈Wn
+ψ(w)1{W=w}.
+In that special case, it is enough to verify the moment restrictions for the atom indicators1{W=
+w}. With continuous-support or large-support designs, the exact population characterization uses
+all bounded measurable design functions, while feasible implementation uses a countable determin-
+ing dictionary. △
+For feasible implementation it is useful to replace the full class of bounded measurable functions
+by countable dense dictionaries.
+Assumption C.4(Countable determining dictionaries).For each fixed(i, n),L 2(Yi)andL 2(W)
+are separable under the designD n. Let
+Φi,n ={ϕ ℓ,i,n :ℓ≥1},Ψ n ={ψ m,n :m≥1}
+be countable dense subsets ofL 2(Yi)andL 2(W), respectively.
+62
+
+--- PAGE 63 ---
+Lemma C.5(Countable moment characterization).Suppose Assumptions C.1 and C.4 hold. Then
+Yi ⊥ ⊥W|G i
+if and only if
+E[ϕ ℓ,i,n(Yi){ψ m,n(W)−E[ψ m,n(W)|G i]}] = 0
+for everyℓ, m≥1.
+Proof.The forward direction follows from Lemma C.2. For the converse, define the bilinear form
+Bi,n(ϕ, ψ) :=E[ϕ(Y i){ψ(W)−E[ψ(W)|G i]}].
+By Cauchy–Schwarz and the fact that conditional expectation is anL 2-projection,
+|Bi,n(ϕ, ψ)| ≤ ∥ϕ(Y i)∥L2 ∥ψ(W)−E[ψ(W)|G i]∥L2
+≤ ∥ϕ(Y i)∥L2∥ψ(W)∥ L2.
+ThusB i,n is continuous onL 2(Yi)×L 2(W). If it vanishes on the dense product dictionary Φ i,n ×Ψn,
+it vanishes on all ofL 2(Yi)×L 2(W), and therefore on all bounded measurable (ϕ, ψ). Lemma C.2
+then impliesY i ⊥ ⊥W|G i.
+RemarkC.6 (No cross-unit independence is used).The equivalence in Lemmas C.2 and C.5 is unit-
+level. It concerns the joint law of (Y i, W, Gi) under the assignment designD n for fixed (i, n). It
+does not requireY i andY j, or the moment kernels for different units, to be independent. Cross-unit
+dependence affects the variance and limiting distribution of averaged moments, not the validity of
+the unit-level moment characterization.△
+C.2 Averaged product residualized moment space
+Lemma C.2 gives a unit-level equivalence. The GMM estimator uses averaged versions of these
+unit-level restrictions. For an admissible pair (ϕ, ψ), define
+ηϕ,ψ,i,n(θ) :=ϕ(Y i)Ri,θψ(W) =ϕ(Y i){ψ(W)−E[ψ(W)|G i,θ]}.
+The corresponding averaged product residualized moment is
+ηϕ,ψ,n(θ) := 1
+Nn
+X
+i∈Un
+ηϕ,ψ,i,n(θ).
+63
+
+--- PAGE 64 ---
+Atθ=θ 0, unit-level exposure sufficiency implies
+E[ηϕ,ψ,i,n(θ0)] = 0 for everyi,
+and hence
+E[ηϕ,ψ,n(θ0)] = 0.
+LetH 0 denote the linear span of averaged product residualized moment directions evaluated at
+θ0. A generic directionη∈ H 0 is generated by finite linear combinations
+ηi,n =
+RX
+r=1
+arϕr(Yi)Ri,θ0ψr(W),
+with experiment-level average
+ηn = 1
+Nn
+X
+i∈Un
+ηi,n.
+For two such directionsη, ξ, define the design-based asymptotic covariance bilinear form
+Ω(η, ξ) := lim
+n→∞
+Nn Cov(ηn, ξn),
+whenever the limit exists. Write
+∥η∥2
+Ω := Ω(η, η).
+Assumption C.7(Asymptotic covariance Hilbert space).The following conditions hold.
+1. For everyη, ξ∈ H 0, the limitΩ(η, ξ)exists and is finite.
+2.Ωis symmetric and positive semidefinite onH 0.
+3. After quotienting out zero-variance directions
+NΩ :={η∈ H 0 :∥η∥ Ω = 0},
+the completion ofH 0/NΩ under∥ · ∥ Ω is a Hilbert space, denoted
+(H,⟨·,·⟩ Ω).
+The covariance Ω is the covariance of averaged design-based moments. It contains all cross-unit
+covariance terms:
+Nn Var(ηn) = 1
+Nn
+X
+i∈Un
+X
+j∈Un
+Cov(ηi,n, ηj,n).
+64
+
+--- PAGE 65 ---
+Thus cross-unit dependence is not ruled out. It is summarized by the asymptotic covariance metric
+and handled by the LLN, CLT, and graph-HAC conditions in Section 3.
+C.3 Oracle moment for scalar exposure parameters
+This subsection treats the scalar caseθ 0 ∈R. The vector case is given in Appendix C.5.
+For a directionη∈ H, letη n(θ) denote the corresponding averaged product residualized moment
+at candidate parameterθ, and define the population mean map
+µη(θ) := lim
+n→∞
+E[ηn(θ)],
+whenever the limit exists. At the true value,
+µη(θ0) = 0.
+Define the local derivative functional
+G(η) := ∂
+∂θ µη(θ)
+
+θ=θ0
+.
+Forη∈ H 0, the span of averaged product residualized moment directions introduced above,η n(θ)
+is the corresponding finite linear combination of sample moments andµ η(θ) is defined directly.
+We call these thefeasibledirections: each is a moment an analyst can actually form and set to
+zero at any candidateθ. A generalη∈ His an Ω-norm limit of elements ofH 0 and need not
+come with a canonical finite-sample moment path away fromθ 0, nor therefore with an associated
+estimator. Accordingly, off-θ 0 objects such asµ η(θ) and the just-identified estimator of part 3
+below are defined only onH 0, and parts 1 and 3 of Assumption C.8 are imposed only there. Part 2,
+the boundedness ofG, is imposed on all ofH; it is what extendsGfromH 0 toHby continuity
+and delivers the Riesz representer below. The distinction matters because the two halves of the
+efficiency argument have different requirements: reading a ratio∥η∥ 2
+Ω/G(η)2 as the asymptotic
+variance of an estimator requires a moment path, whereas bounding that ratio below is a statement
+about the norm geometry ofHand requires none.
+Assumption C.8(Local regularity).The following conditions hold.
+1.Differentiability on feasible directions.For everyη∈ H 0, the mapθ7→µ η(θ)is differen-
+tiable in a neighborhood ofθ 0, with derivativeG(η)atθ 0.
+2.Boundedness on the completion.The mapG:H 0 →Ris bounded under theΩ-norm. That
+is, there existsC G <∞such that
+|G(η)| ≤C G∥η∥Ω for allη∈ H 0,
+65
+
+--- PAGE 66 ---
+andGis understood to be extended to all ofHas the unique continuous linear extension this
+bound provides. In particularGvanishes on the null directionsN Ω of Assumption C.7, so
+passing to the quotient is harmless and anyηwithG(η)̸= 0has∥η∥ Ω >0.
+3.Local expansion on feasible directions.For everyη∈ H 0 withG(η)̸= 0, the just-identified
+estimator based on
+ηn(θ) = 0
+admits the local expansion
+p
+Nn(ˆθη,n −θ 0) =−
+√Nnηn(θ0)
+G(η) +o p(1),
+and p
+Nnηn(θ0)⇒ N(0,∥η∥ 2
+Ω).
+4.Nonzero information.The derivative functional does not vanish identically onH: there
+existsη∈ HwithG(η)̸= 0. SinceH 0 is dense inHandGis continuous, this holds if and only
+ifG(η)̸= 0for some feasibleη∈ H 0, so the condition can be assessed on directions the analyst
+can form. Equivalently, via the Riesz representation below,∥η ⋆∥Ω >0, so thatV ⋆ = 1/∥η⋆∥2
+Ω is
+finite and the infimum in Theorem C.11 runs over a nonempty set. If insteadG≡0, the exposure
+parameter is unidentified at first order by this moment class and no √Nn-consistent estimator
+built from it exists; empirically this corresponds to a flat GMM criterion (weak identification).
+Lemma C.9(Variance of a scalar moment direction).Under Assumptions C.7 and C.8, the asymp-
+totic variance of the just-identified estimator based on a feasible scalar directionη∈ H 0 with
+G(η)̸= 0is
+V(η) = ∥η∥2
+Ω
+G(η)2 .
+Proof.The expansion in Assumption C.8 gives
+p
+Nn(ˆθη,n −θ 0) =−
+√Nnηn(θ0)
+G(η) +o p(1).
+Since p
+Nnηn(θ0)⇒ N(0,∥η∥ 2
+Ω),
+the continuous mapping theorem implies
+p
+Nn(ˆθη,n −θ 0)⇒ N
+
+0, ∥η∥2
+Ω
+G(η)2
+
+.
+66
+
+--- PAGE 67 ---
+By Assumption C.8,Gis a bounded linear functional onH. The Riesz representation theorem
+therefore implies that there exists a unique elementη ⋆ ∈ Hsuch that
+G(η) =⟨η ⋆, η⟩Ω for allη∈ H.
+We callη ⋆ the oracle product residualized moment.
+Lemma C.10(Cauchy–Schwarz lower bound).Suppose Assumptions C.7 and C.8 hold.
+(i) (Geometry.)For everyη∈ HwithG(η)̸= 0,
+∥η∥2
+Ω
+G(η)2 ≥ 1
+∥η⋆∥2
+Ω
+,
+with equality if and only ifηis proportional toη ⋆.
+(ii) (Variance reading.)If in additionη∈ H 0, the left-hand side is the asymptotic varianceV(η)
+of the associated just-identified estimator, by Lemma C.9, soV(η)≥1/∥η ⋆∥2
+Ω.
+Proof.Part (i). The ratio is well defined for suchηbecauseG(η)̸= 0 forces∥η∥ Ω >0 by the
+boundedness in Assumption C.8. By the Riesz representation,
+G(η)2 =⟨η ⋆, η⟩2
+Ω.
+By Cauchy–Schwarz,
+⟨η⋆, η⟩2
+Ω ≤ ∥η ⋆∥2
+Ω∥η∥2
+Ω.
+Rearranging gives
+∥η∥2
+Ω
+G(η)2 ≥ 1
+∥η⋆∥2
+Ω
+.
+The equality condition is the equality condition in Cauchy–Schwarz:ηmust be proportional to
+η⋆ inH. Part (ii) is then immediate from Lemma C.9, which suppliesV(η) =∥η∥ 2
+Ω/G(η)2 for
+η∈ H 0.
+Theorem C.11(Oracle variance bound).Suppose Assumptions C.1, C.7, and C.8 hold. Among
+scalar directions in the averaged product residualized moment spaceH, the oracle variance is
+V ⋆ := 1
+∥η⋆∥2
+Ω
+.
+Equivalently,
+inf
+η∈H:G(η)̸=0
+∥η∥2
+Ω
+G(η)2 =V ⋆,
+67
+
+--- PAGE 68 ---
+and the infimum is attained withinHexactly at the directions proportional toη ⋆. For feasible
+directionsη∈ H 0 the ratio is the asymptotic variance of the corresponding just-identified estimator,
+soV ⋆ is a lower bound on the asymptotic variance of every estimator in the class. The infimum
+overH 0 alone has the same value, but need not be attained there.
+Proof.The moment class is generated by the product residualized moments characterized in Lemma C.2.
+Within the Hilbert spaceHinduced by the asymptotic covariance metric, Lemma C.10(i) gives the
+sharp lower bound and the equality condition, and part (ii) identifies the ratio with the asymptotic
+variance forη∈ H 0. That the two infima agree follows from density ofH 0 inHtogether with
+continuity ofη7→ ∥η∥ 2
+Ω/G(η)2 at anyηwithG(η)̸= 0.
+RemarkC.12 (Attainment and feasibility of the oracle direction).The representerη ⋆ is an element
+of the completionHand need not lie in the spanH 0. When it does not, no just-identified estimator
+in the class attainsV ⋆ exactly, and the content of Theorem C.11 is thatV ⋆ is a sharp lower bound
+approached, but not achieved, along feasible directions. This is what the sieve construction of
+Appendix C.4 supplies: under the density condition in Assumption C.16 (S1), the finite-dictionary
+representersη ⋆
+M, which lie in the spanH M ⊆ H 0 of the firstMdictionary directions, are feasible
+by construction and satisfy∥η ⋆
+M −η ⋆∥Ω →0, so thatV ⋆
+M →V ⋆ by Theorem C.17. Efficiency in
+this paper is therefore attainment in the limit along a growing dictionary of feasible moments, not
+exact attainment at a single moment, except in the special case whereη ⋆ happens to be a finite
+combination of dictionary directions.△
+RemarkC.13 (Within-class optimality).Theorem C.11 is a within-class optimality result. It does
+not characterize the globally efficient estimator under all implications of exposure sufficiency. In
+particular, exposure sufficiency also implies multi-unit restrictions involving (Yi, Yj), joint exposure
+vectors, and more complicated kernels. The oracle varianceV ⋆ is the efficiency bound for the
+averaged product residualized moment spaceH, which is the space used by the proposed GMM
+procedure. △
+RemarkC.14 (Instrument-only moments as a subspace).The instrument-only moments correspond
+to the special case
+ϕ(Yi) =Y i, ψ(W) =h(W).
+Their span is generally a strict subspace ofH. Theorem C.11 optimizes over the larger product
+residualized moment space generated by arbitrary admissible (ϕ, ψ).△
+C.4 Finite dictionaries and sieve GMM
+The oracle momentη ⋆ is generally infinite-dimensional. The feasible estimator approximates it
+using a finite dictionary of product residualized moments.
+68
+
+--- PAGE 69 ---
+Let
+{(ϕm, ψm) :m≥1}
+be a countable dictionary of outcome transformations and design-side functions. For eachm, define
+ηm,n(θ) := 1
+Nn
+X
+i∈Un
+ϕm(Yi){ψ m(W)−E[ψ m(W)|G i,θ]}.
+For a finite dictionary of sizeM, stack
+η(M)
+n (θ) := (η1,n(θ), . . . , ηM,n(θ))⊤ .
+Let
+G(M) := (G(η1), . . . , G(ηM))⊤ ,Ω (M) := (Ω(ηk, ηℓ))k,ℓ≤M .
+Lemma C.15(Finite-dimensional oracle).SupposeΩ (M) is nonsingular andG (M) ̸= 0. For scalar
+θ0, the optimal linear combination
+a⊤η(M)
+n (θ)
+solves
+min
+a:a⊤G(M) ̸=0
+a⊤Ω(M) a
+(a⊤G(M))2 .
+The solution is proportional to
+a⋆
+M = Ω(M)−1 G(M) ,
+and the finite-dictionary oracle variance is
+V ⋆
+M = 1
+G(M)⊤Ω(M)−1 G(M) .
+Proof.Normalizea ⊤G(M) = 1. The problem becomes
+min
+a
+a⊤Ω(M) asubject toa ⊤G(M) = 1.
+The Lagrangian first-order condition gives
+2Ω(M) a−λG (M) = 0,
+so
+a∝Ω (M)−1 G(M) .
+69
+
+--- PAGE 70 ---
+Substituting the normalized solution yields
+V ⋆
+M =
+n
+G(M)⊤Ω(M)−1 G(M)
+o−1
+.
+Equivalently, define the finite-dimensional Riesz representer
+η⋆
+M :=
+MX
+m=1
+γ⋆
+M,mηm, γ ⋆
+M := Ω(M)−1 G(M) .
+Thenη ⋆
+M is the Riesz representer ofGrestricted to
+HM := span{η1, . . . , ηM }.
+The feasible finite-dictionary GMM estimator is
+ˆθM,n ∈argmin
+θ∈Θ
+η(M)
+n (θ)⊤ΛM,nη(M)
+n (θ),
+where the efficient choice is
+ΛM,n =bΩ−1
+M,n.
+This yields the familiar two-step procedure: first obtain a preliminary consistent estimate ofθ 0,
+then estimate the asymptotic covariance matrix of the stacked product residualized moments, and
+finally re-estimate using the inverse covariance weight.
+We next state a high-level sieve condition under which the finite dictionary approximates the
+oracle moment.
+Assumption C.16(Dense product-moment sieve).LetM n → ∞. The following conditions hold.
+(S1) The linear span of{η m :m≥1}is dense inHunder theΩ-norm:
+[
+M≥1
+span{η1, . . . , ηM }
+∥·∥Ω
+=H.
+In continuous-support cases, this dictionary may be constructed from countable dense classes of
+outcome transformations and design-side functions as in Assumption C.4.
+(S2) For each fixedM, the finite-dimensional GMM regularity conditions of Section 3 hold for
+η(M)
+n (θ), with derivativeG (M) and covarianceΩ (M).25
+25Throughout,G (M) :=
+ 
+G(η1), . . . , G(ηM)
+⊤
+is the restriction of the limiting derivative functionalGtoH M, so
+70
+
+--- PAGE 71 ---
+(S3) AlongM n → ∞, the growing-dimensional CLT, local linearization, and stochastic equicontinuity
+errors are sufficiently uniform that the usual sieve GMM expansion holds:
+p
+Nn(ˆθMn,n −θ 0) =−
+n
+G(Mn)⊤Ω(Mn)−1G(Mn)
+o−1
+×G (Mn)⊤Ω(Mn)−1p
+Nnη(Mn)
+n (θ0) +o p(1).
+In addition, the standardized leading term satisfies a scalar triangular-array CLT alongM n:
+(V ⋆
+Mn)−1/2
+n
+G(Mn)⊤Ω(Mn)−1G(Mn)
+o−1
+G(Mn)⊤Ω(Mn)−1p
+Nn η(Mn)
+n (θ0)⇒ N(0,1);
+that is, the efficient directionη ⋆
+Mn itself obeys the affinity-set CLT asM n grows. Convergence
+of its variance alone does not imply this.
+(S4) Ifb n := max i∈Un |Ai|denotes the maximal affinity-set size, the sieve dimension grows slowly
+relative to the effective design-based sample size:
+M 2
+nbn
+Nn
+→0.
+(S5) The graph-HAC covariance estimator is consistent in operator norm on the sieve:
+∥bΩMn,n −Ω (Mn)∥op =o p(1),
+and the eigenvalues ofΩ (Mn) are bounded away from zero on the relevant sieve subspaces.
+(S6) If the conditional expectations
+E[ψm(W)|G i,θ]
+are estimated by simulation, regression, or smoothing rather than computed exactly, the resulting
+first-step residualization error iso p(N −1/2
+n )after projection by the sieve GMM weights.
+Theorem C.17(Sieve approximation of the oracle moment).Suppose Assumptions C.7, C.8, and
+C.16 hold. Then:
+(i)The finite-dimensional Riesz representers converge to the oracle representer:
+∥η⋆
+M −η ⋆∥Ω →0.
+Consequently,
+V ⋆
+M →V ⋆.
+that bothG (M) and Ω (M) are limiting objects in the triangular array. The finite-nexpression∂ θE[η(M)
+n (θ)]
+
+θ=θ0
+recovers the same quantity under the interchange condition∂ θ limn E[η(M)
+n (θ)] = limn ∂θE[η(M)
+n (θ)] atθ 0, which holds
+when the finite-nderivatives converge uniformly nearθ 0; we maintain this whenever the finite-nform is used.
+71
+
+--- PAGE 72 ---
+(ii)For any sequenceM n → ∞satisfying Assumption C.16, the feasible sieve GMM estimator
+satisfies p
+Nn(ˆθMn,n −θ 0)⇒ N(0, V ⋆).
+Thus dense-dictionary sieve GMM attains the oracle variance for the averaged product residualized
+moment spaceH.
+Proof.For part (i), Assumption C.16(S1) implies that the orthogonal projection ofη ⋆ ontoH M
+converges toη ⋆ in∥ · ∥Ω. The finite-dimensional Riesz representer onH M is preciselyη ⋆
+M. Therefore
+∥η⋆
+M −η ⋆∥Ω →0.
+Since
+V ⋆
+M = 1
+∥η⋆
+M ∥2
+Ω
+andV ⋆ = 1
+∥η⋆∥2
+Ω
+,
+the variance convergence follows by continuity, provided∥η ⋆∥Ω >0.
+For part (ii), Assumption C.16(S2)–(S6) gives the sieve GMM expansion
+p
+Nn(ˆθMn,n −θ 0) =−
+n
+G(Mn)⊤Ω(Mn)−1G(Mn)
+o−1
+×G (Mn)⊤Ω(Mn)−1p
+Nnη(Mn)
+n (θ0) +o p(1).
+By the scalar triangular-array CLT required in (S3), the leading term standardized by (V ⋆
+Mn)1/2
+converges in distribution toN(0,1). Part (i) givesV ⋆
+Mn →V ⋆, andV ⋆ >0 by the nonzero-
+information condition in Assumption C.8, so Slutsky’s theorem yields√Nn(ˆθMn,n−θ0)⇒ N(0, V ⋆).
+Convergence of the variance alone would not deliver the normal limit along the growing sieve; the
+CLT for the efficient direction is what closes the argument.
+RemarkC.18 (Primitive sufficient conditions).Assumption C.16 is high-level. It is implied by the
+same primitive ingredients used in Section 3: an affinity-set LLN and CLT for the stacked sieve
+moments, local derivative control nearθ 0, stochastic equicontinuity of the centered process, and
+operator-norm consistency of the graph-HAC covariance estimator. The additional condition
+M 2
+nbn
+Nn
+→0
+requires the squared sieve dimension to grow more slowly than the effective sample sizeN n/bn
+under affinity-set dependence.△
+72
+
+--- PAGE 73 ---
+C.5 Vector parameters and optimal linear aggregation
+The previous subsections stated the oracle geometry for scalarθ 0. Suppose now that
+θ0 ∈R p.
+For each coordinatej= 1, . . . , p, define the coordinate derivative functional
+Gj(η) := ∂
+∂θj
+µη(θ)
+
+θ=θ0
+.
+Assume eachG j is a bounded linear functional onH. By Riesz, there exist unique elements
+s⋆
+1, . . . , s⋆
+p ∈ H
+such that
+Gj(η) =⟨s ⋆
+j , η⟩Ω for allη∈ H.
+Define the oracle information matrix
+I ⋆ :=
+ 
+⟨s⋆
+j , s⋆
+k⟩Ω
+p
+j,k=1 .
+IfI ⋆ is nonsingular, the vector-parameter oracle variance is
+V ⋆ = (I ⋆)−1.
+For a finite dictionary of sizeM, let
+GM := ∂
+∂θ E[η(M)
+n (θ)]
+
+θ=θ0
+∈R M×p ,
+and let Ω M ∈R M×M denote the asymptotic covariance matrix of the stacked moments. The
+finite-dimensional optimal GMM variance is
+V ⋆
+M = (G⊤
+MΩ−1
+M GM)−1.
+Equivalently, theM-dimensional moment vector can be compressed without first-order loss to the
+p-dimensional optimal moment
+G⊤
+MΩ−1
+M η(M)
+n (θ).
+The feasible two-step GMM estimator uses bΩ−1
+M in place of Ω −1
+M . Under the vector analogue of
+73
+
+--- PAGE 74 ---
+Assumption C.16,
+V ⋆
+M →V ⋆,
+and feasible sieve GMM attains the vector oracle variance
+V ⋆ = (I ⋆)−1.
+RemarkC.19 (Discrete or non-smooth exposure parameters).The Riesz derivative argument is a
+local regularity result. It applies most directly to smooth exposure parameters, such as decay rates
+in smooth spatial kernels. For finite grids of radii or networkK-hop exposure parameters, the
+relevant object is generally not the local derivative
+∂θµη(θ0).
+Those cases should be treated as finite-grid or nonregular selection problems. The product resid-
+ualized moment class remains the source of valid design-based moments, but the oracle derivative
+geometry in this appendix should be interpreted as applying to the regular smooth case.△
+D Details and Proofs for Section 5
+This appendix formalizes the two-step inference problem in Section 5. The main text states the
+regular continuous case. Here we also allow a finite-grid exposure component and show that, after it
+has been selected consistently, the remaining two-step estimator is a finite-dimensional Z-estimator
+based on a stacked map. The first block is theprojectedStage 1 GMM equation.
+Throughout, write the exposure-map parameter as
+θ= (ϑ, ρ),
+whereϑis a finite-grid component, possibly absent, andρ∈R pρ is a regular continuous compo-
+nent, possibly absent. Under Corollary B.16, assume that the finite-grid component is selected
+consistently:
+Pr(ˆϑn =ϑ 0)→1.
+All statements below are conditional on the selected classϑ 0. If there is no finite-grid component,
+simply dropϑand readρ=θ. If there is no regular continuous first-stage component, the first
+block below is absent.
+74
+
+--- PAGE 75 ---
+D.1 Two-step estimator as a stacked Z-estimator
+Stage 1.Let Ψ 1i(ρ)∈R q1 denote the Stage 1 design-based moment vector conditional onϑ 0,
+with sample average
+¯Ψ1,n(ρ) := 1
+Nn
+X
+i∈Un
+Ψ1i(ρ).
+Let
+µ1(ρ) := lim
+n→∞
+1
+Nn
+X
+i∈Un
+E[Ψ1i(ρ)]
+denote the deterministic limit of the Stage 1 moment map, and define
+G1 := ∂µ1(ρ0)
+∂ρ⊤ ,
+with the derivative understood in the mean-differentiability sense of Assumption B.12. The Stage 1
+GMM estimator for the regular component satisfies the projected estimating equation
+G⊤
+1 Λ1,n ¯Ψ1,n(ˆρn) =o p(N −1/2
+n ),(D.1)
+where Λ1,n is the Stage 1 weight matrix. Equation (D.1) is the same projected GMM/Z condition
+used in Theorem 3.5. When the Stage 1 moments are exactly identified, it reduces to the usual
+moment equation up to a nonsingular transformation.
+Stage 2.For the linear exposure–response projection, define
+gi(ρ) :=g(W;X i, ϑ0, ρ), Z i(ρ) :=
+ 
+1
+gi(ρ)
+!
+.
+The Stage 2 target (α 0, β0) is defined by the population moment condition
+lim
+n→∞
+1
+Nn
+X
+i∈Un
+E
+h
+Zi(ρ0){Yi −α 0 −β ⊤
+0 gi(ρ0)}
+i
+= 0.(D.2)
+The linear conditional mean restriction
+E[Yi |g i(ρ0)] =α 0 +β ⊤
+0 gi(ρ0)
+is a sufficient condition for (D.2), but is not required for the projection interpretation. Define the
+Stage 2 moment vector
+Ψ2i(ρ, α, β) :=Z i(ρ){Yi −α−β ⊤gi(ρ)} ∈R 1+k,(D.3)
+75
+
+--- PAGE 76 ---
+and its sample average
+¯Ψ2,n(ρ, α, β) := 1
+Nn
+X
+i∈Un
+Ψ2i(ρ, α, β).
+The Stage 2 estimator solves
+¯Ψ2,n(ˆρn,ˆαn, ˆβn) =o p(N −1/2
+n ).(D.4)
+Stacked map.Collect the regular parameters into
+ζ:= (ρ ⊤, α, β⊤)⊤, ζ 0 := (ρ⊤
+0 , α0, β⊤
+0 )⊤.
+Define the stacked estimating map
+¯Φn(ζ) :=
+ 
+G⊤
+1 Λ1,n ¯Ψ1,n(ρ)
+¯Ψ2,n(ρ, α, β)
+!
+.(D.5)
+Equations (D.1) and (D.4) imply
+¯Φn(ˆζn) =o p(N −1/2
+n ), ˆζn := (ˆρ⊤
+n ,ˆαn, ˆβ⊤
+n )⊤.
+Thus the two-step estimator is a Z-estimator for the regular parameter vectorζ.
+D.2 Joint asymptotic normality
+Let Φ(ζ) denote the deterministic limit of (D.5):
+Φ(ζ) :=
+ 
+G⊤
+1 Λ1µ1(ρ)
+µ2(ρ, α, β)
+!
+,
+where Λ1,n
+p
+→Λ 1 and
+µ2(ρ, α, β) := lim
+n→∞
+1
+Nn
+X
+i∈Un
+E[Ψ2i(ρ, α, β)].
+By construction, Φ(ζ 0) = 0.
+Assumption D.1(Two-step high-level regularity).Conditional on the selected finite-grid exposure
+componentϑ 0, the following conditions hold.
+(S1)Consistency and approximate zero.The estimator satisfies ˆζn
+p
+→ζ 0 and
+¯Φn(ˆζn) =o p(N −1/2
+n ).
+76
+
+--- PAGE 77 ---
+(S2)Mean differentiability and rank.The mapΦis mean-differentiable atζ 0:
+Φ(ζ) =A(ζ−ζ 0) +r(ζ),∥r(ζ)∥=o(∥ζ−ζ 0∥),
+for a nonsingular matrixA.
+(S3)Joint affinity-set CLT.The stacked centered map satisfies
+p
+Nn{¯Φn(ζ0)−Φ(ζ 0)} ⇒ N(0,Ω Φ),
+for a finite positive definite matrixΩ Φ. This condition should be verified by applying the
+affinity-set CLT to the stacked array underlying(D.5); equivalently, the CLT must hold for
+every fixed linear combination of the Stage 1 projected moments and Stage 2 moments.
+(S4)Local stochastic expansion.For every sequenceζ n
+p
+→ζ 0,
+p
+Nn
+h
+{¯Φn(ζn)−Φ(ζ n)} − { ¯Φn(ζ0)−Φ(ζ 0)}
+i
+=o p
+ 
+1 +
+p
+Nn ∥ζn −ζ 0∥
+
+.
+Assumption D.1 is the exact analogue of the high-level Z-estimator assumptions used in The-
+orem 3.5, applied to the stacked Stage 1/Stage 2 map. Smooth exposure-response systems can
+verify it using derivative-level LLNs. Non-smooth exposure maps, such as rings, can verify it
+through mean differentiability of Φ and stochastic equicontinuity of the centered stacked process;
+no sample-path differentiability of the ring exposure is required.
+Theorem D.2(Joint asymptotic normality for the two-step estimator).Suppose Assumption D.1
+holds. Then, under the designsD n,
+p
+Nn(ˆζn −ζ 0)⇒ N(0, V ζ), V ζ :=A −1ΩΦA−⊤.
+Proof.We apply Lemma B.14 to the stacked Stage 1/Stage 2 map, takingM n := ¯Φn,M:= Φ,
+and parameterζ. Its hypotheses are supplied by Assumption D.1: consistency ˆζn
+p
+→ζ 0 and the
+approximate-zero condition ¯Φn(ˆζn) =o p(N −1/2
+n ) from (S1); Φ(ζ 0) = 0 (the population moment
+vanishes at the truth) with nonsingular derivativeAfrom (S2); the joint CLT √Nn{¯Φn(ζ0)−
+Φ(ζ0)} ⇒ N(0,Ω Φ) from (S3); and the local stochastic expansion condition (Z) from (S4). Because
+condition (Z) normalizes the remainder by 1 + √Nn∥ζn −ζ 0∥, the lemma delivers the √Nn rate
+rather than presupposing it, and yields
+p
+Nn(ˆζn −ζ 0) =−A −1p
+Nn{¯Φn(ζ0)−Φ(ζ 0)}+o p(1).
+The joint CLT in (S3) and Slutsky’s theorem then give √Nn(ˆζn −ζ 0)⇒ N(0, A −1ΩΦA−⊤) =
+77
+
+--- PAGE 78 ---
+N(0, V ζ).
+RemarkD.3 (Discrete exposure components).The theorem is stated after conditioning on a con-
+sistently selected finite-grid exposure component. Ifθ= (ϑ, ρ) and Pr( ˆϑn =ϑ 0)→1, then
+ˆζn(ˆϑn) = ˆζn(ϑ0) w.p.a.1.
+Consequently, finite-grid selection has no first-order contribution to the distribution in Theo-
+rem D.2. This statement relies on fixed-gap selection consistency; it is not a claim about nonregular
+post-selection inference under ties or local-to-zero gaps.△
+D.3 Inference for the exposure–response coefficientβ 0
+LetK β denote the selection matrix that extracts theβcoordinates fromζ:
+β=K βζ, β 0 =K βζ0, ˆβn =K β ˆζn.
+Define
+Vβ :=K βVζK⊤
+β .
+Corollary D.4(Asymptotic normality of ˆβn).Under the assumptions of Theorem D.2,
+p
+Nn( ˆβn −β 0)⇒ N(0, V β).
+Proof.This follows immediately from Theorem D.2 and the continuous mapping theorem applied
+to the linear mapζ7→K βζ.
+In practice, estimateAand Ω Φ by plug-in analogues evaluated at ˆζn. The covariance ΩΦ should
+be estimated using the same affinity-set or graph-HAC logic as in Section 3, applied to the stacked
+moment contributions underlying (D.5): the projected Stage 1 contributionG ⊤
+1 Λ1Ψ1i(ˆρn) and the
+Stage 2 contribution Ψ 2i(ˆρn,ˆαn, ˆβn). The resulting sandwich estimate
+ˆVζ = ˆA−1 ˆΩΦ ˆA−⊤
+can be projected to obtain
+ˆVβ =K β ˆVζK⊤
+β .
+This delivers design-based inference for the Stage 2 exposure–response coefficients that accounts for
+regular continuous first-stage exposure uncertainty and for the same spatial/network dependence
+structure used in Stage 1.
+78
+
+--- PAGE 79 ---
+RemarkD.5 (Conservativeness of the Stage-2 variance estimator).Writeu i :=Y i −α 0 −β ⊤
+0 gi(ρ0)
+and
+µ2,i :=E[Ψ 2i(ζ0)] =E[Z i(ρ0)u i].
+The projection target (D.2) imposes only 1
+Nn
+P
+i µ2,i →0. The individualµ 2,i need not vanish, and
+they are not identified from the realized assignment: each is a design expectation involving eYi at
+exposure values other than the realized one. The covariance Ω Φ in Assumption D.1 is built from
+contributions centered at these unit-level means, whereas the feasible ˆΩΦ described above centers
+at the common sample mean, the only centering available. Evaluated atζ 0, withA i the affinity set
+of uniti(Section 3.2; not the JacobianA),
+E[ˆΩΦ] = ΩΦ + 1
+Nn
+X
+i
+X
+j∈Ai
+ 
+0 0
+0µ 2,iµ⊤
+2,j
+!
+| {z }
+=:B n
++o(1);
+the Stage-1 block and the cross block are unbiased because the Stage-1 unit means vanish identically
+(Corollary 2.7), and evaluating at ˆζn instead ofζ 0 adds ano p(1) term under Assumption D.1 without
+affecting the decomposition.
+The sign ofB n determines sharpness. The own-index terms 1
+Nn
+P
+i µ2,iµ⊤
+2,i are positive semidef-
+inite, so if the affinity sets are singletons or block-diagonal,B n ⪰0; sinceV ζ =A −1ΩΦA−⊤ and
+Vβ =K βVζK⊤
+β are congruence transformations, which preserve the positive semidefinite order, ˆVβ
+then weakly overstatesV β and confidence intervals forβ 0 are asymptotically valid but conservative,
+with no assumption of correct specification. If the exposure–response is correctly specified unit
+by unit, soµ 2,i = 0 for everyi, thenB n = 0 and inference is exact. Under general overlapping
+dependence the cross termsµ 2,iµ⊤
+2,j are not sign-definite; a sufficient condition restoringB n ⪰0
+is local alignment of the unit-level means, P
+i
+P
+j∈Ai(c⊤µ2,i)(c⊤µ2,j)≥0 for every directionc, as
+when misspecification varies smoothly relative to the affinity radius. Absent such structure we
+confine the conservativeness statement to the block-diagonal case.
+△
+E Additional Application Details
+The appendix follows the order of the main applications. We first report additional implementation
+details for the Muralidharan et al. (2023) application, where the design-based procedure largely
+validates the original exposure scale. We then report additional results for the Egger et al. (2022)
+application, where the exposure choice is more consequential for the downstream IV estimates and
+multiplier accounting.
+79
+
+--- PAGE 80 ---
+E.1 Additional Stage-1 implementation details for Muralidharan et al. (2023)
+This appendix provides further details on the Stage 1 exposure-mapping exercise for Muralidharan
+et al. (2023) used in the main text.
+Throughout, we work with the same GP-level outcomes as in the main text: NREGS earn-
+ings, total income, and wage-labor income. We use the population-weighted village-level ring
+exposure measure and village-consistent annulus average instruments (“bands” specification), the
+strict placebo design, and the two-step fixed-weight GMM criterion searched over the 0.1 km grid
+R={0.1,0.2, . . . ,30.0}km. The baseline in the main text uses 3 km-wide bands up tor max = 20
+km (M= 7 moments).
+Two-step criterion and Wald interval.Let ˆµ(θ) denote the stacked design-based moment
+vector for outcomeYat radiusθ, computed using the mandal-level randomization. The Stage 1
+estimator minimizes a two-step fixed-weight criterion. In the first step we form the identity-weighted
+pilot criterion
+bQ1(θ) := ˆµ(θ) ⊤ˆµ(θ), ˆθ1 := arg min
+θ∈R
+bQ1(θ).
+In the second step we estimate the weighting matrix at the pilot radius and hold it fixed: cW0 :=
+bS( ˆθ1)−1, where bS(θ) is the design-based covariance estimator for the moment vector at radiusθ.
+The radius estimator is then
+ˆθ:= arg min
+θ∈R
+bQ2(θ), bQ2(θ) := ˆµ(θ) ⊤cW0ˆµ(θ).
+The plotted objective in all figures is bQ2(θ)/nfor scale comparability; this rescaling does not affect
+the minimizing radius.
+Regarding inference: because physical interaction distances vary continuously and the 0.1 km
+grid step is fine, the asymptotic normality result of Section 3 applies, and we report a Wald-style
+standard error using a finite-difference Jacobian evaluated at the neighboring grid points,
+bse(ˆθ) =
+h
+n
+
+ˆG⊤cW0 ˆG
+i−1/2
+, ˆG:= ˆµ(ˆθ+h)−ˆµ( ˆθ−h)
+2h ,
+whereh= 0.1 km is the grid step. The 95% Wald interval is ˆθ±1.96·bse( ˆθ). One regularity
+point is worth making explicit here. Thesamplecriterion in the ring radius is piecewise constant,
+with jumps at observed inter-unit distances, so the Wald interval is justified by smoothness of the
+population(design-expectation) moment mapθ7→µ(θ) near ˆθ, not by the fineness of the grid; a fine
+grid only ensures that the finite-difference Jacobian approximates the population derivative well.
+Where that population smoothness is in doubt (e.g., the flatter total- and wage-income objectives),
+the exercise is better read as finite-grid model selection over the candidate radii, and we treat the
+80
+
+--- PAGE 81 ---
+reported Wald intervals as approximate in those cases.
+The fixed-radius overidentification diagnostic at the selected radius is
+J( ˆθ) :=nˆµ( ˆθ)⊤bS( ˆθ)−1ˆµ(ˆθ),
+which, because it is evaluated at the radiusˆθchosen by the criterion, is under the null asymptotically
+χ2 with df = rank
+ bS( ˆθ)
+
+−dimθdegrees of freedom (dimθ= 1 for the scalar radius), i.e., theM−1
+convention used in the table notes. A largep-value suggests that the selected radius is consistent
+with the moment restrictions; it does not imply that a wide range of radii are equally plausible.
+E.1.1 Randomization design and placebo assignments
+Our Stage 1 procedure relies only on the mandal-level randomization of the Smartcard rollout.
+Muralidharan et al. (2023) randomized 296 mandals in eight districts into multiple implementation
+waves, stratifying by district and by a principal component of mandal socio-economic characteris-
+tics. The randomization was conducted in two batches (six “v5” districts and two “v6” districts)
+using R scripts that (i) construct the first principal component of stratification variables within
+each district, (ii) sort mandals by district, revenue division, and this principal component, (iii)
+assign mandals cyclically to a set of intermediate waves (seven waves in the first batch and ten
+waves in the second), (iv) permute wave labels within revenue-division×wave-cell groups, and
+(v) collapse these intermediate waves into treatment, buffer, and control groups while enforcing
+district-specific targets for the number of treatment and control mandals.
+To align our placebo assignments with this design as closely as possible, we obtained the original
+randomization scripts from the authors and implemented an analogous “strict” re-randomization
+procedure in our code. 26
+A subtle but important limitation is that the original experiment included a third, “buffer” wave
+of mandals that were scheduled to receive Smartcards after the treatment group, but no household
+surveys were conducted in these buffer mandals. As Muralidharan et al. (2023) emphasize, the
+survey data are only available for treatment and control mandals, and the timing and intensity of
+Smartcard rollout in buffer mandals are not fully observed. In Appendix B.1, they therefore treat
+buffer mandals as effectively untreated when constructing neighborhood-treatment measures, and
+show that re-weighting buffer mandals as partially treated (e.g., 10–50 percent of full intensity)
+yields qualitatively similar results and typically larger estimated total effects, suggesting that the
+baseline specification is conservative. Following the same spirit, our re-randomization scheme is
+defined over the study mandals (those with survey data andT m ∈ {0,1}) and treats the buffer
+group as a latent complement that is not part of the analysis sample. Thus our placebo assignments
+26We thank the authors for sharing the original randomization code. Our implementation follows their logic but
+operates on the replication files rather than the original merged census data.
+81
+
+--- PAGE 82 ---
+approximate the conditional randomization distribution rather than the full distribution over all
+296 mandals including the buffer wave.
+In addition to this strict placebo design, which mirrors the wave structure and district-level
+targets in the original randomization, we also consider a simpler robustness specification in which
+we re-draw treatment indicators within strata defined by district and discrete bins of the princi-
+pal component, holding fixed the number of treated mandals in each stratum. This “simplified”
+design preserves the key stratification features of the experiment but abstracts from its detailed
+wave structure. Our main results are based on the strict design; the simplified design yields quali-
+tatively similar Stage 1 radius estimates and objective values, reinforcing that our conclusions are
+driven by the core features of the mandal-level randomization rather than by fine details of the
+implementation.
+E.2 Additional results for Egger et al. (2022)
+This appendix gives the outcome-level results behind the Egger et al. application in Section 6.2.
+The main text reports the three aggregates most relevant for the multiplier discussion. Here we
+report the same selected-support IV comparison for all outcomes.
+A. Linear exposure index and IV implementation
+For each candidate supportR m = 2mkm, we use Egger et al.’s annular transfer variables to form
+the linear spillover exposure index
+g(m)
+v (W;θ m) =
+mX
+j=1
+θm,jT ¬v
+v,2(j−1)−2j (W),1 ′θm = 1.
+Stage 1 estimates the index weightsθm from the design-based exposure-sufficiency moments. Stage 2
+then keeps the Egger et al. IV outcome equation and replaces the original scalar spillover variable
+withg (m)
+v (W;bθm). Thus the appendix tables vary the spillover exposure map, but otherwise keep
+the downstream IV exercise as close as possible to the original specification.
+B. Full selected-support IV results
+Table 6 extends the main-text comparison to all outcomes. It reports the original Egger et al. IV
+estimates, the selected-support linear-index estimates, the change in point estimate and standard
+error, the selected support ˆR, and thep-value of the support test (the likelihood-ratio test of the
+full 20 km model against the restricted model that zeroes the annuli beyond ˆR) that drives the
+selection.
+The broader pattern matches the main text: recipient expenditure and asset components are
+stable, while non-recipient and income-side outcomes are more sensitive and noisier. The design-
+82
+
+--- PAGE 83 ---
+Table 6: All outcome IV components: Egger et al. vs. selected linear exposure-index estimates
+Outcome Group Egger IV Linear-index IV ∆β,∆SERSupport p-value
+Household expenditure, annualized Recipients 338.6 (100.6) 317.7 (68.4)−21.0,−32.3 6.0 0.300Non-recipients 334.7 (131.1) 220.3 (89.4)−114.4,−41.7 6.0 0.300
+Non-durable expenditure, annualized Recipients 227.2 (91.4) 223.1 (68.3)−4.2,−23.1 6.0 0.401Non-recipients 317.5 (126.9) 221.3 (79.7)−96.2,−47.2 6.0 0.401
+Food expenditure, annualized Recipients 133.8 (60.6) 85.9 (35.2)−48.0,−25.4 4.0 0.090Non-recipients 133.3 (63.7) 54.7 (27.4)−78.6,−36.2 4.0 0.090
+Temptation goods expenditure, annualized Recipients 5.9 (8.4) 7.0 (6.0) 1.1,−2.5 10.0 0.200Non-recipients -0.7 (6.8) 0.5 (3.2) 1.2,−3.6 10.0 0.200
+Durable expenditure, annualized Recipients 109.0 (26.5) 108.9 (14.7)−0.1,−11.7 4.0 0.324Non-recipients 8.4 (11.8) 2.0 (4.4)−6.4,−7.4 4.0 0.324
+Assets (non-land, non-house), net borrowing Recipients 183.4 (55.2) 177.3 (31.2)−6.1,−23.9 4.0 0.260Non-recipients 133.1 (101.3) 41.9 (45.9)−91.2,−55.5 4.0 0.260
+Housing value Recipients 477.4 (56.1) 425.4 (29.4)−51.9,−26.6 4.0 0.216Non-recipients 80.6 (231.6) -32.5 (96.4)−113.1,−135.2 4.0 0.216
+Land value Recipients 158.5 (304.3) 73.2 (156.3)−85.3,−148.0 4.0 0.080Non-recipients 544.8 (416.4) 181.1 (175.9)−363.7,−240.5 4.0 0.080
+Household income, annualized Recipients 135.7 (82.1) 97.3 (37.0)−38.4,−45.1 4.0 0.164Non-recipients 225.0 (100.1) 81.4 (42.7)−143.6,−57.3 4.0 0.164
+Net value of household transfers received, annualized Recipients -7.4 (14.5) -42.9 (45.4)−35.5,30.9 16.0 0.316Non-recipients 8.8 (16.8) -93.4 (77.8)−102.2,60.9 16.0 0.316
+Profits (ag & non-ag), annualized Recipients 35.9 (37.7) 27.4 (21.4)−8.5,−16.3 4.0 0.061Non-recipients 36.4 (46.5) 10.2 (18.7)−26.3,−27.9 4.0 0.061
+Wage earnings, annualized Recipients 73.7 (62.4) 54.7 (30.0)−19.0,−32.4 6.0 0.969Non-recipients 182.6 (90.2) 103.9 (36.9)−78.8,−53.3 6.0 0.969
+Tax paid, annualized Recipients -0.1 (2.2) 1.6 (1.6) 1.7,−0.6 20.0 1.000Non-recipients 1.7 (2.5) 0.2 (1.6)−1.5,−0.8 20.0 1.000
+Notes:Entries are IV point estimates with standard errors in parentheses. Egger IV values re-estimate the original
+2 km Table 1 specification on our replication sample (cluster standard errors); they closely match the published
+Table I values. Recipient linear-index entries report total effects; non-recipient entries report pooled spillover
+effects, both with joint delta-method standard errors at each outcome’s selected support ˆR. The Support p-value
+column reports the likelihood-ratio support-test p-value at ˆR, the diagnostic shown in the paper radius-path figures.
+83
+
+--- PAGE 84 ---
+based step does not move every coefficient, but it moves enough of the downstream accounting to
+matter.
+The selected supports in Table 6 reinforce the main-text message. The original 2 km support is
+rejected for every outcome; the selected support is most often modestly larger, commonly 4–6 km,
+with a few outcomes selecting longer supports. At the same time, the block split checks are noisy,
+so we interpret the selected supports as diagnostics for the exposure map.
+C. The radius path and the resolution of the annular instruments
+The radius-path standard errors in Figure 2 are not always increasing in the support; for household
+expenditure, the interval widens sharply at 16 km and then tightens again. This unevenness
+reflects the construction of the index rather than the strength of spillovers at those distances: the
+annular transfer variables at neighboring radii are highly collinear when the rings are narrow, so the
+estimated weights are only weakly determined at particular supports and the first-step uncertainty
+carried into the second stage is uneven rather than smoothly increasing. The reported estimates
+do not depend on this. Table 7 reports the recipient total at a common 4 km support for annular
+instrument bands of 1, 1.5, and 2 km; the point estimates move by far less than one standard error.
+Table 7: Recipient total at a common 4 km support, by instrument band width
+Annular instrument band width
+Outcome 1 km 1.5 km 2 km
+Consumption 296 (59) 296 (54) 296 (62)
+Assets 177 (31) 177 (29) 177 (33)
+Total income 97 (37) 91 (36) 97 (40)
+Notes: Recipient total effect at a fixed 4 km support, with the joint delta-method standard error in parentheses,
+using annular instruments of width 1, 1.5, and 2 km. The index weights and the downstream IV are otherwise as in
+the main specification. The design-side conditional expectations in this exhibit are estimated by unpenalized least
+squares on the quadratic basis rather than the main specification’s cross-validated ridge fit.
+D. Multiplier accounting: reparameterization and delta-method inference
+This appendix details the multiplier exercise of Section 6.2. Egger et al. (2022)’s Table V maps the
+coefficients of several weighted IV regressions into component multipliers. For componentc, roleg
+(recipient/non-recipient), and ringk, we impose the design reparameterization
+βcgk =γ cg θcgk, P
+k θcgk = 1,
+so that the normalized shapeθ cg is exactly the Stage 1 index andγ cg is a single slope on the con-
+structed indexS icg(bθcg), the bθcg-weighted combination of uniti’s ring exposures, which enters each
+84
+
+--- PAGE 85 ---
+Table V equation as an endogenous regressor instrumented by the corresponding index instrument.
+Everything else (deflators, transfer normalizations, weights, supports) is held fixed.
+We propagate uncertainty to the multipliers by a cluster-robust delta-method sandwich, cluster-
+ing at the sublocation level (the unit of randomization). Stacking the free shape parametersϕ(an
+mcg −1 vector per outcome/role, withm cg the number of annuli in the selected support) and the
+full Table V coefficient vectorbintop= (ϕ ′, b′)′, write, for each sublocation clusters, the stacked
+influence-function contributionψ s that combines the Stage 1 design-GMM influence, which maps
+the design moments to bϕ, with the Table V two-stage least squares influence; the latter includes
+the generated-regressor adjustment by which the Stage 1 uncertainty in bϕenters bb. For the vector
+of reported multipliersf(p) withD=∂f /∂p ′, the covariance is
+bVf =D
+
+C
+C−1
+CX
+s=1
+ψsψ′
+s
+
+D′, C= 84.
+This construction never inverts the moment covariancebΩ =P
+s UsU ′
+s (withU s the cluster-sstacked
+Stage-1 and Table V moment contribution), and that is what keeps it well posed. The unit of
+independence is the sublocation cluster, so rank( bΩ)≤C= 84, while the Table V coefficient vector
+is high-dimensional (≈400); the efficient-GMM information matrix (G ′bΩ−1G)−1, withG=∂¯g/∂p ′
+the moment Jacobian, would invert through this rank-84 ceiling and is ill-posed. The sandwich
+avoids the inversion entirely: bΩ enters only as the cluster meat, and the reported multipliers are
+a low-dimensional smooth function whose variance is well defined whatever the rank of bΩ. The
+standard errors must be read against the cluster count rather than the household count; with
+C= 84 they are comparable in magnitude to Egger et al. (2022)’s own (Table 5), and applying
+their wild cluster bootstrap (Rademacher signs by sublocation) to our index, holding the shape
+weights fixed, reproduces the Table V component to within a few percent. The resulting design-
+based multipliers and their benchmarks are reported in the main text (Table 5).
+85

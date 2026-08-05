@@ -1,0 +1,3518 @@
+===== PDF PAGE 1 =====
+Identification, Estimation, and Inference in
+Two-Sided Interaction Models∗
+Federico Crippa
+Department of Economics
+Northwestern University
+federicocrippa2025@u.northwestern.edu
+This version: October 26, 2025.
+Newest version here.
+Abstract
+This paper studies a class of models for two-sided interactions, where outcomes depend
+on latent characteristics of two distinct agent types. Models in this class have two core ele-
+ments: the matching network, which records which agent pairs interact, and the interaction
+function, which maps latent characteristics of these agents to outcomes and determines the
+role of complementarities. I introduce the Tukey model, which captures complementarities
+with a single interaction parameter, along with two extensions that allow richer comple-
+mentarity patterns. First, I establish an identification trade-off between the flexibility of the
+interaction function and the density of the matching network: the Tukey model is identified
+under mild conditions, whereas the more flexible extensions require dense networks that are
+rarely observed in applications. Second, I propose a cycle-based estimator for the Tukey in-
+teraction parameter and show that it is consistent and asymptotically normal even when the
+network is sparse. Third, I use its asymptotic distribution to construct a formal test of no
+complementarities. Finally, an empirical illustration shows that the Tukey model recovers
+economically meaningful complementarities.
+∗I am deeply grateful to Federico Bugni, Ivan Canay, and Chuck Manski for their guidance throughout this project.
+I thank Devis Decet, Anastasiia Evdokimova, and Amilcar Velez for many helpful discussions that shaped the ideas
+in this paper. I am further thankful to Eric Auerbach, Bruno Fava, Danil Fedchenko, Joel Horowitz, Zhen Xie, and
+the participants of the HELP Workshop and the Econometrics Reading Group at Northwestern University for their
+valuable comments and suggestions. All errors are my own.
+arXiv:2510.22884v1  [econ.EM]  27 Oct 2025
+
+===== PDF PAGE 2 =====
+1 Introduction
+In many economic settings, outcomes result from the interaction of two distinct types of agents
+and depend on the latent characteristics each side brings to the match. For example, wages reflect
+both worker skills and firm attributes (Abowd et al., 1999); corporate performance depends on
+managerial ability together with company-specific features (Bertrand and Schoar, 2003); and the
+productivity of public offices is shaped by local conditions and the capacity of the bureaucrats in
+charge (Fenizia, 2022).
+Analyzing such settings requires using observable outcomes to (i) disentangle the contribu-
+tions of the agents involved in the interaction, quantifying their latent characteristics, and (ii)
+understand how these characteristics interact to generate outcomes. Doing so provides the foun-
+dation for addressing a wide range of questions. In the labor market, for instance: are high-
+productivity workers more likely to match with high-productivity firms? How much of wage
+variation is due to worker heterogeneity versus firm heterogeneity? Which observable charac-
+teristics correlate with latent productivities? What is the role of complementarities in this set-
+ting? If complementarities matter and wages proxy for output, can counterfactual reallocation of
+matches raise aggregate productivity?
+To study these questions, this paper introduces the Bipartite Interaction (BI) framework,
+which flexibly models two-sided interactions. Any model in this framework has two compo-
+nents: (i) a matching network, where nodes represent agents and edges capture which pairs are
+observed, and (ii) an interaction function, which maps the latent characteristics of matched agents
+into observed outcomes. The matching network summarizes the pattern of available data, while
+restrictions on the interaction function reflect assumptions about complementarities and gener-
+ate distinct models within the framework. A well-known example is the two-way fixed effects
+(TWFE) model, which assumes an additively separable interaction function and therefore rules
+out complementarities. This model has become widely used by applied economists, particularly
+following its influential application by Abowd et al. (1999).
+Building on this framework, I introduce the Tukey model, named after John Tukey, who pro-
+posed an analogous functional form in the context of nonlinear ANOVA (Tukey, 1949). The Tukey
+model enriches the TWFE specification by allowing for complementarities in a simple and inter-
+pretable way: it relies on the assumption that the cross-partial derivative of the interaction func-
+tion is determined by a single scalar parameter. This interaction parameter entirely captures the
+presence, strength, and direction of complementarities; when it equals zero, complementarities
+vanish, and the model coincides with TWFE.
+Next, I study two extensions of the Tukey model that accommodate richer complementarity
+structures by relaxing the restriction of a constant cross-partial derivative. The first allows a
+1
+
+===== PDF PAGE 3 =====
+firm-specific interaction parameter, permitting heterogeneity in complementarity across firms.
+This specification uses the functional form in Bonhomme et al. (2019) but drops their grouping
+assumption, treating each agent individually without clustering. The second extension imposes
+no parametric restriction on the cross-partial derivative. It serves as a fully flexible nonparametric
+benchmark, requiring only that the interaction function be monotone in both arguments.
+Taken together, the BI framework, the Tukey model, and these extensions lead to three main
+contributions. First, I show that identification in the BI framework reveals a trade-off between the
+flexibility of the interaction function and the structure of the matching network: weaker assump-
+tions on the interaction function require richer structure in the matching network. For example,
+in the TWFE model, point identification requires only that the matching network be connected,
+meaning any pair of nodes can be joined by a finite path of edges. This condition is no longer suf-
+ficient in general. In the nonparametric specification, for instance, point identification requires
+that any two nodes of the same type be linked by a path of length at most two. Importantly, the
+trade-off is asymmetric: while the interaction function is unobserved and must be restricted by
+assumption, the matching network is directly observed, and restrictions on it are straightforward
+to check.
+In empirical applications, researchers typically begin by choosing the restrictions to impose
+on the interaction function. The results in this paper can then be used to verify whether the ob-
+served matching network satisfies the corresponding conditions for parameter identification. For
+the Tukey model, point identification requires the same connectedness condition as the TWFE
+model, plus one additional requirement: the presence of at least one informative cycle of length
+four in the matching network (a closed path involving four distinct edges and nodes). This con-
+dition is often satisfied in practice, making the Tukey model a flexible and empirically applicable
+alternative to the TWFE specification. By contrast, the requirements for point identification in
+the two extensions are much more stringent and rarely met in empirical settings where two-sided
+interactions are typically studied.
+Second, I propose a new estimator in the Tukey model for the interaction parameter corre-
+sponding to the cross-partial derivative of the interaction function, and study its properties in a
+large-graph asymptotic analysis that does not require any agent to be observed many times. As
+identification relies on the presence of a cycle in the matching network, the estimator uses mul-
+tiple such cycles to average out noise and consistently estimate the parameter. Unlike alternative
+methods in similar settings, the estimator does not require estimating latent characteristics. It is
+consistent under the mild requirement that the number of cycles scales with graph size; in em-
+ployer–employee matched data, I show that such cycles are typically abundant. The estimator is
+asymptotically normal, with its variance shaped by three elements: (i) the variance of the out-
+come error terms, (ii) heterogeneity in latent characteristics within cycles, and (iii) the ordering of
+2
+
+===== PDF PAGE 4 =====
+agents in each cycle. Since the ordering depends on labels chosen by the researcher, I propose an
+instrument-based procedure that assigns them using observable characteristics correlated with
+latent productivities, ensuring consistency and asymptotic normality.
+Third, I develop a formal test for the absence of complementarities in the BI framework. The
+test exploits the nesting of the TWFE model within the Tukey model: since the TWFE specifica-
+tion corresponds to the Tukey model with the interaction parameter equal to zero, testing this
+null provides a direct test for the absence of complementarities. The assumption of no comple-
+mentarities implied by the TWFE model is often discussed in empirical work, and several informal
+diagnostics are in use, but a formal test has not, to my knowledge, been studied. The cycle-based
+estimator for the interaction parameter does not require estimating any individual latent char-
+acteristics, which allows construction of a test whose asymptotic properties can be studied by
+an asymptotic analysis aligned with common data patterns, including cases where nodes in the
+matching network have no more than two links.
+To illustrate how the Tukey model can provide richer insights into two-sided interactions, I
+revisit the application in Limodio (2021) on the interaction between public managers and tasks,
+focusing on the implementation of World Bank projects. The success of a project is modeled as the
+outcome of the interaction between the ability of the manager in charge and the characteristics of
+the country where they operate. Original estimates using the TWFE model found negative sort-
+ing, with high-performing managers more likely to be matched with low-performing countries.
+Estimates from the Tukey model add further insight: the interaction parameter is negative and
+statistically different from zero, indicating negative complementarities, where high-performing
+managers have larger value added when matched with low-performing countries. Given this
+interaction function, negative sorting is optimal for maximizing average project success, which
+may explain the allocation pattern documented in Limodio (2021) as a rational response to the
+structure of complementarities.
+1.1 Related Literature
+The BI framework proposed in this paper is related to a wide range of earlier approaches to two-
+sided interactions, many of which are reviewed in Bonhomme (2020). The benchmark in this class
+is the TWFE, which assumes a modular (additively separable) interaction function. While most
+empirical applications focus on worker-firm interactions (Abowd et al., 1999; Card et al., 2013;
+Kline, 2024), TWFE-style methods have also been applied to other two-sided settings, includ-
+ing managers and firms (Bertrand and Schoar, 2003), teachers and students (Jackson et al., 2014;
+Chetty et al., 2014a,b), patients and healthcare providers (Finkelstein et al., 2016), and bureaucrats
+and geographic postings (Fenizia, 2022; Limodio, 2021). Despite its versatility, the model relies
+3
+
+===== PDF PAGE 5 =====
+on the strong modularity assumption, which rules out complementarities: the marginal produc-
+tivity of each agent is assumed constant and independent of the other side of the match. In many
+contexts, this contrasts with the emphasis placed on matching, where significant resources are
+devoted to finding “the right match”.
+To relax modularity, Bonhomme et al. (2019) propose a model in which the interaction func-
+tion allows for complementarities across the latent characteristics of agents. Their approach as-
+sumes that agents can be partitioned into a finite number of groups, with all members of a group
+sharing the same latent characteristics. In practice, this requires researchers to assign agents to
+groups, typically via a clustering procedure, and then estimate group-specific productivities and
+intergroup complementarities. A similar approach is adopted in Lei and Ross (2024). These mod-
+els introduce greater flexibility in the interaction function relative to TWFE and have delivered
+valuable empirical insights (Weigel et al., 2024; Mourot, 2025), but rely on the grouped hetero-
+geneity assumption. By contrast, the approach developed in this paper offers a feasible way to
+introduce complementarities into two-sided interactions without relying on grouping.
+Concerns about complementarities have also surfaced in many TWFE applications. A com-
+mon strategy to justify their exclusion has been to estimate a saturated version of the model,
+compare𝑅 2 values, and conclude, based on the typically small changes observed, that comple-
+mentarities are not quantitatively important (Card et al., 2013; Song et al., 2019; Fenizia, 2022;
+Adhvaryu et al., 2024). However, Kline (2024) shows that these𝑅 2 comparisons can be mislead-
+ing and argues that complementarity patterns are better detected by focusing on cycles in the
+matching network. Building on this insight, this paper develops a procedure to formally test the
+absence of complementarities, providing a formal way to assess the assumption at the core of the
+TWFE model.
+Worker-firm interactions are the most common application for this TWFE model (Abowd
+et al., 1999; Card et al., 2013; Kline, 2024), yet modeling labor markets in this “reduced form”
+way has faced criticism (Eeckhout and Kircher, 2011; Hagedorn et al., 2017; Lopes de Melo, 2018;
+Eeckhout, 2018). These concerns extend to the BI framework as well. Still, the framework remains
+valuable: both in other domains where its structure may be more credible (as in the empirical
+illustration) and as a foundation for re-examining labor markets under alternative, potentially
+more realistic, restrictions than those implied by the TWFE model.
+Related developments in balanced unit-time panel settings show the value of modeling inter-
+actions beyond modularity. The model in Tukey (1949), for example, already incorporated com-
+plementarities more richly, and many recent contributions extend this idea using factor models
+or nonparametric interaction structures (Bai, 2009; Freyberger, 2018; Freeman and Weidner, 2023;
+Sbai Sassi, 2024; Armstrong et al., 2025). Two differences distinguish the BI framework from clas-
+sical panels. First, panel models typically focus on estimating coefficients on observed regressors,
+4
+
+===== PDF PAGE 6 =====
+whereas the BI framework aims to recover the interaction function and the fixed effects them-
+selves. Second, panel analysis usually relies on observing all unit-time combinations, while the
+BI framework is defined over incomplete matching networks in which only a subset of possible
+matches is observed. As a result, the structure of the matching network is central to both identifi-
+cation and inference in the BI framework, in contrast to panel settings where it is fixed by design
+and excluded from the modeling analysis.
+Because of this crucial role of the matching network, this paper also contributes to the liter-
+ature on network econometrics. For identification, as in Bramoullé et al. (2009), Graham (2017),
+and De Paula et al. (2018), I impose assumptions on the observed graph to ensure that parameters
+can be identified, using a strategy that eliminates nuisance parameters to identify the interaction
+coefficient, paralleling the approach of Jochmans (2017) for multiplicative models. For inference,
+I consider an asymptotic regime in which the graph grows without requiring the number of real-
+ized links to increase proportionally with the number of potential links, and allowing the number
+of edges per node to remain bounded. Most existing inference results for sparse networks assume
+degrees (numbers of edges per node) that may diverge with network size (Jochmans and Weidner,
+2019; Cai, 2022). Exceptions that accommodate bounded-degree graphs, such as Verdier (2020)
+and Auerbach et al. (2025), do not focus on parameters governing interactions. By explicitly al-
+lowing for bounded degree, the present analysis better reflects the structure of many real-world
+datasets on two-sided interactions and clarifies how the matching network affects the precision
+of BI estimators.
+1.2 Paper Structure and Notation
+The remainder of the paper is organized as follows. Section 2 introduces the BI framework, the
+Tukey model, and its extensions studied in this paper. Section 3 derives necessary and sufficient
+conditions for parameter identification in the Tukey model and its extensions. Section 4 turns to
+estimation in the Tukey model, mostly focusing on the estimator for the interaction parameter
+and its asymptotic properties. Section 5 presents an empirical illustration, showing how the
+Tukey model can be used in practice and how it provides additional insights into the interaction
+function. Section 6 reports Monte Carlo simulations assessing the finite-sample performance of
+the estimator. Section 7 concludes.
+Throughout the paper, lowercase letters denote scalar parameters or quantities specific to an
+individual agent, typically scalars but possibly vectors when productivities are multidimensional
+(e.g.,𝛼 𝑖 represents the latent productivity of worker𝑖). Uppercase letters denote sets (e.g.,𝛼 𝑖 ∈𝐴,
+where𝐴is typically a compact metric space). Bold symbols denote tuples: for example,𝜶denotes
+the collection(𝛼 1, . . . , 𝛼𝐼 ).
+5
+
+===== PDF PAGE 7 =====
+2 Models
+I present the Bipartite Interaction (BI) framework in the context of the labor market, where in-
+teractions involve workers and firms. This setting serves as a concrete example for exposition,
+but the framework itself is general and applies to any two-sided environment.
+2.1 Bipartite Interaction Framework
+Let𝐼∈Nand𝐽∈Ndenote the number of workers and firms, respectively. Each worker𝑖has a
+latent deterministic productivity𝛼 𝑖 ∈𝐴, and each firm𝑗has a latent deterministic productivity
+𝜓 𝑗 ∈Ψ, where𝐴andΨare compact subsets ofR 𝑑. Let𝜶 :=(𝛼 1, . . . , 𝛼𝐼 )and𝝍 :=(𝜓 1, . . . , 𝜓𝐽 )
+denote the collections of these productivities.
+The potential outcome of the interaction between worker𝑖and firm𝑗, for example the wage
+worker𝑖would receive if employed by firm𝑗, is
+𝑦𝑖 𝑗 =𝑓(𝛼 𝑖, 𝜓𝑗 )
+|    {z    }
+𝜃𝑖 𝑗
++𝜂 𝑖 𝑗,
+where𝑓:𝐴×Ψ→Ris the interaction function and𝜂 𝑖 𝑗 is a mean-zero random term. Define
+𝜃𝑖 𝑗 :=𝑓(𝛼 𝑖, 𝜓𝑗 )as the deterministic component of the outcome, equal toE[𝑦 𝑖 𝑗], determined by
+the interaction function and the productivities of the matched agents. To focus on𝑓, I omit
+covariates. Incorporating covariates in the BI framework is a valuable extension not considered
+in this paper.
+To study the properties of𝑓, it is useful to consider the role of its cross-partial derivative,
+which leads to the notions of modularity and complementarities. I formally define modularity
+in Appendix A.1. Intuitively, when𝛼 𝑖 and𝜓 𝑗 are scalars and𝑓is differentiable, the interaction
+function ismodularwhen the cross-partial derivative of𝑓is zero,supermodularwhen it is non-
+negative, andsubmodularwhen it is nonpositive. This is closely related to complementarities. I
+say that an interaction exhibitscomplementaritieswhen the cross-partial derivative is nonzero,
+which I callpositiveornegativewhen this derivative is positive or negative, respectively.
+The potential outcome𝑦 𝑖 𝑗 is defined for all worker-firm pairs, representing the outcome that
+would be realized if match(𝑖, 𝑗)occurred, whether or not it is observed in the data. In practice,
+only a subset of matches is realized, and𝑦 𝑖 𝑗 is observed only for some pairs. Define
+𝐷𝑖 𝑗 =
+ 
+
+1,if𝑦 𝑖 𝑗 is observed,
+0,otherwise,
+6
+
+===== PDF PAGE 8 =====
+as the indicator of observed matches, treated as fixed in the analysis, and collect them inO 𝐼 𝐽 =
+{(𝑖, 𝑗):𝐷 𝑖 𝑗 =1}.
+Let𝐺 𝐼 𝐽 =( [𝐼],[𝐽],O 𝐼 𝐽 )be the bipartite network linking worker𝑖to firm𝑗whenever𝐷 𝑖 𝑗 =1.
+𝐺𝐼 𝐽 is bipartite because its nodes are partitioned into two disjoint sets, workers and firms, with
+no edges within the same set.
+Definition 1.(Matching Network)The matching network𝐺 𝐼 𝐽 is the bipartite graph with node sets
+[𝐼]and[𝐽]and edge setO 𝐼 𝐽 ={(𝑖, 𝑗):𝐷 𝑖 𝑗 =1}. An edge(𝑖, 𝑗)indicates that𝑦 𝑖 𝑗 is observed.
+Figure 1 shows an example with 5 workers (purple), 3 firms (green), and 6 edges, each repre-
+senting an observed outcome.
+𝑖1
+𝑖2
+𝑖3
+𝑖4
+𝑖5
+𝑗1
+𝑗2
+𝑗3
+Figure 1:Matching network with nodes colored by type: workers in purple and firms in green. In this ex-
+ample,𝐼=5,𝐽=3, and the set of observed matches isO 𝐼 𝐽 ={(𝑖 1, 𝑗1),(𝑖 2, 𝑗1),(𝑖 2, 𝑗2),(𝑖 3, 𝑗2),(𝑖 4, 𝑗2),(𝑖 5, 𝑗3)}.
+The fact that worker𝑖 2, for example, is linked to two firms (𝑗 1 and𝑗 2) does not imply that
+the matches occur simultaneously. The matching network is constructed over a chosen time
+window, which may span several years, and each edge can correspond to a different period:𝑖 2
+may be employed by𝑗 1 in one year and by𝑗 2 in another. The BI framework is static, abstracting
+from the timing of moves, so it does not matter whether the match with𝑗 1 occurs before or after
+the one with𝑗 2.
+The matching network is deterministic: the BI framework does not model its formation,
+and the structure of𝐺 𝐼 𝐽 is taken as given. The only source of randomness in the model are
+the terms{𝜂 𝑖 𝑗}(𝑖,𝑗)∈O 𝐼 𝐽 , one for each observed outcome. These terms are mutually independent,
+mean-zero, and may have pair-specific distributions, allowing for heteroskedasticity. Since𝐺 𝐼 𝐽
+is non-random, whether the match(𝑖, 𝑗)is observed does not depend on𝜂 𝑖 𝑗, making the random
+term exogenous.
+For any realized match (𝐷 𝑖 𝑗 =1), the model considers only a single outcome𝑦 𝑖 𝑗. If repeated
+observations of the same worker-firm pair are available, they can be averaged to yield a single
+𝑦𝑖 𝑗, leaving the analysis unchanged.
+7
+
+===== PDF PAGE 9 =====
+Parameters of interest.The primitive parameters of the model are the interaction function
+𝑓and the productivity vectors𝜶and𝝍. Recovering𝑓allows researchers to characterize how
+worker and firm productivities map into the outcome. A central question is whether an agent’s
+marginal productivity depends on the characteristics of the other agent in the match, and, when
+this occurs, to describe the nature and pattern of such complementarities. The productivity vec-
+tors𝜶and𝝍, once linked to additional information on workers and firms, shed light on the
+determinants of productivity differences. For example, regressing𝜶on worker demographics
+reveals which observable traits drive variation in worker productivity.
+Together,𝜶and𝝍permit the study of assortative matching, the tendency of workers and
+firms with similar relative productivities to pair together. A common measure of sorting is the
+correlation between𝛼 𝑖 and𝜓 𝑗 across observed matches: one constructs a vector containing𝛼𝑖 for
+each match(𝑖, 𝑗), a second vector with the corresponding𝜓 𝑗, and then computes their correlation.
+A positive value indicates positive sorting, whereas a value near zero or negative suggests weak
+or reverse sorting.
+Joint knowledge of𝑓,𝜶, and𝝍also enables decomposing outcome variance, quantifying
+the shares attributable to worker heterogeneity, firm heterogeneity, and their interaction. These
+quantities further allow measuring factor misallocation by comparing observed matches to the
+efficient allocation, and support counterfactual analyses in which workers are reassigned across
+firms.
+These examples illustrate the wide range of parameters of interest that can be derived from
+𝑓,𝜶, and𝝍as primitive inputs. A comprehensive treatment of all such parameters is beyond the
+scope of this paper. The focus here will be on primitive𝑓,𝜶, and𝝍under different assumptions on
+𝑓and𝐺 𝐼 𝐽, occasionally using selected derived quantities to highlight key features of the results.
+Functional specifications.Imposing restrictions on the interaction function within the BI
+framework yields distinct models. I focus on three specifications: the Tukey model, the BLM
+model, and the seriation model. The next sections describe each of these models and discuss
+their economic interpretation. Appendix A formalizes their connection to shape restrictions on
+𝑓, showing how their functional forms emerge from broader assumptions.
+2.2 Tukey Model
+The cross-partial derivative of𝑓captures the complementarity structure of the interaction func-
+tion in the BI framework. A natural way to introduce flexibility is to assume that this cross-partial
+8
+
+===== PDF PAGE 10 =====
+derivative is constant, summarized by a single parameter. This yields the specification
+𝜃𝑖 𝑗 =𝛼 𝑖 +𝜓 𝑗 +𝛽 0𝛼𝑖𝜓 𝑗,(Tukey model)
+with𝛽 0 ∈𝐵⊂Rcompact. I refer to this as the Tukey model, after the statistician John Tukey, who
+studied an analogous functional form in two-way ANOVA to test whether two categorical factors
+affect the response additively (Tukey, 1949; Ward and Dick, 1952; Šimeček and Šimečková, 2013).
+In that setting, the focus is on testing the null hypothesis𝛽 0 =0under restrictive assumptions
+(homoskedastic, normally distributed errors𝜂 𝑖 𝑗 and complete matching network𝐺 𝐼 𝐽), and no
+attention is given to the estimation of the parameter itself.
+Conversely, in the BI framework, the interaction parameter𝛽 0 in the Tukey model acquires
+a direct economic meaning. It is the constant cross-partial𝜕 2𝑓/𝜕𝛼 𝜕𝜓, capturing all departures
+from modularity and governing the complementarity pattern between the two productivities.
+Despite its parsimony, where the entire complementarity structure is summarized by a single
+parameter, the Tukey model is flexible enough to encompass supermodular (𝛽0 ≥0), submodular
+(𝛽0 ≤0), and modular (𝛽 0 =0) interaction functions. The sign of𝛽 0 determines the direction
+of complementarities, while its magnitude reflects the relative weight of the multiplicative com-
+ponent compared to the additive one: as|𝛽 0|grows, the role of the match itself becomes more
+important.
+2.2.1 Tukey as Extension of TWFE Model
+When𝛽 0 =0, the Tukey model reduces to the widely used TWFE specification, in its baseline
+form without covariates:
+𝜃𝑖 𝑗 =𝛼 𝑖 +𝜓 𝑗 .(TWFE model)
+In the TWFE model, the cross-partial derivative𝜕 2𝑓/𝜕𝛼 𝜕𝜓is zero, so the interaction function
+is modular and complementarities are ruled out by assumption. The marginal contribution of a
+worker (firm) is independent of the firm (worker) they are matched with and remains constant
+across all matches. Under modularity, for a fixed set of matched agents, total output depends
+only on individual productivities and is invariant to the assignment of matches: any allocation is
+efficient.
+While the assumption of no complementarities is restrictive, especially given the emphasis in
+economic theory on complementarities as a driver of sorting patterns such as positive assortative
+matching (Becker, 1973; Shimer and Smith, 2000), its appropriateness depends on the empirical
+setting and the research question. In practice, the TWFE model is often viewed less as a literal
+9
+
+===== PDF PAGE 11 =====
+description of interactions and more as a tractable approximation to richer structures (Abowd
+et al., 1999; Card et al., 2013). The nesting of TWFE within the Tukey model makes it possible
+to assess when this approximation is likely to be informative and, conversely, when ignoring
+complementarities may lead to misleading conclusions; see Remark 2 for details.
+2.3 Beyond Tukey Model
+The Tukey model introduces complementarities in a simple and interpretable way. To capture
+richer complementarity patterns, one can relax its restrictions and consider more flexible inter-
+action functions: the BLM model allows the interaction parameter to be firm-specific, accom-
+modating heterogeneity in complementarities across firms; the seriation model provides a fully
+nonparametric alternative, imposing only monotonicity and leaving the cross-partial derivative
+unrestricted.
+2.3.1 BLM Model
+Rather than modeling firm productivity as a scalar, suppose instead that each firm is characterized
+by a productivity vector𝜓 𝑗 =(𝑏 𝑗, 𝑎𝑗 ). This leads to the specification
+𝜃𝑖 𝑗 =𝑎 𝑗 +𝑏 𝑗𝛼𝑖,(BLM model)
+where each firm is endowed with both an intercept and a slope, each varying across firms.
+This interaction function is the one studied by Bonhomme et al. (2019), which motivates the
+label BLM model. In their approach, the functional form is embedded in a grouped setting, where
+all firms and workers within a group share the same latent characteristics. In the BI framework,
+by contrast, the BLM model refers to the case in which each group consists of a single worker or
+a single firm.
+The BLM model nests the Tukey model as a special case: when𝑏 𝑗 =1+𝛽 0𝑎 𝑗 for all𝑗, or
+equivalently𝛽 0 = 𝑏 𝑗 −1
+𝑎 𝑗
+, the specification reduces to the Tukey one, with𝜓 𝑗 =𝑎 𝑗. The BLM model
+can thus be viewed as a generalization of the Tukey model, where the slope parameter capturing
+complementarities varies across firms. This additional flexibility allows researchers to distinguish
+a firm’s intrinsic productivity𝑎 𝑗, which enters the model in levels, from its capacity to extract
+value from workers and exploit complementarities, governed by𝑏 𝑗. Unlike the Tukey model,
+which implicitly ties these two roles together, the BLM model permits them to differ, thereby en-
+abling empirical investigation of whether more productive firms are also those in which workers’
+marginal productivity is higher.
+10
+
+===== PDF PAGE 12 =====
+2.3.2 Seriation Model
+The BLM model imposes a specific parametric form on the interaction function. As a benchmark,
+it is useful to also consider a specification that removes all parametric restrictions on the cross-
+partial derivative and allows for fully flexible complementarities. The natural analogue comes
+from nonparametric regression: when the interest is in learningE[𝑌|𝑋]nonparametrically from
+observations of continuous random variables𝑌and𝑋, some regularity assumptions are needed,
+typically smoothness. Similarly, in the bipartite interaction setting, some regularity condition on
+𝑓is necessary to ensure that the data are informative.
+I retain scalar productivities and impose a monotonicity assumption on𝑓, leaving the cross-
+partial unrestricted:
+𝜃𝑖 𝑗 =𝑓 𝑚 (𝛼𝑖, 𝜓𝑗 ),(Seriation model)
+with𝑓 𝑚 :𝐴×Ψ→Rincreasing in both arguments. The monotonicity assumption in a bipartite
+network setting connects directly to seriation problems in statistics (Flammarion et al., 2019) and
+to matrix-completion approaches for bivariate isotonic matrices under unknown permutations
+(Mao et al., 2020). Outside the bipartite setting, it is also related to nonparametric latent-space
+models for network formation; see, for example, Gao (2020) and references therein.
+Monotonicity is a common shape restriction in economics (see the survey in Chetverikov
+et al. (2018)). In this context, it requires that the ranking of average outcomes produced by two
+workers (firms), when matched with the same firm (worker), is preserved across all matches. This
+property holds, for example, in the TWFE model.
+The seriation model imposes no parametric restriction on𝑓 𝑚: when it is twice differentiable,
+monotonicity ensures constant signs for the partial derivatives but imposes no constraint on the
+cross-partial derivatives that capture complementarities. As a result, the complementarity pattern
+is highly flexible: the same firm can exhibit supermodular or submodular behavior depending on
+the productivity of the worker it is matched with. This is not possible in the BLM model, where
+the cross-partial derivative is fixed for each firm and does not vary across workers.
+2.4 Trade-off in BI Framework
+The three models described above, together with the TWFE model, trace out a spectrum within
+the BI framework. At one end lies the fully modular TWFE model, which rules out complemen-
+tarities altogether. At the other end is the seriation model, which only imposes monotonicity
+and allows complementarities to vary freely across matches. The Tukey and BLM models sit
+between these extremes: they restrict the complementarity structure parametrically, but retain
+11
+
+===== PDF PAGE 13 =====
+more flexibility than the TWFE model.
+A second dimension of variation arises from the matching network𝐺 𝐼 𝐽, which encodes the
+observed links between workers and firms. In the most informative case,𝐺 𝐼 𝐽 is complete, with
+𝐷𝑖 𝑗 =1for every pair. At the opposite extreme, the graph may be sparse (with far fewer links
+than the maximum possible) and fragmented, with each firm linked to only a handful of workers,
+and vice versa.
+Together, the interaction function𝑓and the network𝐺 𝐼 𝐽 determine what can be learned
+from the data. The function𝑓and the dimensions𝐼and𝐽dictate how many parameters must
+be recovered, while the structure of𝐺 𝐼 𝐽 governs how much information is available. This creates
+a trade-off: richer flexibility in𝑓requires stronger assumptions on𝐺 𝐼 𝐽, while sparser networks
+can only be informative under more restrictive assumptions on𝑓.
+This trade-off is asymmetric. The function𝑓is unobserved and summarizes the latent inter-
+action between workers and firms;𝐺 𝐼 𝐽 is observed and can be inspected directly. Restrictions on
+𝐺𝐼 𝐽 can therefore be verified in the data, while restrictions on𝑓cannot. For the TWFE model,
+Abowd et al. (1999) and Jochmans and Weidner (2019) provide conditions on𝐺 𝐼 𝐽 for identifying
+and, under additional assumptions, estimating the productivity parameters. For the Tukey, BLM,
+and seriation models, there are no results that allow the matching network to be incomplete. In
+the next section, I derive the necessary and sufficient conditions that link the structure of𝑓with
+the shape of𝐺 𝐼 𝐽, extending identification results to incomplete and possibly sparse graphs. These
+conditions involve some requirements on the matching network𝐺𝐼 𝐽. For each requirement, I will
+also briefly assess its plausibility in the context of employer-employee data.
+In applications, the researcher can proceed in two steps. First, select the restriction on𝑓that
+best fits the economic environment. Then, use these results to check whether the observed𝐺 𝐼 𝐽
+satisfies the corresponding conditions. When the focus is on point-identification, three outcomes
+are possible: (i) the parameters are not identified; (ii) they are identified but not consistently
+estimable; (iii) they are both identified and consistently estimable. Clarifying which case applies
+is essential for understanding what questions the data can credibly answer. Naturally, the richer
+and more connected the graph, the wider the scope of questions that can be addressed.
+3 Identification
+I analyze identification in the Tukey, BLM and seriation models. Section 3.1 introduces the notion
+of identification adopted for the BI framework. Sections 3.2, 3.3, and 3.4 present the identification
+results for the three models. Finally, Section 3.5 revisits the trade-off between the flexibility of
+the interaction function and the structure of the matching network in light of these results.
+12
+
+===== PDF PAGE 14 =====
+3.1 Identification in BI Framework
+I adopt the classical notion of point identification from Koopmans (1949), which requires that
+the model parameters be uniquely recoverable from the distribution of observables. In the BI
+framework, the observables are the collection{𝑦 𝑖 𝑗}(𝑖,𝑗)∈O 𝐼 𝐽 . Hence, for identification purposes, I
+can treatE[𝑦 𝑖 𝑗]=𝜃 𝑖 𝑗 as known for each observed match.
+Formally, I study identification through the noiseless map
+(𝑓 ,𝜶,𝝍, 𝐺 𝐼 𝐽 ) ↦→𝜽 O :={𝜃 𝑖 𝑗}(𝑖,𝑗)∈O 𝐼 𝐽 ,
+where(𝑓 ,𝜶,𝝍)are unknown and the graph𝐺 𝐼 𝐽 is known. The parameter vector(𝑓 ,𝜶,𝝍)is
+point-identifiedif the map
+(𝑓 ,𝜶,𝝍) ↦→𝜽 O
+is injective: that is, whenever parameters(𝑓 ,𝜶,𝝍)and(𝑓 ′,𝜶 ′,𝝍 ′)generate the same𝜽 O, they
+must coincide exactly.
+In practice, a parameter is identified if and only if it can be expressed as a function of𝜽O: this
+is the equivalence I will use to establish identification in the proofs.
+This definition deliberately abstracts from sampling noise and treats the distribution of each
+𝑦𝑖 𝑗 as known, even though in applications each match is typically observed only once. While such
+a notion does not distinguish between parameters that can or cannot be consistently estimated
+in the presence of error terms𝜂 𝑖 𝑗, it provides a fundamental benchmark: if a parameter is not
+identified in the noiseless model, then no estimator can recover it. Conversely, whenever a pa-
+rameter is identified in this sense, it warrants further analysis to determine whether, and under
+what conditions, consistent estimation is feasible.
+A location normalization is often necessary, since the absolute levels of𝜶and𝝍are not
+uniquely determined by the observables. In the TWFE model, for example, adding a constant to
+all𝛼 𝑖 and subtracting it from all𝜓 𝑗 leaves𝜽 O unchanged; the same invariance holds in richer
+specifications with complementarities, where shifts in𝜶can be offset by changes in𝝍and𝑓
+without altering𝜽 O. To fix the reference level and ensure point identification, a normalization
+such as Í
+𝑖 𝛼𝑖 =0or𝛼 1 =0is imposed. Whenever such a normalization is required, I state it
+explicitly and adopt the form that yields the clearest formulas.
+Remark 1.(Partial Identification)This paper focuses on point identification as a starting point
+for studying flexible complementarity patterns in the BI framework. The same noiseless approach
+can, however, be extended to partial identification, where the identified set for(𝑓 ,𝜶,𝝍)is given by
+the set of counterimages of the observed𝜽 O. Because matching networks are often sparse and the
+13
+
+===== PDF PAGE 15 =====
+conditions for point identification difficult to satisfy, partial identification results provide a way to
+extract meaningful information about the underlying economic structure even when point identifi-
+cation fails. Extending the BI framework in this direction appears hence especially promising, and
+future work could build on recent advances such as Crippa and Fedchenko (2025), who study partial
+identification in the distinct but related pairwise interaction model.
+3.2 Identification in Tukey Model
+The Tukey model introduces complementarities in the interaction function through a single pa-
+rameter,𝛽 0, which represents the constant cross-partial derivative and fully characterizes𝑓. I
+present the identification results in two steps: first, the identification of𝛽 0; second, the identifi-
+cation of𝜶and𝝍.
+3.2.1 Identification of𝛽 0
+Identifying𝛽 0 requires additional structure on the matching network𝐺𝐼 𝐽. I begin by recalling the
+notion of a cycle in a bipartite graph.
+Definition 2.(Cycle in the Matching Network)In the bipartite graph𝐺 𝐼 𝐽 =( [𝐼],[𝐽],O 𝐼 𝐽 ), a cycle
+of length2𝐾(𝐾≥2) is a closed alternating sequence of workers and firms
+𝑖1, 𝑗1, 𝑖2, 𝑗2, . . . , 𝑖𝐾, 𝑗𝐾, 𝑖1
+such that, for each𝑘=1, . . . , 𝐾,(𝑖 𝑘, 𝑗𝑘)and(𝑖 𝑘+1, 𝑗𝑘)belong toO 𝐼 𝐽 (with𝑖 𝐾+1 =𝑖 1), and all𝑖 1, . . . , 𝑖𝐾
+and𝑗 1, . . . , 𝑗𝐾 are distinct.
+The graph in Figure 2a contains no cycles: no path starts and ends at the same node while
+traversing distinct edges. By contrast, adding an edge between𝑖 1 and𝑗 2, as in Figure 2b, creates
+the closed path𝑖 1, 𝑗1, 𝑖2, 𝑗2, 𝑖1, which forms a cycle of length 4.
+The key condition required for identification of𝛽 0 is given in Assumption 1.
+Assumption 1.(Informative cycle)The matching network𝐺 𝐼 𝐽 contains a length-4 cycle𝑖 1, 𝑗1, 𝑖2, 𝑗2
+such that𝛼 𝑖1 ≠𝛼 𝑖2 and𝜓 𝑗1 ≠𝜓 𝑗2.
+Assumption 1 requires the presence of a 4-cycle in which both workers and firms differ in pro-
+ductivity. Such heterogeneity is crucial: without it, the outcomes along the cycle would not vary,
+and the cycle would provide no information about𝛽 0. When heterogeneity is present, however,
+the cycle reveals contrasts across matches that make the interaction parameter point-identified.
+Theorem 1.(Identification of𝛽 0)Under the Tukey model, Assumption 1 is sufficient for identifica-
+tion of𝛽 0. If the matching network contains no more than one cycle, it is also necessary.
+14
+
+===== PDF PAGE 16 =====
+𝑖1
+𝑖2
+𝑖3
+𝑖4
+𝑖5
+𝑗1
+𝑗2
+𝑗3
+(a)
+𝑖1
+𝑖2
+𝑖3
+𝑖4
+𝑖5
+𝑗1
+𝑗2
+𝑗3
+(b)
+Figure 2:Two examples of matching networks: (a) a network without cycles, and (b) a network containing
+a cycle of length four. In panel (b), the cycle is formed by the sequence of nodes𝑖 1 →𝑗 1 →𝑖 2 →𝑗 2 →𝑖 1.
+Identification of𝛽 0 hence requires the presence of a cycle in the matching network, and if
+that cycle is unique, it must be of length four. The proof (Appendix H.1) shows that outcomes
+from a cycle of length2𝐾generate a degree-(𝐾−1)polynomial in𝛽 0, with coefficients given by
+known functions of𝜽 O. The identification set consists of the roots of this polynomial. When the
+network contains at most one cycle, point identification requires𝐾=2, i.e. a cycle of length 4.
+More generally, a cycle of length2𝐾yields an identification set with𝐾−1elements. If multiple
+longer cycles are present, the intersection of their identification sets can reduce to a singleton,
+achieving point identification.
+The role of cycles in detecting departures from modularity was previously noted by Card et al.
+(2013) and discussed by Kline (2024), though in those cases cycles were used as a diagnostic device
+rather than as a source of identification for an interaction parameter.
+In the labor market setting, Assumption 1 requires some degree of worker mobility across
+firms. Because each worker can be matched with only one firm at a time, the multiple links needed
+for a cycle arise only when workers change employers. The condition therefore, requires that, for
+some pair of firms, at least two movers exist, and that both the workers and the firms involved
+differ in productivity. This is not especially restrictive: labor markets are typically segmented
+into local or sectoral clusters, and when one worker moves between two firms, the likelihood
+of additional movers between the same firms is higher than under random matching. Evidence
+supports this: in the application of Kline (2024), for instance, about 55% of firms belong to at least
+one cycle.
+3.2.2 Identification of𝜶and𝝍.
+Once𝛽 0 is identified, the productivity vectors𝜶and𝝍in the Tukey model can be identified under
+an additional condition on𝐺 𝐼 𝐽.
+15
+
+===== PDF PAGE 17 =====
+Assumption 2.(Connectedness)The matching network𝐺 𝐼 𝐽 is connected: for any two nodes (work-
+ers or firms) in𝐺 𝐼 𝐽 , there exists a path (i.e., a sequence of nodes linked by edges) joining them.
+The graph in Figure 3a violates Assumption 2, since no path exists, for example, from node𝑖4
+to node𝑖 5. Adding an edge between𝑖 4 and𝑗 3, as in Figure 3b, makes the graph connected.
+𝑖1
+𝑖2
+𝑖3
+𝑖4
+𝑖5
+𝑗1
+𝑗2
+𝑗3
+(a)
+𝑖1
+𝑖2
+𝑖3
+𝑖4
+𝑖5
+𝑗1
+𝑗2
+𝑗3
+(b)
+Figure 3:Two examples of matching networks: (a) a non-connected network, and (b) a connected network,
+which satisfies Assumption 2.
+The identification result for𝜶and𝝍in the Tukey model is reported below.
+Theorem 2.(Identification of𝜶and𝝍in the Tukey model)Under the Tukey model and the
+normalization𝛼 𝑖0 =0, if𝛽 0 is identified, Assumption 2 is necessary and sufficient for identification
+of𝜶and𝝍.
+Theorem 2 extends the classical identification result for the TWFE model: it requires knowl-
+edge of𝛽 0, but allows this parameter to differ from zero. The proof proceeds by first showing that,
+for each observed match, one can construct a function of𝜽 O and the identified𝛽 0 that equals the
+product of known functions of the corresponding worker and firm productivities. Connectedness
+of𝐺 𝐼 𝐽 then guarantees that all worker and firm effects can be recovered up to the normalization,
+completing the identification argument.
+In labor market applications, the matching network is rarely fully connected, especially over
+short time horizons. A common practice is therefore to restrict the analysis to the largest con-
+nected component. For example, in the West German labor market studied by Card et al. (2013),
+the largest component contains over 95% of workers and 90% of firms. Similar firm coverage is
+reported by Bonhomme et al. (2023) for Austria, Italy, Sweden, Norway, and the United States,
+although worker coverage is often much lower, in some cases falling below 50%.
+Theorems 1 and 2 highlight the additional requirements introduced by allowing complemen-
+tarities. Relative to the TWFE model, the Tukey model imposes only a modest cost: the same
+connectedness condition is needed, with the sole extra requirement that the graph contain at
+least one informative cycle to identify𝛽 0. This result exploits the fact that𝛽 0 is a global parame-
+ter: it governs the entire interaction function𝑓and does not vary across specific workers or firms.
+16
+
+===== PDF PAGE 18 =====
+Hence, it can be identified using local information in𝐺 𝐼 𝐽 and then applied across all matches to
+recover𝜶and𝝍.
+The Tukey model, therefore, offers a simple and flexible way to incorporate complementarities
+into the BI framework, while requiring only minimal conditions on the matching network for
+identification. By contrast, as I show in the following sections, more general specifications such
+as the BLM and seriation models demand substantially stronger network requirements, which
+are typically stringent and rarely satisfied in applications.
+Remark 2.(TWFE as Approximation)The TWFE model is often defended on the grounds that
+the benefits of departing from modularity are limited, making it a useful approximation even when
+interactions exhibit some complementarities. The nesting of TWFE within the Tukey model, combined
+with the focus on the noiseless case, allows this claim to be evaluated formally. In Appendix B,
+I study when the TWFE specification provides a good approximation to interactions governed by
+the Tukey model. The results show that relying on TWFE can yield misleading conclusions once
+complementarities play a non-negligible role. In particular, I derive the bias implied by the TWFE
+specification and show that, for example, in settings with a supermodular interaction function and
+strong positive sorting, the sorting captured by TWFE can be zero. In such cases, hence, the TWFE
+model would incorrectly suggest the absence of sorting.
+3.3 Identification in BLM Model
+The BLM model extends the BI framework by allowing each firm to have its own interaction
+parameter. Bonhomme et al. (2019) study this specification under the assumption that workers
+and firms are partitioned into groups, with all agents in a group sharing the same productivity.
+Grouping substantially reduces the effective number of nodes in the matching network, since
+each group can be represented as a single node connected to many others. Under the assump-
+tion that the matching network is complete, Bonhomme et al. (2019) show that𝛼 𝑖,𝑎 𝑗, and𝑏 𝑗 are
+point-identified. Completeness, however, is stronger than necessary. In what follows, I estab-
+lish a weaker connectivity condition on𝐺 𝐼 𝐽 that still ensures identification of the productivity
+parameters.
+To formalize this condition, I introduce the following property of the bipartite graph𝐺 𝐼 𝐽.
+Definition 3.(Seed-and-Snowballs Connectivity)A bipartite graph𝐺 𝐼 𝐽 satisfies Seed-and-Snowballs
+connectivity if there exists a “seed” firm𝑗 0 ∈𝐽from which one can reach all nodes by iterating the
+following steps:
+1.Seed.Set𝑆 𝐽
+0 ={𝑗 0}.
+2.Snowball.For𝑛=0,1,2, . . .:
+17
+
+===== PDF PAGE 19 =====
+(a) Add to𝑆 𝐼
+𝑛 all workers connected to at least one firm in𝑆 𝐽
+𝑛:
+𝑆𝐼
+𝑛 ={𝑖∈𝐼: deg 𝑆 𝐽
+𝑛
+(𝑖) ≥1}.
+(b) Add to𝑆 𝐽
+𝑛+1 all firms connected to at least two workers in𝑆 𝐼
+𝑛:
+𝑆 𝐽
+𝑛+1 =𝑆 𝐽
+𝑛 ∪ {𝑗∈𝐽: deg 𝑆𝐼𝑛 (𝑗) ≥2},
+withdeg 𝑆 (𝑖)indicating the number of links between node𝑖and nodes in𝑆. If for some𝑁the process
+yields𝑆 𝐽
+𝑁 =𝐽and𝑆 𝐼
+𝑁 =𝐼, the graph satisfies the property.
+Intuitively, the procedure alternates between (i) adding all workers linked to any firm already
+in the snowball and (ii) adding all firms connected to at least two of the workers in it. The “two-
+worker” condition guarantees that each newly added firm lies on a cycle, and that these cycles
+overlap so the snowball can propagate through the graph. In Figure 4a, the property fails because
+firm𝑗 3 is not part of any cycle. Adding the edge(𝑖5, 𝑗1), as in Figure 4b, creates overlapping cycles
+and makes the graph Seed-and-Snowballs connected.
+To verify this, run the iterative procedure with𝑗 1 as the seed, so that𝑆 𝐽
+0 ={𝑗 1}. First, include
+the workers linked to the seed:𝑆 𝐼
+0 ={𝑖 1, 𝑖2, 𝑖5}. Then, add firms linked to at least two of these
+workers:𝑆 𝐽
+1 ={𝑗 1, 𝑗2}. Repeating the process yields𝑆 𝐼
+1 ={𝑖 1, 𝑖2, 𝑖5, 𝑖3, 𝑖4}and𝑆 𝐽
+2 ={𝑗 1, 𝑗2, 𝑗3}. Since
+the snowball eventually reaches every node, the graph satisfies Seed-and-Snowballs connectivity.
+𝑖1
+𝑖2
+𝑖3
+𝑖4
+𝑖5
+𝑗1
+𝑗2
+𝑗3
+(a)
+𝑖1
+𝑖2
+𝑖3
+𝑖4
+𝑖5
+𝑗1
+𝑗2
+𝑗3
+(b)
+Figure 4:Two examples of matching networks: (a) a network that does not satisfy Seed-and-Snowballs
+connectivity, and (b) a network that does.
+To the best of my knowledge, this property has not been discussed in the existing network
+literature. Appendix C shows that it is sufficient for the form of connectivity required by Kline
+et al. (2020) to ensure the validity of their variance estimator in the TWFE model, where the
+matching network must remain connected after removing any single worker node along with its
+incident edges.
+18
+
+===== PDF PAGE 20 =====
+As in the Tukey model, Seed-and-Snowballs connectivity must be complemented by sufficient
+heterogeneity in the productivities appearing in the restrictions to obtain the key condition for
+identification.
+Assumption 3.(Informative Seed-and-Snowballs)The matching network𝐺 𝐼 𝐽 satisfies Seed-and-
+Snowballs connectivity, with the additional requirements that: (i) when computingdeg 𝑆 𝐽
+𝑛
+(𝑖), only
+edges to firms with non-zero slopes are counted; and (ii) when computingdeg 𝑆𝐼𝑛 (𝑗), only edges to
+workers with distinct productivities are counted.
+Intuitively, since the BLM model generalizes the Tukey model by allowing a firm-specific
+interaction parameter, Assumption 3 extends Assumptions 1 and 2. It requires that each firm lie on
+a cycle involving heterogeneous productivities, and that these cycles overlap at least at one node.
+This overlap enables information to propagate through the network and ensures identification of
+the parameters in the BLM model, as formalized in the next theorem.
+Theorem 3.(Identification in the BLM model)Under the BLM model and the normalization𝑎 𝑗0 =
+𝑏 𝑗0 =1, Assumption 3 is necessary and sufficient for identification of𝜶,𝒂, and𝒃.
+While Assumption 3 is necessary for identification, it demands a matching network far richer
+than what is typically observed in applications. In the labor market context, for example, Kline
+(2024) finds that nearly half of the firms in their data are not part of any cycle, implying that their
+productivities cannot be identified. This is only a lower bound: being part of a cycle is not enough,
+since the cycles must also share at least one node. As a result, even under favorable conditions, the
+BLM model would fail to identify the productivity of a large share of firms, limiting its empirical
+applicability.
+Theorem 3 thus highlights that the additional flexibility of firm-specific complementarities
+comes at a steep cost: the matching network must satisfy a stringent requirement that is rarely
+met in practice. Point identification in the BLM model is therefore challenging in most empirical
+settings with two-sided interactions, unless one imposes additional dimension-reduction restric-
+tions such as those in Bonhomme et al. (2019).
+3.4 Identification in Seriation Model
+One might ask whether the restrictive graph condition found for identification with the BLM
+model is driven not by its richer interaction function, but by the use of multidimensional firm
+productivity, which introduces additional parameters.
+The seriation model provides an alternative: it allows fully flexible complementarities while
+retaining scalar productivities. Here, the interaction function is left entirely nonparametric. As
+19
+
+===== PDF PAGE 21 =====
+the next proposition shows, this flexibility comes with a sharp limitation:𝑓 𝑚,𝜶, and𝝍can be
+recovered only up to strictly monotonic reparameterizations.
+Proposition 1.(Lack of cardinal identification in the seriation model)Model(𝑓 𝑚,𝜶,𝝍, 𝐺 𝐼 𝐽 )can
+be identified only up to any strictly increasing reparameterization of𝜶and𝝍.
+Proposition 1 implies that only the ordinal information (the ranking) of worker and firm pro-
+ductivities can be identified. Cardinal differences are not preserved under strictly monotonic
+transformations, so𝑓 𝑚,𝜶, and𝝍cannot be separately identified.
+While this prevents recovery of productivity levels, the ranks of{𝛼 𝑖 }and{𝜓 𝑗 }, and thus
+the rankings of the vectors𝜶and𝝍, are still identified. Rank-based methods can therefore be
+employed to study sorting patterns and the determinants of productivity ranks without imposing
+cardinal structure.
+To state an identification condition for the seriation model, I first introduce the notion of
+within-side diameters.
+Definition 4.(Within-side Diameter)The within-side diameters of a graph𝐺 𝐼 𝐽 are the largest
+shortest-path distances between any two nodes on the same side of the bipartition: letting𝑑(𝑢, 𝑣)be
+the number of edges in the shortest path between nodes𝑢and𝑣,
+diamI(𝐺𝐼 𝐽 )=max
+𝑖,𝑖 ′∈𝐼
+𝑑(𝑖, 𝑖 ′),diam J(𝐺𝐼 𝐽 )=max
+𝑗,𝑗 ′∈𝐽
+𝑑(𝑗, 𝑗 ′).
+In the graph of Figure 4a, the within-side diameter for𝐼is4, as the shortest path from𝑖 1
+to𝑖 5 spans four edges. For𝐽, the diameter is4, corresponding to the path between𝑗 1 and𝑗 3. In
+Figure 4b, the diameter for𝐽falls to2thanks to the shorter path𝑗 1 →𝑖 5 →𝑗 3, while the diameter
+for𝐼remains4.
+The following condition for identification in the seriation model directly involves the within-
+side diameters.
+Assumption 4.(Diameter 2)The matching network𝐺 𝐼 𝐽 has within-side diameters equal to two.
+Assumption 4 requires that every pair of workers shares at least one common firm, and every
+pair of firms shares at least one common worker. This ensures that all nodes on the same side
+of the bipartition are linked through a single intermediary on the opposite side. The graph in
+Figure 5a fails this property, as workers𝑖 3 and𝑖 5 have no firm in common. Adding the edge
+(𝑖3, 𝑗3), as in Figure 5b, creates the necessary connections and yields within-side diameters of
+two.
+The next result shows that a within-side diameter of two is exactly the connectivity needed
+to recover the rankings of𝜶and𝝍.
+20
+
+===== PDF PAGE 22 =====
+𝑖1
+𝑖2
+𝑖3
+𝑖4
+𝑖5
+𝑗1
+𝑗2
+𝑗3
+(a)
+𝑖1
+𝑖2
+𝑖3
+𝑖4
+𝑖5
+𝑗1
+𝑗2
+𝑗3
+(b)
+Figure 5:Two examples of matching networks: (a) a network that does not satisfy Assumption 4, and (b)
+a network that does, with within-side diameter equal to 2.
+Theorem 4.(Identification of rankings in the seriation model)Under the Seriation model, As-
+sumption 4 is necessary and sufficient for identification of the rankings of𝜶and𝝍.
+From an empirical standpoint, Assumption 4 is strong: it requires that every pair of workers
+have at least one firm in common and that every pair of firms share at least one worker. In labor
+market data, this would mean that any two workers have worked for the same firms, an unlikely
+occurrence outside of small or highly interconnected markets. As with the BLM model, the seri-
+ation model therefore has limited empirical applicability when the focus is on point identification.
+That said, point identification is not always essential for extracting useful information from
+the data. Even when Assumption 4 fails, the seriation model can still deliver partial identification
+of the productivity rankings. Although I do not study partial identification in this paper, it remains
+a promising direction to explore. Following the approach by Crippa and Fedchenko (2025), for
+example, one could derive informative sets for the rankings of𝜶and𝝍.
+3.5 Identification Trade-off
+When the identification conditions for the TWFE, Tukey, BLM, and seriation models are com-
+pared, the trade-off introduced in Section 2.4 becomes clear: weaker restrictions on the interac-
+tion function require richer structure in the matching network.
+Theorems 3 and 4 show that the conditions for point identification in the BLM and seriation
+models are unlikely to be satisfied in most empirical settings involving two-sided interactions.
+By contrast, Theorems 1 and 2 demonstrate that the interaction parameter𝛽 0, together with𝜶
+and𝝍, can be identified under assumptions that are plausibly met in practice.
+The Tukey model thus emerges as a more flexible yet tractable alternative to the TWFE model.
+It is flexible because it accommodates complementarities, through the parameter𝛽0. It is tractable
+because it imposes only mild requirements on the network, unlike its extensions and similarly to
+the TWFE. In the next section, I show that the additional interaction parameter can be consistently
+21
+
+===== PDF PAGE 23 =====
+estimated under assumptions that are commonly satisfied by matching networks observed in
+applications.
+4 Estimation and Inference in Tukey Model
+I study estimation and inference for the parameters of the Tukey model. Section 4.1 presents
+the asymptotic setting used to analyze estimators in the BI framework. Section 4.2 introduces
+an estimator for𝛽 0, establishes its consistency, derives its asymptotic distribution, and shows
+how it can be used to construct a test for the absence of complementarities. Section 4.3 then
+considers the estimation of productivities𝜶and𝝍. While I propose an estimator, I do not study
+its properties; instead, I show how its analysis and the limitations it faces connect to those of the
+existing productivity estimators in the TWFE model.
+4.1 Large Sample in BI Framework
+To study the large-sample properties of the estimators introduced below, I consider an asymptotic
+setting in which both the number of workers𝐼and the number of firms𝐽grow large (𝐼→ ∞,
+𝐽→ ∞). Information accumulates by adding new nodes to the bipartite graph, rather than by
+repeatedly sampling matches along existing edges.
+The analysis is hence based on an asymptotic setting in which the network expands. The
+sequences of matching networks𝐺 𝐼 𝐽, worker productivities𝜶 𝐼, and firm productivities𝝍 𝐽 are
+taken as deterministic, and the set of observed matchesO 𝐼 𝐽 is allowed to vary with(𝐼, 𝐽). Ran-
+domness arises solely from the error terms{𝜂 𝑖 𝑗}(𝑖,𝑗)∈O 𝐼 𝐽 , which are assumed independent across
+matches.
+This setup contrasts with stochastic network formation models, where the graph itself is ran-
+dom. Instead, the analysis reflects empirical applications in which the observed labor market net-
+work is treated as fixed, and inference concerns the role of unobserved shocks given this network
+structure. Equivalently, the setting can be viewed as one where the network and productivities
+are random, but inference is conducted conditional on their realization.
+The role of the matching network in the asymptotic analysis mirrors its role in identification:
+conditions on the sequence of graphs𝐺 𝐼 𝐽 ensure the validity of the asymptotic results. These
+conditions cannot be verified from a single observed graph. Instead, what matters is how the ob-
+served structure relates to the properties required of the asymptotic sequence, to assess whether
+the asymptotic results provide a good approximation to the finite-sample behavior.
+In labor market applications, the large-𝐼, large-𝐽asymptotic setting is well-suited, as available
+datasets often include millions of workers and firms. At the same time, the data are sparse: each
+22
+
+===== PDF PAGE 24 =====
+worker is observed with only a handful of firms, and each firm with only a modest number of
+workers. For example, in the U.S. labor market over a one-year horizon, a typical worker is
+employed by one or two firms, while a typical firm hires only a few dozen workers. To capture
+this structure, the asymptotic setting allows node degrees to remain bounded as𝐼and𝐽grow,
+rather than requiring any worker to be linked with many firms or any firm with many workers.
+4.2 Interaction Parameter𝛽 0
+Recall the Tukey model:
+𝑦𝑖 𝑗 =𝛼 𝑖 +𝜓 𝑗 +𝛽 0𝛼𝑖𝜓 𝑗 +𝜂 𝑖 𝑗,
+withE[𝜂 𝑖 𝑗]=0, and{𝜂 𝑖 𝑗}(𝑖,𝑗)∈O 𝐼 𝐽 independent.
+This section introduces an estimator for𝛽 0, and analyzes its properties in the large sample
+setting described above. Note that, despite Tukey (1949) and the following literature on non-
+additivity in ANOVA consider this same model, they do not discuss any estimator for𝛽 0, rather
+focusing on directly testing the hypothesis𝛽 0 =0.
+Theorem 1 shows that a single informative four-cycle suffices to identify𝛽0. In the presence of
+noise, however, estimation requires pooling information across many four-cycles present in𝐺 𝐼 𝐽.
+It is therefore convenient to treat each four-cycle as an observational unit and impose conditions
+on the sequence of matching networks that guarantee the number of distinct four-cycles grows
+with𝐼and𝐽.
+4.2.1 Estimator for𝛽 0
+Index the four-cycles in𝐺 𝐼 𝐽 byℓ=1, . . . , 𝐿. For clarity of exposition, I restrict attention to edge-
+disjoint cycles, assuming that no cycles share an edge (but they can share one or two nodes). This
+restriction is not essential, and information from overlapping cycles can also be aggregated, but
+focusing on edge-disjoint cycles keeps the notation tractable.
+Each cycleℓconsists of two distinct workers{𝑖 ℓ, 𝑖′
+ℓ }and two distinct firms{𝑗 ℓ, 𝑗 ′
+ℓ }. For ex-
+positional purposes, suppose labels are ordered so that𝛼 𝑖ℓ ≥𝛼 𝑖′
+ℓ and𝜓 𝑗ℓ ≥𝜓 𝑗 ′
+ℓ . Of course, these
+labels are unknown to the researcher: they only observe the pairs in the cycle, not the underlying
+productivities.
+To work with the formulas below, the researcher must nonetheless assign distinct labels to
+workers and firms in each cycle. At this stage, I leave the rule for assigning labels unspecified;
+later, I propose a procedure that uniquely determines them.
+Formally, the researcher assigns labels(𝑖 ℓ,𝜋 ℓ, 𝑖′
+ℓ,𝜋 ℓ )and(𝑗 ℓ,𝜋 ℓ, 𝑗 ′
+ℓ,𝜋 ℓ )to the worker and firm pairs
+23
+
+===== PDF PAGE 25 =====
+{𝑖ℓ, 𝑖′
+ℓ }and{𝑗 ℓ, 𝑗 ′
+ℓ }. Given this labeling, define
+𝜋ℓ :=𝜋 𝛼
+ℓ 𝜋𝜓
+ℓ ,
+where
+𝜋 𝛼
+ℓ :=
+ 
+
+1,if(𝑖 ℓ,𝜋 ℓ, 𝑖′
+ℓ,𝜋 ℓ )=(𝑖 ℓ, 𝑖′
+ℓ),
+−1,if(𝑖 ℓ,𝜋 ℓ, 𝑖′
+ℓ,𝜋 ℓ )=(𝑖 ′
+ℓ, 𝑖ℓ),
+𝜋𝜓
+ℓ :=
+ 
+
+1,if(𝑗 ℓ,𝜋 ℓ, 𝑗 ′
+ℓ,𝜋 ℓ )=(𝑗 ℓ, 𝑗 ′
+ℓ),
+−1,if(𝑗 ℓ,𝜋 ℓ, 𝑗 ′
+ℓ,𝜋 ℓ )=(𝑗 ′
+ℓ, 𝑗 ℓ).
+In words,𝜋 𝛼
+ℓ (𝜋𝜓
+ℓ ) equals1when the assigned label𝑖 ℓ,𝜋 ℓ (𝑗 ℓ,𝜋 ℓ ) corresponds to the higher-
+productivity worker (firm), and−1otherwise. Because productivities are unobserved,𝜋 ℓ cannot
+be directly chosen, but each labeling rule uniquely determines its value. For this reason, I refer
+to the label assignment chosen by the researcher simply as𝜋 ℓ.
+For each cycleℓwith labeling𝜋 ℓ, define
+ˆΔ1,ℓ,𝜋ℓ :=𝑦 𝑖ℓ,𝜋ℓ 𝑗ℓ,𝜋ℓ −𝑦 𝑖′
+ℓ,𝜋ℓ 𝑗ℓ,𝜋ℓ −𝑦 𝑖ℓ,𝜋ℓ 𝑗 ′
+ℓ,𝜋ℓ
++𝑦 𝑖′
+ℓ,𝜋ℓ 𝑗 ′
+ℓ,𝜋ℓ
+,
+ˆΔ2,ℓ,𝜋ℓ :=𝑦 𝑖ℓ,𝜋ℓ 𝑗ℓ,𝜋ℓ 𝑦𝑖′
+ℓ,𝜋ℓ 𝑗 ′
+ℓ,𝜋ℓ
+−𝑦 𝑖′
+ℓ,𝜋ℓ 𝑗ℓ,𝜋ℓ 𝑦𝑖ℓ,𝜋ℓ 𝑗 ′
+ℓ,𝜋ℓ
+.
+Intuitively, ˆΔ1,ℓ,𝜋ℓ compares the difference in outcomes between workers across firms, whileˆΔ2,ℓ,𝜋ℓ
+contrasts two cross-products, each involving all four nodes in the cycle. Both statistics depend
+on how workers and firms are labeled within the cycle, as shown by the following example.
+Example 1.(Computing ˆΔ1,ℓ,𝜋ℓ and ˆΔ2,ℓ,𝜋ℓ ).Cycleℓincludes workers Alice and Bob, and firms
+Canon and Dell. Alice earns 120 with Canon and 100 with Dell, while Bob earns 100 with Canon and
+90 with Dell.
+To compute ˆΔ1,ℓ,𝜋ℓ and ˆΔ2,ℓ,𝜋ℓ , the researcher must first assign labels(𝑖 ℓ,𝜋 ℓ, 𝑖′
+ℓ,𝜋 ℓ )to Alice and Bob,
+and(𝑗 ℓ,𝜋 ℓ, 𝑗 ′
+ℓ,𝜋 ℓ )to Canon and Dell. Each of the four possible assignments induces a value for𝜋 ℓ and
+determines the outcomes𝑦 𝑖ℓ,𝜋ℓ 𝑗ℓ,𝜋ℓ ,𝑦 𝑖′
+ℓ,𝜋ℓ 𝑗ℓ,𝜋ℓ ,𝑦 𝑖ℓ,𝜋ℓ 𝑗 ′
+ℓ,𝜋ℓ
+, and𝑦 𝑖′
+ℓ,𝜋ℓ 𝑗 ′
+ℓ,𝜋ℓ
+, and thus the corresponding values
+of ˆΔ1,ℓ,𝜋ℓ and ˆΔ2,ℓ,𝜋ℓ . The rows in the following table summarize each assignment:
+𝑖ℓ,𝜋 ℓ 𝑖′
+ℓ,𝜋 ℓ 𝑗ℓ,𝜋 ℓ 𝑗 ′
+ℓ,𝜋 ℓ 𝑦𝑖ℓ,𝜋ℓ 𝑗ℓ,𝜋ℓ 𝑦𝑖′
+ℓ,𝜋ℓ 𝑗ℓ,𝜋ℓ 𝑦𝑖ℓ,𝜋ℓ 𝑗 ′
+ℓ,𝜋ℓ
+𝑦𝑖′
+ℓ,𝜋ℓ 𝑗 ′
+ℓ,𝜋ℓ
+ˆΔ1,ℓ,𝜋ℓ
+ˆΔ2,ℓ,𝜋ℓ 𝜋ℓ
+Alice Bob Canon Dell 120 100 100 90 10 800 1
+Alice Bob Dell Canon 100 90 120 100 -10 -800 -1
+Bob Alice Canon Dell 100 120 90 100 -10 -800 -1
+Bob Alice Dell Canon 90 100 100 120 10 800 1
+Although there are four possible labelings, they generate only two distinct pairs( ˆΔ1,ℓ,𝜋ℓ, ˆΔ2,ℓ,𝜋ℓ ),
+corresponding to the two possible values of𝜋 ℓ (which remains unknown to the researcher).
+24
+
+===== PDF PAGE 26 =====
+With these statistics in hand, define the estimator
+ˆ𝛽𝐿,𝜋 :=−
+1
+𝐿
+Í𝐿
+ℓ=1 ˆΔ1,ℓ,𝜋ℓ
+1
+𝐿
+Í𝐿
+ℓ=1 ˆΔ2,ℓ,𝜋ℓ
+.
+The estimator ˆ𝛽𝐿,𝜋 does not require estimating𝜶or𝝍. As a result,𝛽 0 can be estimated consis-
+tently even when individual productivities cannot be, for example when each worker is observed
+only a few times; see Remark 3 for details.
+The estimator depends on the labelings(𝜋 1, . . . , 𝜋𝐿). In a network with𝐿cycles, different la-
+beling combinations can generate up to2𝐿 distinct estimators of𝛽 0. Such dependence on arbitrary
+labeling is undesirable, since two researchers analyzing the same data could obtain different es-
+timates solely because they chose different labelings. To remove this ambiguity, I later introduce
+a procedure that selects a particular combination of labelings.
+To see why ˆ𝛽𝐿,𝜋 is an estimator for𝛽 0, decompose ˆΔ1,ℓ,𝜋ℓ and ˆΔ2,ℓ,𝜋ℓ as:
+ˆΔ1,ℓ,𝜋ℓ =Δ 1,ℓ,𝜋ℓ +𝜖 Δ1,ℓ,𝜋 ℓ,
+ˆΔ2,ℓ,𝜋ℓ =Δ 2,ℓ,𝜋ℓ +𝜖 Δ2,ℓ,𝜋 ℓ,
+where
+Δ1,ℓ,𝜋ℓ =𝛽 0 (𝛼𝑖ℓ −𝛼 𝑖′
+ℓ ) (𝜓𝑗ℓ −𝜓 𝑗 ′
+ℓ )𝜋 ℓ,
+Δ2,ℓ,𝜋ℓ =−(𝛼 𝑖ℓ −𝛼 𝑖′
+ℓ ) (𝜓𝑗ℓ −𝜓 𝑗 ′
+ℓ )𝜋 ℓ,
+and
+𝜖Δ1,ℓ,𝜋 ℓ =  𝜂𝑖ℓ 𝑗ℓ −𝜂 𝑖′
+ℓ 𝑗ℓ −𝜂 𝑖ℓ 𝑗 ′
+ℓ +𝜂 𝑖′
+ℓ 𝑗 ′
+ℓ
+𝜋ℓ,(4.1)
+𝜖Δ2,ℓ,𝜋 ℓ =  𝜃𝑖ℓ 𝑗ℓ𝜂𝑖′
+ℓ 𝑗 ′
+ℓ +𝜃 𝑖′
+ℓ 𝑗 ′
+ℓ 𝜂𝑖ℓ 𝑗ℓ −𝜃 𝑖′
+ℓ 𝑗ℓ𝜂𝑖ℓ 𝑗 ′
+ℓ −𝜃 𝑖ℓ 𝑗 ′
+ℓ 𝜂𝑖′
+ℓ 𝑗ℓ +𝜂 𝑖ℓ 𝑗ℓ𝜂𝑖′
+ℓ 𝑗 ′
+ℓ −𝜂 𝑖′
+ℓ 𝑗ℓ𝜂𝑖ℓ 𝑗 ′
+ℓ
+𝜋ℓ .(4.2)
+Here, the absolute values ofΔ 1,ℓ,𝜋ℓ andΔ 2,ℓ,𝜋ℓ depend only on the model parameters, while
+their sign is determined by the labeling𝜋 ℓ. The random terms𝜖 Δ1,ℓ,𝜋 ℓ and𝜖 Δ2,ℓ,𝜋 ℓ are mean-zero
+combinations of the four errors𝜂𝑖 𝑗, with their sign again determined solely by𝜋ℓ. This decompo-
+sition highlights why averaging across many cycles reduces sampling variability: the error terms
+{𝜂𝑖 𝑗}are independent and mean zero across edges. Taking the ratio of these averages then can-
+cels the common dependence on latent productivities(𝜶,𝝍)and on labelings, leaving only the
+parameter𝛽 0.
+The next section formalizes this intuition and establishes that, under suitable conditions on
+the sequence of graphs, error terms, and labelings, ˆ𝛽𝐿,𝜋 converges almost surely to𝛽 0.
+25
+
+===== PDF PAGE 27 =====
+4.2.2 Consistency
+To establish the consistency of ˆ𝛽𝐿,𝜋, I require the following conditions.
+Assumption 5.
+5.1(Error Regularity)The error terms𝜂 𝑖 𝑗 are independent across all(𝑖, 𝑗)and satisfyE[𝜂 𝑖 𝑗]=0,
+Var(𝜂𝑖 𝑗) ≥𝐶 𝜂 >0, andE[|𝜂 𝑖 𝑗 | 2+𝛿] ≤𝑀<∞for some𝛿>0and uniform bounds𝐶 𝜂 and𝑀.
+5.2(Cycles Growth)The sequence of matching networks𝐺 𝐼 𝐽 is such that, as𝐼→ ∞and𝐽→ ∞,
+𝐿→ ∞.
+5.3(Cycles Heterogeneity)The sequences of latent productivities𝜶 𝐼 and𝝍 𝐽 , and the sequence of
+matching networks𝐺 𝐼 𝐽 are such that
+𝜇𝐿 = 1
+𝐿
+𝐿∑︁
+ℓ=1
+(𝛼𝑖ℓ −𝛼 𝑖′
+ℓ ) (𝜓𝑗ℓ −𝜓 𝑗 ′
+ℓ )
+is bounded away from zero (𝜇 𝐿 >𝐶 𝜇 >0).
+5.4(Labeling Regularity)The sequence of cycle labelings{𝜋 ℓ }𝐿
+ℓ=1 satisfies
+𝜇𝐿𝑐𝜋 − 1
+𝐿
+𝐿∑︁
+ℓ=1
+(𝛼𝑖ℓ −𝛼 𝑖′
+ℓ ) (𝜓𝑗ℓ −𝜓 𝑗 ′
+ℓ )𝜋 ℓ
+𝑎.𝑠.
+− − →0,
+for some constant𝑐 𝜋 with|𝑐 𝜋 |>𝐶 𝜋 >0. Moreover, the labeling signs{𝜋 ℓ }are independent of
+the error terms{𝜂 𝑖 𝑗}.
+Assumption 5.1 imposes standard regularity conditions on the error terms. Importantly, it
+does not require the𝜂 𝑖 𝑗 to be identically distributed and allows for heteroskedasticity: each error
+may follow its own distribution, provided it has mean zero, is non-degenerate, and admits(2+𝛿)
+moments. While the non-degeneracy and moment conditions are not strictly necessary for con-
+sistency, they are needed for deriving the asymptotic distribution of the estimator in subsequent
+results.
+Assumption 5.2 concerns the sequence of matching networks and requires that the number
+of cycles grows with the overall size of the network. The condition does not restrict node degrees
+and is compatible with graphs𝐺 𝐼 𝐽 where degrees remain bounded: for example, no worker or
+firm needs to appear in more than two matches. Since ˆ𝛽𝐿,𝜋 treats cycles as the fundamental units
+of observation, the assumption guarantees that the number of such units increases sufficiently to
+justify asymptotic analysis.
+26
+
+===== PDF PAGE 28 =====
+Assumption 5.3 requires that the average, across cycles, of the products of worker and firm
+productivity differences remains bounded away from zero. Since this condition is formulated us-
+ing ordered labels, it does not depend on the specific choice of labeling. It is closely related to
+Assumption 1, which underlies identification, and guarantees the presence of systematic hetero-
+geneity in productivities across cycles. Put differently, because𝜇 𝐿 is an average of nonnegative
+terms, requiring𝜇 𝐿 to stay strictly positive implies that a non-vanishing fraction of the summands
+must themselves be bounded away from zero. This excludes degenerate cases in which hetero-
+geneity vanishes asymptotically, requiring enough variation across workers and firms to make
+the cycles informative.
+Assumption 5.4 restricts the sequence of labelings. It rules out labeling schemes that drive
+the average ofΔ 2,ℓ,𝜋ℓ toward zero, since in that case both the numerator and denominator of the
+estimator would vanish, making𝛽0 possibly unrecoverable. It also excludes labelings that are sys-
+tematically correlated with the error terms, as such dependence would invalidate the averaging
+argument underpinning the law of large numbers. The assumption does not prescribe a unique
+labeling rule; rather, it specifies the conditions that any labeling must satisfy to be admissible,
+allowing for both deterministic and stochastic labeling rules. In Section 4.2.4, I present one such
+rule, based on observable instruments, which ensures the condition and provides a practically
+implementable estimator.
+Strong consistency of ˆ𝛽𝐿,𝜋 for𝛽 0 then follows from the strong law of large numbers, as stated
+in the following theorem.
+Theorem 5.(Strong Consistency)Under Assumption 5, as𝐼→ ∞and𝐽→ ∞, the estimator ˆ𝛽𝐿,𝜋
+is strongly consistent for𝛽 0, i.e., ˆ𝛽𝐿,𝜋 →𝑎.𝑠. 𝛽0.
+The assumptions on𝐺 𝐼 𝐽 required for consistency of ˆ𝛽𝐿 are relatively weak. For instance,
+under the bipartite Erdős–Rényi random graph model, Assumption 5.2 holds whenever the link
+probability𝑝 𝐼 𝐽 satisfies √𝐼 𝐽 𝑝𝐼 𝐽 → ∞(see Appendix D for the formal definition of the model
+and the derivation of this threshold). By contrast, ensuring that the graph is connected requires
+the stronger condition
+√𝐼 𝐽 𝑝𝐼 𝐽
+log(√𝐼 𝐽) >1. Hence, under the Erdős–Rényi model, the condition on the
+matching network needed for identification of𝜶and𝝍automatically guarantees the one required
+for consistency of ˆ𝛽𝐿,𝜋.
+The effective sample size for estimating𝛽 0 is𝐿, the number of cycles, rather than the number
+of observed matches. This parallels other settings in econometrics: in local linear regression, the
+effective sample size is proportional to the number of observations times the bandwidth, while
+in clustered data it is given by the number of clusters rather than the number of units.
+In labor market applications, Assumption 5.2 is satisfied whenever the number of cycles grows
+proportionally with the number of workers and firms, even if the graph consists of many discon-
+nected local subgraphs. For instance, in the empirical setting of Kline (2024), the data contain
+27
+
+===== PDF PAGE 29 =====
+roughly 750,000 workers, 70,000 firms, and 5,000 cycles: the number of cycles is large enough
+that asymptotic approximations are likely to provide a good guide to finite-sample behavior.
+The next step is to characterize the asymptotic distribution of ˆ𝛽𝐿,𝜋, which provides the basis
+for valid inference and for testing the absence of complementarities.
+Remark 3.(No Need to Estimate Productivities)A key feature of ˆ𝛽𝐿,𝜋 is that it achieves consistency
+without requiring estimation of the productivity components𝜶and𝝍, which would demand many
+observations of each worker and firm. This is in contrast to more standard approaches, such as the
+iterative least squares procedure of Bai (2009), which estimates𝛽 0 jointly with unit-specific effects.
+In that setting, the asymptotic behavior of the estimator for𝛽 0 depends on the properties of the
+estimators for𝜶and𝝍. By avoiding their estimation altogether, and directly isolating𝛽 0, the cycle-
+based estimator sidesteps this difficulty.
+4.2.3 Asymptotic Distribution
+The estimator ˆ𝛽𝐿,𝜋 is a ratio of averages, which makes its asymptotic behavior amenable to anal-
+ysis via the Lyapunov Central Limit Theorem. To set up the argument, define
+𝑢ℓ,𝜋 ℓ :=𝜖 Δ1,ℓ,𝜋 ℓ +𝛽 0𝜖Δ2,ℓ,𝜋 ℓ,
+with𝜖 Δ1,ℓ,𝜋 ℓ and𝜖 Δ2,ℓ,𝜋 ℓ defined in Equations 4.1 and 4.2. The mean-zero composite error𝑢 ℓ,𝜋 ℓ
+depends on𝛽 0, the four productivity terms, the labeling, and the four error terms associated with
+cycleℓ.
+With this notation in place, the asymptotic distribution of ˆ𝛽𝐿,𝜋 can be derived.
+Theorem 6.(Asymptotic Normality)Under Assumption 5, as𝐼→ ∞and𝐽→ ∞,
+√
+𝐿  ˆ𝛽𝐿,𝜋 −𝛽 0
+
+𝜎𝑢,𝐿
+𝜇𝐿𝑐𝜋
+𝑑
+− → N
+
+0,1
+
+,
+where𝜎 𝑢,𝐿 :=
+√︃
+1
+𝐿
+Í𝐿
+ℓ=1 Var(𝑢ℓ,𝜋 ℓ )is the square root of the average variance of the composite errors
+{𝑢ℓ,𝜋 ℓ }across cycles, and𝜇 𝐿 and𝑐 𝜋 are as defined in Assumptions 5.3 and 5.4.
+The estimator ˆ𝛽𝐿,𝜋 converges at rate
+√
+𝐿, where𝐿, the number of cycles, acts as the effective
+sample size. In a complete bipartite graph, this corresponds to the rate √𝐼 𝐽, since the edges can
+be partitioned into 𝐼
+2 × 𝐽
+2 edge-disjoint four-cycles. This rate is faster than themin{
+√
+𝐼, √𝐽}rate
+obtained by iterative procedures, reflecting the more efficient aggregation of information across
+the graph. An important implication is that ˆ𝛽𝐿,𝜋 remains consistent even when one dimension,
+either𝐼or𝐽, is held fixed while the other grows.
+28
+
+===== PDF PAGE 30 =====
+In addition to the sample size, three scaling terms appear in the asymptotic distribution. The
+first,𝜎 𝑢,𝐿, is the square root of the average variance of the composite error terms𝑢 ℓ,𝜋 . Although
+these errors depend on the chosen labeling, their variances do not; hence𝜎 𝑢,𝐿 is invariant to
+labeling. It reflects only the variability of the underlying noise terms𝜂 𝑖 𝑗: greater noise in𝑦 𝑖 𝑗
+increases𝜎 𝑢,𝐿 and reduces estimator precision.
+The second,𝜇 𝐿, summarizes the heterogeneity in worker and firm productivities across cycles.
+If workers and firms within cycles are too similar,𝜇𝐿 is small and the estimator becomes imprecise.
+By contrast, stronger heterogeneity makes𝜇 𝐿 larger, yielding sharper estimates.
+The third,𝑐 𝜋, isolates the effect of labeling choice. It shows explicitly how different labeling
+rules can affect the variance of the estimator, with some labelings increasing its precision relative
+to others.
+Feasible Scaling Factor Estimation.To make the asymptotic normality result operational
+for inference, the scaling factor 𝜎𝑢,𝐿
+𝜇𝐿𝑐𝜋
+must be estimated. A consistent estimator is
+√︃
+ˆ𝜎2
+𝑢,𝐿,𝜋
+− 1
+𝐿
+Í𝐿
+ℓ=1 ˆΔ2,ℓ,𝜋
+,
+where− 1
+𝐿
+Í𝐿
+ℓ=1 ˆΔ2,ℓ,𝜋 consistently estimates𝜇 𝐿𝑐𝜋 (as established in the consistency proof), and
+ˆ𝜎2
+𝑢,𝐿,𝜋 estimates𝜎 2
+𝑢,𝐿. A convenient choice for ˆ𝜎2
+𝑢,𝐿,𝜋 is the average of the squares of the estimated
+residuals ˆ𝑢ℓ,𝜋 :
+ˆ𝜎2
+𝑢,𝐿,𝜋 := 1
+𝐿
+𝐿∑︁
+ℓ=1
+ˆ𝑢2
+ℓ,𝜋 = 1
+𝐿
+𝐿∑︁
+ℓ=1
+  ˆΔ1,ℓ,𝜋 + ˆ𝛽𝐿,𝜋 ˆΔ2,ℓ,𝜋
+2,
+whose consistency is established in the following proposition.
+Proposition 2.(Consistent Variance Estimator)Under Assumption 5, as𝐼→ ∞and𝐽→ ∞, the
+estimator ˆ𝜎2
+𝑢,𝐿,𝜋 is consistent for𝜎 2
+𝑢,𝐿
+ˆ𝜎2
+𝑢,𝐿,𝜋 −𝜎 2
+𝑢,𝐿
+𝑝
+− →0.
+Theorem 6, together with these feasible estimators for the scaling terms, yields valid asymp-
+totic confidence intervals for𝛽 0. The next section introduces a practical procedure for selecting
+labelings in each cycle, ensuring Assumption 5.4 holds, uniquely defining the estimator, and guar-
+anteeing the validity of inference.
+4.2.4 Rank-Based Labeling
+Assumption 5.4 restricts how labels can be assigned within each cycle but does not prescribe a
+specific rule. In this section, I propose a rank-based procedure for assigning labels(𝑖ℓ,𝜋 ℓ, 𝑖′
+ℓ,𝜋 ℓ )and
+(𝑗 ℓ,𝜋 ℓ, 𝑗 ′
+ℓ,𝜋 ℓ )in each cycle, and show that it satisfies Assumption 5.4. As a result, the estimator with
+29
+
+===== PDF PAGE 31 =====
+this rank-based labeling is consistent and asymptotically normal, and not dependent on arbitrary
+labeling choices.
+Suppose the researcher observes some characteristics of workers and firms, denoted by𝒛 𝜶 =
+(𝑧𝛼
+1 , . . . , 𝑧𝛼
+𝐼 )and𝒛 𝝍 =(𝑧 𝜓
+1 , . . . , 𝑧𝜓
+𝐽 ), and treated as nonrandom. Labels in each cycle are then
+assigned using these instruments according to the following rule.
+Definition 5.(Rank-Based Labeling)In each cycleℓ, the labels(𝑖 ℓ,𝜋 ℓ,𝑧, 𝑖′
+ℓ,𝜋 ℓ,𝑧 )and(𝑗 ℓ,𝜋 ℓ,𝑧, 𝑗 ′
+ℓ,𝜋 ℓ,𝑧 )are
+assigned so that
+𝑧𝛼
+𝑖ℓ,𝜋ℓ,𝑧
+>𝑧 𝛼
+𝑖′
+ℓ,𝜋ℓ,𝑧
+and𝑧 𝜓
+𝑗ℓ,𝜋ℓ,𝑧
+>𝑧 𝜓
+𝑗 ′
+ℓ,𝜋ℓ,𝑧
+.
+Under this rule, the worker and firm with larger instrument values are always labeled𝑖 ℓ,𝜋 ℓ,𝑧
+and𝑗 ℓ,𝜋 ℓ,𝑧 , respectively. This induces the signs
+𝜋 𝛼
+ℓ,𝑧 =sign
+
+𝑧𝛼
+𝑖ℓ −𝑧 𝛼
+𝑖′
+ℓ
+
+, 𝜋 𝜓
+ℓ,𝑧 =sign
+
+𝑧𝜓
+𝑗ℓ −𝑧 𝜓
+𝑗 ′
+ℓ
+
+.
+For expositional clarity, I exclude the possibility of ties in the instruments; when ties occur, they
+can be resolved at random.
+Let ˆ𝛽𝐿,𝑧 denote the Rank-Based Labeling (RBL) estimator, defined using the rank-based label-
+ing:
+ˆ𝛽𝐿,𝑧 :=−
+1
+𝐿
+Í𝐿
+ℓ=1 ˆΔ1,ℓ,𝜋ℓ,𝑧
+1
+𝐿
+Í𝐿
+ℓ=1 ˆΔ2,ℓ,𝜋ℓ,𝑧
+.(RBL estimator)
+The properties of ˆ𝛽𝐿,𝑧 depend on the choice of instruments𝒛 𝛼 and𝒛 𝜓.
+Consider first the oracle case in which the instruments available to the researcher coincide
+exactly with the latent productivities𝜶and𝝍. In this case, the induced labelings satisfy𝜋 ℓ,𝑧 =1
+for allℓ, so that Assumption 5.4 holds with𝑐 𝜋 =1. Such oracle instruments are, of course,
+infeasible in practice, but Assumption 5.4 does not require𝑐 𝜋 =1, just that it remains bounded
+away from zero. Intuitively, this occurs whenever the instruments correctly rank the higher-
+productivity worker and firm more often than not.
+In applications, instruments should therefore be observable characteristics plausibly associ-
+ated with latent productivities. For instance, years of schooling and firm size can serve as instru-
+ments for𝜶and𝝍, as they are often strongly correlated with worker and firm productivity. By
+contrast, outcomes themselves, though mechanically related to productivities, violate the exo-
+geneity requirement, since they also depend on the error terms{𝜂 𝑖 𝑗}. This means that, as shown
+in Appendix E, using outcomes as instruments leads to biased estimates and invalid inference.
+The next example provides a practical illustration of how labels are assigned.
+30
+
+===== PDF PAGE 32 =====
+Example 2.(Rank-Based Labeling in Practice).Consider two cycles. The first involves workers
+Alice and Bob and firms Canon and Dell; the second involves workers Elizabeth and Fred and firms
+General Motors and Honda. To assign labels in each cycle, use years of schooling as an instrument
+for workers, and the number of employees as an instrument for firms. The instrument values are:
+Worker𝑧 𝛼
+𝑖
+Alice 16
+Bob 14
+Elizabeth 18
+Fred 12
+Firm𝑧 𝜓
+𝑗
+Canon 170,000
+Dell 110,000
+General Motors 160,000
+Honda 190,000
+Assign labels in each cycle according to the rank-based labeling, so that the worker with higher
+schooling receives label𝑖 ℓ,𝜋 ℓ,𝑧 and the firm with more employees receives label𝑗 ℓ,𝜋 ℓ,𝑧 . The resulting
+labels and the corresponding cycle statistics are:
+𝑖ℓ,𝜋 ℓ,𝑧 𝑖′
+ℓ,𝜋 ℓ,𝑧 𝑗ℓ,𝜋 ℓ,𝑧 𝑗 ′
+ℓ,𝜋 ℓ,𝑧 𝑧𝛼
+𝑖ℓ,𝜋ℓ,𝑧
+𝑧𝛼
+𝑖′
+ℓ,𝜋ℓ,𝑧
+𝑧𝜓
+𝑗ℓ,𝜋ℓ,𝑧
+𝑧𝜓
+𝑗 ′
+ℓ,𝜋ℓ,𝑧
+ˆΔ1,ℓ,𝜋ℓ,𝑧
+ˆΔ2,ℓ,𝜋ℓ,𝑧
+Alice Bob Canon Dell 16 14 170k 110k 10 800
+Elizabeth Fred Honda General Motors 18 12 190k 160k 20 900
+This table, where each row represents a distinct cycle, is the analysis dataset: the estimator ˆ𝛽𝐿,𝑧
+is the ratio of the averages of the last two columns.
+To formalize the conditions that instruments must satisfy in addition to exogeneity, define
+the averages
+𝜋 𝛼 := 1
+𝐿
+𝐿∑︁
+ℓ=1
+𝜋 𝛼
+ℓ,𝑧, 𝜋𝜓 := 1
+𝐿
+𝐿∑︁
+ℓ=1
+𝜋𝜓
+ℓ,𝑧, 𝜋 𝛼𝜋𝜓 := 1
+𝐿
+𝐿∑︁
+ℓ=1
+𝜋 𝛼
+ℓ,𝑧𝜋𝜓
+ℓ,𝑧,
+and impose the following conditions on the sequences{𝜋 𝛼
+ℓ,𝑧 }and{𝜋 𝜓
+ℓ,𝑧 }.
+Assumption 6.
+6.1(Relevance)Instruments correctly rank workers and firms sufficiently often: there exist con-
+stants𝑐 𝛼, 𝑐𝜓 >0such that, for all sufficiently large𝐿,
+𝜋 𝛼 ≥𝑐 𝛼, 𝜋𝜓 ≥𝑐 𝜓 .
+31
+
+===== PDF PAGE 33 =====
+6.2(No Negative Association)Worker and firm instruments are not systematically opposed:
+1
+𝐿
+𝐿∑︁
+ℓ=1
+(𝜋 𝛼
+ℓ,𝑧 − 𝜋 𝛼 ) (𝜋 𝜓
+ℓ,𝑧 − 𝜋𝜓 ) ≥0.
+6.3(No Large Gap Penalty)Instrument ranks are not systematically misaligned with the magni-
+tude of productivity differences:
+1
+𝐿
+𝐿∑︁
+ℓ=1
+
+(𝛼𝑖ℓ −𝛼 𝑖′
+ℓ ) (𝜓𝑗ℓ −𝜓 𝑗 ′
+ℓ ) −𝜇 𝐿
+
+𝜋 𝛼
+ℓ,𝑧𝜋𝜓
+ℓ,𝑧 − 𝜋 𝛼𝜋𝜓
+
+≥0.
+Assumption 6.1 requires that the instruments contain useful information about the latent
+productivities: the rankings they induce must align with the true rankings often enough. Perfect
+accuracy is not necessary, and occasional misorderings are allowed, as long as the instruments
+select the correct ordering in a sufficiently large fraction of cycles.
+Assumption 6.2 rules out a systematic negative association between worker-side and firm-
+side labelings. That is, it excludes the case in which the worker instrument tends to misorder
+exactly when the firm instrument orders correctly (or vice versa). The restriction applies only on
+average: isolated instances of such behavior are admissible provided they do not dominate.
+Assumption 6.3 prevents a systematic association between large productivity gaps and mis-
+labeling. Specifically, it rules out the possibility that cycles with large differences in worker-firm
+productivities are disproportionately associated with incorrect rankings. This condition is mild:
+in practice, misclassifications are more likely when productivity gaps are small, not when they
+are large.
+The next proposition establishes that, when the instruments satisfy Assumption 6, the rank-
+based labeling𝜋 ℓ,𝑧 satisfies the condition required by Assumption 5.4. Consequently, the RBL
+estimator ˆ𝛽𝐿,𝑧 achieves the asymptotic properties established in Theorems 5 and 6.
+Proposition 3.(Rank-Based Labeling Validity)Under Assumptions 5.1, 5.2, 5.3, and 6, the rank-
+based labeling𝜋 ℓ,𝑧 satisfies Assumption 5.4.
+Proposition 3 ensures that the rank-based labeling delivers a well-defined estimator ˆ𝛽𝐿,𝑧 with
+the aforementioned asymptotic properties. This result allows ˆ𝛽𝐿,𝑧 to serve not only as an esti-
+mator of the interaction parameter but also as the basis for the construction of a formal test for
+the absence of complementarities and hence for modularity of the interaction function in the BI
+framework. The next section develops this test and studies its properties.
+32
+
+===== PDF PAGE 34 =====
+4.2.5 Test for Absence of Complementarities
+The TWFE model is nested within the Tukey model as the special case𝛽0 =0. Hence, the asymp-
+totic distribution of the RBL estimator ˆ𝛽𝐿,𝑧 can be used to test the null hypothesis𝐻 0 :𝛽 0 =0.
+Rejecting𝐻 0 not only rejects the TWFE specification, but also rejects modularity of the interac-
+tion function𝑓, since any modular function can be written in the additive form assumed by the
+TWFE model (see Appendix A). To the best of my knowledge, no formal test of modularity has
+previously been available in the BI framework, even though empirical discussions often revolve
+around whether complementarities are present.
+Testing𝐻 0 :𝛽 0 =0is the central focus of Tukey (1949), although no estimator for𝛽 0 is
+proposed there. Relying on restrictive assumptions (homoskedastic normally distributed errors
+𝜂𝑖 𝑗 and complete matching network𝐺 𝐼 𝐽), Tukey’s procedure first estimates the additive effects𝜶
+and𝝍under the null through two-way fixed effects regression, and then test whether including
+the interaction term𝛼 𝑖𝜓 𝑗 significantly improves model fit, for example through regression-based
+tests or changes in𝑅 2.
+Similar heuristic approaches have been adopted in the TWFE literature (e.g., Card et al. (2013);
+Fenizia (2022)), but the sparsity of the matching network𝐺𝐼 𝐽 makes consistent estimation of𝜶and
+𝝍infeasible, so that any procedure based on regression residuals seem to be justifiable only under
+strong assumptions on the error terms and the matching network. By contrast, the estimatorˆ𝛽𝐿,𝜋
+remains consistent even under heteroskedasticity and in sparse matching structures.
+Test Statistic.Consider the t-statistic
+ˆ𝑇𝐿,𝑧 :=
+√
+𝐿
+1
+𝐿
+Í𝐿
+ℓ=1 ˆΔ1,ℓ,𝜋ℓ,𝑧
+1
+𝐿
+Í𝐿
+ℓ=1 ˆΔ2,ℓ,𝜋ℓ,𝑧
+ˆ𝜎𝑢,𝐿,𝑧
+1
+𝐿
+Í𝐿
+ℓ=1 ˆΔ2,ℓ,𝜋ℓ,𝑧
+=
+Í𝐿
+ℓ=1 ˆΔ1,ℓ,𝜋ℓ,𝑧
+√︂Í𝐿
+ℓ=1
+  ˆΔ1,ℓ,𝜋ℓ,𝑧 −
+Í𝐿
+ℓ=1 ˆΔ1,ℓ,𝜋ℓ,𝑧Í𝐿
+ℓ=1 ˆΔ2,ℓ,𝜋ℓ,𝑧
+ˆΔ2,ℓ,𝜋ℓ,𝑧
+2
+,
+and define the test𝜙 𝐿,𝑧 with size𝛾that rejects the null according to
+𝜙𝐿,𝑧 ( ˆ𝑇𝐿,𝑧, 𝛾)=1
+
+| ˆ𝑇𝐿,𝑧 | ≥𝑐 𝛾/2
+	
+,
+where𝑐 𝛾/2 is the𝛾/2quantile of the standard normal distribution. The asymptotic validity and
+consistency of this test follow directly from the asymptotic normality result in Theorem 6, as
+summarized in the following corollary.
+Corollary 1.(Test for Modularity)Under Assumptions 5 and 6, as𝐼→ ∞and𝐽→ ∞, if the inter-
+action function𝑓is modular, and hence the null hypothesis𝐻 0 :𝛽 0 =0is true, the test𝜙 𝐿,𝑧 ( ˆ𝑇𝐿,𝑧, 𝛾)
+33
+
+===== PDF PAGE 35 =====
+is asymptotically valid:
+lim
+𝐿→∞
+E[𝜙 𝐿,𝑧 ( ˆ𝑇𝐿,𝑧, 𝛾)]=𝛾 .
+Under the Tukey model, when𝛽 0 ≠0and hence the interaction function is not modular, the test is
+consistent:
+lim
+𝐿→∞
+E[𝜙 𝐿,𝑧 ( ˆ𝑇𝐿,𝑧, 𝛾)]=1.
+The test𝜙 𝐿,𝑧 controls asymptotic size for any modular function, but Theorem 6 guarantees
+its consistency only under correct specification of the Tukey model. In particular, a non-modular
+function𝑓can admit a representation with𝛽 0 =0, in which case the test has no power. Thus,
+𝜙𝐿,𝑧 tests a necessary but not sufficient condition for modularity. The situation is analogous to
+testing independence between two variables using the correlation coefficient: while a nonzero
+correlation implies dependence, a correlation of zero does not rule out dependence. In practical
+terms, rejection of the null provides strong evidence against modularity, but failure to reject
+should be interpreted with caution, as it does not imply that the interaction function is modular.
+4.3 Productivities𝜶and𝝍
+Theorem 2 shows that, once𝛽 0 is known, connectedness of the matching graph guarantees iden-
+tification of𝜶and𝝍. Two cases arise. When𝛽 0 =0, the model reduces to the standard TWFE
+specification, and existing estimators can be applied. I briefly review the available results and
+highlight how they rely on strong conditions that are rarely satisfied in labor market data. When
+𝛽0 ≠0, I propose a method that uses the consistent estimator ˆ𝛽𝐿,𝜋 as input for estimating the pro-
+ductivity parameters. A full analysis of its properties is left for future work. As with the TWFE
+model, this approach ultimately requires denser graphs than are typically observed in applica-
+tions, reflecting a shared limitation between the two cases.
+4.3.1 TWFE model:𝛽 0 =0
+When𝛽 0 =0, the Tukey model reduces to:
+𝑦𝑖 𝑗 =𝛼 𝑖 +𝜓 𝑗 +𝜂 𝑖 𝑗,
+and the productivity components can be estimated using the TWFE estimator:
+( ˆ𝜶 𝑡𝑤 𝑓 𝑒, ˆ𝝍𝑡𝑤 𝑓 𝑒 )=(𝐶 ′𝐶) −1𝐶′𝒚O,
+34
+
+===== PDF PAGE 36 =====
+where the design matrix𝐶is defined as in Definition 8.
+Jochmans and Weidner (2019) study the asymptotic properties of the TWFE estimator. For in-
+ference on a single productivity value, they derive its asymptotic distribution under the condition
+that the degree of the corresponding node diverges. More generally, inference on functionals of
+𝜶and𝝍requires that the degrees of many nodes grow. As the authors emphasize, this setting
+is far from typical labor market applications, where node degrees usually remain bounded: the
+number of workers per firm or firms per worker does not increase proportionally with𝐼and𝐽.
+Kline et al. (2020) also study inference for functionals of the productivities, focusing on quadratic
+forms such as variances and covariances. Their asymptotic setting requires the matching network
+𝐺𝐼 𝐽 to grow in a uniformly connected manner, without fragmenting into weakly linked subgraphs.
+As their Table IV shows, however, this condition is rarely satisfied in labor market data, where
+matching networks often exhibit considerable fragmentation.
+These results highlight that in most labor market applications, and indeed in other two-sided
+settings as well, the network is too sparse to justify asymptotic arguments for productivity es-
+timation. This is not surprising: information on individual productivity depends only on the
+relatively few edges involving that node, unlike global parameters such as𝛽0, which influence all
+observed matches.
+4.3.2 Case with complementarities:𝛽 0 ≠0
+The estimator ˆ𝛽𝐿,𝜋 can be used to construct least-squares estimators for𝜶and𝝍when𝛽 0 ≠0.
+I outline a simple procedure for doing so, which turns out to involve the same computational
+problem as estimating interactive fixed effects.
+Starting from the Tukey model in Equation (4.2), multiply both sides by𝛽 0 and add 1:
+1+𝛽 0𝑦𝑖 𝑗 =(1+𝛽 0𝛼𝑖) (1+𝛽 0𝜓 𝑗 ) +𝛽 0𝜂𝑖 𝑗.
+Now substitute𝛽 0 with its consistent estimator ˆ𝛽𝐿,𝜋 and define:
+𝑦′
+𝑖 𝑗 =1+ ˆ𝛽𝐿,𝜋𝑦𝑖 𝑗, 𝛼 ′
+𝑖 =1+ ˆ𝛽𝐿,𝜋𝛼𝑖, 𝜓 ′
+𝑗 =1+ ˆ𝛽𝐿,𝜋𝜓 𝑗, 𝜂 ′
+𝑖 𝑗 = ˆ𝛽𝐿,𝜋𝜂𝑖 𝑗.
+From these transformed variables, estimates for the original productivity terms can be recovered
+from estimates of𝜶 ′ and𝝍 ′. Since
+𝑦′
+𝑖 𝑗 =𝛼 ′
+𝑖𝜓 ′
+𝑗 +𝜂 ′
+𝑖 𝑗,
+35
+
+===== PDF PAGE 37 =====
+a natural approach to estimate𝜶 ′ and𝝍 ′ is to solve the least-squares problem:
+( ˆ𝜶 ′, ˆ𝝍′) ∈arg min
+𝜶 ′,𝝍 ′
+∑︁
+(𝑖,𝑗)∈O 𝐼 𝐽
+ 𝑦′
+𝑖 𝑗 −𝛼 ′
+𝑖𝜓 ′
+𝑗
+2 s.t.∥𝝍 ′∥=1.
+This is the interactive fixed-effects problem, and can be solved via alternating least squares; see
+Appendix F for implementation details.
+A full analysis of the statistical properties of the productivity estimators derived from(ˆ𝜶 ′, ˆ𝝍′)
+lies beyond the scope of this paper and is left for future research. For this reason, in the next
+section, when I illustrate how the Tukey model can be applied in practice, the focus will be on
+𝛽0, the new parameter introduced by the Tukey specification, for which I developed an estimator
+with formally studied asymptotic properties.
+5 Empirical Illustration
+In this section, I revisit the application in Limodio (2021) 1 to illustrate how to estimate the in-
+teraction parameter in the Tukey model and how the resulting estimates can be used to draw
+additional insights about the two-sided interaction.
+Limodio (2021) studies the interaction between managers and tasks in the public sector, focus-
+ing on the allocation of World Bank bureaucrats (hereafter, managers) to development projects in
+low- and middle-income countries. Each manager is responsible for designing, supervising, and
+overseeing project implementation. Project success is measured using ratings from the World
+Bank’s Independent Evaluation Group, which assess the extent to which key objectives were
+achieved. In the original analysis, project success is modeled as a function of a manager-specific
+ability𝛼 𝑖 and a country-specific characteristic𝜓 𝑗, using the TWFE model. An administrative
+dataset records manager-country assignments over time, along with project-level characteristics
+and evaluations, making it possible to construct the matching network and observe the outcome
+corresponding to each edge.
+The combination of assignment data and standardized performance evaluations provides an
+ideal setting to study the structure and consequences of bureaucrat-task matching in an inter-
+national organization. The main result in Limodio (2021) is the presence of negative sorting:
+high-performing managers are disproportionately allocated to low-performing countries. Possi-
+ble explanations include the Bank’s strategic objective of assigning stronger managers to weaker
+countries, internal career incentives and promotion dynamics, the demand for specialized skills in
+more difficult environments, and reallocations following adverse shocks such as natural disasters.
+1The data used for this illustration exercise are publicly available on the author’s website.
+36
+
+===== PDF PAGE 38 =====
+For this illustration, I focus on a version of the model without controls. This differs from the
+main specification in Limodio (2021), which includes year and sector fixed effects in the two-way
+fixed effects regression. The discussion here should therefore be viewed purely as an application
+of the methods developed in this paper, not as a critique of or challenge to their findings. Those
+results rely on additional assumptions that are not addressed in the following analysis.
+The data contain 3,385 projects, corresponding to 1,876 distinct manager-country pairs. When
+the same match𝑦 𝑖 𝑗 is observed multiple times, I use the average outcome. The resulting match-
+ing network consists of 697 manager nodes, 127 country nodes, and 1,876 edges. Within this
+graph, there are 228 edge-distinct four-cycles, involving 369 managers and 114 countries. Thus,
+the information effectively used to estimate the Tukey interaction parameter comes from approx-
+imately half of the edges and managers, and from about 90% of the countries.
+I consider the RBL estimator ˆ𝛽𝐿,𝑧, which assigns labels in each cycle using auxiliary informa-
+tion on managers and countries. This requires instruments, observable characteristics of man-
+agers and countries satisfying Assumption 6. I use the average project size as the instrument for
+managers and the Public Infrastructure Management Index (PIMI) as the instrument for countries.
+Limodio (2021) documents that project size, measured by the average loan amount overseen, is
+predictive of managerial ability: more capable managers tend to supervise larger loans. Similarly,
+the PIMI developed by Dabla-Norris et al. (2012) is predictive of institutional productivity, with
+higher-performing countries scoring higher on this index. Assumptions 6.2 and 6.3 hold provided
+that the rankings induced by these instruments are not systematically opposed within cycles and
+not systematically misaligned when productivity gaps are large. Since such violations would
+require counterintuitive patterns, the assumptions appear plausible in practice. Using average
+loan size for managers and the PIMI for countries, therefore, offers a feasible way to implement
+Assumption 5.4.
+Figure 6 reports the value of the RBL estimator, together with the corresponding confidence
+interval for nominal coverage of0.9. The estimate is negative, indicating negative complemen-
+tarities between managers and countries: the relative contribution of a high-ability manager,
+compared to a lower-ability one, is greater when working in a lower-productivity country. The
+magnitude of the estimate (0.196) can be interpreted as the ratio of the multiplicative to the addi-
+tive component. This suggests that, while smaller in importance than additive effects, the multi-
+plicative part of the interaction function still plays a meaningful role.
+The confidence interval(−0.293,−0.099), centered around ˆ𝛽𝐿,𝑧, does not include zero. The
+p-value for the null𝛽 0 =0equals 0.001, providing strong evidence against the absence of com-
+plementarities in this interaction.
+To underscore the importance of label choice, the figure also reports estimates obtained under
+random labeling. These are presented only to illustrate how reliance on uninformed labels affects
+37
+
+===== PDF PAGE 39 =====
+Random
+Labeling
+Rank−Based
+Labeling
+−0.8 −0.6 −0.4 −0.2 0.0
+Figure 6:Estimates for the Tukey model. The confidence interval is constructed to correctly cover𝛽0 with
+probability 0.9.
+the estimator and should not be interpreted as informative about the underlying interaction.
+As expected, random labeling inflates the variance, producing confidence intervals nearly four
+times wider than those based on rank-based labeling. In this case, the p-value of 0.126 would fail
+to reject the null of no complementarities, highlighting how proper labeling is crucial for test
+power, a theme further explored in the Monte Carlo simulations in the next section.
+Figure 6 shows the estimate for a single random labeling, but many such estimates can be
+computed. Figure 7 plots the distributions of ˆ𝛽𝐿,𝜋 and of ˆ𝜇𝜋 (the estimator of𝜇 𝐿𝑐𝜋, the scaling
+factor in the asymptotic distribution) across 50,000 random labels assignments, with the values
+obtained under rank-based labeling highlighted in red.
+0.0
+0.1
+0.2
+0.3
+0.4
+−1.5 −1.0 −0.5 0.0 0.5 1.0
+β^
+L,π
+Frequency
+0.00
+0.03
+0.06
+0.09
+−2 −1 0 1 2
+µ^π
+Frequency
+Figure 7:Empirical distribution of ˆ𝛽𝐿,𝜋 and ˆ𝜇𝜋. For the distribution of ˆ𝛽𝐿,𝜋, to make the histogram infor-
+mative, I excluded 2.8% of observations out of(−1.5,1). For reference, the minimum and the maximum
+values I obtained are -413.589 and 1543.647.
+The distribution of ˆ𝛽𝐿,𝜋 shows that most labelings yield negative estimates, though with some
+variation in magnitude. The distribution of ˆ𝜇𝜋, symmetric around zero, indicates that the instru-
+ments are informative about the underlying characteristics: the rank-based labeling produces an
+38
+
+===== PDF PAGE 40 =====
+estimate of ˆ𝜇𝜋 larger in absolute value than about 80% of random labelings. At the same time, in
+20% of cases random labeling delivers even larger values, reflecting that, as expected, the instru-
+ments capture only part of the variation in latent rankings.
+Figures 6 and 7 thus highlight the importance of selecting labels correctly. The analogy with
+instrumental variables is direct: valid instruments must be informative about the latent charac-
+teristics, not mere noise, in order to deliver consistent and precise estimates.
+The negative estimate, statistically different from zero, implies that the skills of high-ability
+managers matter most in low-productivity countries, where managerial capacity has a greater
+marginal impact. This explanation was already suggested by Limodio (2021), but could not be
+formally assessed under the modularity restriction of the TWFE model. In this view, assigning
+high-performing bureaucrats to low-performing countries is efficient and raises average project
+success.
+Overall, the empirical illustration shows that the Tukey model is straightforward to imple-
+ment and provides insights into the structure of interactions that the TWFE model, by construc-
+tion, rules out. The exercise also underscores the practical relevance of Assumption 5.4: only
+when instruments induce informative labelings do the resulting estimates convey reliable evi-
+dence about complementarities. In the next section, I turn to Monte Carlo simulations to evaluate
+how these insights carry over to controlled settings and to study the finite-sample behavior of
+the estimator.
+6 Monte Carlo Simulations
+In this section, I investigate the finite-sample behavior of the estimator ˆ𝛽𝐿,𝑧. Because estimation
+of𝛽 0 comes entirely from the cycles, I abstract from the rest of the network: I fix a number of
+cycles𝐿and simulate outcomes only on those cycles. This design lets me isolate how performance
+depends on the effective sample size (the number of cycles), the relevance of the instruments, and
+the relative magnitude of productivity variation to noise.
+Since in simulations the true values of𝜶and𝝍are known, I can examine the role of the
+instruments by directly controlling the labeling within each cycle. Concretely, I set the values
+of𝜋 𝛼
+ℓ,𝑧 and𝜋 𝜓
+ℓ,𝑧, which is equivalent to choosing instruments that induce those labelings. This
+approach cleanly maps instrument relevance into the labelings that matter for ˆ𝛽𝐿,𝑧.
+The simulation design proceeds in two steps.
+Step 1. Generation of productivities.For each of the𝐿cycles, the vector of productivities of
+two workers and two firms is drawn from a multivariate normal distribution with mean vector𝜇
+39
+
+===== PDF PAGE 41 =====
+and covariance matrixΣ:
+𝜇=(1,3,1,3),Σ=
+
+1 0 0.5 0.5
+0 1 0.5 0.5
+0.5 0.5 1 0
+0.5 0.5 0 1
+
+.
+Labels are then assigned by fixing𝜋 𝜓
+ℓ,𝑧 =1and setting𝜋 𝛼
+ℓ,𝑧 equal to1with probability𝑝≥0.5
+and to−1with probability1−𝑝. This corresponds to using different instruments for𝜶: the larger
+the value of𝑝, the stronger the instrument. Equivalently, the same exercise could be conducted
+using instruments for𝝍or for both sides simultaneously.
+Step 2. Generation of outcomes.In each Monte Carlo replication, the four error terms for
+every cycle are drawn independently from a normal distribution with mean zero and variance
+𝜎2
+𝑖 𝑗. Combined with𝛽 0, these errors generate the4𝐿outcomes, which form the simulated data
+observed in that replication.
+I explore the finite-sample properties of the estimator by varying the number of cycles𝐿, the
+error variance𝜎 𝑖 𝑗, and the relevance of the instrument𝑝:
+𝐿∈ {100,500,1000,5000}, 𝜎 𝑖 𝑗 ∈ {0.5,1,2}, 𝑝∈ {1,0.85,0.65,0.5}.
+These choices allow me to examine the role of the assumptions in Theorems 5 and 6, which
+require𝐿to be large,𝜎 𝑖 𝑗 to remain bounded, and𝑝≠0.5. The case𝑝=0.5corresponds to
+non-informative labels, where𝑐 𝜋 =2𝑝−1=0and Assumption 5.4 fails.
+For each parameter combination, Step 1 is implemented once, while Step 2 is repeated 10,000
+times. Fixing productivities, their labels, and their allocation in cycles across replications mimics
+the identification and inference analysis, where𝜶,𝝍,𝐺 𝐼 𝐽,𝒛 𝜶 , and𝒛 𝝍 are treated as deterministic.
+Table 1 reports the mean squared errors of ˆ𝛽𝐿,𝜋 as an estimator of𝛽 0 across simulations.
+Table 2 presents the average widths of the corresponding 90% confidence intervals, while Table 3
+displays the rejection rates of the test for absence of complementarities under the null hypothesis
+𝐻0 :𝛽 0 =0, for𝛽 0 ∈ {0,1}and nominal significance level𝛾=0.1.
+When𝑝>0.5, and hence Assumption 5.4 holds, the mean squared error, the width of the
+confidence intervals, and the discrepancy between nominal and empirical size all increase with
+the error variance and decrease with the sample size. By contrast, the power of the test rises with
+sample size and falls as noise grows. These patterns are consistent with theoretical predictions.
+The more interesting patterns concern the role of𝑝, which captures the relevance of the
+instrument. When Assumption 5.4 is violated (𝑝=0.5), the estimator becomes inconsistent and
+the asymptotic distribution no longer applies. In this case, the mean squared error does not
+40
+
+===== PDF PAGE 42 =====
+Mean squared errors
+𝑝
+𝜎𝑖 𝑗 𝐿1 0.85 0.65 0.5
+0.5 100 0.0004 0.001 0.068 104.760
+0.5 500 0.0001 0.0003 0.001 209.599
+0.5 1000 0.0001 0.0001 0.001 202.407
+0.5 5000 0 0 0.0001 16.723
+1 100 0.002 0.470 9.173 225.307
+1 500 0.0005 0.001 30.133 15.068
+1 1000 0.0002 0.0005 0.005 371.678
+1 5000 0 0.0001 0.0005 390.308
+2 100 0.348 53.365 586.414 371.702
+2 500 0.003 0.018 229.784 101.623
+2 1000 0.001 0.002 5.009 165.683
+2 5000 0.0002 0.0003 0.003 633.327
+Table 1:Mean squared error across different values of𝜎 𝑖 𝑗,𝐿, and𝑝under𝛽=0.
+Average confidence interval width
+𝑝
+𝜎𝑖 𝑗 𝐿1 0.85 0.65 0.5
+0.5 100 0.070 0.110 0.890 2330.210
+0.5 500 0.030 0.060 0.100 8171.620
+0.5 1000 0.020 0.030 0.080 5022.450
+0.5 5000 0.010 0.020 0.040 342.600
+1 100 0.150 2.740 84.360 9941.750
+1 500 0.070 0.110 553.890 203.280
+1 1000 0.050 0.080 0.200 5879.220
+1 5000 0.020 0.030 0.080 16986.770
+2 100 2.980 730.570 15752.510 7345.480
+2 500 0.160 0.310 2214.970 2782.270
+2 1000 0.100 0.150 34.490 3163.600
+2 5000 0.040 0.060 0.160 11696.520
+Table 2:Average width of confidence intervals across different values of𝜎 𝑖 𝑗,𝐿, and𝑝under𝛽=0, for a
+nominal coverage of 0.9.
+41
+
+===== PDF PAGE 43 =====
+Rejection rate under𝐻 0 Rejection rate under𝐻 1
+𝑝 𝑝
+𝜎𝑖 𝑗 𝐿1 0.85 0.65 0.5 1 0.85 0.65 0.5
+0.5 100 0.098 0.077 0.084 0.046 0.983 0.895 0.020 0
+0.5 500 0.102 0.097 0.080 0.028 1 1 0.909 0
+0.5 1000 0.102 0.098 0.076 0.040 1 1 0.995 0
+0.5 5000 0.105 0.100 0.102 0.069 1 1 1 0
+1 100 0.093 0.109 0.113 0.112 0.572 0.409 0.071 0
+1 500 0.091 0.085 0.118 0.139 0.997 0.916 0.267 0
+1 1000 0.094 0.090 0.093 0.132 1 0.997 0.650 0
+1 5000 0.099 0.100 0.089 0.122 1 1 0.994 0
+2 100 0.116 0.133 0.189 0.192 0.173 0.086 0.014 0.005
+2 500 0.094 0.102 0.143 0.188 0.695 0.482 0.078 0.002
+2 1000 0.088 0.086 0.116 0.168 0.930 0.681 0.179 0.002
+2 5000 0.093 0.097 0.092 0.187 1 1 0.608 0.024
+Table 3:Rejection rates across different values of𝜎 𝑖 𝑗,𝐿, and𝑝for the null hypothesis𝐻 0 :𝛽 0 =0,
+considering tests with nominal level𝛾=0.9. In the right part of the table, simulations consider a true
+𝛽0 =1.
+shrink with sample size, the test fails to control size under the null, and it is inconsistent against
+the alternative, regardless of sample size or error variance.
+When the assumption holds but𝑐 𝜋 is small (that is, when𝑝>0.5but close to0.5), finite-
+sample performance deteriorates, especially when𝐿is small and𝜎 𝑖 𝑗 is large. The simulations
+confirm that a small𝑐 𝜋 inflates the estimator’s variance, producing large mean squared errors
+and wide confidence intervals. This effect is most pronounced when𝑝is small relative to𝐿. In
+such cases, the test for absence of complementarities continues to control size reasonably well,
+but its power drops sharply, as the inflated variance reduces the ability to reject the null when
+it is false. This mirrors the empirical illustration, where the null hypothesis𝛽 0 =0was rejected
+under rank-based labeling but not under random labeling.
+Overall, the simulations reinforce the theoretical results and highlight the central role of la-
+beling within cycles: appropriate label selection is crucial not only for estimator precision, but
+also for ensuring that the test for the absence of complementarities retains meaningful power.
+7 Conclusion
+This paper introduced the Bipartite Interaction (BI) framework for modeling two-sided interac-
+tions. Within this framework, I proposed notions of identification and large-sample, and studied
+three models defined by different restrictions on the interaction function, deriving conditions
+42
+
+===== PDF PAGE 44 =====
+for their identification. The analysis highlighted a fundamental trade-off between flexibility in
+the interaction function and the density of the matching network: richer interaction structures
+require stronger graph conditions to achieve point identification.
+Among the models, the Tukey specification emerged as a particularly useful case. By summa-
+rizing complementarities with a single parameter, it extends the TWFE model in a parsimonious
+yet interpretable way, and for identification it requires only mild additional conditions beyond
+those of the TWFE model. I developed a novel cycle-based estimator for its interaction param-
+eter, which avoids estimating latent productivities, is consistent under bounded-degree graphs,
+and is asymptotically normal. Its asymptotic distribution also provides the basis for a formal
+test of the absence of complementarities. An empirical illustration showed that the Tukey model
+can be implemented in settings where the TWFE model is standard, delivering richer insights
+into the interaction process that would remain hidden under additively separable models. More
+broadly, the results demonstrate that complementarities matter in practice and can be studied
+with feasible methods.
+Two directions for future research remain open. First, while the analysis here focused on
+point identification, extending the BI framework to partial identification would be valuable. For
+the BLM and seriation models, even when point identification fails, the data may still deliver infor-
+mative bounds. Characterizing identified sets and developing computational methods to recover
+them could lead to more credible conclusions without strong parametric assumptions. Second,
+while in this paper the main focus was on estimation of𝛽 0 in the Tukey model, researchers are
+often interested also in estimating the productivity parameters𝜶and𝝍. I outlined some estima-
+tors, but a full analysis of their properties is needed to assess when they yield reliable measures
+of worker and firm productivities. The BI framework, by clarifying the distinct roles of the in-
+teraction function and the matching network, provides a natural foundation for these further
+investigations.
+43
+
+===== PDF PAGE 45 =====
+References
+Abowd, J. M., F. Kramarz, and D. N. Margolis(1999): “High Wage Workers and High Wage
+Firms, ”Econometrica, 67, 251–333.
+Adhvaryu, A., V. Bassi, A. Nyshadham, and J. Tamayo(2024): “No line left behind: Assortative
+matching inside the firm, ”The Review of Economics and Statistics, 1–45.
+Arkhangelsky, D. and G. Imbens(2024): “Causal models for longitudinal and panel data: A
+survey, ”The Econometrics Journal, 27, C1–C61.
+Armstrong, T. B., M. Weidner, and A. Zeleneev(2025): “Robust Estimation and Inference in
+Panels with Interactive Fixed Effects, ” Working paper.
+Auerbach, E., H. Guo, and M. Tabord-Meehan(2025): “The local approach to causal inference
+under network interference, ” Working paper.
+Bai, J.(2009): “Panel data models with interactive fixed effects, ”Econometrica, 77, 1229–1279.
+Becker, G. S.(1973): “A theory of marriage: Part I, ”Journal of Political Economy, 81, 813–846.
+Bertrand, M. and A. Schoar(2003): “Managing with style: The effect of managers on firm
+policies, ”The Quarterly Journal of Economics, 118, 1169–1208.
+Blum, A., J. Hopcroft, and R. Kannan(2020):Foundations of Data Science, Cambridge, UK:
+Cambridge University Press.
+Bonhomme, S.(2020): “Econometric analysis of bipartite networks, ” inThe econometric analysis
+of network data, Elsevier, 83–121.
+Bonhomme, S., K. Holzheu, T. Lamadon, E. Manresa, M. Mogstad, and B. Setzler(2023):
+“How much should we trust estimates of firm effects and worker sorting?”Journal of Labor
+Economics, 41, 291–322.
+Bonhomme, S., T. Lamadon, and E. Manresa(2019): “A distributional framework for matched
+employer employee data, ”Econometrica, 87, 699–739.
+Bramoullé, Y., H. Djebbari, and B. Fortin(2009): “Identification of peer effects through social
+networks, ”Journal of Econometrics, 150, 41–55.
+Cai, Y.(2022): “Linear regression with centrality measures, ” Working paper.
+44
+
+===== PDF PAGE 46 =====
+Card, D., J. Heining, and P. Kline(2013): “Workplace heterogeneity and the rise of West German
+wage inequality, ”The Quarterly Journal of Economics, 128, 967–1015.
+Chetty, R., J. N. Friedman, and J. E. Rockoff(2014a): “Measuring the impacts of teachers I:
+Evaluating bias in teacher value-added estimates, ”American Economic Review, 104, 2593–2632.
+——— (2014b): “Measuring the impacts of teachers II: Teacher value-added and student outcomes
+in adulthood, ”American Economic Review, 104, 2633–2679.
+Chetverikov, D., A. Santos, and A. M. Shaikh(2018): “The econometrics of shape restrictions, ”
+Annual Review of Economics, 10, 31–63.
+Crippa, F. and D. Fedchenko(2025): “Partially Identified Rankings from Pairwise Interactions, ”
+Working paper.
+Dabla-Norris, E., J. Brumby, A. Kyobe, Z. Mills, and C. Papageorgiou(2012): “Investing in
+public investment: an index of public investment efficiency, ”Journal of Economic Growth, 17,
+235–266.
+De Paula, Á., S. Richards-Shubik, and E. Tamer(2018): “Identifying preferences in networks
+with bounded degree, ”Econometrica, 86, 263–288.
+Eeckhout, J.(2018): “Sorting in the labor market, ”Annual Review of Economics, 10, 1–29.
+Eeckhout, J. and P. Kircher(2011): “Identifying sorting—in theory, ”The Review of Economic
+Studies, 78, 872–906.
+Fenizia, A.(2022): “Managers and productivity in the public sector, ”Econometrica, 90, 1063–1084.
+Finkelstein, A., M. Gentzkow, and H. Williams(2016): “Sources of geographic variation in
+health care: Evidence from patient migration, ”The Quarterly Journal of Economics, 131, 1681–
+1726.
+Flammarion, N., C. Mao, and P. Rigollet(2019): “Optimal rates of statistical seriation, ”
+Bernoulli, 25, 623–653.
+Freeman, H. and M. Weidner(2023): “Linear panel regressions with two-way unobserved het-
+erogeneity, ”Journal of Econometrics, 237, 105498.
+Freyberger, J.(2018): “Non-parametric panel data models with interactive fixed effects, ”The
+Review of Economic Studies, 85, 1824–1851.
+45
+
+===== PDF PAGE 47 =====
+Gao, W. Y.(2020): “Nonparametric identification in index models of link formation, ”Journal of
+Econometrics, 215, 399–413.
+Graham, B. S.(2017): “An econometric model of network formation with degree heterogeneity, ”
+Econometrica, 85, 1033–1063.
+Hagedorn, M., T. H. Law, and I. Manovskii(2017): “Identifying equilibrium models of labor
+market sorting, ”Econometrica, 85, 29–65.
+Hessert, R. and S. Mallik(2021): “Moore-Penrose inverses of the signless Laplacian and edge-
+Laplacian of graphs, ”Discrete Mathematics, 344, 112451.
+Jackson, C. K., J. E. Rockoff, and D. O. Staiger(2014): “Teacher effects and teacher-related
+policies, ”Annual Review of Economics, 6, 801–825.
+Jochmans, K.(2017): “Two-way models for gravity, ”The Review of Economics and Statistics, 99,
+478–485.
+Jochmans, K. and M. Weidner(2019): “Fixed-effect regressions on network data, ”Econometrica,
+87, 1543–1560.
+Kline, P.(2024): “Firm wage effects, ”Handbook of Labor Economics, 5, 115–181.
+Kline, P., R. Saggio, and M. Sølvsten(2020): “Leave-out estimation of variance components, ”
+Econometrica, 88, 1859–1898.
+Koopmans, T. C.(1949): “Identification problems in economic model construction, ”Econometrica,
+125–144.
+Lang, S.(1987):Linear algebra, Springer Science & Business Media.
+Lei, L. and B. Ross(2024): “Estimating counterfactual matrix means with short panel data, ” Work-
+ing paper.
+Limodio, N.(2021): “Bureaucrat allocation in the public sector: Evidence from the world bank, ”
+The Economic Journal, 131, 3012–3040.
+Lopes de Melo, R.(2018): “Firm wage differentials and labor market sorting: Reconciling theory
+and evidence, ”Journal of Political Economy, 126, 313–346.
+Mao, C., A. Pananjady, and M. J. W ainwright(2020): “Towards optimal estimation of bivariate
+isotonic matrices with unknown permutations, ”The Annals of Statistics, 48, 3183–3205.
+46
+
+===== PDF PAGE 48 =====
+Mourot, P.(2025): “Should Top Surgeons Practice at Top Hospitals? Sorting and Complemen-
+tarities in Healthcare, ” Working paper.
+Nash Jr, J. F.(1950): “Equilibrium points in n-person games, ”Proceedings of the National Academy
+of Sciences, 36, 48–49.
+Sbai Sassi, Y.(2024): “A Linear Regression Model for Non-Oriented Dyadic Data with Interactive
+Individual Effects, ” Working paper.
+Shimer, R. and L. Smith(2000): “Assortative matching and search, ”Econometrica, 68, 343–369.
+Šimeček, P. and M. Šimečková(2013): “Modification of Tukey’s additivity test, ”Journal of Sta-
+tistical Planning and Inference, 143, 197–201.
+Song, J., D. J. Price, F. Guvenen, N. Bloom, and T. Von W achter(2019): “Firming up inequality, ”
+The Quarterly Journal of Economics, 134, 1–50.
+Topkis, D. M.(1998):Supermodularity and Complementarity, Princeton, NJ: Princeton University
+Press.
+Tukey, J. W.(1949): “One degree of freedom for non-additivity, ”Biometrics, 5, 232–242.
+Verdier, V.(2020): “Estimation and inference for linear models with two-way fixed effects and
+sparsely matched data, ”The Review of Economics and Statistics, 102, 1–16.
+W ard, G. and I. Dick(1952): “Non-additivity in randomized block designs and balanced incom-
+plete block designs, ”New Zealand Journal of Science and Technology, 33, 430–436.
+Weigel, J. L., P. Bessone, A. Bergeron, G. Z. Tourek, and J. K. Kabeya(2024): “Supermodular
+bureaucrats: Evidence from randomly assigned tax collectors in the DRC, ” Working paper.
+47
+
+===== PDF PAGE 49 =====
+A Model Characterization via Shape Restrictions
+This Appendix shows how the TWFE, Tukey, and BLM models introduced in Section 2 can be
+obtained from shape restrictions imposed directly on the interaction function𝑓. In particular, I
+demonstrate that imposing certain shape restrictions leads to representations that are observa-
+tionally equivalent to each of these three models: once the restrictions are in place,𝑓can, up to a
+relabeling, be expressed in the form of the TWFE, Tukey, or BLM specification. For the seriation
+model, the connection with monotonicity of𝑓was already made explicit in its definition, and is
+therefore not revisited here.
+These equivalence results clarify the structural assumptions implicitly embedded in the mod-
+els, which are often interpreted only as reduced-form specifications. The remainder of this Ap-
+pendix is organized as follows. Section A.1 shows how modularity leads to the TWFE model;
+Section A.2 establishes the connection between bilinearity and the Tukey model; and Section A.3
+links a diagonal bilinear structure to the BLM model.
+A.1 Modularity and TWFE model
+Recall the definition of modularity (see Topkis (1998) for an extensive discussion).
+Definition 6.(Supermodularity, Submodularity, Modularity)A function𝑓:R×R→Ris super-
+modular (submodular) if, for any quadruple(𝑖, 𝑖 ′, 𝑗, 𝑗 ′)such that𝛼 𝑖 >𝛼 𝑖′ and𝜓 𝑗 >𝜓 𝑗 ′,
+𝑓(𝛼 𝑖, 𝜓𝑗 ) −𝑓(𝛼 𝑖, 𝜓𝑗 ′) ≥ (≤)𝑓(𝛼 𝑖′, 𝜓𝑗 ) −𝑓(𝛼 𝑖′, 𝜓𝑗 ′).
+A function𝑓is modular if it is both supermodular and submodular.
+If𝑓is twice continuously differentiable, supermodularity (submodularity) is equivalent to
+𝜕2𝑓/𝜕𝛼 𝜕𝜓≥0(≤0), and modularity to𝜕 2𝑓/𝜕𝛼 𝜕𝜓=0everywhere.
+The next proposition formalizes the observational equivalence between a modular𝑓and the
+TWFE model specification.
+Proposition 4.(Modularity and TWFE model)Any model(𝑓 ,𝜶,𝝍, 𝐺 𝐼 𝐽 )with𝑓:R×R→R
+modular is observationally equivalent to the TWFE model.
+Proof.For functions defined on product spaces, modularity is equivalent to additive separability.
+Thus, any modular𝑓can be written as𝑓(𝛼 𝑖, 𝜓𝑗 )=𝑔 𝛼 (𝛼𝑖) +𝑔𝜓 (𝜓𝑗 )for some functions𝑔 𝛼 :𝐴→R
+and𝑔 𝜓 :Ψ→R. Let𝛼 ′
+𝑖 :=𝑔 𝛼 (𝛼𝑖)and𝜓 ′
+𝑗 :=𝑔 𝜓 (𝜓𝑗 ). Then, it holds that𝑓(𝛼 𝑖, 𝜓𝑗 )=𝑔 𝛼 (𝛼𝑖)+𝑔𝜓 (𝜓𝑗 )=
+𝛼′
+𝑖 +𝜓 ′
+𝑗, and hence(𝑓 ,𝜶,𝝍, 𝐺 𝐼 𝐽 )and the TWFE model are observationally equivalent.□
+48
+
+===== PDF PAGE 50 =====
+A.2 Bilinearity and Tukey model
+Recall the definition of bilinearity (Lang, 1987).
+Definition 7.(Bilinearity)A function𝑓:𝑈×𝑉→Ris bilinear if, for each fixed𝑣∈𝑉, the map
+𝑢↦→𝑓(𝑢, 𝑣)is linear in𝑢, and for each fixed𝑢∈𝑈, the map𝑣↦→𝑓(𝑢, 𝑣)is linear in𝑣.
+Many panel data methods rely on bilinear interactions between latent fixed effects, whether
+scalar or vector. Examples include two-way and group fixed effects, difference-in-differences,
+synthetic control, factor models, low-rank approximations, and nuclear-norm regularization (see
+Arkhangelsky and Imbens (2024) for a review). Bilinear structures also arise in strategic settings:
+in the classic two-player, two-action simultaneous game with risk-neutral agents (Nash Jr, 1950),
+expected payoffs are bilinear in the players’ mixed strategies.
+In the Bipartite Interaction model, to allow for an intercept while maintaining one scalar
+productivity per agent, define the augmented vectors𝛼 𝑣
+𝑖 :=(𝛼 𝑖,1) ′ and𝜓 𝑣
+𝑗 :=(𝜓 𝑗,1) ′. Say that
+𝑓(𝛼, 𝜓)admits abilinear representationif there exists a bilinear function𝑓 𝑣 such that𝑓(𝛼, 𝜓)=
+𝑓 𝑣 (𝛼 𝑣, 𝜓𝑣 ).
+With an additional assumption on the behavior of𝑓at the origin, the following proposition
+shows that admitting a bilinear representation is observationally equivalent to the Tukey model.
+Proposition 5.(Bilinear Representation and Tukey model)Any model(𝑓 ,𝜶,𝝍, 𝐺 𝐼 𝐽 )in which𝑓
+admits a bilinear representation with𝛼 𝑣
+𝑖 :=(𝛼 𝑖,1) ′ and𝜓 𝑣
+𝑗 :=(𝜓 𝑗,1) ′ and satisfies
+𝑓(𝛼, 𝜓)=0⇐ ⇒𝛼=0∧𝜓=0,
+is observationally equivalent to the Tukey model.
+Proof.By Theorem 4.1 in Lang (1987), any bilinear function𝑓 𝑣 can be written
+𝑓𝑣 (𝛼 𝑣, 𝜓𝑣 )=(𝛼 𝑣 )′ 𝐵 𝜓𝑣, 𝐵=
+ 
+𝑏00 𝑏01
+𝑏10 𝑏11
+!
+.
+Hence,
+𝑓(𝛼, 𝜓)=𝑓 𝑣 (𝛼 𝑣, 𝜓𝑣 )=(𝛼 𝑖,1)𝐵(𝜓 𝑗,1) ′ =𝑏 00𝛼𝜓+𝑏 01𝛼+𝑏 10𝜓+𝑏 11.
+Since𝑓(0,0)=0,𝑏 11 =0. Furthermore, since𝑓(𝛼, 𝜓)=0only when both𝛼and𝜓are zero,
+𝑏01 ≠0and𝑏 10 ≠0. Set
+𝛼′ =𝑏 01𝛼, 𝜓 ′ =𝑏 10𝜓, 𝛽 0 = 𝑏00
+𝑏01𝑏10
+,
+49
+
+===== PDF PAGE 51 =====
+and note that𝑓(𝛼, 𝜓)=𝑏 01𝛼+𝑏 10𝜓+𝑏 00𝛼𝜓=𝛼 ′ +𝜓 ′ +𝛽 0𝛼′𝜓 ′, and hence(𝑓 ,𝜶,𝝍, 𝐺 𝐼 𝐽 )and the
+Tukey model are observationally equivalent.□
+A.3 Bilinearity and BLM model
+Suppose now that each firm is characterized by the productivity vector𝜓 𝑣
+𝑗 =(𝑏 𝑗, 𝑎𝑗 ). Recall that
+adiagonal bilinear formis a bilinear form whose matrix representation is diagonal. Imposing that
+𝑓admits a diagonal bilinear representation is observationally equivalent to the BLM model.
+Proposition 6.(Bilinear Representation and BLM model)Any model(𝑓 ,𝜶,𝝍, 𝐺 𝐼 𝐽 )in which𝑓
+admits a diagonal bilinear representation with𝛼 𝑣
+𝑖 :=(𝛼 𝑖,1) ′ and𝜓 𝑣
+𝑗 =(𝑏 𝑗, 𝑎𝑗 )′ is observationally
+equivalent to the BLM model.
+Proof.By Theorem 4.1 in Lang (1987), any bilinear function𝑓 𝑣 can be written
+𝑓𝑣 (𝛼 𝑣, 𝜓𝑣 )=(𝛼 𝑣 )′ 𝐵 𝜓𝑣, 𝐵=
+ 
+𝑏00 𝑏01
+𝑏10 𝑏11
+!
+.
+Since𝐵diagonal,𝑏 01 =𝑏 10 =0, and hence
+𝑓(𝛼, 𝜓)=𝑓 𝑣 (𝛼 𝑣, 𝜓𝑣 )=(𝛼 𝑖,1)𝐵(𝑏 𝑗, 𝑎𝑗 )′ =𝑏 00𝛼𝑏+𝑏 01𝛼𝑎+𝑏 10𝑏+𝑏 11𝑎=𝑏 00𝛼𝑏+𝑏 11𝑎.
+Set
+𝛼′ =𝑏 00𝛼, 𝑎 ′ =𝑏 11𝑎, 𝑏 ′ =𝑏
+and note that𝑓(𝛼, 𝜓)=𝑏 00𝛼𝑏+𝑏 11𝑎=𝛼 ′𝑏′ +𝑎 ′, and hence(𝑓 ,𝜶,𝝍, 𝐺 𝐼 𝐽 )and the BLM model are
+observationally equivalent.□
+B TWFE as Approximation of Tukey
+The TWFE model is often interpreted as an approximation, analogous to using the best linear
+projection (the linear function of a variable𝑋that minimizes mean squared error when approx-
+imating another variable𝑌) to summarize the relationship between random variables𝑋and𝑌.
+In this Appendix, I investigate how such an approximation behaves when the true worker-firm
+interaction follows the Tukey model.
+50
+
+===== PDF PAGE 52 =====
+Define
+𝑛𝑖 =
+∑︁
+𝑗
+𝐷𝑖 𝑗, 𝑚 𝑗 =
+∑︁
+𝑖
+𝐷𝑖 𝑗, 𝑛=
+∑︁
+𝑖
+𝑛𝑖,
+where𝑛is the total number of matches,𝑛 𝑖 is the degree of worker𝑖, and𝑚 𝑗 is the degree of firm
+𝑗. Using this notation, I introduce the two-way fixed effects (TWFE) projections.
+Definition 8.(TWFE Projection)Under Assumption 2 and the normalization𝛼 1 =0, the TWFE
+projections(𝜶 𝑡𝑤 𝑓 𝑒,𝝍 𝑡𝑤 𝑓 𝑒 )are defined by
+(𝜶 𝑡𝑤 𝑓 𝑒,𝝍 𝑡𝑤 𝑓 𝑒 )=(𝐶 ′𝐶) −1𝐶′𝜽 O,
+where𝐶∈R 𝑛×(𝐼+𝐽−1) is the incidence (design) matrix linking the free worker productivities(𝛼2, . . . , 𝛼𝐼 )
+and all firm productivities(𝜓 1, . . . , 𝜓𝐽 )to the observed matches.
+Intuitively,(𝜶 𝑡𝑤 𝑓 𝑒,𝝍 𝑡𝑤 𝑓 𝑒 )are the coefficients from a TWFE fit in the noiseless model. The
+expression in Definition 8 is the ordinary least squares solution, with𝐶determined entirely by
+the structure of the matching network𝐺 𝐼 𝐽. Each row of𝐶contains one nonzero entry in the
+worker block and one in the firm block, encoding the worker-firm pair observed in that match.
+The matrix𝐶 ′𝐶has the block form
+𝐶′𝐶=
+ 
+diag(𝑛2, . . . , 𝑛𝐼 )𝐷
+𝐷𝑇 diag(𝑚1, . . . , 𝑚𝐽 )
+!
+where𝐷is the incidence block of the adjacency matrix of𝐺 𝐼 𝐽. This is the signless Laplacian
+of𝐺 𝐼 𝐽, the sum of its degree matrix and adjacency matrix, which captures the full connectivity
+structure of the graph.
+Under the TWFE model, the TWFE projections(𝜶 𝑡𝑤 𝑓 𝑒,𝝍 𝑡𝑤 𝑓 𝑒 )coincide with the true pro-
+ductivities(𝜶,𝝍). Under alternative interaction functions, however, the presence of𝐶 ′𝐶in the
+projection formula implies that the bias depends on the entire structure of𝐺 𝐼 𝐽. In the case of the
+Tukey model, this dependence admits a closed-form characterization.
+Define the average partner productivities
+¯𝜓𝑖 = 1
+𝑛𝑖
+∑︁
+𝑗
+𝐷𝑖 𝑗 𝜓 𝑗, ¯𝛼 𝑗 = 1
+𝑚 𝑗
+∑︁
+𝑖
+𝐷𝑖 𝑗 𝛼𝑖,
+where ¯𝜓𝑖 is the average firm productivity for worker𝑖and ¯𝛼 𝑗 is the average worker productivity
+for firm𝑗.
+The next proposition provides the expressions for(𝜶 𝑡𝑤 𝑓 𝑒,𝝍 𝑡𝑤 𝑓 𝑒 )under the Tukey model,
+51
+
+===== PDF PAGE 53 =====
+making it possible to examine when the TWFE projection delivers a good approximation to the
+true interaction.
+Proposition 7.(Misspecified TWFE)Under the Tukey model, the normalization𝛼 1 =0, and As-
+sumption 2, the projections satisfy, for𝑖>1and all𝑗:
+𝛼𝑡𝑤 𝑓 𝑒
+𝑖 =𝛼 𝑖 +𝛽 0
+ 𝐼∑︁
+𝑖′=2
+Λ𝑖,𝑖 ′ 𝑛𝑖′𝛼𝑖′ ¯𝜓𝑖′ +
+𝐽∑︁
+𝑗 ′=1
+Λ𝑖, 𝐼−1+𝑗 ′ 𝑚 𝑗 ′𝜓 𝑗 ′ ¯𝛼 𝑗 ′
+!
+,
+𝜓 𝑡𝑤 𝑓 𝑒
+𝑗 =𝜓 𝑗 +𝛽 0
+ 𝐼∑︁
+𝑖′=2
+Λ𝐼−1+𝑗, 𝑖 ′ 𝑛𝑖′𝛼𝑖′ ¯𝜓𝑖′ +
+𝐽∑︁
+𝑗 ′=1
+Λ𝐼−1+𝑗, 𝐼−1+𝑗 ′ 𝑚 𝑗 ′𝜓 𝑗 ′ ¯𝛼 𝑗 ′
+!
+,
+whereΛ 𝑢,𝑣 denotes the(𝑢, 𝑣)entry of the inverse of the signless Laplacian of𝐺 𝐼 𝐽 .
+Proof.To derive these expressions, rewrite the problem in matrix form and apply the ordinary
+least squares formula. Let𝐴∈R 𝐼 𝐽×𝐼 and𝐵∈R 𝐼 𝐽×𝐽 denote the worker and firm indicator matrices,
+respectively. Each entry𝐴 (𝑖 𝑗), 𝑖 and𝐵 (𝑖 𝑗), 𝑗 equals 1 if the match(𝑖, 𝑗)involves worker𝑖or firm𝑗,
+and zero otherwise. Let𝑌∈R 𝐼 𝐽×1 stack the𝜃 𝑖 𝑗 values, and let𝑆∈R 𝑛×𝐼 𝐽 be the selection matrix
+extracting observed matches, so that𝜽 O =𝑆𝑌.
+To impose𝛼 1 =0, drop the first column of𝐴and define𝐶 :=[𝑆𝐴 −1 𝑆𝐵] ∈R 𝑛×(𝐼+𝐽−1) , where
+𝐴−1 is𝐴without its first column. Let𝑐 𝑡𝑤 𝑓 𝑒 :=[𝛼 𝑡𝑤 𝑓 𝑒
+2 , . . . , 𝛼𝑡𝑤 𝑓 𝑒
+𝐼 , 𝜓𝑡𝑤 𝑓 𝑒
+1 , . . . , 𝜓𝑡𝑤 𝑓 𝑒
+𝐽 ]′. Then
+𝑐𝑡𝑤 𝑓 𝑒 =(𝐶 ′𝐶) −1𝐶′𝑆𝑌=(𝐶 ′𝐶) −1𝐶′𝜽 O.
+Define𝑎 :=𝑆𝐴𝜶,𝑝 :=𝑆𝐵𝝍, andℎ :=𝑎⊙𝑝, where⊙denotes element-wise multiplication. The
+systematic part of the outcome satisfies
+{𝜃𝑖 𝑗}(𝑖,𝑗)∈O 𝐼 𝐽 =𝑆𝑌=𝐶𝑐+𝛽 0ℎ,
+and thus the projection becomes
+𝑐𝑡𝑤 𝑓 𝑒 =𝑐+𝛽 0(𝐶′𝐶) −1𝐶′ℎ,
+where𝛽 0(𝐶′𝐶) −1𝐶′ℎis the bias term.
+The matrix𝐶 ′𝐶is the signless Laplacian. To compute𝐶 ′ℎ, observe that each row𝑘of𝐶 ′ has
+a 1 in the two positions corresponding to the nodes in match𝑘, and zeros elsewhere. Therefore,
+𝐶′ℎis a vector whose first𝐼−1entries are𝑛 𝑖𝛼𝑖 ¯𝜓𝑖 for𝑖=2, . . . , 𝐼, and whose next𝐽entries are
+𝑚 𝑗𝜓 𝑗 ¯𝛼 𝑗 for𝑗=1, . . . , 𝐽. Substituting into the bias formula yields the stated result.□
+The matrixΛ, the inverse of the signless Laplacian, can be viewed as a “connectivity influence
+52
+
+===== PDF PAGE 54 =====
+matrix”: the entryΛ𝑢,𝑣 measures how a perturbation in node𝑣’s outcome propagates through the
+graph to node𝑢. Larger values ofΛ 𝑢,𝑣 indicate that𝑢and𝑣are more tightly linked, via short
+paths, multiple routes, or connections through high-degree nodes, so omitted interaction terms
+from node𝑣spill over more strongly into node𝑢’s TWFE projection.
+The bias in Proposition 7 is proportional to|𝛽 0|, and vanishes when𝛽 0 =0. The expressions
+𝑛𝑖′𝛼𝑖′ ¯𝜓𝑖′ and𝑚 𝑗 ′𝜓 𝑗 ′ ¯𝛼 𝑗 ′ correspond exactly to the interaction components that are omitted when
+TWFE is imposed. The weightsΛ 𝑢,𝑣, given by the entries of the inverse signless Laplacian, deter-
+mine how the structure of𝐺𝐼 𝐽 channels these omitted terms into each node’s projection. Because
+Λdepends on the global topology of the graph, the bias for any given worker or firm is shaped
+by the structure of the entire network. Closed-form expressions forΛare available for certain
+graph families (Hessert and Mallik, 2021), but no general formula exists.
+B.1 Bias Propagation in Sorting Measure
+Crucially, the bias term at each node depend not only on𝛽 0 and the corresponding productivity,
+but also on the full pattern of observed matches. Two workers𝑖and𝑖 ′ with identical productiv-
+ities,𝛼 𝑖 =𝛼 𝑖′, may have different projections,𝛼 𝑡𝑤 𝑓 𝑒
+𝑖 and𝛼 𝑡𝑤 𝑓 𝑒
+𝑖′ . In some cases, the ordering may
+even reverse: for example, it is possible to have𝛼 𝑖 >𝛼 𝑖′ but𝛼 𝑡𝑤 𝑓 𝑒
+𝑖 <𝛼 𝑡𝑤 𝑓 𝑒
+𝑖′ . This is in contrast
+with the balanced panel case, where all worker-firm pairs are observed and projections preserve
+the productivity rankings.
+The bias expressions show that the projections embed the sorting pattern in the matching
+network. Hence, relying on𝜶 𝑡𝑤 𝑓 𝑒 and𝝍 𝑡𝑤 𝑓 𝑒 to measure sorting can be misleading. A standard
+approach is to compute the correlation between𝛼 𝑡𝑤 𝑓 𝑒
+𝑖 and𝜓 𝑡𝑤 𝑓 𝑒
+𝑗 across observed matches: one
+constructs two vectors, one with𝛼 𝑡𝑤 𝑓 𝑒
+𝑖 and another with𝜓 𝑡𝑤 𝑓 𝑒
+𝑗 for each observed pair(𝑖, 𝑗), and
+then computes their correlation as a summary statistic of sorting. A positive correlation sug-
+gests sorting of high-productivity workers with high-productivity firms; a near-zero or negative
+correlation implies weak or negative sorting.
+Proposition 7 can be used directly to construct cases in which the projections fail to capture
+the true sorting pattern. In the example below, I construct a setting with positive sorting, meaning
+that true productivities are positively correlated across matches. Although the true correlation
+is sizable (around0.3), the correlation computed using TWFE projections is close to zero when
+the interaction function is supermodular with𝛽 0 =3. This case is not contrived: the matching
+network in Figure 8 is fairly typical, and simple theory predicts supermodularity being associ-
+ated with positive sorting. Nonetheless, the TWFE approximation would incorrectly suggest the
+absence of sorting.
+Example 3.(Sorting Pattern)Consider the matching network with𝐼=3,𝐽=3, andO 𝐼 𝐽 =
+53
+
+===== PDF PAGE 55 =====
+{(𝑖 1, 𝑗1),(𝑖 1, 𝑗2),(𝑖 1, 𝑗3),(𝑖 2, 𝑗2),(𝑖 2, 𝑗3),(𝑖 3, 𝑗3)}, as illustrated in Figure 8. Let the productivities be
+𝛼1 =4,𝛼 2 =5, and𝛼 3 =2, and𝜓 1 =10,𝜓 2 =8, and𝜓 3 =1.
+𝑖1
+𝑖2
+𝑖3
+𝑗1
+𝑗2
+𝑗3
+Figure 8:Left: the matching network in Example 3. Right: the correlation coefficient𝜌between worker
+and firm TWFE projections across matches as a function of𝛽 0.
+Using Proposition 7, compute the projections𝜶 𝑡𝑤 𝑓 𝑒 and𝝍 𝑡𝑤 𝑓 𝑒 , and let𝜌be the correlation of
+productivities across matches. Figure 8 shows how𝜌varies with𝛽 0: although the true correlation is
+0.3 (and is correctly captured when𝛽 0 =0), the correlation based on the projections can be close to
+zero or even negative.
+Consider the case𝛽 0 =3, hence with a supermodular interaction function. The correlation based
+on the TWFE projections is only0.02, with the bias nearly offsetting the underlying sorting pattern.
+Bias in the covariance also contaminates the variance decomposition, making its components
+difficult to interpret. In addition, because the bias can reverse the true ranking of agents, any two-
+stage procedure that relies on TWFE projections as outcome variables in subsequent regressions
+becomes unreliable.
+Example 3 hence demonstrates that approximating the Tukey model with the TWFE specifi-
+cation, even in the noiseless case, produces parameters of limited informational value once com-
+plementarities are non-negligible. This underscores the importance of methods that allow𝑓to
+feature complementarities. The Tukey model provides the minimal extension of TWFE required
+to capture them, offering a simple yet flexible structure for analysis.
+C Seed-and-Snowballs and Leave-one-out Connectivity
+In this Appendix, I examine the relationship between the Seed-and-Snowballs connectivity prop-
+erty introduced in Section 3.3 and the leave-one-out connectivity condition used by Kline et al.
+(2020) to establish the validity of their variance estimator. The latter requires that the bipartite
+graph remain connected after removing any single worker node together with its incident edges.
+The precise relationship between these two conditions is stated in the following proposition.
+54
+
+===== PDF PAGE 56 =====
+Proposition 8.(Seed-and-Snowballs vs. Leave-one-out Connectivity)If𝐺 𝐼 𝐽 satisfies Seed-and-
+Snowballs connectivity, then it satisfies leave-one-out connectivity; the converse does not hold.
+Proof.Seed-and-Snowballs⇒Leave-one-out. If|𝐽|=1the conclusion is immediate, so assume
+there are at least two firms. Run the Seed–and–Snowballs algorithm using a seed𝑗 0 and record
+the order in which firms enter the set𝑆 𝐽
+𝑛; by construction, each firm𝑗 𝑘 with𝑘≥1is connected
+to the preceding firms through at least two distinct workers, say𝑖 (1)
+𝑘 and𝑖 (2)
+𝑘 .
+Now, remove an arbitrary worker𝑖 ★ together with all incident edges. For every firm𝑗 𝑘 there
+are two cases:
+1. If𝑖 ★ ∉{𝑖 (1)
+𝑘 , 𝑖(2)
+𝑘 },𝑗 𝑘 keeps both links to the earlier firms.
+2. If𝑖 ★ coincides with, say,𝑖 (1)
+𝑘 , the second link𝑖 (2)
+𝑘 remains, so𝑗 𝑘 is still connected to the
+subgraph generated by{𝑗 0, . . . , 𝑗𝑘−1 }.
+Proceeding inductively from𝑘=1to𝑘=|𝐽| −1shows that every firm remains connected to
+𝑗0 after𝑖 ★ is deleted; hence, the whole graph stays connected. Because𝑖 ★ was arbitrary,𝐺 𝐼 𝐽 is
+leave-one-out connected.
+Leave-one-out⇏Seed-and-Snowballs. Consider the graph in Figure 9. Deleting any single
+worker breaks exactly two edges, but the remaining edges still form a path that contains every
+node, so the graph is leave-one-out connected. However, starting for example from the seed𝑗0, the
+snowball algorithm proceeds𝑗 0 → {𝑖 1, 𝑖2, 𝑖5} → {𝑗 0, 𝑗1} → {𝑖 1, 𝑖2, 𝑖5, 𝑖3}; remaining firms share at
+most one of these workers, so no further firm can be added and the procedure stops. Because the
+same failure occurs for any choice of the seed, Seed-and-Snowballs connectivity does not hold.
+𝑗0 𝑗1
+𝑗2 𝑗3
+𝑖1
+𝑖2
+𝑖3
+𝑖4
+𝑖5
+𝑖1
+𝑖2
+𝑖3
+𝑖4
+𝑖5
+𝑗0
+𝑗1
+𝑗2
+𝑗3
+Figure 9:Two representation of the same bipartite graph satisfying leave-one-out connectivity and vio-
+lating seed-and-snowball connectivity.
+□
+55
+
+===== PDF PAGE 57 =====
+D 4-Cycles in Erdős-Rényi Model
+In this Appendix, I study the conditions under which the bipartite Erdős-Rényi random graph
+model generates, with high probability, a diverging number of length-4 cycles, thereby satisfying
+Assumption 5.2. In the Bipartite Interaction model, the graph𝐺𝐼 𝐽 is treated as fixed, so the number
+of cycles is deterministic. The goal here is not to provide a model of network formation, but rather
+to clarify the role of the “many cycles” assumption and how it relates to connectivity. While
+similar insights arise under other random graph models, the Erdős-Rényi model is adopted as a
+simple benchmark in which the entire network structure is governed by a single parameter.
+In the bipartite Erdős–Rényi graph𝐺 𝐼 𝐽 (𝑝𝐼 𝐽 ), each pair(𝑖, 𝑗) ∈𝐼×𝐽is independently linked
+with probability𝑝 𝐼 𝐽 ∈ (0,1). The link probability𝑝 𝐼 𝐽 is constant across edges, but may vary with
+network sizes𝐼and𝐽. Let𝐶 4(𝐼, 𝐽)denote the (random) number of length-4 cycles in𝐺 𝐼 𝐽 (𝑝𝐼 𝐽 ),
+and consider a setting in which the ratio 𝐼
+𝐽 remains bounded (0<𝑐 < 𝐼
+𝐽 < 𝑐<∞) as𝐼, 𝐽→ ∞, so
+that the numbers of agents on the two sides of the market grow at the same rate. The following
+proposition provides a sufficient condition for𝐺𝐼 𝐽 (𝑝𝐼 𝐽 )to contain a diverging number of length-4
+cycles.
+Proposition 9.(Cycles in Erdős-Rényi Model)If𝐼𝑝 𝐼 𝐽 → ∞, then𝐶 4(𝐼, 𝐽)
+𝑝
+− → ∞.
+Proof.LetI ℓ be the indicator that the quartetℓ=(𝑖, 𝑖 ′, 𝑗, 𝑗 ′), with𝑖, 𝑖 ′ ∈𝐼and𝑗, 𝑗 ′ ∈𝐽, forms a
+cycle, and letLdenote the set of all potential quartets. The number of length-4 cycles𝐶 4(𝐼, 𝐽)is
+then given by
+𝐶4(𝐼, 𝐽)=
+∑︁
+ℓ∈L
+Iℓ .
+Since there are  𝐼
+2
+  𝐽
+2
+ = 𝐼(𝐼−1)𝐽(𝐽−1)
+4 potential cycles, and each occurs with probability𝑝 4
+𝐼 𝐽,
+E[𝐶4(𝐼, 𝐽)]= 𝐼(𝐼−1)𝐽(𝐽−1)
+4 𝑝4
+𝐼 𝐽 .
+Consider the variance of𝐶 4(𝐼, 𝐽):
+Var(𝐶4(𝐼, 𝐽))=Var
+ ∑︁
+ℓ∈L
+Iℓ
+!
+=
+∑︁
+ℓ∈L
+Var(Iℓ) +
+∑︁
+ℓ≠ℓ ′
+Cov(Iℓ,Iℓ ′),
+and sinceI 2
+ℓ =Iℓ,
+∑︁
+ℓ
+Var(Iℓ)=
+∑︁
+ℓ
+𝑝4
+𝐼 𝐽 (1−𝑝 4
+𝐼 𝐽 )= 𝐼(𝐼−1)𝐽(𝐽−1)
+4 𝑝4
+𝐼 𝐽 (1−𝑝 4
+𝐼 𝐽 ),
+56
+
+===== PDF PAGE 58 =====
+which gives a term of order𝑂(𝐼 4𝑝4
+𝐼 𝐽 ), where𝐽is replaced by𝐼since both grow at the same rate.
+For two distinct cycles, let𝑘∈ {0,1,2}be the number of shared edges. If𝑘=0, the indicators
+are independent, so the covariance is zero.
+If𝑘=1, the two cycles share exactly one edge and involve six nodes. The number of such
+pairs is therefore of order𝑂(𝐼 3𝐽 3). Each covariance termCov(I ℓ,Iℓ ′)is of order𝑂(𝑝 7
+𝐼 𝐽 ), so the
+total contribution from pairs that share one edge is of order𝑂(𝐼 3𝐽 3𝑝7
+𝐼 𝐽 )=𝑂(𝐼 6𝑝7
+𝐼 𝐽 ).
+If𝑘=2, the two cycles share exactly two edges and involve five nodes. The number of such
+pairs is therefore of order𝑂(𝐼 5). Each covariance termCov(I ℓ,Iℓ ′)is of order𝑂(𝑝 6
+𝐼 𝐽 ), so the total
+contribution from pairs that share two edges is of order𝑂(𝐼 5𝑝6
+𝐼 𝐽 ).
+Since the variance is thus
+Var(𝐶4(𝐼, 𝐽))=𝑂(𝐼 4𝑝4
+𝐼 𝐽 ) +𝑂(𝐼 6𝑝7
+𝐼 𝐽 ) +𝑂(𝐼 5𝑝6
+𝐼 𝐽 ),
+I can conclude that, when𝐼𝑝 𝐼 𝐽 → ∞,
+Var(𝐶4(𝐼, 𝐽))
+(E[𝐶 4(𝐼, 𝐽)]) 2 =𝑂
+ 1
+𝐼𝑝 𝐼 𝐽
+
+→0.
+Let𝜖>0be arbitrary. By Chebyshev’s inequality,
+Pr
+
+𝐶4
+E[𝐶4] −1
+ ≥𝜖
+
+=Pr {|𝐶4 −E[𝐶 4] | ≥𝜖E[𝐶 4]} ≤ Var(𝐶4)
+𝜖2{E[𝐶4]} 2 →0,
+and hence 𝐶4
+E[𝐶4]
+𝑝
+− →1, which establishes
+𝐶4(𝐼, 𝐽)
+𝑝
+− → ∞.
+□
+The threshold for𝑝 𝐼 𝐽 required by Assumption 5.2 can be compared to the threshold needed
+for connectivity. For the network to be connected with high probability, it is necessary that
+𝐼𝑝 𝐼 𝐽
+log(𝐼) >1
+(see Section 8.2 of Blum et al. (2020)). Sincelog(𝐼) → ∞, this condition implies𝐼𝑝 𝐼 𝐽 → ∞. In
+the bipartite Erdős–Rényi model, such a condition automatically guarantees that the number of
+4-cycles diverges. The reverse, however, does not hold:𝐶4(𝐼, 𝐽) → ∞even when𝐼𝑝 𝐼 𝐽 grows more
+slowly thanlog(𝐼). Hence, connectivity is a strictly stronger requirement than the existence of
+many cycles. In particular, under the Erdős-Rényi benchmark, the graph conditions needed for
+57
+
+===== PDF PAGE 59 =====
+identification in the TWFE model also imply consistency of ˆ𝛽𝐿,𝜋 for estimating𝛽 0 in the Tukey
+model.
+E Outcome-Based Labeling
+To assign labels within each cycle, I proposed an instrument-based procedure that relies on ob-
+servable characteristics informative about worker and firm productivities. A natural question
+is whether the outcomes themselves could be used for this purpose: since outcomes depend on
+productivities, one might expect that, on average, the worker (or firm) with higher productivity
+would also generate higher observed outcomes. While this intuition is appealing, it ignores the
+exogeneity requirement: the labeling choice must not depend on the errors{𝜂 𝑖 𝑗}, and hence the
+outcomes can’t be used as instruments.
+To see why this matters, consider the following outcome-based labeling rule, which assigns
+labels according to the higher average outcome within a cycle.
+Definition 9.(Outcome-Based Labeling)In each cycleℓ, the labels(𝑖 ℓ,𝜋 ℓ,𝑦 , 𝑖′
+ℓ,𝜋 ℓ,𝑦 )and(𝑗 ℓ,𝜋 ℓ,𝑦 , 𝑗 ′
+ℓ,𝜋 ℓ,𝑦 )
+are assigned so that
+𝑦𝑖ℓ,𝜋ℓ,𝑦 𝑗ℓ,𝜋ℓ,𝑦 +𝑦 𝑖ℓ,𝜋ℓ,𝑦 𝑗 ′
+ℓ,𝜋ℓ,𝑦
+>𝑦 𝑖′
+ℓ,𝜋ℓ,𝑦 𝑗ℓ,𝜋ℓ,𝑦 +𝑦 𝑖′
+ℓ,𝜋ℓ,𝑦 𝑗 ′
+ℓ,𝜋ℓ,𝑦
+,
+𝑦𝑖ℓ,𝜋ℓ,𝑦 𝑗ℓ,𝜋ℓ,𝑦 +𝑦 𝑖′
+ℓ,𝜋ℓ,𝑦 𝑗ℓ,𝜋ℓ,𝑦 >𝑦 𝑖ℓ,𝜋ℓ,𝑦 𝑗 ′
+ℓ,𝜋ℓ,𝑦
++𝑦 𝑖′
+ℓ,𝜋ℓ,𝑦 𝑗 ′
+ℓ,𝜋ℓ,𝑦
+.
+This induces the signs
+𝜋 𝛼
+ℓ,𝑦 =sign
+
+𝑦𝑖ℓ 𝑗ℓ +𝑦 𝑖ℓ 𝑗 ′
+ℓ −𝑦 𝑖′
+ℓ 𝑗ℓ −𝑦 𝑖′
+ℓ 𝑗 ′
+ℓ
+
+, 𝜋 𝜓
+ℓ,𝑦 =sign
+
+𝑦𝑖ℓ 𝑗ℓ +𝑦 𝑖′
+ℓ 𝑗ℓ −𝑦 𝑖ℓ 𝑗 ′
+ℓ −𝑦 𝑖′
+ℓ 𝑗 ′
+ℓ
+
+.
+Because these signs depend directly on the realized errors𝜂 𝑖 𝑗, the resulting estimator ˆ𝛽𝐿,𝑦 is
+no longer consistent. To illustrate, consider the case𝛽 0 =0,𝛼 𝑖ℓ −𝛼 𝑖′
+ℓ =1, and𝜓 𝑗ℓ −𝜓 𝑗 ′
+ℓ =1, with
+𝜂𝑖′
+ℓ 𝑗ℓ =𝜂 𝑖′
+ℓ 𝑗 ′
+ℓ =0. In this setting, the numerator and denominator of ˆ𝛽𝐿,𝑦 simplify to
+1
+𝐿
+𝐿∑︁
+ℓ=1
+(𝜂𝑖ℓ 𝑗ℓ −𝜂 𝑖ℓ 𝑗 ′
+ℓ )𝜋 𝛼
+ℓ,𝑦𝜋𝜓
+ℓ,𝑦 = 1
+𝐿
+𝐿∑︁
+ℓ=1
+|𝜂𝑖ℓ 𝑗ℓ −𝜂 𝑖ℓ 𝑗 ′
+ℓ |sign 𝜂𝑖ℓ 𝑗ℓ +𝜂 𝑖ℓ 𝑗 ′
+ℓ
+,
+1
+𝐿
+𝐿∑︁
+ℓ=1
+(2𝜂𝑖ℓ 𝑗ℓ −3𝜂 𝑖ℓ 𝑗 ′
+ℓ −1)𝜋 𝛼
+ℓ,𝑦𝜋𝜓
+ℓ,𝑦 = 1
+𝐿
+𝐿∑︁
+ℓ=1
+(2𝜂𝑖ℓ 𝑗ℓ −3𝜂 𝑖ℓ 𝑗 ′
+ℓ −1)sign  𝜂𝑖ℓ 𝑗ℓ −𝜂 𝑖ℓ 𝑗 ′
+ℓ
+ sign 𝜂𝑖ℓ 𝑗ℓ +𝜂 𝑖ℓ 𝑗 ′
+ℓ
+.
+With independent error distributions, one can construct examples where ˆ𝛽𝐿,𝑦 converges al-
+58
+
+===== PDF PAGE 60 =====
+most surely to values different from zero, despite𝛽 0 =0. For instance:
+𝜂𝑖ℓ 𝑗ℓ :=
+ 
+
+3, 𝑝= 1
+4,
+−1, 𝑝= 3
+4,
+𝜂𝑖ℓ 𝑗 ′
+ℓ :=
+ 
+
+2, 𝑝= 5
+7,
+−5, 𝑝= 2
+7,
+=⇒ ˆ𝛽𝐿,𝑦 →𝑎.𝑠. 5
+9,
+while with
+𝜂𝑖ℓ 𝑗ℓ :=
+ 
+
+1, 𝑝= 3
+4,
+−3, 𝑝= 1
+4,
+𝜂𝑖ℓ 𝑗 ′
+ℓ :=
+ 
+
+6, 𝑝= 1
+4,
+−2, 𝑝= 3
+4,
+=⇒ ˆ𝛽𝐿,𝑦 →𝑎.𝑠. − 3
+5 .
+These examples show that outcome-based labeling introduces asymptotic bias intoˆ𝛽𝐿,𝑦, which
+can be either positive or negative depending on the error distribution. The problem arises because
+the labeling uses information contaminated by𝜂 𝑖 𝑗, violating exogeneity. This underscores the
+need for external instruments to guide label assignment.
+F Alternating Least Squares in the Tukey model
+Consider the problem:
+( ˆ𝜶 ′, ˆ𝝍′) ∈arg min
+𝜶 ′,𝝍 ′
+∑︁
+(𝑖,𝑗)∈O 𝐼 𝐽
+ 𝑦′
+𝑖 𝑗 −𝛼 ′
+𝑖𝜓 ′
+𝑗
+2 s.t.∥𝝍 ′∥=1.(F.1)
+Problem (F.1) is non-convex but admits a unique global optimum, up to the normalisation∥𝝍′∥=
+1, as long as the matching network𝐺 𝐼 𝐽 is connected.2
+In practice, solve Problem (F.1) using alternating least squares. Starting from any𝝍 (0) ≠0
+with∥𝝍 (0) ∥2 =1, and iterating for𝑡=0,1,2, . . ., first set
+𝛼 (𝑡+1)
+𝑖 :=
+∑︁
+𝑗:𝐷 𝑖 𝑗=1
+𝜓 (𝑡)
+𝑗 𝑦𝑖 𝑗
+∑︁
+𝑗:𝐷 𝑖 𝑗=1
+ 𝜓 (𝑡)
+𝑗
+2 , 𝑖=1, . . . , 𝐼,(F.2)
+𝜓 (𝑡+1)
+𝑗 :=
+∑︁
+𝑖:𝐷𝑖 𝑗=1
+𝛼 (𝑡+1)
+𝑖 𝑦𝑖 𝑗
+∑︁
+𝑖:𝐷𝑖 𝑗=1
+ 𝛼 (𝑡+1)
+𝑖
+2 , 𝑗=1, . . . , 𝐽 ,(F.3)
+2The scale can be fixed in many equivalent ways; the𝐿2 constraint is convenient because it preserves closed-form
+updates.
+59
+
+===== PDF PAGE 61 =====
+and then rescale
+𝑐 :=
+𝝍 (𝑡+1)
+2,𝜶 (𝑡+1) ←𝑐𝜶 (𝑡+1) ,𝝍 (𝑡+1) ←𝝍 (𝑡+1) /𝑐.
+Equations (F.2)–(F.3) are ordinary least-squares fits with asingleregressor: holding𝝍fixed,
+each𝛼 𝑖 is the slope from regressing{𝑦 𝑖 𝑗} 𝑗:𝐷 𝑖 𝑗=1 on{𝜓 𝑗 } 𝑗:𝐷 𝑖 𝑗=1; with the updated𝜶fixed, each𝜓 𝑗
+is obtained symmetrically. Because (F.1) is bi-convex, the alternating least squares scheme mono-
+tonically decreases the criterion and converges to the global minimizer when𝐺 𝐼 𝐽 is connected.
+G Lemmas
+Lemma 7.(Regularity of Cycle-Based Error Terms)Under Assumptions 5.1 and 5.4, the derived er-
+ror terms𝜖 Δ1,ℓ,𝜋 ℓ and𝜖 Δ2,ℓ,𝜋 ℓ satisfyE[𝜖 Δ1,ℓ,𝜋 ℓ ]=E[𝜖 Δ2,ℓ,𝜋 ℓ ]=0,Var(𝜖 Δ1,ℓ,𝜋 ℓ ) ≥𝐶 1 >0,Var(𝜖 Δ2,ℓ,𝜋 ℓ ) ≥
+𝐶2 >0, andE[|𝜖 Δ1,ℓ,𝜋 ℓ | 2+𝛿′
+] ≤𝑀 1 <∞,E[|𝜖 Δ2,ℓ,𝜋 ℓ | 2+𝛿] ≤𝑀 2 <∞for some𝛿>0and finite con-
+stants𝐶 1, 𝐶2, 𝑀1, 𝑀2.
+Proof.Recall
+𝜖Δ1,ℓ,𝜋 ℓ =𝜖 Δ1,ℓ𝜋 𝛼
+ℓ 𝜋𝜓
+ℓ ,
+𝜖Δ2,ℓ,𝜋 ℓ =𝜖 Δ2,ℓ𝜋 𝛼
+ℓ 𝜋𝜓
+ℓ ,
+with
+𝜖Δ1,ℓ =𝜂 𝑖ℓ 𝑗ℓ −𝜂 𝑖′
+ℓ 𝑗ℓ −𝜂 𝑖ℓ 𝑗 ′
+ℓ +𝜂 𝑖′
+ℓ 𝑗 ′
+ℓ ,
+𝜖Δ2,ℓ =𝜃 𝑖ℓ 𝑗ℓ𝜂𝑖′
+ℓ 𝑗 ′
+ℓ +𝜃 𝑖′
+ℓ 𝑗 ′
+ℓ 𝜂𝑖ℓ 𝑗ℓ −𝜃 𝑖′
+ℓ 𝑗ℓ𝜂𝑖ℓ 𝑗 ′
+ℓ −𝜃 𝑖ℓ 𝑗 ′
+ℓ 𝜂𝑖′
+ℓ 𝑗ℓ +𝜂 𝑖ℓ 𝑗ℓ𝜂𝑖′
+ℓ 𝑗 ′
+ℓ −𝜂 𝑖′
+ℓ 𝑗ℓ𝜂𝑖ℓ 𝑗 ′
+ℓ .
+Since𝛼 𝑖,𝜓 𝑗 and𝛽 0, and hence𝜃 𝑖 𝑗, are bounded, Assumption 5.1 and standard properties of
+expectation, variance, and moments guarantee𝜖Δ1,ℓ and𝜖 Δ2,ℓ to have mean zero, positive variance
+and uniformly bounded2+𝛿moments.
+The term𝜋 𝛼
+ℓ 𝜋𝜓
+ℓ is a random variable with support{−1,+1}, hence with uniformly bounded
+moments.
+By Assumption 5.4,𝜖 Δ1,ℓ,𝜋 ℓ and𝜖 Δ2,ℓ,𝜋 ℓ are the products of two independent random variables,
+one with mean zero, positive variance and uniformly bounded2+𝛿moments and the other with
+uniformly bounded moments. This implies they are also mean zero, have positive variance and
+bounded2+𝛿moments.□
+Lemma 8.(Properties of Composite Error𝑢 ℓ,𝜋 ℓ )Under Assumption 5.1 and 5.4, the composite error
+term𝑢 ℓ,𝜋 ℓ satisfiesE[𝑢 ℓ,𝜋 ℓ ]=0andVar(𝑢 ℓ,𝜋 ℓ ) ≥𝐶 𝑢 >0, for a finite constant𝐶 𝑢. Its moments satisfy
+60
+
+===== PDF PAGE 62 =====
+E[|𝑢 ℓ,𝜋 ℓ | 2+𝛿] ≤𝑀 𝑢 <∞for some𝛿>0and finite constant𝑀 𝑢. Furthermore, the varianceVar(𝑢 ℓ,𝜋 ℓ )
+does not depend on the choice of the labeling.
+Proof.Recall:
+𝑢ℓ,𝜋 ℓ :=𝜖 Δ1,ℓ,𝜋 ℓ +𝛽 0𝜖Δ2,ℓ,𝜋 ℓ =(𝜖 Δ1,ℓ +𝛽 0𝜖Δ2,ℓ )𝜋 𝛼
+ℓ 𝜋𝜓
+ℓ =𝑢 ℓ𝜋 𝛼
+ℓ 𝜋𝜓
+ℓ
+with𝑢 ℓ :=𝜖 Δ1,ℓ +𝛽 0𝜖Δ2,ℓ.
+Since𝛼 𝑖,𝜓 𝑗 and𝛽 0, and hence𝜃 𝑖 𝑗, are bounded, Assumption 5.1 and standard properties of
+expectation, variance, and moments guarantee𝜖 Δ1,ℓ and𝜖 Δ2,ℓ, and hence𝑢 ℓ, to have mean zero,
+positive variance and uniformly bounded2+𝛿moments.
+The term𝜋 𝛼
+ℓ 𝜋𝜓
+ℓ is a random variable with support{−1,+1}, hence with uniformly bounded
+moments.
+By Assumption 5.4,𝑢 ℓ,𝜋 ℓ is the product of two independent random variables, one with mean
+zero, positive variance, and uniformly bounded2+𝛿moments, and the other with uniformly
+bounded moments. This implies they are also mean zero, have positive variance, and bounded
+2+𝛿moments.
+Finally, note that
+Var(𝑢ℓ,𝜋 ℓ )=Var(𝑢 ℓ𝜋 𝛼
+ℓ 𝜋𝜓
+ℓ )=E[(𝑢 ℓ𝜋 𝛼
+ℓ 𝜋𝜓
+ℓ −E[𝑢 ℓ𝜋 𝛼
+ℓ 𝜋𝜓
+ℓ ]) 2]=E[(𝑢 ℓ𝜋 𝛼
+ℓ 𝜋𝜓
+ℓ )2]=E[𝑢 2
+ℓ ]=Var(𝑢 ℓ),
+and hence the varianceVar(𝑢 ℓ,𝜋 ℓ )does not depend on the labelings𝜋 𝛼
+ℓ and𝜋 𝜓
+ℓ .□
+H Proofs
+H.1 Proof of Theorem 1
+First, I show that the presence of a cycle is necessary for identifying𝛽0. Suppose, by contradiction,
+that𝐺 𝐼 𝐽 contains no cycles. If it is connected, it is a tree. If it is disconnected, it decomposes into
+multiple tree components; focusing on any one component suffices, as the same argument applies
+to each. A tree with𝑀nodes has𝑀−1edges, corresponding to𝑀−1observed matches. The
+model includes𝑀node-specific parameters (one for each worker or firm) and the interaction
+parameter𝛽 0, for a total of𝑀+1unknowns.
+Consider the normalization𝛼 𝑖0 =0, and fix an arbitrary value of𝛽 0. In a tree, there is always
+at least one edge connecting a known node to an unknown one. The equation on that edge,
+61
+
+===== PDF PAGE 63 =====
+𝜃𝑖 𝑗 =𝛼 𝑖 +𝜓 𝑗 +𝛽𝛼 𝑖𝜓 𝑗, becomes linear in the unknown parameter. For instance, if𝛼𝑖 is known, then
+𝜃𝑖 𝑗 −𝛼 𝑖 =𝜓 𝑗 (1+𝛽𝛼 𝑖)=⇒𝜓 𝑗 = 𝜃𝑖 𝑗 −𝛼 𝑖
+1+𝛽𝛼 𝑖
+which is unique provided1+𝛽𝛼 𝑖 ≠0. Removing this edge shrinks the tree, and one repeats until
+all productivities are solved in terms of𝛽 0. Varying𝛽 0 yields a continuum of distinct solutions𝜶
+and𝝍, all consistent with the same observed systematic outcome. Since𝛽 0 can be chosen freely
+without contradiction (apart from that one value per edge), it is not identified when𝐺𝐼 𝐽 is a forest.
+Therefore, the existence of at least one cycle in𝐺 𝐼 𝐽 is necessary for the identification of𝛽 0.
+Consider such a cycle, of length2𝐾with𝐾≥2, and relabel the corresponding outcomes
+𝜃𝑖1,𝑗 1, 𝜃𝑖2,𝑗 1, . . . 𝜃𝑖𝐾 ,𝑗 𝐾 , 𝜃𝑖1,𝑗 𝐾 as𝜃 (1), 𝜃 (2), . . . , 𝜃(2𝐾) in the order encountered.
+Define
+𝑢𝑖 :=1+𝛽 0 𝛼𝑖, 𝑣 𝑗 :=1+𝛽 0 𝜓 𝑗 .
+Then for each(𝑖, 𝑗),
+1+𝛽 0𝜃𝑖 𝑗 =1+𝛽 0(𝛼𝑖 +𝜓 𝑗 +𝛽 0𝛼𝑖𝜓 𝑗 )=(1+𝛽 0𝛼𝑖) (1+𝛽 0𝜓 𝑗 )=𝑢 𝑖𝑣 𝑗 .
+Hence, traversing the cycle gives
+𝐾Ö
+𝑘=1
+ 1+𝛽 0𝜃 (2𝑘−1) =
+𝐾Ö
+𝑘=1
+𝑢𝑖𝑘 𝑣 𝑗𝑘 =
+𝐾Ö
+𝑘=1
+𝑢𝑖𝑘+1 𝑣 𝑗𝑘 =
+𝐾Ö
+𝑘=1
+ 1+𝛽 0𝜃 (2𝑘),
+where𝑖 𝐾+1 =𝑖 1.
+Expand the products in elementary symmetric sums:
+𝐾Ö
+𝑘=1
+(1+𝛽 0𝜃 (2𝑘−1) )=
+𝐾∑︁
+𝑟=0
+𝑆odd
+𝑟 𝛽𝑟
+0,
+𝐾Ö
+𝑘=1
+(1+𝛽 0𝜃 (2𝑘) )=
+𝐾∑︁
+𝑟=0
+𝑆even
+𝑟 𝛽𝑟
+0
+where
+𝑆odd
+𝑟 =
+∑︁
+1≤𝑘1<···<𝑘𝑟 ≤𝐾
+𝜃 (2𝑘1−1) · · ·𝜃(2𝑘𝑟 −1), 𝑆 even
+𝑟 =
+∑︁
+1≤𝑘1<···<𝑘𝑟 ≤𝐾
+𝜃 (2𝑘1) · · ·𝜃(2𝑘𝑟 ),
+and the notation Í
+1≤𝑘1<···<𝑘𝑟 ≤𝐾 denotes the sum over all  𝐾
+𝑟
+ ways to choose𝑟distinct indices
+62
+
+===== PDF PAGE 64 =====
+1≤𝑘 1 <· · ·<𝑘 𝑟 ≤𝐾, each counted exactly once. Then, for each such tuple(𝑘 1, . . . , 𝑘𝑟 ), the term
+𝜃 (2𝑘1−1) · · ·𝜃(2𝑘𝑟 −1) is the product of the corresponding𝑟odd-indexed𝜃-values, and analogously
+for𝜃 (2𝑘1) · · ·𝜃(2𝑘𝑟 ).
+Subtracting these expansions eliminates the constant term (𝑟=0), leaving
+𝐾∑︁
+𝑟=1
+ 𝑆odd
+𝑟 −𝑆 even
+𝑟
+𝛽𝑟
+0 =0.
+Set
+Δ𝑟 =𝑆 odd
+𝑟 −𝑆 even
+𝑟 , 𝑟=1,2, . . . , 𝐾 .
+to obtain the degree-𝐾polynomial
+Δ1𝛽0 +Δ 2𝛽2
+0 + · · · +Δ𝐾 𝛽𝐾
+0 =0.
+By construction,𝛽 0 =0is always a root, but does not recover the interaction parameter.
+Factoring it out, one discards the trivial solution and focuses on the roots of
+Δ1 +Δ 2𝛽0 +Δ 3𝛽2
+0 + · · · +Δ𝐾 𝛽 𝐾−1
+0 =0.
+If this polynomial has an additional root𝛽 0 =0, that is a true admissible value for the interaction
+parameter, differently from the purely algebraic root as above.
+Uniqueness of the root is guaranteed only when𝐾=2. Any cycle with𝐾>2does not allow
+for point identification of𝛽 0, since it restricts its value to a set with𝐾−1elements.
+When𝐾=2, the derived formulas are
+Δ1 =𝜃 (1) +𝜃 (3) −𝜃 (2) −𝜃 (4) =𝜃 𝑖1 𝑗1 +𝜃 𝑖2 𝑗2 −𝜃 𝑖1 𝑗2 −𝜃 𝑖2 𝑗1,
+Δ2 =𝜃 (1)𝜃 (3) −𝜃 (2)𝜃 (4) =𝜃 𝑖1 𝑗1𝜃𝑖2 𝑗2 −𝜃 𝑖1 𝑗2𝜃𝑖2 𝑗1,
+and the polynomial becomes
+(𝜃𝑖1 𝑗1 +𝜃 𝑖2 𝑗2 −𝜃 𝑖1 𝑗2 −𝜃 𝑖2 𝑗1) +𝛽 0(𝜃𝑖1 𝑗1𝜃𝑖2 𝑗2 −𝜃 𝑖1 𝑗2𝜃𝑖2 𝑗1)=0.
+𝛽0 is hence identified:
+𝛽0 =− 𝜃𝑖1 𝑗1 +𝜃 𝑖2 𝑗2 −𝜃 𝑖1 𝑗2 −𝜃 𝑖2 𝑗1
+𝜃𝑖1 𝑗1𝜃𝑖2 𝑗2 −𝜃 𝑖1 𝑗2𝜃𝑖2 𝑗1
+63
+
+===== PDF PAGE 65 =====
+where Assumption 1 guarantees the denominator being different from 0. In fact,
+𝜃𝑖1 𝑗1𝜃𝑖2 𝑗2 −𝜃 𝑖1 𝑗2𝜃𝑖2 𝑗1 =𝛼 𝑖1𝜓 𝑗1 +𝛼 𝑖2𝜓 𝑗2 −𝛼 𝑖2𝜓 𝑗1 −𝛼 𝑖1𝜓 𝑗2 =−(𝛼 𝑖1 −𝛼 𝑖2) (𝜓𝑗1 −𝜓 𝑗2).
+H.2 Proof of Theorem 2
+Sufficiency. Consider the model𝜃 𝑖 𝑗 =𝛼 𝑖 +𝜓 𝑗 +𝛽 0𝛼𝑖𝜓 𝑗, with𝛽 0 known. If𝛽 0 =0, this reduces to
+the usual TWFE model. If𝛽 0 ≠0, rewrite
+𝜃𝑖 𝑗 =𝛼 𝑖 +𝜓 𝑗 +𝛽 0𝛼𝑖𝜓 𝑗 =⇒1+𝛽 0𝜃𝑖 𝑗 =(1+𝛽 0𝛼𝑖) (1+𝛽 0𝜓 𝑗 )
+and set
+𝛼′
+𝑖 =1+𝛽 0𝛼𝑖, 𝜓 ′
+𝑗 =1+𝛽 0𝜓 𝑗, 𝜃 ′
+𝑖 𝑗 =1+𝛽 0𝜃𝑖 𝑗,
+which give
+𝜃 ′
+𝑖 𝑗 =𝛼 ′
+𝑖𝜓 ′
+𝑗
+where𝜃 ′
+𝑖 𝑗 is identified. Clearly,𝜶and𝝍are identified if𝛼 ′
+𝑖 and𝜓 ′
+𝑗 are identified for all𝑖and𝑗.
+Since𝛼 𝑖0 =0,𝛼 ′
+𝑖0 =1+𝛽 0𝛼𝑖 =1. If workers𝑖and𝑖 ′ both match with firm𝑗, then
+𝜃 ′
+𝑖 𝑗
+𝜃 ′
+𝑖′ 𝑗
+=
+𝛼 ′
+𝑖𝜓 ′
+𝑗
+𝛼 ′
+𝑖′𝜓 ′
+𝑗
+=
+𝛼 ′
+𝑖
+𝛼 ′
+𝑖′
+, and the ratio is hence identified. Since𝐺 𝐼 𝐽 is connected, for any worker𝑖there exists a path
+𝑖0 −𝑗 1 −𝑖 1 −𝑗 2 −. . .−𝑗 𝑚 −𝑖.
+Applying the ratio argument at each firm along the path:
+𝛼′
+𝑖
+𝛼′
+𝑖0
+= 𝛼′
+𝑖
+𝛼′
+𝑖𝑚−1
+·
+𝛼′
+𝑖𝑚−1
+𝛼′
+𝑖𝑚−2
+· · ·
+𝛼′
+𝑖1
+𝛼′
+𝑖0
+=
+𝑚Ö
+𝑘=1
+𝜃 ′
+𝑖𝑘 𝑗𝑘
+𝜃 ′
+𝑖𝑘−1 𝑗𝑘
+which pins down𝛼 𝑖 uniquely since𝛼 ′
+𝑖0 =1.
+Once all𝛼 𝑖 are known, any observed edge gives𝜓 ′
+𝑗 =
+𝜃 ′
+𝑖 𝑗
+𝛼 ′
+𝑖
+, uniquely determining each𝜓 𝑗.
+Necessity. If𝐺 𝐼 𝐽 is disconnected, it splits into at least two components. On each component,
+one may independently rescale the local𝛼 ′
+𝑖 ’s and𝜓′
+𝑗’s without changing the product𝛼′
+𝑖𝜓 ′
+𝑗 on that
+component. Thus, parameters across different components cannot be jointly identified.
+64
+
+===== PDF PAGE 66 =====
+H.3 Proof of Theorem 3
+First, note that identification in the BLM model requires two normalizations (𝑎 𝑗0 =𝑏 𝑗0 =1). To
+see why, consider parameter vectors(𝒂,𝒃,𝜶)and(𝒂 ′,𝒃 ′,𝜶 ′)with
+𝛼′
+𝑖 =𝑐 1𝛼𝑖 +𝑐 2, 𝑏 ′
+𝑗 = 𝑏 𝑗
+𝑐1
+, 𝑎 ′
+𝑗 =𝑎 𝑗 − 𝑏 𝑗𝑐2
+𝑐1
+,
+for𝑐 1, 𝑐2 ∈Rwith𝑐 1 ≠0, and note that the BLM models with(𝒂,𝒃,𝜶)and(𝒂 ′,𝒃 ′,𝜶 ′)are obser-
+vationally equivalent. To pin down the two degrees of freedom, two normalizations are needed.
+Sufficiency.To prove sufficiency of Assumption 3, proceed along the Seed-and-Snowballs con-
+struction. Let𝑗 0 indicate the seed with the normalization𝑎 𝑗0 =𝑏 𝑗0 =1.
+Assume that, at some stage𝑛≥0, all parameters of firms in𝑆 𝐽
+𝑛 are known. Hence, identify
+parameters associated with workers in𝑆 𝐼
+𝑛 and firms in𝑆 𝐽
+𝑛+1 as follows:
+(i)Firms→workers.For each worker𝑖∈𝑆 𝐼
+𝑛, there exists a firm𝑗∈𝑆 𝐽
+𝑛 such that𝐷 𝑖 𝑗 =1and
+𝑏 𝑗 ≠0, and hence
+𝛼𝑖 = 𝜃𝑖 𝑗 −𝑎 𝑗
+𝑏 𝑗
+.
+(ii)Workers→firms.For each firm𝑗∈𝑆 𝐽
+𝑛+1 there exist two workers𝑖, 𝑖 ′ ∈𝑆 𝐼
+𝑛 such that
+𝐷𝑖 𝑗 =𝐷 𝑖′ 𝑗 =1and𝛼 𝑖 ≠𝛼 𝑖′, and hence
+ 
+
+𝜃𝑖 𝑗 =𝑎 𝑗 +𝑏 𝑗𝛼𝑖
+𝜃𝑖′ 𝑗 =𝑎 𝑗 +𝑏 𝑗𝛼𝑖′
+⇐ ⇒
+ 
+
+𝑏 𝑗 =
+𝜃𝑖′ 𝑗 −𝜃𝑖 𝑗
+𝛼𝑖′ −𝛼𝑖
+𝑎 𝑗 =𝜃 𝑖 𝑗 −
+𝜃𝑖′ 𝑗 −𝜃𝑖 𝑗
+𝛼𝑖′ −𝛼𝑖
+𝛼𝑖 .
+Because the snowball reaches(𝐼, 𝐽)after finitely many steps, every𝛼 𝑖,𝑎 𝑗,𝑏 𝑗 is eventually
+determined. Together with the two normalizations, this proves sufficiency.
+Necessity. If𝐺 𝐼 𝐽 is disconnected, it splits into at least two components. On each component,
+one may independently rescale the local𝛼 𝑖’s,𝑎 𝑗’s, and𝑏 𝑗’s without changing the𝜃 𝑖 𝑗’s on that
+component. Thu,s parameters across different components cannot be jointly identified.
+Suppose now that𝐺 𝐼 𝐽 is connected but does not satisfy the Seed-and-Snowballs property. Fix
+a seed𝑗 0 and run the algorithm until it stalls at some finite step𝑛. Consider
+𝑆 𝐽
+𝑛 ⊂𝐽 , 𝑆 𝐼
+𝑛 ⊂𝐼 .
+65
+
+===== PDF PAGE 67 =====
+By construction, every firm in the outer set
+𝐽 out =𝐽\𝑆 𝐽
+𝑛
+is linked to at most one worker already in𝑆 𝐼
+𝑛. If such a link exists, call its worker the bridge of
+the firm. Write𝐼 out =𝐼\𝑆 𝐼
+𝑛 for the outer workers.
+Choose an outer firm𝑗 𝜆 ∈𝐽 out and let𝑖 𝜆 ∈𝑆 𝐼
+𝑛 be its bridge (it exists because𝐺𝐼 𝐽 is connected).
+Redefine
+𝑏𝜆
+𝑗𝜆 =𝜆 𝑏 𝑗𝜆, 𝑎 𝜆
+𝑗𝜆 =𝜃 𝑖𝜆 𝑗𝜆 −𝑏 𝜆
+𝑗𝜆𝛼𝑖𝜆
+and note that this preserves the value of𝜃 𝑖𝜆 𝑗𝜆 while altering(𝑎 𝑗𝜆, 𝑏𝑗𝜆 ).
+For every worker𝑖∈𝐼 out that is connected to at least one firm whose(𝑎, 𝑏)have already been
+(re)defined, pick one such firm, denote it by𝑗(𝑖), and set
+𝛼 𝜆
+𝑖 =
+𝜃𝑖 𝑗(𝑖) −𝑎 𝜆
+𝑗(𝑖)
+𝑏𝜆
+𝑗(𝑖)
+,
+where as long as𝜆is such that𝑏 𝜆
+𝑗(𝑖) ≠0,𝛼 𝜆
+𝑖 is well-defined, and𝜃 𝑖 𝑗(𝑖) preserved.
+Whenever a still-unprocessed firm𝑗∈𝐽 out is observed with two workers whose productivities
+are already determined and distinct, say𝑖and𝑖 ′, solve
+ 
+
+𝜃𝑖 𝑗 =𝑎 𝜆
+𝑗 +𝑏 𝜆
+𝑗 𝛼 𝜆
+𝑖
+𝜃𝑖′ 𝑗 =𝑎 𝜆
+𝑗 +𝑏 𝜆
+𝑗 𝛼 𝜆
+𝑖′
+⇐ ⇒
+ 
+
+𝑏𝜆
+𝑗 =
+𝜃𝑖′ 𝑗 −𝜃𝑖 𝑗
+𝛼𝜆
+𝑖′ −𝛼𝜆
+𝑖
+𝑎𝜆
+𝑗 =𝜃 𝑖 𝑗 −𝑏 𝜆
+𝑗 𝛼 𝜆
+𝑖
+where the right-hand sides depend smoothly on𝜆via the𝛼’s.
+Iteratively repeat these two steps until all parameters have been recovered, and in case of
+additional degree of freedom (because again at a certain point remain only firms with one worker
+whose productivity has already been determined), just set the parameters at their true value. For
+𝜆=1the procedure returns the original parameters. For𝜆≠1it changes at least𝑏 𝑗𝜆, so the
+parameter vector is different. Because the choice of𝜆is arbitrary, the data are compatible with
+infinitely many distinct(𝜶 𝜆,𝒂 𝜆,𝒃 𝜆), establishing lack of identification.
+66
+
+===== PDF PAGE 68 =====
+H.4 Proof of Proposition 1
+Let(𝑓 𝑚,𝜶,𝝍, 𝐺 𝐼 𝐽 )be any representation with𝜃 𝑖 𝑗 =𝑓 𝑚 (𝛼𝑖, 𝜓𝑗 ). Choose any strictly increasing
+transformations𝑔 𝛼 and𝑔 𝜓, and define
+𝛼′
+𝑖 =𝑔 𝛼 (𝛼𝑖), 𝜓 ′
+𝑗 =𝑔 𝜓 (𝜓𝑗 ), 𝑓 ′
+𝑚 (𝛼, 𝜓)=𝑓 𝑚 (𝑔−1
+𝛼 (𝛼), 𝑔−1
+𝜓 (𝜓)).
+Then,
+𝑓 ′
+𝑚 (𝛼 ′
+𝑖, 𝜓′
+𝑗 )=𝑓 𝑚 (𝑔−1
+𝛼 (𝑔𝛼 (𝛼𝑖)), 𝑔−1
+𝜓 (𝑔𝜓 (𝜓𝑗 )))=𝑓 𝑚 (𝛼𝑖, 𝜓𝑗 ),
+and hence(𝑓 𝑚,𝜶,𝝍, 𝐺 𝐼 𝐽 )and(𝑓 ′
+𝑚,𝜶 ′,𝝍 ′, 𝐺𝐼 𝐽 )are observationally equivalent.
+H.5 Proof of Theorem 4
+I prove the result for the ranking of𝜶; the argument for𝝍is analogous.
+Sufficiency. Fix any two workers𝑖and𝑖 ′. By Assumption 4 there exists a firm𝑗such that
+(𝑖, 𝑗),(𝑖 ′, 𝑗) ∈ O 𝐼 𝐽. Because𝑓 𝑚 is strictly increasing in each argument, the sign of𝜃 𝑖 𝑗 −𝜃 𝑖′ 𝑗 reveals
+whether𝛼 𝑖 exceeds𝛼 𝑖′. Collecting these pairwise comparisons for all(𝑖, 𝑖 ′)constructs a complete,
+transitive ranking of the workers, which is therefore identified.
+Necessity. Suppose, to reach a contradiction, that Assumption 4 fails. Then there exist two
+distinct workers𝑖and𝑖 ′ such that no firm𝑗satisfies(𝑖, 𝑗),(𝑖 ′, 𝑗) ∈ O 𝐼 𝐽. Suppose𝛼 𝑖 >𝛼 𝑖′′ and𝛼 𝑖′ >
+𝛼𝑖′′, for any𝑖 ′′ ≠𝑖,𝑖 ′′ ≠𝑖 ′. Also, suppose that for any pair of firms𝑗and𝑗 ′ such that(𝑖, 𝑗),(𝑖 ′, 𝑗 ′) ∈
+O𝐼 𝐽, it holds that𝜓 𝑗 >𝜓 𝑗 ′, and𝜃 𝑖 𝑗 >𝜃 𝑖′ 𝑗 ′. Now consider the bivariate isotonic matrix where
+workers𝑖and𝑖 ′ occupy the first two rows. Swapping the first and second rows, and filling in
+the missing entries with appropriate values, preserves both row- and column-wise monotonicity.
+This yields a second isotonic matrix that is observationally equivalent to the original but reverses
+the relative order of𝑖and𝑖 ′. Therefore, the ranking of workers is not point-identified, implying
+that Assumption 4 is necessary.
+67
+
+===== PDF PAGE 69 =====
+H.6 Proof of Theorem 5
+Rewrite the estimator as
+ˆ𝛽𝐿,𝜋 =−
+1
+𝐿
+Í𝐿
+ℓ=1 ˆΔ1,ℓ,𝜋ℓ
+1
+𝐿
+Í𝐿
+ℓ=1 ˆΔ2,ℓ,𝜋ℓ
+=−
+1
+𝐿
+Í𝐿
+ℓ=1 Δ1,ℓ,𝜋ℓ + 1
+𝐿
+Í𝐿
+ℓ=1 𝜖Δ1,ℓ,𝜋 ℓ
+1
+𝐿
+Í𝐿
+ℓ=1 Δ2,ℓ,𝜋ℓ + 1
+𝐿
+Í𝐿
+ℓ=1 𝜖Δ2,ℓ,𝜋 ℓ
+=−
+𝛽0 1
+𝐿
+Í𝐿
+ℓ=1 (𝛼𝑖ℓ −𝛼 𝑖′
+ℓ ) (𝜓𝑗ℓ −𝜓 𝑗 ′
+ℓ )𝜋 𝛼
+ℓ 𝜋𝜓
+ℓ + 1
+𝐿
+Í𝐿
+ℓ=1 𝜖Δ1,ℓ,𝜋 ℓ
+− 1
+𝐿
+Í𝐿
+ℓ=1 (𝛼𝑖ℓ −𝛼 𝑖′
+ℓ ) (𝜓𝑗ℓ −𝜓 𝑗 ′
+ℓ )𝜋 𝛼
+ℓ 𝜋𝜓
+ℓ + 1
+𝐿
+Í𝐿
+ℓ=1 𝜖Δ2,ℓ,𝜋 ℓ
+.
+Consider the two collections
+{𝜖Δ1,𝐿,ℓ,𝜋 ℓ : 1≤ℓ≤𝐿}and{𝜖 Δ2,𝐿,ℓ,𝜋 ℓ : 1≤ℓ≤𝐿}.
+By Lemma 7, each entry in these triangular arrays has mean zero and uniformly bounded2+𝛿
+moments. Hence, by the Strong Law of Large Numbers for triangular arrays, conclude
+1
+𝐿
+𝐿∑︁
+ℓ=1
+𝜖Δ1,ℓ,𝜋 ℓ →𝑎.𝑠. 0and 1
+𝐿
+𝐿∑︁
+ℓ=1
+𝜖Δ2,ℓ,𝜋 ℓ →𝑎.𝑠. 0
+as𝐿→ ∞, a limit guaranteed by Assumption 5.2.
+Applying the Continuous Mapping Theorem, and using the facts that𝜇 𝐿 ≠0by Assumption
+5.3 and𝑐 𝜋 ≠0by Assumption 5.4, yields the desired result:
+ˆ𝛽𝐿 =− 𝛽0(𝜇 𝐿𝑐𝜋 +𝑜 𝑎.𝑠. (1)) +𝑜 𝑎.𝑠. (1)
+−𝜇𝐿𝑐𝜋 +𝑜 𝑎.𝑠. (1)) +𝑜 𝑎.𝑠. (1) →𝑎.𝑠. − 𝛽0𝜇𝐿𝑐𝜋
+−𝜇𝐿𝑐𝜋
+=𝛽 0.
+H.7 Proof of Theorem 6
+Define the functions
+𝑔(Δ 1,Δ 2, 𝛽):=Δ 1 +𝛽Δ 2,and ¯𝑔𝐿,𝜋 (𝛽):= 1
+𝐿
+𝐿∑︁
+ℓ=1
+ˆΔ1,ℓ,𝜋ℓ +𝛽 1
+𝐿
+𝐿∑︁
+ℓ=1
+ˆΔ2,ℓ,𝜋ℓ .
+Write the estimator ˆ𝛽𝐿,𝜋 as the minimizer of
+
+¯𝑔𝐿,𝜋 (𝛽)
+2
+:
+ˆ𝛽𝐿,𝜋 =arg min
+𝛽∈𝐵
+
+¯𝑔𝐿,𝜋 (𝛽)
+2
+=−
+1
+𝐿
+Í𝐿
+ℓ=1 ˆΔ1,ℓ,𝜋ℓ
+1
+𝐿
+Í𝐿
+ℓ=1 ˆΔ2,ℓ,𝜋ℓ
+,
+68
+
+===== PDF PAGE 70 =====
+for a compact parameter space𝐵⊂Rcontaining𝛽 0, and note that it implies0= ¯𝑔𝐿,𝜋 ( ˆ𝛽𝐿,𝜋 ).
+Consider a first-order Taylor expansion of ¯𝑔𝐿,𝜋 ( ˆ𝛽𝐿,𝜋 )around the true parameter𝛽 0:
+0= ¯𝑔𝐿,𝜋 ( ˆ𝛽𝐿,𝜋 )= ¯𝑔𝐿,𝜋 (𝛽0) + 𝜕 ¯𝑔𝐿,𝜋 ( ˜𝛽)
+𝜕𝛽 ( ˆ𝛽𝐿,𝜋 −𝛽 0),
+where ˜𝛽is an intermediate value between ˆ𝛽𝐿 and𝛽 0, and 𝜕 ¯𝑔𝐿,𝜋 (𝛽)
+𝜕𝛽 = 1
+𝐿
+Í𝐿
+ℓ=1 ˆΔ2,ℓ,𝜋ℓ . Rearranging
+gives:
+√
+𝐿( ˆ𝛽𝐿,𝜋 −𝛽 0)=
+√
+𝐿 ¯𝑔𝐿,𝜋 (𝛽0)
+− 1
+𝐿
+Í𝐿
+ℓ=1 ˆΔ2,ℓ,𝜋ℓ
+=
+√
+𝐿( 1
+𝐿
+Í𝐿
+ℓ=1 ˆΔ1,ℓ,𝜋ℓ +𝛽 0 1
+𝐿
+Í𝐿
+ℓ=1 ˆΔ2,ℓ,𝜋ℓ )
+− 1
+𝐿
+Í𝐿
+ℓ=1 ˆΔ2,ℓ,𝜋ℓ
+=
+√
+𝐿( 1
+𝐿
+Í𝐿
+ℓ=1 Δ1,ℓ,𝜋ℓ +𝛽 0 1
+𝐿
+Í𝐿
+ℓ=1 Δ2,ℓ,𝜋ℓ ) +
+√
+𝐿 1
+𝐿
+Í𝐿
+ℓ=1 (𝜖Δ1,ℓ,𝜋 ℓ +𝛽 0𝜖Δ2,ℓ,𝜋 ℓ )
+− 1
+𝐿
+Í𝐿
+ℓ=1 ˆΔ2,ℓ,𝜋ℓ
+=
+√
+𝐿(−𝛽 0 1
+𝐿
+Í𝐿
+ℓ=1 Δ2,ℓ,𝜋ℓ +𝛽 0 1
+𝐿
+Í𝐿
+ℓ=1 Δ2,ℓ,𝜋ℓ ) + 1√
+𝐿
+Í𝐿
+ℓ=1 𝑢ℓ,𝜋 ℓ
+− 1
+𝐿
+Í𝐿
+ℓ=1 ˆΔ2,ℓ,𝜋ℓ
+=
+1√
+𝐿
+Í𝐿
+ℓ=1 𝑢ℓ,𝜋 ℓ
+− 1
+𝐿
+Í𝐿
+ℓ=1 Δ2,ℓ,𝜋ℓ − 1
+𝐿
+Í𝐿
+ℓ=1 𝜖Δ2,ℓ
+=
+1√
+𝐿𝜇𝐿𝑐𝜋
+Í𝐿
+ℓ=1 𝑢ℓ,𝜋 ℓ
+− 1
+𝐿𝜇𝐿𝑐𝜋
+Í𝐿
+ℓ=1 Δ2,ℓ,𝜋ℓ − 1
+𝐿𝜇𝐿𝑐𝜋
+Í𝐿
+ℓ=1 𝜖Δ2,ℓ
+.
+where in the last line numerator and denominator are divided by𝜇 𝐿𝑐𝜋, different from zero by
+Assumptions 5.3 and 5.4.
+Consider the triangular array
+{𝑢𝐿,ℓ,𝜋 ℓ := 𝑢ℓ,𝜋 ℓ
+𝜇𝐿𝑐𝜋
+: 1≤ℓ≤𝐿}.
+By Lemma 8, each term𝑢 𝐿,ℓ,𝜋 ℓ has mean zero and uniformly bounded2+𝛿moments. Hence, by
+the Lyapunov Central Limit Theorem for triangular arrays,
+1√
+𝐿
+𝜇𝐿𝑐𝜋
+𝜎𝑢,𝐿,𝜋
+𝐿∑︁
+ℓ=1
+𝑢ℓ,𝜋 ℓ
+𝜇𝐿𝑐𝜋
+𝑑
+− → N (0,1).
+Recall that𝜎 𝑢,𝐿,𝜋 =
+√︃
+1
+𝐿
+Í𝐿
+ℓ=1 Var(𝑢ℓ,𝜋 ℓ ). Lemma 8 proves that eachVar(𝑢 ℓ,𝜋 ℓ )does not depend on
+the labeling of the corresponding cycle, and hence neither𝜎 𝑢,𝐿,𝜋 does.
+69
+
+===== PDF PAGE 71 =====
+Hence consider:
+√
+𝐿 𝜇𝐿𝑐𝜋
+𝜎𝑢,𝐿,𝜋
+  ˆ𝛽𝐿,𝜋 −𝛽 0
+ =
+1√
+𝐿
+𝜇𝐿𝑐𝜋
+𝜎𝑢,𝐿,𝜋
+Í𝐿
+ℓ=1
+𝑢ℓ
+𝜇𝐿𝑐𝜋
+− 1
+𝐿𝜇𝐿𝑐𝜋
+Í𝐿
+ℓ=1 Δ2,ℓ,𝜋ℓ − 1
+𝐿𝜇𝐿𝑐𝜋
+Í𝐿
+ℓ=1 𝜖Δ2,ℓ
+.
+and note that the argument used in Theorem 5 proves that the denominator converges to 1 almost
+surely. Slutsky’s theorem hence allows to conclude
+√
+𝐿 𝜇𝐿𝑐𝜋
+𝜎𝑢,𝐿,𝜋
+  ˆ𝛽𝐿 −𝛽 0
+ 𝑑
+− → N
+
+0,1
+
+.
+H.8 Proof of Proposition 2
+Note that
+ˆ𝑢ℓ,𝜋 = ˆΔ1,ℓ,𝜋 + ˆ𝛽𝐿,𝜋 ˆΔ2,ℓ,𝜋
+=Δ 1,ℓ,𝜋ℓ +𝜖 Δ1,ℓ,𝜋 ℓ + ˆ𝛽𝐿,𝜋 (Δ2,ℓ,𝜋ℓ +𝜖 Δ2,ℓ,𝜋 ℓ )
+=Δ 1,ℓ,𝜋ℓ +𝛽 0Δ2,ℓ,𝜋ℓ
+|              {z              }
+=0
++𝜖 Δ1,ℓ,𝜋 ℓ +𝛽 0𝜖Δ2,ℓ,𝜋 ℓ
+|                {z                }
+𝑢ℓ,𝜋
++( ˆ𝛽𝐿,𝜋 −𝛽 0) ˆΔ2,ℓ,𝜋
+and hence
+ˆ𝑢2
+ℓ,𝜋 =𝑢 2
+ℓ,𝜋 +2𝑢 ℓ,𝜋 ( ˆ𝛽𝐿,𝜋 −𝛽 0) ˆΔ2,ℓ,𝜋 + ( ˆ𝛽𝐿,𝜋 −𝛽 0)2 ˆΔ2
+2,ℓ,𝜋 .
+Since𝜎 2
+𝑢,𝐿 = 1
+𝐿
+Í𝐿
+ℓ=1 𝑢2
+ℓ,𝜋 ℓ , to prove the result I need to prove that
+1
+𝐿
+𝐿∑︁
+ℓ=1
+
+2𝑢ℓ,𝜋 ( ˆ𝛽𝐿,𝜋 −𝛽 0) ˆΔ2,ℓ,𝜋 + ( ˆ𝛽𝐿,𝜋 −𝛽 0)2 ˆΔ2
+2,ℓ,𝜋
+
+=
+=( ˆ𝛽𝐿,𝜋 −𝛽 0) 1
+𝐿
+𝐿∑︁
+ℓ=1
+
+2𝑢ℓ,𝜋 ˆΔ2,ℓ,𝜋
+
++ ( ˆ𝛽𝐿,𝜋 −𝛽 0)2
+𝐿∑︁
+ℓ=1
+
+ˆΔ2
+2,ℓ,𝜋
+ 𝑝
+− →0.
+Assumption 5 and Theorem 5 guarantee( ˆ𝛽𝐿,𝜋 −𝛽 0)=𝑜 𝑝 (1), 1
+𝐿
+Í𝐿
+ℓ=1 𝑢ℓ,𝜋 ˆΔ2,ℓ,𝜋 =𝑂 𝑝 (1), and
+1
+𝐿
+Í𝐿
+ℓ=1 ˆΔ2
+2,ℓ,𝜋 =𝑂 𝑝 (1), and hence the result follows.
+70
+
+===== PDF PAGE 72 =====
+H.9 Proof of Proposition 3
+Define𝐴 ℓ :=(𝛼 𝑖ℓ −𝛼 𝑖′
+ℓ ) (𝜓𝑗ℓ −𝜓 𝑗 ′
+ℓ ). It suffices to show that there exists a constant𝑐 𝜋 with|𝑐 𝜋 |>
+𝐶𝜋 >0such that
+𝜇𝐿𝑐𝜋 − 1
+𝐿
+𝐿∑︁
+ℓ=1
+𝐴ℓ𝜋 𝛼
+ℓ,𝑧𝜋𝜓
+ℓ,𝑧 →𝑎.𝑠. 0,
+and that the collection{𝜋 𝛼
+ℓ,𝑧, 𝜋𝜓
+ℓ,𝑧 }𝐿
+ℓ=1 is independent of the error terms{𝜂 𝑖 𝑗}.
+First, the instruments𝒛 𝜶 and𝒛 𝝍 are deterministic. Hence, the induced signs{𝜋 𝛼
+ℓ,𝑧, 𝜋𝜓
+ℓ,𝑧 }, being
+deterministic functions of the instruments, are independent of the error terms{𝜂 𝑖 𝑗}, exogenous
+by Assumption 5.1.
+Next, note that
+1
+𝐿
+𝐿∑︁
+ℓ=1
+(𝐴ℓ −𝜇 𝐿) (𝜋𝛼
+ℓ,𝑧𝜋𝜓
+ℓ,𝑧 − 𝜋 𝛼𝜋𝜓 )= 1
+𝐿
+𝐿∑︁
+ℓ=1
+𝐴ℓ𝜋 𝛼
+ℓ,𝑧𝜋𝜓
+ℓ,𝑧 −𝜇 𝐿𝜋 𝛼𝜋𝜓,
+so that
+1
+𝐿
+𝐿∑︁
+ℓ=1
+𝐴ℓ𝜋 𝛼
+ℓ 𝜋𝜓
+ℓ = 1
+𝐿
+𝐿∑︁
+ℓ=1
+(𝐴ℓ −𝜇 𝐿) (𝜋𝛼
+ℓ,𝑧𝜋𝜓
+ℓ,𝑧 − 𝜋 𝛼𝜋𝜓 ) +𝜇 𝐿𝜋 𝛼𝜋𝜓 .
+Similarly,
+1
+𝐿
+𝐿∑︁
+ℓ=1
+(𝜋 𝛼
+ℓ,𝑧 − 𝜋 𝛼 ) (𝜋𝜓
+ℓ,𝑧 − 𝜋𝜓 )= 𝜋 𝛼𝜋𝜓 − 𝜋 𝛼𝜋𝜓,
+which implies
+𝜋 𝛼𝜋𝜓 𝐿 = 1
+𝐿
+𝐿∑︁
+ℓ=1
+(𝜋 𝛼
+ℓ,𝑧 − 𝜋 𝛼 ) (𝜋𝜓
+ℓ,𝑧 − 𝜋𝜓 ) + 𝜋 𝛼𝜋𝜓 .
+Substituting this expression yields
+1
+𝐿
+𝐿∑︁
+ℓ=1
+𝐴ℓ𝜋 𝛼
+ℓ,𝑧𝜋𝜓
+ℓ,𝑧 = 1
+𝐿
+𝐿∑︁
+ℓ=1
+(𝐴ℓ −𝜇 𝐿) (𝜋𝛼
+ℓ,𝑧𝜋𝜓
+ℓ,𝑧 − 𝜋 𝛼𝜋𝜓 ) +𝜇 𝐿
+1
+𝐿
+𝐿∑︁
+ℓ=1
+(𝜋 𝛼
+ℓ,𝑧 − 𝜋 𝛼 ) (𝜋𝜓
+ℓ,𝑧 − 𝜋𝜓 ) +𝜇 𝐿𝜋 𝛼𝜋𝜓 .
+Assumption 5.2 guarantees𝐿→ ∞. In the limit, the first term on the right-hand side is
+nonnegative by Assumption 6.3; the second is nonnegative by Assumptions 6.2 and 5.3; and the
+third is bounded away from zero by Assumptions 6.1 and 5.3. The entire expression is hence
+71
+
+===== PDF PAGE 73 =====
+bounded away from zero as well, and Assumption 5.4 holds with𝑐 𝜋 ≥𝑐 𝛼𝑐𝜓.
+72
