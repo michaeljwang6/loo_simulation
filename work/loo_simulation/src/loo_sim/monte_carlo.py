@@ -36,6 +36,7 @@ from .low_rank import (
 )
 from .panel import PanelData, sample_panel
 from .pytwoway_estimators import (
+    BLMSupportError,
     align_blm_cell_means,
     estimate_blm,
     estimate_bs20,
@@ -59,7 +60,7 @@ PopulationKind = Literal[
     "free_factor",
     "grouped",
 ]
-AttemptStatus = Literal["success", "unstable", "failure"]
+AttemptStatus = Literal["success", "unstable", "unsupported", "failure"]
 
 
 @dataclass(frozen=True)
@@ -283,6 +284,7 @@ class MonteCarloSummary:
     n_estimates: int
     n_success: int
     n_unstable: int
+    n_unsupported: int
     n_failure: int
     mean_estimate: float
     mean_target: float
@@ -305,9 +307,11 @@ class EstimatorAttemptSummary:
     n_attempts: int
     n_success: int
     n_unstable: int
+    n_unsupported: int
     n_failure: int
     success_rate: float
     unstable_rate: float
+    unsupported_rate: float
     failure_rate: float
 
 
@@ -338,6 +342,9 @@ class MonteCarloResult:
             unstable = sum(
                 attempt.status == "unstable" for attempt in attempts
             )
+            unsupported = sum(
+                attempt.status == "unsupported" for attempt in attempts
+            )
             failure = sum(
                 attempt.status == "failure" for attempt in attempts
             )
@@ -348,9 +355,11 @@ class MonteCarloResult:
                     n_attempts=total,
                     n_success=success,
                     n_unstable=unstable,
+                    n_unsupported=unsupported,
                     n_failure=failure,
                     success_rate=success / total,
                     unstable_rate=unstable / total,
+                    unsupported_rate=unsupported / total,
                     failure_rate=failure / total,
                 )
             )
@@ -372,10 +381,15 @@ class MonteCarloResult:
 
         selected_statuses: frozenset[AttemptStatus] | None
         if included_statuses is None:
-            selected_statuses = None
+            selected_statuses = frozenset(("success", "unstable"))
         else:
             selected_statuses = frozenset(included_statuses)
-            valid_statuses = {"success", "unstable", "failure"}
+            valid_statuses = {
+                "success",
+                "unstable",
+                "unsupported",
+                "failure",
+            }
             if (
                 not selected_statuses
                 or not selected_statuses.issubset(valid_statuses)
@@ -405,7 +419,7 @@ class MonteCarloResult:
                 record.target_type,
             )
             records_for_key = record_groups[key]
-            if selected_statuses is None or attempt_status[
+            if attempt_status[
                 (
                     record.scenario,
                     record.replication,
@@ -457,6 +471,10 @@ class MonteCarloResult:
                     ),
                     n_unstable=sum(
                         attempt.status == "unstable"
+                        for attempt in attempts
+                    ),
+                    n_unsupported=sum(
+                        attempt.status == "unsupported"
                         for attempt in attempts
                     ),
                     n_failure=sum(
@@ -918,6 +936,23 @@ def _run_fe_kss(
                     ),
                 ]
             )
+        for metric, target in (
+            ("h_f", targets.project.h_f),
+            ("rho_h", targets.project.rho_h),
+        ):
+            records.append(
+                _scalar_record(
+                    scenario=scenario,
+                    replication=replication,
+                    seeds=seed_triplet,
+                    estimator=estimator,
+                    metric=metric,
+                    target_type="population_project",
+                    estimate=0.0,
+                    target=target,
+                    sample=sample,
+                )
+            )
 
 
 def _run_bs20(
@@ -1002,7 +1037,7 @@ def _run_bs20(
             seeds=seed_triplet,
             estimator=estimator,
             metric="worker_firm_covariance",
-            target_type="population_project",
+            target_type="cross_target_project_c_assign",
             estimate=estimate.covariance,
             target=targets.project.c_assign,
             sample=sample,
@@ -1095,6 +1130,24 @@ def _run_blm(
                 alignment.aligned_estimate,
                 target.group_assignment,
             )
+        except BLMSupportError as exc:
+            support_sample = (
+                exc.sample.observations,
+                exc.sample.workers,
+                exc.sample.firms,
+            )
+            attempts.append(
+                _attempt(
+                    scenario=scenario,
+                    replication=replication,
+                    seeds=seeds,
+                    estimator=estimator,
+                    status="unsupported",
+                    message=str(exc),
+                    sample=support_sample,
+                )
+            )
+            continue
         except Exception as exc:
             attempts.append(
                 _attempt(
@@ -1705,7 +1758,7 @@ def _record_from_csv(row: Mapping[str, str]) -> MonteCarloRecord:
 
 def _attempt_from_csv(row: Mapping[str, str]) -> EstimatorAttempt:
     status = row["status"]
-    if status not in ("success", "unstable", "failure"):
+    if status not in ("success", "unstable", "unsupported", "failure"):
         raise ValueError(f"Unknown estimator-attempt status: {status}.")
     return EstimatorAttempt(
         scenario=row["scenario"],
@@ -1956,7 +2009,7 @@ def save_monte_carlo_results(
         )
         stream.write("\n")
     metadata = {
-        "schema_version": 2,
+        "schema_version": 3,
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "config_fingerprint": config_fingerprint(result.config),
         "replication_indices": list(result.replication_indices),

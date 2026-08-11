@@ -132,6 +132,29 @@ def test_conditional_summary_excludes_unstable_returned_values() -> None:
     assert stable.n_unstable == 1
 
 
+def test_unconditional_summary_excludes_unsupported_values() -> None:
+    result = run_monte_carlo(_lightweight_config())
+    unsupported_attempt = replace(result.attempts[1], status="unsupported")
+    audited = replace(
+        result,
+        attempts=(result.attempts[0], unsupported_attempt),
+    )
+
+    summary = next(
+        row
+        for row in audited.summaries()
+        if row.metric == "q_f"
+        and row.target_type == "population_project"
+    )
+    attempt_summary = audited.attempt_summaries()[0]
+
+    assert summary.n_attempts == 2
+    assert summary.n_estimates == 1
+    assert summary.n_unsupported == 1
+    assert attempt_summary.n_unsupported == 1
+    assert attempt_summary.unsupported_rate == 0.5
+
+
 def test_configuration_json_round_trip(tmp_path) -> None:
     config = _lightweight_config()
     value = config_to_dict(config)

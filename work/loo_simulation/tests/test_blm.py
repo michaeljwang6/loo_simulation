@@ -4,12 +4,34 @@ import pytest
 from loo_sim import generate_grouped_population, sample_panel
 from loo_sim.pytwoway_estimators import (
     align_blm_cell_means,
+    compute_blm_support_diagnostics,
     estimate_blm,
     prepare_blm_data,
 )
 
 
 pytest.importorskip("pytwoway")
+
+
+def test_blm_support_diagnostics_identify_exact_missing_cells() -> None:
+    support = compute_blm_support_diagnostics(
+        mover_origins=np.array([0, 0, 1, 2]),
+        mover_destinations=np.array([0, 1, 2, 2]),
+        stayer_groups=np.array([0, 2]),
+        n_firm_types=3,
+    )
+
+    assert support.stayer_groups == (0, 2)
+    assert support.missing_stayer_groups == (1,)
+    assert support.mover_pairs == ((0, 0), (0, 1), (1, 2), (2, 2))
+    assert support.missing_mover_pairs == (
+        (0, 2),
+        (1, 0),
+        (1, 1),
+        (2, 0),
+        (2, 1),
+    )
+    assert not support.complete
 
 
 @pytest.fixture(scope="module")

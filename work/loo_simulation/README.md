@@ -18,7 +18,7 @@ The implementation is deliberately staged:
 1. verify population truths and algebraic identities;
 2. generate observed worker--firm panels from a known full schedule;
 3. add project low-rank plug-in estimates;
-4. wrap PyTwoWay's FE/KSS, BLM, and Borovičková--Shimer estimators;
+4. wrap PyTwoWay's FE/KSS, BLM, and Borovickova--Shimer estimators;
 5. run Monte Carlo experiments and decompose estimation error from estimand
    differences.
 
@@ -28,7 +28,7 @@ See `SIMULATION_CONTRACT.md` for the exact estimands and comparison rules.
 
 The new experiment implements the complete whiteboard cross-product: additive
 AKM, Crippa/Tukey, discrete-type BLM, continuous low-rank-factor, and GKLP DGPs
-are each estimated by KSS, BLM, Borovičková--Shimer 2020, and the current
+are each estimated by KSS, BLM, Borovickova--Shimer 2020, and the current
 project low-rank plug-in. The DGP specification and estimator settings are
 separate in the configuration, so no estimator is restricted to its preferred
 DGP.
@@ -43,15 +43,35 @@ using Codex credits. Start with:
   --output results\dgp_estimator_matrix_pilot
 ```
 
-After the production shards merge, generate the dedicated tables, figures,
-Markdown report, and PDF with:
+The corrected runner checks that BLM observes all three stayer classes and all
+nine mover class-pairs after its own cleaning and estimated-group clustering.
+Panels that fail this condition are labeled `unsupported`; they are not sent to
+PyTwoWay and do not enter RMSE summaries. Estimator failures are a separate
+status.
+
+For the production run completed before this support check was added, create a
+support-audited result without refitting any estimator, then regenerate the
+tables and figures:
 
 ```powershell
-& .\.venv311\Scripts\python.exe scripts\report_dgp_estimator_matrix.py
-& .\.venv311\Scripts\python.exe scripts\build_simulation_writeup_pdf.py `
-  --input DGP_ESTIMATOR_RESULTS.md `
-  --output output\pdf\dgp_estimator_matrix_report.pdf
+& .\.venv311\Scripts\python.exe scripts\reclassify_blm_support.py `
+  --input results\dgp_estimator_matrix\merged `
+  --output results\dgp_estimator_matrix_support_audited\merged
+& .\.venv311\Scripts\python.exe scripts\report_dgp_estimator_matrix.py `
+  --input results\dgp_estimator_matrix_support_audited\merged
 ```
+
+The standalone LaTeX manuscript is `DGP_ESTIMATOR_RESULTS.tex`. Compile it
+with Tectonic or another current LaTeX engine:
+
+```powershell
+tectonic DGP_ESTIMATOR_RESULTS.tex --outdir output\pdf
+Copy-Item output\pdf\DGP_ESTIMATOR_RESULTS.pdf `
+  output\pdf\dgp_estimator_matrix_report.pdf -Force
+```
+
+The official Tectonic installation instructions are at
+<https://tectonic-typesetting.github.io/install.html>.
 
 The first estimator smoke test is:
 
@@ -105,9 +125,9 @@ The full configuration declares 100 replications, but `--replications` and
 written as:
 
 - `records.csv`: one estimate--target--error row per scalar metric;
-- `attempts.csv`: convergence, failure, stability, and retained-sample
+- `attempts.csv`: convergence, unsupported-sample, failure, stability, and retained-sample
   diagnostics for every estimator attempt;
-- `attempt_summary.csv`: estimator-level success, instability, and failure
+- `attempt_summary.csv`: estimator-level success, instability, unsupported, and failure
   rates, including estimators that never return a value;
 - `summary.csv`: bias, error standard deviation, Monte Carlo standard error
   of the bias, RMSE, and mean retained sample size by scenario, estimator,

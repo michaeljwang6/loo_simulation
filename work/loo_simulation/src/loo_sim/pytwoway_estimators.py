@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from itertools import permutations
+from itertools import permutations, product
 import os
 from pathlib import Path
 from typing import Any
@@ -72,6 +72,46 @@ class BLMAnalysisSample:
     workers: int
     firms: int
     firm_groups: int
+    stayer_group_count: int
+    mover_pair_count: int
+
+
+@dataclass(frozen=True)
+class BLMSupportDiagnostics:
+    """Observed firm-class support required by PyTwoWay's BLM updates."""
+
+    stayer_groups: tuple[int, ...]
+    missing_stayer_groups: tuple[int, ...]
+    mover_pairs: tuple[tuple[int, int], ...]
+    missing_mover_pairs: tuple[tuple[int, int], ...]
+
+    @property
+    def complete(self) -> bool:
+        """Whether every stayer class and mover class-pair is observed."""
+
+        return not self.missing_stayer_groups and not self.missing_mover_pairs
+
+
+class BLMSupportError(ValueError):
+    """Raised before BLM fitting when required observed cells are absent."""
+
+    def __init__(
+        self,
+        reason_code: str,
+        diagnostics: BLMSupportDiagnostics,
+        sample: BLMAnalysisSample,
+    ) -> None:
+        self.reason_code = reason_code
+        self.diagnostics = diagnostics
+        self.sample = sample
+        super().__init__(
+            f"BLM_SUPPORT[{reason_code}]: "
+            f"missing_stayer_groups="
+            f"{list(diagnostics.missing_stayer_groups)}; "
+            f"missing_mover_pairs={list(diagnostics.missing_mover_pairs)}; "
+            f"stayer_rows={sample.stayer_rows}; "
+            f"mover_rows={sample.mover_rows}"
+        )
 
 
 @dataclass(frozen=True)
@@ -82,6 +122,7 @@ class PreparedBLMData:
     jdata: Any
     sdata: Any
     sample: BLMAnalysisSample
+    support: BLMSupportDiagnostics
 
 
 @dataclass(frozen=True)
@@ -389,11 +430,12 @@ def prepare_blm_data(
     mover = event_data.get_worker_m(is_sorted=True)
     jdata = event_data.loc[mover, :]
     sdata = event_data.loc[~mover, :]
-    if len(jdata) == 0:
-        raise ValueError("BLM requires at least one mover event.")
-    if len(sdata) == 0:
-        raise ValueError("BLM requires at least one stayer event.")
-
+    support = compute_blm_support_diagnostics(
+        mover_origins=jdata.loc[:, "g1"].to_numpy(dtype=np.int64),
+        mover_destinations=jdata.loc[:, "g2"].to_numpy(dtype=np.int64),
+        stayer_groups=sdata.loc[:, "g1"].to_numpy(dtype=np.int64),
+        n_firm_types=n_firm_types,
+    )
     sample = BLMAnalysisSample(
         observations=int(round(float(clustered.loc[:, "w"].sum()))),
         spells=int(len(clustered)),
@@ -403,12 +445,79 @@ def prepare_blm_data(
         workers=int(event_data.loc[:, "i"].nunique()),
         firms=int(clustered.loc[:, "j"].nunique()),
         firm_groups=observed_cluster_count,
+        stayer_group_count=len(support.stayer_groups),
+        mover_pair_count=len(support.mover_pairs),
     )
+    if len(jdata) == 0:
+        reason_code = "no_mover_events"
+    elif len(sdata) == 0:
+        reason_code = "no_stayer_events"
+    elif support.missing_stayer_groups and support.missing_mover_pairs:
+        reason_code = "missing_stayer_classes_and_mover_pairs"
+    elif support.missing_stayer_groups:
+        reason_code = "missing_stayer_classes"
+    elif support.missing_mover_pairs:
+        reason_code = "missing_mover_pairs"
+    else:
+        reason_code = ""
+    if reason_code:
+        raise BLMSupportError(reason_code, support, sample)
+
     return PreparedBLMData(
         variant=variant,
         jdata=jdata,
         sdata=sdata,
         sample=sample,
+        support=support,
+    )
+
+
+def compute_blm_support_diagnostics(
+    *,
+    mover_origins: ArrayLike,
+    mover_destinations: ArrayLike,
+    stayer_groups: ArrayLike,
+    n_firm_types: int,
+) -> BLMSupportDiagnostics:
+    """Enumerate the observed support used in PyTwoWay BLM probability rows.
+
+    PyTwoWay 0.3.21 reshapes mover counts to ``(nl, nk**2)`` and stayer
+    counts to ``(nl, nk)`` without padding absent categories.  Requiring all
+    firm-class cells here prevents missing categories from becoming either a
+    label-dependent reshape exception or an invalid zero-probability row.
+    """
+
+    if n_firm_types < 1:
+        raise ValueError("n_firm_types must be positive.")
+    origins = np.asarray(mover_origins, dtype=np.int64)
+    destinations = np.asarray(mover_destinations, dtype=np.int64)
+    stayers = np.asarray(stayer_groups, dtype=np.int64)
+    if origins.ndim != 1 or destinations.ndim != 1 or stayers.ndim != 1:
+        raise ValueError("BLM support inputs must be one-dimensional.")
+    if origins.shape != destinations.shape:
+        raise ValueError("Mover origin and destination arrays must align.")
+    for name, values in (
+        ("mover origins", origins),
+        ("mover destinations", destinations),
+        ("stayer groups", stayers),
+    ):
+        if values.size and (values.min() < 0 or values.max() >= n_firm_types):
+            raise ValueError(f"{name} contain an out-of-range firm class.")
+
+    expected_groups = set(range(n_firm_types))
+    observed_groups = set(int(value) for value in stayers)
+    expected_pairs = set(product(range(n_firm_types), repeat=2))
+    observed_pairs = set(
+        zip(
+            (int(value) for value in origins),
+            (int(value) for value in destinations),
+        )
+    )
+    return BLMSupportDiagnostics(
+        stayer_groups=tuple(sorted(observed_groups)),
+        missing_stayer_groups=tuple(sorted(expected_groups - observed_groups)),
+        mover_pairs=tuple(sorted(observed_pairs)),
+        missing_mover_pairs=tuple(sorted(expected_pairs - observed_pairs)),
     )
 
 

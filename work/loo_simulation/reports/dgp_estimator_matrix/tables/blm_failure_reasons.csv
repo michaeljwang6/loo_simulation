@@ -1,10 +1,12 @@
-scenario,scenario_label,reason,count
-akm_dgp,AKM,invalid likelihood start,1
-akm_dgp,AKM,missing stayer-class support,30
-akm_dgp,AKM,no stayer event,2
-blm_grouped_dgp,BLM types,missing stayer-class support,19
-crippa_tukey_dgp,Crippa/Tukey,missing stayer-class support,20
-crippa_tukey_dgp,Crippa/Tukey,no stayer event,1
-gklp_perfect_information_dgp,GKLP,missing stayer-class support,18
-low_rank_factor_dgp,Low-rank factors,invalid likelihood start,2
-low_rank_factor_dgp,Low-rank factors,missing stayer-class support,28
+scenario,scenario_label,status,reason,count
+akm_dgp,AKM,unsupported,missing_mover_pairs,2
+akm_dgp,AKM,unsupported,missing_stayer_classes,53
+akm_dgp,AKM,unsupported,no_stayer_events,2
+blm_grouped_dgp,BLM types,unsupported,missing_stayer_classes,53
+crippa_tukey_dgp,Crippa/Tukey,unsupported,missing_stayer_classes,42
+crippa_tukey_dgp,Crippa/Tukey,unsupported,no_stayer_events,1
+gklp_perfect_information_dgp,GKLP,unsupported,missing_stayer_classes,49
+gklp_perfect_information_dgp,GKLP,unsupported,missing_stayer_classes_and_mover_pairs,1
+low_rank_factor_dgp,Low-rank factors,unsupported,missing_mover_pairs,4
+low_rank_factor_dgp,Low-rank factors,unsupported,missing_stayer_classes,49
+low_rank_factor_dgp,Low-rank factors,unsupported,missing_stayer_classes_and_mover_pairs,1

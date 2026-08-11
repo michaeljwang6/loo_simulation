@@ -1,0 +1,612 @@
+\documentclass[11pt]{article}
+
+\usepackage[letterpaper,margin=0.85in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{caption}
+\usepackage{float}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{linkblue}{HTML}{0072B2}
+\hypersetup{colorlinks=true,linkcolor=linkblue,citecolor=linkblue,urlcolor=linkblue}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\renewcommand{\arraystretch}{1.16}
+\captionsetup{font=small,labelfont=bf}
+
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\QF}{Q_F}
+\newcommand{\HF}{H_F}
+\newcommand{\rhoH}{\rho_H}
+\newcommand{\Cassign}{C_{\mathrm{assign}}}
+\newcommand{\CBS}{C_{\mathrm{BS}}}
+
+\title{DGP-by-Estimator Monte Carlo\\
+\large Methods, corrected results, and interpretation}
+\author{}
+\date{August 11, 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This simulation applies four procedures---KSS, BLM, Borovi\v{c}kov\'{a}--Shimer
+(BS20), and the current project low-rank plug-in---to panels generated from
+five different worker--firm wage models.  The project leave-one-out correction
+is still under development and is not simulated.  The central result is that
+three distinct issues must be kept separate: sampling error, disagreement
+between population estimands, and whether an estimator's required support is
+present.  A forensic audit showed that the original BLM summaries mixed
+supported fits with fits missing stayer-class support.  The corrected pipeline
+rejects such samples before estimation.  Of 500 BLM attempts, 243 have complete
+support, 242 pass the likelihood diagnostic, one returns with a numerical
+warning, and 257 are classified as unsupported.  No supported attempt fails in
+PyTwoWay.  All results below use this corrected classification.
+\end{abstract}
+
+\section{Question and scope}
+
+The experiment asks one symmetric question: what happens when every procedure
+is used under every DGP?  This is more informative than generating all panels
+from an additive AKM model because an additive design mechanically favors an
+additive estimator.  The five DGPs are additive AKM, Crippa/Tukey
+nonadditivity, discrete BLM types, continuous low-rank factors, and GKLP
+comparative advantage.  Each DGP has 100 independent Monte Carlo replications.
+
+The project procedure in this document is the current BIC-selected low-rank
+plug-in.  It is not called the final project LOO estimator because the full LOO
+correction has not yet been implemented.
+
+Every reported number is calculated from the support-audited merged output.
+Its configuration fingerprint is
+\texttt{3e8ab3b57d35190989c47117f139b414b9f656db8a933d6c5d1df6d2aa5fbcc4}.
+The audit reconstructs panels and estimated BLM firm classes from the saved
+seeds, but does not refit a successful estimator.  Statements borrowed from a
+paper or software specification are cited where used; otherwise, equations are
+definitions or explicit derivations.
+
+\section{Notation and project estimands}
+
+Table~\ref{tab:notation} gives every symbol needed later.  Starting here avoids
+changing notation as the procedures are introduced.
+
+\begin{table}[H]
+\centering
+\caption{Notation used throughout the experiment}
+\label{tab:notation}
+\small
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{0.17\textwidth}
+>{\raggedright\arraybackslash}p{0.43\textwidth}
+>{\raggedright\arraybackslash}X}
+\toprule
+Symbol & Exact definition & Meaning \\
+\midrule
+$i,j,t$ & Worker, firm, and period indices & Unit of the matched panel \\
+$Y_{ijt}$ & $m_{ij}+\varepsilon_{ijt}$ & Observed wage outcome \\
+$m_{ij}$ & $\E[Y_{ijt}\mid i,j]$ & Complete systematic wage schedule \\
+$P_{ij}$ & Population probability of match $(i,j)$ & Observed assignment law \\
+$p_i,q_j$ & Marginals of $P_{ij}$ & Worker and firm population weights \\
+$p_iq_j$ & Product of the two marginals & Independent-assignment counterfactual \\
+$a_i,b_j,h_{ij}$ & Components of $m_{ij}=\mu+a_i+b_j+h_{ij}$ under $p_iq_j$ & Worker main effect, firm main effect, and interaction \\
+$\QF$ & $\E_{pq}[(m_{ij}-\E_q[m_{ij}\mid i])^2]$ & Firm-side schedule variation \\
+$\HF$ & $2\E_{pq}[h_{ij}^2]$ & Twice the nonadditive interaction variance \\
+$\rhoH$ & $\HF/(2\QF)$ when $\QF>0$ & Interaction share of firm-side variation \\
+$\Cassign$ & $\{\Var_P(m)-\Var_{pq}(m)\}/2$ & Contribution of observed assignment to schedule variance \\
+$\alpha_i,\psi_j$ & Pseudo-true additive worker and firm effects & Native KSS/AKM projection objects \\
+$\lambda_i,\mu_j$ & $\E_P[m_{ij}\mid i]$ and $\E_P[m_{ij}\mid j]$ & Native BS20 worker and firm wage types \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The ANOVA normalization sets the $p$-weighted mean of $a_i$, the $q$-weighted
+mean of $b_j$, and both weighted margins of $h_{ij}$ to zero.  Consequently,
+\begin{align}
+m_{ij}-\E_q[m_{ij}\mid i] &= b_j+h_{ij}, \\
+\QF &= \Var_q(b_j)+\E_{pq}[h_{ij}^2]
+      =\Var_q(b_j)+\frac{\HF}{2}. \label{eq:q-decomp}
+\end{align}
+Equation~\eqref{eq:q-decomp} is a direct derivation from the project definitions,
+not an assumption about an estimator.
+
+\section{Data-generating processes}
+
+\subsection{Common population and panel design}
+
+Every population contains 300 workers and 18 firms.  Every panel contains ten
+periods, hence 3,000 observations before procedure-specific cleaning.  The
+systematic wage schedule has grand mean zero.  Worker and firm population
+marginals are uniform.  The observation disturbance is independent and
+normally distributed with mean zero and standard deviation 0.5.
+
+All Gaussian coordinates are redrawn in every replication.  Main-effect
+vectors are standardized to finite-population mean zero and variance one.
+Factor columns are centered and orthonormalized under the uniform population
+weights.  Therefore the singular values stated below hold exactly in every
+realized population, rather than only in expectation.
+
+Observed matching probabilities are defined by
+\begin{equation}
+P_{ij}=A_iB_j\exp\!\left\{0.5g_if_j
+  +0.3\frac{h_{ij}}{\operatorname{sd}(h)}\right\},
+\label{eq:assignment}
+\end{equation}
+where the balancing constants $A_i$ and $B_j$ restore uniform worker and firm
+marginals.  For AKM, $h_{ij}=0$ and the second sorting term is omitted.  A
+worker's first firm is drawn from the worker-specific conditional distribution.
+In each later period, the worker redraws from that distribution with probability
+0.40 and otherwise stays.  A redraw may select the same firm.
+
+\subsection{The five wage schedules}
+
+\begin{table}[H]
+\centering
+\caption{DGP-specific structure; all omitted common parameters are stated above}
+\label{tab:dgps}
+\small
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{0.17\textwidth}
+>{\raggedright\arraybackslash}p{0.47\textwidth}
+>{\raggedright\arraybackslash}X}
+\toprule
+DGP & Construction & Nonadditivity \\
+\midrule
+AKM & Independent raw worker and firm $N(0,1)$ effects & Rank zero; $m_{ij}=\alpha_i+\psi_j$ \cite{akm1999} \\
+Crippa/Tukey & Independent raw $\alpha_i,\psi_j\sim N(0,1)$ & $h_{ij}=0.75\alpha_i\psi_j$; rank one; singular value 0.75 \cite[Sec.~2.2]{crippa2025} \\
+BLM types & Two equal worker types and three equal firm classes; raw type effects and factors are $N(0,1)$ & Rank one; singular value 1; genuinely discrete wage surface \cite{blm2019} \\
+Low-rank factors & Worker factor has raw correlation 0.35 with $\alpha_i$; firm factor has raw correlation 0.25 with $\psi_j$ & Rank two; singular values $(1,0.5)$ \\
+GKLP & Raw $\operatorname{Corr}(Z_i,\eta_i)=0.35$ and $\operatorname{Corr}(c_j,b_j)=0.25$ & $m_{ij}=Z_i+c_j+b_j\eta_i+\tfrac12b_j^2(0.5)^2$; rank one \cite{gklp2002,gklp2005} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The Crippa and GKLP rows adapt the cited wage surfaces to the finite simulated
+population.  The numerical standardization, assignment law in
+Equation~\eqref{eq:assignment}, and parameter values in Table~\ref{tab:dgps}
+are simulation choices, not claims from those papers.
+
+\section{Procedures}
+
+\subsection{KSS}
+
+KSS applies leave-out variance-component corrections to a linear model with
+many effects and unrestricted heteroskedasticity \cite{kss2020}.  Here PyTwoWay
+0.3.21 supplies the heteroskedastic KSS correction with approximate trace and
+leverage calculations (\texttt{fe\_exact=False}) \cite{pytwoway}.  Its native
+population schedule is additive:
+\begin{equation}
+m_{ij}^{\mathrm{KSS}}=\mu+\alpha_i+\psi_j.
+\end{equation}
+It natively reports $\Var_q(\psi_j)$ and $\Cov_P(\alpha_i,\psi_j)$.
+
+The additive restriction also implies
+\begin{equation}
+h_{ij}^{\mathrm{KSS}}=0,\qquad
+\HF^{\mathrm{KSS}}=0,\qquad
+\rhoH^{\mathrm{KSS}}=0\quad\text{if }\QF^{\mathrm{KSS}}>0.
+\label{eq:kss-zero}
+\end{equation}
+These are imposed zeros, not interaction quantities estimated from the data.
+The corrected report includes them to show exactly what additivity implies.
+KSS residual variance is not relabeled as $\HF$: under misspecification, that
+residual mixes observation noise with omitted schedule structure.
+
+\subsection{BLM}
+
+BLM models a discrete worker type by firm class wage distribution and estimates
+firm classes before the finite-mixture wage model \cite{blm2019}.  Every DGP is
+fit using two worker types, three estimated firm classes, wage-CDF resolution
+10, four initializations, the best two retained starts, at most 250 mover and
+stayer iterations, and convergence threshold $10^{-6}$.  The implementation is
+PyTwoWay 0.3.21 \cite{pytwoway}.
+
+The actual pipeline is linear:
+\begin{enumerate}
+\item Drop every worker who leaves a firm and later returns to it.
+\item Collapse the remaining panel to employment spells.
+\item Estimate three firm clusters from wage CDF features using K-means.
+\item Convert the spell panel to mover and stayer event-study observations.
+\item Require all three stayer firm classes and all nine mover origin--destination class pairs.
+\item Fit four mover-model starts and retain the two best likelihoods.
+\item Select among those starts using PyTwoWay's connectedness calculation.
+\item Fit the stayer model conditional on the selected mover model.
+\end{enumerate}
+
+Step 5 is the audit correction.  PyTwoWay 0.3.21 reshapes probability counts to
+$2\times 3^2$ for movers and $2\times3$ for stayers without padding absent
+categories.  Without a preflight support check, a missing terminal label raises
+a reshape exception, while a missing interior label can instead create a zero
+probability row.  The corrected code detects the common economic cause before
+calling the optimizer.
+
+For continuous DGPs, BLM receives no oracle worker or firm labels.  Deterministic
+equal-count groups based on product-marginal mean wages are used only to score
+the estimated cell table.  Its cell-table functionals are also compared with
+the full project schedule, so discretization error remains visible.
+
+\subsection{BS20}
+
+BS20 estimates moments of worker and firm wage types in matched data
+\cite{bs2020}.  PyTwoWay's weighted standard estimator is used after
+strongly-connected, spell-level, no-return cleaning \cite{pytwoway}.  The native
+population covariance is
+\begin{equation}
+\CBS=\Cov_P(\lambda_i,\mu_j),\qquad
+\lambda_i=\E_P[m_{ij}\mid i],\quad
+\mu_j=\E_P[m_{ij}\mid j].
+\label{eq:bs-native}
+\end{equation}
+The code reads PyTwoWay's \texttt{cov(lambda, mu)} directly.  It does not
+construct that number from project quantities.  Because $\CBS$ is not generally
+$\Cassign$, BS20 is no longer displayed as an estimator of $\Cassign$.  Their
+population difference is reported separately as an estimand comparison.
+
+\subsection{Project low-rank plug-in}
+
+The current project fit is
+\begin{equation}
+m_{ij}=\alpha_i+\psi_j+
+\sum_{\ell=1}^{r}s_{\ell}U_{i\ell}V_{j\ell}.
+\label{eq:lowrank}
+\end{equation}
+Positive ranks use three starts, tolerance $10^{-6}$, and at most 300
+iterations.  Candidate ranks are $\{0,1\}$ for AKM and grouped BLM and
+$\{0,1,2\}$ for Crippa, continuous low-rank, and GKLP.  All candidates use a
+common retained core: minimum degree 3 for $\{0,1\}$ and degree 4 for
+$\{0,1,2\}$.
+
+The selected rank minimizes
+\begin{equation}
+\operatorname{BIC}(r)
+=n\log(\operatorname{SSE}_r/n)+\operatorname{df}(r)\log n,
+\qquad
+\operatorname{df}(r)=N+J-1+r(N+J-2-r).
+\label{eq:bic}
+\end{equation}
+Equation~\eqref{eq:bic} is an exploratory simulation rule.  It is not part of
+the unfinished project LOO theory.
+
+\section{Evaluation rules}
+
+The experiment separates four statuses:
+\begin{itemize}
+\item \textbf{Pass/completed.} KSS and BS20 returned a value.  BLM additionally
+has complete support and no one-step likelihood decline greater than $10^{-4}$.
+The project fit satisfies convergence and multi-start diagnostics.
+\item \textbf{Returned with warning.} An admissible BLM or project fit returned
+finite values but failed its procedure-specific numerical diagnostic.
+\item \textbf{Unsupported.} BLM lacks a stayer class or mover class-pair after
+its own cleaning and clustering.  It is not sent to the optimizer.
+\item \textbf{Estimator failure.} An admissible sample reaches the estimator,
+but the estimator returns no value.
+\end{itemize}
+
+The $10^{-4}$ BLM likelihood threshold is an engineering diagnostic, not a
+statistical critical value.  For a positive-rank project fit, at least two of
+three starts must have objectives within $0.0001\max(1,|L^*|)$ of the best
+objective, and their $\QF$, $\HF$, and $\Cassign$ spreads must each be within
+$0.001\max(1,|\theta^*|)$.  These thresholds are also engineering checks.  A
+pass does not prove correct specification, correct rank, or low bias.
+
+RMSE uses all values returned from admissible samples.  Unsupported samples do
+not enter the RMSE.  A pass-only RMSE is reported separately and is not treated
+as unconditional procedure performance.
+
+\section{Results}
+
+\subsection{Feasibility and numerical status}
+
+Table~\ref{tab:status} and Figure~\ref{fig:status} report
+pass/warning/unsupported/failure counts.  For KSS and BS20, ``pass'' means only
+that PyTwoWay completed.
+
+\begin{table}[H]
+\centering
+\caption{Status counts out of 100 replications: pass / warning / unsupported / failure}
+\label{tab:status}
+\small
+\begin{tabular}{lcccc}
+\toprule
+DGP & KSS & BLM & BS20 & Project \\
+\midrule
+AKM & 100/0/0/0 & 43/0/57/0 & 100/0/0/0 & 100/0/0/0 \\
+Crippa/Tukey & 100/0/0/0 & 57/0/43/0 & 100/0/0/0 & 100/0/0/0 \\
+BLM types & 100/0/0/0 & 46/1/53/0 & 100/0/0/0 & 6/94/0/0 \\
+Low-rank factors & 100/0/0/0 & 46/0/54/0 & 100/0/0/0 & 78/22/0/0 \\
+GKLP & 100/0/0/0 & 50/0/50/0 & 100/0/0/0 & 94/6/0/0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.98\textwidth]{reports/dgp_estimator_matrix/figures/status-matrix.pdf}
+\caption{Estimator status.  The four numbers printed in each cell follow the
+order in Table~\ref{tab:status}.}
+\label{fig:status}
+\end{figure}
+
+The BLM audit finds 257 unsupported samples and zero estimator failures.  The
+unsupported samples consist of 3 with no stayers, 246 with at least one absent
+stayer class, 6 with only a missing mover class-pair, and 2 with both a missing
+stayer class and mover class-pair.  Thus 243 samples have complete support; 242
+pass and one returns with a likelihood-path warning.
+
+The high unsupported rate follows from the DGP rather than random-start failure.
+As an approximation, the probability of no actual firm change in a later
+period is
+\begin{equation}
+0.6+\frac{0.4}{18}=0.622.
+\end{equation}
+The probability of remaining at the same firm through nine later periods is
+$0.622^9=0.014$, or about four workers out of 300.  After returners are dropped,
+those few stayers must cover three firm classes.  The approximation explains
+the scarcity; the reported classification uses exact realized support.
+
+\subsection{Correctly specified benchmarks}
+
+The expected own-model benchmarks work.  Under AKM, KSS-HE's bias for $\QF$ is
+$+0.0032$ and its RMSE is $0.0485$; its bias for $\Cassign$ is $-0.00014$.
+Under the grouped BLM DGP, the 47 admissible returned BLM fits have the results
+in Table~\ref{tab:blm-own}.  These are conditional on support and therefore do
+not erase the 53 percent infeasibility rate.
+
+\begin{table}[H]
+\centering
+\caption{BLM under its grouped DGP, among 47 admissible returned fits}
+\label{tab:blm-own}
+\begin{tabular}{lrr}
+\toprule
+Project functional & Bias & RMSE \\
+\midrule
+$\QF$ & $-0.0054$ & $0.0492$ \\
+$\HF$ & $-0.0031$ & $0.0741$ \\
+$\rhoH$ & $+0.00056$ & $0.0140$ \\
+$\Cassign$ & $+0.0025$ & $0.0110$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Common project targets}
+
+Figure~\ref{fig:common} compares admissible returned outputs with the common
+project truth.  KSS is shown for $\HF$ and $\rhoH$ because Equation~\eqref{eq:kss-zero}
+implies structural zeros.  The comparison therefore measures what the additive
+restriction misses; it is not an estimated KSS interaction.  BS20 is absent
+from the $\Cassign$ panel because Equation~\eqref{eq:bs-native} defines a
+different covariance.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.98\textwidth]{reports/dgp_estimator_matrix/figures/common-target-rmse.pdf}
+\caption{RMSE relative to the common project truth among admissible returned
+estimates.  N/A means there is no defensible mapping to that project object.
+The label $0^*$ denotes an AKM structural zero.}
+\label{fig:common}
+\end{figure}
+
+Three patterns matter.  First, KSS's $\HF$ and $\rhoH$ errors under the
+nonadditive DGPs are exactly the magnitudes excluded by additivity.  Second,
+supported BLM fits recover the grouped DGP but lose substantial interaction
+variation when a continuous schedule is compressed into six cells.  Its
+$\HF$ RMSE is 0.725 under Crippa, 2.433 under continuous low rank, and 1.923
+under GKLP.  Third, the project estimator's all-returned RMSE can be dominated
+by a small number of positive-rank warning fits.  Figure~\ref{fig:tail}
+separates this tail risk from its pass-only behavior.
+
+\subsection{Native targets versus project targets}
+
+For procedure $p$, comparison with the project truth decomposes as
+\begin{equation}
+\widehat\theta_p-\theta_{\mathrm{proj}}
+=\underbrace{(\widehat\theta_p-\theta_p)}_{\text{estimation error}}
++\underbrace{(\theta_p-\theta_{\mathrm{proj}})}_{\text{estimand difference}}.
+\label{eq:target-gap}
+\end{equation}
+Figure~\ref{fig:gaps} and Table~\ref{tab:gaps} report the second term averaged
+over all 100 populations.  They contain no estimator sampling error.
+
+\begin{table}[H]
+\centering
+\caption{Mean native population target minus project population target}
+\label{tab:gaps}
+\begin{tabular}{lrrr}
+\toprule
+DGP & KSS firm variance $-\QF$ & KSS covariance $-\Cassign$ & $\CBS-\Cassign$ \\
+\midrule
+AKM & $+0.000$ & $+0.000$ & $+0.416$ \\
+Crippa/Tukey & $-0.394$ & $-0.0028$ & $+0.824$ \\
+BLM types & $-0.752$ & $+0.014$ & $+0.622$ \\
+Low-rank factors & $-1.127$ & $-0.017$ & $+0.459$ \\
+GKLP & $-0.741$ & $-0.080$ & $+0.452$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.98\textwidth]{reports/dgp_estimator_matrix/figures/native-project-target-gaps.pdf}
+\caption{Population estimand differences.  These points are native targets
+minus project targets, not estimator bias.}
+\label{fig:gaps}
+\end{figure}
+
+The negative KSS firm-variance differences have an exact explanation under
+independent assignment.  The additive projection then recovers $b_j$, so
+Equation~\eqref{eq:q-decomp} gives
+\begin{equation}
+\Var_q(\psi_j)-\QF=-\frac{\HF}{2}\leq0.
+\label{eq:kss-gap}
+\end{equation}
+With sorted assignment, the pseudo-true additive firm effect can absorb part of
+$h_{ij}$, so Equation~\eqref{eq:kss-gap} no longer fixes the sign.  The negative
+values in the four sorted nonadditive designs are therefore informative
+simulation results, not a universal theorem.  The KSS covariance gaps are small
+and of mixed sign, confirming that no analogous sign claim is warranted.
+
+The BS20 object also needs its own explanation.  Under an additive schedule
+$m_{ij}=a_i+b_j$, define the conditional-expectation operators
+$Tb(i)=\E[b_J\mid I=i]$ and $T^*a(j)=\E[a_I\mid J=j]$.  Then
+\begin{align}
+\lambda_i &= a_i+Tb(i), & \mu_j &= b_j+T^*a(j), \\
+\CBS-\Cassign
+&=\lVert Tb\rVert^2+\lVert T^*a\rVert^2
+  +\langle Tb,TT^*a\rangle \geq 0. \label{eq:bs-gap}
+\end{align}
+The inequality follows from Cauchy--Schwarz and the fact that conditional
+expectation is a contraction in mean square.  Thus the positive AKM gap has a
+mathematical explanation: sorting enters both conditional wage types.  For a
+general nonadditive schedule, Equation~\eqref{eq:bs-gap} need not hold.  The
+positive gaps in the other four rows are features of these DGPs, not a general
+property imposed by the code.
+
+BLM has another population difference outside its discrete DGP.  Replacing a
+continuous wage surface with a $2\times3$ grouped surface changes the project
+functionals even before estimation.  The grouped-minus-full $\HF$ gaps are
+$-0.591$ for Crippa, $-2.452$ for continuous low rank, and $-1.959$ for GKLP.
+The grouped BLM DGP has zero gap up to floating-point error because its true
+labels already define the scoring cells.
+
+\subsection{Rank selection}
+
+Rank is the number of interaction dimensions in Equation~\eqref{eq:lowrank}.
+Rank zero is additive; rank one permits one comparative-advantage dimension;
+rank two permits two.  Figure~\ref{fig:rank} shows how often BIC selects each
+candidate.  The orange outline marks the true rank, while the text at right is
+the separate multi-start diagnostic-pass rate.
+
+\begin{table}[H]
+\centering
+\caption{Project BIC rank selection}
+\label{tab:rank}
+\begin{tabular}{lrrrrr}
+\toprule
+DGP & True rank & Select 0 & Select 1 & Select 2 & Pass rate \\
+\midrule
+AKM & 0 & 100 & 0 & 0 & 100\% \\
+Crippa/Tukey & 1 & 100 & 0 & 0 & 100\% \\
+BLM types & 1 & 2 & 98 & 0 & 6\% \\
+Low-rank factors & 2 & 0 & 100 & 0 & 78\% \\
+GKLP & 1 & 0 & 100 & 0 & 94\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.92\textwidth]{reports/dgp_estimator_matrix/figures/rank-selection.pdf}
+\caption{Share of replications selecting each rank.  Rank accuracy and the
+numerical pass rate answer different questions.}
+\label{fig:rank}
+\end{figure}
+
+Crippa makes the distinction sharp: every project fit passes numerically, but
+BIC selects rank zero in every replication.  The estimator therefore sets the
+true rank-one interaction to zero.  In the rank-two DGP, BIC always selects
+rank one, consistent with retaining the stronger singular-value-1 direction
+and discarding the weaker singular-value-0.5 direction.  A future LOO bias
+correction cannot repair an interaction dimension removed by rank selection.
+
+\subsection{Warnings and tail risk}
+
+Figure~\ref{fig:tail} compares project RMSE among all returned fits with RMSE
+conditional on passing the numerical diagnostics.  A large gap shows that a
+small warning subset dominates squared error.  The pass-only line is useful for
+diagnosis, but it conditions on an estimation outcome and cannot replace
+unconditional performance.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.93\textwidth]{reports/dgp_estimator_matrix/figures/project-returned-vs-stable-rmse.pdf}
+\caption{Project plug-in RMSE among all returned fits and conditional on a
+diagnostic pass.  The vertical axis is logarithmic.}
+\label{fig:tail}
+\end{figure}
+
+\section{Interpretation and next simulation changes}
+
+The full DGP-by-estimator matrix answers the original question more clearly
+than an all-AKM exercise.  KSS works in its additive benchmark, and BLM works
+in its discrete benchmark when its support requirements are met.  Outside
+those benchmarks, performance changes for two different reasons: estimators
+can be inaccurate for their native target, and native targets can differ from
+the project target.  Equation~\eqref{eq:target-gap} shows why those sources must
+not be combined without explanation.
+
+The corrected BLM result is not ``the optimizer fails half the time.''  The
+current observation design produces too few stayers after no-return cleaning.
+More than half of the panels therefore do not identify every probability row
+that the configured $2\times3$ BLM model asks PyTwoWay to update.  A fair next
+experiment should retain the present design as a support stress test and add a
+BLM-feasible design---for example, more workers, a permanent-stayer mixture, a
+lower redraw probability, or fewer firm classes.  That is a DGP change and
+should be declared in advance rather than hidden inside the estimator.
+
+For the project procedure, the dominant present issue is rank selection and
+positive-rank reproducibility, not only small-sample plug-in bias.  Crippa shows
+complete under-selection with numerical convergence; the rank-two design shows
+systematic truncation; and the warning fits create very large squared-error
+tails.  Rank choice and stable schedule completion therefore need to be solved
+before a leave-out correction can be interpreted as the principal remaining
+improvement.
+
+Finally, the reporting distinctions are substantive.  KSS's interaction zeros
+are now labeled ``imposed,'' BS20 is reported under its native covariance rather
+than under $\Cassign$, and BLM support failures are separate from optimizer
+failures.  These labels prevent a numerical table from silently changing the
+meaning of an estimand.
+
+\begin{thebibliography}{99}
+
+\bibitem{akm1999}
+Abowd, J. M., Kramarz, F., and Margolis, D. N. (1999).
+High wage workers and high wage firms.
+\emph{Econometrica}, 67(2), 251--333.
+\url{https://doi.org/10.1111/1468-0262.00020}.
+
+\bibitem{blm2019}
+Bonhomme, S., Lamadon, T., and Manresa, E. (2019).
+A distributional framework for matched employer--employee data.
+\emph{Econometrica}, 87(3), 699--739.
+\url{https://doi.org/10.3982/ECTA15722}.
+
+\bibitem{bs2020}
+Borovi\v{c}kov\'{a}, K., and Shimer, R. (2017; February 2020 manuscript version).
+High wage workers work for high wage firms.
+NBER Working Paper 24074.
+\url{https://doi.org/10.3386/w24074}.
+
+\bibitem{crippa2025}
+Crippa, F. (2025).
+Identification, estimation, and inference in two-sided interaction models.
+Manuscript supplied to the project.
+
+\bibitem{gklp2002}
+Gibbons, R., Katz, L. F., Lemieux, T., and Parent, D. (2002).
+Comparative advantage, learning, and sectoral wage determination.
+NBER Working Paper 8889.
+\url{https://doi.org/10.3386/w8889}.
+
+\bibitem{gklp2005}
+Gibbons, R., Katz, L. F., Lemieux, T., and Parent, D. (2005).
+Comparative advantage, learning, and sectoral wage determination.
+\emph{Journal of Labor Economics}, 23(4), 681--723.
+
+\bibitem{kss2020}
+Kline, P., Saggio, R., and S\o lvsten, M. (2020).
+Leave-out estimation of variance components.
+\emph{Econometrica}, 88(5), 1859--1898.
+\url{https://doi.org/10.3982/ECTA16410}.
+
+\bibitem{pytwoway}
+PyTwoWay contributors (version 0.3.21).
+Python API and estimator documentation.
+\url{https://tlamadon.github.io/pytwoway/internal.html}.
+
+\end{thebibliography}
+
+\end{document}
