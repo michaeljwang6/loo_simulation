@@ -640,6 +640,7 @@ def _result_from_starts(
     grand_mean = float(p @ best.worker_level)
     worker_main = best.worker_level - grand_mean
     functional_values: list[tuple[float, float, float] | None] = []
+    functional_errors: list[str | None] = []
     functionals: PopulationTruth | None = None
     fitted_schedule: FloatArray | None = None
     for index, start in enumerate(starts):
@@ -653,8 +654,11 @@ def _result_from_starts(
                 schedule,
                 data.assignment,
             )
-        except ArithmeticError:
+        except ArithmeticError as exc:
             value = None
+            functional_errors.append(f"{type(exc).__name__}: {exc}")
+        else:
+            functional_errors.append(None)
         if value is None:
             functional_values.append(None)
             del schedule
@@ -670,7 +674,9 @@ def _result_from_starts(
     if functionals is None or fitted_schedule is None:
         raise ValueError(
             "The best weighted-least-squares completion is numerically "
-            "unstable. Increase minimum_degree or inspect the support graph."
+            "unstable. The population-functional validation reported: "
+            f"{functional_errors[best_index]}. Increase minimum_degree or "
+            "inspect the support graph."
         )
 
     objective_cutoff = best.objective + 1e-4 * max(1.0, best.objective)

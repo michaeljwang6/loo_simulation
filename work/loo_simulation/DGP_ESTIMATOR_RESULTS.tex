@@ -43,12 +43,12 @@ It labeled a worker as a BLM stayer only when the worker stayed at one firm in
 all ten periods. Static BLM instead classifies the worker using one declared
 pair: in the corrected code, worker $i$ is a stayer when
 $j_{i0}=j_{i1}$ and a mover when $j_{i0}\ne j_{i1}$; moves after period 1 are
-irrelevant to this classification. Firm classes are still estimated from all
-ten periods so that clustering information is not discarded.
+irrelevant to this classification. Firm classes are estimated from all twenty
+production periods so that clustering information is not discarded.
 
 The replacement run is fully specified in
 \texttt{configs/dgp\_estimator\_matrix\_cluster.json}: one worker count of
-25,000, 5,000 firms, ten periods, 100 replications per DGP, and mechanical
+25,000, 5,000 firms, twenty periods, 100 replications per DGP, and mechanical
 firm retention probability 0.8 at each transition. The code parameter is
 \texttt{redraw\_probability=0.2}; because a redraw can choose the same firm,
 the realized probability that the firm is unchanged is slightly above 0.8.
@@ -340,7 +340,7 @@ that groups firms with similar wage-CDF features.
 
 The corrected pipeline separates clustering from construction of the BLM
 estimation sample. First, it estimates the three firm classes from wage CDFs
-using all ten periods. Second, it keeps one record for each worker observed in
+using all twenty production periods. Second, it keeps one record for each worker observed in
 periods 0 and 1, with the worker's actual wages and firm classes in those two
 periods. Third, it defines $m_i=1\{j_{i0}\ne j_{i1}\}$ and splits this single
 two-period table into movers and stayers. It does not drop returners and does
@@ -859,8 +859,13 @@ retention probability 0.8, so approximately 20,000 workers are mechanically
 retained at their period-0 firm and approximately 5,000 redraw in period 1
 before allowing for redraws back to the same firm. These are declared DGP
 parameters; they are not observations deleted or manufactured by the
-estimator. The resulting accuracy and support rates remain empirical questions
-until all 50 shards have completed.
+estimator. A ten-period cluster preflight then revealed a different support
+problem in the project estimator: the common four-degree core needed for the
+rank-two candidate set was empty in every nonadditive panel. Five movement-graph
+checks at twenty periods retained about 19,000 workers and essentially all
+5,000 firms. The production design therefore uses twenty periods without
+weakening the estimator's declared support rule. The resulting accuracy and
+support rates remain empirical questions until all 50 shards have completed.
 
 For the project procedure, the dominant present issue is rank selection and
 positive-rank reproducibility, not only small-sample plug-in bias.  Crippa shows
@@ -876,7 +881,9 @@ than under $\Cassign$, and BLM support failures are separate from optimizer
 failures.  These labels prevent a numerical table from silently changing the
 meaning of an estimand.
 
+{\small
 \begin{thebibliography}{99}
+\setlength{\itemsep}{0.15em}
 
 \bibitem{akm1999}
 Abowd, J. M., Kramarz, F., and Margolis, D. N. (1999).
@@ -924,5 +931,6 @@ Python API and estimator documentation.
 \url{https://tlamadon.github.io/pytwoway/internal.html}.
 
 \end{thebibliography}
+}
 
 \end{document}

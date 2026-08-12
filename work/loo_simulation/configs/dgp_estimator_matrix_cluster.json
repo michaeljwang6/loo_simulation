@@ -31,7 +31,7 @@
       "name": "akm_dgp",
       "panel_kwargs": {
         "error_sd": 0.5,
-        "n_periods": 10,
+        "n_periods": 20,
         "redraw_probability": 0.2
       },
       "plugin_ranks": [
@@ -50,7 +50,7 @@
       "name": "crippa_tukey_dgp",
       "panel_kwargs": {
         "error_sd": 0.5,
-        "n_periods": 10,
+        "n_periods": 20,
         "redraw_probability": 0.2
       },
       "plugin_ranks": [
@@ -72,7 +72,7 @@
       "name": "blm_grouped_dgp",
       "panel_kwargs": {
         "error_sd": 0.5,
-        "n_periods": 10,
+        "n_periods": 20,
         "redraw_probability": 0.2
       },
       "plugin_ranks": [
@@ -98,7 +98,7 @@
       "name": "low_rank_factor_dgp",
       "panel_kwargs": {
         "error_sd": 0.5,
-        "n_periods": 10,
+        "n_periods": 20,
         "redraw_probability": 0.2
       },
       "plugin_ranks": [
@@ -126,7 +126,7 @@
       "name": "gklp_perfect_information_dgp",
       "panel_kwargs": {
         "error_sd": 0.5,
-        "n_periods": 10,
+        "n_periods": 20,
         "redraw_probability": 0.2
       },
       "plugin_ranks": [
