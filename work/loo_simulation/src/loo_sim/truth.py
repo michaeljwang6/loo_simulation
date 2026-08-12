@@ -112,10 +112,11 @@ def compute_population_truth(
         raise ValueError("Every worker and firm must have positive assignment mass.")
 
     product = np.outer(p, q)
-    grand_mean = float(np.sum(product * m))
+    row_expectation = m @ q
+    grand_mean = float(p @ row_expectation)
     observed_mean = float(np.sum(assignment_prob * m))
 
-    worker_main = m @ q - grand_mean
+    worker_main = row_expectation - grand_mean
     firm_main = p @ m - grand_mean
     interaction = (
         m
@@ -164,10 +165,36 @@ def compute_population_truth(
     firm_main_variance = _weighted_variance(firm_main, q)
     if not np.isclose(q_f, firm_main_variance + 0.5 * h_f, atol=atol):
         raise ArithmeticError("Q_F decomposition failed.")
-    if not np.allclose(interaction @ q, 0.0, atol=atol):
-        raise ArithmeticError("Interaction row-centering condition failed.")
-    if not np.allclose(p @ interaction, 0.0, atol=atol):
-        raise ArithmeticError("Interaction column-centering condition failed.")
+    # These identities involve subtracting schedule components and then
+    # summing thousands of floating-point entries.  An absolute tolerance is
+    # not scale invariant and falsely rejected valid large completions in the
+    # cluster design, including exactly additive rank-zero schedules.  Check
+    # backward error relative to the scale of the operands instead.
+    identity_scale = max(
+        1.0,
+        abs(grand_mean),
+        abs(float(np.min(m))),
+        abs(float(np.max(m))),
+        abs(float(np.min(worker_main))),
+        abs(float(np.max(worker_main))),
+        abs(float(np.min(firm_main))),
+        abs(float(np.max(firm_main))),
+    )
+    centering_tolerance = atol * identity_scale
+    row_centering_error = float(np.max(np.abs(interaction @ q)))
+    if row_centering_error > centering_tolerance:
+        raise ArithmeticError(
+            "Interaction row-centering condition failed "
+            f"(scaled error={row_centering_error / identity_scale:.3e}, "
+            f"tolerance={atol:.3e})."
+        )
+    column_centering_error = float(np.max(np.abs(p @ interaction)))
+    if column_centering_error > centering_tolerance:
+        raise ArithmeticError(
+            "Interaction column-centering condition failed "
+            f"(scaled error={column_centering_error / identity_scale:.3e}, "
+            f"tolerance={atol:.3e})."
+        )
     if not np.isclose(
         c_assign, c_ab + c_ah + c_bh + c_hh, atol=atol
     ):

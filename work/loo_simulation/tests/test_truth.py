@@ -34,6 +34,25 @@ def test_additive_schedule_reduces_to_akm_objects() -> None:
     assert np.isclose(truth.c_hh, 0.0)
 
 
+def test_large_additive_schedule_uses_scale_aware_centering_check() -> None:
+    """Do not reject a valid decomposition because of roundoff scale."""
+
+    rng = np.random.default_rng(12345)
+    shape = (50, 30)
+    raw_assignment = rng.random(shape)
+    assignment = raw_assignment / raw_assignment.sum()
+    schedule = 1e6 * (
+        rng.normal(size=(shape[0], 1))
+        + rng.normal(size=(1, shape[1]))
+    )
+
+    truth = compute_population_truth(schedule, assignment)
+
+    schedule_scale = np.max(np.abs(schedule))
+    assert np.max(np.abs(truth.interaction)) <= 1e-12 * schedule_scale
+    assert truth.h_f <= 1e-20 * schedule_scale**2
+
+
 def test_rank_one_interaction_satisfies_dispersion_identity() -> None:
     worker_main = np.array([-0.8, -0.1, 0.4, 0.5])
     firm_main = np.array([-0.6, 0.2, 0.4])
