@@ -43,11 +43,55 @@ using Codex credits. Start with:
   --output results\dgp_estimator_matrix_pilot
 ```
 
-The corrected runner checks that BLM observes all three stayer classes and all
-nine mover class-pairs after its own cleaning and estimated-group clustering.
-Panels that fail this condition are labeled `unsupported`; they are not sent to
-PyTwoWay and do not enter RMSE summaries. Estimator failures are a separate
-status.
+The corrected runner estimates BLM firm classes from the full panel, then
+constructs the static BLM sample from declared periods 0 and 1. A stayer is a
+worker at the same firm in those two periods; later moves do not change that
+classification. The runner checks that this two-period sample observes all
+three stayer classes and all nine mover class-pairs. Panels that fail this
+condition are labeled `unsupported`; estimator failures are a separate status.
+
+## Next cluster production run
+
+The next production design is declared separately from the archived small
+run in `configs/dgp_estimator_matrix_cluster.json`. It uses 25,000 workers,
+5,000 firms, ten periods, and 100 replications for every DGP. The panel sets
+`redraw_probability=0.2`: in each transition a worker mechanically retains
+the current firm with probability 0.8 and otherwise redraws from the
+worker-specific assignment distribution. Because a redraw can select the
+same firm, the realized probability of an unchanged firm is slightly above
+0.8. The lower end of the requested worker range is deliberate: it supplies
+about 5,000 period-0-to-period-1 redraws while using half as many dense
+worker-by-firm cells as a 50,000-worker design.
+
+Submit the run as 50 resumable shards and automatically merge after all array
+tasks succeed:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -e ".[estimators]"
+bash -n scripts/slurm_dgp_estimator_matrix_cluster.sh \
+  scripts/slurm_merge_dgp_estimator_matrix_cluster.sh \
+  scripts/submit_dgp_estimator_matrix_cluster.sh
+sbatch --array=0 scripts/slurm_dgp_estimator_matrix_cluster.sh
+```
+
+Use that single shard as the cluster-specific memory and wall-time preflight.
+After it completes successfully, submit the full array and dependent merge:
+
+```bash
+bash scripts/submit_dgp_estimator_matrix_cluster.sh
+```
+
+The array specification is `0-49%4`: all 50 shards are created, with at most
+four running simultaneously. With 100 replications, each shard owns two
+global replication indices and runs all five DGPs for those indices. The
+completed pilot shard is reused because every task passes `--resume`. The
+template requests 128 GB for each array task because the present truth engine
+and low-rank estimator still materialize dense worker-by-firm arrays. Cluster
+partitions and account directives are site-specific and should be added to
+the two Slurm scripts before submission.
 
 For the production run completed before this support check was added, create a
 support-audited result without refitting any estimator, then regenerate the

@@ -112,6 +112,7 @@ def reclassify(result: MonteCarloResult) -> MonteCarloResult:
                     panel,
                     n_firm_types=n_firm_types,
                     firm_groups=None,
+                    periods=None,
                     cdf_resolution=config.estimators.blm_cdf_resolution,
                     seed=attempt.estimator_seed,
                 )

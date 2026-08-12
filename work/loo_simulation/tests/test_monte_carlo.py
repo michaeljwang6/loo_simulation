@@ -186,11 +186,28 @@ def test_full_dgp_estimator_matrix_config_is_declared() -> None:
     assert config.estimators.run_low_rank
     assert config.estimators.blm_worker_types == 2
     assert config.estimators.blm_firm_types == 3
+    assert config.estimators.blm_periods == (0, 1)
     assert all(
         scenario.blm_worker_types is None
         and scenario.blm_firm_types is None
         for scenario in config.scenarios
     )
+
+
+def test_cluster_matrix_config_declares_requested_scale_and_persistence() -> None:
+    config = load_monte_carlo_config(
+        "configs/dgp_estimator_matrix_cluster.json"
+    )
+
+    assert config.replications == 100
+    assert config.estimators.blm_periods == (0, 1)
+    assert len(config.scenarios) == 5
+    for scenario in config.scenarios:
+        assert scenario.population_kwargs["n_workers"] == 25_000
+        assert scenario.population_kwargs["n_firms"] == 5_000
+        # The sampler parameter is the probability of redrawing. Thus 0.2
+        # means an 0.8 probability of mechanically retaining the firm.
+        assert scenario.panel_kwargs["redraw_probability"] == 0.2
 
 
 def test_seed_groups_use_common_random_numbers() -> None:

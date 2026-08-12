@@ -7,7 +7,9 @@ from dataclasses import replace
 from pathlib import Path
 
 from loo_sim import (
+    config_fingerprint,
     load_monte_carlo_config,
+    load_monte_carlo_results,
     run_monte_carlo,
     save_monte_carlo_results,
     shard_replication_indices,
@@ -59,6 +61,13 @@ def _arguments() -> argparse.Namespace:
         action="store_true",
         help="Suppress one-line replication progress updates.",
     )
+    parser.add_argument(
+        "--resume",
+        action="store_true",
+        help=(
+            "Validate and reuse an already completed output directory."
+        ),
+    )
     args = parser.parse_args()
     if (args.shard_index is None) != (args.shard_count is None):
         parser.error(
@@ -92,6 +101,29 @@ def main() -> None:
             f"{args.shard_count:04d}"
         )
         output = Path("results") / args.config.stem / shard_name
+    if output.exists() and any(output.iterdir()):
+        if not args.resume:
+            raise FileExistsError(
+                f"Output directory already contains files: {output}. "
+                "Use --resume to validate and reuse a completed result."
+            )
+        existing = load_monte_carlo_results(output)
+        if config_fingerprint(existing.config) != config_fingerprint(config):
+            raise ValueError(
+                f"Existing output has the wrong configuration: {output}."
+            )
+        expected_indices = (
+            tuple(range(config.replications))
+            if replication_indices is None
+            else replication_indices
+        )
+        if existing.replication_indices != expected_indices:
+            raise ValueError(
+                "Existing output has the wrong replication indices: "
+                f"{output}."
+            )
+        print(f"Reusing completed output at {output.resolve()}.")
+        return
     progress = (
         None
         if args.quiet

@@ -2,6 +2,7 @@ import numpy as np
 import pytest
 
 from loo_sim import generate_grouped_population, sample_panel
+from loo_sim.panel import PanelData
 from loo_sim.pytwoway_estimators import (
     align_blm_cell_means,
     compute_blm_support_diagnostics,
@@ -11,6 +12,49 @@ from loo_sim.pytwoway_estimators import (
 
 
 pytest.importorskip("pytwoway")
+
+
+def _two_period_classification_panel() -> tuple[PanelData, np.ndarray]:
+    """Create complete static-BLM support plus moves after period one."""
+
+    firm_groups = np.repeat(np.arange(3, dtype=np.int64), 2)
+    histories: list[list[int]] = [
+        [0, 0, 2, 2],
+        [2, 2, 4, 4],
+        [4, 4, 0, 0],
+    ]
+    first_firm = (0, 2, 4)
+    alternate_firm = (1, 3, 5)
+    for origin_group in range(3):
+        for destination_group in range(3):
+            origin = first_firm[origin_group]
+            destination = (
+                alternate_firm[destination_group]
+                if origin_group == destination_group
+                else first_firm[destination_group]
+            )
+            histories.append([origin, destination, destination, destination])
+
+    firm_id = np.asarray(histories, dtype=np.int64).reshape(-1)
+    n_workers, n_periods = len(histories), 4
+    worker_id = np.repeat(np.arange(n_workers, dtype=np.int64), n_periods)
+    period = np.tile(np.arange(n_periods, dtype=np.int64), n_workers)
+    outcome = (
+        10.0 * worker_id
+        + period
+        + firm_groups[firm_id].astype(float)
+    )
+    return (
+        PanelData(
+            worker_id=worker_id,
+            firm_id=firm_id,
+            period=period,
+            outcome=outcome,
+            systematic_wage=outcome.copy(),
+            error=np.zeros_like(outcome),
+        ),
+        firm_groups,
+    )
 
 
 def test_blm_support_diagnostics_identify_exact_missing_cells() -> None:
@@ -32,6 +76,45 @@ def test_blm_support_diagnostics_identify_exact_missing_cells() -> None:
         (2, 1),
     )
     assert not support.complete
+
+
+def test_blm_classifies_stayers_only_over_declared_period_pair() -> None:
+    panel, firm_groups = _two_period_classification_panel()
+
+    prepared = prepare_blm_data(
+        panel,
+        n_firm_types=3,
+        firm_groups=firm_groups,
+        periods=(0, 1),
+        seed=1100,
+    )
+
+    assert prepared.sample.first_period == 0
+    assert prepared.sample.second_period == 1
+    assert prepared.sample.observations == 2 * panel.n_workers
+    assert prepared.sample.event_rows == panel.n_workers
+    assert prepared.sample.stayer_rows == 3
+    assert prepared.sample.mover_rows == 9
+    assert prepared.support.complete
+    assert set(prepared.sdata.loc[:, "i"]) == {0, 1, 2}
+    first_stayer = prepared.sdata.loc[
+        prepared.sdata.loc[:, "i"] == 0, :
+    ].iloc[0]
+    assert first_stayer["y1"] == panel.outcome[0]
+    assert first_stayer["y2"] == panel.outcome[1]
+
+
+@pytest.mark.parametrize("periods", [(1, 1), (2, 1), (0, 9)])
+def test_blm_rejects_invalid_or_unavailable_period_pairs(periods) -> None:
+    panel, firm_groups = _two_period_classification_panel()
+
+    with pytest.raises(ValueError):
+        prepare_blm_data(
+            panel,
+            n_firm_types=3,
+            firm_groups=firm_groups,
+            periods=periods,
+        )
 
 
 @pytest.fixture(scope="module")
@@ -103,4 +186,8 @@ def test_blm_recovers_grouped_cell_means(
     assert estimate.mover_likelihood_monotone
     assert estimate.stayer_likelihood_monotone
     assert np.isfinite(estimate.connectedness)
-    assert alignment.rmse < 0.15
+    # Estimated grouping uses only the declared two-period cross-section,
+    # whereas oracle grouping is given the true firm classes. The looser
+    # finite-sample bound for estimated groups reflects that extra first-step
+    # sampling noise; the 25,000-worker production design is much larger.
+    assert alignment.rmse < (0.25 if not oracle_groups else 0.15)

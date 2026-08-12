@@ -1,5 +1,14 @@
 # DGP-by-estimator Monte Carlo: methods and results
 
+> **Archived result set.** The numerical results below use the superseded
+> full-history BLM conversion, which classified a worker as a stayer only if
+> the worker remained at one firm throughout all ten periods. Static BLM
+> instead defines mover status over one declared pair of periods. The code now
+> uses periods 0 and 1, and a new 25,000-worker, 5,000-firm cluster run is
+> specified in `configs/dgp_estimator_matrix_cluster.json`. Until that run is
+> complete, the BLM completion rates and cross-DGP BLM results below should not
+> be treated as current evidence. The non-BLM archived results are unchanged.
+
 This report asks a deliberately symmetric question: what happens when each of four procedures is applied to data from each of five worker-firm wage models? The answer is not a single winner. KSS and BLM perform well when their own structures are correct, while nonadditivity, rank selection, sparse support, and differences in estimands explain the cross-model reversals.
 
 Every numerical statement below is derived from the support-audited merged output with configuration fingerprint `3e8ab3b57d35190989c47117f139b414b9f656db8a933d6c5d1df6d2aa5fbcc4`. The support audit reconstructs the original panels and BLM clustering from their saved seeds; it does not refit a successful model. Equations attributed to papers are cited. Every other equation is labeled as a definition or derived below.

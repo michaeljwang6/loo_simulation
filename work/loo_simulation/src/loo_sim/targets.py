@@ -13,6 +13,8 @@ from .truth import PopulationTruth, compute_population_truth
 FloatArray = NDArray[np.float64]
 IntArray = NDArray[np.int64]
 
+_EXPLICIT_AKM_MAX_CELLS = 2_000_000
+
 
 @dataclass(frozen=True)
 class AKMPopulationTarget:
@@ -111,6 +113,16 @@ def compute_akm_population_target(
     """
 
     truth = compute_population_truth(schedule, assignment, atol=atol)
+    return _compute_akm_from_truth(truth, atol=atol)
+
+
+def _compute_akm_from_truth(
+    truth: PopulationTruth,
+    *,
+    atol: float,
+) -> AKMPopulationTarget:
+    """Compute the additive projection while reusing a validated truth."""
+
     m = truth.schedule
     probability = truth.assignment
     p = truth.worker_weights
@@ -121,33 +133,65 @@ def compute_akm_population_target(
     row_mean = np.sum(probability * centered, axis=1) / p
     column_total = np.sum(probability * centered, axis=0)
 
-    # Eliminate the worker effects from the weighted normal equations. The
-    # resulting firm-side Laplacian has a one-dimensional constant null space
-    # exactly when the worker--firm support graph is connected.
-    laplacian = np.diag(q) - probability.T @ (
-        probability / p[:, np.newaxis]
-    )
-    laplacian = 0.5 * (laplacian + laplacian.T)
     right_hand_side = column_total - probability.T @ row_mean
 
-    rank = int(np.linalg.matrix_rank(laplacian, tol=atol))
-    if rank != n_firms - 1:
-        raise ValueError(
-            "AKM population effects require connected assignment support; "
-            f"firm-side normal matrix has rank {rank}, expected {n_firms - 1}."
+    if probability.size <= _EXPLICIT_AKM_MAX_CELLS:
+        # The explicit KKT solve is useful for small tests and gives a direct
+        # connected-support rank check.
+        laplacian = np.diag(q) - probability.T @ (
+            probability / p[:, np.newaxis]
         )
+        laplacian = 0.5 * (laplacian + laplacian.T)
+        rank = int(np.linalg.matrix_rank(laplacian, tol=atol))
+        if rank != n_firms - 1:
+            raise ValueError(
+                "AKM population effects require connected assignment "
+                f"support; firm-side normal matrix has rank {rank}, "
+                f"expected {n_firms - 1}."
+            )
+        kkt = np.block(
+            [
+                [laplacian, q[:, np.newaxis]],
+                [q[np.newaxis, :], np.zeros((1, 1))],
+            ]
+        )
+        solution = np.linalg.solve(
+            kkt,
+            np.concatenate([right_hand_side, np.zeros(1)]),
+        )
+        firm_effect = solution[:n_firms]
+    else:
+        # Forming P' diag(1/p) P costs O(n_workers * n_firms**2), which is
+        # prohibitive for the 25,000-by-5,000 cluster design. CG only needs
+        # products by that matrix. The q q' term removes the constant null
+        # direction and imposes q-weighted normalization.
+        from scipy.sparse.linalg import LinearOperator, cg
 
-    kkt = np.block(
-        [
-            [laplacian, q[:, np.newaxis]],
-            [q[np.newaxis, :], np.zeros((1, 1))],
-        ]
-    )
-    solution = np.linalg.solve(
-        kkt,
-        np.concatenate([right_hand_side, np.zeros(1)]),
-    )
-    firm_effect = solution[:n_firms]
+        def firm_normal_product(value: FloatArray) -> FloatArray:
+            return (
+                q * value
+                - probability.T @ ((probability @ value) / p)
+                + q * float(q @ value)
+            )
+
+        operator = LinearOperator(
+            (n_firms, n_firms),
+            matvec=firm_normal_product,
+            dtype=float,
+        )
+        firm_effect, info = cg(
+            operator,
+            right_hand_side,
+            rtol=max(1e-12, atol * 0.01),
+            atol=0.0,
+            maxiter=max(1_000, 5 * n_firms),
+        )
+        if info != 0:
+            raise ValueError(
+                "Matrix-free AKM population projection did not converge; "
+                f"scipy.sparse.linalg.cg returned info={info}. This can "
+                "indicate disconnected or nearly disconnected support."
+            )
     worker_effect = row_mean - (
         probability @ firm_effect
     ) / p
@@ -216,7 +260,7 @@ def compute_procedure_targets(
     """Compute project, AKM/KSS, and BS20 native population targets."""
 
     project = compute_population_truth(schedule, assignment, atol=atol)
-    akm = compute_akm_population_target(schedule, assignment, atol=atol)
+    akm = _compute_akm_from_truth(project, atol=atol)
     return ProcedureTargets(project=project, akm=akm)
 
 
@@ -227,10 +271,15 @@ def compute_blm_grouped_target(
     firm_groups: ArrayLike,
     *,
     atol: float = 1e-10,
+    project: PopulationTruth | None = None,
 ) -> BLMGroupedPopulationTarget:
     """Aggregate a population into BLM worker-type by firm-class cells."""
 
-    project = compute_population_truth(schedule, assignment, atol=atol)
+    if project is None:
+        project = compute_population_truth(schedule, assignment, atol=atol)
+    else:
+        if project.schedule.shape != np.shape(schedule):
+            raise ValueError("project and schedule must have the same shape.")
     worker_group = np.asarray(worker_groups, dtype=np.int64)
     firm_group = np.asarray(firm_groups, dtype=np.int64)
     if worker_group.shape != (project.schedule.shape[0],):
@@ -248,32 +297,32 @@ def compute_blm_grouped_target(
     if not np.array_equal(firm_labels, np.arange(firm_labels.size)):
         raise ValueError("firm group labels must be contiguous from zero.")
 
-    group_assignment = np.zeros(
-        (worker_labels.size, firm_labels.size),
-        dtype=float,
+    worker_indicator = np.eye(worker_labels.size)[worker_group]
+    firm_indicator = np.eye(firm_labels.size)[firm_group]
+    group_assignment = (
+        worker_indicator.T @ project.assignment @ firm_indicator
     )
-    group_wage_total = np.zeros_like(group_assignment)
-    for worker in range(project.schedule.shape[0]):
-        for firm in range(project.schedule.shape[1]):
-            cell = (worker_group[worker], firm_group[firm])
-            probability = project.assignment[worker, firm]
-            group_assignment[cell] += probability
-            group_wage_total[cell] += (
-                probability * project.schedule[worker, firm]
-            )
+    weighted_schedule = project.assignment * project.schedule
+    group_wage_total = (
+        worker_indicator.T @ weighted_schedule @ firm_indicator
+    )
+    del weighted_schedule
     if np.any(group_assignment <= 0):
         raise ValueError("Every BLM type-class cell must have positive mass.")
     cell_means = group_wage_total / group_assignment
 
-    fitted_group_mean = cell_means[
-        worker_group[:, np.newaxis],
-        firm_group[np.newaxis, :],
-    ]
-    within_cell_variance = float(
-        np.sum(
-            project.assignment
-            * (project.schedule - fitted_group_mean) ** 2
+    total_second_moment = float(
+        np.einsum(
+            "ij,ij,ij->",
+            project.assignment,
+            project.schedule,
+            project.schedule,
+            optimize=True,
         )
+    )
+    within_cell_variance = float(
+        total_second_moment
+        - np.sum(group_assignment * cell_means**2)
     )
     grouped_functionals = compute_population_truth(
         cell_means,
@@ -315,6 +364,7 @@ def compute_blm_evaluation_groups(
     *,
     n_worker_types: int,
     n_firm_types: int,
+    project: PopulationTruth | None = None,
 ) -> BLMEvaluationGroups:
     """Construct a common oracle BLM discretization for any wage schedule.
 
@@ -327,7 +377,13 @@ def compute_blm_evaluation_groups(
     labels directly to ``compute_blm_grouped_target``.
     """
 
-    truth = compute_population_truth(schedule, assignment)
+    truth = (
+        compute_population_truth(schedule, assignment)
+        if project is None
+        else project
+    )
+    if truth.schedule.shape != np.shape(schedule):
+        raise ValueError("project and schedule must have the same shape.")
     worker_score = truth.worker_main.copy()
     firm_score = truth.firm_main.copy()
     worker_groups = _ordered_equal_count_groups(

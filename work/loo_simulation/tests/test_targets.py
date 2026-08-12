@@ -1,5 +1,6 @@
 import numpy as np
 import pytest
+import loo_sim.targets as target_module
 
 from loo_sim import (
     compute_akm_population_target,
@@ -151,3 +152,42 @@ def test_disconnected_assignment_has_no_unique_akm_moment_target() -> None:
 
     with pytest.raises(ValueError, match="connected assignment support"):
         compute_akm_population_target(schedule, assignment)
+
+
+def test_matrix_free_akm_projection_matches_explicit_solve(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    population = generate_population(
+        n_workers=35,
+        n_firms=14,
+        rank=1,
+        singular_values=(0.8,),
+        common_sorting=0.7,
+        interaction_sorting=0.6,
+        seed=804,
+    )
+    explicit = compute_akm_population_target(
+        population.schedule,
+        population.assignment,
+    )
+    monkeypatch.setattr(target_module, "_EXPLICIT_AKM_MAX_CELLS", 0)
+    matrix_free = compute_akm_population_target(
+        population.schedule,
+        population.assignment,
+    )
+
+    assert np.allclose(
+        matrix_free.worker_effect,
+        explicit.worker_effect,
+        atol=1e-9,
+    )
+    assert np.allclose(
+        matrix_free.firm_effect,
+        explicit.firm_effect,
+        atol=1e-9,
+    )
+    assert np.allclose(
+        matrix_free.residual,
+        explicit.residual,
+        atol=1e-9,
+    )

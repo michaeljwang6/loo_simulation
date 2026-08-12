@@ -28,15 +28,39 @@
 \newcommand{\CBS}{C_{\mathrm{BS}}}
 
 \title{DGP-by-Estimator Monte Carlo\\
-\large Methods, corrected results, and interpretation}
+\large Archived baseline results and corrected production design}
 \author{}
-\date{August 11, 2026}
+\date{August 12, 2026}
 
 \begin{document}
 \maketitle
 
+\begin{center}
+\fcolorbox{red}{red!5}{\parbox{0.92\textwidth}{\textbf{Interim archive; do
+not interpret the old BLM tables as corrected results.} The numerical tables
+and figures below were produced using a superseded full-history conversion.
+It labeled a worker as a BLM stayer only when the worker stayed at one firm in
+all ten periods. Static BLM instead classifies the worker using one declared
+pair: in the corrected code, worker $i$ is a stayer when
+$j_{i0}=j_{i1}$ and a mover when $j_{i0}\ne j_{i1}$; moves after period 1 are
+irrelevant to this classification. Firm classes are still estimated from all
+ten periods so that clustering information is not discarded.
+
+The replacement run is fully specified in
+\texttt{configs/dgp\_estimator\_matrix\_cluster.json}: one worker count of
+25,000, 5,000 firms, ten periods, 100 replications per DGP, and mechanical
+firm retention probability 0.8 at each transition. The code parameter is
+\texttt{redraw\_probability=0.2}; because a redraw can choose the same firm,
+the realized probability that the firm is unchanged is slightly above 0.8.
+The Slurm launcher defines 50 resumable shards, two replication indices per
+shard, with at most four shards running concurrently. No replacement numerical
+claim is made before those shards are run and merged. The non-BLM numbers below
+remain an archive of the earlier small design.}}
+\end{center}
+
 \begin{abstract}
-This simulation applies four procedures---Kline--Saggio--S\o lvsten (KSS),
+This document archives a small simulation that applied four
+procedures---Kline--Saggio--S\o lvsten (KSS),
 Bonhomme--Lamadon--Manresa (BLM), Borovi\v{c}kov\'{a}--Shimer (BS20), and the
 current project low-rank plug-in---to panels generated from five distinct
 data-generating processes (DGPs).  A DGP is the rule that creates the full
@@ -45,12 +69,12 @@ panel.  The project leave-one-out (LOO) correction
 is still under development and is not simulated.  The central result is that
 three distinct issues must be kept separate: sampling error, disagreement
 between population estimands, and whether an estimator's required support is
-present.  A forensic audit showed that the original BLM summaries mixed
-supported fits with fits missing stayer-class support.  The corrected pipeline
-rejects such samples before estimation.  Of 500 BLM attempts, 243 have complete
-support, 242 pass the likelihood diagnostic, one returns with a numerical
-warning, and 257 are classified as unsupported.  No supported BLM attempt fails
-in PyTwoWay.  All results below use this corrected classification.
+present. A forensic audit showed that the original BLM summaries mixed
+supported fits with fits missing stayer-class support. The counts below apply
+that support reclassification, but they still use the wrong full-history
+mover/stayer construction. They are historical diagnostics, not evidence on
+the corrected two-period BLM procedure. Corrected numerical results will be
+added only after the declared cluster run is complete.
 \end{abstract}
 
 \section{Question and scope}
@@ -293,7 +317,8 @@ stayer iterations, and convergence threshold $10^{-6}$.  Multiple starts are
 used because a finite-mixture likelihood can have several local optima.  The
 implementation is PyTwoWay 0.3.21 \cite{pytwoway}.
 
-The actual pipeline is linear:
+The archived tables used the following pipeline. It is recorded so that the
+old results are reproducible, not because it is the current specification:
 \begin{enumerate}
 \item Drop every worker who leaves a firm and later returns to it.
 \item Collapse the remaining panel to employment spells.
@@ -308,10 +333,24 @@ minimum mover-graph connectedness across worker types.
 
 An employment spell is a worker's uninterrupted run at one firm.  A mover
 event joins the worker's origin and destination spells; a stayer event records
-a worker observed at one firm throughout.  K-means is the clustering algorithm
+a worker observed at one firm throughout. That full-history definition is the
+error: it is stricter than the static BLM definition and turns workers who move
+after the comparison pair into movers. K-means is the clustering algorithm
 that groups firms with similar wage-CDF features.
 
-Step 5 is the audit correction.  PyTwoWay 0.3.21 reshapes probability counts to
+The corrected pipeline separates clustering from construction of the BLM
+estimation sample. First, it estimates the three firm classes from wage CDFs
+using all ten periods. Second, it keeps one record for each worker observed in
+periods 0 and 1, with the worker's actual wages and firm classes in those two
+periods. Third, it defines $m_i=1\{j_{i0}\ne j_{i1}\}$ and splits this single
+two-period table into movers and stayers. It does not drop returners and does
+not collapse the ten-period history into spells. Finally, it applies the same
+three-class and nine-class-pair support check and then fits the same PyTwoWay
+model. Thus later periods inform firm clustering but cannot change worker
+$i$'s mover/stayer label for the static likelihood.
+
+The support check is a separate correction retained in the new pipeline.
+PyTwoWay 0.3.21 reshapes probability counts to
 $2\times 3^2$ for movers and $2\times3$ for stayers without padding absent
 categories.  Without a preflight support check, a missing terminal label raises
 a reshape exception, while a missing interior label can instead create a zero
@@ -811,14 +850,17 @@ can be inaccurate for their native target, and native targets can differ from
 the project target.  Equation~\eqref{eq:target-gap} shows why those sources must
 not be combined without explanation.
 
-The corrected BLM result is not ``the optimizer fails half the time.''  The
-current observation design produces too few stayers after no-return cleaning.
-More than half of the panels therefore do not identify every probability row
-that the configured $2\times3$ BLM model asks PyTwoWay to update.  A fair next
-experiment should retain the present design as a support stress test and add a
-BLM-feasible design---for example, more workers, a permanent-stayer mixture, a
-lower redraw probability, or fewer firm classes.  That is a DGP change and
-should be declared in advance rather than hidden inside the estimator.
+The archived BLM result is not evidence that the PyTwoWay optimizer fails half
+the time. The full-history conversion incorrectly left only permanent stayers
+in the stayer sample, so the small design often lacked a stayer class. The
+corrected estimator sample uses periods 0 and 1 and leaves later moves out of
+that label. The replacement DGP has 25,000 workers, 5,000 firms, and mechanical
+retention probability 0.8, so approximately 20,000 workers are mechanically
+retained at their period-0 firm and approximately 5,000 redraw in period 1
+before allowing for redraws back to the same firm. These are declared DGP
+parameters; they are not observations deleted or manufactured by the
+estimator. The resulting accuracy and support rates remain empirical questions
+until all 50 shards have completed.
 
 For the project procedure, the dominant present issue is rank selection and
 positive-rank reproducibility, not only small-sample plug-in bias.  Crippa shows

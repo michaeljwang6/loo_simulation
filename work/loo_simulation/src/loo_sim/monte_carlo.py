@@ -162,6 +162,7 @@ class EstimatorConfig:
     blm_n_iterations: int = 250
     blm_threshold: float = 1e-6
     blm_cdf_resolution: int = 10
+    blm_periods: tuple[int, int] = (0, 1)
     blm_worker_types: int | None = None
     blm_firm_types: int | None = None
 
@@ -201,6 +202,14 @@ class EstimatorConfig:
             raise ValueError("blm_threshold must be positive.")
         if self.blm_cdf_resolution < 2:
             raise ValueError("blm_cdf_resolution must be at least two.")
+        if (
+            len(self.blm_periods) != 2
+            or self.blm_periods[0] >= self.blm_periods[1]
+        ):
+            raise ValueError(
+                "blm_periods must contain two distinct periods in "
+                "increasing order."
+            )
         blm_type_counts = (self.blm_worker_types, self.blm_firm_types)
         if any(value is not None for value in blm_type_counts):
             if any(
@@ -1084,6 +1093,7 @@ def _run_blm(
             population.assignment,
             n_worker_types=n_worker_types,
             n_firm_types=n_firm_types,
+            project=targets.project,
         )
         worker_groups = evaluation_groups.worker_groups
         firm_groups = evaluation_groups.firm_groups
@@ -1093,6 +1103,7 @@ def _run_blm(
         population.assignment,
         worker_groups,
         firm_groups,
+        project=targets.project,
     )
     for variant_index, variant in enumerate(config.blm_variants):
         if variant == "oracle" and not true_grouped_target:
@@ -1114,6 +1125,7 @@ def _run_blm(
                     if variant == "oracle"
                     else None
                 ),
+                periods=config.blm_periods,
                 n_init=config.blm_n_init,
                 n_best=config.blm_n_best,
                 n_iterations=config.blm_n_iterations,
@@ -1180,10 +1192,12 @@ def _run_blm(
                 status="success" if stable else "unstable",
                 message=(
                     "BLM likelihood paths passed monotonicity checks; "
+                    f"periods={list(config.blm_periods)}; "
                     f"evaluation_groups={grouping_method}"
                     if stable
                     else "BLM returned values but a likelihood path failed "
                     "its monotonicity check; "
+                    f"periods={list(config.blm_periods)}; "
                     f"evaluation_groups={grouping_method}"
                 ),
                 sample=sample,
@@ -1695,6 +1709,10 @@ def config_from_dict(value: Mapping[str, Any]) -> MonteCarloConfig:
     if "blm_variants" in estimator_value:
         estimator_value["blm_variants"] = tuple(
             estimator_value["blm_variants"]
+        )
+    if "blm_periods" in estimator_value:
+        estimator_value["blm_periods"] = tuple(
+            int(period) for period in estimator_value["blm_periods"]
         )
     for name in ("blm_worker_types", "blm_firm_types"):
         if estimator_value.get(name) is not None:

@@ -31,16 +31,23 @@ by
 where the balancing constants \(a_i,b_j\) restore the uniform marginals.
 For each worker, the initial firm is drawn from \(P_{ij}/P_{i+}\). In each
 later period, the worker redraws from that same conditional distribution with
-probability 0.40 and otherwise stays. Observed wages are
+probability 0.20 and otherwise retains the current firm with probability
+0.80. A redraw may select the same firm, so the realized unchanged-firm
+probability is slightly above 0.80. Observed wages are
 
 \[
  Y_{it}=m_{iJ_{it}}+\varepsilon_{it},\qquad
  \varepsilon_{it}\overset{iid}{\sim}N(0,0.5^2).
 \]
 
-The production configuration uses 300 workers, 18 firms, ten periods, and
-100 Monte Carlo replications in every row. Using the same panel dimensions
-keeps differences across rows attributable to the DGP rather than sample size.
+The next cluster production configuration uses 25,000 workers, 5,000 firms,
+ten periods, and 100 Monte Carlo replications in every row. Using the same
+panel dimensions keeps differences across rows attributable to the DGP rather
+than sample size. We use the lower end of the requested 25,000--50,000 range:
+25,000 workers still supplies about 5,000 period-0-to-period-1 redraws for BLM,
+while halving the number of worker--firm schedule cells relative to 50,000
+workers. The earlier 300-worker results and configuration are retained for
+reproducibility rather than overwritten.
 
 ## The five DGPs
 
@@ -146,7 +153,10 @@ non-BLM row or change the KSS implementation with the DGP.
   with that grouped truth, and the functionals implied by the fitted cell table
   are compared both with the grouped projection and the full-population
   project truth. The latter comparison deliberately includes BLM
-  discretization error.
+  discretization error. Firm classes are estimated using wage observations
+  from all ten periods. The static BLM likelihood then uses exactly periods
+  0 and 1: a worker is a stayer when the firm is unchanged across that pair,
+  regardless of moves in later periods.
 
 - **Borovičková–Shimer 2020:** PyTwoWay's weighted type-moment estimator is
   compared with its native population type moments. Its covariance is also
@@ -184,8 +194,8 @@ Run the one-replication integration check:
   --output results\dgp_estimator_matrix_pilot
 ```
 
-Run the 100-replication experiment locally with four independent worker
-processes:
+The archived small production experiment can still be run locally with four
+independent worker processes:
 
 ```powershell
 & .\.venv311\Scripts\python.exe scripts\run_monte_carlo_shards.py `
@@ -198,21 +208,41 @@ processes:
 
 The launcher saves each shard immediately, validates resumed shards, and
 creates `results\dgp_estimator_matrix\merged` only after all 100 replications
-are present exactly once. On a SLURM cluster, submit
-`scripts/slurm_dgp_estimator_matrix.sh` from the repository root:
+are present exactly once. The 25,000-worker design is intended for a Slurm
+cluster. Submit all 50 shards and the dependent merge job from the repository
+root:
 
 ```bash
-sbatch scripts/slurm_dgp_estimator_matrix.sh
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -e ".[estimators]"
+sbatch --array=0 scripts/slurm_dgp_estimator_matrix_cluster.sh
 ```
 
-After the array completes, run the merge command printed at the end of that
-script.
+The one-shard submission is a cluster-specific preflight for actual memory and
+wall time. If it succeeds, launch the complete array and dependent merge:
+
+```bash
+bash scripts/submit_dgp_estimator_matrix_cluster.sh
+```
+
+The array uses `0-49%4`, so all 50 shards are defined and at most four run at
+once. Each shard contains two of the 100 global replication indices and is
+resumable with strict configuration and index validation. Adjust Slurm
+partition/account settings and the 128 GB memory request to the target
+cluster's policies before submission. The completed preflight shard is reused
+by the full array because every task passes `--resume`.
 
 ## Reproducibility files
 
-- `configs/dgp_estimator_matrix.json`: production design.
+- `configs/dgp_estimator_matrix.json`: archived 300-worker production design.
+- `configs/dgp_estimator_matrix_cluster.json`: next 25,000-worker,
+  5,000-firm cluster design.
 - `configs/dgp_estimator_matrix_pilot.json`: cheap end-to-end check.
 - `scripts/slurm_dgp_estimator_matrix.sh`: 20-task SLURM array template.
+- `scripts/slurm_dgp_estimator_matrix_cluster.sh`: 50-shard cluster array.
+- `scripts/submit_dgp_estimator_matrix_cluster.sh`: array plus dependent merge.
 - `attempts.csv`: every success, unstable fit, and failure.
 - `records.csv`: estimate, target, and error for every scalar comparison.
 - `summary.csv`: unconditional Monte Carlo bias and RMSE.

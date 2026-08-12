@@ -62,7 +62,7 @@ class BS20Result:
 
 @dataclass(frozen=True)
 class BLMAnalysisSample:
-    """Panel retained by the BLM preparation pipeline."""
+    """Two-period sample retained by the BLM preparation pipeline."""
 
     observations: int
     spells: int
@@ -74,6 +74,8 @@ class BLMAnalysisSample:
     firm_groups: int
     stayer_group_count: int
     mover_pair_count: int
+    first_period: int | None
+    second_period: int | None
 
 
 @dataclass(frozen=True)
@@ -104,13 +106,19 @@ class BLMSupportError(ValueError):
         self.reason_code = reason_code
         self.diagnostics = diagnostics
         self.sample = sample
+        period_label = (
+            [sample.first_period, sample.second_period]
+            if sample.first_period is not None
+            else "legacy_full_history"
+        )
         super().__init__(
             f"BLM_SUPPORT[{reason_code}]: "
             f"missing_stayer_groups="
             f"{list(diagnostics.missing_stayer_groups)}; "
             f"missing_mover_pairs={list(diagnostics.missing_mover_pairs)}; "
             f"stayer_rows={sample.stayer_rows}; "
-            f"mover_rows={sample.mover_rows}"
+            f"mover_rows={sample.mover_rows}; "
+            f"periods={period_label}"
         )
 
 
@@ -350,15 +358,85 @@ def estimate_bs20(panel: PanelData) -> BS20Result:
     )
 
 
+def _two_period_blm_events(
+    clustered: Any,
+    *,
+    first_period: int,
+    second_period: int,
+    pd: Any,
+    bpd: Any,
+) -> tuple[Any, Any, Any]:
+    """Construct exactly one static-BLM event row per observed worker."""
+
+    paired_source = clustered.loc[
+        clustered.loc[:, "t"].isin((first_period, second_period)),
+        ["i", "j", "y", "t", "g"],
+    ]
+    paired = (
+        paired_source
+        .pivot(index="i", columns="t", values=["j", "y", "g"])
+        .dropna()
+    )
+    if len(paired) == 0:
+        raise ValueError(
+            "No workers are observed in both requested BLM periods."
+        )
+    event_frame = pd.DataFrame(
+        {
+            "i": paired.index.to_numpy(dtype=np.int64),
+            "j1": paired.loc[:, ("j", first_period)].to_numpy(
+                dtype=np.int64
+            ),
+            "j2": paired.loc[:, ("j", second_period)].to_numpy(
+                dtype=np.int64
+            ),
+            "y1": paired.loc[:, ("y", first_period)].to_numpy(dtype=float),
+            "y2": paired.loc[:, ("y", second_period)].to_numpy(dtype=float),
+            "t1": np.full(len(paired), first_period, dtype=np.int64),
+            "t2": np.full(len(paired), second_period, dtype=np.int64),
+            "g1": paired.loc[:, ("g", first_period)].to_numpy(
+                dtype=np.int64
+            ),
+            "g2": paired.loc[:, ("g", second_period)].to_numpy(
+                dtype=np.int64
+            ),
+        }
+    )
+    event_frame.loc[:, "m"] = (
+        event_frame.loc[:, "j1"].to_numpy()
+        != event_frame.loc[:, "j2"].to_numpy()
+    ).astype(np.int64)
+    event_data = bpd.BipartiteDataFrame(
+        event_frame,
+        track_id_changes=True,
+    )
+    mover = event_data.loc[:, "m"].to_numpy(dtype=np.int64) > 0
+    return (
+        event_data,
+        event_data.loc[mover, :].copy(),
+        event_data.loc[~mover, :].copy(),
+    )
+
+
 def prepare_blm_data(
     panel: PanelData,
     *,
     n_firm_types: int,
     firm_groups: IntArray | None = None,
+    periods: tuple[int, int] | None = (0, 1),
     cdf_resolution: int = 10,
     seed: int = 2026,
 ) -> PreparedBLMData:
-    """Prepare clustered or oracle-group event-study inputs for BLM."""
+    """Prepare a static two-period mover/stayer sample for BLM.
+
+    BLM's static model classifies a worker using one declared pair of
+    periods. A worker is a stayer when the firm is unchanged across that
+    pair, even if the worker moves elsewhere in another panel period. This
+    function deliberately constructs one event-study row per worker instead
+    of collapsing the worker's complete firm history into spells.
+    ``periods=None`` is retained only to reproduce the superseded
+    full-history support audit; new estimation must declare two periods.
+    """
 
     if n_firm_types < 1:
         raise ValueError("n_firm_types must be positive.")
@@ -366,7 +444,28 @@ def prepare_blm_data(
         raise ValueError("cdf_resolution must be at least two.")
     pd, bpd, _ = _load_pytwoway()
     frame = pd.DataFrame(panel.as_columns())
-
+    if periods is None:
+        first_period = None
+        second_period = None
+    else:
+        if len(periods) != 2:
+            raise ValueError("BLM periods must contain exactly two entries.")
+        first_period, second_period = (int(period) for period in periods)
+        if first_period >= second_period:
+            raise ValueError(
+                "BLM periods must be two distinct values in increasing order."
+            )
+        available_periods = set(
+            int(value) for value in frame.loc[:, "t"].unique()
+        )
+        missing_periods = sorted(
+            {first_period, second_period}.difference(available_periods)
+        )
+        if missing_periods:
+            raise ValueError(
+                "BLM periods are absent from the panel: "
+                f"{missing_periods}."
+            )
     if firm_groups is None:
         variant = "estimated_firm_groups"
     else:
@@ -378,7 +477,8 @@ def prepare_blm_data(
             raise ValueError(
                 "firm_groups does not cover every observed firm id."
             )
-        observed_groups = groups[panel.firm_id]
+        observed_firms = frame.loc[:, "j"].to_numpy(dtype=np.int64)
+        observed_groups = groups[observed_firms]
         labels = np.unique(observed_groups)
         if labels.size != n_firm_types:
             raise ValueError(
@@ -391,16 +491,23 @@ def prepare_blm_data(
     cleaned = adata.clean(
         bpd.clean_params(
             {
-                "drop_returns": "returners",
+                "connectedness": None,
+                "drop_returns": (
+                    "returners" if periods is None else False
+                ),
                 "copy": True,
                 "verbose": False,
             }
         )
     )
-    collapsed = cleaned.collapse(is_sorted=True, copy=True)
+    analysis_data = (
+        cleaned.collapse(is_sorted=True, copy=True)
+        if periods is None
+        else cleaned
+    )
     if firm_groups is None:
         os.environ.setdefault("LOKY_MAX_CPU_COUNT", "1")
-        clustered = collapsed.cluster(
+        clustered = analysis_data.cluster(
             bpd.cluster_params(
                 {
                     "measures": bpd.measures.CDFs(
@@ -417,7 +524,7 @@ def prepare_blm_data(
             rng=np.random.default_rng(seed),
         )
     else:
-        clustered = collapsed
+        clustered = analysis_data
 
     observed_cluster_count = int(clustered.loc[:, "g"].nunique())
     if observed_cluster_count != n_firm_types:
@@ -426,10 +533,25 @@ def prepare_blm_data(
             f"{observed_cluster_count} firm groups; expected {n_firm_types}."
         )
 
-    event_data = clustered.to_eventstudy(is_sorted=True, copy=True)
-    mover = event_data.get_worker_m(is_sorted=True)
-    jdata = event_data.loc[mover, :]
-    sdata = event_data.loc[~mover, :]
+    if periods is None:
+        event_data = clustered.to_eventstudy(is_sorted=True, copy=True)
+        mover = event_data.get_worker_m(is_sorted=True)
+        jdata = event_data.loc[mover, :]
+        sdata = event_data.loc[~mover, :]
+        observations = int(round(float(clustered.loc[:, "w"].sum())))
+        spells = int(len(clustered))
+    else:
+        if first_period is None or second_period is None:  # pragma: no cover
+            raise RuntimeError("Validated BLM periods unexpectedly missing.")
+        event_data, jdata, sdata = _two_period_blm_events(
+            clustered,
+            first_period=first_period,
+            second_period=second_period,
+            pd=pd,
+            bpd=bpd,
+        )
+        observations = 2 * int(len(event_data))
+        spells = int(len(event_data) + len(jdata))
     support = compute_blm_support_diagnostics(
         mover_origins=jdata.loc[:, "g1"].to_numpy(dtype=np.int64),
         mover_destinations=jdata.loc[:, "g2"].to_numpy(dtype=np.int64),
@@ -437,16 +559,27 @@ def prepare_blm_data(
         n_firm_types=n_firm_types,
     )
     sample = BLMAnalysisSample(
-        observations=int(round(float(clustered.loc[:, "w"].sum()))),
-        spells=int(len(clustered)),
+        observations=observations,
+        spells=spells,
         event_rows=int(len(event_data)),
         mover_rows=int(len(jdata)),
         stayer_rows=int(len(sdata)),
         workers=int(event_data.loc[:, "i"].nunique()),
-        firms=int(clustered.loc[:, "j"].nunique()),
+        firms=int(
+            np.unique(
+                np.concatenate(
+                    [
+                        event_data.loc[:, "j1"].to_numpy(dtype=np.int64),
+                        event_data.loc[:, "j2"].to_numpy(dtype=np.int64),
+                    ]
+                )
+            ).size
+        ),
         firm_groups=observed_cluster_count,
         stayer_group_count=len(support.stayer_groups),
         mover_pair_count=len(support.mover_pairs),
+        first_period=first_period,
+        second_period=second_period,
     )
     if len(jdata) == 0:
         reason_code = "no_mover_events"
@@ -527,6 +660,7 @@ def estimate_blm(
     n_worker_types: int,
     n_firm_types: int,
     firm_groups: IntArray | None = None,
+    periods: tuple[int, int] = (0, 1),
     n_init: int = 4,
     n_best: int = 2,
     n_iterations: int = 250,
@@ -551,6 +685,7 @@ def estimate_blm(
         panel,
         n_firm_types=n_firm_types,
         firm_groups=firm_groups,
+        periods=periods,
         cdf_resolution=cdf_resolution,
         seed=seed,
     )

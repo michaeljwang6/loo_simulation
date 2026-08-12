@@ -1,0 +1,151 @@
+{
+  "estimators": {
+    "blm_cdf_resolution": 10,
+    "blm_firm_types": 3,
+    "blm_n_best": 2,
+    "blm_n_init": 4,
+    "blm_n_iterations": 250,
+    "blm_periods": [
+      0,
+      1
+    ],
+    "blm_threshold": 1e-06,
+    "blm_variants": [
+      "estimated"
+    ],
+    "blm_worker_types": 2,
+    "fe_exact": false,
+    "low_rank_max_iterations": 300,
+    "low_rank_minimum_degree": null,
+    "low_rank_n_starts": 3,
+    "low_rank_tolerance": 1e-06,
+    "run_bic": true,
+    "run_blm": true,
+    "run_bs20": true,
+    "run_fe_kss": true,
+    "run_low_rank": true
+  },
+  "replications": 100,
+  "scenarios": [
+    {
+      "name": "akm_dgp",
+      "panel_kwargs": {
+        "error_sd": 0.5,
+        "n_periods": 10,
+        "redraw_probability": 0.2
+      },
+      "plugin_ranks": [
+        0,
+        1
+      ],
+      "population_kind": "akm",
+      "population_kwargs": {
+        "common_sorting": 0.5,
+        "n_firms": 5000,
+        "n_workers": 25000
+      },
+      "true_rank": 0
+    },
+    {
+      "name": "crippa_tukey_dgp",
+      "panel_kwargs": {
+        "error_sd": 0.5,
+        "n_periods": 10,
+        "redraw_probability": 0.2
+      },
+      "plugin_ranks": [
+        0,
+        1,
+        2
+      ],
+      "population_kind": "crippa",
+      "population_kwargs": {
+        "beta_0": 0.75,
+        "common_sorting": 0.5,
+        "interaction_sorting": 0.3,
+        "n_firms": 5000,
+        "n_workers": 25000
+      },
+      "true_rank": 1
+    },
+    {
+      "name": "blm_grouped_dgp",
+      "panel_kwargs": {
+        "error_sd": 0.5,
+        "n_periods": 10,
+        "redraw_probability": 0.2
+      },
+      "plugin_ranks": [
+        0,
+        1
+      ],
+      "population_kind": "blm",
+      "population_kwargs": {
+        "common_sorting": 0.5,
+        "interaction_sorting": 0.3,
+        "n_firm_types": 3,
+        "n_firms": 5000,
+        "n_worker_types": 2,
+        "n_workers": 25000,
+        "rank": 1,
+        "singular_values": [
+          1.0
+        ]
+      },
+      "true_rank": 1
+    },
+    {
+      "name": "low_rank_factor_dgp",
+      "panel_kwargs": {
+        "error_sd": 0.5,
+        "n_periods": 10,
+        "redraw_probability": 0.2
+      },
+      "plugin_ranks": [
+        0,
+        1,
+        2
+      ],
+      "population_kind": "low_rank",
+      "population_kwargs": {
+        "common_sorting": 0.5,
+        "firm_factor_correlation": 0.25,
+        "interaction_sorting": 0.3,
+        "n_firms": 5000,
+        "n_workers": 25000,
+        "rank": 2,
+        "singular_values": [
+          1.0,
+          0.5
+        ],
+        "worker_factor_correlation": 0.35
+      },
+      "true_rank": 2
+    },
+    {
+      "name": "gklp_perfect_information_dgp",
+      "panel_kwargs": {
+        "error_sd": 0.5,
+        "n_periods": 10,
+        "redraw_probability": 0.2
+      },
+      "plugin_ranks": [
+        0,
+        1,
+        2
+      ],
+      "population_kind": "gklp",
+      "population_kwargs": {
+        "ability_correlation": 0.35,
+        "common_sorting": 0.5,
+        "firm_type_correlation": 0.25,
+        "interaction_sorting": 0.3,
+        "n_firms": 5000,
+        "n_workers": 25000,
+        "productivity_shock_sd": 0.5
+      },
+      "true_rank": 1
+    }
+  ],
+  "seed": 20260812
+}

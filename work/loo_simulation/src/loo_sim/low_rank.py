@@ -96,6 +96,10 @@ class _EdgeData:
     means: FloatArray
     counts: FloatArray
     assignment: FloatArray
+    edge_worker: IntArray
+    edge_firm: IntArray
+    edge_means: FloatArray
+    edge_counts: FloatArray
     within_match_sse: float
     sample: LowRankAnalysisSample
 
@@ -107,7 +111,6 @@ class _StartFit:
     worker_factors: FloatArray
     firm_factors: FloatArray
     singular_values: FloatArray
-    fitted_schedule: FloatArray
     objective: float
     converged: bool
     iterations: int
@@ -165,8 +168,14 @@ def _largest_support_component(
 
 
 def _rectangle_count(mask: NDArray[np.bool_]) -> int:
-    shared_workers = mask.astype(np.int64).T @ mask.astype(np.int64)
-    upper = shared_workers[np.triu_indices(mask.shape[1], k=1)]
+    # The observed worker--firm graph is sparse in the cluster design. A
+    # sparse cross-product counts workers shared by each firm pair without
+    # performing an O(n_workers * n_firms**2) dense multiplication.
+    from scipy import sparse
+
+    incidence = sparse.csr_matrix(mask, dtype=np.int64)
+    shared = (incidence.T @ incidence).tocoo()
+    upper = shared.data[shared.row < shared.col]
     return int(np.sum(upper * (upper - 1) // 2))
 
 
@@ -234,6 +243,11 @@ def _prepare_edge_data(panel: PanelData, *, minimum_degree: int) -> _EdgeData:
     selected_means[selected_mask] = (
         selected_sums[selected_mask] / selected_counts[selected_mask]
     )
+    edge_worker, edge_firm = np.nonzero(selected_mask)
+    edge_worker = edge_worker.astype(np.int64, copy=False)
+    edge_firm = edge_firm.astype(np.int64, copy=False)
+    edge_means = selected_means[edge_worker, edge_firm]
+    edge_counts = selected_counts[edge_worker, edge_firm]
 
     within_match_sse = max(
         0.0,
@@ -267,67 +281,118 @@ def _prepare_edge_data(panel: PanelData, *, minimum_degree: int) -> _EdgeData:
         means=selected_means,
         counts=selected_counts,
         assignment=assignment,
+        edge_worker=edge_worker,
+        edge_firm=edge_firm,
+        edge_means=edge_means,
+        edge_counts=edge_counts,
         within_match_sse=within_match_sse,
         sample=sample,
     )
 
 
-def _weighted_lstsq(
+def _grouped_weighted_lstsq(
+    groups: IntArray,
+    n_groups: int,
     design: FloatArray,
     outcome: FloatArray,
     weights: FloatArray,
 ) -> FloatArray:
-    sqrt_weight = np.sqrt(weights)
-    return np.linalg.lstsq(
-        design * sqrt_weight[:, np.newaxis],
-        outcome * sqrt_weight,
-        rcond=None,
-    )[0]
+    """Solve many small WLS problems without Python loops over groups."""
+
+    n_columns = design.shape[1]
+    gram = np.empty((n_groups, n_columns, n_columns), dtype=float)
+    for left in range(n_columns):
+        for right in range(n_columns):
+            gram[:, left, right] = np.bincount(
+                groups,
+                weights=weights * design[:, left] * design[:, right],
+                minlength=n_groups,
+            )
+    right_hand_side = np.empty((n_groups, n_columns), dtype=float)
+    for column in range(n_columns):
+        right_hand_side[:, column] = np.bincount(
+            groups,
+            weights=weights * design[:, column] * outcome,
+            minlength=n_groups,
+        )
+
+    # A pseudoinverse matches the minimum-norm behavior of np.linalg.lstsq
+    # when an individual conditional regression is temporarily collinear.
+    return np.einsum(
+        "gij,gj->gi",
+        np.linalg.pinv(gram, rcond=1e-15),
+        right_hand_side,
+    )
 
 
-def _objective(
-    means: FloatArray,
-    counts: FloatArray,
-    fitted: FloatArray,
+def _edge_objective(
+    data: _EdgeData,
+    worker_level: FloatArray,
+    firm_level: FloatArray,
+    worker_factors: FloatArray | None = None,
+    firm_factors: FloatArray | None = None,
 ) -> float:
-    return float(np.sum(counts * (means - fitted) ** 2))
+    fitted = (
+        worker_level[data.edge_worker]
+        + firm_level[data.edge_firm]
+    )
+    if worker_factors is not None and firm_factors is not None:
+        fitted = fitted + np.sum(
+            worker_factors[data.edge_worker]
+            * firm_factors[data.edge_firm],
+            axis=1,
+        )
+    return float(
+        np.sum(data.edge_counts * (data.edge_means - fitted) ** 2)
+    )
 
 
 def _fit_additive(
-    means: FloatArray,
-    counts: FloatArray,
+    data: _EdgeData,
     *,
     tolerance: float,
     max_iterations: int,
 ) -> tuple[FloatArray, FloatArray, bool, int]:
-    mask = counts > 0
-    worker_level = np.zeros(means.shape[0])
-    firm_level = np.zeros(means.shape[1])
+    n_workers = data.sample.workers
+    n_firms = data.sample.firms
+    worker_mass = np.bincount(
+        data.edge_worker,
+        weights=data.edge_counts,
+        minlength=n_workers,
+    )
+    firm_mass = np.bincount(
+        data.edge_firm,
+        weights=data.edge_counts,
+        minlength=n_firms,
+    )
+    worker_level = np.zeros(n_workers)
+    firm_level = np.zeros(n_firms)
     previous = float("inf")
     converged = False
 
     for iteration in range(1, max_iterations + 1):
-        for worker in range(means.shape[0]):
-            observed = mask[worker]
-            weight = counts[worker, observed]
-            worker_level[worker] = np.average(
-                means[worker, observed] - firm_level[observed],
-                weights=weight,
-            )
-        for firm in range(means.shape[1]):
-            observed = mask[:, firm]
-            weight = counts[observed, firm]
-            firm_level[firm] = np.average(
-                means[observed, firm] - worker_level[observed],
-                weights=weight,
-            )
+        worker_level = np.bincount(
+            data.edge_worker,
+            weights=(
+                data.edge_counts
+                * (data.edge_means - firm_level[data.edge_firm])
+            ),
+            minlength=n_workers,
+        ) / worker_mass
+        firm_level = np.bincount(
+            data.edge_firm,
+            weights=(
+                data.edge_counts
+                * (data.edge_means - worker_level[data.edge_worker])
+            ),
+            minlength=n_firms,
+        ) / firm_mass
 
-        q = counts.sum(axis=0) / counts.sum()
+        q = firm_mass / firm_mass.sum()
         firm_mean = float(q @ firm_level)
         firm_level -= firm_mean
         worker_level += firm_mean
-        fitted = worker_level[:, np.newaxis] + firm_level[np.newaxis, :]
-        objective = _objective(means, counts, fitted)
+        objective = _edge_objective(data, worker_level, firm_level)
         if np.isfinite(previous) and abs(
             previous - objective
         ) <= tolerance * max(1.0, previous):
@@ -400,35 +465,59 @@ def _canonicalize_factors(
 
 
 def _spectral_initialization(
-    means: FloatArray,
-    counts: FloatArray,
+    data: _EdgeData,
     worker_level: FloatArray,
     firm_level: FloatArray,
     rank: int,
 ) -> tuple[FloatArray, FloatArray]:
-    p = counts.sum(axis=1) / counts.sum()
-    q = counts.sum(axis=0) / counts.sum()
-    residual = np.zeros_like(means)
-    observed = counts > 0
-    additive = worker_level[:, np.newaxis] + firm_level[np.newaxis, :]
-    residual[observed] = means[observed] - additive[observed]
-    weighted = (
-        np.sqrt(p)[:, np.newaxis]
+    from scipy import sparse
+    from scipy.sparse.linalg import svds
+
+    p = np.bincount(
+        data.edge_worker,
+        weights=data.edge_counts,
+        minlength=data.sample.workers,
+    ) / data.sample.observations
+    q = np.bincount(
+        data.edge_firm,
+        weights=data.edge_counts,
+        minlength=data.sample.firms,
+    ) / data.sample.observations
+    residual = (
+        data.edge_means
+        - worker_level[data.edge_worker]
+        - firm_level[data.edge_firm]
+    )
+    weighted_values = (
+        np.sqrt(p[data.edge_worker])
         * residual
-        * np.sqrt(q)[np.newaxis, :]
+        * np.sqrt(q[data.edge_firm])
     )
-    left, singular_values, right_transpose = np.linalg.svd(
+    weighted = sparse.csr_matrix(
+        (
+            weighted_values,
+            (data.edge_worker, data.edge_firm),
+        ),
+        shape=(data.sample.workers, data.sample.firms),
+    )
+    left, singular_values, right_transpose = svds(
         weighted,
-        full_matrices=False,
+        k=rank,
+        which="LM",
+        v0=np.ones(min(weighted.shape), dtype=float),
     )
-    root = np.sqrt(np.maximum(singular_values[:rank], 0.0))
+    order = np.argsort(singular_values)[::-1]
+    singular_values = singular_values[order]
+    left = left[:, order]
+    right_transpose = right_transpose[order, :]
+    root = np.sqrt(np.maximum(singular_values, 0.0))
     worker_factors = (
-        left[:, :rank]
+        left
         * root[np.newaxis, :]
         / np.sqrt(p)[:, np.newaxis]
     )
     firm_factors = (
-        right_transpose[:rank, :].T
+        right_transpose.T
         * root[np.newaxis, :]
         / np.sqrt(q)[:, np.newaxis]
     )
@@ -446,11 +535,16 @@ def _fit_start(
     tolerance: float,
     max_iterations: int,
 ) -> _StartFit:
-    means = data.means
-    counts = data.counts
-    mask = counts > 0
-    p = data.assignment.sum(axis=1)
-    q = data.assignment.sum(axis=0)
+    p = np.bincount(
+        data.edge_worker,
+        weights=data.edge_counts,
+        minlength=data.sample.workers,
+    ) / data.sample.observations
+    q = np.bincount(
+        data.edge_firm,
+        weights=data.edge_counts,
+        minlength=data.sample.firms,
+    ) / data.sample.observations
     worker_level = initial_worker_level.copy()
     firm_level = initial_firm_level.copy()
     worker_factors = initial_worker_factors.copy()
@@ -460,37 +554,37 @@ def _fit_start(
     singular_values = np.empty(rank)
 
     for iteration in range(1, max_iterations + 1):
-        for worker in range(means.shape[0]):
-            observed = mask[worker]
-            design = np.column_stack(
-                [
-                    np.ones(int(np.sum(observed))),
-                    firm_factors[observed],
-                ]
-            )
-            coefficients = _weighted_lstsq(
-                design,
-                means[worker, observed] - firm_level[observed],
-                counts[worker, observed],
-            )
-            worker_level[worker] = coefficients[0]
-            worker_factors[worker] = coefficients[1:]
+        worker_design = np.column_stack(
+            [
+                np.ones(data.sample.edges),
+                firm_factors[data.edge_firm],
+            ]
+        )
+        worker_coefficients = _grouped_weighted_lstsq(
+            data.edge_worker,
+            data.sample.workers,
+            worker_design,
+            data.edge_means - firm_level[data.edge_firm],
+            data.edge_counts,
+        )
+        worker_level = worker_coefficients[:, 0]
+        worker_factors = worker_coefficients[:, 1:]
 
-        for firm in range(means.shape[1]):
-            observed = mask[:, firm]
-            design = np.column_stack(
-                [
-                    np.ones(int(np.sum(observed))),
-                    worker_factors[observed],
-                ]
-            )
-            coefficients = _weighted_lstsq(
-                design,
-                means[observed, firm] - worker_level[observed],
-                counts[observed, firm],
-            )
-            firm_level[firm] = coefficients[0]
-            firm_factors[firm] = coefficients[1:]
+        firm_design = np.column_stack(
+            [
+                np.ones(data.sample.edges),
+                worker_factors[data.edge_worker],
+            ]
+        )
+        firm_coefficients = _grouped_weighted_lstsq(
+            data.edge_firm,
+            data.sample.firms,
+            firm_design,
+            data.edge_means - worker_level[data.edge_worker],
+            data.edge_counts,
+        )
+        firm_level = firm_coefficients[:, 0]
+        firm_factors = firm_coefficients[:, 1:]
 
         (
             worker_level,
@@ -506,12 +600,13 @@ def _fit_start(
             p,
             q,
         )
-        fitted = (
-            worker_level[:, np.newaxis]
-            + firm_level[np.newaxis, :]
-            + worker_factors @ firm_factors.T
+        objective = _edge_objective(
+            data,
+            worker_level,
+            firm_level,
+            worker_factors,
+            firm_factors,
         )
-        objective = _objective(means, counts, fitted)
         if np.isfinite(previous) and abs(
             previous - objective
         ) <= tolerance * max(1.0, previous):
@@ -525,7 +620,6 @@ def _fit_start(
         worker_factors=worker_factors,
         firm_factors=firm_factors,
         singular_values=singular_values,
-        fitted_schedule=fitted,
         objective=objective,
         converged=converged,
         iterations=iteration,
@@ -545,18 +639,35 @@ def _result_from_starts(
     p = data.assignment.sum(axis=1)
     grand_mean = float(p @ best.worker_level)
     worker_main = best.worker_level - grand_mean
-    functionals_by_start: list[PopulationTruth | None] = []
-    for start in starts:
+    functional_values: list[tuple[float, float, float] | None] = []
+    functionals: PopulationTruth | None = None
+    fitted_schedule: FloatArray | None = None
+    for index, start in enumerate(starts):
+        schedule = (
+            start.worker_level[:, np.newaxis]
+            + start.firm_level[np.newaxis, :]
+            + start.worker_factors @ start.firm_factors.T
+        )
         try:
             value = compute_population_truth(
-                start.fitted_schedule,
+                schedule,
                 data.assignment,
             )
         except ArithmeticError:
             value = None
-        functionals_by_start.append(value)
-    functionals = functionals_by_start[best_index]
-    if functionals is None:
+        if value is None:
+            functional_values.append(None)
+            del schedule
+        else:
+            functional_values.append(
+                (value.q_f, value.h_f, value.c_assign)
+            )
+            if index == best_index:
+                functionals = value
+                fitted_schedule = schedule
+            else:
+                del value, schedule
+    if functionals is None or fitted_schedule is None:
         raise ValueError(
             "The best weighted-least-squares completion is numerically "
             "unstable. Increase minimum_degree or inspect the support graph."
@@ -567,19 +678,16 @@ def _result_from_starts(
         index
         for index, start in enumerate(starts)
         if start.objective <= objective_cutoff
-        and functionals_by_start[index] is not None
+        and functional_values[index] is not None
     ]
     near_q_f = np.array(
-        [functionals_by_start[index].q_f for index in near_indices]
+        [functional_values[index][0] for index in near_indices]
     )
     near_h_f = np.array(
-        [functionals_by_start[index].h_f for index in near_indices]
+        [functional_values[index][1] for index in near_indices]
     )
     near_c_assign = np.array(
-        [
-            functionals_by_start[index].c_assign
-            for index in near_indices
-        ]
+        [functional_values[index][2] for index in near_indices]
     )
     q_f_spread = float(np.ptp(near_q_f))
     h_f_spread = float(np.ptp(near_h_f))
@@ -616,7 +724,7 @@ def _result_from_starts(
         worker_factors=best.worker_factors,
         firm_factors=best.firm_factors,
         singular_values=best.singular_values,
-        fitted_schedule=best.fitted_schedule,
+        fitted_schedule=fitted_schedule,
         edge_objective=best.objective,
         edge_mean_rmse=float(edge_mean_rmse),
         observation_rmse=float(observation_rmse),
@@ -630,16 +738,16 @@ def _result_from_starts(
         start_converged=tuple(start.converged for start in starts),
         start_iterations=tuple(start.iterations for start in starts),
         start_q_f=tuple(
-            value.q_f if value is not None else float("nan")
-            for value in functionals_by_start
+            value[0] if value is not None else float("nan")
+            for value in functional_values
         ),
         start_h_f=tuple(
-            value.h_f if value is not None else float("nan")
-            for value in functionals_by_start
+            value[1] if value is not None else float("nan")
+            for value in functional_values
         ),
         start_c_assign=tuple(
-            value.c_assign if value is not None else float("nan")
-            for value in functionals_by_start
+            value[2] if value is not None else float("nan")
+            for value in functional_values
         ),
     )
 
@@ -669,44 +777,40 @@ def _fit_prepared(
 
     additive_worker, additive_firm, additive_converged, additive_iterations = (
         _fit_additive(
-            data.means,
-            data.counts,
+            data,
             tolerance=tolerance,
             max_iterations=max_iterations,
         )
     )
     if rank == 0:
-        fitted = (
-            additive_worker[:, np.newaxis]
-            + additive_firm[np.newaxis, :]
-        )
         start = _StartFit(
             worker_level=additive_worker,
             firm_level=additive_firm,
             worker_factors=np.empty((data.sample.workers, 0)),
             firm_factors=np.empty((data.sample.firms, 0)),
             singular_values=np.empty(0),
-            fitted_schedule=fitted,
-            objective=_objective(data.means, data.counts, fitted),
+            objective=_edge_objective(
+                data,
+                additive_worker,
+                additive_firm,
+            ),
             converged=additive_converged,
             iterations=additive_iterations,
         )
         return _result_from_starts(data, rank=rank, starts=[start])
 
     spectral_worker, spectral_firm = _spectral_initialization(
-        data.means,
-        data.counts,
+        data,
         additive_worker,
         additive_firm,
         rank,
     )
     residual_scale = np.sqrt(
         max(
-            _objective(
-                data.means,
-                data.counts,
-                additive_worker[:, np.newaxis]
-                + additive_firm[np.newaxis, :],
+            _edge_objective(
+                data,
+                additive_worker,
+                additive_firm,
             )
             / data.sample.observations,
             np.finfo(float).eps,

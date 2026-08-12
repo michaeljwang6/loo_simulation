@@ -1361,7 +1361,25 @@ def build_matrix_report(
     output_directory: str | Path,
     markdown_path: str | Path,
 ) -> tuple[Path, ...]:
-    """Generate the complete DGP-by-estimator report source bundle."""
+    """Generate the archived small-design report source bundle.
+
+    The prose below contains fixed dimensions and historical interpretation.
+    Reject other configurations rather than silently attaching that prose to
+    the corrected cluster results.
+    """
+
+    archived_fingerprint = (
+        "3e8ab3b57d35190989c47117f139b414b9f656db8a933d6c5d1df6d2aa5fbcc4"
+    )
+    actual_fingerprint = config_fingerprint(result.config)
+    if actual_fingerprint != archived_fingerprint:
+        raise ValueError(
+            "This report generator is specific to the archived small "
+            "design. It cannot describe a different configuration without "
+            "silently using wrong sample sizes, BLM preparation, and "
+            "interpretation. Build the corrected cluster report only after "
+            "the 50 shards are merged."
+        )
 
     _validate_result(result)
     output = Path(output_directory)

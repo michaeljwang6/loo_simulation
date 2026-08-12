@@ -218,8 +218,18 @@ A_{\ell k}^{BLM}
 =\mathbb E[Y\mid L=\ell,K=k].
 \]
 
-The PyTwoWay wrapper follows the clean, spell-collapse, firm-cluster,
-event-study, and mover/stayer pipeline. Two variants are kept separate:
+The PyTwoWay wrapper first estimates firm classes from the full panel. It then
+forms one static two-period observation per worker from a declared period pair
+\((t_1,t_2)\). The BLM mover indicator is
+
+\[
+M_i=1\{J_{it_1}\ne J_{it_2}\}.
+\]
+
+Consequently, a worker who stays across the declared pair but moves later is
+a BLM stayer. The obsolete full-history construction, which required a worker
+to remain at one firm throughout the panel, is not used for new estimates.
+Two variants are kept separate:
 
 - **Oracle firm groups:** the true simulated firm classes are supplied in
   column \(g\).
