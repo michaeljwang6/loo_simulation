@@ -14,5 +14,5 @@ cd "${SLURM_SUBMIT_DIR}"
 source .venv/bin/activate
 
 python scripts/merge_monte_carlo.py \
-  --inputs results/dgp_estimator_matrix_cluster/shard_*_of_0050 \
-  --output results/dgp_estimator_matrix_cluster/merged
+  --inputs results/dgp_estimator_matrix_cluster_v2/shard_*_of_0050 \
+  --output results/dgp_estimator_matrix_cluster_v2/merged

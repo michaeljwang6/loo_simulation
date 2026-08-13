@@ -15,9 +15,10 @@
     ],
     "blm_worker_types": 2,
     "fe_exact": false,
+    "low_rank_confirmation_starts": 3,
     "low_rank_max_iterations": 300,
     "low_rank_minimum_degree": null,
-    "low_rank_n_starts": 3,
+    "low_rank_n_starts": 6,
     "low_rank_tolerance": 1e-06,
     "run_bic": true,
     "run_blm": true,
@@ -31,8 +32,8 @@
       "name": "akm_dgp",
       "panel_kwargs": {
         "error_sd": 0.5,
-        "n_periods": 120,
-        "redraw_probability": 0.2
+        "n_periods": 60,
+        "redraw_probability": 0.4
       },
       "plugin_ranks": [
         0,
@@ -50,8 +51,8 @@
       "name": "crippa_tukey_dgp",
       "panel_kwargs": {
         "error_sd": 0.5,
-        "n_periods": 120,
-        "redraw_probability": 0.2
+        "n_periods": 60,
+        "redraw_probability": 0.4
       },
       "plugin_ranks": [
         0,
@@ -72,8 +73,8 @@
       "name": "blm_grouped_dgp",
       "panel_kwargs": {
         "error_sd": 0.5,
-        "n_periods": 120,
-        "redraw_probability": 0.2
+        "n_periods": 60,
+        "redraw_probability": 0.4
       },
       "plugin_ranks": [
         0,
@@ -98,8 +99,8 @@
       "name": "low_rank_factor_dgp",
       "panel_kwargs": {
         "error_sd": 0.5,
-        "n_periods": 120,
-        "redraw_probability": 0.2
+        "n_periods": 60,
+        "redraw_probability": 0.4
       },
       "plugin_ranks": [
         0,
@@ -126,8 +127,8 @@
       "name": "gklp_perfect_information_dgp",
       "panel_kwargs": {
         "error_sd": 0.5,
-        "n_periods": 120,
-        "redraw_probability": 0.2
+        "n_periods": 60,
+        "redraw_probability": 0.4
       },
       "plugin_ranks": [
         0,

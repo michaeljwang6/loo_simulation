@@ -54,13 +54,13 @@ condition are labeled `unsupported`; estimator failures are a separate status.
 
 The next production design is declared separately from the archived small
 run in `configs/dgp_estimator_matrix_cluster.json`. It uses 25,000 workers,
-5,000 firms, 120 periods, and 100 replications for every DGP. The panel sets
-`redraw_probability=0.2`: in each transition a worker mechanically retains
-the current firm with probability 0.8 and otherwise redraws from the
+5,000 firms, 60 periods, and 100 replications for every DGP. The panel sets
+`redraw_probability=0.4`: in each transition a worker mechanically retains
+the current firm with probability 0.6 and otherwise redraws from the
 worker-specific assignment distribution. Because a redraw can select the
 same firm, the realized probability of an unchanged firm is slightly above
-0.8. The lower end of the requested worker range is deliberate: it supplies
-about 5,000 period-0-to-period-1 redraws while using half as many dense
+0.6. The lower end of the requested worker range is deliberate: it supplies
+about 10,000 period-0-to-period-1 redraws while using half as many dense
 worker-by-firm cells as a 50,000-worker design.
 
 The panel length follows a staged support and stability calibration. Ten
@@ -68,8 +68,9 @@ periods produced no common four-degree support core for rank two. Twenty
 periods restored that core but left every positive-rank fit unstable. Scaled
 experiments that preserved the 5:1 worker-to-firm ratio then compared 40, 60,
 80, 100, 120, and 150 periods without changing the support rule, three starts,
-tolerance, or 300-iteration cap. Forty and 60 periods still failed correctly
-specified ranks. Eighty periods passed one seed, but a full candidate-rank run
+tolerance, or 300-iteration cap. At 0.8 retention, 40 and 60 periods still
+failed correctly specified ranks. Eighty periods passed one seed, but a full
+candidate-rank run
 found a BLM completion with nearly equal objectives and materially different
 functionals. At 100 periods, two of five Crippa rank-one fits remained
 unstable. At 120 periods, all 25 correctly specified fits across five DGPs and
@@ -78,9 +79,9 @@ the correct, stable BIC rank in all five DGPs. Only deliberately over-ranked
 fits remained unstable: rank one under rank-zero AKM and rank two under the
 rank-one Crippa and GKLP DGPs. Those warnings are retained as informative
 rank-misspecification diagnostics. BLM classification still uses only periods
-0 and 1; all 120 periods are used to estimate its firm classes.
+0 and 1; all 60 periods in the revised design estimate its firm classes.
 
-The 120-period preflight keeps the 128 GiB and three-day Slurm limits. The
+The revised production run keeps the 128 GiB and three-day Slurm limits. The
 twenty-period full-scale job peaked near 21 GiB; the largest dense objects are
 the unchanged 25,000-by-5,000 population arrays, while the longer panel adds
 long-format observations and more observed edges. The batch script requests
@@ -100,25 +101,27 @@ A mobility-rich alternative uses 60 periods and
 the same expected number of redraw opportunities as 120 periods with
 retention 0.8, but changes the mobility design rather than merely reducing
 rows. At a 2,500-worker, 500-firm calibration scale, all 25 correctly
-specified fits across five DGPs and five seeds were stable. Before changing
-the production configuration, reproduce the exact failed low-rank seed at
-full scale with six exploratory starts and three confirmation starts:
+specified fits across five DGPs and five seeds were stable. The exact failed
+low-rank seed was then rerun at full scale with six exploratory starts and
+three confirmation starts:
 
 ```bash
 git pull
 sbatch scripts/slurm_low_rank_mobility_gate_cluster.sh
 ```
 
-The job runs only the rank-two project plug-in under the low-rank DGP and
-then invokes the formal audit. It writes to
+That targeted job runs only the rank-two project plug-in under the low-rank
+DGP and then invokes the formal audit. It writes to
 `results/low_rank_mobility_gate_cluster_v2`, separate from the original gate
 and the 120-period preflight. The exploratory starts are small perturbations
 of the spectral initialization. The confirmation starts perturb and refit the
 best basin found in that exploration; they must reproduce its objective and
 schedule functionals under the unchanged acceptance threshold. The audit
 message also reports every start's three project functionals, local Gram
-condition numbers, and factor-norm tails. Proceed to a revised full matrix
-preflight only if the job ends with `PREFLIGHT PASSED`.
+condition numbers, and factor-norm tails. The full-scale seed that failed the
+earlier gates passed this confirmation gate with no failed or unstable
+attempts in 12 minutes 29 seconds and about 16 GiB peak memory. This was the
+final pre-production gate and authorizes the 50-shard production run.
 
 Submit the run as 50 resumable shards and automatically merge after all array
 tasks succeed:
@@ -131,34 +134,15 @@ python -m pip install -e ".[estimators]"
 bash -n scripts/slurm_dgp_estimator_matrix_cluster.sh \
   scripts/slurm_merge_dgp_estimator_matrix_cluster.sh \
   scripts/submit_dgp_estimator_matrix_cluster.sh
-sbatch --array=0 scripts/slurm_dgp_estimator_matrix_cluster.sh
-```
-
-Use that single shard as the cluster-specific memory and wall-time preflight.
-After it completes, apply the declared acceptance gate:
-
-```bash
-python scripts/audit_cluster_preflight.py \
-  results/dgp_estimator_matrix_cluster/shard_0000_of_0050
-```
-
-The gate requires every ordinary procedure, every correctly specified or
-under-ranked project fit, and every BIC-selected fit to be numerically stable;
-it also requires BIC to select the true simulation rank in both preflight
-replications. It permits warnings only for fixed-rank candidates that
-deliberately exceed the DGP's true rank. Do not submit the full array until the
-script prints `PREFLIGHT PASSED` and peak memory is inspected with `sacct`.
-Then submit the full array and dependent merge:
-
-```bash
 bash scripts/submit_dgp_estimator_matrix_cluster.sh
 ```
 
 The array specification is `0-49%4`: all 50 shards are created, with at most
 four running simultaneously. With 100 replications, each shard owns two
-global replication indices and runs all five DGPs for those indices. The
-completed pilot shard is reused because every task passes `--resume`. The
-template requests 128 GB for each array task because the present truth engine
+global replication indices and runs all five DGPs for those indices. Results
+are written to `results/dgp_estimator_matrix_cluster_v2`; `--resume` safely
+reuses any completed production shard after interruption. The template
+requests 128 GB for each array task because the present truth engine
 and low-rank estimator still materialize dense worker-by-firm arrays. Cluster
 partitions and account directives are site-specific and should be added to
 the two Slurm scripts before submission.

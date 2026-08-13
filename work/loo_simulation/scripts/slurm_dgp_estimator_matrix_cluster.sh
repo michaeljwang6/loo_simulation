@@ -12,7 +12,7 @@
 set -euo pipefail
 
 cd "${SLURM_SUBMIT_DIR}"
-mkdir -p results/dgp_estimator_matrix_cluster
+mkdir -p results/dgp_estimator_matrix_cluster_v2
 
 # Replace this activation command if the cluster environment is elsewhere.
 source .venv/bin/activate
@@ -31,5 +31,5 @@ python scripts/run_monte_carlo.py \
   --config configs/dgp_estimator_matrix_cluster.json \
   --shard-index "${SLURM_ARRAY_TASK_ID}" \
   --shard-count 50 \
-  --output "results/dgp_estimator_matrix_cluster/${shard_name}" \
+  --output "results/dgp_estimator_matrix_cluster_v2/${shard_name}" \
   --resume
