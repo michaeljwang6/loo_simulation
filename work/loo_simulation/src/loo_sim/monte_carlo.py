@@ -153,6 +153,7 @@ class EstimatorConfig:
     run_blm: bool = True
     low_rank_minimum_degree: int | None = None
     low_rank_n_starts: int = 3
+    low_rank_confirmation_starts: int = 0
     low_rank_tolerance: float = 1e-6
     low_rank_max_iterations: int = 300
     fe_exact: bool = False
@@ -169,6 +170,10 @@ class EstimatorConfig:
     def __post_init__(self) -> None:
         if self.low_rank_n_starts < 1:
             raise ValueError("low_rank_n_starts must be positive.")
+        if self.low_rank_confirmation_starts < 0:
+            raise ValueError(
+                "low_rank_confirmation_starts cannot be negative."
+            )
         if (
             self.low_rank_minimum_degree is not None
             and self.low_rank_minimum_degree < 1
@@ -695,6 +700,9 @@ def _run_low_rank(
                 candidate_ranks=candidates,
                 minimum_degree=config.low_rank_minimum_degree,
                 n_starts=config.low_rank_n_starts,
+                confirmation_starts=(
+                    config.low_rank_confirmation_starts
+                ),
                 tolerance=config.low_rank_tolerance,
                 max_iterations=config.low_rank_max_iterations,
                 seed=seed_triplet[2],
@@ -708,6 +716,9 @@ def _run_low_rank(
                     rank=candidates[0],
                     minimum_degree=config.low_rank_minimum_degree,
                     n_starts=config.low_rank_n_starts,
+                    confirmation_starts=(
+                        config.low_rank_confirmation_starts
+                    ),
                     tolerance=config.low_rank_tolerance,
                     max_iterations=config.low_rank_max_iterations,
                     seed=seed_triplet[2],
@@ -805,6 +816,11 @@ def _record_one_low_rank(
     iteration_text = ",".join(
         str(iterations) for iterations in estimate.start_iterations
     )
+    q_f_text = ",".join(f"{value:.6g}" for value in estimate.start_q_f)
+    h_f_text = ",".join(f"{value:.6g}" for value in estimate.start_h_f)
+    c_assign_text = ",".join(
+        f"{value:.6g}" for value in estimate.start_c_assign
+    )
     message = (
         f"converged={estimate.converged}; "
         f"iterations={estimate.iterations}; "
@@ -816,6 +832,21 @@ def _record_one_low_rank(
         f"start_relative_objective_gaps=[{gap_text}]; "
         f"start_converged=[{convergence_text}]; "
         f"start_iterations=[{iteration_text}]; "
+        f"start_q_f=[{q_f_text}]; "
+        f"start_h_f=[{h_f_text}]; "
+        f"start_c_assign=[{c_assign_text}]; "
+        "worker_design_condition_p99="
+        f"{estimate.worker_design_condition_p99:.6g}; "
+        "worker_design_condition_max="
+        f"{estimate.worker_design_condition_max:.6g}; "
+        "firm_design_condition_p99="
+        f"{estimate.firm_design_condition_p99:.6g}; "
+        "firm_design_condition_max="
+        f"{estimate.firm_design_condition_max:.6g}; "
+        f"worker_factor_norm_p99={estimate.worker_factor_norm_p99:.6g}; "
+        f"worker_factor_norm_max={estimate.worker_factor_norm_max:.6g}; "
+        f"firm_factor_norm_p99={estimate.firm_factor_norm_p99:.6g}; "
+        f"firm_factor_norm_max={estimate.firm_factor_norm_max:.6g}; "
         f"rectangles={estimate.sample.rectangles}; "
         f"edge_mean_rmse={estimate.edge_mean_rmse:.8g}"
     )

@@ -117,6 +117,33 @@ def test_multiple_starts_report_invariant_functional_stability() -> None:
     assert np.ptp(estimate.start_c_assign) < 1e-8
     assert estimate.functionally_stable
     assert estimate.near_optimal_starts == 4
+
+
+def test_confirmation_starts_reproduce_discovered_basin() -> None:
+    population = generate_population(
+        n_workers=14,
+        n_firms=8,
+        rank=1,
+        singular_values=(0.7,),
+        seed=926,
+    )
+    panel = _complete_panel(population.schedule)
+
+    estimate = fit_low_rank_plugin(
+        panel,
+        rank=1,
+        n_starts=2,
+        confirmation_starts=2,
+        seed=927,
+    )
+
+    assert len(estimate.start_objectives) == 4
+    assert estimate.near_optimal_starts >= 2
+    assert estimate.functionally_stable
+    assert np.isfinite(estimate.worker_design_condition_p99)
+    assert np.isfinite(estimate.firm_design_condition_p99)
+    assert estimate.worker_factor_norm_max >= 0
+    assert estimate.firm_factor_norm_max >= 0
     assert estimate.sample.rectangles > 0
 
 

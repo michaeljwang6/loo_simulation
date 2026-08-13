@@ -73,6 +73,8 @@ def test_runner_is_reproducible_and_keeps_target_types_separate() -> None:
         "functionally_stable=" in attempt.message
         and "near_optimal_starts=" in attempt.message
         and "start_relative_objective_gaps=" in attempt.message
+        and "start_q_f=" in attempt.message
+        and "worker_design_condition_p99=" in attempt.message
         and "start_converged=" in attempt.message
         and "start_iterations=" in attempt.message
         and "edge_mean_rmse=" in attempt.message

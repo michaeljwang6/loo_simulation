@@ -1,6 +1,7 @@
 {
   "estimators": {
     "fe_exact": false,
+    "low_rank_confirmation_starts": 3,
     "low_rank_max_iterations": 300,
     "low_rank_minimum_degree": null,
     "low_rank_n_starts": 6,

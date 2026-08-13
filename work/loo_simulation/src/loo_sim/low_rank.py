@@ -73,6 +73,14 @@ class LowRankPluginResult:
     start_q_f: tuple[float, ...]
     start_h_f: tuple[float, ...]
     start_c_assign: tuple[float, ...]
+    worker_design_condition_p99: float
+    worker_design_condition_max: float
+    firm_design_condition_p99: float
+    firm_design_condition_max: float
+    worker_factor_norm_p99: float
+    worker_factor_norm_max: float
+    firm_factor_norm_p99: float
+    firm_factor_norm_max: float
 
 
 @dataclass(frozen=True)
@@ -290,14 +298,13 @@ def _prepare_edge_data(panel: PanelData, *, minimum_degree: int) -> _EdgeData:
     )
 
 
-def _grouped_weighted_lstsq(
+def _grouped_weighted_gram(
     groups: IntArray,
     n_groups: int,
     design: FloatArray,
-    outcome: FloatArray,
     weights: FloatArray,
 ) -> FloatArray:
-    """Solve many small WLS problems without Python loops over groups."""
+    """Construct many small weighted Gram matrices."""
 
     n_columns = design.shape[1]
     gram = np.empty((n_groups, n_columns, n_columns), dtype=float)
@@ -308,6 +315,25 @@ def _grouped_weighted_lstsq(
                 weights=weights * design[:, left] * design[:, right],
                 minlength=n_groups,
             )
+    return gram
+
+
+def _grouped_weighted_lstsq(
+    groups: IntArray,
+    n_groups: int,
+    design: FloatArray,
+    outcome: FloatArray,
+    weights: FloatArray,
+) -> FloatArray:
+    """Solve many small WLS problems without Python loops over groups."""
+
+    n_columns = design.shape[1]
+    gram = _grouped_weighted_gram(
+        groups,
+        n_groups,
+        design,
+        weights,
+    )
     right_hand_side = np.empty((n_groups, n_columns), dtype=float)
     for column in range(n_columns):
         right_hand_side[:, column] = np.bincount(
@@ -322,6 +348,37 @@ def _grouped_weighted_lstsq(
         "gij,gj->gi",
         np.linalg.pinv(gram, rcond=1e-15),
         right_hand_side,
+    )
+
+
+def _grouped_condition_summary(
+    groups: IntArray,
+    n_groups: int,
+    design: FloatArray,
+    weights: FloatArray,
+) -> tuple[float, float]:
+    """Return the 99th percentile and maximum local Gram condition number."""
+
+    gram = _grouped_weighted_gram(
+        groups,
+        n_groups,
+        design,
+        weights,
+    )
+    eigenvalues = np.linalg.eigvalsh(gram)
+    smallest = eigenvalues[:, 0]
+    largest = eigenvalues[:, -1]
+    threshold = (
+        np.finfo(float).eps * design.shape[1] * np.maximum(1.0, largest)
+    )
+    condition = np.full(n_groups, np.inf)
+    identified = smallest > threshold
+    condition[identified] = largest[identified] / smallest[identified]
+    ordered = np.sort(condition)
+    percentile_index = max(0, int(np.ceil(0.99 * n_groups)) - 1)
+    return (
+        float(ordered[percentile_index]),
+        float(ordered[-1]),
     )
 
 
@@ -721,6 +778,38 @@ def _result_from_starts(
     observation_rmse = np.sqrt(
         observation_sse / data.sample.observations
     )
+    worker_design = np.column_stack(
+        [
+            np.ones(data.sample.edges),
+            best.firm_factors[data.edge_firm],
+        ]
+    )
+    (
+        worker_design_condition_p99,
+        worker_design_condition_max,
+    ) = _grouped_condition_summary(
+        data.edge_worker,
+        data.sample.workers,
+        worker_design,
+        data.edge_counts,
+    )
+    firm_design = np.column_stack(
+        [
+            np.ones(data.sample.edges),
+            best.worker_factors[data.edge_worker],
+        ]
+    )
+    (
+        firm_design_condition_p99,
+        firm_design_condition_max,
+    ) = _grouped_condition_summary(
+        data.edge_firm,
+        data.sample.firms,
+        firm_design,
+        data.edge_counts,
+    )
+    worker_factor_norm = np.linalg.norm(best.worker_factors, axis=1)
+    firm_factor_norm = np.linalg.norm(best.firm_factors, axis=1)
 
     return LowRankPluginResult(
         label=PLUGIN_LABEL,
@@ -764,6 +853,16 @@ def _result_from_starts(
             value[2] if value is not None else float("nan")
             for value in functional_values
         ),
+        worker_design_condition_p99=worker_design_condition_p99,
+        worker_design_condition_max=worker_design_condition_max,
+        firm_design_condition_p99=firm_design_condition_p99,
+        firm_design_condition_max=firm_design_condition_max,
+        worker_factor_norm_p99=float(
+            np.quantile(worker_factor_norm, 0.99)
+        ),
+        worker_factor_norm_max=float(np.max(worker_factor_norm)),
+        firm_factor_norm_p99=float(np.quantile(firm_factor_norm, 0.99)),
+        firm_factor_norm_max=float(np.max(firm_factor_norm)),
     )
 
 
@@ -772,6 +871,7 @@ def _fit_prepared(
     *,
     rank: int,
     n_starts: int,
+    confirmation_starts: int,
     tolerance: float,
     max_iterations: int,
     seed: int,
@@ -785,6 +885,8 @@ def _fit_prepared(
         )
     if n_starts < 1:
         raise ValueError("n_starts must be positive.")
+    if confirmation_starts < 0:
+        raise ValueError("confirmation_starts cannot be negative.")
     if tolerance <= 0:
         raise ValueError("tolerance must be positive.")
     if max_iterations < 1:
@@ -861,6 +963,34 @@ def _fit_prepared(
             )
         )
 
+    if confirmation_starts:
+        anchor = min(starts, key=lambda start: start.objective)
+        for _ in range(confirmation_starts):
+            starts.append(
+                _fit_start(
+                    data,
+                    rank=rank,
+                    initial_worker_level=anchor.worker_level,
+                    initial_firm_level=anchor.firm_level,
+                    initial_worker_factors=(
+                        anchor.worker_factors
+                        + rng.normal(
+                            scale=0.05 * factor_scale,
+                            size=(data.sample.workers, rank),
+                        )
+                    ),
+                    initial_firm_factors=(
+                        anchor.firm_factors
+                        + rng.normal(
+                            scale=0.05 * factor_scale,
+                            size=(data.sample.firms, rank),
+                        )
+                    ),
+                    tolerance=tolerance,
+                    max_iterations=max_iterations,
+                )
+            )
+
     return _result_from_starts(data, rank=rank, starts=starts)
 
 
@@ -870,6 +1000,7 @@ def fit_low_rank_plugin(
     rank: int,
     minimum_degree: int | None = None,
     n_starts: int = 3,
+    confirmation_starts: int = 0,
     tolerance: float = 1e-6,
     max_iterations: int = 300,
     seed: int = 2026,
@@ -898,6 +1029,7 @@ def fit_low_rank_plugin(
         data,
         rank=rank,
         n_starts=n_starts,
+        confirmation_starts=confirmation_starts,
         tolerance=tolerance,
         max_iterations=max_iterations,
         seed=seed,
@@ -910,6 +1042,7 @@ def select_low_rank_bic(
     candidate_ranks: tuple[int, ...] = (0, 1, 2),
     minimum_degree: int | None = None,
     n_starts: int = 3,
+    confirmation_starts: int = 0,
     tolerance: float = 1e-6,
     max_iterations: int = 300,
     seed: int = 2026,
@@ -938,6 +1071,7 @@ def select_low_rank_bic(
             data,
             rank=rank,
             n_starts=n_starts,
+            confirmation_starts=confirmation_starts,
             tolerance=tolerance,
             max_iterations=max_iterations,
             seed=seed + 10_000 * rank,

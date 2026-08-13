@@ -23,8 +23,8 @@ mkdir -p "${MPLCONFIGDIR}"
 
 python scripts/run_monte_carlo.py \
   --config configs/low_rank_mobility_gate_cluster.json \
-  --output results/low_rank_mobility_gate_cluster \
+  --output results/low_rank_mobility_gate_cluster_v2 \
   --resume
 
 python scripts/audit_cluster_preflight.py \
-  results/low_rank_mobility_gate_cluster
+  results/low_rank_mobility_gate_cluster_v2

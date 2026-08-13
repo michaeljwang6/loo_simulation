@@ -102,7 +102,7 @@ retention 0.8, but changes the mobility design rather than merely reducing
 rows. At a 2,500-worker, 500-firm calibration scale, all 25 correctly
 specified fits across five DGPs and five seeds were stable. Before changing
 the production configuration, reproduce the exact failed low-rank seed at
-full scale with six starts:
+full scale with six exploratory starts and three confirmation starts:
 
 ```bash
 git pull
@@ -111,10 +111,14 @@ sbatch scripts/slurm_low_rank_mobility_gate_cluster.sh
 
 The job runs only the rank-two project plug-in under the low-rank DGP and
 then invokes the formal audit. It writes to
-`results/low_rank_mobility_gate_cluster`, separate from the 120-period
-preflight. Six starts make this a stronger multimodality check than the three
-starts used when the original ambiguity was found. Proceed to a revised full
-matrix preflight only if the job ends with `PREFLIGHT PASSED`.
+`results/low_rank_mobility_gate_cluster_v2`, separate from the original gate
+and the 120-period preflight. The exploratory starts are small perturbations
+of the spectral initialization. The confirmation starts perturb and refit the
+best basin found in that exploration; they must reproduce its objective and
+schedule functionals under the unchanged acceptance threshold. The audit
+message also reports every start's three project functionals, local Gram
+condition numbers, and factor-norm tails. Proceed to a revised full matrix
+preflight only if the job ends with `PREFLIGHT PASSED`.
 
 Submit the run as 50 resumable shards and automatically merge after all array
 tasks succeed:
