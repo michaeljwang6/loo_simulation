@@ -87,6 +87,35 @@ long-format observations and more observed edges. The batch script requests
 automatic requeue after preemption. It does not hide estimator diagnostics or
 change the result acceptance rule.
 
+The completed full-scale 120-period preflight subsequently exposed one
+failure that the scaled calibration missed. Under the rank-two low-rank DGP,
+replication 0 produced two converged, nearly equal-loss solutions with very
+different completed-schedule functionals. The BIC label and the fixed-rank
+label reported the same fitted rank-two object, so the two audit messages were
+one distinct numerical failure, not two. The preflight therefore did not
+authorize production.
+
+A mobility-rich alternative uses 60 periods and
+`redraw_probability=0.4`, or mechanical retention 0.6. It gives approximately
+the same expected number of redraw opportunities as 120 periods with
+retention 0.8, but changes the mobility design rather than merely reducing
+rows. At a 2,500-worker, 500-firm calibration scale, all 25 correctly
+specified fits across five DGPs and five seeds were stable. Before changing
+the production configuration, reproduce the exact failed low-rank seed at
+full scale with six starts:
+
+```bash
+git pull
+sbatch scripts/slurm_low_rank_mobility_gate_cluster.sh
+```
+
+The job runs only the rank-two project plug-in under the low-rank DGP and
+then invokes the formal audit. It writes to
+`results/low_rank_mobility_gate_cluster`, separate from the 120-period
+preflight. Six starts make this a stronger multimodality check than the three
+starts used when the original ambiguity was found. Proceed to a revised full
+matrix preflight only if the job ends with `PREFLIGHT PASSED`.
+
 Submit the run as 50 resumable shards and automatically merge after all array
 tasks succeed:
 

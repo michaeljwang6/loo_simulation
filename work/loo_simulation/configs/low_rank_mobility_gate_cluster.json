@@ -1,0 +1,45 @@
+{
+  "estimators": {
+    "fe_exact": false,
+    "low_rank_max_iterations": 300,
+    "low_rank_minimum_degree": null,
+    "low_rank_n_starts": 6,
+    "low_rank_tolerance": 1e-06,
+    "run_bic": false,
+    "run_blm": false,
+    "run_bs20": false,
+    "run_fe_kss": false,
+    "run_low_rank": true
+  },
+  "replications": 1,
+  "scenarios": [
+    {
+      "name": "low_rank_factor_dgp_mobility_gate",
+      "panel_kwargs": {
+        "error_sd": 0.5,
+        "n_periods": 60,
+        "redraw_probability": 0.4
+      },
+      "plugin_ranks": [
+        2
+      ],
+      "population_kind": "low_rank",
+      "population_kwargs": {
+        "common_sorting": 0.5,
+        "firm_factor_correlation": 0.25,
+        "interaction_sorting": 0.3,
+        "n_firms": 5000,
+        "n_workers": 25000,
+        "rank": 2,
+        "singular_values": [
+          1.0,
+          0.5
+        ],
+        "worker_factor_correlation": 0.35
+      },
+      "seed_group": 3,
+      "true_rank": 2
+    }
+  ],
+  "seed": 20260812
+}

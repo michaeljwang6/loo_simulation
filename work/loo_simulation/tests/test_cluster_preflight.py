@@ -12,7 +12,12 @@ from loo_sim import (
 )
 
 
-def _saved_preflight(tmp_path: Path, *, unstable_bic: bool) -> Path:
+def _saved_preflight(
+    tmp_path: Path,
+    *,
+    unstable_bic: bool,
+    run_bic: bool = True,
+) -> Path:
     config = MonteCarloConfig(
         scenarios=(
             ScenarioConfig(
@@ -37,7 +42,7 @@ def _saved_preflight(tmp_path: Path, *, unstable_bic: bool) -> Path:
         seed=8675309,
         estimators=EstimatorConfig(
             run_low_rank=True,
-            run_bic=True,
+            run_bic=run_bic,
             run_fe_kss=False,
             run_bs20=False,
             run_blm=False,
@@ -47,7 +52,7 @@ def _saved_preflight(tmp_path: Path, *, unstable_bic: bool) -> Path:
     result = run_monte_carlo(config)
     expanded_scenario = replace(
         config.scenarios[0],
-        plugin_ranks=(0, 1),
+        plugin_ranks=(0, 1) if run_bic else (0,),
     )
     expanded_config = replace(
         config,
@@ -58,13 +63,15 @@ def _saved_preflight(tmp_path: Path, *, unstable_bic: bool) -> Path:
         for attempt in result.attempts
         if attempt.estimator == "project_plugin_r0"
     )
-    allowed_overrank = replace(
-        rank_zero,
-        estimator="project_plugin_r1",
-        status="unstable",
-        message="deliberately over-ranked test warning",
-    )
-    attempts = list(result.attempts) + [allowed_overrank]
+    attempts = list(result.attempts)
+    if run_bic:
+        allowed_overrank = replace(
+            rank_zero,
+            estimator="project_plugin_r1",
+            status="unstable",
+            message="deliberately over-ranked test warning",
+        )
+        attempts.append(allowed_overrank)
     if unstable_bic:
         attempts = [
             replace(
@@ -115,3 +122,19 @@ def test_preflight_gate_rejects_unstable_bic(tmp_path: Path) -> None:
     assert completed.returncode == 1
     assert "unexpected instability" in completed.stdout
     assert "PREFLIGHT FAILED" in completed.stdout
+
+
+def test_preflight_gate_supports_fixed_rank_only_gate(
+    tmp_path: Path,
+) -> None:
+    completed = _run_gate(
+        _saved_preflight(
+            tmp_path,
+            unstable_bic=False,
+            run_bic=False,
+        )
+    )
+
+    assert completed.returncode == 0
+    assert "Audited 1 attempts" in completed.stdout
+    assert "PREFLIGHT PASSED" in completed.stdout

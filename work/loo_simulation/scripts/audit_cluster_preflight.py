@@ -118,22 +118,27 @@ def main() -> int:
         and record.metric == "selected_rank"
         and record.target_type == "rank_diagnostic"
     ]
-    expected_rank_records = len(result.replication_indices) * len(
-        result.config.scenarios
-    )
-    if len(selected_rank_records) != expected_rank_records:
-        problems.append(
-            "Expected "
-            f"{expected_rank_records} BIC rank records but found "
-            f"{len(selected_rank_records)}."
+    if result.config.estimators.run_bic:
+        expected_rank_records = len(result.replication_indices) * len(
+            result.config.scenarios
         )
-    for record in selected_rank_records:
-        if record.estimate != record.target:
+        if len(selected_rank_records) != expected_rank_records:
             problems.append(
-                f"{record.scenario}, replication {record.replication}: "
-                f"BIC selected rank {record.estimate:g}, true rank "
-                f"{record.target:g}."
+                "Expected "
+                f"{expected_rank_records} BIC rank records but found "
+                f"{len(selected_rank_records)}."
             )
+        for record in selected_rank_records:
+            if record.estimate != record.target:
+                problems.append(
+                    f"{record.scenario}, replication "
+                    f"{record.replication}: BIC selected rank "
+                    f"{record.estimate:g}, true rank {record.target:g}."
+                )
+    elif selected_rank_records:
+        problems.append(
+            "Found BIC rank records even though run_bic is false."
+        )
 
     print(
         f"Audited {len(result.attempts)} attempts across "
