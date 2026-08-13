@@ -41,7 +41,7 @@ probability is slightly above 0.80. Observed wages are
 \]
 
 The next cluster production configuration uses 25,000 workers, 5,000 firms,
-forty periods, and 100 Monte Carlo replications in every row. Using the same
+120 periods, and 100 Monte Carlo replications in every row. Using the same
 panel dimensions keeps differences across rows attributable to the DGP rather
 than sample size. We use the lower end of the requested 25,000--50,000 range:
 25,000 workers still supplies about 5,000 period-0-to-period-1 redraws for BLM,
@@ -49,17 +49,20 @@ while halving the number of worker--firm schedule cells relative to 50,000
 workers. The earlier 300-worker results and configuration are retained for
 reproducibility rather than overwritten.
 
-The first cluster preflight used ten periods. At retention probability 0.8,
-the common degree-four support core required by the rank-two candidate set was
-empty in every nonadditive project fit. Twenty periods restored the core and
-eliminated support failures, but all sixteen distinct positive-rank fits were
-unstable: fifteen reached 300 iterations, and the remaining converged fit had
-only one near-optimal start. This is consistent with weak worker-side
-information. Ignoring rare redraws to the same firm, the expected number of
-distinct firms per worker is $1+19(0.2)=4.8$ at twenty periods, barely above
-the three worker-specific coefficients in rank two. Forty periods raises that
-expectation to $1+39(0.2)=8.8$. The next preflight therefore uses forty
-periods while leaving the support rule and all optimizer settings unchanged.
+The panel length was calibrated before the production run. Ten periods had no
+degree-four support core, and twenty periods restored the core but left every
+positive-rank fit unstable. Proportionally scaled checks preserved the 5:1
+worker-to-firm ratio and all optimizer settings while comparing 40, 60, 80,
+100, 120, and 150 periods. Forty and 60 periods failed correctly specified
+ranks. Eighty periods passed one oracle-rank seed, but the full candidate set
+found a BLM fit with nearly identical objectives and different functionals. At
+100 periods, two of five Crippa rank-one fits were unstable. At 120 periods,
+all 25 correctly specified fits across five DGPs and five seeds were stable.
+The full candidate-rank pipeline at replication indices 0 and 50 selected the
+correct stable BIC rank in every DGP. Its only remaining warnings were the
+deliberately over-ranked AKM rank-one and Crippa/GKLP rank-two fits. The next
+full-scale preflight therefore uses 120 periods while leaving the support rule,
+three starts, tolerance, and 300-iteration cap unchanged.
 
 ## The five DGPs
 
@@ -166,7 +169,7 @@ non-BLM row or change the KSS implementation with the DGP.
   are compared both with the grouped projection and the full-population
   project truth. The latter comparison deliberately includes BLM
   discretization error. Firm classes are estimated using wage observations
-  from all forty periods. The static BLM likelihood then uses exactly periods
+  from all 120 periods. The static BLM likelihood then uses exactly periods
   0 and 1: a worker is a stayer when the firm is unchanged across that pair,
   regardless of moves in later periods.
 

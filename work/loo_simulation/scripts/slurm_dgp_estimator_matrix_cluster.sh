@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 #SBATCH --job-name=loo-matrix-25k
+#SBATCH --partition=shared
 #SBATCH --array=0-49%4
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=128G
 #SBATCH --time=3-00:00:00
+#SBATCH --requeue
 #SBATCH --output=loo-matrix-25k-%A_%a.out
 #SBATCH --error=loo-matrix-25k-%A_%a.err
 

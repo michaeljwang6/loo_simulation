@@ -54,7 +54,7 @@ condition are labeled `unsupported`; estimator failures are a separate status.
 
 The next production design is declared separately from the archived small
 run in `configs/dgp_estimator_matrix_cluster.json`. It uses 25,000 workers,
-5,000 firms, forty periods, and 100 replications for every DGP. The panel sets
+5,000 firms, 120 periods, and 100 replications for every DGP. The panel sets
 `redraw_probability=0.2`: in each transition a worker mechanically retains
 the current firm with probability 0.8 and otherwise redraws from the
 worker-specific assignment distribution. Because a redraw can select the
@@ -63,18 +63,29 @@ same firm, the realized probability of an unchanged firm is slightly above
 about 5,000 period-0-to-period-1 redraws while using half as many dense
 worker-by-firm cells as a 50,000-worker design.
 
-The panel length follows two cluster preflights. Ten periods produced no common
-four-degree support core for rank two. Twenty periods restored that core and
-eliminated support failures, but every positive-rank fit was numerically
-unstable: fifteen of sixteen distinct fits reached the 300-iteration limit,
-and the remaining fit had only one near-optimal start. With retention 0.8, the
-expected number of distinct firms per worker (ignoring rare redraws to the same
-firm) is only $1+19(0.2)=4.8$ at twenty periods, barely above the worker
-intercept and two factor coordinates in a rank-two fit. Forty periods raises
-this expectation to $1+39(0.2)=8.8$. The next preflight therefore changes
-only panel length: it keeps the estimator's support rule, three starts,
-tolerance, and 300-iteration cap fixed. BLM classification still uses only
-periods 0 and 1; all forty periods are used to estimate its firm classes.
+The panel length follows a staged support and stability calibration. Ten
+periods produced no common four-degree support core for rank two. Twenty
+periods restored that core but left every positive-rank fit unstable. Scaled
+experiments that preserved the 5:1 worker-to-firm ratio then compared 40, 60,
+80, 100, 120, and 150 periods without changing the support rule, three starts,
+tolerance, or 300-iteration cap. Forty and 60 periods still failed correctly
+specified ranks. Eighty periods passed one seed, but a full candidate-rank run
+found a BLM completion with nearly equal objectives and materially different
+functionals. At 100 periods, two of five Crippa rank-one fits remained
+unstable. At 120 periods, all 25 correctly specified fits across five DGPs and
+five seeds were stable. A separate two-seed full candidate-rank gate selected
+the correct, stable BIC rank in all five DGPs. Only deliberately over-ranked
+fits remained unstable: rank one under rank-zero AKM and rank two under the
+rank-one Crippa and GKLP DGPs. Those warnings are retained as informative
+rank-misspecification diagnostics. BLM classification still uses only periods
+0 and 1; all 120 periods are used to estimate its firm classes.
+
+The 120-period preflight keeps the 128 GiB and three-day Slurm limits. The
+twenty-period full-scale job peaked near 21 GiB; the largest dense objects are
+the unchanged 25,000-by-5,000 population arrays, while the longer panel adds
+long-format observations and more observed edges. The batch script requests
+automatic requeue after preemption. It does not hide estimator diagnostics or
+change the result acceptance rule.
 
 Submit the run as 50 resumable shards and automatically merge after all array
 tasks succeed:
@@ -91,7 +102,20 @@ sbatch --array=0 scripts/slurm_dgp_estimator_matrix_cluster.sh
 ```
 
 Use that single shard as the cluster-specific memory and wall-time preflight.
-After it completes successfully, submit the full array and dependent merge:
+After it completes, apply the declared acceptance gate:
+
+```bash
+python scripts/audit_cluster_preflight.py \
+  results/dgp_estimator_matrix_cluster/shard_0000_of_0050
+```
+
+The gate requires every ordinary procedure, every correctly specified or
+under-ranked project fit, and every BIC-selected fit to be numerically stable;
+it also requires BIC to select the true simulation rank in both preflight
+replications. It permits warnings only for fixed-rank candidates that
+deliberately exceed the DGP's true rank. Do not submit the full array until the
+script prints `PREFLIGHT PASSED` and peak memory is inspected with `sacct`.
+Then submit the full array and dependent merge:
 
 ```bash
 bash scripts/submit_dgp_estimator_matrix_cluster.sh

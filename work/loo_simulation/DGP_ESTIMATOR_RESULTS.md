@@ -5,7 +5,7 @@
 > the worker remained at one firm throughout all ten periods. Static BLM
 > instead defines mover status over one declared pair of periods. The code now
 > uses periods 0 and 1, and a new 25,000-worker, 5,000-firm cluster run is
-> specified with forty panel periods in
+> specified with 120 panel periods in
 > `configs/dgp_estimator_matrix_cluster.json`. Until that run is
 > complete, the BLM completion rates and cross-DGP BLM results below should not
 > be treated as current evidence. The non-BLM archived results are unchanged.
