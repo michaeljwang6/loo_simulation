@@ -789,6 +789,22 @@ def _record_one_low_rank(
     status: AttemptStatus = (
         "success" if estimate.functionally_stable else "unstable"
     )
+    best_objective = min(estimate.start_objectives)
+    objective_scale = max(1.0, abs(best_objective))
+    relative_objective_gaps = tuple(
+        (objective - best_objective) / objective_scale
+        for objective in estimate.start_objectives
+    )
+    gap_text = ",".join(
+        f"{gap:.6g}" for gap in relative_objective_gaps
+    )
+    convergence_text = ",".join(
+        "1" if converged else "0"
+        for converged in estimate.start_converged
+    )
+    iteration_text = ",".join(
+        str(iterations) for iterations in estimate.start_iterations
+    )
     message = (
         f"converged={estimate.converged}; "
         f"iterations={estimate.iterations}; "
@@ -797,6 +813,9 @@ def _record_one_low_rank(
         f"q_f_spread={estimate.q_f_spread:.8g}; "
         f"h_f_spread={estimate.h_f_spread:.8g}; "
         f"c_assign_spread={estimate.c_assign_spread:.8g}; "
+        f"start_relative_objective_gaps=[{gap_text}]; "
+        f"start_converged=[{convergence_text}]; "
+        f"start_iterations=[{iteration_text}]; "
         f"rectangles={estimate.sample.rectangles}; "
         f"edge_mean_rmse={estimate.edge_mean_rmse:.8g}"
     )

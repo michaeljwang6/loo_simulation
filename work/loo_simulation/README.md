@@ -54,7 +54,7 @@ condition are labeled `unsupported`; estimator failures are a separate status.
 
 The next production design is declared separately from the archived small
 run in `configs/dgp_estimator_matrix_cluster.json`. It uses 25,000 workers,
-5,000 firms, twenty periods, and 100 replications for every DGP. The panel sets
+5,000 firms, forty periods, and 100 replications for every DGP. The panel sets
 `redraw_probability=0.2`: in each transition a worker mechanically retains
 the current firm with probability 0.8 and otherwise redraws from the
 worker-specific assignment distribution. Because a redraw can select the
@@ -63,15 +63,18 @@ same firm, the realized probability of an unchanged firm is slightly above
 about 5,000 period-0-to-period-1 redraws while using half as many dense
 worker-by-firm cells as a 50,000-worker design.
 
-The twenty-period choice follows a cluster preflight of the originally proposed
-ten-period design. With 0.8 retention, the rank-two project estimator requires
-the common four-degree worker--firm support core, but iterative pruning removed
-the entire core in every nonadditive preflight panel. A movement-graph check at
-twenty periods retained about 19,000 of 25,000 workers and essentially all
-5,000 firms. We therefore changed the observation design rather than weakening
-the estimator's support rule after seeing the result. BLM classification still
-uses only periods 0 and 1; all twenty periods are used to estimate its firm
-classes.
+The panel length follows two cluster preflights. Ten periods produced no common
+four-degree support core for rank two. Twenty periods restored that core and
+eliminated support failures, but every positive-rank fit was numerically
+unstable: fifteen of sixteen distinct fits reached the 300-iteration limit,
+and the remaining fit had only one near-optimal start. With retention 0.8, the
+expected number of distinct firms per worker (ignoring rare redraws to the same
+firm) is only $1+19(0.2)=4.8$ at twenty periods, barely above the worker
+intercept and two factor coordinates in a rank-two fit. Forty periods raises
+this expectation to $1+39(0.2)=8.8$. The next preflight therefore changes
+only panel length: it keeps the estimator's support rule, three starts,
+tolerance, and 300-iteration cap fixed. BLM classification still uses only
+periods 0 and 1; all forty periods are used to estimate its firm classes.
 
 Submit the run as 50 resumable shards and automatically merge after all array
 tasks succeed:

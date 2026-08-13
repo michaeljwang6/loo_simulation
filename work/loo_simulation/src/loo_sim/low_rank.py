@@ -695,10 +695,19 @@ def _result_from_starts(
     near_c_assign = np.array(
         [functional_values[index][2] for index in near_indices]
     )
-    q_f_spread = float(np.ptp(near_q_f))
-    h_f_spread = float(np.ptp(near_h_f))
-    c_assign_spread = float(np.ptp(near_c_assign))
     required_near_starts = 1 if len(starts) == 1 else 2
+    # A singleton set has a mechanical range of zero, but that does not show
+    # reproducibility across starts.  Preserve zero for the one-start rank-zero
+    # problem and report unavailable spreads for a positive-rank fit with only
+    # one near-optimal solution.
+    if len(starts) == 1 or len(near_indices) >= 2:
+        q_f_spread = float(np.ptp(near_q_f))
+        h_f_spread = float(np.ptp(near_h_f))
+        c_assign_spread = float(np.ptp(near_c_assign))
+    else:
+        q_f_spread = float("nan")
+        h_f_spread = float("nan")
+        c_assign_spread = float("nan")
     functionally_stable = (
         best.converged
         and len(near_indices) >= required_near_starts

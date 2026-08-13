@@ -41,7 +41,7 @@ probability is slightly above 0.80. Observed wages are
 \]
 
 The next cluster production configuration uses 25,000 workers, 5,000 firms,
-twenty periods, and 100 Monte Carlo replications in every row. Using the same
+forty periods, and 100 Monte Carlo replications in every row. Using the same
 panel dimensions keeps differences across rows attributable to the DGP rather
 than sample size. We use the lower end of the requested 25,000--50,000 range:
 25,000 workers still supplies about 5,000 period-0-to-period-1 redraws for BLM,
@@ -51,13 +51,15 @@ reproducibility rather than overwritten.
 
 The first cluster preflight used ten periods. At retention probability 0.8,
 the common degree-four support core required by the rank-two candidate set was
-empty in all six nonadditive project fits, although KSS, BLM, and BS20 all
-completed. This is a mechanical support mismatch: nine transitions generate
-too few distinct worker--firm edges for a four-degree bipartite core. In
-five movement-graph simulations, twenty periods retained about 19,000 workers
-and all 5,000 firms, whereas ten periods retained none. The production design
-therefore uses twenty periods and leaves the estimator's predeclared support
-rule unchanged.
+empty in every nonadditive project fit. Twenty periods restored the core and
+eliminated support failures, but all sixteen distinct positive-rank fits were
+unstable: fifteen reached 300 iterations, and the remaining converged fit had
+only one near-optimal start. This is consistent with weak worker-side
+information. Ignoring rare redraws to the same firm, the expected number of
+distinct firms per worker is $1+19(0.2)=4.8$ at twenty periods, barely above
+the three worker-specific coefficients in rank two. Forty periods raises that
+expectation to $1+39(0.2)=8.8$. The next preflight therefore uses forty
+periods while leaving the support rule and all optimizer settings unchanged.
 
 ## The five DGPs
 
@@ -164,7 +166,7 @@ non-BLM row or change the KSS implementation with the DGP.
   are compared both with the grouped projection and the full-population
   project truth. The latter comparison deliberately includes BLM
   discretization error. Firm classes are estimated using wage observations
-  from all twenty periods. The static BLM likelihood then uses exactly periods
+  from all forty periods. The static BLM likelihood then uses exactly periods
   0 and 1: a worker is a stayer when the firm is unchanged across that pair,
   regardless of moves in later periods.
 

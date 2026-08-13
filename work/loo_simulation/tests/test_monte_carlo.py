@@ -72,6 +72,9 @@ def test_runner_is_reproducible_and_keeps_target_types_separate() -> None:
     assert all(
         "functionally_stable=" in attempt.message
         and "near_optimal_starts=" in attempt.message
+        and "start_relative_objective_gaps=" in attempt.message
+        and "start_converged=" in attempt.message
+        and "start_iterations=" in attempt.message
         and "edge_mean_rmse=" in attempt.message
         for attempt in first.attempts
     )
@@ -205,7 +208,7 @@ def test_cluster_matrix_config_declares_requested_scale_and_persistence() -> Non
     for scenario in config.scenarios:
         assert scenario.population_kwargs["n_workers"] == 25_000
         assert scenario.population_kwargs["n_firms"] == 5_000
-        assert scenario.panel_kwargs["n_periods"] == 20
+        assert scenario.panel_kwargs["n_periods"] == 40
         # The sampler parameter is the probability of redrawing. Thus 0.2
         # means an 0.8 probability of mechanically retaining the firm.
         assert scenario.panel_kwargs["redraw_probability"] == 0.2
