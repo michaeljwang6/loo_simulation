@@ -61,8 +61,10 @@ poor under Crippa, BLM, and the continuous rank-two DGP because a small set of
 ill-conditioned schedule completions creates enormous squared-error tails.
 Thus the main unresolved issue for the project benchmark is numerical
 regularization of continuous-factor completion, not rank selection in this
-design.  The full project leave-one-out correction is still under development
-and is not represented as complete here.
+design.  No regularized estimator variant is evaluated in the production
+Monte Carlo: the evidence identifies a failure mechanism, not the efficacy of
+a proposed fix.  The full project leave-one-out correction is still under
+development and is not represented as complete here.
 \end{abstract}
 
 \section{Question, notation, and estimands}
@@ -406,6 +408,75 @@ fit completes unobserved schedule entries and applies the project definitions
 to that completion.  This is a plug-in estimator without the unfinished
 leave-worker-out bias correction.
 
+\subsection{Completed calibration versus untested estimator variants}
+
+Several stabilizing choices were incorporated while constructing the
+production baseline, but they were not run as separate estimator arms in the
+final Monte Carlo.  Table~\ref{tab:variants} makes that boundary explicit.
+This distinction matters because a successful preflight does not establish
+that a change lowers unconditional bias or RMSE.
+
+\begin{table}[H]
+\centering
+\small
+\caption{What was tried, and what remains untested}
+\label{tab:variants}
+\begin{tabularx}{\textwidth}{@{}p{0.28\textwidth}p{0.13\textwidth}X@{}}
+\toprule
+Choice & Production status & What the evidence does and does not establish \\
+\midrule
+Center and SVD-normalize factors after every ALS iteration
+& Used
+& Fixes the factor normalization and prevents arbitrary location or rotation
+drift.  It was not a separate comparison arm and did not eliminate warnings. \\
+Require at least $r+2$ distinct partners on the common support core
+& Used
+& Adds one partner beyond the algebraic $r+1$ minimum.  It is a declared
+support safeguard, not ridge regularization. \\
+Six exploratory starts plus three confirmation starts
+& Used
+& Searches more basins and checks whether the best basin reproduces.  This
+makes instability visible; it does not force unstable local regressions to
+become stable. \\
+Sixty periods with redraw probability $0.40$
+& Used
+& Increases mobility relative to the failed high-retention preflights.  This
+changes the simulated information set, not the estimator. \\
+Ridge or Tikhonov local factor regressions
+& Not run
+& Proposed estimator variant.  No claim about its bias, RMSE, or warning rate
+is supported by the current results. \\
+Condition-number-adaptive penalty, pooling, or support rule
+& Not run
+& Proposed estimator variant.  The rule and tuning parameter must be declared
+before examining the returned functionals. \\
+Direct estimation of $\QF$, $\HF$, and $\Cassign$ without full completion
+& Not run
+& Proposed way to avoid extrapolating every unobserved worker--firm pair. \\
+Full leave-worker-out correction
+& Not run
+& Still under development and intentionally excluded from the production
+comparison. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The phrase ``make conditioning part of the estimator'' has a specific meaning.
+For example, before a worker update, define the local Gram matrix from the
+intercept and visited-firm factor vectors.  A declared estimator could inspect
+its spectrum and, when independent local variation is weak, replace the
+unregularized inverse by a prespecified ridge inverse or a prespecified pooling
+or support rule.  That rule changes every returned estimate by design.  It is
+not the pass-only calculation used later, which removes warning fits after
+estimation.
+
+The next valid efficacy experiment should hold the DGP draws and Monte Carlo
+seeds fixed and compare the present baseline with declared regularized
+variants.  The outcomes should be unconditional bias, unconditional RMSE,
+warning rate, and any change in the population targeted by a support rule.
+Until that experiment is run, the proposed variants are research directions,
+not simulation findings.
+
 \subsection{Mappings, status, and accuracy metrics}
 
 Table~\ref{tab:mapping} prevents unlike objects from being silently relabeled.
@@ -732,10 +803,13 @@ Fourth, the current plug-in is not the final LOO procedure.  Before a
 leave-worker-out correction can be interpreted as solving the main remaining
 bias, the completion stage needs a principled safeguard such as regularized
 local regressions, conditioning-aware support, or a direct estimator of the
-target functionals.  Any such change must be declared as part of the estimator
-and re-evaluated without changing the DGP.  The present results therefore serve
-as a transparent baseline: they show both the promise of the low-rank estimand
-and the numerical limitation that a completed LOO estimator must address.
+target functionals.  Section~3.5 separates the calibration choices already
+embedded in the baseline from these untested estimator variants.  Any new rule
+must be declared as part of the estimator and re-evaluated without changing the
+DGP.  The present results therefore serve as a transparent baseline: they show
+both the promise of the low-rank estimand and the numerical limitation that a
+completed LOO estimator must address, but they do not show that any proposed
+regularization improves efficacy.
 
 \clearpage
 {\small
