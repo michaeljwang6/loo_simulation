@@ -210,10 +210,10 @@ def test_cluster_matrix_config_declares_requested_scale_and_persistence() -> Non
     for scenario in config.scenarios:
         assert scenario.population_kwargs["n_workers"] == 25_000
         assert scenario.population_kwargs["n_firms"] == 5_000
-        assert scenario.panel_kwargs["n_periods"] == 120
-        # The sampler parameter is the probability of redrawing. Thus 0.2
-        # means an 0.8 probability of mechanically retaining the firm.
-        assert scenario.panel_kwargs["redraw_probability"] == 0.2
+        assert scenario.panel_kwargs["n_periods"] == 60
+        # The production mobility design redraws with probability 0.4, so the
+        # probability of mechanically retaining the current firm is 0.6.
+        assert scenario.panel_kwargs["redraw_probability"] == 0.4
 
 
 def test_seed_groups_use_common_random_numbers() -> None:

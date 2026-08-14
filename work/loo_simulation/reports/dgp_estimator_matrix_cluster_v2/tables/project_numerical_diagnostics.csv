@@ -1,0 +1,9 @@
+scenario,scenario_label,status,count,median_max_local_condition,p90_max_local_condition,median_max_factor_norm,p90_max_factor_norm
+akm_dgp,AKM,success,100,1.0,1.0,0.0,0.0
+crippa_tukey_dgp,Crippa/Tukey,success,39,98.0974,122.6102,3.634,4.068446
+crippa_tukey_dgp,Crippa/Tukey,unstable,61,116.711,2528030.0,3.73891,153.917
+blm_grouped_dgp,BLM types,success,85,157.171,1328.452000000001,1.59493,3.2185680000000003
+blm_grouped_dgp,BLM types,unstable,15,6340.39,120422279.99999997,13.1293,379.02139999999997
+low_rank_factor_dgp,Low-rank factors,success,93,42.1171,57.962579999999996,4.32011,4.802782
+low_rank_factor_dgp,Low-rank factors,unstable,7,84005.7,314218.00000000006,184.866,211.6832
+gklp_perfect_information_dgp,GKLP,success,100,36.965149999999994,52.66709000000001,4.26624,4.648092

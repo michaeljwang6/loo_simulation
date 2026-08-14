@@ -1,0 +1,6 @@
+scenario,scenario_label,true_rank,selected_rank_0,selected_rank_1,selected_rank_2,correct_rank_rate,stable_rate,unstable_rate,failure_rate
+akm_dgp,AKM,0,100,0,0,1.0,1.0,0.0,0.0
+crippa_tukey_dgp,Crippa/Tukey,1,0,100,0,1.0,0.39,0.61,0.0
+blm_grouped_dgp,BLM types,1,0,100,0,1.0,0.85,0.15,0.0
+low_rank_factor_dgp,Low-rank factors,2,0,0,100,1.0,0.93,0.07,0.0
+gklp_perfect_information_dgp,GKLP,1,0,100,0,1.0,1.0,0.0,0.0

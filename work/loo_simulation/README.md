@@ -147,17 +147,18 @@ and low-rank estimator still materialize dense worker-by-firm arrays. Cluster
 partitions and account directives are site-specific and should be added to
 the two Slurm scripts before submission.
 
-For the production run completed before this support check was added, create a
-support-audited result without refitting any estimator, then regenerate the
-tables and figures:
+The completed 25,000-worker, 5,000-firm production run is summarized from the
+validated merged output without refitting any estimator:
 
 ```powershell
-& .\.venv311\Scripts\python.exe scripts\reclassify_blm_support.py `
-  --input results\dgp_estimator_matrix\merged `
-  --output results\dgp_estimator_matrix_support_audited\merged
-& .\.venv311\Scripts\python.exe scripts\report_dgp_estimator_matrix.py `
-  --input results\dgp_estimator_matrix_support_audited\merged
+& .\.venv311\Scripts\python.exe scripts\build_cluster_report_artifacts.py `
+  --input results\dgp_estimator_matrix_cluster_v2\merged `
+  --output reports\dgp_estimator_matrix_cluster_v2
 ```
+
+The artifact builder refuses a result whose configuration fingerprint differs
+from the completed production run. This prevents an old pilot or a partial
+merge from being presented as the production result.
 
 The standalone LaTeX manuscript is `DGP_ESTIMATOR_RESULTS.tex`. Compile it
 with Tectonic or another current LaTeX engine:
