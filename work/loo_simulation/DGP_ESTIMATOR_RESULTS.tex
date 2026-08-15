@@ -36,35 +36,12 @@
 \newcommand{\CBS}{C_{\mathrm{BS}}}
 \newcommand{\rhoBS}{\rho_{\mathrm{BS}}}
 
-\title{DGP-by-Estimator Monte Carlo\\
-\large Production methods, results, and interpretation}
+\title{Updated DGP Simulation}
 \author{}
 \date{August 14, 2026}
 
 \begin{document}
 \maketitle
-
-\begin{abstract}
-This report assumes familiarity with the original LOO proposal, but not with
-this simulation.  It keeps the proposal's notation and defines every added
-DGP, implementation rule, diagnostic, and comparison.
-
-\begin{itemize}
-\item \textbf{Design.} Cross four procedures (KSS-HE, BLM, BS20, and the
-project plug-in) with five DGPs.  Each cell uses 100 populations with 25,000
-workers, 5,000 firms, and 60 periods.  Exact finite-population truths are known.
-\item \textbf{Specification checks.} KSS-HE is accurate under additive AKM;
-BLM is accurate under the discrete BLM DGP.  BIC selects the true interaction
-rank in all 500 populations.
-\item \textbf{Project result.} The plug-in is accurate under AKM and GKLP and
-in the typical replication of every nonadditive DGP.  Rare, ill-conditioned
-schedule completions make its unconditional RMSE poor under Crippa, BLM, and
-the continuous rank-two DGP.
-\item \textbf{Limit.} The production Monte Carlo does not test a regularized
-variant or the full leave-worker-out correction.  It identifies a failure
-mechanism; it does not establish that a proposed fix works.
-\end{itemize}
-\end{abstract}
 
 \section{Question, notation, and estimands}
 
